@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrTaskInfoMapper">
+
+    <resultMap type="EmrTaskInfo" id="EmrTaskInfoResult">
+        <result property="id"    column="id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="taskType"    column="task_type"    />
+        <result property="taskTypeName"    column="task_type_name"    />
+        <result property="taskAppDoc"    column="task_app_doc"    />
+        <result property="taskAppDocName"    column="task_app_doc_name"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="limitTime"    column="limit_time"    />
+        <result property="limitTimeUnit"    column="limit_time_unit"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="busId"    column="bus_id"    />
+        <result property="busName"    column="bus_name"    />
+        <result property="mark"    column="mark"    />
+        <result property="docCd"    column="doc_cd"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="finishTime"    column="finish_time"    />
+        <result property="useTime"    column="use_time"    />
+        <result property="overtimeFlag"    column="overtime_flag"    />
+        <result property="treatFlag"    column="treat_flag"    />
+        <result property="busSection"    column="bus_section"    />
+        <result property="busSectionName"    column="bus_section_name"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="eventNo"    column="event_no"    />
+        <result property="dutyDeptCd"    column="duty_dept_cd"    />
+        <result property="dutyDeptName"    column="duty_dept_name"    />
+    </resultMap>
+    <resultMap id="EmrTaskInfoVoResult" type="EmrTaskInfoVo" extends="EmrTaskInfoResult">
+        <result property="remainHours"    column="remainHours"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="evenName"    column="even_name"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="mark"    column="mark"    />
+        <result property="taskTypeName"    column="task_type_name"    />
+        <result property="remainingTime"    column="remaining_time"    />
+        <result property="dataType"    column="data_type"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="mrFileShowName"    column="mr_file_show_name"    />
+        <result property="mrFileIdStr"    column="mr_file_id_str"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="bedNo"    column="BED_NO"    />
+        <result property="sex"    column="SEX"    />
+        <result property="iterTypeCode" column="iter_type_code" />
+        <result property="iterTypeName" column="iter_type_name" />
+        <result property="recordNo" column="RECORD_NO" />
+    </resultMap>
+    <resultMap id="EmrTaskInfoModifyApplResult" type="com.emr.project.emr.domain.vo.EmrTaskInfoVo" extends="EmrTaskInfoResult">
+        <result property="applId"    column="appl_id"    />
+        <result property="conState"    column="con_state"    />
+        <result property="endDatetime" column="end_datetime"/>
+        <result property="emrTypeCode" column="emr_type_code"/>
+    </resultMap>
+    <sql id="selectEmrTaskInfoVo">
+        select id, inp_no, patient_id, patient_name, dept_cd, dept_name, task_type, task_type_name, task_app_doc, task_app_doc_name,
+               begin_time, limit_time, limit_time_unit, end_time, bus_id, bus_name, mark, doc_cd, doc_name, finish_time, use_time,
+               overtime_flag, treat_flag, bus_section, bus_section_name,mr_file_id,event_no,duty_dept_cd,duty_dept_name from emr_task_info
+    </sql>
+
+    <select id="selectEmrTaskInfoList" parameterType="EmrTaskInfo" resultMap="EmrTaskInfoResult">
+        <include refid="selectEmrTaskInfoVo"/>
+        <where>
+            treat_flag !='2'
+            <if test="inpNo != null  and inpNo != ''"> and inp_no = #{inpNo}</if>
+            <if test="id != null  and id != ''"> and id = #{id}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="taskType != null  and taskType != ''"> and task_type = #{taskType}</if>
+            <if test="taskTypeName != null  and taskTypeName != ''"> and task_type_name like concat(concat('%', #{taskTypeName}), '%')</if>
+            <if test="taskAppDoc != null  and taskAppDoc != ''"> and task_app_doc = #{taskAppDoc}</if>
+            <if test="taskAppDocName != null  and taskAppDocName != ''"> and task_app_doc_name like concat(concat('%', #{taskAppDocName}), '%')</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="limitTime != null "> and limit_time = #{limitTime}</if>
+            <if test="limitTimeUnit != null  and limitTimeUnit != ''"> and limit_time_unit = #{limitTimeUnit}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="busId != null  and busId != ''"> and bus_id = #{busId}</if>
+            <if test="busName != null  and busName != ''"> and bus_name like concat(concat('%', #{busName}), '%')</if>
+            <if test="mark != null  and mark != ''"> and mark = #{mark}</if>
+            <if test="docCd != null  and docCd != ''"> and doc_cd = #{docCd}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="finishTime != null "> and finish_time = #{finishTime}</if>
+            <if test="useTime != null  and useTime != ''"> and use_time = #{useTime}</if>
+            <if test="overtimeFlag != null "> and overtime_flag = #{overtimeFlag}</if>
+            <if test="treatFlag != null  and treatFlag != ''"> and treat_flag = #{treatFlag}</if>
+            <if test="busSection != null  and busSection != ''"> and bus_section = #{busSection}</if>
+            <if test="busSectionName != null  and busSectionName != ''"> and bus_section_name like concat(concat('%', #{busSectionName}), '%')</if>
+            <if test="mrFileId != null">and mr_file_id = #{mrFileId}</if>
+            <if test="eventNo != null">and event_no = #{eventNo}</if>
+        </where>
+        order by begin_time desc
+    </select>
+
+    <select id="selectEmrTaskInfoListFiled" resultMap="EmrTaskInfoResult">
+        select *
+          from emr_task_info
+         where patient_id in
+               (select patient_id from emr_qc_flow a where a.mr_state = '16')
+    </select>
+
+    <select id="selectEmrTaskInfoById" parameterType="Long" resultMap="EmrTaskInfoResult">
+        <include refid="selectEmrTaskInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <delete id="deleteEmrTaskInfo" parameterType="EmrTaskInfo">
+        delete from emr_task_info
+        where patient_id = #{patientId}
+        and task_type = #{taskType}
+        and treat_flag = #{treatFlag}
+        and task_app_doc = #{taskAppDoc}
+    </delete>
+
+    <delete id="deleteTaskInfoByEventNo" parameterType="String">
+        delete from emr_task_info where event_no = #{eventNo}
+    </delete>
+
+    <insert id="insertEmrTaskInfo" parameterType="EmrTaskInfo">
+        insert into emr_task_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="inpNo != null and inpNo != ''">inp_no,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="taskType != null">task_type,</if>
+            <if test="taskTypeName != null">task_type_name,</if>
+            <if test="taskAppDoc != null">task_app_doc,</if>
+            <if test="taskAppDocName != null">task_app_doc_name,</if>
+            <if test="beginTime != null">begin_time,</if>
+            <if test="limitTime != null">limit_time,</if>
+            <if test="limitTimeUnit != null">limit_time_unit,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="busId != null">bus_id,</if>
+            <if test="busName != null">bus_name,</if>
+            <if test="mark != null">mark,</if>
+            <if test="docCd != null">doc_cd,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="useTime != null">use_time,</if>
+            <if test="overtimeFlag != null">overtime_flag,</if>
+            <if test="treatFlag != null">treat_flag,</if>
+            <if test="busSection != null">bus_section,</if>
+            <if test="busSectionName != null">bus_section_name,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="eventNo != null">event_No,</if>
+            <if test="dutyDeptCd != null">DUTY_DEPT_CD,</if>
+            <if test="dutyDeptName != null">DUTY_DEPT_NAME,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="inpNo != null and inpNo != ''">#{inpNo},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="taskType != null">#{taskType},</if>
+            <if test="taskTypeName != null">#{taskTypeName},</if>
+            <if test="taskAppDoc != null">#{taskAppDoc},</if>
+            <if test="taskAppDocName != null">#{taskAppDocName},</if>
+            <if test="beginTime != null">#{beginTime},</if>
+            <if test="limitTime != null">#{limitTime},</if>
+            <if test="limitTimeUnit != null">#{limitTimeUnit},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="busId != null">#{busId},</if>
+            <if test="busName != null">#{busName},</if>
+            <if test="mark != null">#{mark},</if>
+            <if test="docCd != null">#{docCd},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="useTime != null">#{useTime},</if>
+            <if test="overtimeFlag != null">#{overtimeFlag},</if>
+            <if test="treatFlag != null">#{treatFlag},</if>
+            <if test="busSection != null">#{busSection},</if>
+            <if test="busSectionName != null">#{busSectionName},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="eventNo != null">#{eventNo},</if>
+            <if test="dutyDeptCd != null">#{dutyDeptCd},</if>
+            <if test="dutyDeptName != null">#{dutyDeptName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrTaskInfo" parameterType="EmrTaskInfo">
+        update emr_task_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inpNo != null and inpNo != ''">inp_no = #{inpNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="taskType != null">task_type = #{taskType},</if>
+            <if test="taskTypeName != null">task_type_name = #{taskTypeName},</if>
+            <if test="taskAppDoc != null">task_app_doc = #{taskAppDoc},</if>
+            <if test="taskAppDocName != null">task_app_doc_name = #{taskAppDocName},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="limitTime != null">limit_time = #{limitTime},</if>
+            <if test="limitTimeUnit != null">limit_time_unit = #{limitTimeUnit},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="busId != null">bus_id = #{busId},</if>
+            <if test="busName != null">bus_name = #{busName},</if>
+            <if test="mark != null">mark = #{mark},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="useTime != null">use_time = #{useTime},</if>
+            <if test="overtimeFlag != null">overtime_flag = #{overtimeFlag},</if>
+            <if test="treatFlag != null">treat_flag = #{treatFlag},</if>
+            <if test="busSection != null">bus_section = #{busSection},</if>
+            <if test="busSectionName != null">bus_section_name = #{busSectionName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="eventNo != null">event_no = #{eventNo},</if>
+        </trim>
+        where id = #{id}
+        <if test="ids != null and ids.size() > 0">
+            and id in
+            <foreach collection="ids" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+    <update id="updateEmrTaskInfoForRecover" parameterType="EmrTaskInfo">
+        update emr_task_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inpNo != null and inpNo != ''">inp_no = #{inpNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="taskType != null">task_type = #{taskType},</if>
+            <if test="taskTypeName != null">task_type_name = #{taskTypeName},</if>
+            <if test="taskAppDoc != null">task_app_doc = #{taskAppDoc},</if>
+            <if test="taskAppDocName != null">task_app_doc_name = #{taskAppDocName},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="limitTime != null">limit_time = #{limitTime},</if>
+            <if test="limitTimeUnit != null">limit_time_unit = #{limitTimeUnit},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="busId != null">bus_id = #{busId},</if>
+            <if test="busName != null">bus_name = #{busName},</if>
+            <if test="mark != null">mark = #{mark},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="useTime != null">use_time = #{useTime},</if>
+            <if test="overtimeFlag != null">overtime_flag = #{overtimeFlag},</if>
+            <if test="treatFlag != null">treat_flag = #{treatFlag},</if>
+            <if test="busSection != null">bus_section = #{busSection},</if>
+            <if test="busSectionName != null">bus_section_name = #{busSectionName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="eventNo != null">event_no = #{eventNo},</if>
+        </trim>
+        where id in
+            <foreach collection="ids" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </update>
+
+    <update id="updateEmrTaskInfoForCancelSign" parameterType="EmrTaskInfo">
+        update emr_task_info c
+            set c.treat_flag = '0',c.finish_time = ''
+            where c.id = (select b.id
+            from (select a.*
+            from emr_task_info a
+            where a.mr_file_id = #{mrFileId}
+            and a.bus_section = '22'
+            and a.doc_cd = #{docCd}
+            and a.duty_dept_cd = #{dutyDeptCd}
+            and a.task_type = '2'
+            and a.treat_flag = '1'
+            order by a.finish_time desc) b
+            where rownum &lt; 2)
+    </update>
+    <delete id="deleteEmrTaskInfoById" parameterType="Long">
+        delete from emr_task_info where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrTaskInfoByIds" parameterType="String">
+        delete from emr_task_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCancelEmrTaskInfo" parameterType="String">
+        delete from emr_task_info where patient_id in
+        <foreach item="item" collection="admissionNos" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insertTaskList" parameterType="EmrTaskInfoVo">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_task_info
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.inpNo != null and item.inpNo != ''">inp_no,</if>
+                <if test="item.patientId != null">patient_id,</if>
+                <if test="item.patientName != null">patient_name,</if>
+                <if test="item.deptCd != null">dept_cd,</if>
+                <if test="item.deptName != null">dept_name,</if>
+                <if test="item.taskType != null">task_type,</if>
+                <if test="item.taskTypeName != null">task_type_name,</if>
+                <if test="item.taskAppDoc != null">task_app_doc,</if>
+                <if test="item.taskAppDocName != null">task_app_doc_name,</if>
+                <if test="item.beginTime != null">begin_time,</if>
+                <if test="item.limitTime != null">limit_time,</if>
+                <if test="item.limitTimeUnit != null">limit_time_unit,</if>
+                <if test="item.endTime != null">end_time,</if>
+                <if test="item.busId != null">bus_id,</if>
+                <if test="item.busName != null">bus_name,</if>
+                <if test="item.mark != null">mark,</if>
+                <if test="item.docCd != null">doc_cd,</if>
+                <if test="item.docName != null">doc_name,</if>
+                <if test="item.finishTime != null">finish_time,</if>
+                <if test="item.useTime != null">use_time,</if>
+                <if test="item.overtimeFlag != null">overtime_flag,</if>
+                <if test="item.treatFlag != null">treat_flag,</if>
+                <if test="item.busSection != null">bus_section,</if>
+                <if test="item.busSectionName != null">bus_section_name,</if>
+                <if test="item.mrFileId != null">mr_file_id,</if>
+                <if test="item.eventNo != null">event_No,</if>
+                <if test="item.dutyDeptCd != null">duty_dept_cd,</if>
+                <if test="item.dutyDeptName != null">duty_dept_name,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.inpNo != null and item.inpNo != ''">#{item.inpNo},</if>
+                <if test="item.patientId != null">#{item.patientId},</if>
+                <if test="item.patientName != null">#{item.patientName},</if>
+                <if test="item.deptCd != null">#{item.deptCd},</if>
+                <if test="item.deptName != null">#{item.deptName},</if>
+                <if test="item.taskType != null">#{item.taskType},</if>
+                <if test="item.taskTypeName != null">#{item.taskTypeName},</if>
+                <if test="item.taskAppDoc != null">#{item.taskAppDoc},</if>
+                <if test="item.taskAppDocName != null">#{item.taskAppDocName},</if>
+                <if test="item.beginTime != null">#{item.beginTime},</if>
+                <if test="item.limitTime != null">#{item.limitTime},</if>
+                <if test="item.limitTimeUnit != null">#{item.limitTimeUnit},</if>
+                <if test="item.endTime != null">#{item.endTime},</if>
+                <if test="item.busId != null">#{item.busId},</if>
+                <if test="item.busName != null">#{item.busName},</if>
+                <if test="item.mark != null">#{item.mark},</if>
+                <if test="item.docCd != null">#{item.docCd},</if>
+                <if test="item.docName != null">#{item.docName},</if>
+                <if test="item.finishTime != null">#{item.finishTime},</if>
+                <if test="item.useTime != null">#{item.useTime},</if>
+                <if test="item.overtimeFlag != null">#{item.overtimeFlag},</if>
+                <if test="item.treatFlag != null">#{item.treatFlag},</if>
+                <if test="item.busSection != null">#{item.busSection},</if>
+                <if test="item.busSectionName != null">#{item.busSectionName},</if>
+                <if test="item.mrFileId != null">#{item.mrFileId},</if>
+                <if test="item.eventNo != null">#{item.eventNo},</if>
+                <if test="item.dutyDeptCd != null">#{item.dutyDeptCd},</if>
+                <if test="item.dutyDeptName != null">#{item.dutyDeptName},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <select id="selectPatientNoCreIndexType" resultMap="EmrTaskInfoModifyApplResult">
+        SELECT t.*,a.id appl_id,a.con_state,a.end_datetime,agi.emr_type_code
+        FROM EMR_TASK_INFO t
+        LEFT JOIN QC_AGI_RULE agi ON t.BUS_ID = agi.id
+        LEFT JOIN EMR_MODIFY_APPL a on t.id = a.mr_file_id and a.app_reason_cd = '3'
+        WHERE t.task_type='1' and t.TREAT_FLAG='0' and t.mr_file_id is null
+        and t.PATIENT_ID = #{patientId}
+        <if test="id != null">
+            and t.id = #{id}
+        </if>
+          <if test="emrTypeCodeList !=null and emrTypeCodeList.size > 0">
+              and agi.EMR_TYPE_CODE in
+              <foreach collection="emrTypeCodeList" item="emrTypeCode" open="(" separator="," close=")">
+                  #{emrTypeCode}
+              </foreach>
+          </if>
+    </select>
+    <select id="selectEmrToDoList" parameterType="String" resultMap="EmrTaskInfoVoResult">
+        SELECT task.*,CEIL((task.END_TIME-sysdate)* 24) as remainHours,vis.res_doc_name,pp.patient_main_id,vis.BED_NO,pp.SEX,qa.EMR_TYPE_NAME,qa.EMR_TYPE_CODE,vis.RECORD_NO
+        FROM EMR_TASK_INFO task
+        left join EMR_INDEX ex on task.mr_file_id=ex.id
+        left join PAT_VISITINFO vis on task.PATIENT_ID = vis.PATIENT_ID
+        left join PAT_PERSONALINFO pp on pp.PATIENT_ID = vis.PATIENT_ID
+        left join QC_AGI_RULE qa on qa.id=task.bus_id
+        left join EMR_QC_FLOW qf on qf.PATIENT_ID = task.PATIENT_ID
+        WHERE (((task.DOC_CD =#{docCode} or vis.RES_DOC_CD=#{docCode} ) and (qf.MR_STATE not in ('14','16') or qf.MR_STATE is null))
+            or (vis.RES_DOC_CD=#{docCode} and qf.MR_STATE = '16'))
+            and task.TREAT_FLAG ='0'
+            and task.TASK_TYPE ='1'
+            and ex.DEL_FLAG='0'
+        <if test="patientId!=null and patientId!=''">
+            and task.patient_id=#{patientId}
+        </if>
+    </select>
+    <select id="selectEmrUnWriteList" parameterType="String" resultMap="EmrTaskInfoVoResult">
+        select eti.*,qae.EVEN_NAME,qar.EMR_TYPE_NAME from emr_task_info eti left join QC_AGI_RULE qar on eti.BUS_ID = qar.id
+            left join QC_AGI_EVEN qae on qae.EVEN_CODE=qar.AGI_EVNT where eti.TASK_TYPE='1' and eti.TREAT_FLAG='0' and eti.patient_id=#{patientId}
+    </select>
+
+    <select id="selectInfoByDocsAndIndex" parameterType="EmrTaskInfoVo" resultMap="EmrTaskInfoVoResult">
+        select *
+          from emr_task_info a
+         <where>
+             a.mr_file_id = #{mrFileId}
+             and a.task_type='2'
+             and a.treat_flag='0'
+             <if test="basEmployeeList != null and basEmployeeList.size() >0 ">
+             and a.doc_cd in
+                 <foreach collection="basEmployeeList" item="item" open="(" separator="," close=")">
+                     #{item.emplNumber}
+                 </foreach>
+             </if>
+             <if test="docCd != null and docCd != ''">
+                and doc_cd = #{docCd}
+             </if>
+             <if test="busSection != null and busSection != ''">
+                and bus_section = #{busSection}
+             </if>
+         </where>
+
+    </select>
+
+    <update id="updateTaskInfoByDel">
+        update EMR_TASK_INFO set finish_time=null,use_time = null,overtime_flag = null,treat_flag='0',mr_file_id = null
+        where treat_flag='1' and mr_file_id = #{mrFileId} and task_type = #{taskType}
+    </update>
+
+    <update id="updateTaskInfoEventNo" parameterType="string">
+        update emr_task_info set event_no = #{eventNo}
+            where event_no = #{oldEventNo} and bus_section = '17'
+    </update>
+
+    <select id="selectAgiRuleTaskList" parameterType="PatEventVo" resultMap="EmrTaskInfoResult">
+        select t.*
+        from emr_task_info t
+        left join qc_agi_rule r on t.BUS_ID = r.id
+        left join pat_visitinfo v on v.PATIENT_ID = t.PATIENT_ID
+        <where>
+            and t.task_type = '1'
+            <if test="patientId != null and patientId != ''">
+                and t.patient_id = #{patientId}
+            </if>
+            <if test="ruleIdList != null and ruleIdList.size > 0">
+                and r.id in
+                <foreach collection="ruleIdList" item="ruleId" open="(" separator="," close=")">
+                    #{ruleId}
+                </foreach>
+            </if>
+            <if test="afterOutTimeDayNum != null">
+                and (v.OUT_TIME is null or (v.OUT_TIME is not null and to_char(v.OUT_TIME,'yyyy-MM-dd') >= to_char(trunc(sysdate, 'HH24')-#{afterOutTimeDayNum}, 'yyyy-MM-dd')))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAgiRuleTaskYcjList" parameterType="PatEventVo" resultMap="EmrTaskInfoResult">
+        select t.*
+        from emr_task_info t
+        left join qc_agi_rule r on t.BUS_ID = r.id
+        left join pat_visitinfo v on v.PATIENT_ID = t.PATIENT_ID
+        <where>
+            and t.task_type = '1'
+            and t.treat_flag = '1'
+            <if test="patientId != null and patientId != ''">
+                and t.patient_id = #{patientId}
+            </if>
+            <if test="ruleIdList != null and ruleIdList.size > 0">
+                and r.id in
+                <foreach collection="ruleIdList" item="ruleId" open="(" separator="," close=")">
+                    #{ruleId}
+                </foreach>
+            </if>
+            <if test="afterOutTimeDayNum != null">
+                and (v.OUT_TIME is null or (v.OUT_TIME is not null and to_char(v.OUT_TIME,'yyyy-MM-dd') >= to_char(trunc(sysdate, 'HH24')-#{afterOutTimeDayNum}, 'yyyy-MM-dd')))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectOvertimeUnWriteList" parameterType="String" resultMap="EmrTaskInfoVoResult">
+        select i.emr_type_code,d.data_tag emr_type_name,i.mark, i.end_time,i.task_type_name,i.remaining_time,i.patient_id,i.id,
+               i.data_type,i.rule_id,i.mr_file_show_name,i.mr_file_id_str,r.rule_name
+        from (
+             select i.mr_type emr_type_code,'超时创建病历' mark, i.last_finish_time end_time, i.mr_file_show_name task_type_name, '及时' remaining_time,i.patient_id, to_char(i.id) id, 'index' data_type,to_char(i.last_finish_rule_id) rule_id,i.mr_file_show_name,to_char(i.id) mr_file_id_str
+             from emr_index i where i.mr_type != 'MAINFILE' and i.del_flag = '0' and i.last_finish_time is not null and  i.cre_date > i.last_finish_time
+             union
+             select i.mr_type emr_type_code,'超时创建病历' mark, i.last_finish_time end_time, i.mr_file_show_name task_type_name, '及时' remaining_time,ei.patient_id, to_char(i.id) id, 'index' data_type,to_char(i.last_finish_rule_id) rule_id,i.mr_file_show_name,to_char(i.id) mr_file_id_str
+             from emr_subfile_index i left join emr_index ei on i.main_id = ei.id where i.del_flag = '0' and i.last_finish_time is not null and  i.cre_date > i.last_finish_time
+             union
+             select '61' emr_type_code, '超时创建病历' mark, i.last_finish_time end_time,'病程记录' task_type_name,'及时' remaining_time,i.patient_id,i.record_id id,'mr_hp' data_type,to_char(i.last_finish_rule_id) rule_id,'病案首页' mr_file_show_name,i.record_id mr_file_id_str
+             from mr_hp i where i.last_finish_time is not null and  i.cre_date > i.last_finish_time
+             union
+             select emr_type_code,mark,end_time,task_type_name,case when remaining_time_int > 0 then concat(concat('超时', abs(remaining_time_int)), '小时') else concat(remaining_time_int, '小时') end remaining_time,a.patient_id,a.id,'task' data_type,a.rule_id,mr_file_show_name,mr_file_id_str from (
+                 select r.emr_type_code emr_type_code,t.mark,t.end_time,t.task_type_name,
+                 case when FINISH_TIME is not null then CEIL((FINISH_TIME - END_TIME) * 24)  else CEIL((sysdate - t.END_TIME) * 24) end remaining_time_int,t.patient_id,to_char(t.id) id,t.bus_id rule_id,null mr_file_show_name, null mr_file_id_str
+                 from EMR_TASK_INFO t left join QC_AGI_RULE r on t.bus_id = r.id where t.TASK_TYPE = '1' and t.TREAT_FLAG = '0' and t.mr_file_id is null) a
+        ) i
+        left join TM_BS_DICT_DATA d on i.EMR_TYPE_CODE = d.data_val and d.dict_type = 's004'
+        left join QC_AGI_RULE r on i.rule_id = r.id
+        where i.patient_id = #{patientId}
+        order by end_time
+    </select>
+    <update id="updateTaskInfoByEventNo" >
+        update emr_task_info set TREAT_FLAG='1' where EVENT_NO in
+        <foreach item="eventNo" collection="orderNoList" open="(" separator="," close=")">
+            #{eventNo}
+        </foreach>
+    </update>
+    <update id="updateTaskBusByIds" >
+        update emr_task_info set TREAT_FLAG='0',mr_file_id='',FINISH_TIME='',USE_TIME='' where id in
+        <foreach item="id" collection="taskId" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <select id="selectTaskByEventNoAndBus" parameterType="String" resultMap="EmrTaskInfoVoResult">
+        <include refid="selectEmrTaskInfoVo"/>
+        <where>
+            <if test="busId != null  and busId != ''"> and bus_id = #{busId}</if>
+            <if test="treatFlag != null  and treatFlag != ''"> and treat_flag = #{treatFlag}</if>
+            <if test="eventNo != null">and event_no = #{eventNo}</if>
+        </where>
+    </select>
+    <update id="updateTaskInfoByMrfileId" >
+        update emr_task_info set treat_flag=#{state},finish_time=sysdate where mr_file_id=#{mrFileId} and task_type='3' and treat_flag='0'
+    </update>
+
+    <update id="updateTaskInfoByMrfileIdAndDocCdForFreeMove" >
+        update emr_task_info set treat_flag = '1',finish_time=sysdate
+            where mr_file_id=#{mrFileId} and doc_cd=#{docCd} and bus_section='22' and task_type='2' and treat_flag='0'
+    </update>
+
+    <update id="updateTaskInfoBydocCode" >
+        update emr_task_info set treat_flag='0',finish_time=null where mr_file_id=#{mrFileId} and task_type='3' and treat_flag='1' and DOC_CD=#{docCode}
+        <if test="id != null">
+            and id = #{id}
+        </if>
+    </update>
+    <delete id="deleteEmrTaskInfoByMrFileId" >
+        delete from emr_task_info where task_type='3' and treat_flag='0' and mr_file_id=#{mrFileId}
+    </delete>
+    <select id="selectNoFinishTaskList" parameterType="String" resultMap="EmrTaskInfoVoResult">
+        select t.*,r.emr_type_code,r.EMR_TYPE_NAME,e.iter_type_code,e.iter_type_name from EMR_TASK_INFO t
+        left join QC_AGI_RULE r on t.BUS_ID = r.id
+        left join qc_rule_iter_emr e on r.emr_type_code = e.emr_type_code
+        where t.TREAT_FLAG = 0
+        and t.PATIENT_ID = #{patientId}
+        and t.task_type = #{taskType}
+    </select>
+    <update id="updateTaskInfoById" >
+        update emr_task_info set treat_flag='1',finish_time=sysdate where id=#{id}
+    </update>
+</mapper>

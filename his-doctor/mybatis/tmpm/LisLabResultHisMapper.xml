@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.LisLabResultHisMapper">
+
+    <resultMap type="LisLabResultHis" id="LisLabResultHisResult">
+        <result property="id"    column="id"    />
+        <result property="lisItemCd"    column="lis_item_cd"    />
+        <result property="lisResultCd"    column="lis_result_cd"    />
+        <result property="lisResultName"    column="lis_result_name"    />
+        <result property="hisResultCd"    column="his_result_cd"    />
+        <result property="hisResultName"    column="his_result_name"    />
+    </resultMap>
+
+    <sql id="selectLisLabResultHisVo">
+        select id, lis_item_cd, lis_result_cd, lis_result_name, his_result_cd, his_result_name from tm_pm_lis_lab_result_his
+    </sql>
+
+    <select id="selectLisLabResultHisList" parameterType="LisLabResultHis" resultMap="LisLabResultHisResult">
+        <include refid="selectLisLabResultHisVo"/>
+        <where>
+            <if test="lisItemCd != null  and lisItemCd != ''"> and lis_item_cd = #{lisItemCd}</if>
+            <if test="lisResultCd != null  and lisResultCd != ''"> and lis_result_cd = #{lisResultCd}</if>
+            <if test="lisResultName != null  and lisResultName != ''"> and lis_result_name like concat(concat('%', #{lisResultName}), '%')</if>
+            <if test="hisResultCd != null  and hisResultCd != ''"> and his_result_cd = #{hisResultCd}</if>
+            <if test="hisResultName != null  and hisResultName != ''"> and his_result_name like concat(concat('%', #{hisResultName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectLisLabResultHisById" parameterType="Long" resultMap="LisLabResultHisResult">
+        <include refid="selectLisLabResultHisVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLisLabResultHis" parameterType="LisLabResultHis">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_tm_pm_lis_lab_result_his.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into tm_pm_lis_lab_result_his
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="lisItemCd != null">lis_item_cd,</if>
+            <if test="lisResultCd != null">lis_result_cd,</if>
+            <if test="lisResultName != null">lis_result_name,</if>
+            <if test="hisResultCd != null">his_result_cd,</if>
+            <if test="hisResultName != null">his_result_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="lisItemCd != null">#{lisItemCd},</if>
+            <if test="lisResultCd != null">#{lisResultCd},</if>
+            <if test="lisResultName != null">#{lisResultName},</if>
+            <if test="hisResultCd != null">#{hisResultCd},</if>
+            <if test="hisResultName != null">#{hisResultName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLisLabResultHis" parameterType="LisLabResultHis">
+        update tm_pm_lis_lab_result_his
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="lisItemCd != null">lis_item_cd = #{lisItemCd},</if>
+            <if test="lisResultCd != null">lis_result_cd = #{lisResultCd},</if>
+            <if test="lisResultName != null">lis_result_name = #{lisResultName},</if>
+            <if test="hisResultCd != null">his_result_cd = #{hisResultCd},</if>
+            <if test="hisResultName != null">his_result_name = #{hisResultName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLisLabResultHisById" parameterType="Long">
+        delete from tm_pm_lis_lab_result_his where id = #{id}
+    </delete>
+
+    <delete id="deleteLisLabResultHisByIds" parameterType="String">
+        delete from tm_pm_lis_lab_result_his where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

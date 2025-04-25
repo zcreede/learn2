@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrBinaryMapper">
+
+    <resultMap type="EmrBinary" id="EmrBinaryResult">
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrCon"    column="mr_con"    />
+        <result property="mrConHeader"    column="mr_con_header"    />
+        <result property="mrConFooter"    column="mr_con_footer"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="mrContent"    column="mr_content"    />
+    </resultMap>
+
+    <sql id="selectEmrBinaryVo">
+        select mr_file_id, org_cd, org_name, patient_id, mr_con, mr_con_header, mr_con_footer, cre_per_name, cre_per_code, cre_date, alt_per_name, alt_per_code, alt_date,mr_content from emr_binary
+    </sql>
+
+    <select id="selectEmrBinaryList" parameterType="EmrBinary" resultMap="EmrBinaryResult">
+        <include refid="selectEmrBinaryVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="orgName != null  and orgName != ''"> and org_name like concat(concat('%', #{orgName}), '%')</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="mrCon != null  and mrCon != ''"> and mr_con = #{mrCon}</if>
+            <if test="mrConHeader != null  and mrConHeader != ''"> and mr_con_header = #{mrConHeader}</if>
+            <if test="mrConFooter != null  and mrConFooter != ''"> and mr_con_footer = #{mrConFooter}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrBinaryById" parameterType="Long" resultMap="EmrBinaryResult">
+        <include refid="selectEmrBinaryVo"/>
+        where mr_file_id = #{mrFileId}
+    </select>
+
+    <insert id="insertEmrBinary" parameterType="EmrBinary">
+        insert into emr_binary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="mrCon != null">mr_con,</if>
+            <if test="mrConHeader != null">mr_con_header,</if>
+            <if test="mrConFooter != null">mr_con_footer,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="mrContent != null">mr_content,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="mrCon != null">#{mrCon},</if>
+            <if test="mrConHeader != null">#{mrConHeader},</if>
+            <if test="mrConFooter != null">#{mrConFooter},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="mrContent != null">#{mrContent},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrBinary" parameterType="EmrBinary">
+        update emr_binary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="mrCon != null">mr_con = #{mrCon},</if>
+            <if test="mrConHeader != null">mr_con_header = #{mrConHeader},</if>
+            <if test="mrConFooter != null">mr_con_footer = #{mrConFooter},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="mrContent != null">mr_Content = #{mrContent},</if>
+        </trim>
+        where mr_file_id = #{mrFileId}
+    </update>
+
+    <delete id="deleteEmrBinaryById" parameterType="Long">
+        delete from emr_binary where mr_file_id = #{mrFileId}
+    </delete>
+
+    <delete id="deleteEmrBinaryByIds" parameterType="String">
+        delete from emr_binary where mr_file_id in
+        <foreach item="mrFileId" collection="array" open="(" separator="," close=")">
+            #{mrFileId}
+        </foreach>
+    </delete>
+
+    <select id="selectListByIds" parameterType="Long" resultMap="EmrBinaryResult">
+        select * from emr_binary where mr_file_id in
+        <foreach item="mrFileId" collection="mrFileIds" open="(" separator="," close=")">
+            #{mrFileId}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.TestExamAlertResultMapper">
+
+    <resultMap type="TestExamAlertResult" id="TestExamAlertResultResult">
+        <result property="id"    column="id"    />
+        <result property="appCd"    column="app_cd"    />
+        <result property="reportId"    column="report_id"    />
+        <result property="reportItemId"    column="report_item_id"    />
+        <result property="resultAlertId"    column="result_alert_id"    />
+        <result property="classCode"    column="class_code"    />
+        <result property="handleDocNo"    column="handle_doc_no"    />
+        <result property="handleDocName"    column="handle_doc_name"    />
+        <result property="handleDocTime"    column="handle_doc_time"    />
+        <result property="handleDocContent"    column="handle_doc_content"    />
+        <result property="handleNurseNo"    column="handle_nurse_no"    />
+        <result property="handleNurseName"    column="handle_nurse_name"    />
+        <result property="handleNurseTime"    column="handle_nurse_time"    />
+        <result property="handleNurseContent"    column="handle_nurse_content"    />
+        <result property="overtimeFlag"    column="overtime_flag"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+    </resultMap>
+
+    <sql id="selectTestExamAlertResultVo">
+        select id, app_cd, report_id, report_item_id, result_alert_id, class_code, handle_doc_no, handle_doc_name, handle_doc_time, handle_doc_content, handle_nurse_no, handle_nurse_name, handle_nurse_time, handle_nurse_content, overtime_flag, mr_file_id from test_exam_alert_result
+    </sql>
+
+    <select id="selectTestExamAlertResultList" parameterType="TestExamAlertResult" resultMap="TestExamAlertResultResult">
+        <include refid="selectTestExamAlertResultVo"/>
+        <where>
+            <if test="appCd != null  and appCd != ''"> and app_cd = #{appCd}</if>
+            <if test="reportId != null  and reportId != ''"> and report_id = #{reportId}</if>
+            <if test="reportItemId != null  and reportItemId != ''"> and report_item_id = #{reportItemId}</if>
+            <if test="resultAlertId != null  and resultAlertId != ''"> and result_alert_id = #{resultAlertId}</if>
+            <if test="classCode != null  and classCode != ''"> and class_code = #{classCode}</if>
+            <if test="handleDocNo != null  and handleDocNo != ''"> and handle_doc_no = #{handleDocNo}</if>
+            <if test="handleDocName != null  and handleDocName != ''"> and handle_doc_name like concat(concat('%', #{handleDocName}), '%')</if>
+            <if test="handleDocTime != null "> and handle_doc_time = #{handleDocTime}</if>
+            <if test="handleDocContent != null  and handleDocContent != ''"> and handle_doc_content = #{handleDocContent}</if>
+            <if test="handleNurseNo != null  and handleNurseNo != ''"> and handle_nurse_no = #{handleNurseNo}</if>
+            <if test="handleNurseName != null  and handleNurseName != ''"> and handle_nurse_name like concat(concat('%', #{handleNurseName}), '%')</if>
+            <if test="handleNurseTime != null "> and handle_nurse_time = #{handleNurseTime}</if>
+            <if test="handleNurseContent != null  and handleNurseContent != ''"> and handle_nurse_content = #{handleNurseContent}</if>
+            <if test="overtimeFlag != null  and overtimeFlag != ''"> and overtime_flag = #{overtimeFlag}</if>
+            <if test="mrFileId != null "> and mr_file_id = #{mrFileId}</if>
+        </where>
+    </select>
+
+    <select id="selectTestExamAlertResultByReportId" parameterType="String" resultMap="TestExamAlertResultResult">
+        <include refid="selectTestExamAlertResultVo"/>
+        where report_id = #{reportId}
+    </select>
+
+    <insert id="insertTestExamAlertResult" parameterType="TestExamAlertResult">
+        insert into test_exam_alert_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="appCd != null and appCd != ''">app_cd,</if>
+            <if test="reportId != null and reportId != ''">report_id,</if>
+            <if test="reportItemId != null and reportItemId != ''">report_item_id,</if>
+            <if test="resultAlertId != null and resultAlertId != ''">result_alert_id,</if>
+            <if test="classCode != null and classCode != ''">class_code,</if>
+            <if test="handleDocNo != null">handle_doc_no,</if>
+            <if test="handleDocName != null">handle_doc_name,</if>
+            <if test="handleDocTime != null">handle_doc_time,</if>
+            <if test="handleDocContent != null">handle_doc_content,</if>
+            <if test="handleNurseNo != null">handle_nurse_no,</if>
+            <if test="handleNurseName != null">handle_nurse_name,</if>
+            <if test="handleNurseTime != null">handle_nurse_time,</if>
+            <if test="handleNurseContent != null">handle_nurse_content,</if>
+            <if test="overtimeFlag != null">overtime_flag,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="appCd != null and appCd != ''">#{appCd},</if>
+            <if test="reportId != null and reportId != ''">#{reportId},</if>
+            <if test="reportItemId != null and reportItemId != ''">#{reportItemId},</if>
+            <if test="resultAlertId != null and resultAlertId != ''">#{resultAlertId},</if>
+            <if test="classCode != null and classCode != ''">#{classCode},</if>
+            <if test="handleDocNo != null">#{handleDocNo},</if>
+            <if test="handleDocName != null">#{handleDocName},</if>
+            <if test="handleDocTime != null">#{handleDocTime},</if>
+            <if test="handleDocContent != null">#{handleDocContent},</if>
+            <if test="handleNurseNo != null">#{handleNurseNo},</if>
+            <if test="handleNurseName != null">#{handleNurseName},</if>
+            <if test="handleNurseTime != null">#{handleNurseTime},</if>
+            <if test="handleNurseContent != null">#{handleNurseContent},</if>
+            <if test="overtimeFlag != null">#{overtimeFlag},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestExamAlertResult" parameterType="TestExamAlertResult">
+        update test_exam_alert_result
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appCd != null and appCd != ''">app_cd = #{appCd},</if>
+            <if test="reportId != null and reportId != ''">report_id = #{reportId},</if>
+            <if test="reportItemId != null and reportItemId != ''">report_item_id = #{reportItemId},</if>
+            <if test="resultAlertId != null and resultAlertId != ''">result_alert_id = #{resultAlertId},</if>
+            <if test="classCode != null and classCode != ''">class_code = #{classCode},</if>
+            <if test="handleDocNo != null">handle_doc_no = #{handleDocNo},</if>
+            <if test="handleDocName != null">handle_doc_name = #{handleDocName},</if>
+            <if test="handleDocTime != null">handle_doc_time = #{handleDocTime},</if>
+            <if test="handleDocContent != null">handle_doc_content = #{handleDocContent},</if>
+            <if test="handleNurseNo != null">handle_nurse_no = #{handleNurseNo},</if>
+            <if test="handleNurseName != null">handle_nurse_name = #{handleNurseName},</if>
+            <if test="handleNurseTime != null">handle_nurse_time = #{handleNurseTime},</if>
+            <if test="handleNurseContent != null">handle_nurse_content = #{handleNurseContent},</if>
+            <if test="overtimeFlag != null">overtime_flag = #{overtimeFlag},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTestExamAlertResultById" parameterType="Long">
+        delete from test_exam_alert_result where id = #{id}
+    </delete>
+
+    <delete id="deleteTestExamAlertResultByIds" parameterType="String">
+        delete from test_exam_alert_result where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <resultMap type="TestAlertResultVo" id="TestAlertResultResult" extends="TestExamAlertResultResult">
+        <result property="resultalertid"    column="resultalertid"    />
+        <result property="alertman"    column="alertman"    />
+        <result property="alertdt"    column="alertdt"    />
+        <result property="reportid"    column="reportid"    />
+        <result property="resultid"    column="resultid"    />
+        <result property="rptunitid"    column="rptunitid"    />
+        <result property="rptunitname"    column="rptunitname"    />
+        <result property="hospitalcode"    column="hospitalcode"    />
+        <result property="patType"    column="pat_type"    />
+        <result property="patNo"    column="pat_no"    />
+        <result property="patId"    column="pat_id"    />
+        <result property="patCardno"    column="pat_cardno"    />
+        <result property="inpId"    column="inp_id"    />
+        <result property="patName"    column="pat_name"    />
+        <result property="patSex"    column="pat_sex"    />
+        <result property="patAgestr"    column="pat_agestr"    />
+        <result property="reqWardno"    column="req_wardno"    />
+        <result property="reqBedno"    column="req_bedno"    />
+        <result property="reqDeptno"    column="req_deptno"    />
+        <result property="reqDocno"    column="req_docno"    />
+        <result property="emerFlag"    column="emer_flag"    />
+        <result property="specimenName"    column="specimen_name"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="recieveDt"    column="recieve_dt"    />
+        <result property="descriptions"    column="descriptions"    />
+        <result property="rptItemid"    column="rpt_itemid"    />
+        <result property="rptItemcode"    column="rpt_itemcode"    />
+        <result property="itemcodeEn"    column="itemcode_en"    />
+        <result property="rptItemname"    column="rpt_itemname"    />
+        <result property="externalcode1"    column="externalcode1"    />
+        <result property="externalcode2"    column="externalcode2"    />
+        <result property="result"    column="result"    />
+        <result property="result1"    column="result1"    />
+        <result property="result2"    column="result2"    />
+        <result property="result3"    column="result3"    />
+        <result property="resultFlag"    column="result_flag"    />
+        <result property="resultUnit"    column="result_unit"    />
+        <result property="resultRef"    column="result_ref"    />
+        <result property="redoFlag"    column="redo_flag"    />
+        <result property="redoResult"    column="redo_result"    />
+        <result property="alertrules"    column="alertrules"    />
+        <result property="resultId" column="result_id" />
+        <result property="reqDeptName" column="req_dept_name"/>
+        <result property="repDocName" column="rep_doc_name"/>
+        <result property="overtimeFlag" column="overtime_flag"/>
+        <result property="visitingStaffName" column="visiting_staff_name" />
+        <result property="caseNo" column="case_no"/>
+        <result property="patientMainId" column="PATIENT_MAIN_ID"/>
+        <result property="mainFileId" column="main_file_id"/>
+        <result property="repDeptName" column="rep_dept_name"/>
+        <result property="patType" column="pat_type"/>
+    </resultMap>
+
+    <select id="selectTestAlertResultList" parameterType="TestAlertReportVo" resultMap="TestAlertResultResult">
+        select t.pat_name,t.pat_id,d.dept_name req_dept_name,t.pat_no,t.req_bedno,t.rpt_itemcode,
+        t.rpt_itemname,t.result,t.result_unit,t.result_ref,r.handle_doc_name,r.handle_doc_time,
+        r.handle_doc_content,t.alertdt,t.rep_dept_name,t.rep_doc_name,r.handle_nurse_name,
+        r.handle_nurse_time,r.handle_nurse_content,
+        case when r.id is not null then r.overtime_flag when (alertdt+#{overtimeConfigure}/(24*60)-sysdate)&gt;=0 then '0' when (alertdt+#{overtimeConfigure}/(24*60)-sysdate)&lt;0 then '1'  else '0' end as overtime_flag,
+        i.id mr_file_id,t.RESULTALERTID,
+        case when r.handle_doc_content is not null then r.id else null end result_id,
+        t.pat_sex,t.pat_agestr,m.RES_DOC_NAME visiting_staff_name,m.RECORD_NO case_no, p.PATIENT_MAIN_ID,ei.id main_file_id,t.pat_type
+        from test_alert_report t
+        left join test_exam_alert_result r on t.RESULTALERTID = r.report_id
+        left join emr_subfile_index i on r.mr_file_id = i.id and i.del_flag = '0'
+        left join tm_bs_dept d on t.req_deptno = d.dept_code
+        left join pat_visitinfo m on t.pat_id = m.inp_no
+        left join pat_personalinfo p on m.PATIENT_ID = p.PATIENT_ID
+        left join emr_index ei on t.pat_id = ei.patient_id and ei.mr_type = 'MAINFILE'  and ei.del_flag = '0'
+        <where>
+            m.inp_no is not null
+            <if test="alertdtBegin != null and alertdtBegin != ''">
+                and t.alertdt &gt;= to_date(#{alertdtBegin},'yyyy-MM-dd')
+            </if>
+            <if test="alertdtEnd != null and alertdtEnd != ''">
+                and t.alertdt &lt; to_date(#{alertdtEnd},'yyyy-MM-dd')
+            </if>
+            <if test="reqDeptno != null and reqDeptno != ''">
+                and t.req_deptno = #{reqDeptno}
+            </if>
+            <if test="patNo != null and patNo != ''">
+                and m.record_no = #{patNo}
+            </if>
+            <if test='overtimeFlag != null and overtimeFlag == "1"'>
+                and ((r.id is not null and r.overtime_flag = #{overtimeFlag}) or  (r.id is null and(t.alertdt+#{overtimeConfigure}/(24*60)-sysdate)&lt;0))
+            </if>
+            <if test='overtimeFlag != null and overtimeFlag == "0"'>
+                and ((r.id is not null and r.overtime_flag = #{overtimeFlag}) or  (r.id is null and(t.alertdt+#{overtimeConfigure}/(24*60)-sysdate)&gt;=0))
+            </if>
+            <!-- 病历书写：已书写/未书写；查询类型：全部/住院/门诊； -->
+            <if test="patType != null and patType != ''">
+                and t.pat_type = #{patType}
+            </if>
+            <if test='mrFileFlag != null and mrFileFlag=="0"'>
+                and i.id is null
+            </if>
+            <if test='mrFileFlag != null and mrFileFlag=="1"'>
+                and i.id is not null
+            </if>
+        </where>
+        order by t.alertdt desc, resultalertid desc
+    </select>
+
+    <resultMap type="ExamAlertResultVo" id="ExamItemResult" extends="TestExamAlertResultResult" >
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="examRepNo"    column="exam_rep_no"    />
+        <result property="appCd"    column="app_cd"    />
+        <result property="examAppOrg"    column="exam_app_org"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="examTime"    column="exam_time"    />
+        <result property="examPos"    column="exam_pos"    />
+        <result property="examItemCd"    column="exam_item_cd"    />
+        <result property="examItemName"    column="exam_item_name"    />
+        <result property="examResObj"    column="exam_res_obj"    />
+        <result property="examResSub"    column="exam_res_sub"    />
+        <result property="examResQua"    column="exam_res_qua"    />
+        <result property="examResUnit"    column="exam_res_unit"    />
+        <result property="examResCd"    column="exam_res_cd"    />
+        <result property="examRemark"    column="exam_remark"    />
+        <result property="imageWay"    column="image_way"    />
+        <result property="examRepOrg"    column="exam_rep_org"    />
+        <result property="examRepDeptCd"    column="exam_rep_dept_cd"    />
+        <result property="examRepDeptName"    column="exam_rep_dept_name"    />
+        <result property="examDocCd"    column="exam_doc_cd"    />
+        <result property="examDocName"    column="exam_doc_name"    />
+        <result property="examTecCd"    column="exam_tec_cd"    />
+        <result property="examTecName"    column="exam_tec_name"    />
+        <result property="examRepDate"    column="exam_rep_date"    />
+        <result property="repDocCd"    column="rep_doc_cd"    />
+        <result property="repDocName"    column="rep_doc_name"    />
+        <result property="examWayCd"    column="exam_way_cd"    />
+        <result property="examWayName"    column="exam_way_name"    />
+        <result property="examSpecNo"    column="exam_spec_no"    />
+        <result property="examSpecName"    column="exam_spec_name"    />
+        <result property="examType"    column="exam_type"    />
+        <result property="conDocCd"    column="con_doc_cd"    />
+        <result property="conDocName"    column="con_doc_name"    />
+        <result property="source"    column="source"    />
+        <result property="identify"    column="identify"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="alterFlag"    column="alter_flag"    />
+        <result property="accnum"    column="accnum"    />
+        <result property="diagClicName"    column="diag_clic_name"    />
+        <result property="resultId" column="result_id" />
+        <result property="name" column="name" />
+        <result property="bedid" column="bedid" />
+        <result property="visitingStaffNo" column="visiting_staff_no" />
+        <result property="visitingStaffName" column="visiting_staff_name" />
+        <result property="sex"    column="sex"    />
+        <result property="recDate"    column="rec_date"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="patientMainId" column="PATIENT_MAIN_ID"/>
+        <result property="mainFileId" column="main_file_id"/>
+        <result property="inpNo" column="inp_no"/>
+        <result property="identify" column="identify"/>
+    </resultMap>
+
+    <select id="selectExamAlertResultList" parameterType="ExamItemVo" resultMap="ExamItemResult">
+        select b.patient_name name,e.app_dept_name,m.record_no case_no,e.patient_id,m.bed_no bedid,e.exam_res_sub,e.exam_pos,
+        e.exam_rep_date,e.exam_rep_dept_name,e.exam_doc_name,r.handle_doc_name,
+        r.handle_doc_time,r.handle_doc_content,r.handle_nurse_name,r.handle_nurse_time,
+        r.handle_nurse_content,e.exam_res_obj,
+        case when r.id is not null then r.overtime_flag when (rec_date+#{overtimeConfigure}/(24*60)-sysdate)&gt;=0 then '0' when (rec_date+#{overtimeConfigure}/(24*60)-sysdate)&lt;0 then '1'  else '0' end as overtime_flag,
+        i.id mr_file_id, e.id,
+        case when r.handle_doc_content is not null then r.id else null end result_id,
+        m.RES_DOC_CD visiting_staff_no,m.RES_DOC_NAME visiting_staff_name,dd.data_tag sex,e.rep_doc_name,
+        e.rec_date, b.PATIENT_MAIN_ID,ei.id main_file_id,m.inp_no,
+        case when e.identify='门诊' then '1' when e.identify='急诊' then '2' when e.identify='住院' then '3'
+        when e.identify='体检' then '4' else '' end as identify
+        from exam_item e
+        left join test_exam_alert_result r on e.id = r.report_id
+        left join emr_subfile_index i on r.mr_file_id = i.id and i.del_flag = '0'
+        left join pat_visitinfo m on e.patient_id = m.patient_id
+        left join pat_personalinfo b on e.patient_id = b.patient_id
+        left join tm_bs_dict_data dd on b.sex = dd.data_val and dict_type = 's028'
+        left join emr_index ei on e.patient_id = ei.patient_id and ei.mr_type = 'MAINFILE'  and ei.del_flag = '0'
+        <where>
+            and e.alter_flag = '1'
+            <if test="examRepDateBegin != null and examRepDateBegin!= ''">
+                and e.exam_rep_date &gt;= to_date(#{examRepDateBegin},'yyyy-MM-dd')
+            </if>
+            <if test="examRepDateEnd != null and examRepDateEnd!= ''">
+                and e.exam_rep_date &lt; to_date(#{examRepDateEnd},'yyyy-MM-dd')
+            </if>
+            <if test="appDeptCd != null and appDeptCd != ''">
+                and e.app_dept_cd = #{appDeptCd}
+            </if>
+            <if test="patientId != null and patientId != ''">
+                and m.record_no = #{patientId}
+            </if>
+            <if test='overtimeFlag != null and overtimeFlag == "1"'>
+                and ((r.id is not null and r.overtime_flag = #{overtimeFlag}) or  (r.id is null and(e.rec_date+#{overtimeConfigure}/(24*60)-sysdate)&lt;0))
+            </if>
+            <if test='overtimeFlag != null and overtimeFlag == "0"'>
+                and ((r.id is not null and r.overtime_flag = #{overtimeFlag}) or  (r.id is null and(e.rec_date+#{overtimeConfigure}/(24*60)-sysdate)&gt;=0))
+            </if>
+            <!-- 病历书写：已书写/未书写；查询类型：全部/住院/门诊； -->
+            <!--if test="identify != null and identify != ''">
+                and e.identify = #{patType}
+            </if-->
+            <if test='identify != null and identify=="1"'>
+                and e.identify = '门诊'
+            </if>
+            <if test='identify != null and identify=="2"'>
+                and e.identify = '急诊'
+            </if>
+            <if test='identify != null and identify=="3"'>
+                and e.identify = '住院'
+            </if>
+            <if test='identify != null and identify=="4"'>
+                and e.identify = '体检'
+            </if>
+            <if test='mrFileFlag != null and mrFileFlag=="0"'>
+                and i.id is null
+            </if>
+            <if test='mrFileFlag != null and mrFileFlag=="1"'>
+                and i.id is not null
+            </if>
+        </where>
+        order by rec_date desc
+    </select>
+    <select id="selectExamaLertList" resultMap="TestAlertResultResult">
+        SELECT
+            t.rpt_itemcode,
+            t.rpt_itemname,
+            t.result,
+            t.result_unit,
+            t.result_ref,
+            t.alertdt,
+            r.handle_doc_name,
+            r.handle_doc_time,
+            r.handle_doc_content
+        FROM
+            test_alert_report t
+            left join test_exam_alert_result r ON t.RESULTALERTID = r.report_id
+            left join tm_bs_dept d ON t.req_deptno = d.dept_code
+        WHERE
+            t.pat_no = #{patientId}
+            AND t.pat_type = '3'
+            <if test="startDate != null">
+                and t.alertdt &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and t.alertdt &lt; #{endDate}
+            </if>
+        ORDER BY
+            t.alertdt DESC,
+            resultalertid DESC
+    </select>
+    <select id="selectExamAlertList" resultMap="ExamItemResult">
+        SELECT
+            e.exam_res_sub,
+            e.exam_pos,
+            e.exam_rep_date,
+            e.exam_doc_name,
+            r.handle_doc_name,
+            r.handle_doc_time,
+            r.handle_doc_content
+        FROM
+            exam_item e
+            LEFT JOIN test_exam_alert_result r ON e.id = r.report_id
+            LEFT JOIN pat_visitinfo m ON e.patient_id = m.patient_id
+            LEFT JOIN pat_personalinfo b ON e.patient_id = b.patient_id
+        WHERE
+            e.alter_flag = '1'
+            AND m.record_no = #{patientId}
+            <if test="startDate != null">
+                and e.exam_rep_date &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and e.exam_rep_date &lt; #{endDate}
+            </if>
+        ORDER BY
+        rec_date DESC
+    </select>
+    <update id="updateMrFileId" parameterType="TestExamAlertResult">
+        update test_exam_alert_result set mr_file_id = #{mrFileId} where id = #{id}
+    </update>
+</mapper>

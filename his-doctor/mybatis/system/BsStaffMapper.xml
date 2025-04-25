@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.BsStaffMapper">
+
+    <resultMap type="BsStaff" id="BsStaffResult">
+        <result property="id"    column="id"    />
+        <result property="hospitalNo"    column="hospital_no"    />
+        <result property="staffCode"    column="staff_code"    />
+        <result property="staffNo"    column="staff_no"    />
+        <result property="staffName"    column="staff_name"    />
+        <result property="staffNamePym"    column="staff_name_pym"    />
+        <result property="idcard"    column="idcard"    />
+        <result property="staffSex"    column="staff_sex"    />
+        <result property="nation"    column="nation"    />
+        <result property="birdthDate"    column="birdth_date"    />
+        <result property="politicalStatus"    column="political_status"    />
+        <result property="occuType"    column="occu_type"    />
+        <result property="title"    column="title"    />
+        <result property="hiresWay"    column="hires_way"    />
+        <result property="tel"    column="tel"    />
+        <result property="nativePlace"    column="native_place"    />
+        <result property="profiles"    column="profiles"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="pic"    column="pic"    />
+        <result property="picType"    column="pic_type"    />
+        <result property="staffType"    column="staff_type"    />
+        <result property="password"    column="password"    />
+        <result property="passwordHis"    column="password_his"    />
+        <result property="beginDate"    column="begin_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="caPic"    column="ca_pic"    />
+        <result property="caPicType"    column="ca_pic_type"    />
+        <result property="caSerial"    column="ca_serial"    />
+        <result property="prescribeFlag"    column="prescribe_flag"    />
+        <result property="operativeGrade"    column="operative_grade"    />
+        <result property="orderGrade"    column="order_grade"    />
+        <result property="chronicFlag"    column="chronic_flag"    />
+        <result property="antibioticsFlag"    column="antibiotics_flag"    />
+        <result property="bz1"    column="bz_1"    />
+        <result property="bz2"    column="bz_2"    />
+        <result property="bz3"    column="bz_3"    />
+    </resultMap>
+    <resultMap id="BsStaffVoResult" type="BsStaffVo" extends="BsStaffResult">
+        <result property="titleName"    column="title_name"    />
+    </resultMap>
+    <sql id="selectBsStaffVo">
+        select id, hospital_no, staff_code, staff_no, staff_name, staff_name_pym, idcard, staff_sex, nation, birdth_date, political_status, occu_type, title, hires_way, tel, native_place, profiles, status, del_flag, pic, pic_type, staff_type, password, password_his, begin_date, end_date, ca_pic, ca_pic_type, ca_serial, prescribe_flag, operative_grade, order_grade, chronic_flag, antibiotics_flag, bz_1, bz_2, bz_3 from tm_bs_staff
+    </sql>
+
+    <select id="selectBsStaffById" parameterType="Long" resultMap="BsStaffResult">
+        <include refid="selectBsStaffVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBsStaffByStaffType" parameterType="com.emr.project.system.domain.BsStaff" resultMap="BsStaffResult">
+        <include refid="selectBsStaffVo"/>
+        where staff_type = #{staffType}
+    </select>
+
+    <!-- 根据职工编码查询信息 -->
+    <select id="selectBsStaffByStaffCode" parameterType="String" resultMap="BsStaffResult">
+        <include refid="selectBsStaffVo"/>
+         where staff_code = #{staffCode} and rownum <![CDATA[ <= ]]> 1
+    </select>
+
+    <sql id="Base_Column_List">
+    id, HOSPITAL_NO as hospital_no, staff_code, staff_no, staff_name, staff_name_pym, idcard, staff_sex,
+    nation, birdth_date, Political_status, occu_type, title, hires_way, tel, native_place,
+    profiles, status, pic_type, staff_type, password, begin_date, end_date, ca_pic_type,
+    ca_serial, prescribe_flag, Operative_grade, order_grade, Chronic_flag,password_His,antibiotics_flag,bz_1, bz_2, bz_3
+  </sql>
+    <sql id="Blob_Column_List">
+    pic, ca_pic
+  </sql>
+    <select id="selectByConn" parameterType="com.emr.project.system.domain.BsStaff" resultMap="BsStaffResult">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from TM_BS_STAFF
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="hospitalNo != null">
+                and HOSPITAL_NO = #{hospitalNo,jdbcType=VARCHAR}
+            </if>
+            <if test="staffCode != null">
+                and staff_code = #{staffCode,jdbcType=VARCHAR}
+            </if>
+            <if test="staffNo != null">
+                and staff_no = #{staffNo,jdbcType=VARCHAR}
+            </if>
+            <if test="staffName != null">
+                and staff_name = #{staffName,jdbcType=VARCHAR}
+            </if>
+            <if test="staffNamePym != null">
+                and staff_name_pym = #{staffNamePym,jdbcType=VARCHAR}
+            </if>
+            <if test="idcard != null">
+                and idcard = #{idcard,jdbcType=VARCHAR}
+            </if>
+            <if test="staffSex != null">
+                and staff_sex = #{staffSex,jdbcType=VARCHAR}
+            </if>
+            <if test="nation != null">
+                and nation = #{nation,jdbcType=VARCHAR}
+            </if>
+            <if test="birdthDate != null">
+                and birdth_date = #{birdthDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="politicalStatus != null">
+                and Political_status = #{politicalStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="occuType != null">
+                and occu_type = #{occuType,jdbcType=VARCHAR}
+            </if>
+            <if test="title != null">
+                and title = #{title,jdbcType=VARCHAR}
+            </if>
+            <if test="hiresWay != null">
+                and hires_way = #{hiresWay,jdbcType=VARCHAR}
+            </if>
+            <if test="tel != null">
+                and tel = #{tel,jdbcType=VARCHAR}
+            </if>
+            <if test="nativePlace != null">
+                and native_place = #{nativePlace,jdbcType=VARCHAR}
+            </if>
+            <if test="profiles != null">
+                and profiles = #{profiles,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="picType != null">
+                and pic_type = #{picType,jdbcType=VARCHAR}
+            </if>
+            <if test="staffType != null">
+                and staff_type = #{staffType,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="beginDate != null">
+                and begin_date = #{beginDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endDate != null">
+                and end_date = #{endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="caPicType != null">
+                and ca_pic_type = #{caPicType,jdbcType=VARCHAR}
+            </if>
+            <if test="caSerial != null">
+                and ca_serial = #{caSerial,jdbcType=VARCHAR}
+            </if>
+            <if test="prescribeFlag != null">
+                and prescribe_flag = #{prescribeFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="operativeGrade != null">
+                and Operative_grade = #{operativeGrade,jdbcType=VARCHAR}
+            </if>
+            <if test="orderGrade != null">
+                and order_grade = #{orderGrade,jdbcType=VARCHAR}
+            </if>
+            <if test="chronicFlag != null">
+                and Chronic_flag = #{chronicFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="pic != null">
+                and pic = #{pic,jdbcType=LONGVARBINARY}
+            </if>
+            <if test="caPic != null">
+                and ca_pic = #{caPic,jdbcType=LONGVARBINARY}
+            </if>
+        </where>
+    </select>
+    <select id="selectStaffList" resultMap="BsStaffVoResult" parameterType="String">
+        select s.*,d.data_tag TITLE_NAME from tm_bs_staff s
+        left join tm_bs_dict_data d on s.TITLE = d.data_val and d.dict_type='s048'
+        where 1=1
+        <if test="staffCodeList!=null and staffCodeList.size > 0">
+            and staff_code in
+            <foreach collection="staffCodeList" item="staffCode" open="(" separator="," close=")">
+                #{staffCode}
+            </foreach>
+        </if>
+    </select>
+</mapper>

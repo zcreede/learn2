@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.webservice.mapper.MedicareAuditMapper">
+
+    <resultMap id="MedicareAuditPatientDtosResult" type="com.emr.project.webservice.domain.req.MedicareAuditPatientDtosReq">
+        <result property="patn_id" column="patn_id"/>
+        <result property="patn_name" column="patn_name"/>
+        <result property="gend" column="gend"/>
+        <result property="brdy" column="brdy"/>
+        <result property="poolarea" column="poolarea"/>
+        <result property="curr_mdtrt_id" column="curr_mdtrt_id"/>
+    </resultMap>
+    <select id="selectPatientDtos" resultMap="MedicareAuditPatientDtosResult">
+        select c.personal_no as patn_id, --参保人标识
+               a.NAME as patn_name, --姓名
+               a.SEX as gend, --性别
+               to_char(a.BIRDTH_DATE,'yyyy-MM-dd') as brdy, --出生日期
+               c.ssqbh as poolarea, --统筹区编码
+               a.case_no as curr_mdtrt_id, --当前就诊标识
+               '' as fsi_encounter_dtos --就诊信息集合
+          from t_ar_baseinfomation a
+          left join tm_bs_hospital b on a.HOSPITAL_CODE = b.hospital_code
+          left join T_MI_REGISTRATION c on a.admission_no = c.admission_no
+          where a.admission_no = #{admissionNo}
+    </select>
+
+    <resultMap id="MedicareAuditEncounterDtosResult" type="com.emr.project.webservice.domain.req.MedicareAuditEncounterDtosReq">
+        <result property="mdtrt_id" column="mdtrt_id"/>
+        <result property="medins_id" column="medins_id"/>
+        <result property="medins_name" column="medins_name"/>
+        <result property="medins_admdvs" column="medins_admdvs"/>
+        <result property="medins_type" column="medins_type"/>
+        <result property="medins_lv" column="medins_lv"/>
+        <result property="wardarea_codg" column="wardarea_codg"/>
+        <result property="wardno" column="wardno"/>
+        <result property="bedno" column="bedno"/>
+        <result property="adm_date" column="adm_date"/>
+        <result property="dscg_date" column="dscg_date"/>
+        <result property="dscg_main_dise_codg" column="dscg_main_dise_codg"/>
+        <result property="dscg_main_dise_name" column="dscg_main_dise_name"/>
+        <result property="dr_codg" column="dr_codg"/>
+        <result property="adm_dept_codg" column="adm_dept_codg"/>
+        <result property="adm_dept_name" column="adm_dept_name"/>
+        <result property="dscg_dept_codg" column="dscg_dept_codg"/>
+        <result property="dscg_dept_name" column="dscg_dept_name"/>
+        <result property="med_mdtrt_type" column="med_mdtrt_type"/>
+        <result property="med_type" column="med_type"/>
+        <result property="matn_stas" column="matn_stas"/>
+        <result property="medfee_sumamt" column="medfee_sumamt"/>
+        <result property="ownpay_amt" column="ownpay_amt"/>
+        <result property="selfpay_amt" column="selfpay_amt"/>
+        <result property="acct_payamt" column="acct_payamt"/>
+        <result property="ma_amt" column="ma_amt"/>
+        <result property="hifp_payamt" column="hifp_payamt"/>
+        <result property="setl_totlnum" column="setl_totlnum"/>
+        <result property="insutype" column="insutype"/>
+        <result property="reim_flag" column="reim_flag"/>
+        <result property="out_setl_flag" column="out_setl_flag"/>
+    </resultMap>
+    <select id="selectEncounterDtos" resultMap="MedicareAuditEncounterDtosResult">
+        select e.hospital_serial_number as mdtrt_id, --就诊标识
+                b.chs_code as medins_id, --医疗服务机构标识
+                b.chs_name as medins_name, --医疗机构名称
+                b.district as medins_admdvs, --医疗机构行政区划编码
+                'A2' as medins_type, --医疗服务机构类型
+                case when b.level_code = '12' then '08'
+                     when b.level_code = '13' then '09'
+                     when b.level_code = '14' then '10'
+                     when b.level_code = '19' then '14'
+                     when b.level_code = '22' then '05'
+                     when b.level_code = '23' then '06'
+                     when b.level_code = '24' then '07'
+                     when b.level_code = '29' then '13'
+                     when b.level_code = '31' then '01'
+                     when b.level_code = '32' then '02'
+                     when b.level_code = '33' then '03'
+                     when b.level_code = '34' then '04'
+                     when b.level_code = '39' then '12'
+                else '11' end  as medins_lv, --医疗机构等级
+                a.DEPARTMENT_NO as wardarea_codg, --病区标识
+                a.bed_no as wardno, --病房号
+                a.bed_no as bedno, --病床号
+                a.hospitalized_date as adm_date, --入院日期
+                a.leave_hospital_date as dscg_date, --出院日期
+                d.diag_cd as dscg_main_dise_codg, --主诊断编码
+                d.diag_name as dscg_main_dise_name, --主诊断名称
+                --(select listagg(diag.diag_name, ',') within group (order by diag.diag_name) AS diag_list from diag_info diag where diag.patient_id = a.ADMISSION_NO) as fsi_diagnose_dtos, --诊断信息DTO(*)
+                a.RESIDENT_CODE as dr_codg, --医师标识
+                a.ward_no as adm_dept_codg, --入院科室标识
+                h.dept_name as adm_dept_name, --入院科室名称
+                a.discharge_ward_no as dscg_dept_codg, --出院科室标识
+                h1.dept_name as dscg_dept_name, --出院科室名称
+                '2' as med_mdtrt_type, --就诊类型
+                e.hospital_type as med_type, --医疗类别
+                0 as matn_stas, --生育状态
+                nvl(hf.cumulative_cost,0) as medfee_sumamt, --总费用
+                0 as ownpay_amt, --自费金额
+                0 as selfpay_amt, --自付金额
+                0 as acct_payamt, --个人账户支付金额
+                0 as ma_amt, --救助金支付金额
+                0 as hifp_payamt, --统筹金支付金额
+                1 as setl_totlnum, --结算总次数
+                e.insurance_type as insutype, --险种
+                '1' as reim_flag, --报销标志
+                --e.ssqbh as out_setl_flag --异地结算标志
+                case when e.ssqbh = (select code from yb_sjpt_Type where name='本地') then '1' else '0' end as out_setl_flag
+        from t_ar_medicalinformation a
+        left join tm_bs_hospital b on a.HOSPITAL_CODE = b.hospital_code
+        left join tm_na_beds c on a.DEPARTMENT_NO = c.ward_no and a.BED_NO = c.bed_no
+        left join diag_info d on a.ADMISSION_NO = d.patient_id  and d.diag_type_cd = '02' and d.diag_class = 'XY' and d.diag_class_cd = '01'
+        left join t_ih_cumulativecost hf on a.ADMISSION_NO = hf.ADMISSION_NO
+        left join T_MI_REGISTRATION e on a.admission_no = e.admission_no
+        left join YBDictionaryInfo g on e.personnel_type=g.name and g.lxcode='psn_type'
+        left join tm_bs_dept h on a.ward_no = h.dept_code and a.hospital_code = h.hospital_no
+        left join tm_bs_dept h1 on a.discharge_ward_no = h1.dept_code and a.hospital_code = h1.hospital_no
+        left join t_ar_baseinfomation j on a.admission_no = j.admission_no
+        where a.admission_no = #{admissionNo}
+    </select>
+
+    <resultMap  id="MedicareAuditDiagnoseDtosResult" type="com.emr.project.webservice.domain.req.MedicareAuditDiagnoseDtosReq">
+        <result property="dise_id" column="dise_id"/>
+        <result property="inout_dise_type" column="inout_dise_type"/>
+        <result property="maindise_flag" column="maindise_flag"/>
+        <result property="dias_srt_no" column="dias_srt_no"/>
+        <result property="dise_codg" column="dise_codg"/>
+        <result property="dise_name" column="dise_name"/>
+        <result property="dise_date" column="dise_date"/>
+    </resultMap>
+    <select id="selectDiagnoseDtos" resultMap="MedicareAuditDiagnoseDtosResult">
+        select '1' as dise_id, --诊断标识
+               '1' as inout_dise_type, --出入诊断类别
+               '1' as maindise_flag, --主诊断标志
+               '1' as dias_srt_no, --诊断排序号
+               a.diag_cd as dise_codg, --诊断(疾病)编码
+               a.diag_name as dise_name, --诊断(疾病)名称
+               a.dia_date as dise_date --诊断日期
+          from diag_info a
+          where a.diag_type_cd in('02','03')
+            and a.diag_class = 'XY'
+            and a.diag_class_cd = '01'
+            and a.patient_id = #{admissionNo}
+    </select>
+
+    <resultMap id="MedicareAuditOrderDtosResult" type="com.emr.project.webservice.domain.req.MedicareAuditOrderDtosReq">
+        <result property="rx_id" column="rx_id"/>
+        <result property="rxno" column="rxno"/>
+        <result property="grpno" column="grpno"/>
+        <result property="long_drord_flag" column="long_drord_flag"/>
+        <result property="hilist_type" column="hilist_type"/>
+        <result property="chrg_type" column="chrg_type"/>
+        <result property="drord_bhvr" column="drord_bhvr"/>
+        <result property="hilist_code" column="hilist_code"/>
+        <result property="hilist_name" column="hilist_name"/>
+        <result property="hilist_dosform" column="hilist_dosform"/>
+        <result property="hilist_lv" column="hilist_lv"/>
+        <result property="hilist_pric" column="hilist_pric"/>
+        <result property="lv1_hosp_item_pric" column="lv1_hosp_item_pric"/>
+        <result property="lv2_hosp_item_pric" column="lv2_hosp_item_pric"/>
+        <result property="lv3_hosp_item_pric" column="lv3_hosp_item_pric"/>
+        <result property="hilist_memo" column="hilist_memo"/>
+        <result property="hosplist_code" column="hosplist_code"/>
+        <result property="hosplist_name" column="hosplist_name"/>
+        <result property="hosplist_dosform" column="hosplist_dosform"/>
+        <result property="cnt" column="cnt"/>
+        <result property="pric" column="pric"/>
+        <result property="sumamt" column="sumamt"/>
+        <result property="ownpay_amt" column="ownpay_amt"/>
+        <result property="selfpay_amt" column="selfpay_amt"/>
+        <result property="spec" column="spec"/>
+        <result property="spec_unt" column="spec_unt"/>
+        <result property="drord_begn_date" column="drord_begn_date"/>
+        <result property="drord_stop_date" column="drord_stop_date"/>
+        <result property="drord_dept_codg" column="drord_dept_codg"/>
+        <result property="drord_dept_name" column="drord_dept_name"/>
+        <result property="drord_dr_codg" column="drord_dr_codg"/>
+        <result property="drord_dr_name" column="drord_dr_name"/>
+        <result property="drord_dr_profttl" column="drord_dr_profttl"/>
+        <result property="curr_drord_flag" column="curr_drord_flag"/>
+    </resultMap>
+    <select id="selectOrderDtos" resultMap="MedicareAuditOrderDtosResult">
+        select c.id as rx_id, --处方(医嘱)标识
+                a.order_no as rxno, --处方号
+                b.order_group_no as grpno, --组编号
+                case a.ORDER_TYPE  when '1' then '1' else '0' end as long_drord_flag, --是否为长期医嘱
+                case when b.HERBAL_FLAG ='1' then '201' when a.ORDER_CLASS_CODE='01' then '101' else '201'  end as hilist_type, --目录类别
+                case when a.ORDER_CLASS_CODE='01' then '01' else  e.sec_item_code end as chrg_type, --收费类别
+                '3' as drord_bhvr, --医嘱行为
+                '' as hilist_code, --医保目录代码
+                '' as hilist_name, --医保目录名称
+                '' as hilist_dosform, --医保目录(药品)剂型
+                '' as hilist_lv, --医保目录等级
+                0.00 as hilist_pric, --医保目录价格(*)
+                0.00 as lv1_hosp_item_pric, --一级医院目录价格(*)
+                0.00 as lv2_hosp_item_pric, --二级医院目录价格(*)
+                0.00 as lv3_hosp_item_pric, --三级医院目录价格(*)
+                '' as hilist_memo, --医保目录备注(*)
+                c.charge_no as hosplist_code, --医院目录代码
+                c.charge_name as hosplist_name, --医院目录名称
+                '' as hosplist_dosform, --医院目录(药品)剂型
+                c.order_total_dose as cnt, --数量
+                c.price as pric, --单价
+                c.order_total as sumamt, --总费用
+                0 as ownpay_amt, --自费金额
+                0 as selfpay_amt, --自付金额
+                c.standard as spec, --规格
+                c.unit as spec_unt, --数量单位
+                b.order_start_time as drord_begn_date, --医嘱开始日期
+                b.order_stop_time as drord_stop_date, --医嘱停止日期
+                a.order_doctor_dep_code as drord_dept_codg, --下达医嘱的科室标识
+                a.order_doctor_dep_name as drord_dept_name, --下达医嘱科室名称
+                b.order_start_doc as drord_dr_codg, --开处方(医嘱)医生标识
+                b.order_start_doc_name as drord_dr_name, --开处方(医嘱)医生姓名
+                m.data_tag as drord_dr_profttl, --开处方(医嘱)医职称
+                '0' as curr_drord_flag --是否当前处方(医嘱)
+            from td_pa_order a
+            inner join td_pa_order_item b on a.order_no = b.order_no
+            inner join td_pa_order_detail c on b.order_no = c.order_no and b.order_group_no = c.order_group_no and b.order_sort_number = c.order_sort_number
+            left join tm_bs_price_yy d on c.charge_no = d.item_no
+            left join TM_BS_ACCOUNT_THIRD_DYGX e on d.HOS_UPPER = e.third_code and e.sec_code = '04'
+            left join tm_bs_staff j on j.staff_code = b.order_start_doc
+            left join tm_bs_dict_data m on m.dict_type = 's048' and m.data_val = j.title
+            where b.ORDER_STATUS not in ('6', '7', '11', '12')
+            and c.CHARGE_NO != 'NNNNNN'
+            and a.patient_id = #{admissionNo}
+            and a.order_no in
+            <foreach collection="orderNoList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrHpDrawApiMapper">
+
+    <resultMap type="MrHpDrawApi" id="MrHpDrawApiResult">
+        <result property="id"    column="id"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="parameter"    column="parameter"    />
+        <result property="parameterType"    column="parameter_type"    />
+        <result property="parameterThird"    column="parameter_third"    />
+        <result property="hisParameter"    column="his_parameter"    />
+    </resultMap>
+
+    <sql id="selectMrHpDrawApiVo">
+        select id, main_id, parameter,parameter_type,parameter_third, his_parameter from mr_hp_draw_api
+    </sql>
+
+    <select id="selectMrHpDrawApiList" parameterType="MrHpDrawApi" resultMap="MrHpDrawApiResult">
+        <include refid="selectMrHpDrawApiVo"/>
+        <where>
+            <if test="mainId != null "> and main_id = #{mainId}</if>
+            <if test="parameter != null  and parameter != ''"> and parameter = #{parameter}</if>
+            <if test="parameterType != null  and parameterType != ''"> and parameter_type = #{parameterType}</if>
+            <if test="parameterThird != null  and parameterThird != ''"> and parameter_third = #{parameterThird}</if>
+            <if test="hisParameter != null  and hisParameter != ''"> and his_parameter = #{hisParameter}</if>
+        </where>
+    </select>
+
+    <select id="selectMrHpDrawApiById" parameterType="Long" resultMap="MrHpDrawApiResult">
+        <include refid="selectMrHpDrawApiVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMrHpDrawApi" parameterType="MrHpDrawApi">
+        insert into mr_hp_draw_api
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="mainId != null">main_id,</if>
+            <if test="parameter != null and parameter != ''">parameter,</if>
+            <if test="parameterType != null and parameterType != ''">parameter_type,</if>
+            <if test="parameterThird != null and parameterThird != ''">parameter_third,</if>
+            <if test="hisParameter != null">his_parameter,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="mainId != null">#{mainId},</if>
+            <if test="parameter != null and parameter != ''">#{parameter},</if>
+            <if test="parameterType != null and parameterType != ''">#{parameterType},</if>
+            <if test="parameterThird != null and parameterThird != ''">#{parameterThird},</if>
+            <if test="hisParameter != null">#{hisParameter},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="MrHpDrawApi">
+        INSERT ALL
+        <foreach item="item" collection="list">
+            into mr_hp_draw_api
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,
+                </if>
+                <if test="item.mainId != null">main_id,
+                </if>
+                <if test="item.parameter != null and item.parameter != ''">parameter,
+                </if>
+                <if test="item.parameterType != null and item.parameterType != ''">parameter_type,
+                </if>
+                <if test="item.parameterThird != null and item.parameterThird != ''">parameter_third,
+                </if>
+                <if test="item.hisParameter != null">his_parameter,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},
+                </if>
+                <if test="item.mainId != null">#{item.mainId},
+                </if>
+                <if test="item.parameter != null and item.parameter != ''">#{item.parameter},
+                </if>
+                <if test="item.parameterType != null and item.parameterType != ''">#{item.parameterType},
+                </if>
+                <if test="item.parameterThird != null and item.parameterThird != ''">#{item.parameterThird},
+                </if>
+                <if test="item.hisParameter != null">#{item.hisParameter},
+                </if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateMrHpDrawApi" parameterType="MrHpDrawApi">
+        update mr_hp_draw_api
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainId != null">main_id = #{mainId},</if>
+            <if test="parameter != null and parameter != ''">parameter = #{parameter},</if>
+            <if test="parameterType != null and parameterType != ''">parameter_type = #{parameterType},</if>
+            <if test="parameterThird != null and parameterThird != ''">parameter_third = #{parameterThird},</if>
+            <if test="hisParameter != null">his_parameter = #{hisParameter},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMrHpDrawApiById" parameterType="Long">
+        delete from mr_hp_draw_api where id = #{id}
+    </delete>
+
+    <delete id="deleteMrHpDrawApiByMainId" parameterType="Long">
+        delete from mr_hp_draw_api where main_id = #{mainId}
+    </delete>
+
+    <delete id="deleteMrHpDrawApiByIds" parameterType="String">
+        delete from mr_hp_draw_api where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

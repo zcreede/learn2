@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcRuleConLogicMapper">
+
+    <resultMap type="QcRuleConLogic" id="QcRuleConLogicResult">
+        <result property="id"    column="id"    />
+        <result property="ruleCode"    column="rule_code"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="defeLevel"    column="defe_level"    />
+        <result property="addMeth"    column="add_meth"    />
+        <result property="ruleDesc"    column="rule_desc"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="expres1"    column="expres1"    />
+        <result property="expres1Desc"    column="expres1_desc"    />
+        <result property="expres2"    column="expres2"    />
+        <result property="expres2Desc"    column="expres2_desc"    />
+        <result property="expres"    column="expres"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="ruleFile"    column="rule_file"    />
+    </resultMap>
+    <resultMap id="QcRuleConLogicVoResult" type="QcRuleConLogicVo" extends="QcRuleConLogicResult">
+        <result property="defeLevelName"    column="defeLevelName"    />
+    </resultMap>
+    <sql id="selectQcRuleConLogicVo">
+        select id, rule_code, rule_name, emr_type_code, emr_type_name, defe_level, add_meth, rule_desc,rule_file, valid_flag, expres1, expres1_desc, expres2, expres2_desc, expres, del_flag, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date from qc_rule_con_logic
+    </sql>
+
+    <select id="selectQcRuleConLogicList" parameterType="QcRuleConLogic" resultMap="QcRuleConLogicVoResult">
+        select DISTINCT qc.id, qc.rule_code, qc.rule_name, qc.emr_type_code, qc.emr_type_name, qc.defe_level, qc.add_meth, qc.rule_desc,
+        qc.valid_flag, qc.expres1, qc.expres1_desc, qc.expres2, qc.expres2_desc, qc.expres,qc.rule_file, qc.del_flag, qc.alt_per_name, qc.alt_per_code,
+        qc.alt_date, qc.cre_per_name, qc.cre_per_code, qc.cre_date,sdd.data_tag AS defeLevelName from qc_rule_con_logic qc
+        LEFT JOIN TM_BS_DICT_DATA sdd ON qc.defe_level = sdd.data_val AND dict_type = 's052'
+        <where>
+            <if test="ruleCode != null  and ruleCode != ''"> and rule_code = #{ruleCode}</if>
+            <if test="ruleName != null  and ruleName != ''"> and rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="emrTypeCode != null  and emrTypeCode != ''"> and emr_type_code = #{emrTypeCode}</if>
+            <if test="emrTypeName != null  and emrTypeName != ''"> and emr_type_name like concat(concat('%', #{emrTypeName}), '%')</if>
+            <if test="defeLevel != null  and defeLevel != ''"> and defe_level = #{defeLevel}</if>
+            <if test="addMeth != null  and addMeth != ''"> and add_meth = #{addMeth}</if>
+            <if test="ruleDesc != null  and ruleDesc != ''"> and rule_desc = #{ruleDesc}</if>
+            <if test="validFlag != null  and validFlag != ''"> and valid_flag = #{validFlag}</if>
+            <if test="expres1 != null  and expres1 != ''"> and expres1 = #{expres1}</if>
+            <if test="expres1Desc != null  and expres1Desc != ''"> and expres1_desc = #{expres1Desc}</if>
+            <if test="expres2 != null  and expres2 != ''"> and expres2 = #{expres2}</if>
+            <if test="expres2Desc != null  and expres2Desc != ''"> and expres2_desc = #{expres2Desc}</if>
+            <if test="expres != null  and expres != ''"> and expres = #{expres}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="ruleFile != null "> and rule_file = #{ruleFile}</if>
+            and qc.del_flag='0' order by qc.cre_date desc
+        </where>
+    </select>
+
+    <select id="selectQcRuleConLogicById" parameterType="Long" resultMap="QcRuleConLogicResult">
+        <include refid="selectQcRuleConLogicVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertQcRuleConLogic" parameterType="QcRuleConLogic">
+        insert into qc_rule_con_logic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="ruleCode != null">rule_code,</if>
+            <if test="ruleName != null">rule_name,</if>
+            <if test="emrTypeCode != null">emr_type_code,</if>
+            <if test="emrTypeName != null">emr_type_name,</if>
+            <if test="defeLevel != null">defe_level,</if>
+            <if test="addMeth != null">add_meth,</if>
+            <if test="ruleDesc != null">rule_desc,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="expres1 != null">expres1,</if>
+            <if test="expres1Desc != null">expres1_desc,</if>
+            <if test="expres2 != null">expres2,</if>
+            <if test="expres2Desc != null">expres2_desc,</if>
+            <if test="expres != null">expres,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="ruleFile != null">rule_file,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="ruleCode != null">#{ruleCode},</if>
+            <if test="ruleName != null">#{ruleName},</if>
+            <if test="emrTypeCode != null">#{emrTypeCode},</if>
+            <if test="emrTypeName != null">#{emrTypeName},</if>
+            <if test="defeLevel != null">#{defeLevel},</if>
+            <if test="addMeth != null">#{addMeth},</if>
+            <if test="ruleDesc != null">#{ruleDesc},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="expres1 != null">#{expres1},</if>
+            <if test="expres1Desc != null">#{expres1Desc},</if>
+            <if test="expres2 != null">#{expres2},</if>
+            <if test="expres2Desc != null">#{expres2Desc},</if>
+            <if test="expres != null">#{expres},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="ruleFile != null">#{ruleFile},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateQcRuleConLogic" parameterType="QcRuleConLogic">
+        update qc_rule_con_logic
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ruleCode != null">rule_code = #{ruleCode},</if>
+            <if test="ruleName != null">rule_name = #{ruleName},</if>
+            <if test="emrTypeCode != null">emr_type_code = #{emrTypeCode},</if>
+            <if test="emrTypeName != null">emr_type_name = #{emrTypeName},</if>
+            <if test="defeLevel != null">defe_level = #{defeLevel},</if>
+            <if test="addMeth != null">add_meth = #{addMeth},</if>
+            <if test="ruleDesc != null">rule_desc = #{ruleDesc},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="expres1 != null">expres1 = #{expres1},</if>
+            <if test="expres1Desc != null">expres1_desc = #{expres1Desc},</if>
+            <if test="expres2 != null">expres2 = #{expres2},</if>
+            <if test="expres2Desc != null">expres2_desc = #{expres2Desc},</if>
+            <if test="expres != null">expres = #{expres},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="ruleFile != null">rule_file = #{ruleFile},</if>
+            cre_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcRuleConLogicById" parameterType="Long">
+        delete from qc_rule_con_logic where id = #{id}
+    </delete>
+
+    <delete id="deleteQcRuleConLogicByIds" parameterType="String">
+        delete from qc_rule_con_logic where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysDictDataMapper">
+
+	<resultMap type="SysDictData" id="SysDictDataResult">
+		<id     property="dictCode"   column="data_id"   />
+		<result property="dictSort"   column="data_sort"   />
+		<result property="dictLabel"  column="data_tag"  />
+		<result property="inputstrphtc"  column="DATA_PYM"  />
+		<result property="dictValue"  column="data_val"  />
+		<result property="dictType"   column="dict_type"   />
+		<result property="cssClass"   column="css_class"   />
+		<result property="listClass"  column="list_class"  />
+		<result property="isDefault"  column="is_default"  />
+		<result property="status"     column="status"      />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+		<result property="isPreset" column="is_preset" />
+	</resultMap>
+
+	<sql id="selectDictDataVo">
+        select data_id, data_sort, data_tag, DATA_PYM, data_val, dict_type,   status, create_by, create_time, remark, is_preset
+		from TM_BS_DICT_DATA
+    </sql>
+
+	<select id="selectDictDataList" parameterType="SysDictData" resultMap="SysDictDataResult">
+	    <include refid="selectDictDataVo"/>
+		<where>
+		    <if test="dictType != null and dictType != ''">
+				AND dict_type = #{dictType}
+			</if>
+			<if test="dictLabel != null and dictLabel != ''">
+				AND (data_tag like concat(concat('%',#{dictLabel}),'%') or DATA_PYM like concat(concat('%',#{dictLabel}),'%'))
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="dataValList != null and dataValList.size() > 0">
+				and data_val in
+				<foreach collection="dataValList" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		order by data_sort asc
+	</select>
+
+	<select id="selectDictDataByType" parameterType="SysDictData" resultMap="SysDictDataResult">
+		<include refid="selectDictDataVo"/>
+		where status = '0' and dict_type = #{dictType} order by data_sort asc
+	</select>
+
+	<select id="selectDictDataListByType" parameterType="String" resultMap="SysDictDataResult">
+		select data_id, data_sort, data_tag, data_val, dict_type,remark
+		from TM_BS_DICT_DATA
+		where status = '0' and dict_type in
+		<foreach collection="array" item="dictType" open="(" separator="," close=")">
+			#{dictType}
+		</foreach>
+        order by dict_type,data_sort
+	</select>
+
+	<select id="selectDictLabel" resultType="String">
+		select data_tag from TM_BS_DICT_DATA
+		where dict_type = #{dictType} and data_val = #{dictValue}
+	</select>
+
+	<select id="selectDictDataById" parameterType="Long" resultMap="SysDictDataResult">
+		<include refid="selectDictDataVo"/>
+		where data_id = #{dictCode}
+	</select>
+
+	<select id="countDictDataByType" resultType="Integer">
+	    select count(1) from TM_BS_DICT_DATA where dict_type=#{dictType}
+	</select>
+
+	<delete id="deleteDictDataById" parameterType="Long">
+ 		delete from TM_BS_DICT_DATA where data_id = #{dictCode}
+ 	</delete>
+
+ 	<delete id="deleteDictDataByIds" parameterType="Long">
+ 		delete from TM_BS_DICT_DATA where data_id in
+ 		<foreach collection="array" item="dictCode" open="(" separator="," close=")">
+ 			#{dictCode}
+        </foreach>
+ 	</delete>
+
+	<update id="updateDictData" parameterType="SysDictData">
+ 		update TM_BS_DICT_DATA
+ 		<set>
+ 			<if test="dictSort != null">data_sort = #{dictSort},</if>
+ 			<if test="dictLabel != null and dictLabel != ''">data_tag = #{dictLabel},</if>
+			<if test="inputstrphtc != null and inputstrphtc != ''">DATA_PYM = #{inputstrphtc},</if>
+ 			<if test="dictValue != null and dictValue != ''">data_val = #{dictValue},</if>
+ 			<if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
+ 			<if test="cssClass != null">css_class = #{cssClass},</if>
+ 			<if test="listClass != null">list_class = #{listClass},</if>
+ 			<if test="isDefault != null and isDefault != ''">is_default = #{isDefault},</if>
+ 			<if test="status != null">status = #{status},</if>
+ 			<if test="remark != null">remark = #{remark},</if>
+ 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+ 			update_time = sysdate
+ 		</set>
+ 		where data_id = #{dictCode}
+	</update>
+
+	<update id="updateDictDataType" parameterType="String">
+ 		update TM_BS_DICT_DATA set dict_type = #{newDictType} where dict_type = #{oldDictType}
+	</update>
+
+ 	<insert id="insertDictData" parameterType="SysDictData">
+ 		insert into TM_BS_DICT_DATA(
+ 		    <if test="dictCode != null and dictCode != 0">data_id,</if>
+ 			<if test="dictSort != null">data_sort,</if>
+ 			<if test="dictLabel != null and dictLabel != ''">data_tag,</if>
+			<if test="inputstrphtc != null and inputstrphtc != ''">DATA_PYM,</if>
+ 			<if test="dictValue != null and dictValue != ''">data_val,</if>
+ 			<if test="dictType != null and dictType != ''">dict_type,</if>
+ 			<if test="cssClass != null and cssClass != ''">css_class,</if>
+ 			<if test="listClass != null and listClass != ''">list_class,</if>
+ 			<if test="isDefault != null and isDefault != ''">is_default,</if>
+ 			<if test="status != null">status,</if>
+ 			<if test="remark != null and remark != ''">remark,</if>
+ 			<if test="createBy != null and createBy != ''">create_by,</if>
+			<if test="isPreset != null and isPreset != ''">is_preset,</if>
+ 			create_time
+ 		)values(
+ 		    <if test="dictCode != null and dictCode != 0">#{dictCode},</if>
+ 		    <if test="dictSort != null">#{dictSort},</if>
+ 		    <if test="dictLabel != null and dictLabel != ''">#{dictLabel},</if>
+			<if test="inputstrphtc != null and inputstrphtc != ''">#{inputstrphtc},</if>
+ 			<if test="dictValue != null and dictValue != ''">#{dictValue},</if>
+ 			<if test="dictType != null and dictType != ''">#{dictType},</if>
+ 			<if test="cssClass != null and cssClass != ''">#{cssClass},</if>
+ 			<if test="listClass != null and listClass != ''">#{listClass},</if>
+ 			<if test="isDefault != null and isDefault != ''">#{isDefault},</if>
+ 			<if test="status != null">#{status},</if>
+ 			<if test="remark != null and remark != ''">#{remark},</if>
+ 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+			<if test="isPreset != null and isPreset != ''">#{isPreset},</if>
+ 			sysdate
+ 		)
+	</insert>
+
+</mapper>

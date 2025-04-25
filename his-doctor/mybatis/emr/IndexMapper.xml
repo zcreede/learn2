@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.IndexMapper">
+
+    <resultMap type="Index" id="IndexResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrFileNo"    column="mr_file_no"    />
+        <result property="mrFileName"    column="mr_file_name"    />
+        <result property="mrServPath"    column="mr_serv_path"    />
+        <result property="mrLocaPath"    column="mr_loca_path"    />
+        <result property="mrFileShowName"    column="mr_file_show_name"    />
+        <result property="mrTypeCd"    column="mr_type_cd"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="mrSetCd"    column="mr_set_cd"    />
+        <result property="mrSetName"    column="mr_set_name"    />
+        <result property="areaCode"    column="area_code"    />
+        <result property="wardName"    column="ward_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="mrState"    column="mr_state"    />
+        <result property="fsotFlag"    column="fsot_flag"    />
+        <result property="fsotHours"    column="fsot_hours"    />
+        <result property="mrAlterTimes"    column="mr_alter_times"    />
+        <result property="printFlag"    column="print_flag"    />
+        <result property="mrPrintTimes"    column="mr_print_times"    />
+        <result property="mraaTime"    column="mraa_time"    />
+        <result property="fsSignTime"    column="fs_sign_time"    />
+        <result property="subPerCd"    column="sub_per_cd"    />
+        <result property="subPerName"    column="sub_per_name"    />
+        <result property="tempId"    column="temp_id"    />
+        <result property="secLevel"    column="sec_level"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="cpDeptCd"    column="cp_dept_cd"    />
+        <result property="cpDeptName"    column="cp_dept_name"    />
+        <result property="mrClass"    column="mr_class"    />
+        <result property="recoDate"    column="reco_date"    />
+        <result property="contChecTime"    column="cont_chec_time"    />
+        <result property="contChecState"    column="cont_chec_state"    />
+        <result property="contChecCd"    column="cont_chec_cd"    />
+        <result property="contChecName"    column="cont_chec_name"    />
+        <result property="intDocCd"    column="int_doc_cd"    />
+        <result property="intDocName"    column="int_doc_name"    />
+        <result property="copyFlag"    column="copy_flag"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="moreDoc"    column="more_doc"    />
+        <result property="babyId"    column="baby_id"    />
+        <result property="lockState"    column="lock_state"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="uperDoct"    column="uper_doct"    />
+        <result property="uperDoctName"    column="uper_doct_name"    />
+        <result property="uperTitle"    column="uper_title"    />
+        <result property="uperTitleName"    column="uper_title_name"    />
+        <result property="lastFinishTime" column="last_finish_time"/>
+        <result property="lastFinishRuleId" column="last_finish_rule_id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="firstPrintTime" column="FIRST_PRINT_TIME" />
+    </resultMap>
+    <resultMap id="IndexVoResult" type="IndexVo" extends="IndexResult">
+        <result property="dutyDocName"    column="duty_doc_name"    />
+        <result property="agingFlag"    column="aging_flag"    />
+        <result property="firstSign"    column="first_sign"    />
+        <result property="superSign"    column="super_sign"    />
+        <result property="finishSign"    column="finish_sign"    />
+        <result property="flawNum"    column="flaw_num"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="agiRuleCode"    column="agi_rule_code"    />
+        <result property="ruleCode"    column="rule_code"    />
+        <result property="remainingTime"    column="remaining_time"    />
+        <result property="mainFileFlag"    column="mainFileFlag"    />
+        <result property="primaryId"    column="primary_id"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="mainName"    column="main_name"    />
+        <result property="mark"    column="mark"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="dataType"    column="data_type"    />
+        <result property="mrTypeClass"    column="mrTypeClass"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="agiRuleId"    column="agiRuleId"    />
+        <result property="agiRuleName"    column="agiRuleName"    />
+        <result property="sex"    column="sex"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="resDocCd"    column="res_doc_cd"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="recordNo"    column="record_no"    />
+        <result property="tempId"   column="temp_id"    />
+        <result property="mrTypeName"   column="mr_type_name"    />
+        <result property="visitNo"   column="visit_no"    />
+    </resultMap>
+    <resultMap id="QcRulesVoResult" type="QcRulesVo">
+        <result property="id"    column="id"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="ruleType"    column="rule_type"    />
+        <result property="ruleTypeName"    column="rule_type_name"    />
+        <result property="ruleDesc"    column="rule_desc"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="elemFlag" column="elem_flag"/>
+        <result property="ruleClass" column="rule_class"/>
+        <result property="defeLevel" column="defe_level"/>
+    </resultMap>
+    <sql id="selectIndexVo">
+        select id, org_cd, org_name, patient_id, mr_type, mr_file_no, mr_file_name, mr_serv_path, mr_loca_path, mr_file_show_name, mr_type_cd,
+        mr_type_name, mr_set_cd, mr_set_name, area_code, ward_name, dept_cd, dept_name, mr_state, fsot_flag, fsot_hours, mr_alter_times,
+         print_flag, mr_print_times, mraa_time, fs_sign_time, sub_per_cd, sub_per_name, temp_id, sec_level, cre_per_name, cre_per_code,
+          cp_dept_cd, cp_dept_name, mr_class, reco_date, cont_chec_time, cont_chec_state, cont_chec_cd, cont_chec_name, int_doc_cd,
+          int_doc_name, copy_flag, file_type, bed_no, more_doc, baby_id, lock_state, del_flag, cre_date, alt_per_name, alt_per_code,
+           alt_date,uper_doct,uper_doct_name,uper_title,uper_title_name,last_finish_time,last_finish_rule_id,order_no,FIRST_PRINT_TIME from emr_index
+    </sql>
+
+    <select id="selectDelIndexPageList" parameterType="IndexVo" resultMap="IndexResult">
+--         UNION
+--         SELECT es.id, e.patient_id, es.mr_file_show_name, es.mr_type, es.mr_state, es.lock_state, es.cre_per_name,
+--         es.cre_date, es.alt_per_name, es.alt_date, ( e.mr_type_name || '--' || sdd.data_tag ) AS mr_type_name,es.CP_DEPT_NAME,es.alt_per_code,es.del_flag,es.sec_level
+--         FROM emr_subfile_index es LEFT JOIN EMR_INDEX e ON e.id = es.MAIN_ID
+--         LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = es.mr_type AND sdd.dict_type = 's004'
+
+        SELECT s.id, s.patient_id, s.mr_file_show_name, s.mr_type, s.mr_state, s.lock_state, s.cre_per_name,
+        s.cre_date, s.alt_per_name,s.alt_per_code, s.alt_date, s.mr_type_name, pv.inp_no, pi.patient_name,s.CP_DEPT_NAME,s.del_flag,s.sec_level
+        FROM ( SELECT id, patient_id, mr_file_show_name, mr_type, mr_state, lock_state, cre_per_name,
+        cre_date, alt_per_name, alt_date, mr_type_name,CP_DEPT_NAME,alt_per_code,del_flag,sec_level FROM emr_index
+        ) s
+        left join pat_visitinfo pv on s.patient_id = pv.patient_id
+        left join pat_personalinfo pi on pv.patient_id = pi.patient_id WHERE mr_type != 'MAINFILE'
+        <if test="inpNo != null  and inpNo != ''"> and pv.inp_no like concat(concat('%', #{inpNo}), '%')</if>
+        <if test="patientId != null  and patientId != ''"> and s.patient_id = #{patientId}</if>
+        <if test="delFlag != null"> and s.del_flag = #{delFlag}</if>
+        <if test="lockState != null"> and s.lock_state = #{lockState}</if>
+        <if test="mrType != null  and mrType != ''"> and s.mr_type = #{mrType}</if>
+        <if test="altDateBegin != null and altDateBegin != ''">and s.alt_date &gt;= to_date(#{altDateBegin},'yyyy-MM-dd HH24:mi:ss') </if>
+        <if test="altDateEnd != null and altDateEnd != ''">and s.alt_date &lt; to_date(#{altDateEnd},'yyyy-MM-dd HH24:mi:ss')</if>
+        order by s.alt_date desc
+    </select>
+    <select id="selectTodoList" parameterType="IndexVo" resultMap="IndexVoResult">
+        select s.*,sdd.data_tag as mr_type_name from (
+            select id primary_id,id,patient_id,mr_type,mr_file_show_name, null remaining_time,CRE_PER_NAME,CRE_DATE,ALT_DATE,mr_state,
+                   null signer_name,null task_id, null rule_code,sec_level,'false' as mainFileFlag,null main_id,null main_name,'1' data_type,
+                   reco_date,case when mr_state in ('05','07','08') then FIRST_PRINT_TIME else null end as FIRST_PRINT_TIME
+            from emr_index  where del_flag='0' and mr_type!='MAINFILE' and mr_state != '08'
+            union
+            select es.id primary_id,es.id,e.patient_id,es.mr_type,es.mr_file_show_name, null remaining_time,es.CRE_PER_NAME,es.CRE_DATE,
+                es.ALT_DATE,es.mr_state,null signer_name,null task_id, null rule_code,es.sec_level,'true' as mainFileFlag,
+                e.id main_id,e.mr_file_show_name main_name,'2' data_type,e.reco_date,
+                case when es.mr_state in ('05','07','08') then e.FIRST_PRINT_TIME else null end as FIRST_PRINT_TIME
+            from emr_subfile_index es left join EMR_INDEX e on e.id = es.MAIN_ID where es.del_flag='0' and es.mr_state != '08'
+            union
+            select primary_id,id,patient_id,mr_type,mr_file_show_name,
+                case when remaining_time_int &lt; 0 then concat(concat('超时', abs(remaining_time_int)),'小时')
+                else concat(remaining_time_int,'小时') end remaining_time,
+                cre_per_name,cre_date,alt_date,mr_state,duty_doc_name,task_id,agi_rule_code,sec_level,mainFileFlag,main_id,main_name,'3' data_type,
+                null as reco_date,null as FIRST_PRINT_TIME
+            from (
+            select t.id primary_id,null id,t.patient_id,agi.emr_type_code mr_type, t.mark mr_file_show_name, CEIL((t.END_TIME - sysdate)* 24) remaining_time_int,null CRE_PER_NAME,null CRE_DATE,t.BEGIN_TIME ALT_DATE, null mr_state,null duty_doc_name,t.id task_id, agi.RULE_CODE AGI_RULE_CODE,'1' sec_level,'false' as mainFileFlag,null main_id,null main_name
+            from EMR_TASK_INFO t
+            left join QC_AGI_RULE agi on t.BUS_ID = agi.id where t.task_type='1' and t.TREAT_FLAG='0' and t.mr_file_id is null ) a
+            union
+            select l.id primary_id,null id,l.patient_id,l.mr_type,null mr_file_show_name, null remaining_time_int,null CRE_PER_NAME,
+            null CRE_DATE,l.CRE_DATE ALT_DATE, '-1' mr_state,null duty_doc_name,l.id task_id, to_char(l.RULE_Id) rule_code,'1' sec_level,
+            'false' as mainFileFlag,null main_id,null main_name,'4' data_type,null as reco_date,null as FIRST_PRINT_TIME
+            from emr_qc_list l left join emr_qc_record r on l.main_id = r.id where (r.qc_section !='03' or (r.qc_section ='03' and (r.state = '1' or r.state = '31' or r.state = '2' or r.state = '3'))) and l.missing_file_flag = 1 <if test="noFinishStateList!=null and noFinishStateList.size>0">and l.qc_state in <foreach collection="noFinishStateList" item="noFinishState" open="(" separator="," close=")">#{noFinishState}</foreach></if>
+        ) s
+        left join TM_BS_DICT_DATA sdd on sdd.data_val=s.mr_type and sdd.dict_type='s004'
+        where s.patient_id=#{patientId}
+        <if test="secLevelList != null and secLevelList.size != 0">
+            and s.sec_level in
+            <foreach item="item" index="index" collection="secLevelList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by CRE_DATE desc,ALT_DATE  desc
+    </select>
+
+    <select id="selectTodoListFromTask" parameterType="IndexVo" resultMap="IndexVoResult">
+        select primary_id,
+        id,
+        patient_id,
+        mr_type,
+        mr_file_show_name,
+        case
+        when remaining_time_int &lt; 0 then
+        concat(concat('超时', abs(remaining_time_int)), '小时')
+        else
+        concat(remaining_time_int, '小时')
+        end remaining_time,
+        cre_per_name,
+        cre_date,
+        alt_date,
+        mr_state,
+        duty_doc_name,
+        task_id,
+        agi_rule_code,
+        sec_level,
+        mainFileFlag,
+        main_id,
+        main_name,
+        '3' data_type,
+        null as reco_date,
+        sdd.data_tag as mr_type_name
+        from (select t.id primary_id,
+        null id,
+        t.patient_id,
+        agi.emr_type_code mr_type,
+        null mr_file_show_name,
+        CEIL((t.END_TIME - sysdate) * 24) remaining_time_int,
+        null CRE_PER_NAME,
+        null CRE_DATE,
+        t.BEGIN_TIME ALT_DATE,
+        null mr_state,
+        null duty_doc_name,
+        t.id task_id,
+        agi.RULE_CODE AGI_RULE_CODE,
+        '1' sec_level,
+        'false' as mainFileFlag,
+        null main_id,
+        null main_name
+        from EMR_TASK_INFO t
+        left join QC_AGI_RULE agi
+        on t.BUS_ID = agi.id
+        where t.task_type = #{taskType}
+        and t.TREAT_FLAG = '0'
+        and t.mr_file_id is null) a
+        left join TM_BS_DICT_DATA sdd
+        on sdd.data_val = a.mr_type
+        and sdd.dict_type = 's004'
+        where a.patient_id = #{patientId}
+        <if test="secLevelList != null and secLevelList.size != 0">
+            and a.sec_level in
+            <foreach item="item" index="index" collection="secLevelList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by CRE_DATE desc,ALT_DATE  desc
+    </select>
+
+    <select id="selectYetEmrList" parameterType="IndexVo" resultMap="IndexVoResult">
+        select primary_id, id, patient_id,mr_file_show_name,mr_type,mr_state,lock_state,cre_per_name,cre_date,alt_per_name,alt_date,uper_doct_name,sdd.data_tag as mr_type_name,mainFileFlag,main_id,main_name,reco_date,FIRST_PRINT_TIME from (
+        select id primary_id, id,patient_id,mr_file_show_name,mr_type,mr_state,lock_state,cre_per_name,cre_date,alt_per_name,alt_date,sec_level,UPER_DOCT_NAME,'false' as mainFileFlag,null main_id,null main_name,reco_date,FIRST_PRINT_TIME
+        from emr_index  where del_flag='0'
+        union
+        select es.id primary_id, es.id,e.patient_id ,es.mr_file_show_name,es.mr_type ,es.mr_state ,es.lock_state ,es.cre_per_name , es.cre_date ,
+        es.alt_per_name,es.alt_date,e.sec_level,es.uper_doct_name,'true' as mainFileFlag,e.id main_id,e.mr_file_show_name main_name,e.reco_date,e.FIRST_PRINT_TIME
+        from emr_subfile_index es left join EMR_INDEX e on e.id = es.MAIN_ID
+        where es.del_flag='0' ) s
+        left join TM_BS_DICT_DATA sdd on sdd.data_val=s.mr_type and sdd.dict_type='s004'
+        where s.patient_id=#{patientId} and s.mr_type!='MAINFILE'
+        <if test="mrStateList != null and mrStateList.size != 0">
+            and s.mr_state in
+            <foreach item="item" index="index" collection="mrStateList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="secLevelList != null and secLevelList.size != 0">
+            and s.sec_level in
+            <foreach item="item" index="index" collection="secLevelList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="emrTypeCodeList != null and emrTypeCodeList.size != 0">
+            and s.mr_type in
+            <foreach item="item" index="index" collection="emrTypeCodeList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by cre_date desc, alt_date desc
+    </select>
+
+    <select id="selectTodoSubList" parameterType="IndexVo" resultMap="IndexVoResult">
+        select  s.*,
+        case when remaining_time_int &lt; 0 then concat(concat('超时', abs(remaining_time_int)),'小时')
+        else concat(remaining_time_int,'小时') end remaining_time
+        from (
+        select t.id task_id,t.bus_id as agiRuleId,agi.emr_type_code mr_type,class.EMR_CLASS_CODE as mrTypeClass, sdd.data_tag mr_type_name,t.mark,t.END_TIME,CEIL((t.END_TIME - sysdate)* 24) remaining_time_int
+        from EMR_TASK_INFO t
+        left join QC_AGI_RULE agi on t.BUS_ID = agi.id
+        left join SYS_EMR_TYPE_CONFIG class on agi.emr_type_code = class.emr_type_code
+        left join TM_BS_DICT_DATA sdd on sdd.data_val=class.emr_type_code and sdd.dict_type='s004'
+        where t.task_type='1' and t.TREAT_FLAG='0'
+        <if test="mrTypeClass!=null and mrTypeClass!=''"> and class.EMR_CLASS_CODE = #{mrTypeClass}</if>
+		<if test="mrTypeClass==null"> and class.EMR_CLASS_CODE <![CDATA[<>]]> '01'</if>
+        and class.VALID_FLAG = '1'
+        and class.MERGE_FLAG in ('1','2')
+        and t.patient_id=#{patientId}
+        order by t.begin_time
+        ) s
+    </select>
+
+    <select id="selectSealupIndexList" parameterType="IndexVo" resultMap="IndexResult">
+        SELECT id, PATIENT_ID,MR_FILE_SHOW_NAME,MR_TYPE,MR_STATE,LOCK_STATE,CRE_PER_NAME,CRE_DATE,ALT_PER_NAME,ALT_DATE FROM (
+        SELECT id,PATIENT_ID,MR_FILE_SHOW_NAME,MR_TYPE,MR_STATE,LOCK_STATE,CRE_PER_NAME,CRE_DATE,ALT_PER_NAME,ALT_DATE from EMR_INDEX  where MR_TYPE != '01' OR MR_TYPE is null AND 			DEL_FLAG='0'
+        union
+        SELECT es.id,e.PATIENT_ID  ,es.MR_FILE_SHOW_NAME,es.MR_TYPE ,es.MR_STATE ,es.LOCK_STATE ,es.CRE_PER_NAME , es.CRE_DATE ,
+        es.ALT_PER_NAME,es.ALT_DATE  FROM EMR_SUBFILE_INDEX es  left join EMR_INDEX e on e.id = es.MAIN_ID
+        where e.DEL_FLAG='0' and es.DEL_FLAG='0')
+        where PATIENT_ID=#{patientId}
+        <if test="creDate != null "> and to_char(CRE_DATE,'yyyy-MM-dd') = to_char(#{creDate},'yyyy-MM-dd')</if>
+        <if test="creDateBegin != null">and cre_date &gt;= #{creDateBegin} </if>
+        <if test="creDateEnd != null">and cre_date &lt; #{creDateEnd}</if>
+    </select>
+
+    <select id="selectIndexList" parameterType="Index" resultMap="IndexResult">
+        <include refid="selectIndexVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="orgName != null  and orgName != ''"> and org_name like concat(concat('%', #{orgName}), '%')</if>
+            <if test="patientId != null "> and patient_id = #{patientId}</if>
+            <if test="mrType != null  and mrType != ''"> and mr_type = #{mrType}</if>
+            <if test="mrFileNo != null "> and mr_file_no = #{mrFileNo}</if>
+            <if test="mrFileName != null  and mrFileName != ''"> and mr_file_name like concat(concat('%', #{mrFileName}), '%')</if>
+            <if test="mrServPath != null  and mrServPath != ''"> and mr_serv_path = #{mrServPath}</if>
+            <if test="mrLocaPath != null  and mrLocaPath != ''"> and mr_loca_path = #{mrLocaPath}</if>
+            <if test="mrFileShowName != null  and mrFileShowName != ''"> and mr_file_show_name like concat(concat('%', #{mrFileShowName}), '%')</if>
+            <if test="mrTypeCd != null  and mrTypeCd != ''"> and mr_type_cd = #{mrTypeCd}</if>
+            <if test="mrTypeName != null  and mrTypeName != ''"> and mr_type_name like concat(concat('%', #{mrTypeName}), '%')</if>
+            <if test="mrSetCd != null  and mrSetCd != ''"> and mr_set_cd = #{mrSetCd}</if>
+            <if test="mrSetName != null  and mrSetName != ''"> and mr_set_name like concat(concat('%', #{mrSetName}), '%')</if>
+            <if test="areaCode != null  and areaCode != ''"> and area_code = #{areaCode}</if>
+            <if test="wardName != null  and wardName != ''"> and ward_name like concat(concat('%', #{wardName}), '%')</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="mrState != null  and mrState != ''"> and mr_state = #{mrState}</if>
+            <if test="fsotFlag != null "> and fsot_flag = #{fsotFlag}</if>
+            <if test="fsotHours != null "> and fsot_hours = #{fsotHours}</if>
+            <if test="mrAlterTimes != null "> and mr_alter_times = #{mrAlterTimes}</if>
+            <if test="printFlag != null  and printFlag != ''"> and print_flag = #{printFlag}</if>
+            <if test="mrPrintTimes != null "> and mr_print_times = #{mrPrintTimes}</if>
+            <if test="mraaTime != null "> and mraa_time = #{mraaTime}</if>
+            <if test="fsSignTime != null "> and fs_sign_time = #{fsSignTime}</if>
+            <if test="subPerCd != null  and subPerCd != ''"> and sub_per_cd = #{subPerCd}</if>
+            <if test="subPerName != null  and subPerName != ''"> and sub_per_name like concat(concat('%', #{subPerName}), '%')</if>
+            <if test="tempId != null  and tempId != ''"> and temp_id = #{tempId}</if>
+            <if test="secLevel != null  and secLevel != ''"> and sec_level = #{secLevel}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="cpDeptCd != null  and cpDeptCd != ''"> and cp_dept_cd = #{cpDeptCd}</if>
+            <if test="cpDeptName != null  and cpDeptName != ''"> and cp_dept_name like concat(concat('%', #{cpDeptName}), '%')</if>
+            <if test="mrClass != null  and mrClass != ''"> and mr_class = #{mrClass}</if>
+            <if test="recoDate != null "> and reco_date = #{recoDate}</if>
+            <if test="contChecTime != null "> and cont_chec_time = #{contChecTime}</if>
+            <if test="contChecState != null  and contChecState != ''"> and cont_chec_state = #{contChecState}</if>
+            <if test="contChecCd != null  and contChecCd != ''"> and cont_chec_cd = #{contChecCd}</if>
+            <if test="contChecName != null  and contChecName != ''"> and cont_chec_name like concat(concat('%', #{contChecName}), '%')</if>
+            <if test="intDocCd != null  and intDocCd != ''"> and int_doc_cd = #{intDocCd}</if>
+            <if test="intDocName != null  and intDocName != ''"> and int_doc_name like concat(concat('%', #{intDocName}), '%')</if>
+            <if test="copyFlag != null  and copyFlag != ''"> and copy_flag = #{copyFlag}</if>
+            <if test="fileType != null  and fileType != ''"> and file_type = #{fileType}</if>
+            <if test="bedNo != null  and bedNo != ''"> and bed_no = #{bedNo}</if>
+            <if test="moreDoc != null  and moreDoc != ''"> and more_doc = #{moreDoc}</if>
+            <if test="babyId != null  and babyId != ''"> and baby_id = #{babyId}</if>
+            <if test="lockState != null "> and lock_state = #{lockState}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="uperDoct != null "> and uper_doct = #{uperDoct}</if>
+            <if test="uperDoctName != null "> and uper_doct_name = #{uperDoctName}</if>
+            <if test="uperTitle != null "> and uper_title = #{uperTitle}</if>
+            <if test="uperTitleName != null "> and uper_title_name = #{uperTitleName}</if>
+            <if test="delFlag != null and delFlag!=''">and del_flag = #{delFlag}</if>
+            <if test="mrStateList != null and mrStateList.size != 0">
+                and mr_state in
+                <foreach item="item" index="index" collection="mrStateList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="secLevelList != null and secLevelList.size != 0">
+                and sec_level in
+                <foreach item="item" index="index" collection="secLevelList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        and del_flag='0'
+        order by cre_date
+    </select>
+
+    <select id="selectIndexById" parameterType="Long" resultMap="IndexResult">
+        <include refid="selectIndexVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectIndexVoById" parameterType="Long" resultMap="IndexVoResult">
+        <include refid="selectIndexVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectIndexInfoById" parameterType="Long" resultMap="IndexResult">
+        select ei.*, pv.inp_no, pi.patient_name from emr_index ei
+        left join pat_visitinfo pv on ei.patient_id = pv.patient_id
+        left join pat_personalinfo pi on pv.patient_id = pi.patient_id
+        where ei.id = #{id}
+    </select>
+    <select id="selectIndexByPatientId" parameterType="String" resultMap="IndexResult">
+        select * from emr_index where patient_id=#{patientId} and mr_type='MAINFILE' and del_flag='0'
+    </select>
+
+    <insert id="insertIndex" parameterType="Index">
+        insert into emr_index
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="mrType != null">mr_type,</if>
+            <if test="mrFileNo != null">mr_file_no,</if>
+            <if test="mrFileName != null">mr_file_name,</if>
+            <if test="mrServPath != null">mr_serv_path,</if>
+            <if test="mrLocaPath != null">mr_loca_path,</if>
+            <if test="mrFileShowName != null">mr_file_show_name,</if>
+            <if test="mrTypeCd != null">mr_type_cd,</if>
+            <if test="mrTypeName != null">mr_type_name,</if>
+            <if test="mrSetCd != null">mr_set_cd,</if>
+            <if test="mrSetName != null">mr_set_name,</if>
+            <if test="areaCode != null">area_code,</if>
+            <if test="wardName != null">ward_name,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="mrState != null">mr_state,</if>
+            <if test="fsotFlag != null">fsot_flag,</if>
+            <if test="fsotHours != null">fsot_hours,</if>
+            <if test="mrAlterTimes != null">mr_alter_times,</if>
+            <if test="printFlag != null">print_flag,</if>
+            <if test="mrPrintTimes != null">mr_print_times,</if>
+            <if test="mraaTime != null">mraa_time,</if>
+            <if test="fsSignTime != null">fs_sign_time,</if>
+            <if test="subPerCd != null">sub_per_cd,</if>
+            <if test="subPerName != null">sub_per_name,</if>
+            <if test="tempId != null">temp_id,</if>
+            <if test="secLevel != null">sec_level,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="cpDeptCd != null">cp_dept_cd,</if>
+            <if test="cpDeptName != null">cp_dept_name,</if>
+            <if test="mrClass != null and mrClass != ''">mr_class,</if>
+            <if test="recoDate != null">reco_date,</if>
+            <if test="contChecTime != null">cont_chec_time,</if>
+            <if test="contChecState != null">cont_chec_state,</if>
+            <if test="contChecCd != null">cont_chec_cd,</if>
+            <if test="contChecName != null">cont_chec_name,</if>
+            <if test="intDocCd != null">int_doc_cd,</if>
+            <if test="intDocName != null">int_doc_name,</if>
+            <if test="copyFlag != null">copy_flag,</if>
+            <if test="fileType != null">file_type,</if>
+            <if test="bedNo != null">bed_no,</if>
+            <if test="moreDoc != null">more_doc,</if>
+            <if test="babyId != null">baby_id,</if>
+            <if test="lockState != null">lock_state,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="uperDoct != null">uper_doct,</if>
+            <if test="uperDoctName != null">uper_doct_name,</if>
+            <if test="uperTitle != null">uper_title,</if>
+            <if test="uperTitleName != null">uper_title_name,</if>
+            cre_date,
+            <if test="lastFinishTime != null">last_finish_time,</if>
+            <if test="lastFinishRuleId != null">last_finish_rule_id,</if>
+            <if test="orderNo != null and orderNo!=''">order_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="mrType != null">#{mrType},</if>
+            <if test="mrFileNo != null">#{mrFileNo},</if>
+            <if test="mrFileName != null">#{mrFileName},</if>
+            <if test="mrServPath != null">#{mrServPath},</if>
+            <if test="mrLocaPath != null">#{mrLocaPath},</if>
+            <if test="mrFileShowName != null">#{mrFileShowName},</if>
+            <if test="mrTypeCd != null">#{mrTypeCd},</if>
+            <if test="mrTypeName != null">#{mrTypeName},</if>
+            <if test="mrSetCd != null">#{mrSetCd},</if>
+            <if test="mrSetName != null">#{mrSetName},</if>
+            <if test="areaCode != null">#{areaCode},</if>
+            <if test="wardName != null">#{wardName},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="mrState != null">#{mrState},</if>
+            <if test="fsotFlag != null">#{fsotFlag},</if>
+            <if test="fsotHours != null">#{fsotHours},</if>
+            <if test="mrAlterTimes != null">#{mrAlterTimes},</if>
+            <if test="printFlag != null">#{printFlag},</if>
+            <if test="mrPrintTimes != null">#{mrPrintTimes},</if>
+            <if test="mraaTime != null">#{mraaTime},</if>
+            <if test="fsSignTime != null">#{fsSignTime},</if>
+            <if test="subPerCd != null">#{subPerCd},</if>
+            <if test="subPerName != null">#{subPerName},</if>
+            <if test="tempId != null">#{tempId},</if>
+            <if test="secLevel != null">#{secLevel},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="cpDeptCd != null">#{cpDeptCd},</if>
+            <if test="cpDeptName != null">#{cpDeptName},</if>
+            <if test="mrClass != null and mrClass != ''">#{mrClass},</if>
+            <if test="recoDate != null">#{recoDate},</if>
+            <if test="contChecTime != null">#{contChecTime},</if>
+            <if test="contChecState != null">#{contChecState},</if>
+            <if test="contChecCd != null">#{contChecCd},</if>
+            <if test="contChecName != null">#{contChecName},</if>
+            <if test="intDocCd != null">#{intDocCd},</if>
+            <if test="intDocName != null">#{intDocName},</if>
+            <if test="copyFlag != null">#{copyFlag},</if>
+            <if test="fileType != null">#{fileType},</if>
+            <if test="bedNo != null">#{bedNo},</if>
+            <if test="moreDoc != null">#{moreDoc},</if>
+            <if test="babyId != null">#{babyId},</if>
+            <if test="lockState != null">#{lockState},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="uperDoct != null">#{uperDoct},</if>
+            <if test="uperDoctName != null">#{uperDoctName},</if>
+            <if test="uperTitle != null">#{uperTitle},</if>
+            <if test="uperTitleName != null">#{uperTitleName},</if>
+            sysdate,
+            <if test="lastFinishTime != null">#{lastFinishTime},</if>
+            <if test="lastFinishRuleId != null">#{lastFinishRuleId},</if>
+            <if test="orderNo != null and orderNo!=''">#{orderNo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIndex" parameterType="Index">
+        update emr_index
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="mrType != null">mr_type = #{mrType},</if>
+            <if test="mrFileNo != null">mr_file_no = #{mrFileNo},</if>
+            <if test="mrFileName != null">mr_file_name = #{mrFileName},</if>
+            <if test="mrServPath != null">mr_serv_path = #{mrServPath},</if>
+            <if test="mrLocaPath != null">mr_loca_path = #{mrLocaPath},</if>
+            <if test="mrFileShowName != null">mr_file_show_name = #{mrFileShowName},</if>
+            <if test="mrTypeCd != null">mr_type_cd = #{mrTypeCd},</if>
+            <if test="mrTypeName != null">mr_type_name = #{mrTypeName},</if>
+            <if test="mrSetCd != null">mr_set_cd = #{mrSetCd},</if>
+            <if test="mrSetName != null">mr_set_name = #{mrSetName},</if>
+            <if test="areaCode != null">area_code = #{areaCode},</if>
+            <if test="wardName != null">ward_name = #{wardName},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="mrState != null">mr_state = #{mrState},</if>
+            <if test="fsotFlag != null">fsot_flag = #{fsotFlag},</if>
+            <if test="fsotHours != null">fsot_hours = #{fsotHours},</if>
+            <if test="mrAlterTimes != null">mr_alter_times = #{mrAlterTimes},</if>
+            <if test="printFlag != null">print_flag = #{printFlag},</if>
+            <if test="mrPrintTimes != null">mr_print_times = #{mrPrintTimes},</if>
+            <if test="mraaTime != null">mraa_time = #{mraaTime},</if>
+            <if test="fsSignTime != null">fs_sign_time = #{fsSignTime},</if>
+            <if test="subPerCd != null">sub_per_cd = #{subPerCd},</if>
+            <if test="subPerName != null">sub_per_name = #{subPerName},</if>
+            <if test="tempId != null">temp_id = #{tempId},</if>
+            <if test="secLevel != null">sec_level = #{secLevel},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="cpDeptCd != null">cp_dept_cd = #{cpDeptCd},</if>
+            <if test="cpDeptName != null">cp_dept_name = #{cpDeptName},</if>
+            <if test="mrClass != null and mrClass != ''">mr_class = #{mrClass},</if>
+            <if test="recoDate != null">reco_date = #{recoDate},</if>
+            <if test="contChecTime != null">cont_chec_time = #{contChecTime},</if>
+            <if test="contChecState != null">cont_chec_state = #{contChecState},</if>
+            <if test="contChecCd != null">cont_chec_cd = #{contChecCd},</if>
+            <if test="contChecName != null">cont_chec_name = #{contChecName},</if>
+            <if test="intDocCd != null">int_doc_cd = #{intDocCd},</if>
+            <if test="intDocName != null">int_doc_name = #{intDocName},</if>
+            <if test="copyFlag != null">copy_flag = #{copyFlag},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="moreDoc != null">more_doc = #{moreDoc},</if>
+            <if test="babyId != null">baby_id = #{babyId},</if>
+            <if test="lockState != null">lock_state = #{lockState},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="uperDoct != null">uper_doct = #{uperDoct},</if>
+            <if test="uperDoctName != null">uper_doct_name = #{uperDoctName},</if>
+            <if test="uperTitle != null">uper_title = #{uperTitle},</if>
+            <if test="uperTitleName != null">uper_title_name = #{uperTitleName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="lastFinishTime != null">last_finish_time=#{lastFinishTime},</if>
+            <if test="lastFinishRuleId != null">last_finish_rule_id=#{lastFinishRuleId},</if>
+            <if test="orderNo != null and orderNo!=''">order_no=#{orderNo},</if>
+            <if test="firstPrintTime != null">FIRST_PRINT_TIME=#{firstPrintTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateIndexSecLevel">
+        update emr_index set sec_level=#{secLevel}, alt_per_code = #{altPerCode},alt_per_name = #{altPerName},alt_date = sysdate  where id in
+        <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateIndexById" parameterType="Long">
+        update emr_index set DEL_FLAG='1'  where id = #{id};
+        update emr_subfile_index set DEL_FLAG='1'  where id = #{id}
+    </update>
+
+    <update id="updateIndexByIds" parameterType="String">
+        update emr_index set DEL_FLAG='1'  where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateIndexLockState" parameterType="Index">
+          update emr_index set
+          lock_state = #{lockState},
+          alt_per_code = #{altPerCode},alt_per_name = #{altPerName},alt_date = sysdate
+          where patient_id=#{patientId}  and del_flag='0' and mr_type!='MAINFILE'
+          <if test="lockState ==0">and lock_state = 1</if>
+          <if test="mrState !=null and mrState!=''">and mr_state = #{mrState}</if>
+    </update>
+
+    <update id="updateIndexDelFlag" parameterType="Index">
+        update emr_index set
+        del_flag = #{delFlag},
+        alt_per_name = #{altPerName},
+        alt_per_code = #{altPerCode},
+        alt_date = sysDate
+        where id = #{id}
+    </update>
+
+    <select id="selectQcRulesList"  resultMap="QcRulesVoResult">
+        select * from qc_rules where rule_type in
+        <foreach item="item" index="index" collection="ruleTypeList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and  FIND_IN_SET(#{mrType}, emr_type_code) <![CDATA[ <> ]]> 0
+    </select>
+    <select id="selectEmrUnFinishList" parameterType="String" resultMap="IndexVoResult">
+         select id,patient_id,mr_type, mr_file_show_name,del_flag,mr_state,cre_per_name,cre_date,uper_doct_name,reco_date,sdd.data_tag as mr_type_name from (
+         SELECT ei.id,ei.patient_id,ei.mr_type,ei.mr_file_show_name,ei.del_flag,ei.mr_state,ei.cre_per_name,ei.cre_date,ei.uper_doct_name,ei.RECO_DATE  FROM emr_index ei
+         LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = ei.mr_type AND sdd.dict_type = 's004'
+         where ei.mr_type !='MAINFILE'
+         UNION
+         SELECT es.id,e.patient_id,es.mr_type, es.mr_file_show_name, es.del_flag,es.mr_state,es.cre_per_name,es.cre_date, es.uper_doct_name,es.RECO_DATE
+         FROM emr_subfile_index es
+         left join emr_index e on es.main_id=e.id and e.mr_type='MAINFILE') s
+         LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = s.mr_type AND sdd.dict_type = 's004'
+         where s.del_flag='0' and s.mr_state!='08'
+         <if test="patientId !=null and patientId !=''">
+             and s.patient_id=#{patientId}
+         </if>
+    </select>
+    <select id="selectEmrUnUpdateList" parameterType="String" resultMap="IndexVoResult">
+         select id,patient_id,mr_type, mr_file_show_name,del_flag,mr_state,cre_per_name,cre_date,uper_doct_name,reco_date,sdd.data_tag as mr_type_name from (
+         SELECT ei.id,ei.patient_id,ei.mr_type,ei.mr_file_show_name,ei.del_flag,ei.mr_state,ei.cre_per_name,ei.cre_date,ei.uper_doct_name,ei.RECO_DATE  FROM emr_index ei
+         LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = ei.mr_type AND sdd.dict_type = 's004'
+         where ei.mr_type !='MAINFILE'
+         UNION
+         SELECT es.id,e.patient_id,es.mr_type, es.mr_file_show_name, es.del_flag,es.mr_state,es.cre_per_name,es.cre_date, es.uper_doct_name,es.RECO_DATE
+         FROM emr_subfile_index es
+         left join emr_index e on es.main_id=e.id and e.mr_type='MAINFILE') s
+         LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = s.mr_type AND sdd.dict_type = 's004'
+         where s.del_flag='0' and s.patient_id=#{patientId}
+    </select>
+
+    <select id="selectUnSignEmrList" parameterType="String" resultMap="IndexVoResult">
+select * from (
+        select s.id,s.patient_id,s.MR_FILE_SHOW_NAME,s.CRE_PER_NAME,s.RECO_DATE,s.mr_state,s.mr_type,s.main_id, pp.patient_name ,vis.inp_no,sdd.data_tag as mr_type_name,pp.patient_main_id,vis.dept_cd,vis.bed_no,pp.sex,vis.res_doc_name,vis.res_doc_cd,vis.RECORD_NO  from (
+           SELECT id,patient_id,MR_FILE_SHOW_NAME,CRE_PER_CODE,CRE_PER_NAME,RECO_DATE,MR_STATE,MR_TYPE,del_flag,id as main_id
+           FROM EMR_INDEX where mr_type!='MAINFILE' and mr_state!='08'
+        union
+        SELECT a.id,
+        a.patient_id,
+        a.MR_FILE_SHOW_NAME,
+        a.CRE_PER_CODE,
+        a.CRE_PER_NAME,
+        a.RECO_DATE,
+        a.MR_STATE,
+        a.MR_TYPE,
+        a.del_flag,
+        a.id as main_id
+        FROM EMR_INDEX a
+        left join emr_task_info b
+        on b.bus_id = a.id
+        where a.mr_type != 'MAINFILE'
+        and a.mr_state = '08'
+        and b.bus_section = '22'
+        and b.treat_flag='0'
+        and a.DEL_FLAG='0'
+           UNION
+           select es.id,ei.patient_id,es.MR_FILE_SHOW_NAME,es.CRE_PER_CODE,es.CRE_PER_NAME,es.RECO_DATE,es.MR_STATE,es.MR_TYPE,es.del_flag,es.main_id
+           from EMR_SUBFILE_INDEX es
+               left join emr_index ei on es.main_id=ei.id
+                where es.DEL_FLAG='0' and (es.mr_state != '08' or (es.mr_state='08' and ei.patient_id in(select d.patient_id from emr_task_info d where d.bus_section='22')))
+               ) s
+           left JOIN PAT_VISITINFO vis ON s.PATIENT_ID = vis.PATIENT_ID
+           left JOIN PAT_PERSONALINFO pp ON pp.PATIENT_ID = vis.PATIENT_ID
+           left JOIN EMR_TASK_INFO eti ON eti.MR_FILE_ID = s.id and TASK_TYPE in('2','3')
+           left JOIN TM_BS_DICT_DATA sdd ON s.mr_type = sdd.data_val and dict_type='s004'
+           left join EMR_QC_FLOW qf on qf.PATIENT_ID = vis.PATIENT_ID
+        WHERE
+            (((s.CRE_PER_CODE =#{docCode} OR vis.RES_DOC_CD =#{docCode} ) and s.mr_state in ('01','03')) or (eti.DOC_CD=#{docCode} and eti.TREAT_FLAG = '0')) AND s.DEL_FLAG ='0'
+          AND s.MR_TYPE IN(SELECT EMR_TYPE_CODE FROM SYS_EMR_TYPE_CONFIG WHERE SIGN_FLAG IN ('1','2','3','4' ))
+          and (qf.MR_STATE not in ('14','16') or qf.MR_STATE is null)
+          <if test="patientId!=null and patientId!=''">
+              and s.patient_id=#{patientId}
+          </if>
+        )
+        order by RECO_DATE
+    </select>
+    <select id="selectPatIndexList" parameterType="PatEventVo" resultMap="IndexResult">
+        select i.*,e.id,v.PATIENT_ID
+        from emr_index i
+        left join pat_event e on e.PATIENT_ID = i.PATIENT_ID
+        left join pat_visitinfo v on v.PATIENT_ID = e.PATIENT_ID
+        <where>
+            and i.mr_type != 'MAINFILE'
+            and i.del_flag = '0'
+            <if test="patientId != null and patientId != ''">
+                and i.patient_id = #{patientId}
+            </if>
+            <if test="orgCd != null and orgCd != ''">
+                and i.org_cd = #{orgCd}
+            </if>
+            <if test="eventCodeList != null and eventCodeList.size > 0">
+                and e.event_code in
+                <foreach collection="eventCodeList" item="eventCode" open="(" separator="," close=")">
+                    #{eventCode}
+                </foreach>
+            </if>
+            <if test="mrTypeList != null and mrTypeList.size > 0">
+                and i.mr_type in
+                <foreach collection="mrTypeList" item="mrType" open="(" separator="," close=")">
+                    #{mrType}
+                </foreach>
+            </if>
+            <if test="afterOutTimeDayNum != null">
+                and (v.OUT_TIME is null or (v.OUT_TIME is not null and to_char(v.OUT_TIME,'yyyy-MM-dd') >= to_char(trunc(sysdate, 'HH24')-#{afterOutTimeDayNum}, 'yyyy-MM-dd')))
+            </if>
+        </where>
+    </select>
+    <update id="updatePrintInfo" parameterType="Long">
+        UPDATE emr_index T1
+        SET T1.PRINT_FLAG = '1',
+            T1.MR_PRINT_TIMES = (select case when T2.MR_PRINT_TIMES is null then 1	else T2.MR_PRINT_TIMES+1 end MR_PRINT_TIMES from emr_index t2 where T2.id = T1.id and t1.id = #{id})
+        WHERE EXISTS(SELECT 1 FROM emr_index T2 WHERE T2.id = T1.id and t1.id = #{id})
+    </update>
+    <select id="selectOvertimeWriteList" parameterType="String" resultMap="IndexVoResult">
+        select d.data_val EMR_TYPE_CODE,d.data_tag EMR_TYPE_NAME, '超时创建病历' mark,i.LAST_FINISH_TIME end_time,'' TASK_TYPE_NAME, '及时' remaining_time
+        from emr_index i
+                 left join TM_BS_DICT_DATA d on i.mr_type = d.data_val and d.dict_type = 's004'
+        where i.cre_date > i.LAST_FINISH_TIME
+          and t.patient_id = #{patientId}
+    </select>
+    <update id="updateLastFinishTimeList" parameterType="Index">
+        <foreach item="item" index="index" collection="list" open="begin" separator=";" close=";end;">
+            UPDATE emr_index set LAST_FINISH_TIME = #{item.lastFinishTime} where id = #{item.id}
+        </foreach>
+    </update>
+    <select id="selectOpeIndexByEmrType" resultMap="IndexVoResult" >
+        select s.*,sdd.data_tag as emr_Type_Name from (
+        select ei.MR_FILE_SHOW_NAME,ei.id,ei.cre_per_name,ei.cre_date,ei.mr_type from emr_index ei
+        where ei.patient_id=#{patientId} and ei.del_flag='0' and ei.order_no is null
+        <if test="emrTypeCodeList!=null and emrTypeCodeList.size()>0">
+            and ei.mr_type in
+            <foreach collection="emrTypeCodeList" item="emrTypeCode" open="(" separator="," close=")">
+                #{emrTypeCode}
+            </foreach>
+        </if>
+        union all
+        select es.MR_FILE_SHOW_NAME,es.id,es.cre_per_name,es.cre_date,es.mr_type from emr_subfile_index es left join emr_index e on es.MAIN_ID=e.id
+        where  e.patient_id=#{patientId} and es.del_flag='0'  and es.order_no is null
+          <if test="emrTypeCodeList!=null and emrTypeCodeList.size()>0">
+              and es.mr_type in
+              <foreach collection="emrTypeCodeList" item="emrTypeCode" open="(" separator="," close=")">
+                  #{emrTypeCode}
+              </foreach>
+         </if>) s
+        left join TM_BS_DICT_DATA sdd on s.mr_type=sdd.data_val and sdd.dict_type='s004'
+    </select>
+    <select id="selectOpeIndexByOrderNo" parameterType="String" resultMap="IndexVoResult">
+      select s.*,
+           sdd.data_tag          as emrTypeName,
+           config.emr_class_code as mrTypeClass
+      from (select ei.id,
+                   ei.mr_type,
+                   ei.MR_FILE_SHOW_NAME,
+                   ei.cre_per_name,
+                   ei.cre_date,
+                   null                 as task_id,
+                   ei.id                as agiRuleId,
+                   ei.mr_file_show_name as agiRuleName
+              from emr_index ei
+              left join TD_CA_OPERATION_APPLY eti
+                on ei.org_cd = eti.hospital_code
+               and ei.order_no = eti.apply_form_no
+               and eti.apply_form_no = #{applyFormNo}
+             where ei.del_flag = '0'
+               and ei.ORDER_NO = #{applyFormNo}
+            union all
+            select es.id,
+                   es.mr_type,
+                   es.MR_FILE_SHOW_NAME,
+                   es.cre_per_name,
+                   es.cre_date,
+                   null                 as task_id,
+                   es.id                as agiRuleId,
+                   es.mr_file_show_name as agiRuleName
+              from emr_subfile_index es
+              left join TD_CA_OPERATION_APPLY eti
+                on es.order_no = eti.apply_form_no
+               and eti.apply_form_no = #{applyFormNo}
+             where es.del_flag = '0'
+               and es.ORDER_NO = #{applyFormNo}) s
+      left join TM_BS_DICT_DATA sdd
+        on s.mr_type = sdd.data_val
+       and sdd.dict_type = 's004'
+      left join SYS_EMR_TYPE_CONFIG config
+        on config.emr_type_code = s.mr_type
+    </select>
+    <update id="updateEmrOrderNo" parameterType="String">
+        update emr_index set order_no='' where order_no=#{orderNo}
+    </update>
+    <update id="updateEmrOrderNoByIdList" >
+        update emr_index set order_no=#{orderNo} where id in
+        <foreach collection="mrFileIdList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <update id="updateOrderNoEmptyByIdList" >
+        update emr_index set order_no='' where id in
+        <foreach collection="mrFileIdList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateOrderNoByOrderNo" parameterType="String">
+        update emr_index set order_no = #{newOrderNo}
+        where order_no = #{oldOrderNo}
+        and mr_type in(select emr_type_code from qc_agi_rule where agi_evnt = '17')
+    </update>
+
+    <select id="selectEmrListByPat" resultMap="IndexVoResult" parameterType="IndexVo">
+        select ei.* from emr_index ei
+         left join tm_bs_dict_data dd on ei.mr_type_cd=dd.DATA_VAL and dd.dict_type='s003'
+         where ei.patient_id=#{patientId} and ei.del_flag='0'
+           <if test="mrState!=null and mrState!=''">
+               and (ei.MR_STATE=#{mrState} or ei.mr_type='MAINFILE')
+           </if>
+        <if test="mrFileShowName!=null and mrFileShowName!=''"> and ei.mr_file_show_name like concat(concat('%', #{mrFileShowName}), '%')</if>
+        order by dd.data_sort
+    </select>
+
+    <select id="selectEmrListByVisitNo" resultMap="IndexVoResult" parameterType="IndexVo">
+        select a.id,
+               a.patient_id,
+               a.visit_no,
+               a.mr_type_cd,
+               b.data_tag as mr_type_name,
+               a.mr_file_name,
+               a.mr_serv_path
+          from TD_EMR_INDEX_OUTP a
+          left join tm_bs_dict_data b
+            on a.mr_type_cd = b.data_val
+           and b.dict_type = 's004'
+         where a.del_flag = '0'
+           and a.patient_id = #{patientId}
+           and a.visit_no = #{visitNo}
+        order by b.data_sort asc
+    </select>
+
+    <select id="selectEmrPdfPath" resultMap="IndexVoResult">
+        select id,patient_id,MR_LOCA_PATH,MR_FILE_SHOW_NAME,CRE_PER_NAME,CRE_PER_CODE FROM emr_index where mr_state='08' and del_flag='0'
+        union
+        select e.id,e.patient_id,s.MR_LOCA_PATH,e.MR_FILE_SHOW_NAME,e.CRE_PER_NAME,e.CRE_PER_CODE from
+        (SELECT MR_LOCA_PATH,alt_date,MAIN_ID,mm FROM (SELECT t.MR_LOCA_PATH, t.alt_date, t.MAIN_ID, rank ( ) over ( partition BY t.main_id ORDER BY t.alt_date DESC ) mm FROM EMR_SUBFILE_INDEX t where t.del_flag='0' and t.mr_state='08')WHERE mm = 1) s left join emr_index e on e.id=s.main_id
+    </select>
+    <select id="selectUnSavePdfEmr" resultType="java.lang.Long">
+        select * from (select id from emr_index where mr_state='08' and DEL_FLAG='0' and (MR_SERV_PATH is null or MR_SERV_PATH='D:/image/' or MR_SERV_PATH='Y:/image/')
+        union
+        select id from EMR_INDEX where DEL_FLAG='0' and (MR_SERV_PATH is null or MR_SERV_PATH='D:/image/' or MR_SERV_PATH='Y:/image/') and id in (select main_id from EMR_SUBFILE_INDEX where mr_state='08' and DEL_FLAG='0' group by main_id)) emr where rownum&lt;=10
+    </select>
+    <select id="selectSubEmrListByPat" resultMap="IndexVoResult" parameterType="String">
+        select si.* from EMR_SUBFILE_INDEX si left join emr_index ei on si.main_id=ei.id where ei.patient_id=#{patientId} and si.del_flag='0' and ei.del_flag='0'
+    </select>
+    <resultMap id="SelectUnConsultationMap" type="com.emr.project.emr.domain.UnConsultationDTO">
+        <result property="id"    column="ID"    />
+        <result property="patientId"    column="PATIENT_ID"    />
+        <result property="applyDocCd"    column="APPLY_DOC_CD"    />
+        <result property="applyDocName"    column="APPLY_DOC_NAME"    />
+        <result property="invDocCd"    column="INV_DOC_CD"    />
+        <result property="invDocName"    column="INV_DOC_NAME"    />
+    </resultMap>
+    <select id="selectUnConsultation" resultMap="SelectUnConsultationMap" parameterType="java.lang.String">
+        SELECT
+            ei.ID,
+            ei.PATIENT_ID,
+            tcc.PATIENT_NAME,
+            tcc.APPLY_DOC_CD,
+            tcc.APPLY_DOC_NAME,
+            tcc.INV_DOC_CD,
+            tcc.INV_DOC_NAME
+        FROM
+            emr_index ei
+        LEFT JOIN TD_CA_CONS_APPLY tcc ON tcc.MR_FILE_ID = ei.ID
+        WHERE
+            ei.PATIENT_ID = #{patientId}
+            AND ei.del_flag = '0'
+            AND ei.mr_type != 'MAINFILE'  AND ei.mr_state != '08'
+            AND ei.MR_TYPE = '17'
+    </select>
+	<select id="selectAllIndexList" parameterType="IndexVo" resultMap="IndexVoResult">
+        select a.*,d.data_tag emr_type_name from (
+        select i.id,i.mr_type,i.PATIENT_ID,i.cre_date,i.temp_id from emr_index i where i.mr_type <![CDATA[<>]]> 'MAINFILE'
+        union all
+        select si.id,si.mr_type,i.PATIENT_ID,si.cre_date,si.temp_id from emr_subfile_index si left join emr_index i on si.MAIN_ID = i.id and i.mr_type = 'MAINFILE'
+        ) a
+        left join TM_BS_DICT_DATA d on a.mr_type = d.data_val and d.dict_type = 's004'
+        <where>
+            <if test='patientId != null and patientId != ""'>a.patient_id = #{patientId}</if>
+            <if test="idList != null and idList.size > 0">
+                and a.id in
+                <foreach collection="idList" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="mrType != null and mrType != ''">
+                and a.mr_type = #{mrType}
+            </if>
+            <if test="id != null">
+                and a.id = #{id}
+            </if>
+        </where>
+        order by a.cre_date desc
+    </select>
+    <select id="selectIndexListByTmplList" resultType="com.emr.project.emr.domain.Index">
+        <include refid="selectIndexVo"/>
+        where PATIENT_ID = #{patientId} and DEL_FLAG = '0'
+        <if test="list != null and list.size() > 0">
+            and TEMP_ID in
+            <foreach collection="list" close=")" open="(" separator="," item="item">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectIndexByTmplId" resultMap="IndexResult">
+        <include refid="selectIndexVo"/>
+        where PATIENT_ID = #{patientId} and DEL_FLAG = '0' and TEMP_ID = #{tempId}
+        AND ROWNUM = 1 order by CRE_DATE desc
+    </select>
+    <select id="selectOrderNoByIdList" resultMap="IndexResult">
+        <include refid="selectIndexVo"/>
+        where order_no is not null
+        <if test="list!=null and list.size()>0">
+            and id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <resultMap id="IndexMzVoResult" type="com.emr.project.emr.domain.vo.IndexMzVo">
+        <result column="proof_id" property="proofId"    />
+        <result column="proof_No" property="proofNo"    />
+        <result column="file_id" property="fileId"    />
+    </resultMap>
+    <select id="selectIndexMzVoList" parameterType="string" resultMap="IndexMzVoResult">
+        select a.proof_no,b.id as file_id,a.id as proof_id
+          from TD_DR_INP_PROOF a
+          left join td_emr_index_outp b
+            on a.patient_id = b.patient_id
+           and a.visit_no = b.visit_no
+           and b.mr_type_cd = '48'
+           and b.del_flag = 0
+         where a.inp_no = #{patientId}
+           and a.status != '0'
+    </select>
+
+    <delete id="deleteByIds" >
+        delete from emr_index where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

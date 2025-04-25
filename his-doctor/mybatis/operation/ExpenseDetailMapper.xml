@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.ExpenseDetailMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.pat.domain.ExpenseDetail">
+        <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode"/>
+        <result column="admission_no" jdbcType="VARCHAR" property="admissionNo"/>
+        <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount"/>
+        <result column="bills_no" jdbcType="VARCHAR" property="billsNo"/>
+        <result column="prescription" jdbcType="VARCHAR" property="prescription"/>
+        <result column="filing_date" jdbcType="TIMESTAMP" property="filingDate"/>
+        <result column="project_no" jdbcType="VARCHAR" property="projectNo"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="three_level_accounting" jdbcType="VARCHAR" property="threeLevelAccounting"/>
+        <result column="three_level_name" jdbcType="VARCHAR" property="threeLevelName"/>
+        <result column="standard_code" jdbcType="VARCHAR" property="standardCode"/>
+        <result column="standard_name" jdbcType="VARCHAR" property="standardName"/>
+        <result column="charge_code" jdbcType="VARCHAR" property="chargeCode"/>
+        <result column="charge_no" jdbcType="VARCHAR" property="chargeNo"/>
+        <result column="charge_name" jdbcType="VARCHAR" property="chargeName"/>
+        <result column="standard" jdbcType="VARCHAR" property="standard"/>
+        <result column="insurance_code" jdbcType="VARCHAR" property="insuranceCode"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="dose" jdbcType="DECIMAL" property="dose"/>
+        <result column="total" jdbcType="DECIMAL" property="total"/>
+        <result column="cope_no" jdbcType="VARCHAR" property="copeNo"/>
+        <result column="cope_sort_number" jdbcType="VARCHAR" property="copeSortNumber"/>
+        <result column="item_sort_number" jdbcType="VARCHAR" property="itemSortNumber"/>
+        <result column="cope_group" jdbcType="VARCHAR" property="copeGroup"/>
+        <result column="cope_type" jdbcType="VARCHAR" property="copeType"/>
+        <result column="cope_class" jdbcType="VARCHAR" property="copeClass"/>
+        <result column="item_code" jdbcType="VARCHAR" property="itemCode"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="bills_no_old" jdbcType="VARCHAR" property="billsNoOld"/>
+        <result column="pay_mark" jdbcType="VARCHAR" property="payMark"/>
+        <result column="validity" jdbcType="TIMESTAMP" property="validity"/>
+        <result column="closing_date" jdbcType="TIMESTAMP" property="closingDate"/>
+        <result column="middle_settlement_mark" jdbcType="VARCHAR" property="middleSettlementMark"/>
+        <result column="settle_account" jdbcType="VARCHAR" property="settleAccount"/>
+        <result column="settle_account_no" jdbcType="VARCHAR" property="settleAccountNo"/>
+        <result column="settle_account_name" jdbcType="VARCHAR" property="settleAccountName"/>
+        <result column="statistics_date" jdbcType="TIMESTAMP" property="statisticsDate"/>
+        <result column="cp_code" jdbcType="VARCHAR" property="cpCode"/>
+        <result column="cp_name" jdbcType="VARCHAR" property="cpName"/>
+        <result column="operation_no" jdbcType="VARCHAR" property="operationNo"/>
+        <result column="operation_name" jdbcType="VARCHAR" property="operationName"/>
+        <result column="baby_fee_mark" jdbcType="VARCHAR" property="babyFeeMark"/>
+        <result column="uploading_mark" jdbcType="VARCHAR" property="uploadingMark"/>
+        <result column="reg_no" jdbcType="VARCHAR" property="regNo"/>
+        <result column="source_program" jdbcType="VARCHAR" property="sourceProgram"/>
+        <result column="perform_list_no" jdbcType="VARCHAR" property="performListNo"/>
+        <result column="perform_list_sort_number" jdbcType="VARCHAR" property="performListSortNumber"/>
+        <result column="drug_stock_no" property="drugStockNo" />
+    </resultMap>
+
+    <resultMap id="ExpenseDetailVoResultMap" extends="BaseResultMap"
+               type="com.emr.project.pat.domain.vo.ExpenseDetailVo">
+        <result column="filing_date_str" jdbcType="VARCHAR" property="filingDateStr"/>
+        <result column="PHYSICIAN_CODE" jdbcType="VARCHAR" property="physicianCode"/>
+        <result column="PHYSICIAN_NO" jdbcType="VARCHAR" property="physicianNo"/>
+        <result column="PHYSICIAN_NAME" jdbcType="VARCHAR" property="physicianName"/>
+        <result column="PHYSICIAN_DPT_NAME" jdbcType="VARCHAR" property="physicianDptName"/>
+        <result column="PHYSICIAN_DPT_NO" jdbcType="VARCHAR" property="physicianDptNo"/>
+        <result column="EXECUTOR_DPT_NO" jdbcType="VARCHAR" property="executorDptNo"/>
+        <result column="EXECUTOR_DPT_NAME" jdbcType="VARCHAR" property="executorDptName"/>
+        <result column="patient_name" jdbcType="VARCHAR" property="patientName"/>
+        <result column="thirdName" jdbcType="VARCHAR" property="thirdName"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="operator_name" jdbcType="VARCHAR" property="operatorName"/>
+    </resultMap>
+    <!-- 批量插入费用明细 -->
+    <insert id="insertBatch" parameterType="com.emr.project.operation.mapper.ExpenseDetailMapper">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into t_ih_expensedetail(hospital_code, admission_no, hospitalized_count,
+            bills_no, prescription, filing_date,
+            project_no, project_name, three_level_accounting,three_level_name,
+            standard_code, standard_name, charge_code,
+            charge_no, charge_name, standard,
+            insurance_code, unit, price,
+            dose, total, cope_no,
+            cope_sort_number, item_sort_number, cope_group,
+            cope_type, cope_class, item_code,
+            item_name, bills_no_old, pay_mark,
+            validity, closing_date, middle_settlement_mark,
+            settle_account, settle_account_no, settle_account_name,
+            statistics_date, cp_code, cp_name,
+            operation_no, operation_name, baby_fee_mark,
+            uploading_mark, reg_no, source_program,perform_list_no,perform_list_sort_number
+            ) values (
+            #{item.hospitalCode,jdbcType=VARCHAR},
+            #{item.admissionNo,jdbcType=VARCHAR},
+            #{item.hospitalizedCount,jdbcType=INTEGER},
+            #{item.billsNo,jdbcType=VARCHAR},
+            #{item.prescription,jdbcType=VARCHAR},
+            (SELECT sysdate FROM dual) ,
+            #{item.projectNo,jdbcType=VARCHAR},
+            #{item.projectName,jdbcType=VARCHAR},
+            #{item.threeLevelAccounting,jdbcType=VARCHAR},
+            #{item.threeLevelName,jdbcType=VARCHAR},
+            #{item.standardCode,jdbcType=VARCHAR},
+            #{item.standardName,jdbcType=VARCHAR},
+            #{item.chargeCode,jdbcType=VARCHAR},
+            #{item.chargeNo,jdbcType=VARCHAR},
+            #{item.chargeName,jdbcType=VARCHAR},
+            #{item.standard,jdbcType=VARCHAR},
+            #{item.insuranceCode,jdbcType=VARCHAR},
+            #{item.unit,jdbcType=VARCHAR},
+            #{item.price,jdbcType=DECIMAL},
+            #{item.dose,jdbcType=DECIMAL},
+            #{item.total,jdbcType=DECIMAL},
+            #{item.copeNo,jdbcType=VARCHAR},
+            #{item.copeSortNumber,jdbcType=VARCHAR},
+            #{item.itemSortNumber,jdbcType=VARCHAR},
+            #{item.copeGroup,jdbcType=VARCHAR},
+            #{item.copeType,jdbcType=VARCHAR},
+            #{item.copeClass,jdbcType=VARCHAR},
+            #{item.itemCode,jdbcType=VARCHAR},
+            #{item.itemName,jdbcType=VARCHAR},
+            #{item.billsNoOld,jdbcType=VARCHAR},
+            #{item.payMark,jdbcType=VARCHAR},
+            #{item.validity,jdbcType=TIMESTAMP},
+            #{item.closingDate,jdbcType=TIMESTAMP},
+            #{item.middleSettlementMark,jdbcType=VARCHAR},
+            #{item.settleAccount,jdbcType=VARCHAR},
+            #{item.settleAccountNo,jdbcType=VARCHAR},
+            #{item.settleAccountName,jdbcType=VARCHAR},
+            #{item.statisticsDate,jdbcType=TIMESTAMP},
+            #{item.cpCode,jdbcType=VARCHAR},
+            #{item.cpName,jdbcType=VARCHAR},
+            #{item.operationNo,jdbcType=VARCHAR},
+            #{item.operationName,jdbcType=VARCHAR},
+            #{item.babyFeeMark,jdbcType=VARCHAR},
+            #{item.uploadingMark,jdbcType=VARCHAR},
+            #{item.regNo,jdbcType=VARCHAR},
+            #{item.sourceProgram,jdbcType=VARCHAR},
+            #{item.performListNo,jdbcType=VARCHAR},
+            #{item.performListSortNumber,jdbcType=VARCHAR}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <!-- 批量插入费用明细 申请 -->
+    <insert id="insertBatchApp" parameterType="com.emr.project.operation.mapper.ExpenseDetailMapper">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into t_ih_expensedetail_app(hospital_code, admission_no, hospitalized_count,
+            bills_no, prescription, filing_date,
+            project_no, project_name, three_level_accounting,three_level_name,
+            standard_code, standard_name, charge_code,
+            charge_no, charge_name, standard,
+            insurance_code, unit, price,
+            dose, total, cope_no,
+            cope_sort_number, item_sort_number, cope_group,
+            cope_type, cope_class, item_code,
+            item_name, bills_no_old, pay_mark,
+            validity, closing_date, middle_settlement_mark,
+            settle_account, settle_account_no, settle_account_name,
+            statistics_date, cp_code, cp_name,
+            operation_no, operation_name, baby_fee_mark,
+            uploading_mark, reg_no, source_program,perform_list_no,perform_list_sort_number
+            ) values (
+            #{item.hospitalCode,jdbcType=VARCHAR},
+            #{item.admissionNo,jdbcType=VARCHAR},
+            #{item.hospitalizedCount,jdbcType=INTEGER},
+            #{item.billsNo,jdbcType=VARCHAR},
+            #{item.prescription,jdbcType=VARCHAR},
+            (SELECT sysdate FROM dual) ,
+            #{item.projectNo,jdbcType=VARCHAR},
+            #{item.projectName,jdbcType=VARCHAR},
+            #{item.threeLevelAccounting,jdbcType=VARCHAR},
+            #{item.threeLevelName,jdbcType=VARCHAR},
+            #{item.standardCode,jdbcType=VARCHAR},
+            #{item.standardName,jdbcType=VARCHAR},
+            #{item.chargeCode,jdbcType=VARCHAR},
+            #{item.chargeNo,jdbcType=VARCHAR},
+            #{item.chargeName,jdbcType=VARCHAR},
+            #{item.standard,jdbcType=VARCHAR},
+            #{item.insuranceCode,jdbcType=VARCHAR},
+            #{item.unit,jdbcType=VARCHAR},
+            #{item.price,jdbcType=DECIMAL},
+            #{item.dose,jdbcType=DECIMAL},
+            #{item.total,jdbcType=DECIMAL},
+            #{item.copeNo,jdbcType=VARCHAR},
+            #{item.copeSortNumber,jdbcType=VARCHAR},
+            #{item.itemSortNumber,jdbcType=VARCHAR},
+            #{item.copeGroup,jdbcType=VARCHAR},
+            #{item.copeType,jdbcType=VARCHAR},
+            #{item.copeClass,jdbcType=VARCHAR},
+            #{item.itemCode,jdbcType=VARCHAR},
+            #{item.itemName,jdbcType=VARCHAR},
+            #{item.billsNoOld,jdbcType=VARCHAR},
+            #{item.payMark,jdbcType=VARCHAR},
+            #{item.validity,jdbcType=TIMESTAMP},
+            #{item.closingDate,jdbcType=TIMESTAMP},
+            #{item.middleSettlementMark,jdbcType=VARCHAR},
+            #{item.settleAccount,jdbcType=VARCHAR},
+            #{item.settleAccountNo,jdbcType=VARCHAR},
+            #{item.settleAccountName,jdbcType=VARCHAR},
+            #{item.statisticsDate,jdbcType=TIMESTAMP},
+            #{item.cpCode,jdbcType=VARCHAR},
+            #{item.cpName,jdbcType=VARCHAR},
+            #{item.operationNo,jdbcType=VARCHAR},
+            #{item.operationName,jdbcType=VARCHAR},
+            #{item.babyFeeMark,jdbcType=VARCHAR},
+            #{item.uploadingMark,jdbcType=VARCHAR},
+            #{item.regNo,jdbcType=VARCHAR},
+            #{item.sourceProgram,jdbcType=VARCHAR},
+            #{item.performListNo,jdbcType=VARCHAR},
+            #{item.performListSortNumber,jdbcType=VARCHAR}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <resultMap id="TakeDrugFee_BaseResultMap" extends="BaseResultMap" type="com.emr.project.operation.domain.dto.TakeDrugFeeDTO">
+        <result column="case_no" jdbcType="VARCHAR" property="caseNo" />
+        <result column="physician_name" jdbcType="VARCHAR" property="physicianName" />
+        <result column="visiting_staff_code" jdbcType="VARCHAR" property="visitingStaffCode" />
+        <result column="visiting_staff_no" jdbcType="VARCHAR" property="visitingStaffNo" />
+        <result column="visiting_staff_name" jdbcType="VARCHAR" property="visitingStaffName" />
+        <result column="ward_no" jdbcType="VARCHAR" property="wardNo" />
+        <result column="ward_name" jdbcType="VARCHAR" property="wardName" />
+        <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+        <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
+        <result column="drug_stock_no" jdbcType="INTEGER" property="drugStockNo" />
+        <result column="executor_dpt_no" jdbcType="VARCHAR" property="executorDptNo" />
+        <result column="pharmacy_name" jdbcType="VARCHAR" property="pharmacyName" />
+        <result column="pharmacy_no" jdbcType="VARCHAR" property="pharmacyNo" />
+        <result column="staff_name" jdbcType="VARCHAR" property="orderName" />
+        <result column="take_drug_ward_no" jdbcType="VARCHAR" property="takeDrugWardNo" />
+        <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+
+        <result column="item_sort_number" jdbcType="VARCHAR" property="orderGroupSortNumber" />
+        <result column="perform_list_no" jdbcType="VARCHAR" property="performListNo" />
+        <result column="issue_date" jdbcType="TIMESTAMP" property="issueDate" />
+    </resultMap>
+    <select id="selectTakeDrugFeePageList" parameterType="java.util.Map" resultMap="TakeDrugFee_BaseResultMap">
+        select
+        ed.*,f.case_no,f.physician_name,f.visiting_staff_code,
+        f.visiting_staff_no,
+        f.visiting_staff_name,f.PHYSICIAN_DPT_NO as ward_no,f.PHYSICIAN_DPT_NAME as ward_name,
+        dl.patient_name,
+        m.patient_id,f.executor_dpt_no,
+        dl.pharmacy_no,dl.issue_date,
+        d.dept_name pharmacy_name,
+        ps.staff_name,bs.staff_name as operator_name,
+        dl.take_drug_ward_no
+        from t_ih_expensedetail ed
+        left join td_na_pat_fee f on ed.prescription = f.prescription
+        left join TM_BS_STAFF ps on ps.staff_code=f.physician_no
+        left join td_pa_take_drug_list_fy dl on ed.perform_list_no = dl.perform_list_no
+        and ed.cope_group = dl.order_group_no and ed.item_sort_number=dl.order_group_sort_number
+        and ed.DRUG_STOCK_NO = dl.DRUG_STOCK_NO
+        and ed.total > 0
+        left join t_ar_medicalinformation m on dl.admission_no = m.admission_no
+        left join TM_BS_DEPT d on dl.pharmacy_no = d.dept_code
+        left join TM_BS_STAFF bs on bs.staff_code = dl.issue_oper
+        where     ed.perform_list_no is not null
+        and (f.PHYSICIAN_DPT_NO = #{deptCode1} or f.ACCOUNTING_DEPARTMENT_NO=#{deptCode1} or f.APPLY_DEPT_CD = #{deptCode1})
+        <if test="list !=null and list.size>0">
+            and ed.three_level_accounting in
+            <foreach collection="list" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="admissionNo!=null and admissionNo!=''">
+            and ed.admission_no = #{admissionNo}
+        </if>
+        <if test="drugName!=null and drugName!= ''">
+            and (dl.drug_name like concat( concat('%', #{drugName}), '%')
+            or dl.drug_name_pym like concat( concat('%', #{drugName}), '%'))
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and to_char(dl.ISSUE_DATE, 'yyyy-MM-dd HH24:mi:ss')&gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and to_char(dl.ISSUE_DATE, 'yyyy-MM-dd HH24:mi:ss')&lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
+        <if test="deptCode !=null and deptCode != ''">
+            and dl.pharmacy_no = #{deptCode}
+        </if>
+        order by ed.cope_no,ed.filing_date
+    </select>
+
+    <select id="selectReturnedFeeList" resultType="String" resultMap="BaseResultMap">
+        select * from t_ih_expensedetail_all
+        where total &lt; 0 and PERFORM_LIST_NO is not null
+        and bills_no_old in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectFeeList" resultType="String" resultMap="BaseResultMap">
+        select * from t_ih_expensedetail
+        where total &gt; 0
+        and bills_no in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectPrescriptionList" resultType="java.lang.String">
+        select PRESCRIPTION from t_ih_expensedetail where PERFORM_LIST_NO in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectExpenseDetailByPerformListNo" resultMap="BaseResultMap">
+        SELECT * FROM t_ih_expensedetail WHERE PERFORM_LIST_NO = #{performListNo}
+    </select>
+    <select id="selectTakeDrugListByPerformListNo" resultMap="TakeDrugFee_BaseResultMap">
+        select
+        ed.*,pf.case_no,pf.physician_name,pf.visiting_staff_code,
+        pf.visiting_staff_no,
+        pf.visiting_staff_name,pf.PHYSICIAN_DPT_NO as ward_no,pf.PHYSICIAN_DPT_NAME as ward_name,
+        dl.patient_name,
+        m.patient_id,pf.executor_dpt_no,
+        dl.pharmacy_no,dl.issue_date,
+        d.dept_name pharmacy_name,
+        ps.staff_name,bs.staff_name as operator_name,
+        dl.take_drug_ward_no
+        from  td_pa_take_drug_list_fy dl
+        left join t_ih_expensedetail ed on ed.perform_list_no = dl.perform_list_no
+        and ed.cope_group = dl.order_group_no and ed.item_sort_number=dl.order_group_sort_number
+        left join td_na_pat_fee pf on ed.prescription = pf.prescription
+        left join TM_BS_STAFF ps on ps.staff_code=pf.physician_no
+        left join t_ar_medicalinformation m on dl.admission_no = m.admission_no
+        left join TM_BS_DEPT d on dl.pharmacy_no = d.dept_code
+        left join TM_BS_STAFF bs on bs.staff_code = dl.issue_oper
+        left join TM_BS_ACCOUNT_THIRD third on ed.THREE_LEVEL_ACCOUNTING = third.CODE
+        where    ed.perform_list_no is not null and dl.perform_list_no is not null
+        and dl.perform_list_no = #{performListNo} and third.FIRST_CODE = 1
+        <if test=" list != null">
+            and dl.perform_list_sort_number in
+            <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by ed.cope_no,ed.filing_date
+    </select>
+    <select id="selectExpenseDetailListByPerformListNo" resultMap="BaseResultMap">
+        SELECT a.* FROM T_IH_EXPENSEDETAIL a
+        left join TM_BS_ACCOUNT_THIRD third on a.THREE_LEVEL_ACCOUNTING = third.CODE
+        where third.FIRST_CODE != 1 AND a.PERFORM_LIST_NO = #{performListNo} and a.perform_list_sort_number is not null
+        <if test=" list != null ">
+            and a.perform_list_sort_number in
+            <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectExpenseDetailByPerformList" resultMap="BaseResultMap">
+        SELECT * FROM T_IH_EXPENSEDETAIL
+        where PERFORM_LIST_NO = #{performListNo} and perform_list_sort_number is not null
+        <if test=" list != null ">
+            and perform_list_sort_number in
+            <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectExpensedetailByOrderNo" resultMap="BaseResultMap">
+        SELECT bills_no,prescription,filing_date,cope_no,total,COPE_GROUP FROM T_IH_EXPENSEDETAIL
+        <where>
+            <if test="list!= null and list.size()>0">
+                and cope_no in
+                <foreach collection="list" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectExpenseDetailByBillsNoList" resultMap="BaseResultMap">
+        select admission_no, hospitalized_count, bills_no,price, dose, total from t_ih_expensedetail
+        where total &gt; 0
+        <if test="list!= null and list.size()>0">
+            and bills_no in
+            <foreach collection="list" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+        union all
+        select admission_no,hospitalized_count,bills_no_old as bills_no, price, dose, total from td_na_tfsqb
+        where mark in ('-1','0')
+        <if test="list!= null and list.size()>0">
+            and bills_no_old in
+            <foreach collection="list" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+        union all
+        select admission_no, hospitalized_count, bills_no_old as bills_no,price, dose, total from t_ih_expensedetail
+        where total &lt; 0
+        <if test="list!= null and list.size()>0">
+            and bills_no_old in
+            <foreach collection="list" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectExpenseDetailApplyByBillsNoList" resultMap="BaseResultMap">
+        select * from t_ih_expensedetail_app
+        where total &gt; 0
+        <if test="list!= null and list.size()>0">
+            and bills_no in
+            <foreach collection="list" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectExpenseDetailApplyByPrescriptions" parameterType="String" resultMap="BaseResultMap">
+        select * from t_ih_expensedetail_app where total &gt; 0
+        <if test="list!= null and list.size()>0">
+            and prescription in
+            <foreach collection="list" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <delete id="delExpenseDetailApplyByBillsNo" parameterType="String">
+        delete from t_ih_expensedetail_app where total &gt; 0
+        <if test="list!= null and list.size()>0">
+            and bills_no in
+            <foreach collection="list" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+    <select id="selectPatExpenseDetailApplyList" resultMap="ExpenseDetailVoResultMap">
+        select p.PHYSICIAN_NAME,PHYSICIAN_DPT_NAME,p.EXECUTOR_NAME,p.EXECUTOR_DPT_NAME,p.OPERATOR_NAME,p.ACCOUNTING_DEPARTMENT_NAME,d.*
+        from t_ih_expensedetail_app d
+        left join td_na_ope_fee_app p on d.PRESCRIPTION = p.PRESCRIPTION
+        where d.total &gt; 0
+        <if test="admissionNo!=null and admissionNo!=''">
+            and d.admission_no = #{admissionNo}
+        </if>
+        <if test="accountingDepartmentNo!=null and accountingDepartmentNo!=''">
+            and p.ACCOUNTING_DEPARTMENT_NO = #{accountingDepartmentNo}
+        </if>
+        order by d.filing_date,d.bills_no
+    </select>
+    <select id="queryOperationFee" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(1) from T_IH_EXPENSEDETAIL_ALL where  project_no ='10' and ADMISSION_NO=#{inpNo}
+    </select>
+</mapper>

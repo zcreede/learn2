@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.ModifyApplMapper">
+
+    <resultMap type="ModifyAppl" id="ModifyApplResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="appReason"    column="app_reason"    />
+        <result property="appReasonCd"    column="app_reason_cd"    />
+        <result property="appReasonDetails"    column="app_reason_details"    />
+        <result property="conDate"    column="con_date"    />
+        <result property="conState"    column="con_state"    />
+        <result property="conDocCd"    column="con_doc_cd"    />
+        <result property="conDocName"    column="con_doc_name"    />
+        <result property="treatDeadline"    column="treat_deadline"    />
+        <result property="deadlineUnit"    column="deadline_unit"    />
+        <result property="endDatetime"    column="end_datetime"    />
+        <result property="conView"    column="con_view"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <resultMap id="ModifyApplVoResult" type="ModifyApplVo" extends="ModifyApplResult">
+        <result property="inpNo"    column="inp_no"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="mrState"    column="mrState"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="mrFileIdReal"    column="mr_file_id_real"    />
+        <result property="emrType"    column="emr_type"    />
+        <result property="emrTypeNameReal"    column="emr_type_name_real"    />
+    </resultMap>
+
+    <sql id="selectModifyApplVo">
+        select id, patient_id, patient_name, mr_file_id, file_name, app_time, app_doc_cd, app_doc_name, app_dept_cd, app_dept_name, app_reason, app_reason_cd, app_reason_details, con_date, con_state, con_doc_cd, con_doc_name, treat_deadline, deadline_unit, end_datetime, con_view, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from emr_modify_appl
+    </sql>
+
+    <select id="selectModifyApplList" parameterType="ModifyApplVo" resultMap="ModifyApplVoResult">
+        select ma.id, ma.patient_id, ma.patient_name, ma.mr_file_id, nvl(m.id,me.id) as mr_file_id_real, nvl(ma.file_name,m.mr_file_show_name) as file_name, ma.app_time, ma.app_doc_cd, ma.app_doc_name,
+        nvl(m.mr_type,me.mr_type) as emr_type,nvl(tb.data_tag,tbe.data_tag) as emr_type_name_real,
+        case when ma.app_reason_cd = 3 and ma.reco_date is null then r.emr_type_name
+        when ma.app_reason_cd = 3 and ma.reco_date is not null and ma.file_name is null then '病程记录'
+        when ma.app_reason_cd = 3 and ma.reco_date is not null and ma.file_name is not null then ma.file_name else '' end emr_type_name,
+        ma.app_dept_cd, ma.app_dept_name,ma.app_reason, app_reason_cd, ma.app_reason_details, ma.con_date, ma.con_state,
+               ma.con_doc_cd, ma.con_doc_name, ma.treat_deadline, ma.deadline_unit, ma.end_datetime, ma.con_view, ma.cre_per_code,
+               ma.cre_per_name, ma.cre_date, ma.alt_per_code, ma.alt_per_name, ma.alt_date, pv.inp_no, pp.age_y, pp.age_m, pp.age_d,
+               pp.age_h, pp.age_mi,nvl(eqf.mr_State,'00') as mrState,pp.patient_main_id
+        from emr_modify_appl ma
+        left join emr_qc_flow eqf on eqf.patient_id = ma.patient_id
+        left join pat_visitinfo pv on ma.patient_id = pv.patient_id
+        left join pat_personalinfo pp on pp.patient_id = pv.patient_id
+        left join EMR_TASK_INFO t on ma.mr_file_id = t.id and ma.app_reason_cd = '3'
+        left join QC_AGI_RULE r on t.bus_id = r.id
+        left join tm_bs_dept d on ma.app_dept_cd = d.dept_code
+        left join (select id,mr_file_show_name,mr_type from emr_index union all select id,mr_file_show_name,mr_type from emr_subfile_index ) m on t.mr_file_id=m.id
+        left join (select id,mr_file_show_name,mr_type from emr_index union all select id,mr_file_show_name,mr_type from emr_subfile_index ) me on ma.mr_file_id=me.id
+        left join (select * from tm_bs_dict_data tbd where tbd.dict_type='s004') tb on tb.data_val=m.mr_type
+        left join (select * from tm_bs_dict_data tbd where tbd.dict_type='s004') tbe on tbe.data_val=me.mr_type
+        <where>
+            <if test="appTimeBegStr != null and appTimeBegStr != ''"> and ma.app_time &gt;= to_date(#{appTimeBegStr},'yyyy-MM-dd HH24:mi:ss')</if>
+            <if test="appTimeEndStr != null and appTimeEndStr != ''"> and ma.app_time &lt; to_date(#{appTimeEndStr},'yyyy-MM-dd HH24:mi:ss')</if>
+            <if test="conState != null  and conState != ''"> and ma.con_state = #{conState}</if>
+            <if test="dateStart != null"> and ma.app_time &gt;= #{dateStart}</if>
+            <if test="dateEnd != null"> and ma.app_time &lt; #{dateEnd}</if>
+            <if test="appDocName != null  and appDocName != ''"> and
+            (
+                ma.app_doc_name like concat(concat('%', #{appDocName}), '%')
+                or ma.app_doc_cd like concat(concat('%', #{appDocName}), '%')
+                )
+            </if>
+            <if test="conStateList != null  and conStateList.size > 0">
+                and ma.con_state in
+                <foreach collection="conStateList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="fileName != null  and fileName != ''"> and ma.file_name like concat(concat('%', #{fileName}), '%')</if>
+            <if test="appReasonCd != null "> and ma.app_reason_cd = #{appReasonCd}</if>
+            <if test="appDeptCd != null  and appDeptCd != ''"> and d.dept_code = #{appDeptCd}</if>
+            <if test="patientId != null  and patientId != ''"> and ma.patient_id = #{patientId}</if>
+            <if test="inpNo != null  and inpNo != ''"> and pv.inp_no like concat(concat('%', #{inpNo}), '%')</if>
+            <if test="patientName != null  and patientName != ''"> and ma.patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="mrFileId != null "> and ma.mr_file_id = #{mrFileId}</if>
+            <if test="appDocCd != null  and appDocCd != ''"> and ma.app_doc_cd = #{appDocCd}</if>
+            <if test="appDocName != null  and appDocName != ''"> and ma.app_doc_name like concat(concat('%', #{appDocName}), '%')</if>
+            <if test="appDeptName != null  and appDeptName != ''"> and ma.app_dept_name like concat(concat('%', #{appDeptName}), '%')</if>
+            <if test="appReason != null  and appReason != ''"> and ma.app_reason = #{appReason}</if>
+            <if test="appReasonDetails != null  and appReasonDetails != ''"> and app_reason_details = #{appReasonDetails}</if>
+            <if test="conDate != null "> and ma.con_date = #{conDate}</if>
+            <if test="conDocCd != null  and conDocCd != ''"> and ma.con_doc_cd = #{conDocCd}</if>
+            <if test="conDocName != null  and conDocName != ''"> and ma.con_doc_name like concat(concat('%', #{conDocName}), '%')</if>
+            <if test="treatDeadline != null "> and ma.treat_deadline = #{treatDeadline}</if>
+            <if test="deadlineUnit != null  and deadlineUnit != ''"> and ma.deadline_unit = #{deadlineUnit}</if>
+            <if test="endDatetime != null "> and ma.end_datetime = #{endDatetime}</if>
+            <if test="conView != null  and conView != ''"> and ma.con_view = #{conView}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and ma.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and ma.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and ma.alt_date = #{altDate}</if>
+            <if test="mrStateList != null">
+                and
+                <if test='mrState != null and mrState == "00"'>
+                    (eqf.mr_State is null or
+                </if>
+                eqf.mr_State in
+                <foreach collection="mrStateList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                <if test='mrState != null and mrState == "00"'>
+                    )
+                </if>
+            </if>
+        </where>
+        order by ma.app_time desc
+    </select>
+
+    <select id="selectModifyApplById" parameterType="Long" resultMap="ModifyApplResult">
+        <include refid="selectModifyApplVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectModifyApplByIds"  resultMap="ModifyApplResult">
+        <include refid="selectModifyApplVo"/>
+        <if test="ids != null and ids.size > 0">
+            where id in
+            <foreach collection="ids" item="id"  open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <insert id="insertModifyAppl" parameterType="ModifyAppl">
+        insert into emr_modify_appl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="patientName != null and patientName != ''">patient_name,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="fileName != null and fileName != ''">file_name,</if>
+            app_time,
+            <if test="appDocCd != null and appDocCd != ''">app_doc_cd,</if>
+            <if test="appDocName != null and appDocName != ''">app_doc_name,</if>
+            <if test="appDeptCd != null and appDeptCd != ''">app_dept_cd,</if>
+            <if test="appDeptName != null and appDeptName != ''">app_dept_name,</if>
+            <if test="appReason != null">app_reason,</if>
+            <if test="appReasonCd != null">app_reason_cd,</if>
+            <if test="appReasonDetails != null">app_reason_details,</if>
+            <if test="conDate != null">con_date,</if>
+            <if test="conState != null">con_state,</if>
+            <if test="conDocCd != null">con_doc_cd,</if>
+            <if test="conDocName != null">con_doc_name,</if>
+            <if test="treatDeadline != null">treat_deadline,</if>
+            <if test="deadlineUnit != null">deadline_unit,</if>
+            end_datetime,
+            <if test="conView != null">con_view,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            cre_date,
+            <if test="recoDate != null">reco_date,</if>
+            <if test="mrFlag != null and mrFlag != ''">mr_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="patientName != null and patientName != ''">#{patientName},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="fileName != null and fileName != ''">#{fileName},</if>
+            sysdate,
+            <if test="appDocCd != null and appDocCd != ''">#{appDocCd},</if>
+            <if test="appDocName != null and appDocName != ''">#{appDocName},</if>
+            <if test="appDeptCd != null and appDeptCd != ''">#{appDeptCd},</if>
+            <if test="appDeptName != null and appDeptName != ''">#{appDeptName},</if>
+            <if test="appReason != null">#{appReason},</if>
+            <if test="appReasonCd != null">#{appReasonCd},</if>
+            <if test="appReasonDetails != null">#{appReasonDetails},</if>
+            <if test="conDate != null">#{conDate},</if>
+            <if test="conState != null">#{conState},</if>
+            <if test="conDocCd != null">#{conDocCd},</if>
+            <if test="conDocName != null">#{conDocName},</if>
+            <if test="treatDeadline != null">#{treatDeadline},</if>
+            <if test="deadlineUnit != null">#{deadlineUnit},</if>
+            sysdate+1,
+            <if test="conView != null">#{conView},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            sysdate,
+            <if test="recoDate != null">#{recoDate},</if>
+            <if test="mrFlag != null and mrFlag != ''">#{mrFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateModifyAppl" parameterType="ModifyAppl">
+        update emr_modify_appl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="fileName != null and fileName != ''">file_name = #{fileName},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="appDocCd != null and appDocCd != ''">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null and appDocName != ''">app_doc_name = #{appDocName},</if>
+            <if test="appDeptCd != null and appDeptCd != ''">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null and appDeptName != ''">app_dept_name = #{appDeptName},</if>
+            <if test="appReason != null">app_reason = #{appReason},</if>
+            <if test="appReasonCd != null">app_reason_cd = #{appReasonCd},</if>
+            <if test="appReasonDetails != null">app_reason_details = #{appReasonDetails},</if>
+            <if test="conState != null">con_state = #{conState},</if>
+            <if test="conDocCd != null">con_doc_cd = #{conDocCd},</if>
+            <if test="conDocName != null">con_doc_name = #{conDocName},</if>
+            <if test="treatDeadline != null">treat_deadline = #{treatDeadline},</if>
+            <if test="deadlineUnit != null">deadline_unit = #{deadlineUnit},</if>
+            <if test="endDatetime != null">end_datetime = #{endDatetime},</if>
+            <if test="conView != null">con_view = #{conView},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            con_date = sysdate,
+            <if test="recoDate != null">reco_date = #{recoDate},</if>
+            <if test="mrFlag != null and mrFlag != ''">mr_flag = #{mrFlag}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateModifyApplByIds" parameterType="ModifyApplVo">
+        update emr_modify_appl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="fileName != null and fileName != ''">file_name = #{fileName},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="appDocCd != null and appDocCd != ''">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null and appDocName != ''">app_doc_name = #{appDocName},</if>
+            <if test="appDeptCd != null and appDeptCd != ''">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null and appDeptName != ''">app_dept_name = #{appDeptName},</if>
+            <if test="appReason != null">app_reason = #{appReason},</if>
+            <if test="appReasonCd != null">app_reason_cd = #{appReasonCd},</if>
+            <if test="appReasonDetails != null">app_reason_details = #{appReasonDetails},</if>
+            <if test="conState != null">con_state = #{conState},</if>
+            <if test="conDocCd != null">con_doc_cd = #{conDocCd},</if>
+            <if test="conDocName != null">con_doc_name = #{conDocName},</if>
+            <if test="treatDeadline != null">treat_deadline = #{treatDeadline},</if>
+            <if test="deadlineUnit != null">deadline_unit = #{deadlineUnit},</if>
+            <if test="endDatetime != null">end_datetime = #{endDatetime},</if>
+            <if test="conView != null">con_view = #{conView},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            con_date = sysdate,
+        </trim>
+        where id in
+        <foreach collection="ids" item="id"  open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <update id="updateModifyApplVo" >
+        update emr_modify_appl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="fileName != null and fileName != ''">file_name = #{fileName},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="appDocCd != null and appDocCd != ''">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null and appDocName != ''">app_doc_name = #{appDocName},</if>
+            <if test="appDeptCd != null and appDeptCd != ''">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null and appDeptName != ''">app_dept_name = #{appDeptName},</if>
+            <if test="appReason != null">app_reason = #{appReason},</if>
+            <if test="appReasonCd != null">app_reason_cd = #{appReasonCd},</if>
+            <if test="appReasonDetails != null">app_reason_details = #{appReasonDetails},</if>
+            <if test="conState != null">con_state = #{conState},</if>
+            <if test="conDocCd != null">con_doc_cd = #{conDocCd},</if>
+            <if test="conDocName != null">con_doc_name = #{conDocName},</if>
+            <if test="treatDeadline != null">treat_deadline = #{treatDeadline},</if>
+            <if test="deadlineUnit != null">deadline_unit = #{deadlineUnit},</if>
+            <if test="endDatetime != null">end_datetime = #{endDatetime},</if>
+            <if test="conView != null">con_view = #{conView},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            con_date = sysdate,
+            <if test="recoDate != null">reco_date = #{recoDate},</if>
+            <if test="mrFlag != null and mrFlag != ''">mr_flag = #{mrFlag}</if>
+        </trim>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ids !=null and ids.size()>0">
+                and id in
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteModifyApplById" parameterType="Long">
+        delete from emr_modify_appl where id = #{id}
+    </delete>
+
+    <delete id="deleteModifyApplByIds" parameterType="String">
+        delete from emr_modify_appl where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectModifyApplByEndDate" parameterType="ModifyAppl" resultMap="ModifyApplResult">
+        <include refid="selectModifyApplVo"/>
+        where mr_file_id=#{mrFileId}
+        <if test="appReasonCd != null and appReasonCd != ''">and app_reason_cd=#{appReasonCd}</if>
+        <if test="conState != null and conState != ''"> and con_state=#{conState}</if>
+        <if test="appDocCd != null and appDocCd != ''"> and app_doc_cd = #{appDocCd}</if>
+        <if test="appDeptCd != null and appDeptCd != ''">and app_dept_cd = #{appDeptCd}</if>
+        and end_datetime>sysdate
+        and rownum = 1
+        order by app_time desc
+    </select>
+
+    <select id="selectList" parameterType="ModifyAppl" resultMap="ModifyApplResult">
+        <include refid="selectModifyApplVo"/>
+        <where>
+            <if test="mrFileId != null">and mr_file_id = #{mrFileId}</if>
+            <if test="appReasonCd != null and appReasonCd != ''"> and app_reason_cd = #{appReasonCd}</if>
+            <if test="conState != null and conState != ''"> and con_state=#{conState}</if>
+            <if test="mrFlag != null and mrFlag != ''"> and mr_flag=#{mrFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectModifyAppl" parameterType="ModifyAppl" resultMap="ModifyApplResult">
+        <include refid="selectModifyApplVo"/>
+        <where>
+            <if test="mrFileId != null">and mr_file_id = #{mrFileId}</if>
+            <if test="appReasonCd != null and appReasonCd != ''"> and app_reason_cd = #{appReasonCd}</if>
+            <if test="conState != null and conState != ''"> and con_state=#{conState}</if>
+            <if test="mrFlag != null and mrFlag != ''"> and mr_flag=#{mrFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectSubFileAppls" parameterType="ModifyApplVo" resultMap="ModifyApplResult">
+        <include refid="selectModifyApplVo"/>
+        <where>
+            <if test="patientId != null and patientId!= ''">
+                and patient_id = #{patientId}
+            </if>
+            <if test="appReasonCd != null and appReasonCd != ''"> and app_reason_cd = #{appReasonCd}</if>
+            <if test="recoDateBegin != null and recoDateBegin!= '' and recoDateEnd != null and recoDateEnd!= ''">
+                and reco_date &gt;= to_date(#{recoDateBegin},'yyyy-MM-dd HH24:mi:ss')
+                and reco_date &lt; to_date(#{recoDateEnd},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="mrFlag != null and mrFlag!= ''">
+                and mr_flag = #{mrFlag}
+            </if>
+            <if test="conStateList != null  and conStateList.size > 0">
+                and con_state in
+                <foreach collection="conStateList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectModifyApplByAppl" parameterType="com.emr.project.emr.domain.vo.ModifyApplVo" resultMap="ModifyApplResult">
+        <include refid="selectModifyApplVo"/>
+        where mr_file_id=#{mrFileId}
+        <if test="appReasonCd != null and appReasonCd != ''">and app_reason_cd=#{appReasonCd}</if>
+        <if test="conState != null and conState != ''"> and con_state=#{conState}</if>
+        and end_datetime>sysdate
+        <if test="recoDateBegin != null and recoDateBegin!= '' and recoDateEnd != null and recoDateEnd!= ''">
+            and reco_date &gt;= to_date(#{recoDateBegin},'yyyy-MM-dd HH24:mi:ss')
+            and reco_date &lt; to_date(#{recoDateEnd},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        and rownum = 1
+        order by app_time desc
+    </select>
+</mapper>

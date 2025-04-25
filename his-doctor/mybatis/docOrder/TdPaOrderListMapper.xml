@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderListMapper">
+    <resultMap type="OrderListVo" id="OrderListVoResult">
+        <result property="patientId"    column="patient_id"    />
+        <result property="babyAdmissionNo"    column="baby_admission_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderGroupSortNumber"    column="order_group_sort_number"    />
+        <result property="orderStartTime"    column="order_start_time"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="orderActualUsage"    column="order_actual_usage"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="drippingSpeed"    column="DRIPPING_SPEED"    />
+        <result property="itemOrderUsageWay"    column="item_order_usage_way"    />
+        <result property="itemOrderUsageWayName"    column="item_order_usage_way_name"    />
+        <result property="itemOrderFreq"    column="item_order_freq"    />
+        <result property="itemOrderFreqName"    column="item_order_freq_name"    />
+        <result property="patientSelfDrugFlag"    column="patient_self_drug_flag"    />
+        <result property="skinTestResults"    column="skin_test_results"    />
+        <result property="doctorInstructions"    column="doctor_instructions"    />
+        <result property="submitDoctorNo"    column="submit_doctor_no"    />
+        <result property="submitDoctorName"    column="submit_doctor_name"    />
+        <result property="orderAuditDoc"    column="order_audit_doc"    />
+        <result property="orderAuditDocName"    column="order_audit_doc_name"    />
+        <result property="orderStopDate"    column="order_stop_time"    />
+        <result property="orderStopTime"    column="order_stop_time"    />
+        <result property="orderStopDoc"    column="order_stop_doc"    />
+        <result property="orderStopDocName"    column="order_stop_doc_name"    />
+        <result property="orderCancelTime"    column="order_cancel_time"    />
+        <result property="orderCancelDate"    column="order_cancel_time"    />
+        <result property="orderCancelDoc"    column="order_cancel_doc"    />
+        <result property="orderCancelDocName"    column="order_cancel_doc_name"    />
+        <result property="masterOrder"    column="master_order"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="deptCd"    column="PATIENT_DEP_CODE"    />
+        <result property="deptName"    column="PATIENT_DEP_NAME"    />
+        <result property="bedNo"    column="BED_NO"    />
+        <result property="orderFlagCd"    column="ORDER_FLAG_CD"    />
+        <result property="printDate"    column="print_date"    />
+        <result property="outHavaDrugFlag"    column="out_hava_drug_flag"    />
+        <result property="standard"    column="standard"    />
+        <result property="orderDose"    column="order_dose"    />
+        <result property="unit"    column="unit"    />
+        <result property="herbalDose"    column="HERBAL_DOSE"    />
+        <result property="oederDesc"    column="OEDER_DESC"    />
+        <result property="reOrganizationNo"    column="RE_ORGANIZATION_NO"    />
+        <result property="orderStartDoc"    column="order_start_doc"    />
+        <result property="orderStartDocName"    column="order_start_doc_name"    />
+        <result property="purposeAntimicrobialUse"    column="PURPOSE_ANTIMICROBIAL_USE"    />
+        <result property="examPart" column="EXAM_PART"/>
+        <result property="orderStopAuditTime"    column="ORDER_STOP_AUDIT_TIME"    />
+        <result property="orderStopAuditDoc"    column="ORDER_STOP_AUDIT_DOC"    />
+        <result property="orderStopAuditDocName" column="ORDER_STOP_AUDIT_DOC_NAME"/>
+        <result property="orderPerformTime"    column="ORDER_EXECUTE_TIME"    />
+        <result property="orderPerformNurse"    column="ORDER_EXECUTE_DOC"    />
+        <result property="orderPerformNurseName" column="ORDER_EXECUTE_DOC_NAME"/>
+        <result property="additionalFlag" column="additional_flag" />
+    </resultMap>
+    <select id="selectOrderLongListPage" parameterType="OrderListSearchVo" resultMap="OrderListVoResult">
+        select c.* from (
+        select b.*,rownum as no from (
+        select fi.EXAM_PART_NAME EXAM_PART,a.*,row_number() over (partition by did order by os.operation_time desc,a.order_group_no, a.ORDER_GROUP_SORT_NUMBER desc) row_num from (
+            select oi.order_no||oi.order_group_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+                              oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,
+                              null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+                              oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+                              null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+                              oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+                              oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+                              o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+                              oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,
+                              oi.order_status,null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+                              oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER o
+            left join TD_PA_ORDER_ITEM oi on o.ORDER_NO = oi.ORDER_NO
+            where o.order_class_code &lt;&gt; '01'
+            and oi.order_flag_cd != '02'
+            <if test="herbalFlag != null">
+                and oi.herbal_flag = #{herbalFlag}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and o.order_type = #{orderType}
+            </if>
+            union all
+            select o.order_no||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+                                  oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no, od.charge_name,
+                                  od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+                                  oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,
+                                  od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+                                  oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+                                  oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.master_order,o.bed_no,
+                                  o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,od.out_hava_drug_flag,od.standard,
+                                  od.order_dose,od.unit,od.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+                                  od.PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+                                  oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER_DETAIL od
+            left join TD_PA_ORDER_ITEM oi on od.ORDER_NO = oi.ORDER_NO
+            left join TD_PA_ORDER o on oi.ORDER_NO = o.ORDER_NO
+            left join TM_BS_ORDER_SIG s on oi.ITEM_ORDER_USAGE_WAY = s.sig_cd
+            where o.ORDER_CLASS_CODE = '01' and s.order_book_show = '1' and oi.order_flag_cd != '02'
+            <if test="herbalFlag != null">
+                and oi.herbal_flag = #{herbalFlag}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and o.order_type = #{orderType}
+            </if>
+            union all
+            select oi.order_no||oi.order_group_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+            oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,
+            null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+            oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+            null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+            oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+            oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+            o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+            oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+            null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER o
+            left join TD_PA_ORDER_ITEM oi on o.ORDER_NO = oi.ORDER_NO
+            where o.order_class_code &lt;&gt; '01'
+            and oi.order_flag_cd = '02'
+            <if test="herbalFlag != null">
+                and oi.herbal_flag = #{herbalFlag}
+            </if>
+            union all
+            select oi.order_no||oi.order_group_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+            oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,
+            null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+            oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+            null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+            oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+            oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+            o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+            oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+            null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER_H o
+            left join TD_PA_ORDER_ITEM_H oi on o.ORDER_NO = oi.ORDER_NO
+            where o.order_class_code &lt;&gt; '01'
+            and oi.order_flag_cd != '02'
+            <if test="herbalFlag != null">
+                and oi.herbal_flag = #{herbalFlag}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and o.order_type = #{orderType}
+            </if>
+            union all
+            select o.order_no||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+            oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no, od.charge_name,
+            od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+            oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,
+            od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+            oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+            oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.master_order,o.bed_no,
+            o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,od.out_hava_drug_flag,od.standard,
+            od.order_dose,od.unit,od.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+            od.PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER_DETAIL_H od
+            left join TD_PA_ORDER_ITEM_H oi on od.ORDER_NO = oi.ORDER_NO
+            left join TD_PA_ORDER_H o on oi.ORDER_NO = o.ORDER_NO
+            left join TM_BS_ORDER_SIG s on oi.ITEM_ORDER_USAGE_WAY = s.sig_cd
+            where o.ORDER_CLASS_CODE = '01' and s.order_book_show = '1' and oi.order_flag_cd != '02'
+            <if test="herbalFlag != null">
+                and oi.herbal_flag = #{herbalFlag}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and o.order_type = #{orderType}
+            </if>
+        union all
+        select oi.order_no||oi.order_group_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+        oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,
+        null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+        oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+        null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+        oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+        oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+        o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+        oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+        null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+        from TD_PA_ORDER_h o
+        left join TD_PA_ORDER_ITEM_h oi on o.ORDER_NO = oi.ORDER_NO
+        where o.order_class_code &lt;&gt; '01'
+        and oi.order_flag_cd = '02'
+        <if test="herbalFlag != null">
+            and oi.herbal_flag = #{herbalFlag}
+        </if>
+        ) a
+        left join TD_PA_ORDER_STATUS os on a.order_no = os.order_no
+        left join TD_PA_APPLY_FORM_ALL f on a.order_no = f.order_no
+        left join TD_PA_APPLY_FORM_ITEM_ALL fi on f.apply_form_no = fi.apply_form_no and a.order_group_no = fi.order_group_no
+        and a.order_sort_number = fi.item_sort_number
+        where a.patient_id = #{patientId}
+        <if test="pplorderGroupNo != null">and a.ORDER_GROUP_NO &gt; #{pplorderGroupNo}</if>
+        <if test="babyAdmissionNo == null">and (a.baby_admission_no is null or a.baby_admission_no = '')</if>
+        <if test="babyAdmissionNo != null and babyAdmissionNo != ''">and a.baby_admission_no = #{babyAdmissionNo}</if>
+        <choose>
+            <when test='deptCode != null and deptCode != "all"'>
+                and a.ORDER_DOCTOR_DEP_CODE = #{deptCode}
+            </when>
+            <otherwise></otherwise>
+        </choose>
+        ) b where row_num = 1 order by RE_ORGANIZATION_NO,ORDER_START_TIME, ORDER_GROUP_NO, ORDER_GROUP_SORT_NUMBER
+        ) c where order_status in ('0','1','2','3','8','4','5','6','7') <if test="pageSize != null">and c.no &lt;= #{pageSize}</if>
+    </select>
+
+    <select id="selectOrderLongAllListPage" parameterType="OrderListSearchVo" resultMap="OrderListVoResult">
+        select c.* from (
+        select b.*,rownum as no from (
+        select fi.EXAM_PART_NAME EXAM_PART,a.*,row_number() over (partition by did order by os.operation_time desc,a.order_group_no, a.ORDER_GROUP_SORT_NUMBER desc) row_num from (
+        select oi.order_no||od.ORDER_SORT_NUMBER||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+        oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no cp_no, od.charge_name cp_name,
+        null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+        oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+        null SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS||oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+        oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+        oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+        o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+        oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,
+        oi.order_status,null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+        from TD_PA_ORDER_DETAIL od
+        left join TD_PA_ORDER o on od.ORDER_NO = o.ORDER_NO
+        left join TD_PA_ORDER_ITEM oi on o.ORDER_NO = oi.ORDER_NO and od.ORDER_SORT_NUMBER = oi.ORDER_SORT_NUMBER
+        where o.order_class_code &lt;&gt; '01'
+        and oi.order_flag_cd != '02'
+        <if test="herbalFlag != null">
+            and oi.herbal_flag = #{herbalFlag}
+        </if>
+        <if test="orderType != null and orderType != ''">
+            and o.order_type = #{orderType}
+        </if>
+        union all
+        select o.order_no||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+        oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no, od.charge_name,
+        od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+        oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,
+        od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+        oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+        oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.master_order,o.bed_no,
+        o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,od.out_hava_drug_flag,od.standard,
+        od.order_dose,od.unit,od.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+        od.PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+        from TD_PA_ORDER_DETAIL od
+        left join TD_PA_ORDER_ITEM oi on od.ORDER_NO = oi.ORDER_NO
+        left join TD_PA_ORDER o on oi.ORDER_NO = o.ORDER_NO
+        left join TM_BS_ORDER_SIG s on oi.ITEM_ORDER_USAGE_WAY = s.sig_cd
+        where o.ORDER_CLASS_CODE = '01' and s.order_book_show = '1' and oi.order_flag_cd != '02'
+        <if test="herbalFlag != null">
+            and oi.herbal_flag = #{herbalFlag}
+        </if>
+        <if test="orderType != null and orderType != ''">
+            and o.order_type = #{orderType}
+        </if>
+        union all
+        select oi.order_no||oi.order_group_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+        oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,
+        null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+        oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+        null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+        oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+        oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+        o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+        oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+        null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+        from TD_PA_ORDER o
+        left join TD_PA_ORDER_ITEM oi on o.ORDER_NO = oi.ORDER_NO
+        where o.order_class_code &lt;&gt; '01'
+        and oi.order_flag_cd = '02'
+        <if test="herbalFlag != null">
+            and oi.herbal_flag = #{herbalFlag}
+        </if>
+        union all
+        select oi.order_no||od.ORDER_SORT_NUMBER||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+        oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no cp_no, od.charge_name cp_name,
+        null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+        oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+        null SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS||oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+        oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+        oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+        o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+        oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+        null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+        from TD_PA_ORDER_DETAIL_H od
+        left join TD_PA_ORDER_H o on od.ORDER_NO = o.ORDER_NO
+        left join TD_PA_ORDER_ITEM_H oi on o.ORDER_NO = oi.ORDER_NO and od.ORDER_SORT_NUMBER = oi.ORDER_SORT_NUMBER
+        where o.order_class_code &lt;&gt; '01'
+        and oi.order_flag_cd != '02'
+        <if test="herbalFlag != null">
+            and oi.herbal_flag = #{herbalFlag}
+        </if>
+        <if test="orderType != null and orderType != ''">
+            and o.order_type = #{orderType}
+        </if>
+        union all
+        select o.order_no||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+        oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no, od.charge_name,
+        od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+        oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,
+        od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+        oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+        oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.master_order,o.bed_no,
+        o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,od.out_hava_drug_flag,od.standard,
+        od.order_dose,od.unit,od.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+        od.PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+        from TD_PA_ORDER_DETAIL_H od
+        left join TD_PA_ORDER_ITEM_H oi on od.ORDER_NO = oi.ORDER_NO
+        left join TD_PA_ORDER_H o on oi.ORDER_NO = o.ORDER_NO
+        left join TM_BS_ORDER_SIG s on oi.ITEM_ORDER_USAGE_WAY = s.sig_cd
+        where o.ORDER_CLASS_CODE = '01' and s.order_book_show = '1' and oi.order_flag_cd != '02'
+        <if test="herbalFlag != null">
+            and oi.herbal_flag = #{herbalFlag}
+        </if>
+        <if test="orderType != null and orderType != ''">
+            and o.order_type = #{orderType}
+        </if>
+        union all
+        select oi.order_no||oi.order_group_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+        oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,
+        null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+        oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+        null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+        oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+        oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null master_order,o.bed_no,
+        o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+        oi.order_dose_item order_dose,oi.unit_item unit,oi.RE_ORGANIZATION_NO,oi.order_start_doc,oi.order_start_doc_name,oi.order_status,
+        null PURPOSE_ANTIMICROBIAL_USE,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,oi.additional_flag,o.ORDER_DOCTOR_DEP_CODE
+        from TD_PA_ORDER_h o
+        left join TD_PA_ORDER_ITEM_h oi on o.ORDER_NO = oi.ORDER_NO
+        where o.order_class_code &lt;&gt; '01'
+        and oi.order_flag_cd = '02'
+        <if test="herbalFlag != null">
+            and oi.herbal_flag = #{herbalFlag}
+        </if>
+        ) a
+        left join TD_PA_ORDER_STATUS os on a.order_no = os.order_no
+        left join TD_PA_APPLY_FORM_ALL f on a.order_no = f.order_no
+        left join TD_PA_APPLY_FORM_ITEM_ALL fi on f.apply_form_no = fi.apply_form_no and a.order_group_no = fi.order_group_no
+        and a.order_sort_number = fi.item_sort_number
+        where a.patient_id = #{patientId}
+        <if test="pplorderGroupNo != null">and a.ORDER_GROUP_NO &gt; #{pplorderGroupNo}</if>
+        <if test="babyAdmissionNo == null">and (a.baby_admission_no is null or a.baby_admission_no = '')</if>
+        <if test="babyAdmissionNo != null and babyAdmissionNo != ''">and a.baby_admission_no = #{babyAdmissionNo}</if>
+        <choose>
+            <when test='deptCode != null and deptCode != "all"'>
+                and a.ORDER_DOCTOR_DEP_CODE = #{deptCode}
+            </when>
+            <otherwise></otherwise>
+        </choose>
+        ) b where row_num = 1 order by RE_ORGANIZATION_NO,ORDER_START_TIME, ORDER_GROUP_NO,ORDER_SORT_NUMBER, ORDER_GROUP_SORT_NUMBER
+        ) c where order_status in ('0','1','2','3','8','4','5','6','7') <if test="pageSize != null">and c.no &lt;= #{pageSize}</if>
+    </select>
+
+    <select id="selectOrderTempListPage" parameterType="OrderListSearchVo" resultMap="OrderListVoResult">
+        select a.order_status,a.PATIENT_ID,a.order_no,a.order_type,a.order_class_code,a.ORDER_SORT_NUMBER,a.order_group_no,a.ORDER_GROUP_SORT_NUMBER,a.ORDER_START_TIME,a.cp_no,a.cp_name,a.ORDER_ACTUAL_USAGE,a.USAGE_UNIT,a.DRIPPING_SPEED,a.ITEM_ORDER_USAGE_WAY,a.ITEM_ORDER_USAGE_WAY_NAME,a.ITEM_ORDER_FREQ,a.ITEM_ORDER_FREQ_NAME,a.PATIENT_SELF_DRUG_FLAG,a.SKIN_TEST_RESULTS,a.DOCTOR_INSTRUCTIONS,a.SUBMIT_DOCTOR_NO,a.SUBMIT_DOCTOR_NAME,a.order_audit_doc,a.order_audit_doc_name,a.order_stop_time,a.order_stop_doc,a.order_stop_doc_name,a.ORDER_CANCEL_TIME,a.ORDER_CANCEL_DOC,a.ORDER_CANCEL_DOC_NAME,a.OUT_HAVA_DRUG_FLAG,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+        oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME
+        from (
+            select oi.order_status,o.PATIENT_ID,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER, oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY, oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME, oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null OUT_HAVA_DRUG_FLAG,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME
+            from TD_PA_ORDER o
+            left join TD_PA_ORDER_ITEM oi on o.ORDER_NO = oi.ORDER_NO
+            where o.order_type = '2' and o.ORDER_CLASS_CODE &lt;&gt; '01' and (oi.HERBAL_FLAG is null or oi.HERBAL_FLAG = '0')
+            union all
+            select oi.order_status,o.PATIENT_ID,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER, oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY, oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME, oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.OUT_HAVA_DRUG_FLAG,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME
+            from TD_PA_ORDER o
+            left join TD_PA_ORDER_ITEM oi on o.ORDER_NO = oi.ORDER_NO
+            left join TD_PA_ORDER_DETAIL od on oi.ORDER_NO = od.ORDER_NO
+            where o.order_type = '2' and o.ORDER_CLASS_CODE = '01' and (oi.HERBAL_FLAG is null or oi.HERBAL_FLAG = '0')
+            union all
+            select oi.order_status,o.PATIENT_ID,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER, oi.order_group_no, '01' ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY, oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,null SKIN_TEST_RESULTS,oi.OEDER_DESC DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME, oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME, null OUT_HAVA_DRUG_FLAG,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME
+            from TD_PA_ORDER_H o
+            left join TD_PA_ORDER_ITEM_H oi on o.ORDER_NO = oi.ORDER_NO
+            where o.order_type = '2' and o.ORDER_CLASS_CODE &lt;&gt; '01' and (oi.HERBAL_FLAG is null or oi.HERBAL_FLAG = '0')
+            union all
+            select oi.order_status,o.PATIENT_ID,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER, oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, oi.cp_no, oi.cp_name,od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY, oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME, oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.OUT_HAVA_DRUG_FLAG,oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME
+            from TD_PA_ORDER_H o
+            left join TD_PA_ORDER_ITEM_H oi on o.ORDER_NO = oi.ORDER_NO
+            left join TD_PA_ORDER_DETAIL_H od on oi.ORDER_NO = od.ORDER_NO
+            where o.order_type = '2' and o.ORDER_CLASS_CODE = '01' and (oi.HERBAL_FLAG is null or oi.HERBAL_FLAG = '0')
+        ) a
+        left join TM_BS_ORDER_SIG s on a.ITEM_ORDER_USAGE_WAY = s.sig_cd
+        where s.order_book_show = '1'
+        and a.order_status in ('0','1','8','4','5','6','7')
+        and a.PATIENT_ID = #{patientId}
+        and a.ORDER_GROUP_NO &gt; #{pplorderGroupNo}
+        <if test="babyAdmissionNo == null">and (baby_admission_no is null or baby_admission_no = '')</if>
+        <if test="babyAdmissionNo != null and babyAdmissionNo != ''">and baby_admission_no = #{babyAdmissionNo}</if>
+        order by ORDER_START_TIME
+    </select>
+    <select id="selectOrderDecoctionListPage" parameterType="OrderListSearchVo" resultMap="OrderListVoResult">
+        select c.* from (
+        select b.*,rownum as no from (
+        select a.*,row_number() over (partition by did order by os.operation_time desc,a.order_group_no, a.ORDER_GROUP_SORT_NUMBER desc) row_num from (
+            select o.order_no||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+            oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no cp_no, od.charge_name cp_name,
+            od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+            oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,
+            od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+            oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+            oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.master_order,o.bed_no,
+            o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,od.out_hava_drug_flag,od.standard,
+            od.order_dose,od.unit,oi.HERBAL_DOSE, oi.OEDER_DESC,oi.RE_ORGANIZATION_NO,oi.order_status,
+            oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER_DETAIL od
+            left join TD_PA_ORDER_ITEM oi on od.ORDER_NO = oi.ORDER_NO
+            left join TD_PA_ORDER o on oi.ORDER_NO = o.ORDER_NO
+            left join TM_BS_ORDER_SIG s on oi.ITEM_ORDER_USAGE_WAY = s.sig_cd
+            where o.ORDER_CLASS_CODE = '01' and s.order_book_show = '1'
+            <if test="herbalFlag != null">
+                and oi.herbal_flag = #{herbalFlag}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and o.order_type = #{orderType}
+            </if>
+            union all
+            SELECT o.order_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER, oi.order_group_no,
+            null ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME,oi.cp_no, oi.cp_name, null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,
+            oi.ITEM_ORDER_USAGE_WAY, oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+            null SKIN_TEST_RESULTS,null DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME, oi.order_audit_doc, oi.order_audit_doc_name,
+            oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name, oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,
+            '1' master_order,o.bed_no, o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+            null order_dose,null unit,oi.HERBAL_DOSE, oi.OEDER_DESC,oi.RE_ORGANIZATION_NO,oi.order_status,
+            oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER o
+            left join TD_PA_ORDER_ITEM oi on o.ORDER_NO = oi.ORDER_NO
+            where o.order_class_code &lt;&gt; '01'
+            and oi.order_flag_cd in ('02','04')
+            and oi.herbal_flag = '0'
+            union all
+            select o.order_no||od.ORDER_GROUP_SORT_NUMBER did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER,
+            oi.order_group_no, od.ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME, od.charge_no cp_no, od.charge_name cp_name,
+            od.ORDER_ACTUAL_USAGE, od.USAGE_UNIT,od.DRIPPING_SPEED,oi.ITEM_ORDER_USAGE_WAY,
+            oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,od.PATIENT_SELF_DRUG_FLAG,
+            od.SKIN_TEST_RESULTS,od.DOCTOR_INSTRUCTIONS DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME,
+            oi.order_audit_doc, oi.order_audit_doc_name,oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name,
+            oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,od.master_order,o.bed_no,
+            o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,od.out_hava_drug_flag,od.standard,
+            od.order_dose,od.unit,oi.HERBAL_DOSE, oi.OEDER_DESC,oi.RE_ORGANIZATION_NO,oi.order_status,
+            oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER_DETAIL_H od
+            left join TD_PA_ORDER_ITEM_H oi on od.ORDER_NO = oi.ORDER_NO
+            left join TD_PA_ORDER_H o on oi.ORDER_NO = o.ORDER_NO
+            left join TM_BS_ORDER_SIG s on oi.ITEM_ORDER_USAGE_WAY = s.sig_cd
+            where o.ORDER_CLASS_CODE = '01' and s.order_book_show = '1'
+            <if test="herbalFlag != null">
+                and oi.herbal_flag = #{herbalFlag}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and o.order_type = #{orderType}
+            </if>
+            union all
+            SELECT o.order_no did,o.PATIENT_ID,o.baby_admission_no,o.order_no,o.order_type,o.order_class_code,oi.ORDER_SORT_NUMBER, oi.order_group_no,
+            null ORDER_GROUP_SORT_NUMBER,oi.ORDER_START_TIME,oi.cp_no, oi.cp_name, null ORDER_ACTUAL_USAGE, null USAGE_UNIT,null DRIPPING_SPEED,
+            oi.ITEM_ORDER_USAGE_WAY, oi.ITEM_ORDER_USAGE_WAY_NAME,oi.ITEM_ORDER_FREQ, oi.ITEM_ORDER_FREQ_NAME,null PATIENT_SELF_DRUG_FLAG,
+            null SKIN_TEST_RESULTS,null DOCTOR_INSTRUCTIONS,oi.SUBMIT_DOCTOR_NO, oi.SUBMIT_DOCTOR_NAME, oi.order_audit_doc, oi.order_audit_doc_name,
+            oi.order_stop_time,oi.order_stop_doc,oi.order_stop_doc_name, oi.ORDER_CANCEL_TIME,oi.ORDER_CANCEL_DOC,oi.ORDER_CANCEL_DOC_NAME,
+            '1' master_order,o.bed_no, o.PATIENT_DEP_CODE,o.PATIENT_DEP_NAME,oi.ORDER_FLAG_CD,oi.print_date,null out_hava_drug_flag,null standard,
+            null order_dose,null unit,oi.HERBAL_DOSE, oi.OEDER_DESC,oi.RE_ORGANIZATION_NO,oi.order_status,
+            oi.ORDER_EXECUTE_TIME,oi.ORDER_EXECUTE_DOC,oi.ORDER_EXECUTE_DOC_NAME,
+            oi.ORDER_STOP_AUDIT_TIME,oi.ORDER_STOP_AUDIT_DOC,oi.ORDER_STOP_AUDIT_DOC_NAME,o.ORDER_DOCTOR_DEP_CODE
+            from TD_PA_ORDER_H o
+            left join TD_PA_ORDER_ITEM_H oi on o.ORDER_NO = oi.ORDER_NO
+            where o.order_class_code &lt;&gt; '01'
+            and oi.order_flag_cd in ('02','04')
+            and oi.herbal_flag = '0'
+        ) a
+        left join TD_PA_ORDER_STATUS os on a.order_no = os.order_no
+        where a.patient_id = #{patientId}
+        <if test="pplorderGroupNo != null">and a.ORDER_GROUP_NO &gt; #{pplorderGroupNo}</if>
+        <if test="babyAdmissionNo == null">and (a.baby_admission_no is null or a.baby_admission_no = '')</if>
+        <if test="babyAdmissionNo != null and babyAdmissionNo != ''">and a.baby_admission_no = #{babyAdmissionNo}</if>
+        <choose>
+            <when test='deptCode != null and deptCode != "all"'>
+                and a.ORDER_DOCTOR_DEP_CODE = #{deptCode}
+            </when>
+            <otherwise></otherwise>
+        </choose>
+        ) b where row_num = 1 order by ORDER_GROUP_NO, ORDER_START_TIME, ORDER_GROUP_SORT_NUMBER
+        ) c where order_status in ('0','1','2','3','8','4','5','6','7') <if test="pageSize != null">and c.no &lt;= #{pageSize}</if>
+    </select>
+    <resultMap id="OrderApplyFormDetailResult" type="OrderApplyFormDetailVo">
+        <result property="examTime" column="examTime"/>
+        <result property="examDocCd" column="examDocCd"/>
+        <result property="examDocName" column="examDocName"/>
+        <result property="examRepDate" column="examRepDate"/>
+        <result property="repDocCd" column="repDocCd"/>
+        <result property="repDocName" column="repDocName"/>
+
+        <result property="creDate" column="creDate"/>
+        <result property="crePerCode" column="crePerCode"/>
+        <result property="crePerName" column="crePerName"/>
+        <result property="orderNo" column="orderNo"/>
+        <result property="applyFormNo" column="applyFormNo"/>
+    </resultMap>
+    <select id="selectOrderClassCode2Detail" resultMap="OrderApplyFormDetailResult" parameterType="java.lang.String">
+        select
+            apf.order_no as orderNo,
+            apf.apply_form_no as applyFormNo,
+            ei.exam_time as examTime,
+            ei.exam_doc_cd as examDocCd,
+            ei.exam_doc_name as examDocName,
+            ei.exam_rep_date as examRepDate,
+            ei.rep_doc_cd as repDocCd,
+            ei.rep_doc_name as repDocName,
+            ei.cre_date as creDate,
+            ei.cre_per_code as crePerCode,
+            ei.cre_per_name as crePerName
+        from td_pa_apply_form apf
+        left join exam_item ei on ei.app_cd = apf.apply_form_no
+        where apf.order_no= #{orderNo}
+    </select>
+    <resultMap id="OrderApplyFormTestResult" type="com.emr.project.docOrder.domain.vo.OrderApplyFormTestVo">
+        <result property="smsj" column="sm_sj"/>
+        <result property="smOper" column="SM_OPER"/>
+        <result property="smOperName" column="smOperName"/>
+
+        <result property="scsj" column="sc_sj"/>
+        <result property="scOper" column="sc_oper"/>
+        <result property="scOperName" column="scOperName"/>
+
+        <result property="machineConfirmTime" column="machine_confirm_time"/>
+
+        <result property="issTime" column="iss_time"/>
+        <result property="issCd" column="iss_cd"/>
+        <result property="issName" column="iss_name"/>
+
+        <result property="printsj" column="print_sj"/>
+        <result property="printOper" column="print_oper"/>
+        <result property="printOperName" column="printOperName"/>
+        <result property="orderNo" column="orderNo"/>
+        <result property="applyFormNo" column="applyFormNo"/>
+    </resultMap>
+    <select id="selectOrderTestDetail" resultMap="OrderApplyFormTestResult">
+        select
+            apf.order_no as orderNo,
+            apf.apply_form_no as applyFormNo,
+            tmdy.print_sj,
+            tmdy.print_oper,
+            (select STAFF_NAME from TM_BS_STAFF where STAFF_NO = tmdy.PRINT_OPER) as printOperName,
+            tmdy.sm_sj,
+            tmdy.SM_OPER,
+            (select STAFF_NAME from TM_BS_STAFF where STAFF_NO = tmdy.SM_OPER) as smOperName,
+            tmdy.sc_sj,
+            tmdy.sc_oper,
+            (select STAFF_NAME from TM_BS_STAFF where STAFF_NO = tmdy.sc_oper) as scOperName,
+            apf.machine_confirm_time,
+            re.iss_time,
+            re.iss_cd,
+            re.iss_name
+        from td_pa_apply_form apf
+        left join yy_lis_tmdy tmdy on tmdy.djh = apf.apply_form_no
+        left join test_report re on apf.apply_form_no = re.app_cd
+        where apf.order_no=#{orderNo}
+    </select>
+
+    <resultMap id="SysDeptMap" type="SysDept">
+        <result column="dept_code" property="deptCode" />
+        <result column="dept_name" property="deptName" />
+    </resultMap>
+    <select id="selectPatOrderDeptList" parameterType="string" resultMap="SysDeptMap">
+        select distinct o.order_doctor_dep_code as dept_code, o.order_doctor_dep_name as dept_name
+        from td_pa_order_all o where patient_id = #{patientId} order by o.order_doctor_dep_code
+    </select>
+</mapper>

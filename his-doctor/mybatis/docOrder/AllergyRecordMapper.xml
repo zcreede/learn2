@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.AllergyRecordMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.docOrder.domain.AllergyRecord">
+    <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+    <result column="case_no" jdbcType="VARCHAR" property="caseNo" />
+    <result column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+    <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="patient_sex" jdbcType="VARCHAR" property="patientSex" />
+    <result column="patient_age" jdbcType="VARCHAR" property="patientAge" />
+    <result column="allergy_code" jdbcType="VARCHAR" property="allergyCode" />
+    <result column="allergy_name" jdbcType="VARCHAR" property="allergyName" />
+    <result column="allergy_type" jdbcType="VARCHAR" property="allergyType" />
+    <result column="operator_date" jdbcType="TIMESTAMP" property="operatorDate" />
+    <result column="operator_no" jdbcType="VARCHAR" property="operatorNo" />
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+  </resultMap>
+  
+  	<!-- 根据住院号删除全部 -->
+  	<delete id="delByZyh">
+        DELETE FROM td_na_allergy_record WHERE admission_no = #{admissionNo,jdbcType=VARCHAR}
+    </delete>
+  
+    <!-- 查询一条数据-->
+	<select id="selectOne"  resultMap="BaseResultMap">
+	    SELECT * from td_na_allergy_record where admission_no = #{admissionNo,jdbcType=VARCHAR} and rownum = 1
+	</select>
+	<select id="getList"  resultMap="BaseResultMap">
+	    SELECT * from td_na_allergy_record where admission_no = #{admissionNo,jdbcType=VARCHAR}
+	</select>
+
+  <insert id="insert" parameterType="com.emr.project.docOrder.domain.AllergyRecord">
+    insert into td_na_allergy_record (id,hospital_code, case_no, admission_no,
+      hospitalized_count, patient_name, patient_sex, 
+      patient_age, allergy_code, allergy_name, 
+      allergy_type, operator_date, operator_no, 
+      operator_name)
+    values (#{id},#{hospitalCode,jdbcType=VARCHAR}, #{caseNo,jdbcType=VARCHAR}, #{admissionNo,jdbcType=VARCHAR},
+      #{hospitalizedCount,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, #{patientSex,jdbcType=VARCHAR}, 
+      #{patientAge,jdbcType=VARCHAR}, #{allergyCode,jdbcType=VARCHAR}, #{allergyName,jdbcType=VARCHAR}, 
+      #{allergyType,jdbcType=VARCHAR}, #{operatorDate,jdbcType=TIMESTAMP}, #{operatorNo,jdbcType=VARCHAR}, 
+      #{operatorName,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.emr.project.docOrder.domain.AllergyRecord">
+    insert into td_na_allergy_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hospitalCode != null">
+        hospital_code,
+      </if>
+      <if test="caseNo != null">
+        case_no,
+      </if>
+      <if test="admissionNo != null">
+        admission_no,
+      </if>
+      <if test="hospitalizedCount != null">
+        hospitalized_count,
+      </if>
+      <if test="patientName != null">
+        patient_name,
+      </if>
+      <if test="patientSex != null">
+        patient_sex,
+      </if>
+      <if test="patientAge != null">
+        patient_age,
+      </if>
+      <if test="allergyCode != null">
+        allergy_code,
+      </if>
+      <if test="allergyName != null">
+        allergy_name,
+      </if>
+      <if test="allergyType != null">
+        allergy_type,
+      </if>
+      <if test="operatorDate != null">
+        operator_date,
+      </if>
+      <if test="operatorNo != null">
+        operator_no,
+      </if>
+      <if test="operatorName != null">
+        operator_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hospitalCode != null">
+        #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null">
+        #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionNo != null">
+        #{admissionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalizedCount != null">
+        #{hospitalizedCount,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientSex != null">
+        #{patientSex,jdbcType=VARCHAR},
+      </if>
+      <if test="patientAge != null">
+        #{patientAge,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyCode != null">
+        #{allergyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyName != null">
+        #{allergyName,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyType != null">
+        #{allergyType,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDate != null">
+        #{operatorDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorNo != null">
+        #{operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateAllergyRecord" parameterType="com.emr.project.docOrder.domain.AllergyRecord">
+    update td_na_allergy_record
+    <set>
+      <if test="hospitalCode != null">
+        hospital_code = #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null">
+        case_no = #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionNo != null">
+        admission_no = #{admissionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalizedCount != null">
+        hospitalized_count = #{hospitalizedCount,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null">
+        patient_name = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientSex != null">
+        patient_sex = #{patientSex,jdbcType=VARCHAR},
+      </if>
+      <if test="patientAge != null">
+        patient_age = #{patientAge,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyCode != null">
+        allergy_code = #{allergyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyName != null">
+        allergy_name = #{allergyName,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyType != null">
+        allergy_type = #{allergyType,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDate != null">
+        operator_date = #{operatorDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorNo != null">
+        operator_no = #{operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    	where id = #{id}
+  </update>
+  <insert id="insertList" parameterType="com.emr.project.docOrder.domain.AllergyRecord">
+    insert all
+    <foreach item="allergyRecord" index="index" collection="list">
+      into td_na_allergy_record (id, hospital_code, case_no, admission_no,hospitalized_count,
+      patient_name, patient_sex,patient_age, allergy_code, allergy_name,
+      allergy_type, operator_date, operator_no,operator_name)
+      values (
+      #{allergyRecord.id},
+      #{allergyRecord.hospitalCode,jdbcType=VARCHAR},
+      #{allergyRecord.caseNo,jdbcType=VARCHAR},
+      #{allergyRecord.admissionNo,jdbcType=VARCHAR},
+      #{allergyRecord.hospitalizedCount,jdbcType=INTEGER},
+      #{allergyRecord.patientName,jdbcType=VARCHAR},
+      #{allergyRecord.patientSex,jdbcType=VARCHAR},
+      #{allergyRecord.patientAge,jdbcType=VARCHAR},
+      #{allergyRecord.allergyCode,jdbcType=VARCHAR},
+      #{allergyRecord.allergyName,jdbcType=VARCHAR},
+      #{allergyRecord.allergyType,jdbcType=VARCHAR},
+      #{allergyRecord.operatorDate,jdbcType=TIMESTAMP},
+      #{allergyRecord.operatorNo,jdbcType=VARCHAR},
+      #{allergyRecord.operatorName,jdbcType=VARCHAR}
+      )
+    </foreach>
+    select 1 from dual
+  </insert>
+</mapper>

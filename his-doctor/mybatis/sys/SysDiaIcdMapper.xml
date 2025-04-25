@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.sys.mapper.SysDiaIcdMapper">
+
+    <resultMap type="SysDiaIcd" id="SysDiaIcdResult">
+        <result property="icdId"    column="icd_id"    />
+        <result property="icdCd"    column="icd_cd"    />
+        <result property="icdName"    column="icd_name"    />
+        <result property="icdCdAdd"    column="icd_cd_add"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="verNum"    column="ver_num"    />
+        <result property="dictTypeId"    column="dict_type_id"    />
+        <result property="medType"    column="med_type"    />
+        <result property="specDise"    column="spec_dise"    />
+        <result property="remark"    column="remark"    />
+        <result property="sex"    column="sex"    />
+        <result property="firstDiagFlag"    column="first_diag_flag"    />
+        <result property="deathDiagFlag"    column="death_diag_flag"    />
+        <result property="medicalInsuranceCode"    column="bzbm"    />
+        <result property="medicalInsuranceName"    column="bzmc"    />
+    </resultMap>
+<resultMap id="SysDiaIcdVoResult" type="SysDiaIcdVo" extends="SysDiaIcdResult">
+    <result property="collectFlag"    column="collectFlag"    />
+</resultMap>
+    <sql id="selectSysDiaIcdVo">
+        select icd_id, icd_cd, icd_name, icd_cd_add, inputstrphtc, ver_num, dict_type_id, med_type, spec_dise, remark,sex,first_diag_flag,death_diag_flag from sys_dia_icd
+    </sql>
+
+    <select id="selectSysDiaIcdList" parameterType="SysDiaIcd" resultMap="SysDiaIcdResult">
+        select a.icd_id, a.icd_cd, a.icd_name, a.icd_cd_add, a.inputstrphtc, a.ver_num, a.dict_type_id, a.med_type,
+        a.spec_dise,a.remark,sex,a.first_diag_flag,a.death_diag_flag, b.bzbm,b.bzmc
+        from sys_dia_icd a
+        left join V_YY_BZBM_XMDZ b on a.icd_cd = b.xmbh
+        where rownum &lt; 51
+          <if test="dictTypeId!=null and dictTypeId!=''">
+              and dict_type_id=#{dictTypeId}
+          </if>
+        <if test="icdName != null">and (icd_name like concat(concat('%', #{icdName}), '%')  or inputstrphtc like concat(concat('%', upper(#{icdName})), '%')) </if>
+    </select>
+
+    <select id="selectSysDiaIcdListByType" parameterType="SysDiaIcd" resultMap="SysDiaIcdVoResult">
+        select a.icd_id, a.icd_cd, a.icd_name, a.icd_cd_add , a.inputstrphtc, a.ver_num, a.dict_type_id,
+        a.med_type, a.spec_dise,a.remark,sex,a.first_diag_flag,a.death_diag_flag,b.bzbm,b.bzmc
+        from sys_dia_icd a
+        left join V_YY_BZBM_XMDZ b on a.icd_cd = b.xmbh
+        <where>
+            a.VALID_FLAG = '1'
+            <if test="dictTypeId !=null and dictTypeId != ''">and dict_type_id=#{dictTypeId}</if>
+            <if test="icdName != null and icdName!=''">
+            and (
+                icd_name like concat(concat('%', #{icdName}), '%')
+                or inputstrphtc like concat(concat('%', upper(#{icdName})), '%')
+                or icd_cd like concat(concat('%', upper(#{icdName})), '%')
+                )
+                order by
+                (case when (
+                a.icd_name = #{icdName}
+                or a.inputstrphtc = upper(#{icdName})
+                or a.inputstrphtc = lower(#{icdName})
+                or a.icd_cd = #{icdName})
+                then 1
+                when (
+                a.icd_name like concat(#{icdName},'%')
+                or a.inputstrphtc like concat(upper(#{icdName}),'%')
+                or a.inputstrphtc like concat(lower(#{icdName}),'%')
+                or a.icd_cd like concat(#{icdName},'%'))
+                then 2
+                when (
+                a.icd_name like concat('%',#{icdName})
+                or a.inputstrphtc like concat('%',upper(#{icdName}))
+                or a.inputstrphtc like concat('%',lower(#{icdName}))
+                or a.icd_cd like concat('%',#{icdName}))
+                then 3
+                when (
+                a.icd_name like concat(concat('%',#{icdName}),'%')
+                or a.inputstrphtc like concat(concat('%',upper(#{icdName})),'%')
+                or a.inputstrphtc like concat(concat('%',lower(#{icdName})),'%')
+                or a.icd_cd like concat(concat('%',#{icdName}),'%'))
+                then 4
+                else 0
+                end)
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSysDiaIcdAndOpeIcd" parameterType="SysDiaIcdVo" resultMap="SysDiaIcdResult">
+        select ICD_CD,ICD_NAME,INPUTSTRPHTC,DICT_TYPE_ID FROM(select  ICD_CD,ICD_NAME,inputstrphtc,DICT_TYPE_ID  from SYS_DIA_ICD WHERE VALID_FLAG='1'
+        UNION
+        select ICD_CD,ICD_NAME,inputstrphtc,'OPE' as DICT_TYPE_ID from SYS_OPE_ICD WHERE VALID_FLAG='1')
+        <where>
+            <if test="dictTypeId !=null and dictTypeId != ''">and dict_type_id=#{dictTypeId}</if>
+            <if test="!isEqual and icdName != null">
+            and (icd_name like concat(concat('%', #{icdName}), '%')  or inputstrphtc like concat(concat('%', upper(#{icdName})), '%')
+                or icd_cd like concat(concat('%',#{icdName}),'%')
+            )
+            </if>
+            <if test="isEqual and icdName != null">
+                and (icd_name = #{icdName}  or inputstrphtc = #{icdName}
+                or icd_cd = #{icdName}
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSysDiaIcdById" parameterType="Long" resultMap="SysDiaIcdResult">
+        <include refid="selectSysDiaIcdVo"/>
+        where icd_id = #{icdId}
+    </select>
+
+    <insert id="insertSysDiaIcd" parameterType="SysDiaIcd">
+        <selectKey keyProperty="icdId" resultType="long" order="BEFORE">
+            SELECT seq_sys_dia_icd.NEXTVAL as icdId FROM DUAL
+        </selectKey>
+        insert into sys_dia_icd
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="icdId != null">icd_id,</if>
+            <if test="icdCd != null and icdCd != ''">icd_cd,</if>
+            <if test="icdName != null and icdName != ''">icd_name,</if>
+            <if test="icdCdAdd != null">icd_cd_add,</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">inputstrphtc,</if>
+            <if test="verNum != null and verNum != ''">ver_num,</if>
+            <if test="dictTypeId != null">dict_type_id,</if>
+            <if test="medType != null">med_type,</if>
+            <if test="specDise != null">spec_dise,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="icdId != null">#{icdId},</if>
+            <if test="icdCd != null and icdCd != ''">#{icdCd},</if>
+            <if test="icdName != null and icdName != ''">#{icdName},</if>
+            <if test="icdCdAdd != null">#{icdCdAdd},</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">#{inputstrphtc},</if>
+            <if test="verNum != null and verNum != ''">#{verNum},</if>
+            <if test="dictTypeId != null">#{dictTypeId},</if>
+            <if test="medType != null">#{medType},</if>
+            <if test="specDise != null">#{specDise},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysDiaIcd" parameterType="SysDiaIcd">
+        update sys_dia_icd
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="icdCd != null and icdCd != ''">icd_cd = #{icdCd},</if>
+            <if test="icdName != null and icdName != ''">icd_name = #{icdName},</if>
+            <if test="icdCdAdd != null">icd_cd_add = #{icdCdAdd},</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">inputstrphtc = #{inputstrphtc},</if>
+            <if test="verNum != null and verNum != ''">ver_num = #{verNum},</if>
+            <if test="dictTypeId != null">dict_type_id = #{dictTypeId},</if>
+            <if test="medType != null">med_type = #{medType},</if>
+            <if test="specDise != null">spec_dise = #{specDise},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where icd_id = #{icdId}
+    </update>
+
+    <delete id="deleteSysDiaIcdById" parameterType="Long">
+        delete from sys_dia_icd where icd_id = #{icdId}
+    </delete>
+
+    <delete id="deleteSysDiaIcdByIds" parameterType="String">
+        delete from sys_dia_icd where icd_id in
+        <foreach item="icdId" collection="array" open="(" separator="," close=")">
+            #{icdId}
+        </foreach>
+    </delete>
+
+    <select id="selectSysDiaIcdByIcdCdList" parameterType="String" resultMap="SysDiaIcdResult">
+        <include refid="selectSysDiaIcdVo"/>
+        where icd_cd in
+        <foreach item="icdCd" collection="list" open="(" separator="," close=")">
+            #{icdCd}
+        </foreach>
+    </select>
+    <select id="selectDiagCommonList" parameterType="SysDiaIcd" resultMap="SysDiaIcdVoResult">
+        select
+            sdi.icd_id, sdi.icd_cd, sdi.icd_name, sdi.icd_cd_add, sdi.inputstrphtc, sdi.ver_num,
+            sdi.dict_type_id, sdi.med_type,sdi.spec_dise, sdi.remark,sdi.sex,sdi.first_diag_flag,
+            sdi.death_diag_flag,b.bzbm,b.bzmc
+        from
+            tm_pm_clin_item_collection clin
+        left join sys_dia_icd sdi on clin.item_cd = sdi.icd_cd
+        left join V_YY_BZBM_XMDZ b on sdi.icd_cd = b.xmbh
+        where clin.doc_cd=#{docCd} and clin.ITEM_CLASS_CD='50' and sdi.valid_flag = '1'
+            <if test="dictTypeId !=null and dictTypeId != ''">and sdi.dict_type_id=#{dictTypeId}</if>
+            <if test="icdName != null and icdName!=''">and (sdi.icd_name like concat(concat('%', #{icdName}), '%')  or sdi.inputstrphtc like concat(concat('%', upper(#{icdName})), '%')) </if>
+        order by clin.sort
+    </select>
+</mapper>

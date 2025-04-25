@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrHpFeeMapper">
+
+    <resultMap type="MrHpFee" id="MrHpFeeResult">
+        <result property="feeId"    column="FEE_ID"  />
+        <result property="recordId"    column="RECORD_ID"  />
+        <result property="feeCd"    column="FEE_CD" />
+        <result property="feeName"    column="FEE_NAME" />
+        <result property="amount"    column="AMOUNT" />
+        <result property="crePerCode"    column="CRE_PER_CODE"  />
+        <result property="creDate"    column="CRE_DATE"  />
+        <result property="crePerName"    column="CRE_PER_NAME"  />
+        <result property="altPerName"    column="ALT_PER_NAME"  />
+        <result property="altPerCode"    column="ALT_PER_CODE"  />
+        <result property="altDate"    column="ALT_DATE"   />
+    </resultMap>
+
+    <sql id="selectMrHpFeeVo">
+        select fee_id, record_id, fee_cd, fee_name, amount, cre_per_code, cre_date, cre_per_name, alt_per_name, alt_per_code from mr_hp_fee
+    </sql>
+
+    <select id="selectMrHpFeeList" parameterType="MrHpFee" resultMap="MrHpFeeResult">
+        <include refid="selectMrHpFeeVo"/>
+        <where>
+            <if test="recordId != null  and recordId != ''"> and record_id = #{recordId}</if>
+            <if test="feeCd != null  and feeCd != ''"> and fee_cd = #{feeCd}</if>
+            <if test="feeName != null  and feeName != ''"> and fee_name like concat(concat('%', #{feeName}), '%')</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+        </where>
+    </select>
+
+    <select id="selectMrHpFeeById" parameterType="String" resultMap="MrHpFeeResult">
+        <include refid="selectMrHpFeeVo"/>
+        where fee_id = #{feeId}
+    </select>
+
+    <select id="selectMrHpFeeByRecordId" parameterType="String" resultType="com.emr.project.mrhp.domain.vo.TdCmFeeVo">
+        select tcf.record_id as recordId,tch.patient_id as patientId, tch.patient_name as patientName, tch.record_no as recordNo, tcf.*
+        from (select a.record_id,
+        nvl(sum(decode(a.fee_cd, '0001', a.amount)), '0') as zfy,
+        nvl(sum(decode(a.fee_cd, '000101', a.amount)), '0') as zfje,
+        nvl(sum(decode(a.fee_cd, '0101', a.amount)), '0') as ybylfwf,
+        nvl(sum(decode(a.fee_cd, '0102', a.amount)), '0') as ybzlczf,
+        nvl(sum(decode(a.fee_cd, '0103', a.amount)), '0') as hlf,
+        nvl(sum(decode(a.fee_cd, '0104', a.amount)), '0') as qtfy,
+        nvl(sum(decode(a.fee_cd, '0201', a.amount)), '0') as blzdf,
+        nvl(sum(decode(a.fee_cd, '0202', a.amount)), '0') as syszdf,
+        nvl(sum(decode(a.fee_cd, '0203', a.amount)), '0') as yxxzdf,
+        nvl(sum(decode(a.fee_cd, '0204', a.amount)), '0') as lczdxmf,
+        nvl(sum(decode(a.fee_cd, '0301', a.amount)), '0') as fsszlxmf,
+        nvl(sum(decode(a.fee_cd, '0302', a.amount)), '0') as sszlf,
+        nvl(sum(decode(a.fee_cd, '0401', a.amount)), '0') as kff,
+        nvl(sum(decode(a.fee_cd, '0501', a.amount)), '0') as zyzlf,
+        nvl(sum(decode(a.fee_cd, '0502', a.amount)), '0') as zyzd,
+        nvl(sum(decode(a.fee_cd, '0503', a.amount)), '0') as zyqt,
+        nvl(sum(decode(a.fee_cd, '0601', a.amount)), '0') as xyf,
+        nvl(sum(decode(a.fee_cd, '0701', a.amount)), '0') as zcyf,
+        nvl(sum(decode(a.fee_cd, '0702', a.amount)), '0') as zcyf_zcy,
+        nvl(sum(decode(a.fee_cd, '0801', a.amount)), '0') as xf,
+        nvl(sum(decode(a.fee_cd, '0802', a.amount)), '0') as bdblzpf,
+        nvl(sum(decode(a.fee_cd, '0803', a.amount)), '0') as qdblzpf,
+        nvl(sum(decode(a.fee_cd, '0804', a.amount)), '0') as nxyzlzpf,
+        nvl(sum(decode(a.fee_cd, '0805', a.amount)), '0') as xbyzlzpf,
+        nvl(sum(decode(a.fee_cd, '0901', a.amount)), '0') as jcyycxyyclf,
+        nvl(sum(decode(a.fee_cd, '0902', a.amount)), '0') as zlyycxyyclf,
+        nvl(sum(decode(a.fee_cd, '0903', a.amount)), '0') as ssyycxyyclf,
+        nvl(sum(decode(a.fee_cd, '1001', a.amount)), '0') as qtf,
+        nvl(sum(decode(a.fee_cd, '010101', a.amount)), '0') as zybzlzf,
+        nvl(sum(decode(a.fee_cd, '010102', a.amount)), '0') as zybzlzhzf,
+        nvl(sum(decode(a.fee_cd, '030101', a.amount)), '0') as lcwlzlf,
+        nvl(sum(decode(a.fee_cd, '030201', a.amount)), '0') as mzf,
+        nvl(sum(decode(a.fee_cd, '030202', a.amount)), '0') as ssf,
+        nvl(sum(decode(a.fee_cd, '050101', a.amount)), '0') as zywz,
+        nvl(sum(decode(a.fee_cd, '050102', a.amount)), '0') as zygs,
+        nvl(sum(decode(a.fee_cd, '050103', a.amount)), '0') as zcyjf,
+        nvl(sum(decode(a.fee_cd, '050104', a.amount)), '0') as zytzl,
+        nvl(sum(decode(a.fee_cd, '050105', a.amount)), '0') as zygczl,
+        nvl(sum(decode(a.fee_cd, '050106', a.amount)), '0') as zytszl,
+        nvl(sum(decode(a.fee_cd, '050301', a.amount)), '0') as zytstpjg,
+        nvl(sum(decode(a.fee_cd, '050302', a.amount)), '0') as bzss,
+        nvl(sum(decode(a.fee_cd, '060101', a.amount)), '0') as kjywfy,
+        nvl(sum(decode(a.fee_cd, '070101', a.amount)), '0') as yljgzyzjf
+        from mr_hp_fee a
+        where a.record_id = #{recordId}
+        group by a.record_id) tcf
+        left join mr_hp tch on tcf.record_id = tch.record_id
+    </select>
+
+    <select id="selectMrHpFeeListByProc" parameterType="java.util.HashMap" statementType="CALLABLE" resultMap="MrHpFeeResult">
+        <!--用call来调用存储过程  statementType="CALLABLE" -->
+        {call PROC_MR_HP_FEE(
+        #{inpNo,mode=IN,jdbcType=VARCHAR},
+        #{mrHpFee,mode=OUT,jdbcType=CURSOR,resultMap=MrHpFeeResult}
+        )}
+    </select>
+
+    <insert id="insertMrHpFee" parameterType="MrHpFee">
+        insert into mr_hp_fee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="feeId != null">fee_id,</if>
+            <if test="recordId != null and recordId != ''">record_id,</if>
+            <if test="feeCd != null and feeCd != ''">fee_cd,</if>
+            <if test="feeName != null and feeName != ''">fee_name,</if>
+            <if test="amount != null">amount,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name,</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="feeId != null">#{feeId},</if>
+            <if test="recordId != null and recordId != ''">#{recordId},</if>
+            <if test="feeCd != null and feeCd != ''">#{feeCd},</if>
+            <if test="feeName != null and feeName != ''">#{feeName},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="altPerName != null and altPerName != ''">#{altPerName},</if>
+            <if test="altPerCode != null and altPerCode != ''">#{altPerCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMrHpFee" parameterType="MrHpFee">
+        update mr_hp_fee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null and recordId != ''">record_id = #{recordId},</if>
+            <if test="feeCd != null and feeCd != ''">fee_cd = #{feeCd},</if>
+            <if test="feeName != null and feeName != ''">fee_name = #{feeName},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+        </trim>
+        where fee_id = #{feeId}
+    </update>
+
+    <delete id="deleteMrHpFeeById" parameterType="String">
+        delete from mr_hp_fee where fee_id = #{feeId}
+    </delete>
+
+    <delete id="deleteMrHpFeeByIds" parameterType="String">
+        delete from mr_hp_fee where fee_id in
+        <foreach item="feeId" collection="array" open="(" separator="," close=")">
+            #{feeId}
+        </foreach>
+    </delete>
+    <delete id="deleteMrHpFeeByRescordId" parameterType="String">
+        delete from mr_hp_fee where RECORD_ID = #{recordId}
+    </delete>
+
+    <insert id ="insertMrHpFeeList" parameterType="java.util.List" >
+        insert into mr_hp_fee
+        (fee_id,record_id, fee_cd, fee_name, amount,cre_per_code,cre_date,cre_per_name,alt_per_name,alt_per_code,alt_date)
+        <foreach collection ="list" item="mrHpFeeList" index= "index" separator="union all" >
+            select  #{mrHpFeeList.feeId,jdbcType=VARCHAR},
+            #{mrHpFeeList.recordId,jdbcType=VARCHAR},
+            #{mrHpFeeList.feeCd,jdbcType=VARCHAR},
+            #{mrHpFeeList.feeName,jdbcType=VARCHAR},
+            #{mrHpFeeList.amount,jdbcType=NUMERIC},
+            #{mrHpFeeList.crePerCode,jdbcType=VARCHAR},
+            #{mrHpFeeList.creDate,jdbcType=DATE},
+            #{mrHpFeeList.crePerName,jdbcType=VARCHAR},
+            #{mrHpFeeList.altPerName,jdbcType=VARCHAR},
+            #{mrHpFeeList.altPerCode,jdbcType=VARCHAR},
+            #{mrHpFeeList.altDate,jdbcType=DATE}
+             from dual
+        </foreach >
+    </insert >
+    <resultMap id="MrHpFeePbVoResult" type="MrHpFeePbVo">
+        <result column="zyh" property="zyh" />
+        <result column="rycs" property="rycs" />
+        <result column="bafybh" property="bafybh" />
+        <result column="je" property="je" />
+        <result column="bz" property="bz" />
+    </resultMap>
+    <select id="selectHisPbMrHpFeeList" parameterType="SqlVo" resultMap="MrHpFeePbVoResult">
+        ${sqlStr} #{inpNo},1
+    </select>
+    <select id="selectHisPbMrHpFeeKJList" parameterType="SqlVo" resultMap="MrHpFeePbVoResult">
+        ${sqlStr} and zyh = #{inpNo}
+    </select>
+    <select id="selectHisPbMrHpFeeZFList" parameterType="SqlVo" resultMap="MrHpFeePbVoResult">
+        ${sqlStr} where zyh= #{inpNo}
+    </select>
+</mapper>

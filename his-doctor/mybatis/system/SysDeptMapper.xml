@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysDeptMapper">
+
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+		<result property="searchCode" column="search_code" />
+		<result property="deptCode"   column="dept_code" />
+		<result property="deptType"   column="dept_type" />
+		<result property="sysFlag"   column="sys_flag" />
+		<result property="orgCode"   column="org_code" />
+		<result property="takeDrugModel"   column="tabke_drug_mode" />
+		<result property="arrearsFlag"   column="arrears_flag" />
+		<result property="accountsMode" column="accounts_mode"/>
+		<result property="site" column="site"/>
+		<result property="mrClass" column="mr_class"/>
+		<result property="chsCode" column="chs_code"/>
+		<result property="chsName" column="chs_name"/>
+		<result property="defaultDrugstore" column="default_drugstore"/>
+		<result property="deptNamePym1" column="dept_name_pym1"/>
+		<result property="deptNamePym2" column="dept_name_pym2"/>
+	</resultMap>
+	<resultMap id="SysDeptVoResult" type="SysDeptVo" extends="SysDeptResult">
+		<result property="tickstate"   column="tickstate" />
+	</resultMap>
+
+	<sql id="selectDeptVo">
+      select d.ID as dept_id,
+      d.HOSPITAL_NO as parent_id,
+      '' as ancestors, d.dept_name, d.SORT_ORDER as order_num,
+        d.DIRECTOR_CODE as leader, d.TEL as phone, d.EMAIL as email, d.status, d.del_flag,
+        d.DEPT_NAME_PYM1 as search_code, d.dept_code, d.dept_type, d.SPECIAL_FLAG as sys_flag, d.HOSPITAL_NO as org_code, d.ARREARS_FLAG as arrearsFlag, d.default_drugstore
+        from tm_bs_dept d
+    </sql>
+
+	<select id="selectDeptList" parameterType="SysDept" resultMap="SysDeptResult">
+        <include refid="selectDeptVo"/>
+        where (d.del_flag = '0' or d.del_flag is null) and (d.status = '0' or d.status is null)
+        <if test="parentId != null and parentId != 0">
+			AND HOSPITAL_NO = #{parentId}
+		</if>
+		<if test="deptName != null and deptName != ''">
+			AND (dept_name like concat(concat('%',#{deptName}),'%') or DEPT_NAME_PYM1 like concat(concat('%',#{deptName}),'%'))
+		</if>
+		<if test="orgCode != null ">
+			AND HOSPITAL_NO = #{orgCode}
+		</if>
+		<if test="deptType != null ">
+			AND dept_type = #{deptType}
+		</if>
+		<if test="deptCode != null ">
+			AND dept_code = #{deptCode}
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+		order by d.HOSPITAL_NO, d.SORT_ORDER
+    </select>
+
+	<select id="selectDeptZyList" parameterType="SysDept" resultMap="SysDeptResult">
+		select d.*
+		from tm_bs_dept d
+		inner join tm_bs_dept_type_contrast e
+		on d.dept_code = e.dept_code
+        where (d.del_flag = '0' or d.del_flag is null)
+			and (d.status = '0' or d.status is null)
+			and e.dept_type = '11'
+		<if test="deptName != null and deptName != ''">
+			AND (dept_name like concat(concat('%',#{deptName}),'%') or DEPT_NAME_PYM1 like concat(concat('%',#{deptName}),'%'))
+		</if>
+		<if test="deptType != null ">
+			AND dept_type = #{deptType}
+		</if>
+		<if test="deptCode != null and deptCode != ''">
+			AND d.dept_code != #{deptCode}
+		</if>
+		order by d.dept_code
+    </select>
+	<select id="selectOrgList"  resultMap="SysDeptResult">
+        select
+        ID as dept_id,HOSPITAL_NO as dept_code,
+        HOSPITAL_NO as ORG_CODE,HOSPITAL_NAME as dept_name
+        from tm_bs_hospital
+--         where del_flag='0' and STATUS='0'
+    </select>
+
+	<select id="selectDeptPageList" parameterType="SysDept" resultMap="SysDeptResult">
+		<include refid="selectDeptVo"/>
+		where d.del_flag = '0'
+		<if test="deptName != null and deptName != ''">
+			AND d.dept_name like concat(concat('%',#{deptName}),'%')
+		</if>
+	</select>
+
+    <select id="selectDeptListByRoleId" resultType="Integer">
+		select d.dept_id
+		from sys_dept d
+            left join sys_employee_role_dept rd on d.dept_id = rd.dept_id
+        where rd.role_id = #{roleId}
+            <if test="deptCheckStrictly">
+              and d.dept_id not in (select d.parent_id from sys_dept d inner join sys_employee_role_dept rd on d.dept_id = rd.dept_id and rd.role_id = #{roleId})
+            </if>
+		order by d.parent_id, d.order_num
+	</select>
+
+    <select id="selectDeptById" parameterType="Long" resultMap="SysDeptResult">
+		<include refid="selectDeptVo"/>
+		where id = #{deptId}
+	</select>
+
+	<select id="selectDeptByDeptCode" parameterType="String" resultMap="SysDeptResult">
+		select d.id as dept_id,
+		       d.HOSPITAL_NO as parent_id,
+		       d.dept_name,
+		       d.SORT_ORDER as order_num,
+		       d.DIRECTOR_CODE as leader,
+		       d.TEL as phone,
+		       d.email,
+		       d.status,
+		       d.del_flag,
+		       d.DEPT_NAME_PYM1 as search_code,
+		       d.dept_code,
+		       d.dept_type,
+		       d.SPECIAL_FLAG as sys_flag,
+		       d.HOSPITAL_NO as org_code
+		from tm_bs_dept d
+		where d.dept_code = #{deptCode}
+		<if test="deptId !=null">and d.id!=#{deptId}</if>
+	</select>
+
+	<select id="selectDeptByDeptName" parameterType="String" resultMap="SysDeptResult">
+		<include refid="selectDeptVo"/>
+		where dept_name = #{deptName}
+		<if test="deptId !=null">and id!=#{deptId}</if>
+	</select>
+
+    <select id="checkDeptExistUser" parameterType="Long" resultType="int">
+		select count(1) from sys_user where dept_id = #{deptId} and del_flag = '0'
+	</select>
+
+	<select id="hasChildByDeptId" parameterType="Long" resultType="int">
+		select count(1) from sys_dept
+		where del_flag = '0' and parent_id = #{deptId} and rownum <![CDATA[ <= ]]> 1
+	</select>
+
+	<select id="selectChildrenDeptById" parameterType="Long" resultMap="SysDeptResult">
+		select * from sys_dept where FIND_IN_SET(#{deptId}, ancestors) <![CDATA[ <> ]]> 0
+	</select>
+
+	<select id="selectNormalChildrenDeptById" parameterType="Long" resultType="int">
+		select count(*) from sys_dept where status = 0 and del_flag = '0' and FIND_IN_SET(#{deptId}, ancestors) <![CDATA[ <> ]]> 0
+	</select>
+
+	<select id="checkDeptNameUnique" resultMap="SysDeptResult">
+	    <include refid="selectDeptVo"/>
+		where dept_name=#{deptName} and HOSPITAL_NO = #{parentId} and rownum <![CDATA[ <= ]]> 1
+	</select>
+
+	<select id="checkDeptCodeUnique" resultMap="SysDeptResult">
+		<include refid="selectDeptVo"/>
+		where dept_code=#{deptCode} and rownum <![CDATA[ <= ]]> 1
+	</select>
+
+    <insert id="insertDept" parameterType="SysDept">
+ 		insert into sys_dept(
+ 			<if test="deptId != null and deptId != 0">dept_id,</if>
+ 			<if test="parentId != null and parentId != 0">parent_id,</if>
+ 			<if test="deptName != null and deptName != ''">dept_name,</if>
+ 			<if test="ancestors != null and ancestors != ''">ancestors,</if>
+ 			<if test="orderNum != null and orderNum != ''">order_num,</if>
+ 			<if test="leader != null and leader != ''">leader,</if>
+ 			<if test="phone != null and phone != ''">phone,</if>
+ 			<if test="email != null and email != ''">email,</if>
+ 			<if test="status != null">status,</if>
+ 			<if test="createBy != null and createBy != ''">create_by,</if>
+			<if test="searchCode != null and searchCode != ''">search_code,</if>
+			<if test="deptCode != null and deptCode != ''">dept_code,</if>
+			<if test="deptType != null and deptType != ''">dept_type,</if>
+			<if test="sysFlag != null and sysFlag != ''">sys_flag,</if>
+			<if test="orgCode != null and orgCode != ''">org_code,</if>
+ 			create_time
+ 		)values(
+ 			<if test="deptId != null and deptId != 0">#{deptId},</if>
+ 			<if test="parentId != null and parentId != 0">#{parentId},</if>
+ 			<if test="deptName != null and deptName != ''">#{deptName},</if>
+ 			<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+ 			<if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+ 			<if test="leader != null and leader != ''">#{leader},</if>
+ 			<if test="phone != null and phone != ''">#{phone},</if>
+ 			<if test="email != null and email != ''">#{email},</if>
+ 			<if test="status != null">#{status},</if>
+ 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+			<if test="searchCode != null and searchCode != ''">#{searchCode},</if>
+			<if test="deptCode != null and deptCode != ''">#{deptCode},</if>
+			<if test="deptType != null and deptType != ''">#{deptType},</if>
+			<if test="sysFlag != null and sysFlag != ''">#{sysFlag},</if>
+			<if test="orgCode != null and orgCode != ''">#{orgCode},</if>
+ 			sysdate
+ 		)
+	</insert>
+
+	<update id="updateDept" parameterType="SysDept">
+ 		update sys_dept
+ 		<set>
+ 			<if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+ 			<if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+ 			<if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
+ 			<if test="orderNum != null and orderNum != ''">order_num = #{orderNum},</if>
+ 			<if test="leader != null">leader = #{leader},</if>
+ 			<if test="phone != null">phone = #{phone},</if>
+ 			<if test="email != null">email = #{email},</if>
+ 			<if test="status != null and status != ''">status = #{status},</if>
+ 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			<if test="searchCode != null and searchCode != ''">search_code = #{searchCode},</if>
+			<if test="deptCode != null and deptCode != ''">dept_code = #{deptCode},</if>
+			<if test="deptType != null and deptType != ''">dept_type = #{deptType},</if>
+			<if test="sysFlag != null and sysFlag != ''">sys_flag = #{sysFlag},</if>
+			<if test="orgCode != null and orgCode != ''">org_code = #{orgCode},</if>
+ 			update_time = sysdate
+ 		</set>
+ 		where dept_id = #{deptId}
+	</update>
+
+	<update id="updateDeptChildren" parameterType="java.util.List">
+	    update sys_dept set ancestors =
+	    <foreach collection="depts" item="item" index="index"
+	        separator=" " open="case dept_id" close="end">
+	        when #{item.deptId} then #{item.ancestors}
+	    </foreach>
+	    where dept_id in
+	    <foreach collection="depts" item="item" index="index"
+	        separator="," open="(" close=")">
+	        #{item.deptId}
+	    </foreach>
+	</update>
+
+	<update id="updateDeptStatusNormal" parameterType="Long">
+ 	    update sys_dept set status = '0' where dept_id in
+ 	    <foreach collection="array" item="deptId" open="(" separator="," close=")">
+        	#{deptId}
+        </foreach>
+	</update>
+
+	<delete id="deleteDeptById" parameterType="Long">
+		update sys_dept set del_flag = '2' where dept_id = #{deptId}
+	</delete>
+
+	<select id="selectByDeptIds" parameterType="String" resultMap="SysDeptResult">
+		select d.id as dept_id,
+		d.HOSPITAL_NO as org_code,
+		d.dept_name,
+		d.SORT_ORDER as order_num,
+		d.DIRECTOR_CODE as leader, d.TEL as phone,
+		d.status, d.del_flag,d.DEPT_NAME_PYM1 as search_code,
+		d.dept_code, d.dept_type,
+		d.SPECIAL_FLAG as sys_flag, d.tabke_drug_mode
+		from tm_bs_dept d
+		where  d.dept_code in
+		<foreach collection="list" item="deptId" open="(" separator="," close=")">
+			#{deptId}
+		</foreach>
+	</select>
+	<select id="selectByDeptIdsAndTypes" parameterType="String" resultMap="SysDeptResult">
+		select d.id as dept_id,
+		d.HOSPITAL_NO as org_code,
+		d.dept_name,
+		d.SORT_ORDER as order_num,
+		d.DIRECTOR_CODE as leader, d.TEL as phone,
+		d.status, d.del_flag,d.DEPT_NAME_PYM1 as search_code,
+		d.dept_code, t3.dept_type,
+		d.SPECIAL_FLAG as sys_flag, d.tabke_drug_mode, d.dept_name_pym1, d.dept_name_pym2
+		from tm_bs_dept d
+		LEFT JOIN tm_bs_dept_type_contrast t3 on d.dept_code=t3.dept_code
+		where  d.dept_code in
+		<foreach collection="list" item="deptId" open="(" separator="," close=")">
+			#{deptId}
+		</foreach>
+		order by d.dept_name_pym1
+	</select>
+	<select id="selectAll" resultMap="SysDeptResult">
+		<include refid="selectDeptVo"/>
+		where d.del_flag = '0'
+	</select>
+
+	<select id="selectDeptByEmployeeId" parameterType="String" resultMap="SysDeptResult">
+		select d.id as dept_id,
+		       d.HOSPITAL_NO as parent_id,
+		       d.dept_name,
+		       d.SORT_ORDER as order_num,
+		       d.DIRECTOR_CODE as leader, d.TEL as phone,
+		       d.status, d.del_flag,d.DEPT_NAME_PYM1 as search_code,
+		       d.dept_code, d.dept_type,d.HOSPITAL_NO as org_code,
+		       d.SPECIAL_FLAG as sys_flag, d.tabke_drug_mode,
+		       d.arrears_flag as arrears_flag,d.accounts_mode,
+		       d.mr_class,
+			   h.chs_code,
+			   h.chs_name
+		from tm_bs_dept d
+		left join tm_bs_staff_dept ud on d.dept_code = ud.DEPT_CODE
+		left join tm_bs_hospital h on d.hospital_no=h.hospital_no
+		where ud.STAFF_CODE = #{employeeId}
+	</select>
+	<select id="selectDeptByUserId" parameterType="Long" resultMap="SysDeptResult">
+		select d.ID as dept_id, d.HOSPITAL_NO as parent_id,
+		 d.dept_name, d.SORT_ORDER as order_num,
+		d.DIRECTOR_CODE as leader, d.TEL as phone, d.EMAIL as email, d.STATUS as status,
+		d.del_flag, d.DEPT_NAME_PYM1 as search_code, d.dept_code, d.dept_type
+		from tm_bs_dept d
+		left join tm_bs_staff_dept ud on d.dept_code = ud.dept_code
+		left join tm_bs_staff u on ud.staff_code = u.staff_code
+		where u.id = #{userId}
+	</select>
+
+
+<!--	<select id="selectDeptInfoByUserId" parameterType="Long" resultMap="SysDeptResult">-->
+<!--		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status, d.del_flag, d.create_by, d.create_time, d.search_code, d.dept_code, d.dept_type-->
+<!--		from sys_dept d-->
+<!--		left join sys_user_dept ud on d.dept_id = ud.dept_id-->
+<!--		where ud.user_id = #{userId}-->
+<!--	</select>-->
+
+	<select id="selectSpecialTypeList" parameterType="String" resultMap="SysDeptResult">
+		select
+		d.ID as dept_id,
+		d.HOSPITAL_NO as parent_id,
+		d.dept_name, d.SORT_ORDER as order_num,
+		d.DIRECTOR_CODE as leader,
+		d.TEL as phone, d.status, d.del_flag,  d.DEPT_NAME_PYM1 as search_code, d.dept_code, d.dept_type
+		from tm_bs_dept d
+		where d.SPECIAL_FLAG=#{sysFlag}
+	</select>
+	<select id="selectDocDeptList" parameterType="sysDept" resultMap="SysDeptResult">
+		select d.id as dept_id,d.dept_name, d.dept_code
+		from tm_bs_dept d
+		left join tm_bs_staff_dept ud on d.dept_code = ud.dept_code
+		left join tm_bs_staff be on be.staff_code = ud.staff_code
+        where be.staff_code=#{emplNumber}
+	</select>
+
+	<select id="selectTmplDeptOrderList" parameterType="sysDeptVo" resultMap="SysDeptVoResult">
+		 select DECODE(td.dept_cd,null,'0','1') as tickstate,sd.dept_name,sd.dept_code from sys_dept sd
+		 left join tmpl_dept td on sd.dept_code=td.dept_cd and td.temp_id=#{tempId}
+		 where sd.del_flag = '0'
+		<if test="deptName != null and deptName != ''">
+			AND sd.dept_name like concat(concat('%',#{deptName}),'%')
+		</if>
+		 order by td.dept_cd
+	</select>
+
+	<insert id="insertMap" parameterType="map">
+		insert into TM_BS_DEPT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="DEPT_ID != null">ID, </if>
+			<if test="DEPT_NAME != null and DEPT_NAME != ''">DEPT_NAME, </if>
+			<if test="DEPT_NAME != null and DEPT_NAME != ''">DEPT_NAME_PYM1, </if>
+			<if test="ORDER_NUM != null">SORT_ORDER, </if>
+			<if test="LEADER != null and LEADER != ''">DIRECTOR_CODE, </if>
+			<if test="STATUS != null and STATUS != ''">STATUS, </if>
+			<if test="DEL_FLAG != null and DEL_FLAG != ''">DEL_FLAG, </if>
+			<if test="DEPT_CODE != null and DEPT_CODE != ''">DEPT_CODE, </if>
+			<if test="DEPT_TYPE != null and DEPT_TYPE != ''">DEPT_TYPE,</if>
+			<if test="SYS_FLAG != null and SYS_FLAG != ''">SPECIAL_FLAG,</if>
+			<if test="ORG_CODE != null and ORG_CODE != ''">HOSPITAL_NO,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="DEPT_ID != null and DEPT_ID != ''">#{DEPT_ID}, </if>
+			<if test="DEPT_NAME != null and DEPT_NAME != ''">#{DEPT_NAME}, </if>
+			<if test="DEPT_NAME != null and DEPT_NAME != ''">fgetpy(#{DEPT_NAME}), </if>
+			<if test="ORDER_NUM != null">#{ORDER_NUM}, </if>
+			<if test="LEADER != null and LEADER != ''">#{LEADER}, </if>
+			<if test="STATUS != null and STATUS != ''">#{STATUS}, </if>
+			<if test="DEL_FLAG != null and DEL_FLAG != ''">#{DEL_FLAG}, </if>
+			<if test="DEPT_CODE != null and DEPT_CODE != ''">#{DEPT_CODE}, </if>
+			<if test="DEPT_TYPE != null and DEPT_TYPE != ''">#{DEPT_TYPE}, </if>
+			<if test="SYS_FLAG != null and SYS_FLAG != ''">#{SYS_FLAG},</if>
+			<if test="ORG_CODE != null and ORG_CODE != ''">#{ORG_CODE},</if>
+		</trim>
+	</insert>
+	<select id="selectListByDeptCodeList" resultMap="SysDeptResult">
+		<include refid="selectDeptVo"/>
+		left join TM_BS_HOSPITAL o on d.HOSPITAL_NO = o.HOSPITAL_NO
+		where o.HOSPITAL_NO = #{hospitalCode}
+		and d.dept_code in
+		<foreach collection="deptCodeList" item="deptCode" open="(" separator="," close=")">
+			#{deptCode}
+		</foreach>
+	</select>
+	<select id="selectAllDeptList" resultType="com.emr.project.system.domain.SysDept">
+      select dept_code as deptCode, dept_name as deptName from TM_BS_DEPT
+  	</select>
+	<delete id="deleteDept" >
+		delete from tm_bs_dept
+	</delete>
+	<delete id="deleteDeptByDeptCode" parameterType="String">
+		delete from tm_bs_dept where dept_code=#{deptCode}
+	</delete>
+
+	<select id="selectdeptListByTypeCode" parameterType="String" resultMap="SysDeptResult">
+		select de.ID as dept_id,
+			   de.HOSPITAL_NO as parent_id,
+			   '' as ancestors, de.dept_name, de.SORT_ORDER as order_num,
+			   de.DIRECTOR_CODE as leader, de.TEL as phone, de.EMAIL as email, de.status, de.del_flag,
+			   de.DEPT_NAME_PYM1 as search_code, de.dept_code, de.dept_type, de.SPECIAL_FLAG as sys_flag, de.HOSPITAL_NO as org_code from tm_Bs_dept de
+			       left join TM_BS_DEPT_TYPE_CONTRAST ty on de.dept_Code=ty.dept_code where de.del_flag='0' and ty.DEPT_TYPE=#{typeCode}
+<!--             <if test="deptName!=null and deptName!=''">-->
+<!--				 and (de.dept_name like concat(concat('%',#{deptName}),'%') or de.DEPT_NAME_PYM1 like concat(concat('%',#{deptName}),'%'))-->
+<!--			 </if>-->
+	</select>
+	<sql id="Base_Column_List">
+    id, hospital_no hospital_code, dept_code dep_code, dept_name dep_name, dept_name_pym1 dep_name_pym1,
+    dept_name_pym2 dep_name_pym2, ward_no, Professional,
+    upper_dept upper_dep, dept_class dep_class, dept_type dep_type,
+    pharmacy_type, special_flag, sort_order, special_limit,
+    beds_open, accounts_mode, arrears_flag, dep_ratio, site, Head_nurse_code, Director_code,
+    tel, fax, email, profile
+  </sql>
+	<!-- 根据code查询单个信息 -->
+	<select id="getOneByCode" parameterType="java.lang.String" resultMap="SysDeptResult" >
+		select d.id as dept_id,
+		       d.HOSPITAL_NO as parent_id,
+		       d.dept_name,
+		       d.SORT_ORDER as order_num,
+		       d.DIRECTOR_CODE as leader,
+		       d.TEL as phone,
+		       d.email,
+		       d.status,
+		       d.del_flag,
+		       d.DEPT_NAME_PYM1 as search_code,
+		       d.dept_code,
+		       d.dept_type,
+		       d.SPECIAL_FLAG as sys_flag,
+		       d.HOSPITAL_NO as org_code,
+		       arrears_flag,
+		       accounts_mode,
+		       d.mr_class
+		from TM_BS_DEPT d
+		where d.dept_code = #{depCode}
+	</select>
+	<select id="selectListByDepCodeList" parameterType="java.util.List" resultMap="SysDeptResult">
+		<include refid="selectDeptVo"/>
+		where d.dept_code in
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
+	<select id="selectSysDeptSiteByCodeList" resultMap="SysDeptResult">
+		SELECT dept_code,SITE,DEPT_NAME FROM tm_bs_dept
+		<where>
+			<if test="list !=null and list.size()>0">
+				and DEPT_CODE in
+				<foreach collection="list" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+</mapper>

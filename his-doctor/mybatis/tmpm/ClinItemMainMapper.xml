@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.ClinItemMainMapper">
+
+    <resultMap type="ClinItemMain" id="ClinItemMainResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="itemClassCd"    column="item_class_cd"    />
+        <result property="itemClassName"    column="item_class_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="outEnabled"    column="out_enabled"    />
+        <result property="inEnabled"    column="in_enabled"    />
+        <result property="documentTypeNo"    column="document_type_no"    />
+        <result property="examMachineCd"    column="exam_machine_cd"    />
+        <result property="examMachineName"    column="exam_machine_name"    />
+        <result property="examPartCd"    column="exam_part_cd"    />
+        <result property="examPartName"    column="exam_part_name"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="itemTypeCd"    column="item_type_cd"    />
+        <result property="freqFlag"    column="freq_flag"    />
+        <result property="priceFlag"    column="price_flag"    />
+        <result property="price"    column="price"    />
+        <result property="execDeptCd"    column="exec_dept_cd"    />
+        <result property="execDeptName"    column="exec_dept_name"    />
+        <result property="itemFlagCd"    column="item_flag_cd"    />
+        <result property="itemFlagName"    column="item_flag_name"    />
+        <result property="barcodeClassCd"    column="barcode_class_cd"    />
+        <result property="barcodeClassName"    column="barcode_class_name"    />
+        <result property="execTerm"    column="exec_term"    />
+        <result property="examSex"    column="exam_sex"    />
+        <result property="indication"    column="indication"    />
+        <result property="examNote"    column="exam_note"    />
+        <result property="specCollectionReq"    column="spec_collection_req"    />
+        <result property="examSign"    column="exam_sign"    />
+        <result property="supportDiag"    column="support_diag"    />
+        <result property="exclusionDiag"    column="exclusion_diag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="executorFlag"    column="executor_flag"    />
+        <result property="emrEventCd"    column="emr_event_cd"    />
+        <result property="numberLimit"    column="number_limit"    />
+        <result property="itemNameShort"    column="item_name_short"    />
+        <result property="changeFlag"    column="change_flag"    />
+        <result property="ageStart"    column="age_start"    />
+        <result property="ageEnd"    column="age_end"    />
+    </resultMap>
+    <resultMap type="DrugAndClin" id="DrugAndClinResult">
+        <result property="id"    column="item_cd"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="cpNo"    column="item_cd"    />
+        <result property="cpName"    column="item_name"    />
+        <result property="orderClassCode"    column="item_class_cd"    />
+        <result property="orderClassName"    column="item_class_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+
+        <result property="price"    column="price"    />
+        <result property="outEnabled"    column="out_enabled"    />
+        <result property="inEnabled"    column="in_enabled"    />
+        <result property="documentTypeNo"    column="document_type_no"    />
+        <result property="examMachineCd"    column="exam_machine_cd"    />
+        <result property="examMachineName"    column="exam_machine_name"    />
+        <result property="examPartCd"    column="exam_part_cd"    />
+        <result property="examPartName"    column="exam_part_name"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="orderItemType"    column="item_type_cd"    />
+        <result property="freqFlag"    column="freq_flag"    />
+        <result property="priceFlag"    column="price_flag"    />
+        <result property="performDepCode"    column="exec_dept_cd"    />
+        <result property="performDepName"    column="exec_dept_name"    />
+        <result property="itemFlagCd"    column="item_flag_cd"    />
+        <result property="itemFlagName"    column="item_flag_name"    />
+        <result property="barcodeClassCd"    column="barcode_class_cd"    />
+        <result property="barcodeClassName"    column="barcode_class_name"    />
+        <result property="execTerm"    column="exec_term"    />
+        <result property="examSex"    column="exam_sex"    />
+        <result property="indication"    column="indication"    />
+        <result property="examNote"    column="exam_note"    />
+        <result property="specCollectionReq"    column="spec_collection_req"    />
+        <result property="examSign"    column="exam_sign"    />
+        <result property="supportDiag"    column="support_diag"    />
+        <result property="exclusionDiag"    column="exclusion_diag"    />
+
+        <result property="orderFlag"    column="order_flag"    />
+        <result property="usageTimes"    column="usage_times"    />
+
+        <result property="executorFlag"    column="executor_flag"    />
+        <result property="emrEventCd"    column="emr_event_cd"    />
+        <result property="herbalFlag"    column="herbal_flag"    />
+        <result property="changeFlag"    column="change_flag"    />
+        <result property="ageStart"    column="age_start"    />
+        <result property="ageEnd"    column="age_end"    />
+        <result property="notice"    column="notice"    />
+    </resultMap>
+
+    <sql id="selectClinItemMainVo">
+        select hospital_code, item_cd, item_name, item_class_cd, item_class_name, standard, inputstrphtc, out_enabled, in_enabled, document_type_no, exam_machine_cd, exam_machine_name, exam_part_cd, exam_part_name, spec_cd, spec_name, item_type_cd, freq_flag, price_flag, price, exec_dept_cd, exec_dept_name, item_flag_cd, item_flag_name, barcode_class_cd, barcode_class_name, exec_term, exam_sex, indication, exam_note, spec_collection_req, exam_sign, support_diag, exclusion_diag, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,executor_flag,emr_event_cd,number_limit,item_name_short,change_flag,age_start,age_end from TM_BS_CLIN_ITEM_MAIN
+    </sql>
+
+    <select id="selectClinItemMainList" parameterType="ClinItemMain" resultMap="ClinItemMainResult">
+        <include refid="selectClinItemMainVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="itemClassCd != null  and itemClassCd != ''"> and item_class_cd = #{itemClassCd}</if>
+            <if test="itemClassName != null  and itemClassName != ''"> and item_class_name like concat(concat('%', #{itemClassName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="outEnabled != null  and outEnabled != ''"> and out_enabled = #{outEnabled}</if>
+            <if test="inEnabled != null  and inEnabled != ''"> and in_enabled = #{inEnabled}</if>
+            <if test="documentTypeNo != null  and documentTypeNo != ''"> and document_type_no = #{documentTypeNo}</if>
+            <if test="examMachineCd != null  and examMachineCd != ''"> and exam_machine_cd = #{examMachineCd}</if>
+            <if test="examMachineName != null  and examMachineName != ''"> and exam_machine_name like concat(concat('%', #{examMachineName}), '%')</if>
+            <if test="examPartCd != null  and examPartCd != ''"> and exam_part_cd = #{examPartCd}</if>
+            <if test="examPartName != null  and examPartName != ''"> and exam_part_name like concat(concat('%', #{examPartName}), '%')</if>
+            <if test="specCd != null  and specCd != ''"> and spec_cd = #{specCd}</if>
+            <if test="specName != null  and specName != ''"> and spec_name like concat(concat('%', #{specName}), '%')</if>
+            <if test="itemTypeCd != null  and itemTypeCd != ''"> and item_type_cd = #{itemTypeCd}</if>
+            <if test="freqFlag != null  and freqFlag != ''"> and freq_flag = #{freqFlag}</if>
+            <if test="priceFlag != null  and priceFlag != ''"> and price_flag = #{priceFlag}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="execDeptCd != null  and execDeptCd != ''"> and exec_dept_cd = #{execDeptCd}</if>
+            <if test="execDeptName != null  and execDeptName != ''"> and exec_dept_name like concat(concat('%', #{execDeptName}), '%')</if>
+            <if test="itemFlagCd != null  and itemFlagCd != ''"> and item_flag_cd = #{itemFlagCd}</if>
+            <if test="itemFlagName != null  and itemFlagName != ''"> and item_flag_name like concat(concat('%', #{itemFlagName}), '%')</if>
+            <if test="barcodeClassCd != null  and barcodeClassCd != ''"> and barcode_class_cd = #{barcodeClassCd}</if>
+            <if test="barcodeClassName != null  and barcodeClassName != ''"> and barcode_class_name like concat(concat('%', #{barcodeClassName}), '%')</if>
+            <if test="execTerm != null  and execTerm != ''"> and exec_term = #{execTerm}</if>
+            <if test="examSex != null  and examSex != ''"> and exam_sex = #{examSex}</if>
+            <if test="indication != null  and indication != ''"> and indication = #{indication}</if>
+            <if test="examNote != null  and examNote != ''"> and exam_note = #{examNote}</if>
+            <if test="specCollectionReq != null  and specCollectionReq != ''"> and spec_collection_req = #{specCollectionReq}</if>
+            <if test="examSign != null  and examSign != ''"> and exam_sign = #{examSign}</if>
+            <if test="supportDiag != null  and supportDiag != ''"> and support_diag = #{supportDiag}</if>
+            <if test="exclusionDiag != null  and exclusionDiag != ''"> and exclusion_diag = #{exclusionDiag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="executorFlag != null "> and executor_flag = #{executorFlag}</if>
+            <if test="emrEventCd != null "> and emr_event_cd = #{emrEventCd}</if>
+        </where>
+    </select>
+
+    <select id="selectClinItemMainById" parameterType="String" resultMap="ClinItemMainResult">
+        <include refid="selectClinItemMainVo"/>
+        where item_cd = #{itemCd}
+    </select>
+    <select id="selectClinItemMainByItemCds"  resultMap="ClinItemMainResult">
+        <include refid="selectClinItemMainVo"/>
+        where item_cd in
+        <foreach item="itemCd" collection="itemCdList" open="(" separator="," close=")">
+            #{itemCd}
+        </foreach>
+    </select>
+
+    <insert id="insertClinItemMain" parameterType="ClinItemMain">
+        insert into TM_BS_CLIN_ITEM_MAIN
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="itemClassCd != null">item_class_cd,</if>
+            <if test="itemClassName != null">item_class_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="outEnabled != null">out_enabled,</if>
+            <if test="inEnabled != null">in_enabled,</if>
+            <if test="documentTypeNo != null">document_type_no,</if>
+            <if test="examMachineCd != null">exam_machine_cd,</if>
+            <if test="examMachineName != null">exam_machine_name,</if>
+            <if test="examPartCd != null">exam_part_cd,</if>
+            <if test="examPartName != null">exam_part_name,</if>
+            <if test="specCd != null">spec_cd,</if>
+            <if test="specName != null">spec_name,</if>
+            <if test="itemTypeCd != null">item_type_cd,</if>
+            <if test="freqFlag != null">freq_flag,</if>
+            <if test="priceFlag != null">price_flag,</if>
+            <if test="price != null">price,</if>
+            <if test="execDeptCd != null">exec_dept_cd,</if>
+            <if test="execDeptName != null">exec_dept_name,</if>
+            <if test="itemFlagCd != null">item_flag_cd,</if>
+            <if test="itemFlagName != null">item_flag_name,</if>
+            <if test="barcodeClassCd != null">barcode_class_cd,</if>
+            <if test="barcodeClassName != null">barcode_class_name,</if>
+            <if test="execTerm != null">exec_term,</if>
+            <if test="examSex != null">exam_sex,</if>
+            <if test="indication != null">indication,</if>
+            <if test="examNote != null">exam_note,</if>
+            <if test="specCollectionReq != null">spec_collection_req,</if>
+            <if test="examSign != null">exam_sign,</if>
+            <if test="supportDiag != null">support_diag,</if>
+            <if test="exclusionDiag != null">exclusion_diag,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="executorFlag != null ">executor_flag,</if>
+            <if test="emrEventCd != null ">emr_event_cd,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="itemClassCd != null">#{itemClassCd},</if>
+            <if test="itemClassName != null">#{itemClassName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="outEnabled != null">#{outEnabled},</if>
+            <if test="inEnabled != null">#{inEnabled},</if>
+            <if test="documentTypeNo != null">#{documentTypeNo},</if>
+            <if test="examMachineCd != null">#{examMachineCd},</if>
+            <if test="examMachineName != null">#{examMachineName},</if>
+            <if test="examPartCd != null">#{examPartCd},</if>
+            <if test="examPartName != null">#{examPartName},</if>
+            <if test="specCd != null">#{specCd},</if>
+            <if test="specName != null">#{specName},</if>
+            <if test="itemTypeCd != null">#{itemTypeCd},</if>
+            <if test="freqFlag != null">#{freqFlag},</if>
+            <if test="priceFlag != null">#{priceFlag},</if>
+            <if test="price != null">#{price},</if>
+            <if test="execDeptCd != null">#{execDeptCd},</if>
+            <if test="execDeptName != null">#{execDeptName},</if>
+            <if test="itemFlagCd != null">#{itemFlagCd},</if>
+            <if test="itemFlagName != null">#{itemFlagName},</if>
+            <if test="barcodeClassCd != null">#{barcodeClassCd},</if>
+            <if test="barcodeClassName != null">#{barcodeClassName},</if>
+            <if test="execTerm != null">#{execTerm},</if>
+            <if test="examSex != null">#{examSex},</if>
+            <if test="indication != null">#{indication},</if>
+            <if test="examNote != null">#{examNote},</if>
+            <if test="specCollectionReq != null">#{specCollectionReq},</if>
+            <if test="examSign != null">#{examSign},</if>
+            <if test="supportDiag != null">#{supportDiag},</if>
+            <if test="exclusionDiag != null">#{exclusionDiag},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="executorFlag != null ">#{executorFlag},</if>
+            <if test="emrEventCd != null ">#{emrEventCd},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClinItemMain" parameterType="ClinItemMain">
+        update TM_BS_CLIN_ITEM_MAIN
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="itemClassCd != null">item_class_cd = #{itemClassCd},</if>
+            <if test="itemClassName != null">item_class_name = #{itemClassName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="outEnabled != null">out_enabled = #{outEnabled},</if>
+            <if test="inEnabled != null">in_enabled = #{inEnabled},</if>
+            <if test="documentTypeNo != null">document_type_no = #{documentTypeNo},</if>
+            <if test="examMachineCd != null">exam_machine_cd = #{examMachineCd},</if>
+            <if test="examMachineName != null">exam_machine_name = #{examMachineName},</if>
+            <if test="examPartCd != null">exam_part_cd = #{examPartCd},</if>
+            <if test="examPartName != null">exam_part_name = #{examPartName},</if>
+            <if test="specCd != null">spec_cd = #{specCd},</if>
+            <if test="specName != null">spec_name = #{specName},</if>
+            <if test="itemTypeCd != null">item_type_cd = #{itemTypeCd},</if>
+            <if test="freqFlag != null">freq_flag = #{freqFlag},</if>
+            <if test="priceFlag != null">price_flag = #{priceFlag},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="execDeptCd != null">exec_dept_cd = #{execDeptCd},</if>
+            <if test="execDeptName != null">exec_dept_name = #{execDeptName},</if>
+            <if test="itemFlagCd != null">item_flag_cd = #{itemFlagCd},</if>
+            <if test="itemFlagName != null">item_flag_name = #{itemFlagName},</if>
+            <if test="barcodeClassCd != null">barcode_class_cd = #{barcodeClassCd},</if>
+            <if test="barcodeClassName != null">barcode_class_name = #{barcodeClassName},</if>
+            <if test="execTerm != null">exec_term = #{execTerm},</if>
+            <if test="examSex != null">exam_sex = #{examSex},</if>
+            <if test="indication != null">indication = #{indication},</if>
+            <if test="examNote != null">exam_note = #{examNote},</if>
+            <if test="specCollectionReq != null">spec_collection_req = #{specCollectionReq},</if>
+            <if test="examSign != null">exam_sign = #{examSign},</if>
+            <if test="supportDiag != null">support_diag = #{supportDiag},</if>
+            <if test="exclusionDiag != null">exclusion_diag = #{exclusionDiag},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="executorFlag != null ">executor_flag = #{executorFlag},</if>
+            <if test="emrEventCd != null ">emr_event_cd = #{emrEventCd},</if>
+        </trim>
+        where item_cd = #{itemCd}
+    </update>
+
+    <delete id="deleteClinItemMainById" parameterType="String">
+        delete from TM_BS_CLIN_ITEM_MAIN where item_cd = #{itemCd}
+    </delete>
+
+    <delete id="deleteClinItemMainByIds" parameterType="String">
+        delete from TM_BS_CLIN_ITEM_MAIN where item_cd in
+        <foreach item="itemCd" collection="array" open="(" separator="," close=")">
+            #{itemCd}
+        </foreach>
+    </delete>
+
+    <select id="selectClinList" resultMap="DrugAndClinResult">
+        select m.hospital_code, m.item_cd, m.item_name, m.item_class_cd, m.item_class_name, m.standard, m.inputstrphtc, m.out_enabled, m.in_enabled,
+        m.document_type_no, m.exam_machine_cd, m.exam_machine_name, m.exam_part_cd, m.exam_part_name, m.spec_cd, m.spec_name, m.item_type_cd,
+        m.freq_flag, m.price_flag, m.price, m.exec_dept_cd, m.exec_dept_name, m.item_flag_cd, m.item_flag_name, m.barcode_class_cd,
+        m.barcode_class_name, m.exec_term, m.exam_sex, m.indication, m.exam_note, m.spec_collection_req, m.exam_sign, m.support_diag,
+        m.exclusion_diag, l.USAGE_TIMES, m.executor_flag, m.emr_event_cd,m.unit,'0' herbal_flag,
+        case m.item_class_cd when '02' then t.order_flag when '03' then t.order_flag else '1' end order_flag,m.change_flag,m.age_start,m.age_end,
+        case when a.devicetype_code is not null then a.notice when a.devicetype_code is null then b.notice end as notice
+        from TM_BS_CLIN_ITEM_MAIN m
+        left join TM_BS_CLIN_ITEM_DEPT d on m.ITEM_CD = d.CLIN_ITEM_CD
+        left join TM_BS_DOCUMENT_TYPE t on m.DOCUMENT_TYPE_NO = t.DOCUMENT_TYPE_CD
+        left join TM_PM_CLINITEM_USE_LOG l on m.ITEM_CD = l.ITEM_CD and l.doc_cd = #{docCd}
+        left join tm_bs_device a on m.exam_machine_cd = a.devicetype_code
+        left join tm_bs_device b on t.exam_machine_cd = b.devicetype_code
+        <where>
+            and m.IN_ENABLED = 1
+            and m.DEL_FLAG = '0'
+            <if test="hospitalCode != null and hospitalCode != ''"> and m.hospital_code = #{hospitalCode}</if>
+            <if test="deptCode != null and deptCode != ''"> and (d.DEPT_CD = '000000' or d.DEPT_CD = #{deptCode})</if>
+            <if test="itemFlagCd != null and itemFlagCd != ''"> and m.item_flag_cd = #{itemFlagCd}</if>
+        </where>
+        order by l.usage_times
+    </select>
+    <select id="selectClinItemMainByItemCdList" resultMap="ClinItemMainResult">
+        <include refid="selectClinItemMainVo"/>
+        <where>
+            <if test="list != null and list.size()>0">
+                and item_cd in
+                <foreach collection="list" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectCountByItemFlagCd" resultType="java.lang.Integer">
+        select count(0) from TM_BS_CLIN_ITEM_MAIN where ITEM_FLAG_CD=#{itemFlagCd} and DEL_FLAG= '0'
+    </select>
+</mapper>

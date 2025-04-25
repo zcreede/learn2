@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.recall.mapper.IndexRecallApplyMapper">
+
+    <resultMap type="IndexRecallApply" id="IndexRecallApplyResult">
+        <result property="id"    column="id"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="recallReason"    column="recall_reason"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="conDeptCd"    column="con_dept_cd"    />
+        <result property="conDeptName"    column="con_dept_name"    />
+        <result property="conTime"    column="con_time"    />
+        <result property="conDocCd"    column="con_doc_cd"    />
+        <result property="conDocName"    column="con_doc_name"    />
+        <result property="conRemark"    column="con_remark"    />
+        <result property="appStatus"    column="app_status"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="fileDate"    column="file_date"    />
+        <result property="dischargeDepartmentNo"    column="discharge_department_no"    />
+        <result property="dischargeDepartmentName"    column="discharge_department_name"    />
+        <result property="hospitalizedDate"    column="hospitalized_date"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="residentCode"    column="resident_code"    />
+        <result property="residentNo"    column="resident_no"    />
+        <result property="residentName"    column="resident_name"    />
+        <result property="mrState"    column="mr_state"    />
+    </resultMap>
+
+    <sql id="selectIndexRecallApplyVo">
+        select id, app_doc_cd, app_doc_name, app_dept_cd, app_dept_name, app_time, recall_reason, case_no, admission_no,
+        hospitalized_count, patient_name, con_dept_cd, con_dept_name, con_time, con_doc_cd, con_doc_name, con_remark,
+        app_status, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, file_date,
+        discharge_department_no, discharge_department_name, hospitalized_date, leave_hospital_date, resident_code,
+         resident_no, resident_name, mr_state from emr_index_recall_apply
+    </sql>
+
+    <select id="selectIndexRecallApplyList" parameterType="IndexRecallApply" resultMap="IndexRecallApplyVOResult">
+        <include refid="selectIndexRecallApplyVo"/>
+        <where>
+            <if test="appDocCd != null  and appDocCd != ''"> and app_doc_cd = #{appDocCd}</if>
+            <if test="appDocName != null  and appDocName != ''"> and app_doc_name like concat(concat('%', #{appDocName}), '%')</if>
+            <if test="appDeptCd != null  and appDeptCd != ''"> and app_dept_cd = #{appDeptCd}</if>
+            <if test="appDeptName != null  and appDeptName != ''"> and app_dept_name like concat(concat('%', #{appDeptName}), '%')</if>
+            <if test="appTime != null "> and app_time = #{appTime}</if>
+            <if test="recallReason != null  and recallReason != ''"> and recall_reason = #{recallReason}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="conDeptCd != null  and conDeptCd != ''"> and con_dept_cd = #{conDeptCd}</if>
+            <if test="conDeptName != null  and conDeptName != ''"> and con_dept_name like concat(concat('%', #{conDeptName}), '%')</if>
+            <if test="conTime != null "> and con_time = #{conTime}</if>
+            <if test="conDocCd != null  and conDocCd != ''"> and con_doc_cd = #{conDocCd}</if>
+            <if test="conDocName != null  and conDocName != ''"> and con_doc_name like concat(concat('%', #{conDocName}), '%')</if>
+            <if test="conRemark != null  and conRemark != ''"> and con_remark = #{conRemark}</if>
+            <if test="appStatus != null  and appStatus != ''"> and app_status = #{appStatus}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="fileDate != null "> and file_date = #{fileDate}</if>
+            <if test="dischargeDepartmentNo != null  and dischargeDepartmentNo != ''"> and discharge_department_no = #{dischargeDepartmentNo}</if>
+            <if test="dischargeDepartmentName != null  and dischargeDepartmentName != ''"> and discharge_department_name like concat(concat('%', #{dischargeDepartmentName}), '%')</if>
+            <if test="hospitalizedDate != null "> and hospitalized_date = #{hospitalizedDate}</if>
+            <if test="leaveHospitalDate != null "> and leave_hospital_date = #{leaveHospitalDate}</if>
+            <if test="residentCode != null  and residentCode != ''"> and resident_code = #{residentCode}</if>
+            <if test="residentNo != null  and residentNo != ''"> and resident_no = #{residentNo}</if>
+            <if test="residentName != null  and residentName != ''"> and resident_name like concat(concat('%', #{residentName}), '%')</if>
+            <if test="mrState != null  and mrState != ''"> and mr_state = #{mrState}</if>
+        </where>
+    </select>
+
+    <select id="selectIndexRecallApplyById" parameterType="Long" resultMap="IndexRecallApplyResult">
+        <include refid="selectIndexRecallApplyVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectRecallApplyByAdmissionNo" resultMap="IndexRecallApplyResult">
+        <include refid="selectIndexRecallApplyVo"/>
+        where ADMISSION_NO = #{admissionNo} and app_status ='0' and APP_DOC_CD= #{userName}
+    </select>
+    <resultMap id="IndexRecallApplyVOResult" type="com.emr.project.recall.domain.vo.IndexRecallApplyVO">
+        <result property="id"    column="id"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="recallReason"    column="recall_reason"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="conDeptCd"    column="con_dept_cd"    />
+        <result property="conDeptName"    column="con_dept_name"    />
+        <result property="conTime"    column="con_time"    />
+        <result property="conDocCd"    column="con_doc_cd"    />
+        <result property="conDocName"    column="con_doc_name"    />
+        <result property="conRemark"    column="con_remark"    />
+        <result property="appStatus"    column="app_status"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="fileDate"    column="file_date"    />
+        <result property="dischargeDepartmentNo"    column="discharge_department_no"    />
+        <result property="dischargeDepartmentName"    column="discharge_department_name"    />
+        <result property="hospitalizedDate"    column="hospitalized_date"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="residentCode"    column="resident_code"    />
+        <result property="residentNo"    column="resident_no"    />
+        <result property="residentName"    column="resident_name"    />
+        <result property="mrState"    column="mr_state"    />
+    </resultMap>
+    <select id="selectReviewedList" resultMap="IndexRecallApplyVOResult">
+        SELECT
+        b.*
+        FROM
+            emr_index_recall_apply b
+        LEFT JOIN TM_BS_STAFF s ON s.staff_code = b.APP_DOC_CD
+        <where>
+            <if test="list !=null and list.size>0">
+                and b.APP_STATUS in
+                <foreach collection="list" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="dateType != null">
+                <if test="dateType == 1">
+                    <if test="startTime != null and startTime!=''">
+                        and to_char(b.CON_TIME, 'yyyy-MM-dd HH24:mi:ss')&gt;= #{startTime,jdbcType=VARCHAR}
+                    </if>
+                    <if test="endTime!=null and endTime!=''">
+                        and to_char(b.CON_TIME, 'yyyy-MM-dd HH24:mi:ss')&lt;= #{endTime,jdbcType=VARCHAR}
+                    </if>
+                </if>
+                <if test="dateType == 2">
+                    <if test="startTime != null and startTime!=''">
+                        and to_char(b.APP_TIME, 'yyyy-MM-dd HH24:mi:ss')&gt;= #{startTime,jdbcType=VARCHAR}
+                    </if>
+                    <if test="endTime != null and endTime != ''">
+                        and to_char(b.APP_TIME, 'yyyy-MM-dd HH24:mi:ss')&lt;= #{endTime,jdbcType=VARCHAR}
+                    </if>
+                </if>
+            </if>
+            <if test="appDeptCd !=null and appDeptCd != ''">
+                and b.APP_DEPT_CD = #{appDeptCd}
+            </if>
+            <if test="searchStr != null and searchStr != ''">
+                and (b.ADMISSION_NO like concat( concat('%', #{searchStr}), '%')
+                or b.CASE_NO like concat( concat('%', #{searchStr}), '%')
+                or b.PATIENT_NAME like concat( concat('%', #{searchStr}), '%'))
+            </if>
+            <if test="appDocName != null and appDocName != ''">
+                and (s.STAFF_NAME like concat( concat('%', #{appDocName}), '%')
+                or s.STAFF_NAME_PYM like concat( concat('%', #{appDocName}), '%')
+                or s.STAFF_NO like concat( concat('%', #{appDocName}), '%'))
+            </if>
+        </where>
+        order by b.APP_TIME desc
+    </select>
+    <insert id="insertIndexRecallApply" parameterType="IndexRecallApply">
+        insert into emr_index_recall_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="appDocCd != null and appDocCd != ''">app_doc_cd,</if>
+            <if test="appDocName != null and appDocName != ''">app_doc_name,</if>
+            <if test="appDeptCd != null and appDeptCd != ''">app_dept_cd,</if>
+            <if test="appDeptName != null and appDeptName != ''">app_dept_name,</if>
+            <if test="appTime != null">app_time,</if>
+            <if test="recallReason != null and recallReason != ''">recall_reason,</if>
+            <if test="caseNo != null and caseNo != ''">case_no,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="conDeptCd != null">con_dept_cd,</if>
+            <if test="conDeptName != null">con_dept_name,</if>
+            <if test="conTime != null">con_time,</if>
+            <if test="conDocCd != null">con_doc_cd,</if>
+            <if test="conDocName != null">con_doc_name,</if>
+            <if test="conRemark != null">con_remark,</if>
+            <if test="appStatus != null">app_status,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="fileDate != null">file_date,</if>
+            <if test="dischargeDepartmentNo != null">discharge_department_no,</if>
+            <if test="dischargeDepartmentName != null">discharge_department_name,</if>
+            <if test="hospitalizedDate != null">hospitalized_date,</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date,</if>
+            <if test="residentCode != null">resident_code,</if>
+            <if test="residentNo != null">resident_no,</if>
+            <if test="residentName != null">resident_name,</if>
+            <if test="mrState != null">mr_state,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="appDocCd != null and appDocCd != ''">#{appDocCd},</if>
+            <if test="appDocName != null and appDocName != ''">#{appDocName},</if>
+            <if test="appDeptCd != null and appDeptCd != ''">#{appDeptCd},</if>
+            <if test="appDeptName != null and appDeptName != ''">#{appDeptName},</if>
+            <if test="appTime != null">#{appTime},</if>
+            <if test="recallReason != null and recallReason != ''">#{recallReason},</if>
+            <if test="caseNo != null and caseNo != ''">#{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="conDeptCd != null">#{conDeptCd},</if>
+            <if test="conDeptName != null">#{conDeptName},</if>
+            <if test="conTime != null">#{conTime},</if>
+            <if test="conDocCd != null">#{conDocCd},</if>
+            <if test="conDocName != null">#{conDocName},</if>
+            <if test="conRemark != null">#{conRemark},</if>
+            <if test="appStatus != null">#{appStatus},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="fileDate != null">#{fileDate},</if>
+            <if test="dischargeDepartmentNo != null">#{dischargeDepartmentNo},</if>
+            <if test="dischargeDepartmentName != null">#{dischargeDepartmentName},</if>
+            <if test="hospitalizedDate != null">#{hospitalizedDate},</if>
+            <if test="leaveHospitalDate != null">#{leaveHospitalDate},</if>
+            <if test="residentCode != null">#{residentCode},</if>
+            <if test="residentNo != null">#{residentNo},</if>
+            <if test="residentName != null">#{residentName},</if>
+            <if test="mrState != null">#{mrState},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIndexRecallApply" parameterType="IndexRecallApply">
+        update emr_index_recall_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appDocCd != null and appDocCd != ''">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null and appDocName != ''">app_doc_name = #{appDocName},</if>
+            <if test="appDeptCd != null and appDeptCd != ''">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null and appDeptName != ''">app_dept_name = #{appDeptName},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="recallReason != null and recallReason != ''">recall_reason = #{recallReason},</if>
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="conDeptCd != null">con_dept_cd = #{conDeptCd},</if>
+            <if test="conDeptName != null">con_dept_name = #{conDeptName},</if>
+            <if test="conTime != null">con_time = #{conTime},</if>
+            <if test="conDocCd != null">con_doc_cd = #{conDocCd},</if>
+            <if test="conDocName != null">con_doc_name = #{conDocName},</if>
+            <if test="conRemark != null">con_remark = #{conRemark},</if>
+            <if test="appStatus != null">app_status = #{appStatus},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="fileDate != null">file_date = #{fileDate},</if>
+            <if test="dischargeDepartmentNo != null">discharge_department_no = #{dischargeDepartmentNo},</if>
+            <if test="dischargeDepartmentName != null">discharge_department_name = #{dischargeDepartmentName},</if>
+            <if test="hospitalizedDate != null">hospitalized_date = #{hospitalizedDate},</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date = #{leaveHospitalDate},</if>
+            <if test="residentCode != null">resident_code = #{residentCode},</if>
+            <if test="residentNo != null">resident_no = #{residentNo},</if>
+            <if test="residentName != null">resident_name = #{residentName},</if>
+            <if test="mrState != null">mr_state = #{mrState},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteIndexRecallApplyById" parameterType="Long">
+        delete from emr_index_recall_apply where id = #{id}
+    </delete>
+
+    <delete id="deleteIndexRecallApplyByIds" parameterType="String">
+        delete from emr_index_recall_apply where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

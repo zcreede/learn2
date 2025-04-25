@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.OrderdetailMapper">
+    
+    <resultMap type="Orderdetail" id="OrderdetailResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="maNo"    column="ma_no"    />
+        <result property="maCd"    column="ma_cd"    />
+        <result property="maGroupNo"    column="ma_group_no"    />
+        <result property="clinProCd"    column="clin_pro_cd"    />
+        <result property="clinProName"    column="clin_pro_name"    />
+        <result property="valFlag"    column="val_flag"    />
+        <result property="skinTestFlag"    column="skin_test_flag"    />
+        <result property="addFeeCd"    column="add_fee_cd"    />
+        <result property="rmaNo"    column="rma_no"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="spec"    column="spec"    />
+        <result property="unit"    column="unit"    />
+        <result property="amount"    column="amount"    />
+        <result property="gross"    column="gross"    />
+        <result property="money"    column="money"    />
+        <result property="rate"    column="rate"    />
+        <result property="usage"    column="usage"    />
+        <result property="exeDeptCd"    column="exe_dept_cd"    />
+        <result property="exeDeptName"    column="exe_dept_name"    />
+        <result property="ownedDrugFlag"    column="owned_drug_flag"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="medDictCd"    column="med_dict_cd"    />
+        <result property="realDosage"    column="real_dosage"    />
+        <result property="dosageUnit"    column="dosage_unit"    />
+        <result property="remark"    column="remark"    />
+        <result property="drugForm"    column="drug_form"    />
+        <result property="hosItemCd"    column="hos_item_cd"    />
+        <result property="skinTestRes"    column="skin_test_res"    />
+        <result property="antiUseAim"    column="anti_use_aim"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="rateCd"    column="rate_cd"    />
+        <result property="usageCd"    column="usage_cd"    />
+        <result property="dieFlag"    column="die_flag"    />
+        <result property="audittime"    column="audittime"    />
+        <result property="dischargemedication"    column="dischargemedication"    />
+        <result property="proprietarymarker"    column="proprietarymarker"    />
+        <result property="alternatemark"    column="alternatemark"    />
+        <result property="patientId"    column="patient_id"    />
+    </resultMap>
+
+    <sql id="selectOrderdetailVo">
+        select id, org_cd, org_name, order_id, ma_no, ma_cd, ma_group_no, clin_pro_cd, clin_pro_name, val_flag, skin_test_flag, add_fee_cd, rma_no, item_cd, item_name, spec, unit, amount, gross, money, rate, usage, exe_dept_cd, exe_dept_name, owned_drug_flag, unit_price, med_dict_cd, real_dosage, dosage_unit, remark, drug_form, hos_item_cd, skin_test_res, anti_use_aim, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, rate_cd, usage_cd, die_flag, audittime, dischargemedication, proprietarymarker, alternatemark, patient_id from clin_orderdetail
+    </sql>
+
+    <select id="selectOrderdetailList" parameterType="Orderdetail" resultMap="OrderdetailResult">
+        <include refid="selectOrderdetailVo"/>
+        <where>  
+            <if test="orgName != null  and orgName != ''"> and org_name like concat(concat('%', #{orgName}), '%')</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="maNo != null "> and ma_no = #{maNo}</if>
+            <if test="maCd != null  and maCd != ''"> and ma_cd = #{maCd}</if>
+            <if test="maGroupNo != null "> and ma_group_no = #{maGroupNo}</if>
+            <if test="clinProCd != null  and clinProCd != ''"> and clin_pro_cd = #{clinProCd}</if>
+            <if test="clinProName != null  and clinProName != ''"> and clin_pro_name like concat(concat('%', #{clinProName}), '%')</if>
+            <if test="valFlag != null  and valFlag != ''"> and val_flag = #{valFlag}</if>
+            <if test="skinTestFlag != null  and skinTestFlag != ''"> and skin_test_flag = #{skinTestFlag}</if>
+            <if test="addFeeCd != null  and addFeeCd != ''"> and add_fee_cd = #{addFeeCd}</if>
+            <if test="rmaNo != null "> and rma_no = #{rmaNo}</if>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="spec != null  and spec != ''"> and spec = #{spec}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="gross != null "> and gross = #{gross}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="rate != null  and rate != ''"> and rate = #{rate}</if>
+            <if test="usage != null  and usage != ''"> and usage = #{usage}</if>
+            <if test="exeDeptCd != null  and exeDeptCd != ''"> and exe_dept_cd = #{exeDeptCd}</if>
+            <if test="exeDeptName != null  and exeDeptName != ''"> and exe_dept_name like concat(concat('%', #{exeDeptName}), '%')</if>
+            <if test="ownedDrugFlag != null  and ownedDrugFlag != ''"> and owned_drug_flag = #{ownedDrugFlag}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="medDictCd != null  and medDictCd != ''"> and med_dict_cd = #{medDictCd}</if>
+            <if test="realDosage != null "> and real_dosage = #{realDosage}</if>
+            <if test="dosageUnit != null  and dosageUnit != ''"> and dosage_unit = #{dosageUnit}</if>
+            <if test="drugForm != null  and drugForm != ''"> and drug_form = #{drugForm}</if>
+            <if test="hosItemCd != null  and hosItemCd != ''"> and hos_item_cd = #{hosItemCd}</if>
+            <if test="skinTestRes != null  and skinTestRes != ''"> and skin_test_res = #{skinTestRes}</if>
+            <if test="antiUseAim != null  and antiUseAim != ''"> and anti_use_aim = #{antiUseAim}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="rateCd != null  and rateCd != ''"> and rate_cd = #{rateCd}</if>
+            <if test="usageCd != null  and usageCd != ''"> and usage_cd = #{usageCd}</if>
+            <if test="dieFlag != null  and dieFlag != ''"> and die_flag = #{dieFlag}</if>
+            <if test="audittime != null "> and audittime = #{audittime}</if>
+            <if test="dischargemedication != null  and dischargemedication != ''"> and dischargemedication = #{dischargemedication}</if>
+            <if test="proprietarymarker != null  and proprietarymarker != ''"> and proprietarymarker = #{proprietarymarker}</if>
+            <if test="alternatemark != null  and alternatemark != ''"> and alternatemark = #{alternatemark}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderdetailById" parameterType="String" resultMap="OrderdetailResult">
+        <include refid="selectOrderdetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderdetail" parameterType="Orderdetail">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_clin_orderdetail.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into clin_orderdetail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="orderId != null and orderId != ''">order_id,</if>
+            <if test="maNo != null">ma_no,</if>
+            <if test="maCd != null and maCd != ''">ma_cd,</if>
+            <if test="maGroupNo != null">ma_group_no,</if>
+            <if test="clinProCd != null">clin_pro_cd,</if>
+            <if test="clinProName != null">clin_pro_name,</if>
+            <if test="valFlag != null">val_flag,</if>
+            <if test="skinTestFlag != null">skin_test_flag,</if>
+            <if test="addFeeCd != null">add_fee_cd,</if>
+            <if test="rmaNo != null">rma_no,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="spec != null">spec,</if>
+            <if test="unit != null">unit,</if>
+            <if test="amount != null">amount,</if>
+            <if test="gross != null">gross,</if>
+            <if test="money != null">money,</if>
+            <if test="rate != null">rate,</if>
+            <if test="usage != null">usage,</if>
+            <if test="exeDeptCd != null">exe_dept_cd,</if>
+            <if test="exeDeptName != null">exe_dept_name,</if>
+            <if test="ownedDrugFlag != null">owned_drug_flag,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="medDictCd != null">med_dict_cd,</if>
+            <if test="realDosage != null">real_dosage,</if>
+            <if test="dosageUnit != null">dosage_unit,</if>
+            <if test="remark != null">remark,</if>
+            <if test="drugForm != null">drug_form,</if>
+            <if test="hosItemCd != null">hos_item_cd,</if>
+            <if test="skinTestRes != null">skin_test_res,</if>
+            <if test="antiUseAim != null">anti_use_aim,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="rateCd != null">rate_cd,</if>
+            <if test="usageCd != null">usage_cd,</if>
+            <if test="dieFlag != null">die_flag,</if>
+            <if test="audittime != null">audittime,</if>
+            <if test="dischargemedication != null">dischargemedication,</if>
+            <if test="proprietarymarker != null">proprietarymarker,</if>
+            <if test="alternatemark != null">alternatemark,</if>
+            <if test="patientId != null">patient_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="orderId != null and orderId != ''">#{orderId},</if>
+            <if test="maNo != null">#{maNo},</if>
+            <if test="maCd != null and maCd != ''">#{maCd},</if>
+            <if test="maGroupNo != null">#{maGroupNo},</if>
+            <if test="clinProCd != null">#{clinProCd},</if>
+            <if test="clinProName != null">#{clinProName},</if>
+            <if test="valFlag != null">#{valFlag},</if>
+            <if test="skinTestFlag != null">#{skinTestFlag},</if>
+            <if test="addFeeCd != null">#{addFeeCd},</if>
+            <if test="rmaNo != null">#{rmaNo},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="spec != null">#{spec},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="gross != null">#{gross},</if>
+            <if test="money != null">#{money},</if>
+            <if test="rate != null">#{rate},</if>
+            <if test="usage != null">#{usage},</if>
+            <if test="exeDeptCd != null">#{exeDeptCd},</if>
+            <if test="exeDeptName != null">#{exeDeptName},</if>
+            <if test="ownedDrugFlag != null">#{ownedDrugFlag},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="medDictCd != null">#{medDictCd},</if>
+            <if test="realDosage != null">#{realDosage},</if>
+            <if test="dosageUnit != null">#{dosageUnit},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="drugForm != null">#{drugForm},</if>
+            <if test="hosItemCd != null">#{hosItemCd},</if>
+            <if test="skinTestRes != null">#{skinTestRes},</if>
+            <if test="antiUseAim != null">#{antiUseAim},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="rateCd != null">#{rateCd},</if>
+            <if test="usageCd != null">#{usageCd},</if>
+            <if test="dieFlag != null">#{dieFlag},</if>
+            <if test="audittime != null">#{audittime},</if>
+            <if test="dischargemedication != null">#{dischargemedication},</if>
+            <if test="proprietarymarker != null">#{proprietarymarker},</if>
+            <if test="alternatemark != null">#{alternatemark},</if>
+            <if test="patientId != null">#{patientId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderdetail" parameterType="Orderdetail">
+        update clin_orderdetail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+            <if test="orderId != null and orderId != ''">order_id = #{orderId},</if>
+            <if test="maNo != null">ma_no = #{maNo},</if>
+            <if test="maCd != null and maCd != ''">ma_cd = #{maCd},</if>
+            <if test="maGroupNo != null">ma_group_no = #{maGroupNo},</if>
+            <if test="clinProCd != null">clin_pro_cd = #{clinProCd},</if>
+            <if test="clinProName != null">clin_pro_name = #{clinProName},</if>
+            <if test="valFlag != null">val_flag = #{valFlag},</if>
+            <if test="skinTestFlag != null">skin_test_flag = #{skinTestFlag},</if>
+            <if test="addFeeCd != null">add_fee_cd = #{addFeeCd},</if>
+            <if test="rmaNo != null">rma_no = #{rmaNo},</if>
+            <if test="itemCd != null">item_cd = #{itemCd},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="spec != null">spec = #{spec},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="gross != null">gross = #{gross},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="rate != null">rate = #{rate},</if>
+            <if test="usage != null">usage = #{usage},</if>
+            <if test="exeDeptCd != null">exe_dept_cd = #{exeDeptCd},</if>
+            <if test="exeDeptName != null">exe_dept_name = #{exeDeptName},</if>
+            <if test="ownedDrugFlag != null">owned_drug_flag = #{ownedDrugFlag},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="medDictCd != null">med_dict_cd = #{medDictCd},</if>
+            <if test="realDosage != null">real_dosage = #{realDosage},</if>
+            <if test="dosageUnit != null">dosage_unit = #{dosageUnit},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="drugForm != null">drug_form = #{drugForm},</if>
+            <if test="hosItemCd != null">hos_item_cd = #{hosItemCd},</if>
+            <if test="skinTestRes != null">skin_test_res = #{skinTestRes},</if>
+            <if test="antiUseAim != null">anti_use_aim = #{antiUseAim},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="rateCd != null">rate_cd = #{rateCd},</if>
+            <if test="usageCd != null">usage_cd = #{usageCd},</if>
+            <if test="dieFlag != null">die_flag = #{dieFlag},</if>
+            <if test="audittime != null">audittime = #{audittime},</if>
+            <if test="dischargemedication != null">dischargemedication = #{dischargemedication},</if>
+            <if test="proprietarymarker != null">proprietarymarker = #{proprietarymarker},</if>
+            <if test="alternatemark != null">alternatemark = #{alternatemark},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderdetailById" parameterType="String">
+        delete from clin_orderdetail where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderdetailByIds" parameterType="String">
+        delete from clin_orderdetail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

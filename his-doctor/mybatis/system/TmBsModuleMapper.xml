@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.TmBsModuleMapper">
+
+    <resultMap type="TmBsModule" id="TmBsModuleResult">
+        <result property="id"    column="id"    />
+        <result property="moduleCode"    column="module_code"    />
+        <result property="moduleName"    column="module_name"    />
+        <result property="modulePym"    column="module_pym"    />
+        <result property="isThirdParty"    column="is_third_party"    />
+        <result property="isEnable"    column="is_enable"    />
+        <result property="defaultUser"    column="default_user"    />
+        <result property="defaultPwd"    column="default_pwd"    />
+        <result property="isMenu"    column="is_menu"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="sort"    column="sort"    />
+        <result property="company"    column="company"    />
+        <result property="integrationMode"    column="integration_mode"    />
+        <result property="openMode"    column="open_mode"    />
+        <result property="openType"    column="open_type"    />
+        <result property="programPath"    column="program_path"    />
+        <result property="moduleType"    column="module_type"    />
+        <result property="moduleIcon"    column="module_icon"    />
+        <result property="moduleColor"    column="module_color"    />
+        <result property="bz1"    column="bz_1"    />
+        <result property="bz2"    column="bz_2"    />
+        <result property="bz3"    column="bz_3"    />
+        <result property="hospitalNo"    column="hospital_no"    />
+        <result property="hospitalName"    column="hospital_name"    />
+        <result property="isPlatform"    column="is_platform"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTmBsModuleVo">
+        select id, module_code, module_name, module_pym, is_third_party, is_enable, default_user, default_pwd, is_menu, status, del_flag, sort, company, integration_mode, open_mode, open_type, program_path, module_type, module_icon, module_color, bz_1, bz_2, bz_3, hospital_no, hospital_name, is_platform, create_time, update_time, from tm_bs_module
+    </sql>
+
+    <select id="selectTmBsModuleList" parameterType="TmBsModule" resultMap="TmBsModuleResult">
+        <include refid="selectTmBsModuleVo"/>
+        <where>
+            <if test="moduleCode != null  and moduleCode != ''"> and module_code = #{moduleCode}</if>
+            <if test="moduleName != null  and moduleName != ''"> and module_name like concat(concat('%', #{moduleName}), '%')</if>
+            <if test="modulePym != null  and modulePym != ''"> and module_pym = #{modulePym}</if>
+            <if test="isThirdParty != null "> and is_third_party = #{isThirdParty}</if>
+            <if test="isEnable != null "> and is_enable = #{isEnable}</if>
+            <if test="defaultUser != null  and defaultUser != ''"> and default_user = #{defaultUser}</if>
+            <if test="defaultPwd != null  and defaultPwd != ''"> and default_pwd = #{defaultPwd}</if>
+            <if test="isMenu != null "> and is_menu = #{isMenu}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="company != null  and company != ''"> and company = #{company}</if>
+            <if test="integrationMode != null  and integrationMode != ''"> and integration_mode = #{integrationMode}</if>
+            <if test="openMode != null  and openMode != ''"> and open_mode = #{openMode}</if>
+            <if test="openType != null  and openType != ''"> and open_type = #{openType}</if>
+            <if test="programPath != null  and programPath != ''"> and program_path = #{programPath}</if>
+            <if test="moduleType != null  and moduleType != ''"> and module_type = #{moduleType}</if>
+            <if test="moduleIcon != null  and moduleIcon != ''"> and module_icon = #{moduleIcon}</if>
+            <if test="moduleColor != null  and moduleColor != ''"> and module_color = #{moduleColor}</if>
+            <if test="bz1 != null  and bz1 != ''"> and bz_1 = #{bz1}</if>
+            <if test="bz2 != null  and bz2 != ''"> and bz_2 = #{bz2}</if>
+            <if test="bz3 != null  and bz3 != ''"> and bz_3 = #{bz3}</if>
+            <if test="hospitalNo != null  and hospitalNo != ''"> and hospital_no = #{hospitalNo}</if>
+            <if test="hospitalName != null  and hospitalName != ''"> and hospital_name like concat(concat('%', #{hospitalName}), '%')</if>
+            <if test="isPlatform != null  and isPlatform != ''"> and is_platform = #{isPlatform}</if>
+        </where>
+    </select>
+
+    <select id="selectTmBsModuleById" parameterType="Long" resultMap="TmBsModuleResult">
+        <include refid="selectTmBsModuleVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmBsModule" parameterType="TmBsModule">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_tm_bs_module.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into tm_bs_module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="moduleCode != null">module_code,</if>
+            <if test="moduleName != null">module_name,</if>
+            <if test="modulePym != null">module_pym,</if>
+            <if test="isThirdParty != null">is_third_party,</if>
+            <if test="isEnable != null">is_enable,</if>
+            <if test="defaultUser != null">default_user,</if>
+            <if test="defaultPwd != null">default_pwd,</if>
+            <if test="isMenu != null">is_menu,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="sort != null">sort,</if>
+            <if test="company != null">company,</if>
+            <if test="integrationMode != null">integration_mode,</if>
+            <if test="openMode != null">open_mode,</if>
+            <if test="openType != null">open_type,</if>
+            <if test="programPath != null">program_path,</if>
+            <if test="moduleType != null">module_type,</if>
+            <if test="moduleIcon != null">module_icon,</if>
+            <if test="moduleColor != null">module_color,</if>
+            <if test="bz1 != null">bz_1,</if>
+            <if test="bz2 != null">bz_2,</if>
+            <if test="bz3 != null">bz_3,</if>
+            <if test="hospitalNo != null">hospital_no,</if>
+            <if test="hospitalName != null">hospital_name,</if>
+            <if test="isPlatform != null">is_platform,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="moduleCode != null">#{moduleCode},</if>
+            <if test="moduleName != null">#{moduleName},</if>
+            <if test="modulePym != null">#{modulePym},</if>
+            <if test="isThirdParty != null">#{isThirdParty},</if>
+            <if test="isEnable != null">#{isEnable},</if>
+            <if test="defaultUser != null">#{defaultUser},</if>
+            <if test="defaultPwd != null">#{defaultPwd},</if>
+            <if test="isMenu != null">#{isMenu},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="company != null">#{company},</if>
+            <if test="integrationMode != null">#{integrationMode},</if>
+            <if test="openMode != null">#{openMode},</if>
+            <if test="openType != null">#{openType},</if>
+            <if test="programPath != null">#{programPath},</if>
+            <if test="moduleType != null">#{moduleType},</if>
+            <if test="moduleIcon != null">#{moduleIcon},</if>
+            <if test="moduleColor != null">#{moduleColor},</if>
+            <if test="bz1 != null">#{bz1},</if>
+            <if test="bz2 != null">#{bz2},</if>
+            <if test="bz3 != null">#{bz3},</if>
+            <if test="hospitalNo != null">#{hospitalNo},</if>
+            <if test="hospitalName != null">#{hospitalName},</if>
+            <if test="isPlatform != null">#{isPlatform},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmBsModule" parameterType="TmBsModule">
+        update tm_bs_module
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="moduleCode != null">module_code = #{moduleCode},</if>
+            <if test="moduleName != null">module_name = #{moduleName},</if>
+            <if test="modulePym != null">module_pym = #{modulePym},</if>
+            <if test="isThirdParty != null">is_third_party = #{isThirdParty},</if>
+            <if test="isEnable != null">is_enable = #{isEnable},</if>
+            <if test="defaultUser != null">default_user = #{defaultUser},</if>
+            <if test="defaultPwd != null">default_pwd = #{defaultPwd},</if>
+            <if test="isMenu != null">is_menu = #{isMenu},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="company != null">company = #{company},</if>
+            <if test="integrationMode != null">integration_mode = #{integrationMode},</if>
+            <if test="openMode != null">open_mode = #{openMode},</if>
+            <if test="openType != null">open_type = #{openType},</if>
+            <if test="programPath != null">program_path = #{programPath},</if>
+            <if test="moduleType != null">module_type = #{moduleType},</if>
+            <if test="moduleIcon != null">module_icon = #{moduleIcon},</if>
+            <if test="moduleColor != null">module_color = #{moduleColor},</if>
+            <if test="bz1 != null">bz_1 = #{bz1},</if>
+            <if test="bz2 != null">bz_2 = #{bz2},</if>
+            <if test="bz3 != null">bz_3 = #{bz3},</if>
+            <if test="hospitalNo != null">hospital_no = #{hospitalNo},</if>
+            <if test="hospitalName != null">hospital_name = #{hospitalName},</if>
+            <if test="isPlatform != null">is_platform = #{isPlatform},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmBsModuleById" parameterType="Long">
+        delete from tm_bs_module where id = #{id}
+    </delete>
+
+    <delete id="deleteTmBsModuleByIds" parameterType="String">
+        delete from tm_bs_module where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectModuleListByUser" parameterType="String" resultMap="TmBsModuleResult">
+        select distinct m.id, m.module_code, m.module_name, m.module_pym, m.is_third_party, m.is_enable, m.default_user, m.default_pwd,
+        m.is_menu, m.status, m.del_flag, m.sort, m.company, m.integration_mode, m.open_mode, m.open_type, m.program_path, m.module_type,
+        m.module_icon, m.module_color, m.bz_1, m.bz_2, m.bz_3, m.hospital_no, m.hospital_name, m.is_platform, m.create_time, m.update_time
+        from tm_bs_staff_role sr
+        left join tm_bs_role_module rm on sr.role_no = rm.role_no
+        left join tm_bs_module m on m.module_code = rm.module_code
+        where sr.staff_code = #{staffCode}
+    </select>
+</mapper>

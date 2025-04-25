@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.DocumentTypeDeptMapper">
+
+    <resultMap type="DocumentTypeDept" id="DocumentTypeDeptResult">
+        <result property="id"    column="id"    />
+        <result property="documentTypeCd"    column="document_type_cd"    />
+        <result property="documentTypeName"    column="document_type_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectDocumentTypeDeptVo">
+        select id, document_type_cd, document_type_name, dept_cd, dept_name, alt_per_code, alt_per_name, alt_date from TM_BS_DOCUMENT_TYPE_DEPT
+    </sql>
+
+    <select id="selectDocumentTypeDeptList" parameterType="DocumentTypeDept" resultMap="DocumentTypeDeptResult">
+        <include refid="selectDocumentTypeDeptVo"/>
+        <where>
+            <if test="documentTypeCd != null  and documentTypeCd != ''"> and document_type_cd = #{documentTypeCd}</if>
+            <if test="documentTypeName != null  and documentTypeName != ''"> and document_type_name like concat(concat('%', #{documentTypeName}), '%')</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectDocumentTypeDeptById" parameterType="Long" resultMap="DocumentTypeDeptResult">
+        <include refid="selectDocumentTypeDeptVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDocumentTypeDept" parameterType="DocumentTypeDept">
+        insert into TM_BS_DOCUMENT_TYPE_DEPT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="documentTypeCd != null">document_type_cd,</if>
+            <if test="documentTypeName != null">document_type_name,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="documentTypeCd != null">#{documentTypeCd},</if>
+            <if test="documentTypeName != null">#{documentTypeName},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDocumentTypeDept" parameterType="DocumentTypeDept">
+        update TM_BS_DOCUMENT_TYPE_DEPT
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentTypeCd != null">document_type_cd = #{documentTypeCd},</if>
+            <if test="documentTypeName != null">document_type_name = #{documentTypeName},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDocumentTypeDeptById" parameterType="Long">
+        delete from TM_BS_DOCUMENT_TYPE_DEPT where id = #{id}
+    </delete>
+
+    <delete id="deleteDocumentTypeDeptByIds" parameterType="String">
+        delete from TM_BS_DOCUMENT_TYPE_DEPT where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

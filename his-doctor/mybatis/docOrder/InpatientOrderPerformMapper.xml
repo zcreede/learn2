@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.InpatientOrderPerformMapper">
+    <resultMap id="InpatientOrderPerformDTOResultMap" type="com.emr.project.docOrder.domain.vo.InpatientOrderPerformDTO">
+        <result column="bedid" property="bedid" />
+        <result column="name" property="patientName" />
+        <result column="standard_cd" property="standardCd"/>
+        <result column="SIG_NAME" property="orderUsageWay" />
+        <result column="order_usage_way" property="orderUsageWayNmae" />
+        <result column="hospital_code" property="hospitalCode" />
+        <result column="perform_ward_no" property="performWardNo" />
+        <result column="perform_dep_code" property="performDepCode" />
+        <result column="case_no" property="caseNo" />
+        <result column="perform_list_no" property="performListNo" />
+        <result column="order_no" property="orderNo" />
+        <result column="order_type" property="orderType" />
+        <result column="order_sort_number" property="orderSortNumber" />
+        <result column="order_class_code" property="orderClassCode" />
+        <result column="admission_no" property="admissionNo" />
+        <result column="hospitalized_count" property="hospitalizedCount" />
+        <result column="order_doctor_code" property="orderDoctorCode" />
+        <result column="order_doctor_no" property="orderDoctorNo" />
+        <result column="order_doctor_ward_no" property="orderDoctorWardNo" />
+        <result column="order_doctor_dep_code" property="orderDoctorDepCode" />
+        <result column="order_doctor_dep_name" property="orderDoctorDepName"/>
+        <result column="staff_name" property="orderDoctorName" />
+        <result column="order_start_time" property="orderStartTime" />
+        <result column="document_type_no" property="documentTypeNo" />
+        <result column="perform_list_status" property="performListStatus" />
+        <result column="cp_no" property="cpNo" />
+        <result column="cp_name" property="cpName" />
+        <result column="handle_time" property="handleTime" />
+        <result column="handle_nurse_code" property="handleNurseCode" />
+        <result column="handle_nurse_no" property="handleNurseNo" />
+        <result column="handle_nurse_name" property="handleNurseName" />
+        <result column="perform_time" property="performTime" />
+        <result column="perform_nurse_code" property="performNurseCode" />
+        <result column="perform_nurse_no" property="performNurseNo" />
+        <result column="perform_nurse_name" property="performNurseName" />
+        <result column="out_hava_drug_flag" property="outHavaDrugFlag" />
+        <result column="order_item_type" property="orderItemType" />
+        <result column="first_double_flag" property="firstDoubleFlag" />
+        <result column="take_drug_mode" property="takeDrugMode" />
+        <result column="dep_code" property="depCode" />
+        <result column="plan_usage_time" property="planUsageTime" />
+        <result column="baby_admission_no" property="babyAdmissionNo" />
+        <result column="first_bottle_flag" property="firstBottleFlag" />
+        <result column="perform_computer_no" property="performComputerNo" />
+        <result column="perform_computer_ip" property="performComputerIp" />
+        <result column="detail_perform_dep_code" property="detailPerformDepCode" />
+        <result column="detail_perform_dep_name" property="detailPerformDepName" />
+        <result column="detail_perform_ward_no" property="detailPerformWardNo" />
+        <result column="pc_pda_flag" property="pcPdaFlag" />
+        <result column="perform_list_sort_number" property="performListSortNumber" />
+        <result column="order_group_no" property="orderGroupNo" />
+        <result column="charge_no" property="chargeNo" />
+        <result column="charge_name" property="chargeName" />
+        <result column="standard_code" property="standardCode" />
+        <result column="standard_name" property="standardName" />
+        <result column="standard" property="standard" />
+        <result column="unit" property="unit" />
+        <result column="usage_unit" property="usageUnit" />
+        <result column="order_actual_usage" property="orderActualUsage" />
+        <result column="order_dose" property="orderDose" />
+        <result column="order_total_dose" property="orderTotalDose" />
+        <result column="price" property="price" />
+        <result column="order_total" property="orderTotal" />
+        <result column="order_freq_name" property="orderFreqName" />
+        <result column="order_freq" property="orderFreq" />
+        <result column="herbal_flag" property="herbalFlag" />
+        <result column="herbal_dose" property="herbalDose" />
+        <result column="drug_form" property="drugForm" />
+        <result column="doctor_instructions" property="doctorInstructions" />
+        <result column="patient_self_drug_flag" property="patientSelfDrugFlag" />
+        <result column="price_flag" property="priceFlag" />
+        <result column="pharmacopoeia_no" property="pharmacopoeiaNo" />
+        <result column="order_group_sort_number" property="orderGroupSortNumber" />
+        <result column="stock_no" property="stockNo" />
+        <result column="hygienic_material_flag" property="hygienicMaterialFlag" />
+        <result column="drug_class_code" property="drugClassCode" />
+        <result column="ward_no" property="patient_ward_no" />
+        <result column="department_no" property="patientDepCode" />
+        <result column="baby_name" property="baby_name" />
+        <result column="is_green" property="isGreen" />
+        <result column="order_usage_flag" property="orderUsageFlag" />
+        <result column="money" property="money" />
+        <result column="order_status" property="order_status" />
+        <result column="order_stop_time" property="order_stop_time" />
+        <result column="decoct_method" property="decoctMethod" />
+    </resultMap>
+
+    <!-- 多条件查询医嘱执行单列表 -->
+    <select id="selectInpatientOrderPerform" parameterType="com.emr.project.docOrder.domain.vo.InpatientOrderPerformVo" resultMap="InpatientOrderPerformDTOResultMap">
+        select * from (select
+        t3.bedid,
+        t3.name,
+        t4.SIG_NAME,
+        t4.standard_cd,
+        t2.order_usage_way ,
+        t1.hospital_code,
+        t1.perform_ward_no,
+        t1.perform_dep_code,
+        t1.case_no ,
+        t1.perform_list_no,
+        t1.order_no,
+        t1.order_type,
+        tpioi.order_sort_number,
+        t1.order_class_code,
+        t1.admission_no,
+        t1.hospitalized_count,
+        t1.order_doctor_code,
+        t1.order_doctor_no,
+        t1.order_doctor_ward_no,
+        t1.order_doctor_dep_code,
+        t12.staff_name,
+        t1.order_start_time,
+        t1.document_type_no,
+        t1.perform_list_status,
+        t1.cp_no,
+        t1.cp_name,
+        t1.handle_time,
+        t1.handle_nurse_code,
+        t1.handle_nurse_no,
+        t5.staff_name as handle_nurse_name,
+        (SELECT sysdate FROM dual) as perform_time,
+        t1.perform_nurse_code,
+        t1.perform_nurse_no,
+        t6.staff_name as perform_nurse_name,
+        t1.out_hava_drug_flag,
+        t1.order_item_type,
+        t1.first_double_flag,
+        t1.take_drug_mode,
+        t1.dep_code,
+        t1.plan_usage_time,
+        t1.baby_admission_no,
+        t1.first_bottle_flag,
+        t1.perform_computer_no,
+        t1.perform_computer_ip,
+        t1.detail_perform_dep_code,
+        t7.dept_name as detail_perform_dep_name,
+        t1.detail_perform_ward_no,
+        t1.pc_pda_flag,
+        t2.perform_list_sort_number,
+        t2.order_group_no,
+        t2.charge_no,
+        t2.charge_name,
+        t2.standard_code,
+        t2.standard_name,
+        t2.standard,
+        t2.unit,
+        t2.usage_unit,
+        t2.order_actual_usage,
+        t2.order_dose,
+        t2.order_total_dose,
+        t2.price,
+        t2.order_total,
+        t2.order_freq as order_freq_name,
+        t9.freq_name as order_freq,
+        t2.herbal_flag,
+        t2.herbal_dose,
+        t2.drug_form,
+        t2.doctor_instructions,
+        t2.patient_self_drug_flag,
+        t2.price_flag,
+        t2.pharmacopoeia_no,
+        t2.order_group_sort_number,
+        t2.stock_no,
+        t2.hygienic_material_flag,
+        t2.drug_class_code,
+        t3.ward_no,t3.department_no,
+        t10.baby_name,
+        case when t1.plan_usage_time>sysdate then 0 else 1 end as is_green,
+        (select count(1) FROM tm_pa_order_usage_fee a where a.yongfa_bh=t2.order_usage_way) as order_usage_flag,
+        ( t11.depos_it - t11.cumulative_cost ) money,
+        tpioi.order_status,
+        tpioi.order_stop_time,
+        tpioi.decoct_method,t12.dept_name order_doctor_dep_name
+        from t_ar_medicalinformation t3
+        left join td_pa_order_perform t1 on t3.admission_no = t1.admission_no
+        left join td_pa_order_perform_detail t2 on t1.perform_list_no = t2.perform_list_no and t1.perform_list_sort_number=t2.perform_list_sort_number
+        left join td_pa_order_item tpioi on tpioi.order_no = t1.order_no AND tpioi.order_sort_number = t2.order_sort_number
+        left join TM_BS_ORDER_SIG t4 on t2.order_usage_way = t4.SIG_CD
+        left join TM_BS_STAFF t5 on t5.staff_code = t1.handle_nurse_no
+        left join TM_BS_STAFF t6 on t6.staff_code = t1.perform_nurse_no
+        left join TM_BS_STAFF t12 on t12.staff_code = t1.order_doctor_code
+        left join TM_BS_DEPT t7 on t7.dept_code = t1.detail_perform_dep_code
+        left join tm_na_beds t8 on t3.bed_no = t8.bed_no
+        left join TM_BS_ORDER_FREQ t9 on t9.FREQ_CD=t2.order_freq
+        left join TD_NA_baby_info t10 on t10.baby_no=t1.baby_admission_no AND t1.baby_admission_no IS NOT NULL
+        LEFT JOIN t_ih_cumulativecost t11 ON t3.admission_no = t11.admission_no
+        left join TM_BS_DEPT t12 on t12.dept_code = t1.order_doctor_dep_code
+        left join TM_BS_ORDER_SIG s on tpioi.ITEM_ORDER_USAGE_WAY = s.sig_cd
+        where t3.hospital_mark='1' and t1.perform_ward_no=#{depCode,jdbcType=VARCHAR}
+        <if test="sign == 3"><!-- 查询执行界面-->
+            and t1.perform_list_status=0
+        </if>
+        <if test="sign == 4 and performListStatus3 == null">/*查询挂起处理界面*/
+            and (t1.perform_list_status=3 or t1.perform_list_status=4)
+        </if>
+        <if test="admissionNo != null and admissionNo != ''">
+            and t1.admission_no = #{admissionNo,jdbcType=VARCHAR}
+        </if>
+        <!-- 类型 -->
+        <if test="orderType != null and orderType != '' and orderType != 'all'">
+            and t1.order_type = #{orderType,jdbcType=VARCHAR}
+        </if>
+        <!-- 类别 -->
+        <if test="orderClassCode !=null and orderClassCode != ''">
+            and t1.order_class_code = #{orderClassCode,jdbcType=VARCHAR}
+        </if>
+        <!-- 药房 执行科室 -->
+        <if test="pharmacy !=null and pharmacy != ''">
+            and t1.detail_perform_dep_code = #{pharmacy,jdbcType=VARCHAR}
+        </if>
+        <if test="classify != null and classify!=''">
+            and s.STANDARD_cd = #{classify}
+        </if>
+        <!-- 拼音码 -->
+        <if test="chargeName !=null and chargeName != ''">
+            and t2.charge_name like concat( concat('%', #{chargeName}), '%')
+        </if>
+        <if test="performListStatus1!=null and performListStatus1 != '' and performListStatus2 ==null">
+            and t1.perform_list_status ='4'
+        </if>
+        <if test="performListStatus2 !=null and performListStatus2 != '' and performListStatus1 == null">
+            and t1.perform_list_status ='3'
+        </if>
+        <if test="performListStatus3 !=null and performListStatus3 != ''">
+            and t1.perform_list_status ='2'
+        </if>
+        <if test="isSkinTest !=null and isSkinTest != ''">
+            and t4.sig_name like '%皮试%'
+        </if>
+        <if test='planUsageFlag != null and planUsageFlag == "1"'>
+            and trunc(t1.plan_usage_time) = trunc(sysdate)
+        </if>
+        <if test='planUsageFlag != null and planUsageFlag == "0"'>
+            and trunc(t1.plan_usage_time) != trunc(sysdate)
+        </if>
+        )aa WHERE 1=1 and (order_status  in (2,3,8) OR (order_status IN ( 4, 5 ) AND order_stop_time>sysdate))
+        order by aa.bedid, to_number(aa.order_group_no), aa.perform_list_no, aa.perform_list_sort_number,to_number(aa.order_group_sort_number)
+    </select>
+
+    <resultMap id="SkinTestResuleVoMap" type="SkinTestResuleVo">
+        <result property="chargeNo" column="charge_no"   />
+        <result property="chargeName" column="charge_name"   />
+        <result property="skinTestResults" column="skin_test_results"   />
+        <result property="skinTestResultsTime" column="skin_test_results_time"   />
+    </resultMap>
+    <select id="selectSkinTestResultByPatient" parameterType="String" resultMap="SkinTestResuleVoMap">
+        select a.charge_no,
+               a.charge_name,
+               a.skin_test_results,
+               a.skin_test_results_time
+          from td_pa_order_detail a
+          left join td_pa_order b
+            on a.order_no = b.order_no
+         where b.admission_no = #{admissionNo}
+           and a.skin_test_results is not null
+        order by a.skin_test_results_time desc
+    </select>
+
+    <resultMap id="BaseResultMap" type="com.emr.project.docOrder.domain.InpatientOrderPerform">
+        <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+        <result column="perform_ward_no" jdbcType="VARCHAR" property="performWardNo" />
+        <result column="perform_dep_code" jdbcType="VARCHAR" property="performDepCode" />
+        <result column="case_no" jdbcType="VARCHAR" property="caseNo" />
+        <result column="perform_list_no" jdbcType="VARCHAR" property="performListNo" />
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+        <result column="order_type" jdbcType="VARCHAR" property="orderType" />
+        <result column="order_sort_number" jdbcType="VARCHAR" property="orderSortNumber" />
+        <result column="order_class_code" jdbcType="VARCHAR" property="orderClassCode" />
+        <result column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+        <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount" />
+        <result column="order_doctor_code" jdbcType="VARCHAR" property="orderDoctorCode" />
+        <result column="order_doctor_no" jdbcType="VARCHAR" property="orderDoctorNo" />
+        <result column="order_doctor_ward_no" jdbcType="VARCHAR" property="orderDoctorWardNo" />
+        <result column="order_doctor_dep_code" jdbcType="VARCHAR" property="orderDoctorDepCode" />
+        <result column="order_start_time" jdbcType="TIMESTAMP" property="orderStartTime" />
+        <result column="document_type_no" jdbcType="VARCHAR" property="documentTypeNo" />
+        <result column="perform_list_status" jdbcType="VARCHAR" property="performListStatus" />
+        <result column="cp_no" jdbcType="VARCHAR" property="cpNo" />
+        <result column="cp_name" jdbcType="VARCHAR" property="cpName" />
+        <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" />
+        <result column="handle_nurse_code" jdbcType="VARCHAR" property="handleNurseCode" />
+        <result column="handle_nurse_no" jdbcType="VARCHAR" property="handleNurseNo" />
+        <result column="perform_time" jdbcType="TIMESTAMP" property="performTime" />
+        <result column="perform_nurse_code" jdbcType="VARCHAR" property="performNurseCode" />
+        <result column="perform_nurse_no" jdbcType="VARCHAR" property="performNurseNo" />
+        <result column="out_hava_drug_flag" jdbcType="VARCHAR" property="outHavaDrugFlag" />
+        <result column="order_item_type" jdbcType="INTEGER" property="orderItemType" />
+        <result column="first_double_flag" jdbcType="BIGINT" property="firstDoubleFlag" />
+        <result column="take_drug_mode" jdbcType="VARCHAR" property="takeDrugMode" />
+        <result column="dep_code" jdbcType="VARCHAR" property="depCode" />
+        <result column="plan_usage_time" jdbcType="TIMESTAMP" property="planUsageTime" />
+        <result column="baby_admission_no" jdbcType="VARCHAR" property="babyAdmissionNo" />
+        <result column="first_bottle_flag" jdbcType="INTEGER" property="firstBottleFlag" />
+        <result column="perform_computer_no" jdbcType="VARCHAR" property="performComputerNo" />
+        <result column="perform_computer_ip" jdbcType="VARCHAR" property="performComputerIp" />
+        <result column="perform_list_sort_number" jdbcType="INTEGER" property="performListSortNumber" />
+        <result column="detail_perform_dep_code" jdbcType="VARCHAR" property="detailPerformDepCode" />
+        <result column="detail_perform_ward_no" jdbcType="VARCHAR" property="detailPerformWardNo" />
+    </resultMap>
+    <select id="selectHisPatientOrderPerformList" resultMap="BaseResultMap">
+        select *
+          from td_pa_order_perform a
+         where a.admission_no in
+               (select b.admission_no from t_ar_medicalinformation_h b)
+            <if test="deptList != null and deptList.size() >0">
+                and a.detail_perform_dep_code in
+                <foreach collection="deptList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+    </select>
+
+    <delete id="deletePatientOrderPerformByPerformListNos" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform">
+        delete from td_pa_order_perform
+        where
+        <foreach collection="orderPerformList" item="item" separator=" OR ">
+            (HOSPITAL_CODE = #{item.hospitalCode}
+            and PERFORM_LIST_NO = #{item.performListNo}
+            and ORDER_NO = #{item.orderNo}
+            and ORDER_SORT_NUMBER = #{item.orderSortNumber}
+            and ADMISSION_NO = #{item.admissionNo}
+            and HOSPITALIZED_COUNT = #{item.hospitalizedCount}
+            )
+        </foreach>
+    </delete>
+</mapper>

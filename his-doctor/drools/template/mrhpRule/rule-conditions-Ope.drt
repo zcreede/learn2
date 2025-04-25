@@ -1,0 +1,44 @@
+template header
+
+rule
+ruleId
+ruleName
+ruleCode
+eventVariable
+errorMsg
+errorColumn
+eventType
+otherRule
+ruleConditions
+ruleOrder
+ruleResuleVo
+
+
+template "judge condition"
+
+rule "@{ruleId}_@{ruleName}_条件"
+salience @{ruleOrder}
+when
+   @{eventVariable} : @{eventType}()
+   Boolean(this == true) from accumulate(
+   		$mrHpOpeList: List() from collect(MrHpOpe() from @{eventVariable}.mrHpOpeList),
+   		init(boolean res = false;),
+   		action(
+   			for(int i=0;i<$mrHpOpeList.size();i++){
+   				System.out.println("------"+((MrHpOpe)$mrHpOpeList.get(i)).getOpeId());
+   				if(res){break;}
+   				MrHpOpe ope = (MrHpOpe)$mrHpOpeList.get(i);
+   				if(@{ruleConditions} && !res){
+   					res = true;
+   				}
+   			}
+   		),
+   		result(res)
+   	)
+then
+   @{ruleResuleVo} $checkResult = new @{ruleResuleVo}("@{ruleId}", "");
+   $checkResult.setIsConditionsRes(true);
+   @{eventVariable}.getResultVoList().add($checkResult);
+end
+
+end template

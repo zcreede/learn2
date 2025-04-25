@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.PhysignValueMapper">
+    <resultMap type="PhysignValueVo" id="PhysignValueVoResult">
+        <result property="baseid"    column="BASEID"    />
+        <result property="curDay"    column="CUR_DAY"    />
+        <result property="timebz"    column="TIMEBZ"    />
+        <result property="timecs"    column="TIMECS"    />
+        <result property="tzsName"    column="TZS_NAME"    />
+        <result property="tzValue"    column="TZ_VALUE"    />
+        <result property="timeStr"    column="TIME_STR"    />
+    </resultMap>
+
+    <select id="selectValueList" parameterType="com.emr.project.docOrder.domain.vo.PhysignValueVo" resultType="PhysignValueVo">
+        ${sqlStr}
+    </select>
+
+    <select id="getValueRangeList" parameterType="com.emr.project.docOrder.domain.vo.PhysignValueVo" resultType="PhysignValueVo">
+        ${sqlStr}
+    </select>
+</mapper>

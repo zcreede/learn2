@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.TdPmNoticeMapper">
+
+    <resultMap type="TdPmNotice" id="TdPmNoticeResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="noticeType"    column="notice_type"    />
+        <result property="creDeptCd"    column="cre_dept_cd"    />
+        <result property="creDeptName"    column="cre_dept_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectTdPmNoticeVo">
+        select id, title, content, notice_type, cre_dept_cd, cre_dept_name, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, from td_pm_notice
+    </sql>
+
+    <select id="selectTdPmNoticeList" parameterType="TdPmNotice" resultMap="TdPmNoticeResult">
+        SELECT pn.* FROM TD_PM_NOTICE pn
+        LEFT JOIN TD_PM_NOTICE_OBJECT pno ON pn.ID = pno.NOTICE_ID
+        where (pno.OBJECT_CD='000000' or pno.OBJECT_CD=#{docCd} or pno.OBJECT_CD=#{deptCode} or pno.OBJECT_CD='0304')
+        <if test="title != null  and title != ''"> and title = #{title}</if>
+        <if test="content != null  and content != ''"> and content = #{content}</if>
+        <if test="noticeType != null  and noticeType != ''"> and notice_type = #{noticeType}</if>
+        <if test="creDeptCd != null  and creDeptCd != ''"> and cre_dept_cd = #{creDeptCd}</if>
+        <if test="creDeptName != null  and creDeptName != ''"> and cre_dept_name like concat(concat('%', #{creDeptName}), '%')</if>
+        <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+        <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+        <if test="creDate != null "> and cre_date = #{creDate}</if>
+        <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+        <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        <if test="altDate != null "> and alt_date = #{altDate}</if>
+         order by pn.cre_Date desc
+    </select>
+
+    <select id="selectTdPmNoticeById" parameterType="Long" resultMap="TdPmNoticeResult">
+        <include refid="selectTdPmNoticeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPmNotice" parameterType="TdPmNotice">
+        insert into td_pm_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="noticeType != null">notice_type,</if>
+            <if test="creDeptCd != null">cre_dept_cd,</if>
+            <if test="creDeptName != null">cre_dept_name,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="noticeType != null">#{noticeType},</if>
+            <if test="creDeptCd != null">#{creDeptCd},</if>
+            <if test="creDeptName != null">#{creDeptName},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPmNotice" parameterType="TdPmNotice">
+        update td_pm_notice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="noticeType != null">notice_type = #{noticeType},</if>
+            <if test="creDeptCd != null">cre_dept_cd = #{creDeptCd},</if>
+            <if test="creDeptName != null">cre_dept_name = #{creDeptName},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPmNoticeById" parameterType="Long">
+        delete from td_pm_notice where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPmNoticeByIds" parameterType="String">
+        delete from td_pm_notice where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectTopFiveList" parameterType="String" resultMap="TdPmNoticeResult">
+        select * from (SELECT
+        pn.* FROM
+        TD_PM_NOTICE pn
+        LEFT JOIN TD_PM_NOTICE_OBJECT pno ON pn.ID = pno.NOTICE_ID
+        where (pno.OBJECT_CD='000000' or pno.OBJECT_CD=#{docCd} or pno.OBJECT_CD=#{deptCode} or pno.OBJECT_CD='0304')
+        order by pn.CRE_DATE desc) where ROWNUM &lt;=5
+    </select>
+</mapper>

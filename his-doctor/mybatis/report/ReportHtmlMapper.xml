@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.report.mapper.ReportHtmlMapper">
+	<resultMap id="PatientInLeaveInfoMap" type="PatientInLeaveInfoVo">
+		<result property="departmentNo"    column="DEPARTMENT_NO"    />
+		<result property="deptName"    column="DEPT_NAME"    />
+		<result property="admissionNo"    column="ADMISSION_NO"    />
+		<result property="hospitalizedCount"    column="HOSPITALIZED_COUNT"    />
+		<result property="name"    column="NAME"    />
+		<result property="sex"    column="SEX"    />
+		<result property="bedId"    column="BEDId"    />
+		<result property="residentName"    column="RESIDENT_NAME"    />
+		<result property="expenseCategoryNo"    column="EXPENSE_CATEGORY_NO"    />
+		<result property="expenseCategory"    column="EXPENSE_CATEGORY"    />
+		<result property="deposIt"    column="DEPOS_IT"    />
+		<result property="cumulativeCost"    column="CUMULATIVE_COST"    />
+		<result property="arrearsAmount"    column="ARREARS_AMOUNT"    />
+		<result property="hospitalizedDate"    column="HOSPITALIZED_DATE"    />
+		<result property="leaveHospitalDate"    column="LEAVE_HOSPITAL_DATE"    />
+		<result property="dayNum"    column="DAY_NUM"    />
+		<result property="admittingDiagnosisName"    column="ADMITTING_DIAGNOSIS_NAME"    />
+		<result property="presentAddress"    column="PRESENT_ADDRESS"    />
+		<result property="contTel"    column="CONT_TEL"    />
+		<result property="ageY"    column="PERSON_AGE"    />
+		<result property="ageM"    column="AGE_MONTH"    />
+		<result property="ageD"    column="AGE_DAY"    />
+		<result property="ageH"    column="AGE_HOUR"    />
+		<result property="ageMi"    column="AGE_BRANCH"    />
+	</resultMap>
+	<resultMap id="FeeItemVoResult" type="FeeItemVo">
+		<result property="billDocName"    column="physician_name"    />
+		<result property="billDocCd"    column="PHYSICIAN_NO"    />
+		<result property="patientName"    column="name"    />
+		<result property="inpNo"    column="ADMISSION_NO"    />
+		<result property="filingDate"    column="filing_date"    />
+		<result property="feeItemCode"    column="feeItemCode"    />
+		<result property="feeItemName"    column="feeItemName"    />
+		<result property="standard"    column="standard"    />
+		<result property="unit"    column="unit"    />
+		<result property="price"    column="price"    />
+		<result property="dose"    column="dose"    />
+		<result property="total"    column="total"    />
+		<result property="execDeptName"    column="executor_dpt_name"    />
+		<result property="billDeptName"    column="PHYSICIAN_DPT_NAME"    />
+	</resultMap>
+	<resultMap id="FeeWorkloadVoResult" type="FeeWorkloadVo">
+		<result property="total"    column="total"    />
+		<result property="staffCode"    column="staffCode"    />
+		<result property="threeLevelCode"    column="threeLevelCode"    />
+		<result property="threeLevelName"    column="threeLevelName"    />
+		<result property="staffName"    column="staffName"    />
+	</resultMap>
+
+	<!-- 所有患者 -->
+	<select id="selectPatientAll" parameterType="PatientInLeaveInfoVoParam" resultMap="PatientInLeaveInfoMap">
+		select m.DEPARTMENT_NO, d.dept_name, m.ADMISSION_NO,m.HOSPITALIZED_COUNT,m.name, b.sex,m.BEDId,m.RESIDENT_NAME,b.EXPENSE_CATEGORY_NO,
+		b.EXPENSE_CATEGORY,c.DEPOS_IT, c.CUMULATIVE_COST,c.CUMULATIVE_COST-c.DEPOS_IT ARREARS_AMOUNT,m.HOSPITALIZED_DATE, m.LEAVE_HOSPITAL_DATE,
+		ceil(nvl(m.LEAVE_HOSPITAL_DATE,sysdate)-m.HOSPITALIZED_DATE) DAY_NUM, di.icd_name ADMITTING_DIAGNOSIS_NAME,
+		nvl(b.PRESENT_ADDRESS_SHENG,'')||nvl(b.PRESENT_ADDRESS_SHI,'')||nvl(b.PRESENT_ADDRESS_XIAN,'')||nvl(b.PRESENT_ADDRESS_XIANG,'')||nvl(b.PRESENT_ADDRESS_CUN,'') PRESENT_ADDRESS,
+		b.CONT_TEL,b.PERSON_AGE, b.AGE_MONTH, b.AGE_DAY, b.AGE_HOUR, b.AGE_BRANCH
+		from T_AR_MEDICALINFORMATION_ALL m
+		left join T_AR_BASEINFOMATION_ALL b on m.ADMISSION_NO = b.ADMISSION_NO
+		left join tm_bs_dept d on m.DEPARTMENT_NO = d.DEPT_CODE
+		left join T_IH_CUMULATIVECOST c on m.ADMISSION_NO = c.ADMISSION_NO
+		left join SYS_DIA_ICD di on m.ADMITTING_DIAGNOSIS = di.icd_cd
+		<where>
+			<if test="hospitalizedDateBegin!=null and hospitalizedDateBegin != ''">
+				and m.HOSPITALIZED_DATE <![CDATA[ > ]]> to_date(#{hospitalizedDateBegin}, 'yyyy-MM-dd')
+			</if>
+			<if test="hospitalizedDateEnd!=null and hospitalizedDateEnd != ''">
+				and m.HOSPITALIZED_DATE <![CDATA[ < ]]> to_date(#{hospitalizedDateEnd}, 'yyyy-MM-dd')
+			</if>
+			<if test="deptCodeList!=null and deptCodeList.size > 0">
+				and m.DEPARTMENT_NO in
+				<foreach collection="deptCodeList" item="deptCode" open="(" separator="," close=")">
+					#{deptCode}
+				</foreach>
+			</if>
+			<if test="searchName!=null and searchName != ''">
+				and (m.ADMISSION_NO like '%'||#{searchName}||'%' or m.name like '%'||#{searchName}||'%')
+			</if>
+			<if test="residentName!=null and residentName != ''">
+				and (m.resident_code like '%'||#{residentName}||'%' or m.resident_name like '%'||#{residentName}||'%')
+			</if>
+		</where>
+		order by m.ADMISSION_NO desc
+	</select>
+
+	<!-- 在院患者 -->
+	<select id="selectPatientIn" parameterType="PatientInLeaveInfoVoParam" resultMap="PatientInLeaveInfoMap">
+		select m.DEPARTMENT_NO, d.dept_name, m.ADMISSION_NO,m.HOSPITALIZED_COUNT,m.name, b.sex,m.BEDId,m.RESIDENT_NAME,b.EXPENSE_CATEGORY_NO,b.EXPENSE_CATEGORY,c.DEPOS_IT, c.CUMULATIVE_COST,c.CUMULATIVE_COST-c.DEPOS_IT,m.HOSPITALIZED_DATE, m.LEAVE_HOSPITAL_DATE,ceil(nvl(m.LEAVE_HOSPITAL_DATE,sysdate)-m.HOSPITALIZED_DATE) day_num, di.icd_name ADMITTING_DIAGNOSIS_NAME,nvl(b.PRESENT_ADDRESS_SHENG,'')||nvl(b.PRESENT_ADDRESS_SHI,'')||nvl(b.PRESENT_ADDRESS_XIAN,'')||nvl(b.PRESENT_ADDRESS_XIANG,'')||nvl(b.PRESENT_ADDRESS_CUN,''),b.CONT_TEL,b.PERSON_AGE, b.AGE_MONTH, b.AGE_DAY, b.AGE_HOUR, b.AGE_BRANCH
+		from T_AR_MEDICALINFORMATION m
+		left join T_AR_BASEINFOMATION b on m.ADMISSION_NO = b.ADMISSION_NO
+		left join tm_bs_dept d on m.DEPARTMENT_NO = d.DEPT_CODE
+		left join T_IH_CUMULATIVECOST c on m.ADMISSION_NO = c.ADMISSION_NO
+		left join SYS_DIA_ICD di on m.ADMITTING_DIAGNOSIS = di.icd_cd
+		<where>
+			<if test="deptCodeList!=null and deptCodeList.size > 0">
+				and m.DEPARTMENT_NO in
+				<foreach collection="deptCodeList" item="deptCode" open="(" separator="," close=")">
+					#{deptCode}
+				</foreach>
+			</if>
+			<if test="searchName!=null and searchName != ''">
+				and (m.ADMISSION_NO like '%'||#{searchName}||'%' or m.name like '%'||#{searchName}||'%')
+			</if>
+		</where>
+		order by m.ADMISSION_NO desc
+	</select>
+
+	<!-- 出院患者 -->
+	<select id="selectPatientLeave" parameterType="PatientInLeaveInfoVoParam" resultMap="PatientInLeaveInfoMap">
+		select m.DEPARTMENT_NO, d.dept_name, m.ADMISSION_NO,m.HOSPITALIZED_COUNT,m.name, b.sex,m.BEDId,m.RESIDENT_NAME,b.EXPENSE_CATEGORY_NO,b.EXPENSE_CATEGORY,c.DEPOS_IT, c.CUMULATIVE_COST,c.CUMULATIVE_COST-c.DEPOS_IT,m.HOSPITALIZED_DATE, m.LEAVE_HOSPITAL_DATE,ceil(nvl(m.LEAVE_HOSPITAL_DATE,sysdate)-m.HOSPITALIZED_DATE) day_num, di.icd_name ADMITTING_DIAGNOSIS_NAME,nvl(b.PRESENT_ADDRESS_SHENG,'')||nvl(b.PRESENT_ADDRESS_SHI,'')||nvl(b.PRESENT_ADDRESS_XIAN,'')||nvl(b.PRESENT_ADDRESS_XIANG,'')||nvl(b.PRESENT_ADDRESS_CUN,''),b.CONT_TEL,b.PERSON_AGE, b.AGE_MONTH, b.AGE_DAY, b.AGE_HOUR, b.AGE_BRANCH
+		from T_AR_MEDICALINFORMATION_CY m
+		left join T_AR_BASEINFOMATION_CY b on m.ADMISSION_NO = b.ADMISSION_NO
+		left join tm_bs_dept d on m.DEPARTMENT_NO = d.DEPT_CODE
+		left join T_IH_CUMULATIVECOST c on m.ADMISSION_NO = c.ADMISSION_NO
+		left join SYS_DIA_ICD di on m.ADMITTING_DIAGNOSIS = di.icd_cd
+		<where>
+			<if test="hospitalizedDateBegin!=null and hospitalizedDateBegin != ''">
+				and m.LEAVE_HOSPITAL_DATE <![CDATA[ > ]]> to_date(#{hospitalizedDateBegin}, 'yyyy-MM-dd')
+			</if>
+			<if test="hospitalizedDateEnd!=null and hospitalizedDateEnd != ''">
+				and m.LEAVE_HOSPITAL_DATE <![CDATA[ < ]]> to_date(#{hospitalizedDateEnd}, 'yyyy-MM-dd')
+			</if>
+			<if test="deptCodeList!=null and deptCodeList.size > 0">
+				and m.DEPARTMENT_NO in
+				<foreach collection="deptCodeList" item="deptCode" open="(" separator="," close=")">
+					#{deptCode}
+				</foreach>
+			</if>
+			<if test="searchName!=null and searchName != ''">
+				and (m.ADMISSION_NO like '%'||#{searchName}||'%' or m.name like '%'||#{searchName}||'%')
+			</if>
+		</where>
+		order by m.ADMISSION_NO desc
+	</select>
+
+	<select id="queryFeeItemList" parameterType="FeeItemVoParam" resultMap="FeeItemVoResult">
+		select * from (
+				  select a.physician_name
+					   ,a.PHYSICIAN_NO
+					   ,m.name
+					   ,a.CASE_NO as ADMISSION_NO
+					   ,a.filing_date
+					   ,b.charge_code as feeItemCode
+					   ,b.charge_name as feeItemName
+					   ,b.standard
+					   ,b.unit
+					   ,b.price
+					   ,b.dose
+					   ,b.total
+					   ,a.executor_dpt_name
+					   ,a.PHYSICIAN_DPT_NAME,
+						b.CLOSING_DATE,
+						a.PHYSICIAN_DPT_NO
+				  from td_na_pat_fee a,t_ih_expensedetail b,T_AR_MEDICALINFORMATION m
+				  where b.pay_mark ='-1' and a.prescription = b.prescription and m.ADMISSION_NO=a.ADMISSION_NO
+				  union all
+				  select a.physician_name
+					   ,a.PHYSICIAN_NO
+					   ,m.name
+					   ,a.CASE_NO as ADMISSION_NO
+					   ,a.filing_date
+					   ,b.charge_code as feeItemCode
+					   ,b.charge_name as feeItemName
+					   ,b.standard
+					   ,b.unit
+					   ,b.price
+					   ,b.dose
+					   ,b.total
+					   ,a.executor_dpt_name
+					   ,a.PHYSICIAN_DPT_NAME,
+				         b.CLOSING_DATE,
+				         a.PHYSICIAN_DPT_NO
+				  from v_na_pa_fee_h a,v_ih_expensedetail_h b,T_AR_MEDICALINFORMATION_all m
+				  where b.pay_mark ='-1' and a.prescription = b.prescription and m.ADMISSION_NO=a.ADMISSION_NO
+			  ) a
+          <where>
+			  <if test="queryType!=null and queryType!=''">
+				  <if test="queryType=='1'.toString() and beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+					  and a.CLOSING_DATE between to_date(#{beginDateTime},'yyyy-MM-dd') and to_date(#{endDateTime},'yyyy-MM-dd')
+				  </if>
+				  <if test="queryType=='2'.toString() and beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+					  and a.FILING_DATE between to_date(#{beginDateTime},'yyyy-MM-dd') and to_date(#{endDateTime},'yyyy-MM-dd')
+				  </if>
+			  </if>
+			  <if test="billDeptCd!=null and billDeptCd!=''">
+				  and a.PHYSICIAN_DPT_NO=#{billDeptCd}
+			  </if>
+			  <if test="billDocCd!=null and billDocCd!=''">
+				  and a.PHYSICIAN_NO=#{billDocCd}
+			  </if>
+			  <if test="feeItemName!=null and feeItemName!=''">
+				  and (a.feeItemName like concat(concat('%', #{feeItemName}), '%') or a.feeItemCode like concat(concat('%', #{feeItemName}), '%'))
+			  </if>
+		  </where>
+		order by a.ADMISSION_NO desc , a.filing_date
+	</select>
+
+	<select id="queryFeeItemTotal" parameterType="FeeItemVoParam" resultType="java.lang.Double">
+		select sum(total) from (select * from (
+		select a.physician_name
+		,a.PHYSICIAN_NO
+		,m.name
+		,a.CASE_NO as ADMISSION_NO
+		,a.filing_date
+		,b.charge_code as feeItemCode
+		,b.charge_name as feeItemName
+		,b.standard
+		,b.unit
+		,b.price
+		,b.dose
+		,b.total
+		,a.executor_dpt_name
+		,a.PHYSICIAN_DPT_NAME,
+		b.CLOSING_DATE,
+		a.PHYSICIAN_DPT_NO
+		from td_na_pat_fee a,t_ih_expensedetail b,T_AR_MEDICALINFORMATION m
+		where b.pay_mark ='-1' and a.prescription = b.prescription and m.ADMISSION_NO=a.ADMISSION_NO
+		union all
+		select a.physician_name
+		,a.PHYSICIAN_NO
+		,m.name
+		,a.CASE_NO as ADMISSION_NO
+		,a.filing_date
+		,b.charge_code as feeItemCode
+		,b.charge_name as feeItemName
+		,b.standard
+		,b.unit
+		,b.price
+		,b.dose
+		,b.total
+		,a.executor_dpt_name
+		,a.PHYSICIAN_DPT_NAME,
+		b.CLOSING_DATE,
+		a.PHYSICIAN_DPT_NO
+		from v_na_pa_fee_h a,v_ih_expensedetail_h b,T_AR_MEDICALINFORMATION_all m
+		where b.pay_mark ='-1' and a.prescription = b.prescription and m.ADMISSION_NO=a.ADMISSION_NO
+		) a
+		<where>
+			<if test="queryType!=null and queryType!=''">
+				<if test="queryType=='1'.toString() and beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+					and a.CLOSING_DATE between to_date(#{beginDateTime},'yyyy-MM-dd') and to_date(#{endDateTime},'yyyy-MM-dd')
+				</if>
+				<if test="queryType=='2'.toString() and beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+					and a.FILING_DATE between to_date(#{beginDateTime},'yyyy-MM-dd') and to_date(#{endDateTime},'yyyy-MM-dd')
+				</if>
+			</if>
+			<if test="billDeptCd!=null and billDeptCd!=''">
+				and a.PHYSICIAN_DPT_NO=#{billDeptCd}
+			</if>
+			<if test="billDocCd!=null and billDocCd!=''">
+				and a.PHYSICIAN_NO=#{billDocCd}
+			</if>
+			<if test="feeItemName!=null and feeItemName!=''">
+				and (a.feeItemName like concat(concat('%', #{feeItemName}), '%') or a.feeItemCode like concat(concat('%', #{feeItemName}), '%'))
+			</if>
+		</where>
+         )
+	</select>
+	<select id="selectFeeWorkloadList" parameterType="FeeWorkloadVo" resultMap="FeeWorkloadVoResult">
+select * from (select a.total,a.PHYSICIAN_NO as staffCode,trim(a.three_level_accounting) as threeLevelCode,trim(a.three_level_name) as threeLevelName,s.staff_name as staffName from (SELECT
+		sum( total ) AS total ,PHYSICIAN_NO,three_level_accounting,three_level_name
+		FROM
+		(
+		<if test="queryType!=null and queryType!='' and queryType=='1'.toString()">
+			SELECT
+			TRIM(b.three_level_accounting) as three_level_accounting,TRIM(b.three_level_name)as three_level_name,b.total,a.PHYSICIAN_NO
+			FROM
+			td_na_pat_fee a,
+			t_ih_expensedetail b
+			WHERE
+			b.pay_mark = '-1'
+			AND a.prescription = b.prescription
+			AND charge_no != '00'
+			and a.PHYSICIAN_NO is not null
+			and a.PHYSICIAN_DPT_NO=#{billDeptCode}
+			<if test="beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+				and a.FILING_DATE between to_date(#{beginDateTime},'yyyy-MM-dd') and to_date(#{endDateTime},'yyyy-MM-dd')
+			</if>
+			UNION ALL
+		</if>
+		SELECT
+		TRIM(b.three_level_accounting) as three_level_accounting,TRIM(b.three_level_name)as three_level_name,b.total,a.PHYSICIAN_NO
+		FROM
+		v_na_pa_fee_h a,
+		v_ih_expensedetail_h b
+		WHERE
+		b.pay_mark = '-1'
+		AND a.prescription = b.prescription
+		AND charge_no != '00'
+		and a.PHYSICIAN_NO is not null
+		and a.PHYSICIAN_DPT_NO=#{billDeptCode}
+		<if test="beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+			and a.FILING_DATE between to_date(#{beginDateTime},'yyyy-MM-dd') and to_date(#{endDateTime},'yyyy-MM-dd')
+		</if>
+		)
+		GROUP BY
+		PHYSICIAN_NO,three_level_accounting, three_level_name ) a left join tm_Bs_staff s on a.PHYSICIAN_NO=s.staff_code
+		where a.three_level_accounting is not null and a.three_level_name is not null) where total!=0
+
+	</select>
+	<select id="selectInHosPatientFeeWorkloadList" resultMap="FeeWorkloadVoResult">
+		select
+		a.total,
+		a.PHYSICIAN_NO as staffCode,
+		trim(a.three_level_accounting) as threeLevelCode,
+		trim(a.three_level_name) as threeLevelName,
+		s.staff_name as staffName
+		from (
+		SELECT
+		SUM(total) AS total ,
+		PHYSICIAN_NO,
+		three_level_accounting,
+		three_level_name
+		FROM
+		(
+		SELECT
+		TRIM(b.three_level_accounting) as three_level_accounting,
+		TRIM(b.three_level_name)as three_level_name,
+		b.total,
+		a.PHYSICIAN_NO
+		FROM
+		TD_NA_PAT_FEE_ALL a,
+		T_IH_EXPENSEDETAIL_ALL b
+		WHERE
+		b.pay_mark = '-1'
+		AND a.prescription = b.prescription
+		AND charge_no != '00'
+		and a.PHYSICIAN_NO is not null
+		<choose>
+			<when test="departmentType == '1'.toString()">
+				and a.PHYSICIAN_DPT_NO= #{billDeptCode,jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				and a.EXECUTOR_DPT_NO= #{billDeptCode,jdbcType=VARCHAR}
+				and a.PHYSICIAN_DPT_NO= #{billDeptCode,jdbcType=VARCHAR}
+			</otherwise>
+		</choose>
+		<if test="beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+			and a.FILING_DATE <![CDATA[>=]]> to_date(#{beginDateTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			and a.FILING_DATE <![CDATA[<]]> to_date(#{endDateTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		)
+		GROUP BY
+		PHYSICIAN_NO,
+		three_level_accounting,
+		three_level_name
+		HAVING SUM(total)!=0
+		) a
+		left join tm_Bs_staff s on a.PHYSICIAN_NO = s.staff_code
+		where a.three_level_accounting is not null and a.three_level_name is not null
+	</select>
+	<select id="selectLeaveHospitalFeeWorkloadList" resultMap="FeeWorkloadVoResult">
+		select
+		a.total,
+		a.PHYSICIAN_NO as staffCode,
+		trim(a.three_level_accounting) as threeLevelCode,
+		trim(a.three_level_name) as threeLevelName,
+		s.staff_name as staffName
+		from (
+		SELECT
+		SUM(total) AS total ,
+		PHYSICIAN_NO,
+		three_level_accounting,
+		three_level_name
+		FROM
+		(
+		SELECT
+		TRIM(b.three_level_accounting) as three_level_accounting,
+		TRIM(b.three_level_name)as three_level_name,
+		b.total,
+		a.PHYSICIAN_NO
+		FROM
+		TD_NA_PAT_FEE_ALL a,
+		T_IH_EXPENSEDETAIL_ALL b
+		LEFT JOIN T_AR_MEDICALINFORMATION_ALL m ON b.ADMISSION_NO = m.ADMISSION_NO
+		WHERE
+		b.pay_mark = '-1' and m.CLOSING_DATE is not null
+		AND a.prescription = b.prescription
+		AND charge_no != '00'
+		and a.PHYSICIAN_NO is not null
+		<choose>
+			<when test="departmentType == '1'.toString()">
+				and a.PHYSICIAN_DPT_NO= #{billDeptCode,jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				and a.EXECUTOR_DPT_NO= #{billDeptCode,jdbcType=VARCHAR}
+				and a.PHYSICIAN_DPT_NO= #{billDeptCode,jdbcType=VARCHAR}
+			</otherwise>
+		</choose>
+		<if test="beginDateTime!=null and beginDateTime!='' and endDateTime!=null and endDateTime!=''">
+			and m.CLOSING_DATE <![CDATA[>=]]> to_date(#{beginDateTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			and m.CLOSING_DATE <![CDATA[<]]> to_date(#{endDateTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		)
+		GROUP BY
+		PHYSICIAN_NO,
+		three_level_accounting,
+		three_level_name
+		HAVING SUM(total)!=0
+		) a
+		left join tm_Bs_staff s on a.PHYSICIAN_NO = s.staff_code
+		where a.three_level_accounting is not null and a.three_level_name is not null
+	</select>
+</mapper>

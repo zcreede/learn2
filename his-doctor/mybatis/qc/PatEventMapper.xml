@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.PatEventMapper">
+
+    <resultMap type="PatEvent" id="PatEventResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="eventCode"    column="event_code"    />
+        <result property="eventName"    column="event_name"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="eventNo"    column="event_no"    />
+        <result property="preDocCd"    column="pre_doc_cd"    />
+        <result property="preDocName"    column="pre_doc_name"    />
+        <result property="postDocCd"    column="post_doc_cd"    />
+        <result property="postDocName"    column="post_doc_name"    />
+        <result property="eventSource"    column="event_source"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <resultMap type="PatEventVo" id="PatEventIndexResult" extends="PatEventResult">
+        <result property="indexId"    column="index_id"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="resDocCd"    column="res_doc_cd"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="idcard"    column="idcard"    />
+    </resultMap>
+
+    <sql id="selectPatEventVo">
+        select id, org_cd, inp_no, patient_id, patient_name, event_code, event_name, begin_time, end_time, event_no, pre_doc_cd, pre_doc_name, post_doc_cd, post_doc_name, event_source, del_flag, cre_date, alt_date from pat_event
+    </sql>
+
+    <select id="selectPatEventList" parameterType="PatEvent" resultMap="PatEventResult">
+        <include refid="selectPatEventVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="inpNo != null  and inpNo != ''"> and inp_no = #{inpNo}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="eventCode != null  and eventCode != ''"> and event_code = #{eventCode}</if>
+            <if test="eventName != null  and eventName != ''"> and event_name like concat(concat('%', #{eventName}), '%')</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="eventNo != null  and eventNo != ''"> and event_no = #{eventNo}</if>
+            <if test="preDocCd != null  and preDocCd != ''"> and pre_doc_cd = #{preDocCd}</if>
+            <if test="preDocName != null  and preDocName != ''"> and pre_doc_name like concat(concat('%', #{preDocName}), '%')</if>
+            <if test="postDocCd != null  and postDocCd != ''"> and post_doc_cd = #{postDocCd}</if>
+            <if test="postDocName != null  and postDocName != ''"> and post_doc_name like concat(concat('%', #{postDocName}), '%')</if>
+            <if test="eventSource != null  and eventSource != ''"> and event_source = #{eventSource}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectPatEventById" parameterType="Long" resultMap="PatEventResult">
+        <include refid="selectPatEventVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPatEvent" parameterType="PatEvent">
+        insert into pat_event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="inpNo != null and inpNo != ''">inp_no,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="patientName != null and patientName != ''">patient_name,</if>
+            <if test="eventCode != null and eventCode != ''">event_code,</if>
+            <if test="eventName != null and eventName != ''">event_name,</if>
+            <if test="beginTime != null">begin_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="eventNo != null">event_no,</if>
+            <if test="preDocCd != null">pre_doc_cd,</if>
+            <if test="preDocName != null">pre_doc_name,</if>
+            <if test="postDocCd != null">post_doc_cd,</if>
+            <if test="postDocName != null">post_doc_name,</if>
+            <if test="eventSource != null">event_source,</if>
+            <if test="delFlag != null">del_flag,</if>
+            cre_date,
+            alt_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="inpNo != null and inpNo != ''">#{inpNo},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="patientName != null and patientName != ''">#{patientName},</if>
+            <if test="eventCode != null and eventCode != ''">#{eventCode},</if>
+            <if test="eventName != null and eventName != ''">#{eventName},</if>
+            <if test="beginTime != null">#{beginTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="eventNo != null">#{eventNo},</if>
+            <if test="preDocCd != null">#{preDocCd},</if>
+            <if test="preDocName != null">#{preDocName},</if>
+            <if test="postDocCd != null">#{postDocCd},</if>
+            <if test="postDocName != null">#{postDocName},</if>
+            <if test="eventSource != null">#{eventSource},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            sysdate,
+            sysdate,
+         </trim>
+    </insert>
+
+    <insert id="insertList" parameterType="PatEvent">
+        insert all
+        <foreach collection="list" item="item">
+            into pat_event
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orgCd != null">org_cd,</if>
+                <if test="item.inpNo != null and item.inpNo != ''">inp_no,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.patientName != null and item.patientName != ''">patient_name,</if>
+                <if test="item.eventCode != null and item.eventCode != ''">event_code,</if>
+                <if test="item.eventName != null and item.eventName != ''">event_name,</if>
+                <if test="item.beginTime != null">begin_time,</if>
+                <if test="item.endTime != null">end_time,</if>
+                <if test="item.eventNo != null">event_no,</if>
+                <if test="item.preDocCd != null">pre_doc_cd,</if>
+                <if test="item.preDocName != null">pre_doc_name,</if>
+                <if test="item.postDocCd != null">post_doc_cd,</if>
+                <if test="item.postDocName != null">post_doc_name,</if>
+                <if test="item.eventSource != null">event_source,</if>
+                <if test="item.delFlag != null">del_flag,</if>
+                cre_date,
+                alt_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orgCd != null">#{item.orgCd},</if>
+                <if test="item.inpNo != null and item.inpNo != ''">#{item.inpNo},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.eventCode != null and item.eventCode != ''">#{item.eventCode},</if>
+                <if test="item.eventName != null and item.eventName != ''">#{item.eventName},</if>
+                <if test="item.beginTime != null">#{item.beginTime},</if>
+                <if test="item.endTime != null">#{item.endTime},</if>
+                <if test="item.eventNo != null">#{item.eventNo},</if>
+                <if test="item.preDocCd != null">#{item.preDocCd},</if>
+                <if test="item.preDocName != null">#{item.preDocName},</if>
+                <if test="item.postDocCd != null">#{item.postDocCd},</if>
+                <if test="item.postDocName != null">#{item.postDocName},</if>
+                <if test="item.eventSource != null">#{item.eventSource},</if>
+                <if test="item.delFlag != null">#{item.delFlag},</if>
+                sysdate,
+                sysdate,
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updatePatEvent" parameterType="PatEvent">
+        update pat_event
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="inpNo != null and inpNo != ''">inp_no = #{inpNo},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="eventCode != null and eventCode != ''">event_code = #{eventCode},</if>
+            <if test="eventName != null and eventName != ''">event_name = #{eventName},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="eventNo != null">event_no = #{eventNo},</if>
+            <if test="preDocCd != null">pre_doc_cd = #{preDocCd},</if>
+            <if test="preDocName != null">pre_doc_name = #{preDocName},</if>
+            <if test="postDocCd != null">post_doc_cd = #{postDocCd},</if>
+            <if test="postDocName != null">post_doc_name = #{postDocName},</if>
+            <if test="eventSource != null">event_source = #{eventSource},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePatEventById" parameterType="Long">
+        delete from pat_event where id = #{id}
+    </delete>
+
+    <delete id="deletePatEventByIds" parameterType="String">
+        delete from pat_event where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByEventCodeAndBeginTime" parameterType="PatEventVo" resultMap="PatEventResult">
+        <include refid="selectPatEventVo"/>
+        where event_code = #{eventCode} and begin_time &lt; trunc(sysdate, 'HH24')-#{afterBeginHour}/24
+    </select>
+    <select id="selectListByEventCodeAndBeginTime" parameterType="PatEventVo" resultMap="PatEventIndexResult">
+        select e.*,i.id index_id,v.dept_cd,v.dept_name,v.res_doc_cd,v.res_doc_name
+        from pat_event e
+        left join pat_visitinfo v on e.patient_id = v.patient_id
+        left join EMR_INDEX i on e.PATIENT_ID = i.PATIENT_ID
+        <if test="mrTypeList != null and mrTypeList.size > 0">
+            and i.MR_TYPE in
+            <foreach collection="mrTypeList" item="mrType" open="(" separator="," close=")">
+                #{mrType}
+            </foreach>
+        </if>
+        where e.EVENT_CODE = #{eventCode}
+        <if test="beginTime != null">
+            and e.ALT_DATE &gt;= #{beginTime}
+        </if>
+        <if test="afterOutTimeDayNum != null">
+            and v.out_time is not null and v.out_time &lt; trunc(sysdate, 'HH24')-24*#{afterOutTimeDayNum}+1/24
+        </if>
+        <if test="patientId != null and patientId != ''">
+            and e.patient_id = #{patientId}
+        </if>
+    </select>
+    <select id="selectListByEventCode" parameterType="PatEventVo" resultMap="PatEventIndexResult">
+        select e.*,v.dept_cd,v.dept_name,v.res_doc_cd,v.res_doc_name
+        from pat_event e
+        left join pat_visitinfo v on v.PATIENT_ID = e.PATIENT_ID
+        left join T_IH_CUMULATIVECOST c on v.inp_no = c.admission_no
+        where e.del_flag = '0'
+        and (v.OUT_TIME is null or (v.OUT_TIME is not null and to_char(v.OUT_TIME,'yyyy-MM-dd') >= to_char(trunc(sysdate, 'HH24')-#{afterOutTimeDayNum}, 'yyyy-MM-dd')))
+        and (v.OUT_TIME is null or (cast(TO_NUMBER((v.OUT_TIME- v.INHOS_TIME)*24) as int) <![CDATA[<]]> 24 and c.CUMULATIVE_COST > 0) or (cast(TO_NUMBER((v.OUT_TIME- v.INHOS_TIME)*24) as int) <![CDATA[>]]> 24 ))
+        <if test="eventCodeList != null and eventCodeList.size > 0">
+            and e.event_code in
+            <foreach collection="eventCodeList" item="eventCode" open="(" separator="," close=")">
+                #{eventCode}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectListByEventCodeNew" parameterType="PatEventVo" resultMap="PatEventIndexResult">
+        select e.*, v.DEPARTMENT_NO as dept_cd, d.dept_name as dept_name,v.RESIDENT_CODE as res_doc_cd, v.RESIDENT_NAME as res_doc_name,a.IDCARD
+        from pat_event e
+        left join t_ar_medicalinformation_all v on v.ADMISSION_NO = e.PATIENT_ID
+        left join t_ar_baseinfomation_all a on a.ADMISSION_NO = e.patient_id
+        left join T_IH_CUMULATIVECOST c on v.ADMISSION_NO = c.admission_no
+        left join tm_bs_dept d on v.DEPARTMENT_NO = d.dept_code
+        <where>
+            e.del_flag = '0'
+            and (v.LEAVE_HOSPITAL_DATE is null or (v.LEAVE_HOSPITAL_DATE is not null and to_char(v.LEAVE_HOSPITAL_DATE,'yyyy-MM-dd') >= to_char(trunc(sysdate, 'HH24') - #{afterOutTimeDayNum}, 'yyyy-MM-dd')))
+            and (v.LEAVE_HOSPITAL_DATE is null or (cast(TO_NUMBER((v.LEAVE_HOSPITAL_DATE- v.ENTRY_DATE)*24) as int) <![CDATA[<]]> 24 and c.CUMULATIVE_COST > 0) or (cast(TO_NUMBER((v.LEAVE_HOSPITAL_DATE- v.ENTRY_DATE)*24) as int) <![CDATA[>]]> 24 ))
+            <if test="eventCodeList != null and eventCodeList.size > 0">
+                and e.event_code in
+                <foreach collection="eventCodeList" item="eventCode" open="(" separator="," close=")">
+                    #{eventCode}
+                </foreach>
+            </if>
+            and e.PATIENT_ID in(select m.ADMISSION_NO from t_ar_medicalinformation_all m)
+            <if test="patientId != null and patientId != ''">
+                and e.patient_id = #{patientId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectListByPatient" parameterType="String" resultMap="PatEventIndexResult">
+        select e.*,v.dept_cd,v.dept_name,v.res_doc_cd,v.res_doc_name
+        from pat_event e
+        left join pat_visitinfo v on v.PATIENT_ID = e.PATIENT_ID
+        where e.del_flag = '0' and e.patient_id = #{patientId} and e.org_cd = #{orgCd}
+    </select>
+    <select id="selectListByPatientAndEvent" resultMap="PatEventResult">
+        <include refid="selectPatEventVo"/>
+        where patient_id in
+        <foreach collection="patientIdList" item="patientId" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+        and event_code in
+        <foreach collection="eventCodeList" item="eventCode" open="(" separator="," close=")">
+            #{eventCode}
+        </foreach>
+    </select>
+    <select id="selectTestAlertList" resultMap="PatEventResult">
+        select
+            m.HOSPITAL_CODE as org_cd,
+            m.ADMISSION_NO as inp_no,
+            m.ADMISSION_NO as patient_id,
+            m.ADMISSION_NO as patient_id,
+            m.name as patient_name,
+            '14' as event_code,
+            '危急值' as event_name,
+            t.ALERTDT as begin_time,
+            'HIS' AS event_source,
+            '0' AS del_flag
+        from  test_alert_report t
+        left join T_AR_MEDICALINFORMATION m on t.PAT_NO =m.ADMISSION_NO
+        where m.ADMISSION_NO is not null
+        <if test="beginDate!=null and beginDate != ''">and t.alertdt &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        <if test="endDate!=null and endDate!= ''">and t.alertdt &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        ORDER BY t.alertdt DESC
+    </select>
+    <select id="selectExamAlertList" resultMap="PatEventResult">
+        SELECT
+            m.HOSPITAL_CODE as org_cd,
+            m.ADMISSION_NO as inp_no,
+            m.ADMISSION_NO as patient_id,
+            m.ADMISSION_NO as patient_id,
+            m.name as patient_name,
+            '14' as event_code,
+            '危急值' as event_name,
+            e.ALT_DATE as begin_time,
+            'HIS' AS event_source,
+            '0' AS del_flag
+        FROM
+            exam_item e
+            LEFT JOIN T_AR_MEDICALINFORMATION m ON e.PATIENT_ID = m.ADMISSION_NO
+        WHERE
+            e.alter_flag = '1'
+            AND m.ADMISSION_NO IS NOT NULL
+        <if test="beginDate!=null and beginDate != ''">and e.ALT_DATE &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        <if test="endDate!=null and endDate!= ''">and e.ALT_DATE &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        ORDER BY e.ALT_DATE DESC
+    </select>
+    <select id="selectRescueOrderList" resultMap="PatEventResult">
+        SELECT
+            m.HOSPITAL_CODE as org_cd,
+            m.ADMISSION_NO as inp_no,
+            m.ADMISSION_NO as patient_id,
+            m.ADMISSION_NO as patient_id,
+            m.name as patient_name,
+            '16' as event_code,
+            '抢救' as event_name,
+            i.ORDER_START_TIME as begin_time,
+            i.order_no as event_no,
+            'HIS' AS event_source,
+            '0' AS del_flag,
+            i.ORDER_START_DOC as pre_doc_cd,
+            i.ORDER_START_DOC_NAME as pre_doc_name
+        FROM
+            td_pa_order_item i
+            left join TD_PA_ORDER o on o.ORDER_NO=i.ORDER_NO
+            LEFT JOIN T_AR_MEDICALINFORMATION m ON o.ADMISSION_NO = m.ADMISSION_NO
+        WHERE
+            ( i.cp_name LIKE '抢%救%' OR i.cp_name LIKE '%抢救%' ) and m.ADMISSION_NO is not null
+        <if test="beginDate!=null and beginDate != ''">and i.ORDER_START_TIME &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        <if test="endDate!=null and endDate!= ''">and i.ORDER_START_TIME &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        ORDER BY i.ORDER_START_TIME DESC
+    </select>
+    <select id="selectBloodOrderList" resultMap="PatEventResult">
+        SELECT
+            m.HOSPITAL_CODE as org_cd,
+            m.ADMISSION_NO as inp_no,
+            m.ADMISSION_NO as patient_id,
+            m.ADMISSION_NO as patient_id,
+            m.name as patient_name,
+            '08' as event_code,
+            '输血' as event_name,
+            i.ORDER_START_TIME as begin_time,
+            i.order_no as event_no,
+            'HIS' AS event_source,
+            '0' AS del_flag,
+            i.ORDER_START_DOC as pre_doc_cd,
+            i.ORDER_START_DOC_NAME as pre_doc_name
+        FROM
+            td_pa_order_item i
+        left join TD_PA_ORDER o on o.ORDER_NO=i.ORDER_NO
+        LEFT JOIN T_AR_MEDICALINFORMATION m ON o.ADMISSION_NO = m.ADMISSION_NO
+        WHERE
+        ( i.cp_name LIKE '输%细胞%悬液%' OR i.cp_name LIKE '%输血%' ) and m.ADMISSION_NO is not null
+        <if test="beginDate!=null and beginDate != ''">and i.ORDER_START_TIME &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        <if test="endDate!=null and endDate!= ''">and i.ORDER_START_TIME &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        ORDER BY i.ORDER_START_TIME DESC
+    </select>
+    <delete id="delPatientEventByOrderNos" parameterType="String">
+        delete from pat_event where event_no in
+        <foreach item="eventNo" collection="list" open="(" separator="," close=")">
+            #{eventNo}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TmPmDjcdDefineMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TmPmDjcdDefine">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="DJLX" jdbcType="DECIMAL" property="djlx" />
+    <result column="DJ_LENGTH" jdbcType="DECIMAL" property="djLength" />
+    <result column="BZ" jdbcType="VARCHAR" property="bz" />
+  </resultMap>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.TmPmDjcdDefine">
+    insert into TM_PM_DJCD_DEFINE (ID, DJLX, DJ_LENGTH, BZ)
+    values (#{id,jdbcType=DECIMAL}, #{djlx,jdbcType=DECIMAL}, #{djLength,jdbcType=DECIMAL},
+      #{bz,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.TmPmDjcdDefine">
+    insert into TM_PM_DJCD_DEFINE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="djlx != null">
+        DJLX,
+      </if>
+      <if test="djLength != null">
+        DJ_LENGTH,
+      </if>
+      <if test="bz != null">
+        BZ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="djlx != null">
+        #{djlx,jdbcType=DECIMAL},
+      </if>
+      <if test="djLength != null">
+        #{djLength,jdbcType=DECIMAL},
+      </if>
+      <if test="bz != null">
+        #{bz,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getDjcdDefineByDjlx" resultMap="BaseResultMap">
+     select ID, DJLX, DJ_LENGTH, BZ from TM_PM_DJCD_DEFINE
+     where DJLX = #{djlx}
+  </select>
+</mapper>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.PatientsReturnDrugMapper">
+    <resultMap id="TakeDrugListResult" type="com.emr.project.operation.domain.resp.UnTakeDrugResp">
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <result column="orderType" jdbcType="VARCHAR" property="orderType" />
+        <result column="chargeName" jdbcType="VARCHAR" property="chargeName" />
+        <result column="standard" jdbcType="VARCHAR" property="standard" />
+        <result column="price" jdbcType="VARCHAR" property="price" />
+        <result column="orderDose" jdbcType="VARCHAR" property="orderDose" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="total" jdbcType="VARCHAR" property="total" />
+        <result column="orderNo" jdbcType="VARCHAR" property="orderNo" />
+        <result column="orderSortNumber" jdbcType="VARCHAR" property="orderSortNumber" />
+        <result column="filingDate" jdbcType="VARCHAR" property="filingDate" />
+        <result column="staffName" jdbcType="VARCHAR" property="staffName" />
+        <result column="deptName" jdbcType="VARCHAR" property="deptName" />
+        <result column="deptCode" jdbcType="VARCHAR" property="deptCode" />
+
+        <result column="performListNo" jdbcType="VARCHAR" property="performListNo" />
+        <result column="performListSortNumber" jdbcType="VARCHAR" property="performListSortNumber" />
+        <result column="orderGroupNo" jdbcType="VARCHAR" property="orderGroupNo" />
+
+        <result column="pharmacyNo" jdbcType="VARCHAR" property="pharmacyNo" />
+        <result column="pharmacopoeiaNo" jdbcType="VARCHAR" property="pharmacopoeiaNo" />
+        <result column="drugStockNo" jdbcType="VARCHAR" property="drugStockNo" />
+        <result column="pharmacyName" jdbcType="VARCHAR" property="pharmacyName" />
+
+        <result column="operatorName" jdbcType="VARCHAR" property="operatorName" />
+        <result column="takeDrugStatus" jdbcType="VARCHAR" property="takeDrugStatus" />
+        <result column="upStatus" jdbcType="VARCHAR" property="upStatus" />
+    </resultMap>
+
+    <select id="unTakeDrugList" resultMap="TakeDrugListResult">
+        SELECT
+            dl.id AS id,
+            dl.DRUG_NAME AS chargeName,
+            dl.ORDER_STANDARD AS standard,
+            dl.ORDER_TYPE AS orderType,
+            to_char(dl.ORDER_PRICE,'fm99999990.00') AS price,
+            dl.ORDER_DOSE AS orderDose,
+            dl.ORDER_UNIT AS unit,
+            to_char(pd.ORDER_TOTAL,'fm99999990.00') AS total,
+            dl.order_no AS orderNo,
+            dl.pharmacy_no AS pharmacyNo,
+            dl.PHARMACOPOEIA_NO AS pharmacopoeiaNo,
+            dl.DRUG_STOCK_NO AS drugStockNo,
+            dl.order_sort_number AS orderSortNumber,
+            dl.PERFORM_LIST_NO AS performListNo,
+            dl.PERFORM_LIST_SORT_NUMBER AS performListSortNumber,
+            dl.ORDER_GROUP_NO AS orderGroupNo,
+            dl.order_group_sort_number AS orderGroupSortNumber,
+            to_char(dl.TAKE_DRUG_TIME,'yyyy-MM-dd HH24:mi') AS filingDate,
+            s.staff_name AS staffName,
+            dt.dept_name AS deptName,
+            dl.TAKE_DRUG_WARD_NO AS deptCode,
+            d.dept_name AS pharmacyName,
+            bs.staff_name as operatorName,
+            dl.take_drug_status as takeDrugStatus,
+            dl.up_status AS upStatus
+        FROM
+            td_pa_take_drug_list dl
+            left join td_pa_order_detail pd ON dl.order_no = pd.order_no
+            AND dl.order_sort_number = pd.order_sort_number
+            AND dl.order_group_no = pd.order_group_no
+            AND dl.order_group_sort_number = pd.order_group_sort_number
+            left join TM_BS_DEPT d ON dl.pharmacy_no = d.dept_code
+            left join TM_BS_DEPT dt ON dl.TAKE_DRUG_WARD_NO = dt.dept_code
+            left join TM_BS_STAFF s ON s.staff_code = dl.order_doctor_code
+            left join TM_BS_STAFF bs ON bs.staff_code = dl.take_drug_operator
+        WHERE
+            dl.valid = 1 and dl.TAKE_DRUG_STATUS in ('0','1','2','3','10','11') and dl.TAKE_DRUG_WARD_NO=#{deptCode1}
+            <if test=" admissionNo!=null and admissionNo !=''">
+                AND dl.ADMISSION_NO = #{admissionNo}
+            </if>
+            <if test="deptCode != null and deptCode != ''">
+                and dl.PHARMACY_NO = #{deptCode}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND dl.TAKE_DRUG_TIME &gt;= to_date ( #{startTime,jdbcType=VARCHAR}, 'yyyy-MM-dd HH24:mi:ss' )
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND dl.TAKE_DRUG_TIME &lt; to_date ( #{endTime,jdbcType=VARCHAR}, 'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="drugName != null and drugName != ''">
+                and (dl.DRUG_NAME like concat( concat('%', #{drugName}), '%')
+                or dl.DRUG_NAME_PYM like concat( concat('%', #{drugName}), '%') )
+            </if>
+        ORDER BY
+            dl.order_group_no ASC
+    </select>
+    <select id="selectUnTakeDrugListByPerformListNo" resultMap="TakeDrugListResult">
+        SELECT
+            dl.id AS id,
+            dl.DRUG_NAME AS chargeName,
+            dl.ORDER_STANDARD AS standard,
+            dl.ORDER_TYPE AS orderType,
+            to_char(dl.ORDER_PRICE,'fm99999990.00') AS price,
+            dl.ORDER_DOSE AS orderDose,
+            dl.ORDER_UNIT AS unit,
+            to_char(pd.ORDER_TOTAL,'fm99999990.00') AS total,
+            dl.order_no AS orderNo,
+            dl.pharmacy_no AS pharmacyNo,
+            dl.PHARMACOPOEIA_NO AS pharmacopoeiaNo,
+            dl.DRUG_STOCK_NO AS drugStockNo,
+            dl.order_sort_number AS orderSortNumber,
+            dl.PERFORM_LIST_NO AS performListNo,
+            dl.PERFORM_LIST_SORT_NUMBER AS performListSortNumber,
+            dl.ORDER_GROUP_NO AS orderGroupNo,
+            dl.order_group_sort_number AS orderGroupSortNumber,
+            to_char(dl.TAKE_DRUG_TIME,'yyyy-MM-dd HH24:mi') AS filingDate,
+            s.staff_name AS staffName,
+            dl.PATIENT_DEP_NAME AS deptName,
+            d.dept_name AS pharmacyName,
+            bs.staff_name as operatorName,
+            dl.take_drug_status as takeDrugStatus,
+            dl.up_status AS upStatus
+        FROM
+            td_pa_take_drug_list dl
+            left join td_pa_order_detail pd ON dl.order_no = pd.order_no
+            AND dl.order_sort_number = pd.order_sort_number
+            AND dl.order_group_no = pd.order_group_no
+            AND dl.order_group_sort_number = pd.order_group_sort_number
+            left join TM_BS_DEPT d ON dl.pharmacy_no = d.dept_code
+            left join TM_BS_STAFF s ON s.staff_code = dl.order_doctor_code
+            left join TM_BS_STAFF bs ON bs.staff_code = dl.take_drug_operator
+        WHERE
+            dl.valid = 1 and dl.TAKE_DRUG_STATUS = '1'
+        and dl.perform_list_no = #{performListNo}
+        <if test=" list != null">
+            and dl.perform_list_sort_number in
+            <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+</mapper>

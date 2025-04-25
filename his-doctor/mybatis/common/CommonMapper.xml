@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.common.mapper.CommonMapper">
+
+    <select id="getSysdate" resultType="String">
+        select sysdate from dual
+    </select>
+
+    <select id="getSystimestamp" resultType="String">
+        select TO_CHAR(systimestamp,'YYMMDDHH24MISS.FF') from dual
+    </select>
+
+    <resultMap type="TmBsDefineConfigureP" id="TmBsDefineConfigurePResult">
+        <result property="hisVer"    column="his_ver"    />
+        <result property="systemCode"    column="system_code"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="nameShort"    column="name_short"    />
+        <result property="type"    column="type"    />
+        <result property="sfqz"    column="sfqz"    />
+        <result property="defaultValue"    column="default_value"    />
+        <result property="range"    column="range"    />
+        <result property="min"    column="min"    />
+        <result property="max"    column="max"    />
+        <result property="qzfs"    column="qzfs"    />
+        <result property="jsInt"    column="js_int"    />
+        <result property="mjChr"    column="mj_chr"    />
+        <result property="sfylsj"    column="sfylsj"    />
+        <result property="ylz"    column="ylz"    />
+        <result property="sfylqt"    column="sfylqt"    />
+        <result property="qtbm"    column="qtbm"    />
+        <result property="qtylz"    column="qtylz"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="zjm"    column="zjm"    />
+        <result property="classf"    column="classf"    />
+        <result property="codeP"    column="code_p"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+    <select id="selectDefineConfigureByCode" parameterType="String" resultMap="TmBsDefineConfigurePResult">
+        select HIS_VER, SYSTEM_CODE, CODE, NAME, NAME_SHORT, TYPE, SFQZ, DEFAULT_VALUE, RANGE, MIN, MAX, QZFS, JS_INT, MJ_CHR, SFYLSJ, YLZ, SFYLQT, QTBM, QTYLZ, REMARKS, ZJM, CLASSF, CODE_P, CREATE_TIME, UPDATE_TIME
+        from TM_BS_DEFINE_CONFIGURE_P where code = #{code}
+    </select>
+    <resultMap id="NursingLevelMap" type="com.emr.project.common.domain.vo.NursingLevelVo">
+        <result property="levelNo"    column="LEVEL_NO"    />
+        <result property="levelName"    column="LEVEL_NAME"    />
+    </resultMap>
+    <select id="selectNursingLevelList" resultMap="NursingLevelMap">
+        SELECT LEVEL_NO,LEVEL_NAME FROM TM_NA_NURSING_LEVEL
+    </select>
+</mapper>

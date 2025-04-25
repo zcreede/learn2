@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.MedicalinformationMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.Medicalinformation">
+        <id column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+        <id column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+        <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
+        <result column="case_no" jdbcType="VARCHAR" property="caseNo" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount" />
+        <result column="tel" jdbcType="VARCHAR" property="tel" />
+        <result column="department_no" jdbcType="VARCHAR" property="departmentNo" />
+        <result column="ward_no" jdbcType="VARCHAR" property="wardNo" />
+        <result column="ward_name" jdbcType="VARCHAR" property="wardName" />
+        <result column="bed_no" jdbcType="VARCHAR" property="bedNo" />
+        <result column="bedid" jdbcType="VARCHAR" property="bedid" />
+        <result column="bed_surcharge" jdbcType="DECIMAL" property="bedSurcharge" />
+        <result column="bed_charge_date" jdbcType="TIMESTAMP" property="bedChargeDate" />
+        <result column="hospital_way" jdbcType="VARCHAR" property="hospitalWay" />
+        <result column="hospital_condition" jdbcType="VARCHAR" property="hospitalCondition" />
+        <result column="level_care" jdbcType="VARCHAR" property="levelCare" />
+        <result column="level_name" jdbcType="VARCHAR" property="levelName" />
+        <result column="archiater_no" jdbcType="VARCHAR" property="archiaterNo" />
+        <result column="archiater_name" jdbcType="VARCHAR" property="archiaterName" />
+        <result column="visiting_staff_no" jdbcType="VARCHAR" property="visitingStaffNo" />
+        <result column="visiting_staff_name" jdbcType="VARCHAR" property="visitingStaffName" />
+        <result column="supervisor_nurse_no" jdbcType="VARCHAR" property="supervisorNurseNo" />
+        <result column="supervisor_nurse_name" jdbcType="VARCHAR" property="supervisorNurseName" />
+        <result column="hospitalized_date" jdbcType="TIMESTAMP" property="hospitalizedDate" />
+        <result column="leave_hospital_date" jdbcType="TIMESTAMP" property="leaveHospitalDate" />
+        <result column="hospital_mark" jdbcType="VARCHAR" property="hospitalMark" />
+        <result column="leave_hospital_condition" jdbcType="VARCHAR" property="leaveHospitalCondition" />
+        <result column="discharge_department_no" jdbcType="VARCHAR" property="dischargeDepartmentNo" />
+        <result column="discharge_ward_no" jdbcType="VARCHAR" property="dischargeWardNo" />
+        <result column="closing_date" jdbcType="TIMESTAMP" property="closingDate" />
+        <result column="outpatient_diagnosis" jdbcType="VARCHAR" property="outpatientDiagnosis" />
+        <result column="outpatient_doctor" jdbcType="VARCHAR" property="outpatientDoctor" />
+        <result column="admitting_diagnosis" jdbcType="VARCHAR" property="admittingDiagnosis" />
+        <result column="leave_hospital_diagnosis" jdbcType="VARCHAR" property="leaveHospitalDiagnosis" />
+        <result column="entry_date" jdbcType="TIMESTAMP" property="entryDate" />
+        <result column="actual_discharge_time" jdbcType="TIMESTAMP" property="actualDischargeTime" />
+        <result column="single_disease_mark" jdbcType="VARCHAR" property="singleDiseaseMark" />
+        <result column="inpat_arrearage_mark" jdbcType="VARCHAR" property="inpatArrearageMark" />
+        <result column="approver" jdbcType="VARCHAR" property="approver" />
+        <result column="blood_pressure" jdbcType="VARCHAR" property="bloodPressure" />
+        <result column="bingqing_dq" jdbcType="VARCHAR" property="bingqingDq" />
+        <result column="gms" jdbcType="VARCHAR" property="gms" />
+        <result column="medical_group" jdbcType="VARCHAR" property="medicalGroup" />
+        <result column="Resident_code" jdbcType="VARCHAR" property="residentCode" />
+        <result column="Resident_no" jdbcType="VARCHAR" property="residentNo" />
+        <result column="Resident_name" jdbcType="VARCHAR" property="residentName" />
+        <result column="nursing_group" jdbcType="VARCHAR" property="nursingGroup" />
+        <result column="supervisor_nurse_code" jdbcType="VARCHAR" property="supervisorNurseCode" />
+        <result column="daycase_flag" jdbcType="VARCHAR" property="daycaseFlag" />
+        <result column="follow_type" jdbcType="VARCHAR" property="followType" />
+        <result column="follow_freq" jdbcType="VARCHAR" property="followFreq" />
+        <result column="return_visit_flag" jdbcType="VARCHAR" property="returnVisitFlag" />
+        <result column="return_visit_date" jdbcType="TIMESTAMP" property="returnVisitDate" />
+        <result column="cp_no" jdbcType="VARCHAR" property="cpNo" />
+        <result column="cp_name" jdbcType="VARCHAR" property="cpName" />
+        <result column="borrow_bed_mark" jdbcType="VARCHAR" property="borrowBedMark" />
+        <result column="share_ward_no" jdbcType="VARCHAR" property="shareWardNo" />
+        <result column="archiater_code" jdbcType="VARCHAR" property="archiaterCode" />
+        <result column="visiting_staff_code" jdbcType="VARCHAR" property="visitingStaffCode" />
+        <result column="illness" jdbcType="VARCHAR" property="illness" />
+        <result column="days" jdbcType="VARCHAR" property="days" />
+        <result column="cp_flag" jdbcType="VARCHAR" property="cpFlag" />
+    </resultMap>
+
+    <resultMap id="patientInfoOtherMap" type="com.emr.project.pat.domain.vo.VisitinfoVo">
+        <result column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+        <result column="closing_date" jdbcType="TIMESTAMP" property="closingDate" />
+        <result column="mr_state" jdbcType="VARCHAR" property="mrState" />
+        <result column="final_filing_date" jdbcType="TIMESTAMP" property="finalFilingDate" />
+    </resultMap>
+
+    <!-- 查询患者就诊信息 -->
+    <select id="getMedicalinfo"  resultMap="BaseResultMap" >
+    select c.dept_name as ward_name,a.*,b.level_name from t_ar_medicalinformation a
+    left join tm_na_nursing_level b on a.level_care = b.level_code
+    left join tm_bs_dept c on a.WARD_NO = c.dept_code
+    where a.admission_no = #{admission_no,jdbcType=INTEGER}
+  </select>
+
+    <!-- 查询患者就诊信息-所有 -->
+    <select id="getHisMedicalByAdmissionNo"  resultMap="BaseResultMap" >
+    select a.* from t_ar_medicalinformation_all a
+    where a.admission_no = #{admission_no,jdbcType=INTEGER}
+  </select>
+
+    <select id="getMedicalinfoDetail"  parameterType="java.util.Map" resultType="java.util.Map" >
+        select t1.*,t2.person_age,t2.sex,t5.staff_name,t6.dept_name as dep_name,t7.ward_name from t_ar_medicalinformation t1
+        left join t_ar_baseinfomation t2 on t1.admission_no = t2.admission_no
+        left join tm_na_beds t3 on t1.bed_no = t3.bed_no
+        left join TM_BS_STAFF t5 on t5.staff_no = t1.Resident_code
+        left join TM_BS_DEPT t6 on t6.dept_code = t1.department_no
+        left join TM_BS_WARD t7 on t7.ward_no = t1.ward_no
+        where t1.hospital_mark='1' and t1.admission_no = #{admissionNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectMedicalinfo" resultMap="BaseResultMap">
+        select * from T_AR_MEDICALINFORMATION_ALL
+        where admission_no = #{admissionNo} and HOSPITALIZED_COUNT = #{hospitalizedCount}
+    </select>
+    <select id="selectMedicalinfoByPatientId" resultMap="BaseResultMap">
+        select * from T_AR_MEDICALINFORMATION_ALL
+        where admission_no = #{patientId}
+    </select>
+    <resultMap id="OutpatientInfoVOMap" type="com.emr.project.mzInfo.domain.OutpatientInfoVO">
+        <result column="name" property="name" />
+        <result column="CASE_NO" property="caseNo" />
+        <result column="ADMISSION_NO" property="admissionNo" />
+        <result column="sex" property="sex" />
+        <result column="PERSON_AGE" property="personAge" />
+        <result column="AGE_MONTH" property="ageMonth" />
+        <result column="AGE_DAY" property="ageDay" />
+        <result column="AGE_HOUR" property="ageHour" />
+        <result column="AGE_BRANCH" property="ageBranch" />
+        <result column="type" property="type" />
+        <result column="IDCARD" property="idCard" />
+        <result column="WARD_NO" property="deptCode" />
+        <result column="DEPT_NAME" property="deptName" />
+        <result column="HOSPITALIZED_DATE" property="hospitalizedDate" />
+        <result column="BIRDTH_DATE" property="birdthDate" />
+        <result column="RESIDENT_NO" property="residentNo" />
+        <result column="RESIDENT_NAME" property="residentName" />
+        <result column="DIAG_NAME" property="inhosDiagName" />
+        <result column="HOSPITAL_MARK" property="hospitalMark" />
+    </resultMap>
+    <select id="selectOutpatient" resultMap="OutpatientInfoVOMap">
+        SELECT
+            b.NAME,
+            b.CASE_NO,
+            b.ADMISSION_NO,
+            dict.DATA_TAG as sex,
+            b.PERSON_AGE,
+            b.AGE_MONTH,
+            b.AGE_DAY,
+            b.AGE_HOUR,
+            b.AGE_BRANCH,
+            'zy' as type,
+            b.IDCARD,
+            m.WARD_NO,
+            indept.DEPT_NAME,
+            m.HOSPITALIZED_DATE,
+            b.BIRDTH_DATE,
+            m.RESIDENT_NO,
+            m.RESIDENT_NAME,
+            di.DIAG_NAME,
+            case m.HOSPITAL_MARK
+            when '0' then '在院'
+            when '1' then '在院'
+            when '3' then '出院'
+            when '4' then '出院' end as HOSPITAL_MARK
+        FROM
+            T_AR_BASEINFOMATION_ALL b
+        left join T_AR_MEDICALINFORMATION_all m  ON b.ADMISSION_NO = m.ADMISSION_NO
+        left join TM_BS_DICT_DATA dict on dict.DICT_TYPE='s028' and b.SEX = dict.DATA_VAL
+        left join TM_BS_DEPT indept on indept.DEPT_CODE =m.WARD_NO
+        left join DIAG_INFO di on di.PATIENT_ID = b.ADMISSION_NO and di.DIAG_TYPE_CD ='02' and di.DIAG_CLASS_CD='01'
+        <where>
+            <if test="inpNo != null and inpNo!= ''">
+                and b.case_no = #{inpNo}
+            </if>
+            <if test="idCard != null and idCard != ''">
+                and (b.IDCARD = upper(#{idCard}) or b.IDCARD = LOWER(#{idCard}))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPatientInfoOther" resultMap="patientInfoOtherMap" parameterType="com.emr.project.pat.domain.vo.VisitinfoVo">
+        select a.ADMISSION_NO,
+           a.CLOSING_DATE,
+           b.mr_state,
+           case
+             when b.mr_state = '16' then
+              b.file_time
+           end as final_filing_date
+      from t_ar_medicalinformation_all a
+      left join emr_qc_flow b
+        on a.ADMISSION_NO = b.patient_id and b.mr_state='16'
+     <where>
+         a.LEAVE_HOSPITAL_DATE is not null
+         <if test="patientIdList != null and patientIdList.size() >0">
+            and a.admission_no in
+             <foreach collection="patientIdList" item="item" index="index" open="(" close=")" separator=",">
+                 #{item}
+             </foreach>
+         </if>
+     </where>
+    </select>
+
+    <update id="updateLCLJInfo" parameterType="Medicalinformation">
+        update t_ar_medicalinformation
+        <set>
+            <if test="cpNo != null and cpNo != ''">
+                cp_no = #{cpNo},
+            </if>
+            <if test="cpName != null and cpName != ''">
+                cp_name = #{cpName},
+            </if>
+            <if test="cpFlag != null and cpFlag != ''">
+                cp_flag = #{cpFlag},
+            </if>
+        </set>
+        where admission_no = #{admissionNo}
+    </update>
+</mapper>

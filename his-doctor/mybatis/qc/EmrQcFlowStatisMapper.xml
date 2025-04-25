@@ -1,0 +1,1572 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcFlowStatisMapper">
+    <resultMap id="EmrQcFlowStatisResult" type="EmrQcFlowStatis" >
+        <result property="xAxisID"    column="xAxisID"    />
+        <result property="xAxisName"    column="xAxisName"    />
+        <result property="valueTotal"    column="valueTotal"    />
+        <result property="inDeptCd"    column="in_dept_cd"    />
+        <result property="inDeptName"    column="in_dept_name"    />
+        <result property="doctCd"    column="doct_cd"    />
+        <result property="doctName"    column="doct_name"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+
+        <result property="resDocCd"    column="res_doc_cd"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="remainingTime"    column="remaining_time"    />
+        <result property="emrClassName"    column="emrClassName"    />
+        <result property="mrTypeName"    column="mrTypeName"    />
+        <result property="emrClassCode"    column="emr_class_code"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="avgScore"    column="avgScore"    />
+        <result property="termAvg"    column="termAvg"    />
+        <result property="deptAvg"    column="deptAvg"    />
+        <result property="checkAvg"    column="checkAvg"    />
+        <result property="checkJ"    column="checkJ"    />
+        <result property="checkY"    column="checkY"    />
+        <result property="checkB"    column="checkB"    />
+        <result property="deptJ"    column="deptJ"    />
+        <result property="deptY"    column="deptY"    />
+        <result property="deptB"    column="deptB"    />
+        <result property="termJ"    column="termJ"    />
+        <result property="termY"    column="termY"    />
+        <result property="termB"    column="termB"    />
+        <result property="checkScore"    column="checkScore"    />
+        <result property="checkDocName"    column="check_doc_name"    />
+        <result property="deptScore"    column="deptScore"    />
+        <result property="deptQcName"    column="dept_qc_name"    />
+        <result property="termScore"    column="termScore"    />
+        <result property="termQcName"    column="term_qc_name"    />
+        <result property="firstCode"    column="FIRST_CODE"    />
+        <result property="firsName"    column="FIRS_NAME"    />
+        <result property="filingDate"    column="FILING_DATE"    />
+        <result property="total"    column="total"    />
+        <result property="entryDate"    column="entry_date"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="recoDate"    column="reco_date"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="ryjlTotal"    column="ryjlTotal"    />
+        <result property="bcjlTotal"    column="bcjlTotal"    />
+        <result property="ssjlTotal"    column="ssjlTotal"    />
+        <result property="sszqtysTotal"    column="sszqtysTotal"    />
+        <result property="cyjlTotal"    column="cyjlTotal"    />
+        <result property="gdblTotal"    column="gdblTotal"    />
+        <result property="checkTotal" column="checkTotal"/>
+        <result property="deptTotal" column="deptTotal"/>
+        <result property="termTotal" column="termTotal"/>
+        <result property="flow1" column="flow1"/>
+        <result property="flow2" column="flow2"/>
+        <result property="flow3" column="flow3"/>
+        <result property="flow5" column="flow5"/>
+        <result property="flow6" column="flow6"/>
+        <result property="flow7" column="flow7"/>
+        <result property="recordTotal" column="recordTotal"/>
+    </resultMap>
+    <resultMap id="SysReportCompDetailResult" type="SysReportCompDetail" >
+        <result property="id"    column="id"    />
+        <result property="repId"    column="rep_id"    />
+        <result property="comId"    column="com_id"    />
+        <result property="comDetailCode"    column="com_detail_code"    />
+        <result property="comDetailName"    column="com_detail_name"    />
+        <result property="dataSource"    column="data_source"    />
+        <result property="staticData"    column="static_data"    />
+        <result property="sqlStr"    column="sql_str"    />
+        <result property="classMethod"    column="class_method"    />
+        <result property="returnDataType"    column="return_data_type"    />
+        <result property="valid"    column="valid"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePer"    column="cre_per"    />
+        <result property="crePerName"    column="cre_per_name"    />
+    </resultMap>
+
+    <resultMap type="EmrQcList" id="EmrQcListResult">
+        <result property="id"    column="id"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="flawDesc"    column="flaw_desc"    />
+        <result property="qconTimes"    column="qcon_times"    />
+        <result property="emrEleId"    column="emr_ele_id"    />
+        <result property="emrEleName"    column="emr_ele_name"    />
+        <result property="defectRow"    column="defect_row"    />
+        <result property="eleContext"    column="ele_context"    />
+        <result property="qcState"    column="qc_state"    />
+        <result property="treatTime"    column="treat_time"    />
+        <result property="treatCd"    column="treat_cd"    />
+        <result property="treatName"    column="treat_name"    />
+        <result property="treatFlag"    column="treat_flag"    />
+        <result property="treatDesc"    column="treat_desc"    />
+        <result property="conTime"    column="con_time"    />
+        <result property="conCd"    column="con_cd"    />
+        <result property="conName"    column="con_name"    />
+        <result property="deadlineUnit"    column="deadline_unit"    />
+        <result property="conResult"    column="con_result"    />
+        <result property="conDesc"    column="con_desc"    />
+        <result property="doctCd"    column="doct_cd"    />
+        <result property="doctName"    column="doct_name"    />
+        <result property="qcSection"    column="qc_section"    />
+        <result property="qcdoctCd"    column="qcdoct_cd"    />
+        <result property="qcdoctName"    column="qcdoct_name"    />
+        <result property="qcDate"    column="qc_date"    />
+        <result property="treatDeadline"    column="treat_deadline"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="defeLevel"    column="defe_level"    />
+        <result property="dbEleId"    column="db_ele_id"    />
+        <result property="missingFileFlag"    column="missing_file_flag"    />
+    </resultMap>
+
+    <resultMap id="EmrQcListVoResult" type="EmrQcListVo" extends="EmrQcListResult">
+        <result property="mrFileName"    column="mr_file_name"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="recoDate"    column="RECO_DATE"    />
+        <result property="inDeptName"    column="IN_DEPT_NAME"    />
+        <result property="mrState"    column="mr_state"    />
+        <result property="qcBillNo"    column="qc_bill_no"    />
+    </resultMap>
+    <resultMap id="StatisticsResultVoResult" type="StatisticsResultVo" >
+        <result property="qcdoctCd"    column="QCDOCT_CD"    />
+        <result property="qcdoctName"    column="QCDOCT_NAME"    />
+        <result property="flaws"    column="flaws"    />
+        <result property="checks"    column="checks"    />
+        <result property="unChecks"    column="unChecks"    />
+        <result property="state"    column="state"    />
+    </resultMap>
+    <select id="selectReportComDetailList" parameterType="Long" resultMap="SysReportCompDetailResult">
+        select * from sys_report_comp_detail where rep_id=#{repId}
+    </select>
+
+
+
+
+<!--<select id="selectPatTotal" parameterType="StatementVo" resultType="java.lang.Integer">
+    select count(*) from PAT_VISITINFO pv left join EMR_QC_flow flow on flow.PATIENT_ID=pv.PATIENT_ID
+    <if test="beginTime!=null and endTime!=null">
+        where
+            (pv.INHOS_TIME &lt; #{beginTime}
+            and (flow.MR_SUB_TIME is null
+            or (flow.MR_SUB_TIME is not null and DEPT_QC_STATE!='3'
+            and flow.MR_SUB_TIME > #{beginTime})))
+            or
+            (#{beginTime} &lt;= pv.INHOS_TIME
+            and  pv.INHOS_TIME &lt; #{endTime})
+    </if>
+</select>-->
+<select id="selectPatTotal" parameterType="StatementVo" resultType="java.lang.Integer">
+    select count(*) from PAT_VISITINFO pv left join EMR_QC_flow flow on flow.PATIENT_ID=pv.PATIENT_ID
+    <if test="beginTime!=null and endTime!=null">
+        where
+        #{beginTime} &lt;= pv.INHOS_TIME
+        and  pv.INHOS_TIME &lt; #{endTime}
+    </if>
+</select>
+<select id="selectEmrQcTotalGroup" parameterType="StatementVo" resultType="java.lang.Integer">
+    select count(count(*)) from EMR_QC_RECORD where QC_SECTION='03' and state in('2','3')
+    <if test="beginTime!=null and  endTime!=null">and QC_DATE between #{beginTime} and #{endTime}</if>
+    group by patient_id
+</select>
+<select id="selectEmrQcTotal" parameterType="StatementVo" resultType="java.lang.Integer">
+    select count(*) from EMR_QC_RECORD where QC_SECTION='03' and state in('2','3','31')
+    <if test="beginTime!=null and  endTime!=null">and QC_DATE between #{beginTime} and #{endTime}</if>
+</select>
+<select id="selectEmrQcListTotal" parameterType="StatementVo" resultType="java.lang.Integer">
+    select count(count(*)) from emr_qc_list eq
+    left join emr_qc_record eqr on eq.main_id=eqr.id where eq.QC_SECTION='03' and eqr.state in('2','3','31')
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE >= #{beginTime} and eqr.QC_DATE &lt;=#{endTime}</if>
+    group by eqr.id
+</select>
+<select id="selectEmrQcListCheckTotal" parameterType="StatementVo" resultType="java.lang.Integer">
+    select count(count(*)) from emr_qc_list eq
+    left join emr_qc_record eqr on eq.main_id=eqr.id where eq.QC_SECTION='03' and eqr.state='2'
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE >= #{beginTime} and eqr.QC_DATE &lt;=#{endTime}</if>
+    group by eqr.id
+</select>
+<select id="selectEmrQcListUnCheckTotal" parameterType="StatementVo" resultType="java.lang.Integer">
+    select count(count(*)) from emr_qc_list eq
+    left join emr_qc_record eqr on eq.main_id=eqr.id where eq.QC_SECTION='03' and eqr.state in ('3','31')
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE >= #{beginTime} and eqr.QC_DATE &lt;=#{endTime}</if>
+    group by eqr.id
+</select>
+<select id="selectEmrQcDocCodeList"  resultType="java.lang.String">
+    select QCDOCT_CD from  ( select QCDOCT_CD,count(*) from emr_qc_record where QC_SECTION='03' AND STATE in('2','3')
+    <if test="beginTime!=null and  endTime!=null">and QC_DATE >= #{beginTime} and QC_DATE &lt;=#{endTime}</if>
+    group by QCDOCT_CD order by count(*) desc ) where rownum &lt; =10
+</select>
+<select id="selectDocFlawHistogram" resultMap="StatisticsResultVoResult">
+    SELECT
+    QCDOCT_CD,
+    QCDOCT_NAME,
+    ( SELECT count( * ) FROM emr_qc_list eq WHERE eq.main_id = eqr.id ) AS flaws,--缺陷数量
+    state
+    FROM
+    emr_qc_record eqr
+    WHERE
+    QC_SECTION = '03'
+    AND EQR.STATE IN ( '2', '3' ,'31')
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE >= #{beginTime} and eqr.QC_DATE &lt;=#{endTime}</if>
+</select>
+    <select id="selectFlawTablePage"  parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select QCDOCT_CD as doct_cd,QCDOCT_NAME as doct_name,count(*) valueTotal from emr_Qc_record where QC_SECTION='03' and STATE in('2','3','31')
+        <if test="beginTime!=null and  endTime!=null">and QC_DATE >= #{beginTime} and QC_DATE &lt;=#{endTime}</if>
+        group by QCDOCT_CD,QCDOCT_NAME order by valueTotal desc
+</select>
+    <select id="selectFlawTableInfo"  parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select * from (SELECT QCDOCT_CD as doct_cd, QCDOCT_NAME as doct_name, (select count(*) from emr_Qc_list where main_id=eqr.id) valueTotal FROM emr_qc_record eqr
+        WHERE QC_SECTION = '03' AND state IN ( '2', '3' ,'31')
+        <if test="beginTime!=null and  endTime!=null">and QC_DATE >= #{beginTime} and QC_DATE &lt;=#{endTime}</if>
+        )where valueTotal>0
+</select>
+    <select id="selectFlawTableCheck"  parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select * from (SELECT QCDOCT_CD as doct_cd, QCDOCT_NAME as doct_name, (select count(*) from emr_Qc_list where main_id=eqr.id) valueTotal FROM emr_qc_record eqr WHERE QC_SECTION = '03' AND state='2'
+        <if test="beginTime!=null and  endTime!=null">and QC_DATE >= #{beginTime} and QC_DATE &lt;=#{endTime}</if>
+        )where valueTotal>0
+</select>
+
+
+<select id="selectCheckFlowTypePie" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+    select * from (
+        select eql.DB_ELE_ID as xAxisID,eql.EMR_ELE_NAME as xAxisName ,count(*) as valueTotal from emr_qc_list eql
+            left join  emr_qc_record eqr on eqr.id=eql.main_id
+        where eql.QC_SECTION=#{qcSection}
+         <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+         <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+        group by eql.DB_ELE_ID,eql.EMR_ELE_NAME
+        order by count(*) desc
+        )where rownum&lt;=10
+</select>
+<select id="selectFlowTypePieTotal" parameterType="EmrQcFlowStatis" resultType="java.lang.Integer">
+    select count(*) as total from emr_qc_list eql
+       left join  emr_qc_record eqr on eqr.id=eql.main_id
+    where eql.QC_SECTION=#{qcSection}
+    <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+</select>
+    <select id="selectCheckFlowTypeCylinderEle" parameterType="EmrQcFlowStatis" resultType="java.lang.String">
+        select xAxisID from (
+        select eql.DB_ELE_ID as xAxisID,eql.EMR_ELE_NAME as xAxisName from emr_qc_list eql
+        left join  emr_qc_record eqr on eqr.id=eql.main_id
+        where eql.QC_SECTION=#{qcSection}
+        <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+        <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+        group by eql.DB_ELE_ID,eql.EMR_ELE_NAME
+        order by count(*) desc
+        )where rownum&lt;=10
+</select>
+
+<select id="selectCheckFlowTypeCylinderList" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+    select DB_ELE_ID as xAxisID,EMR_ELE_NAME as xAxisName,sum(flow1) as flow1,sum(flow2) as flow2,sum(flow3) as
+    flow3,sum(flow5) as flow5,sum(flow6) as flow6,sum(flow7) as flow7,sum(flow1+flow2+flow3+flow5+flow6+flow7) as valueTotal from
+    (SELECT
+    eql.DB_ELE_ID,
+    eql.EMR_ELE_NAME,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('4')) as flow1,--已修改
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('0','3')) as flow2,--未修改
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('1')) as flow3,--质控有误
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('5')) as flow5, --确认已修改
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('6')) as flow6, --已确认有误
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('7')) as flow7 --病历已删除
+    FROM
+    emr_qc_list eql
+    left join emr_qc_record eqr on eql.main_id=eqr.id
+    WHERE
+    eql.qc_section = #{qcSection}
+    <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+    )
+    GROUP BY
+        DB_ELE_ID,
+        EMR_ELE_NAME order by valueTotal desc
+</select>
+<select id="selectCheckEmrTotal" parameterType="EmrQcFlowStatis" resultType="java.lang.Integer">
+    select count(distinct emr.ID) from (select ID,MR_TYPE_CD,MR_TYPE_NAME from emr_index
+    UNION
+    select id,'01','病程记录' from EMR_SUBFILE_INDEX) emr
+      left join emr_qc_list eql on eql.MR_FILE_ID=emr.id
+      left join emr_qc_record eqr on eqr.id=eql.main_id
+    where eql.QC_SECTION=#{qcSection}
+    <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+</select>
+
+<select id="selectCheckEmrClassTotal" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+    SELECT
+    emr.MR_TYPE_CD as xAxisID,emr.MR_TYPE_NAME as xAxisName,count(distinct emr.ID) as valueTotal
+    FROM
+    ( SELECT ID, MR_TYPE_CD, MR_TYPE_NAME FROM emr_index UNION SELECT id, '01' as MR_TYPE_CD, '病程记录' as MR_TYPE_NAME FROM EMR_SUBFILE_INDEX ) emr
+    LEFT JOIN emr_qc_list eql ON eql.MR_FILE_ID = emr.id
+    LEFT JOIN emr_qc_record eqr ON eqr.id = eql.main_id
+    WHERE
+    eql.QC_SECTION = #{qcSection}
+    <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+    group by emr.MR_TYPE_CD,emr.MR_TYPE_NAME order by valueTotal desc
+</select>
+
+    <select id="selectCheckEmrTypeTopTen" parameterType="EmrQcFlowStatis" resultType="java.lang.String">
+        select xAxisID from  (SELECT
+        eql.MR_TYPE AS xAxisID,
+        eql.MR_TYPE_NAME,
+        count(*) as valueTotal
+        FROM
+        ( SELECT ID, MR_TYPE_CD, MR_TYPE_NAME FROM emr_index UNION SELECT id, '01' as MR_TYPE_CD, '病程记录' as MR_TYPE_NAME FROM EMR_SUBFILE_INDEX ) emr
+        LEFT JOIN emr_qc_list eql ON eql.MR_FILE_ID = emr.id
+        LEFT JOIN emr_qc_record eqr ON eqr.id = eql.main_id
+        WHERE
+         eql.QC_SECTION = #{qcSection}
+        <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+        <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+        group by eql.MR_TYPE,eql.MR_TYPE_NAME order by valueTotal desc) where rownum&lt;=10
+    </select>
+<select id="selectCheckEmrTypeList" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+    select mr_type_cd as xAxisID,MR_TYPE_NAME as xAxisName,sum(flow1) as flow1,sum(flow2) as flow2,sum(flow3) as
+    flow3,sum(flow5) as flow5,sum(flow6) as flow6,sum(flow7) as flow7,sum(flow1+flow2+flow3+flow5+flow6+flow7) valueTotal,count(DISTINCT id) recordTotal   from
+    (SELECT emr.id,
+    eql.MR_TYPE AS mr_type_cd,
+    eql.MR_TYPE_NAME,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('4')) as flow1,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('0','3')) as flow2,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('1')) as flow3,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('5')) as flow5, --确认已修改
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('6')) as flow6, --已确认有误
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('7')) as flow7 --病历已删除
+    FROM
+    ( SELECT ID, MR_TYPE_CD, MR_TYPE_NAME FROM emr_index UNION SELECT id, '01' as MR_TYPE_CD, '病程记录' as MR_TYPE_NAME FROM EMR_SUBFILE_INDEX ) emr
+    LEFT JOIN emr_qc_list eql ON eql.MR_FILE_ID = emr.id
+    LEFT JOIN emr_qc_record eqr ON eqr.id = eql.main_id
+    WHERE
+    eql.QC_SECTION = #{qcSection}
+    <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+    )
+    group by mr_type_cd,MR_TYPE_NAME  order by valueTotal desc
+
+</select>
+<select id="selectCheckDoctList" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+    select DOCT_CD as xAxisID,DOCT_NAME as xAxisName,sum(flow1) as flow1,sum(flow2) as flow2,sum(flow3) as
+    flow3,sum(flow5) as flow5,sum(flow6) as flow6,sum(flow7) as flow7,sum(flow1+flow2+flow3+flow5+flow6+flow7) as valueTotal from
+    (SELECT
+    eql.DOCT_CD,
+    eql.DOCT_NAME,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('4')) as flow1,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('0','3')) as flow2,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('1')) as flow3,
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('5')) as flow5, --确认已修改
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('6')) as flow6, --已确认有误
+    (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('7')) as flow7 --病历已删除
+    FROM
+    emr_qc_list eql
+    left join emr_qc_record eqr on eql.main_id=eqr.id
+    WHERE
+    eql.qc_section = #{qcSection}
+    <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+    <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+    )
+    GROUP BY
+        DOCT_CD,
+        DOCT_NAME
+
+</select>
+
+    <select id="selectCheckDeptList" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select IN_DEPT_CD,IN_DEPT_NAME,IN_DEPT_NAME as xAxisName,sum(flow1) as flow1,sum(flow2) as flow2,sum(flow3) as flow3,sum(flow5) as flow5,sum(flow6) as flow6,sum(flow7) as flow7,sum(flow1+flow2+flow3+flow5+flow6+flow7)
+        as valueTotal,sum(ryjl) as ryjlTotal,sum(bcjl) as bcjlTotal,sum(ssjl) as ssjlTotal,sum(sszqtys) as sszqtysTotal,sum(cyjl) as cyjlTotal,nvl(m.gdbl,0) as gdblTotal from
+        (SELECT
+        tam.DEPARTMENT_NO as IN_DEPT_CD,
+        tbd.dept_name as IN_DEPT_NAME,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('4')) as flow1,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('0','3')) as flow2,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('1')) as flow3,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('5')) as flow5,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('6')) as flow6,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('7')) as flow7,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.mr_type in(select a.data_val from tm_bs_dict_data a left join sys_emr_type_config b on a.data_val = to_char(b.emr_type_code) where a.dict_type='s004' and b.emr_class_code='08')) as ryjl,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.mr_type in(select a.data_val from tm_bs_dict_data a left join sys_emr_type_config b on a.data_val = to_char(b.emr_type_code) where a.dict_type='s004' and b.emr_class_code='01')) as bcjl,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.mr_type in(select a.data_val from tm_bs_dict_data a left join sys_emr_type_config b on a.data_val = to_char(b.emr_type_code) where a.dict_type='s004' and b.emr_class_code='09')) as ssjl,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.mr_type in(select a.data_val from tm_bs_dict_data a left join sys_emr_type_config b on a.data_val = to_char(b.emr_type_code) where a.dict_type='s004' and b.emr_class_code='13')) as sszqtys,
+        (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.mr_type in(select a.data_val from tm_bs_dict_data a left join sys_emr_type_config b on a.data_val = to_char(b.emr_type_code) where a.dict_type='s004' and b.emr_class_code='03')) as cyjl
+        FROM
+        (SELECT ID, MR_TYPE_CD, MR_TYPE_NAME FROM emr_index where del_flag = '0' UNION SELECT id, '01' AS MR_TYPE_CD, '病程记录' AS MR_TYPE_NAME FROM EMR_SUBFILE_INDEX where del_flag = '0') emr
+        LEFT JOIN emr_qc_list eql ON eql.MR_FILE_ID = emr.id
+        left join t_ar_medicalinformation_all tam on tam.ADMISSION_NO = eql.patient_id
+        left join tm_bs_dept tbd on tam.DEPARTMENT_NO = tbd.dept_code
+        left join emr_qc_flow eqf on eql.patient_id = eqf.patient_id
+        WHERE
+        eql.qc_section = #{qcSection}
+        <if test="beginTime!=null and  endTime!=null">and eql.QC_DATE between #{beginTime} and #{endTime}</if>
+        ) n
+        left join (select dept_cd,count(1) as gdbl from emr_qc_flow where mr_state = '16' group by dept_cd ) m on m.dept_cd = n.IN_DEPT_CD
+        GROUP BY
+            IN_DEPT_CD,
+            IN_DEPT_NAME,
+            m.gdbl
+    </select>
+
+    <select id="selectCheckFlowTypeDiaLogTable" parameterType="EmrQcFlowStatis" resultMap="EmrQcListVoResult">
+        select eql.*,pp.patient_name,pv.record_no as inp_no,eqr.IN_DEPT_NAME, qf.mr_state
+        from
+        ( SELECT ID, MR_TYPE_CD, MR_TYPE_NAME FROM emr_index UNION SELECT id, '01' as MR_TYPE_CD, '病程记录' as MR_TYPE_NAME FROM EMR_SUBFILE_INDEX ) emr
+            LEFT JOIN emr_qc_list eql ON eql.MR_FILE_ID = emr.id
+            left join emr_qc_record eqr on eql.main_id=eqr.id
+            left join pat_visitinfo pv on pv.patient_id=eql.patient_id
+            left join PAT_PERSONALINFO pp on pp.patient_id=pv.patient_id
+            left join emr_qc_flow qf on eql.patient_id = qf.patient_id
+        <where>
+            <if test="qcSection!=null and qcSection!=''"> and eql.qc_section=#{qcSection}</if>
+            <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+            <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+            <if test="patientName!=null and  patientName!=''">and (pp.patient_name like concat(concat('%', #{patientName}), '%') or pv.record_no like concat(concat('%', #{patientName}), '%'))</if>
+            <if test="mrType !=null and mrType!=''">and eql.MR_TYPE=#{mrType}</if>
+            <if test="qcStateList !=null">
+                and eql.QC_STATE in
+                <foreach collection="qcStateList" item="qcState" open="(" close=")" separator=",">
+                    #{qcState}
+                </foreach>
+
+            </if>
+            <if test="doctCd !=null and doctCd!=''">and eql.DOCT_CD=#{doctCd}</if>
+            <if test="dbEleId !=null ">and eql.DB_ELE_ID=#{dbEleId}</if>
+        </where>
+        order by eql.qc_date desc
+    </select>
+
+    <select id="selectCheckFlowTypeDiaLogExport" parameterType="EmrQcFlowStatis" resultType="com.emr.project.qc.domain.vo.EmrQcExportListVo">
+        select eql.*,pp.patient_name,pv.record_no as inp_no,eqr.IN_DEPT_NAME from emr_qc_list eql
+            left join emr_qc_record eqr on eql.main_id=eqr.id
+            left join pat_visitinfo pv on pv.patient_id=eql.patient_id
+            left join PAT_PERSONALINFO pp on pp.patient_id=pv.patient_id
+        <where>
+            <if test="qcSection!=null and qcSection!=''"> and eql.qc_section=#{qcSection}</if>
+            <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+            <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+            <if test="patientName!=null and  patientName!=''">and (pp.patient_name like concat(concat('%', #{patientName}), '%') or pv.record_no like concat(concat('%', #{patientName}), '%'))</if>
+            <if test="mrType !=null and mrType!=''">and eql.MR_TYPE=#{mrType}</if>
+            <if test="qcStateList !=null">
+                and eql.QC_STATE in
+                <foreach collection="qcStateList" item="qcState" open="(" close=")" separator=",">
+                    #{qcState}
+                </foreach>
+
+            </if>
+            <if test="doctCd !=null and doctCd!=''">and eql.DOCT_CD=#{doctCd}</if>
+            <if test="dbEleId !=null ">and eql.DB_ELE_ID=#{dbEleId}</if>
+        </where>
+    </select>
+    <select id="selectCheckDoctTable" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+         select
+         DOCT_CD as xAxisID,DOCT_NAME as xAxisName,
+        IN_DEPT_CD,IN_DEPT_NAME,sum(flow1) as flow1,sum(flow2) as flow2,sum(flow3) as
+        flow3,sum(flow5) as flow5,sum(flow6) as flow6,sum(flow7) as flow7,sum(flow1+flow2+flow3+flow5+flow6+flow7) as valueTotal from
+            (SELECT
+                  eql.DOCT_CD,
+                 eql.DOCT_NAME,
+                 eqr.IN_DEPT_CD,
+                 eqr.IN_DEPT_NAME,
+                 (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('4')) as flow1,
+                 (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('0','3')) as flow2,
+                (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('1')) as flow3,
+                (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('5')) as flow5, --确认已修改
+                (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('6')) as flow6, --已确认有误
+                (select count(*) from emr_qc_list eq where eq.id=eql.id and eq.qc_state in('7')) as flow7 --病历已删除
+             FROM
+                 emr_qc_list eql
+                     left join emr_qc_record eqr on eql.main_id=eqr.id
+             WHERE
+        eql.qc_section = #{qcSection}
+        <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+        <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>)
+        GROUP BY
+             DOCT_CD,
+            DOCT_NAME,
+            IN_DEPT_CD,
+            IN_DEPT_NAME order by valueTotal desc
+    </select>
+
+    <select id="selectMissingFileCount"  resultMap="EmrQcFlowStatisResult">
+        SELECT
+            se.EMR_CLASS_CODE AS xAxisId,
+            sdd.data_tag AS xAxisName,
+            count( * ) valueTotal
+        FROM
+            emr_task_info eti
+                LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+                left join SYS_EMR_TYPE_CONFIG se on se.EMR_TYPE_CODE = qar.EMR_TYPE_CODE
+                left join TM_BS_DICT_DATA sdd on sdd.data_val = se.EMR_CLASS_CODE and dict_type='s003'
+        WHERE
+            eti.task_type = '1'
+          AND eti.TREAT_FLAG = '0'
+          AND eti.mr_file_id IS NULL
+        GROUP BY
+            se.EMR_CLASS_CODE,
+            sdd.data_tag
+    </select>
+    <select id="selectMissingFileDeptCount"  resultMap="EmrQcFlowStatisResult">
+        select * from (SELECT
+               eti.DEPT_CD,eti.DEPT_NAME ,count(*) valueTotal
+           FROM
+               emr_task_info eti
+                   LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+           WHERE
+               eti.task_type = '1'
+             AND eti.TREAT_FLAG = '0'
+             AND eti.mr_file_id IS NULL
+           GROUP BY
+               eti.DEPT_CD,
+               eti.DEPT_NAME
+           ORDER BY
+               valueTotal DESC) where rownum&lt;=10
+    </select>
+    <select id="selectMissingFileTable" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select emr.*,case when remaining_time_int &lt; 0 then concat(concat('超时', abs(remaining_time_int)),'小时')
+        else concat(remaining_time_int,'小时') end remaining_time,sd.data_tag as emrClassName,sdd.data_tag as mrTypeName,se.EMR_CLASS_CODE  from (SELECT
+        v.res_doc_cd, v.res_doc_name, eti.dept_name, eti.dept_cd, '超时未书写' AS xAxisName, '1' AS xAxisID, eti.doc_cd AS doct_cd, eti.doc_name AS doct_name, qar.EMR_TYPE_CODE as mr_type,
+        eti.PATIENT_NAME, v.record_no as inp_no, CEIL((eti.END_TIME - sysdate)* 24) remaining_time_int, eti.END_TIME
+        FROM emr_task_info eti
+        LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+        LEFT JOIN PAT_VISITINFO v ON eti.patient_id = v.patient_id
+        WHERE
+        eti.task_type = '1'
+        AND eti.TREAT_FLAG = '0'
+        AND eti.mr_file_id IS NULL )emr
+        left join TM_BS_DICT_DATA sdd on emr.mr_type = sdd.data_val and sdd.dict_type='s004'
+        LEFT JOIN SYS_EMR_TYPE_CONFIG se ON se.emr_type_code = emr.MR_TYPE
+        left join TM_BS_DICT_DATA sd on se.EMR_CLASS_CODE = sd.data_val and sd.dict_type='s003'
+        <where>
+            <if test="deptCd!=null and deptCd!=''"> and emr.dept_cd=#{deptCd}</if>
+            <if test="doctCd!=null and doctCd!=''"> and emr.doct_cd=#{doctCd}</if>
+            <if test="emrClassCode!=null and emrClassCode!=''"> and se.emr_class_code=#{emrClassCode}</if>
+            <if test="mrType!=null and mrType!=''"> and emr.mr_type=#{mrType}</if>
+            <if test="xAxisID!=null and xAxisID!=''"> and emr.xAxisID=#{xAxisID}</if>
+        </where>
+    </select>
+    <select id="selectTimeOutEmrPie" parameterType="EmrQcFlowStatis"  resultMap="EmrQcFlowStatisResult">
+        SELECT
+            count(*) valueTotal,'超时未书写' as xAxisName
+        FROM
+            emr_task_info eti
+            LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+            left join t_ar_medicalinformation_all a on eti.patient_id = a.ADMISSION_NO
+            left join emr_qc_list eql on eql.patient_id = a.admission_no and eti.mr_file_id = eql.mr_file_id and eql.missing_file_flag = '1'
+        WHERE
+            eti.task_type = '1'
+          AND eti.TREAT_FLAG = '0'
+          AND eti.mr_file_id IS NULL
+          and a.ADMISSION_NO is not null
+        <if test="doctName!=null and doctName!=''">
+            and (eti.doc_name like concat(concat('%', #{doctName}), '%')
+            or eti.doc_name like concat(concat('%', #{doctName}), '%')
+            or eti.doc_cd like concat(concat('%', #{doctName}), '%')
+            or eti.doc_cd like concat(concat('%', #{doctName}), '%')
+            )
+        </if>
+          <if test="deptCd != null and deptCd != ''">
+              and eti.DEPT_CD = #{deptCd}
+          </if>
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and a.ENTRY_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.ENTRY_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+          UNION ALL
+        select count(*) valueTotal,'超时已书写' as xAxisName
+        from (
+        select ei.id from emr_index ei
+        left join t_ar_medicalinformation_all a on ei.patient_id = a.ADMISSION_NO
+        left join emr_qc_list eql on eql.patient_id = ei.patient_id and eql.mr_file_id = ei.id and eql.missing_file_flag = '1'
+        where ei.CRE_DATE>ei.LAST_FINISH_TIME
+            and a.ADMISSION_NO is not null
+        <if test="doctName!=null and doctName!=''">
+            and (ei.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+            or ei.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+            or ei.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+            or ei.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd != ''">
+            and ei.DEPT_CD = #{deptCd}
+        </if>
+        <if test="dateType == '1'.toString()">
+            <if test="dateStart != null">
+                and a.ENTRY_DATE &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.ENTRY_DATE &lt; #{dateEnd}
+            </if>
+        </if>
+        <if test="dateType == '2'.toString()">
+            <if test="dateStart != null">
+                and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+            </if>
+        </if>
+        <if test="dateType == '3'.toString()">
+            <if test="dateStart != null">
+                and eql.cre_date &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and eql.cre_date &lt; #{dateEnd}
+            </if>
+        </if>
+        UNION
+        select esi.id from EMR_SUBFILE_INDEX esi
+        left join emr_index ei on ei.id = esi.main_id
+        left join t_ar_medicalinformation_all a on ei.patient_id = a.ADMISSION_NO
+        left join emr_qc_list eql on eql.patient_id = ei.patient_id and eql.mr_file_id = esi.id and eql.missing_file_flag = '1'
+        where esi.CRE_DATE>esi.LAST_FINISH_TIME
+            and a.ADMISSION_NO is not null
+        <if test="deptCd != null and deptCd != ''">
+            and esi.DEPT_CD = #{deptCd}
+        </if>
+        <if test="doctName!=null and doctName!=''">
+            and (esi.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+            or esi.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+            or esi.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+            or esi.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+            )
+        </if>
+        <if test="dateType == '1'.toString()">
+            <if test="dateStart != null">
+                and a.ENTRY_DATE &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.ENTRY_DATE &lt; #{dateEnd}
+            </if>
+        </if>
+        <if test="dateType == '2'.toString()">
+            <if test="dateStart != null">
+                and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+            </if>
+        </if>
+        <if test="dateType == '3'.toString()">
+            <if test="dateStart != null">
+                and eql.cre_date &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and eql.cre_date &lt; #{dateEnd}
+            </if>
+        </if>
+        ) emr
+    </select>
+    <select id="selectTimeOutEmrTotal"  parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select doct_cd,doct_name,dept_name,dept_cd,count(xAxisName) valueTotal from (
+        SELECT eti.DOC_CD as doct_cd,eti.DOC_NAME as doct_name,eti.dept_name,eti.dept_cd,'超时未书写' as xAxisName
+        FROM t_ar_medicalinformation_all a
+        left join emr_task_info eti on a.ADMISSION_NO=eti.patient_id
+        LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+        left join emr_qc_list eql on eql.patient_id = a.ADMISSION_NO and eti.mr_file_id = eql.mr_file_id and eql.missing_file_flag = '1'
+        <where>
+            eti.task_type = '1'
+            AND eti.TREAT_FLAG = '0'
+            AND eti.mr_file_id IS NULL
+            <if test="doctName!=null and doctName!=''">
+                and (eti.doc_name like concat(concat('%', #{doctName}), '%')
+                or eti.doc_name like concat(concat('%', #{doctName}), '%')
+                or eti.doc_cd like concat(concat('%', #{doctName}), '%')
+                or eti.doc_cd like concat(concat('%', #{doctName}), '%')
+                )
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and eti.DEPT_CD = #{deptCd}
+            </if>
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and a.ENTRY_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.ENTRY_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        UNION all
+        select ei.CRE_PER_CODE as doct_cd ,ei.CRE_PER_NAME as doct_name,v.dept_name,v.dept_cd,'超时已书写' as xAxisName
+        from PAT_VISITINFO v
+        left join emr_index ei on v.patient_id=ei.patient_id
+        left join emr_qc_list eql on eql.patient_id = v.patient_id and eql.mr_file_id = ei.id and eql.missing_file_flag = '1'
+        <where>
+            ei.mr_type != 'MAINFILE'
+            and ei.CRE_DATE>ei.LAST_FINISH_TIME
+            <if test="doctName!=null and doctName!=''">
+                and (ei.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+                or ei.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+                or ei.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+                or ei.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+                )
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and ei.DEPT_CD = #{deptCd}
+            </if>
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and v.INHOS_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.INHOS_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and v.OUT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.OUT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        UNION all
+        select esi.CRE_PER_CODE as doct_cd ,esi.CRE_PER_NAME  as doct_name,v.dept_name,v.dept_cd,'超时已书写' as xAxisName
+        from PAT_VISITINFO v
+        left join emr_index ei on v.PATIENT_ID = ei.patient_id
+        left join EMR_SUBFILE_INDEX esi on esi.main_id=ei.id
+        left join emr_qc_list eql on eql.patient_id = v.patient_id and eql.mr_file_id = esi.id and eql.missing_file_flag = '1'
+        <where>
+            esi.CRE_DATE>esi.LAST_FINISH_TIME
+            <if test="deptCd != null and deptCd != ''">
+                and esi.DEPT_CD = #{deptCd}
+            </if>
+            <if test="doctName!=null and doctName!=''">
+                and (esi.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+                or esi.CRE_PER_CODE like concat(concat('%', #{doctName}), '%')
+                or esi.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+                or esi.CRE_PER_NAME like concat(concat('%', #{doctName}), '%')
+                )
+            </if>
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and v.INHOS_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.INHOS_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and v.OUT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.OUT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        ) a
+        <where>
+            <if test="doctName!=null and doctName!=''">and (a.doct_name like concat(concat('%', #{doctName}), '%') or a.doct_cd like concat(concat('%', #{doctName}), '%'))</if>
+            <if test="deptCd!=null and deptCd!=''">and a.dept_cd=#{deptCd}</if>
+        </where>
+        group by doct_cd,doct_name,dept_name,dept_cd
+        order by valueTotal desc
+    </select>
+    <select id="selectTimeOutEmrTotalByDoct"  parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select doct_cd,doct_name,count(xAxisName) valueTotal from (
+        SELECT eti.DOC_CD as doct_cd,eti.DOC_NAME as doct_name,eti.dept_name,eti.dept_cd,'超时未书写' as xAxisName
+        FROM emr_task_info eti
+        LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+        left join t_ar_medicalinformation_all a on eti.patient_id = a.ADMISSION_NO
+        left join emr_qc_list eql on eql.patient_id = a.ADMISSION_NO and eti.mr_file_id = eql.mr_file_id and eql.missing_file_flag = '1'
+        <where>
+            eti.task_type = '1'
+            AND eti.TREAT_FLAG = '0'
+            AND eti.mr_file_id IS NULL
+            and a.ADMISSION_NO is not null
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and a.ENTRY_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.ENTRY_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        UNION all
+        select ei.CRE_PER_CODE as doct_cd ,ei.CRE_PER_NAME as doct_name,v.dept_name,v.dept_cd,'超时已书写' as xAxisName
+        from emr_index ei
+        left join PAT_VISITINFO v on ei.patient_id = v.patient_id
+        left join t_ar_medicalinformation_all a on ei.patient_id = a.ADMISSION_NO
+        left join emr_qc_list eql on eql.patient_id = v.patient_id and eql.mr_file_id = ei.id and eql.missing_file_flag = '1'
+        <where>
+            ei.mr_type != 'MAINFILE'
+            and ei.CRE_DATE>ei.LAST_FINISH_TIME
+            and a.ADMISSION_NO is not null
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and v.INHOS_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.INHOS_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and v.OUT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.OUT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        UNION all
+        select esi.CRE_PER_CODE as doct_cd ,esi.CRE_PER_NAME  as doct_name,v.dept_name,v.dept_cd,'超时已书写' as xAxisName
+        from EMR_SUBFILE_INDEX esi left join emr_index ei on esi.main_id = ei.id
+        left join PAT_VISITINFO v on ei.patient_id = v.patient_id
+        left join emr_index ei on ei.id = esi.main_id
+        left join t_ar_medicalinformation_all a on ei.patient_id = a.ADMISSION_NO
+        left join emr_qc_list eql on eql.patient_id = v.patient_id and eql.mr_file_id = esi.id and eql.missing_file_flag = '1'
+        <where>
+            esi.CRE_DATE>esi.LAST_FINISH_TIME
+            and a.ADMISSION_NO is not null
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and v.INHOS_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.INHOS_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and v.OUT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.OUT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        ) a
+        <where>
+            <if test="doctName!=null and doctName!=''">and (a.doct_name like concat(concat('%', #{doctName}), '%') or a.doct_cd like concat(concat('%', #{doctName}), '%'))</if>
+            <if test="deptCd!=null and deptCd!=''">and a.dept_cd=#{deptCd}</if>
+        </where>
+        group by doct_cd,doct_name
+        order by valueTotal desc
+    </select>
+    <select id="selectTimeOutEmrWrite" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT doct_cd, doct_name, dept_name,dept_cd, count( xAxisName ) valueTotal FROM (SELECT ei.CRE_PER_CODE as doct_cd, ei.CRE_PER_NAME as doct_name, v.dept_name,v.dept_cd, '超时已书写' AS xAxisName
+        FROM PAT_VISITINFO v
+        left join emr_index ei on ei.patient_id = v.patient_id
+        left join emr_qc_list eql on eql.patient_id = v.patient_id and eql.mr_file_id = ei.id and eql.missing_file_flag = '1'
+        <where>
+            ei.mr_type != 'MAINFILE' AND ei.CRE_DATE > ei.LAST_FINISH_TIME
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and v.IN_DEPT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.IN_DEPT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and v.OUT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.OUT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eql.cre_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eql.cre_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        UNION ALL
+        SELECT esi.CRE_PER_CODE as doct_cd, esi.CRE_PER_NAME as doct_name, v.dept_name,v.dept_cd, '超时已书写' AS xAxisName
+        FROM PAT_VISITINFO v
+        LEFT JOIN emr_index ei ON v.patient_id= ei.patient_id
+        left join EMR_SUBFILE_INDEX esi on esi.main_id = ei.id
+        left join emr_qc_list eql on eql.patient_id = v.patient_id and eql.mr_file_id = esi.id and eql.missing_file_flag = '1'
+        <where>
+            esi.CRE_DATE > esi.LAST_FINISH_TIME
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and v.IN_DEPT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.IN_DEPT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and v.OUT_TIME &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and v.OUT_TIME &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and esi.reco_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and esi.reco_date &lt; #{dateEnd}
+                </if>
+            </if>
+         </where>) a
+        <where>
+            <if test="doctName!=null and doctName!=''">and (a.doct_name like concat(concat('%', #{doctName}), '%') or a.doct_cd like concat(concat('%', #{doctName}), '%'))</if>
+            <if test="deptCd!=null and deptCd!=''">and a.dept_cd=#{deptCd}</if>
+        </where>
+        GROUP BY doct_cd, doct_name, dept_name,dept_cd ORDER BY valueTotal DESC
+    </select>
+    <select id="selectTimeOutEmrWriteByDoct" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT doct_cd, doct_name, count( xAxisName ) valueTotal FROM (SELECT ei.CRE_PER_CODE as doct_cd, ei.CRE_PER_NAME as doct_name, v.dept_name,v.dept_cd, '超时已书写' AS xAxisName FROM emr_index ei
+        LEFT JOIN PAT_VISITINFO v ON ei.patient_id = v.patient_id
+        left join t_ar_medicalinformation_all a on ei.patient_id = a.ADMISSION_NO
+        WHERE ei.mr_type != 'MAINFILE' AND ei.CRE_DATE > ei.LAST_FINISH_TIME and a.ADMISSION_NO is not null
+        UNION ALL
+        SELECT esi.CRE_PER_CODE as doct_cd, esi.CRE_PER_NAME as doct_name, v.dept_name,v.dept_cd, '超时已书写' AS xAxisName FROM EMR_SUBFILE_INDEX esi
+        LEFT JOIN emr_index ei ON esi.main_id = ei.id
+        LEFT JOIN PAT_VISITINFO v ON ei.patient_id = v.patient_id
+        left join t_ar_medicalinformation_all a on ei.patient_id = a.ADMISSION_NO
+        WHERE esi.CRE_DATE > esi.LAST_FINISH_TIME and a.ADMISSION_NO is not null) a
+        <where>
+            <if test="doctName!=null and doctName!=''">and (a.doct_name like concat(concat('%', #{doctName}), '%') or a.doct_cd like concat(concat('%', #{doctName}), '%'))</if>
+            <if test="deptCd!=null and deptCd!=''">and a.dept_cd=#{deptCd}</if>
+        </where>
+        GROUP BY doct_cd, doct_name ORDER BY valueTotal DESC
+    </select>
+    <select id="selectTimeOutEmrUnWrite" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT doct_cd, doct_name, dept_name,dept_cd, count( xAxisName ) valueTotal FROM (SELECT eti.DOC_CD as doct_cd, eti.doc_name as doct_name, eti.dept_name,eti.dept_cd, '超时未书写' AS xAxisName
+          FROM t_ar_medicalinformation_all tam
+        left join emr_task_info eti on eti.patient_id = tam.ADMISSION_NO
+        LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+        left join emr_qc_list eql on eql.patient_id = tam.ADMISSION_NO and eti.mr_file_id = eql.mr_file_id and eql.missing_file_flag = '1'
+          <where>
+              eti.task_type = '1'
+              AND eti.TREAT_FLAG = '0'
+              AND eti.mr_file_id IS NULL
+              <if test="dateType == '1'.toString()">
+                  <if test="dateStart != null">
+                      and tam.ENTRY_DATE &gt;= #{dateStart}
+                  </if>
+                  <if test="dateEnd != null">
+                      and tam.ENTRY_DATE &lt; #{dateEnd}
+                  </if>
+              </if>
+              <if test="dateType == '2'.toString()">
+                  <if test="dateStart != null">
+                      and tam.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+                  </if>
+                  <if test="dateEnd != null">
+                      and tam.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+                  </if>
+              </if>
+              <if test="dateType == '3'.toString()">
+                  <if test="dateStart != null">
+                      and eql.cre_date &gt;= #{dateStart}
+                  </if>
+                  <if test="dateEnd != null">
+                      and eql.cre_date &lt; #{dateEnd}
+                  </if>
+              </if>
+          </where>
+              ) a
+        <where>
+            <if test="doctName!=null and doctName!=''">and (a.doct_name like concat(concat('%', #{doctName}), '%') or a.doct_cd like concat(concat('%', #{doctName}), '%'))</if>
+            <if test="deptCd!=null and deptCd!=''">and a.dept_cd=#{deptCd}</if>
+        </where>
+        GROUP BY doct_cd, doct_name, dept_name,dept_cd ORDER BY valueTotal DESC
+    </select>
+    <select id="selectTimeOutEmrUnWriteByDoct" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT doct_cd, doct_name, count( xAxisName ) valueTotal FROM (SELECT eti.DOC_CD as doct_cd, eti.doc_name as doct_name, eti.dept_name,eti.dept_cd, '超时未书写' AS xAxisName
+          FROM emr_task_info eti
+        LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+        left join t_ar_medicalinformation_all a on eti.patient_id = a.ADMISSION_NO
+          WHERE
+              eti.task_type = '1'
+            AND eti.TREAT_FLAG = '0'
+            AND eti.mr_file_id IS NULL
+            and a.ADMISSION_NO is not null) a
+        <where>
+            <if test="doctName!=null and doctName!=''">and (a.doct_name like concat(concat('%', #{doctName}), '%') or a.doct_cd like concat(concat('%', #{doctName}), '%'))</if>
+            <if test="deptCd!=null and deptCd!=''">and a.dept_cd=#{deptCd}</if>
+        </where>
+        GROUP BY doct_cd, doct_name ORDER BY valueTotal DESC
+    </select>
+    <select id="selectTimeOutEmrTableInfo" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select emr.*,case when remaining_time_int &lt; 0 then concat(concat('超时', abs(remaining_time_int)),'小时')
+        else concat(remaining_time_int,'小时') end remaining_time,sd.data_tag as emrClassName,sdd.data_tag as mrTypeName,se.EMR_CLASS_CODE from (
+        SELECT a.ENTRY_DATE,a.LEAVE_HOSPITAL_DATE, null as reco_date, eti.mr_file_id,eti.patient_id,eti.id as task_id,
+        v.res_doc_cd, v.res_doc_name, eti.dept_name, eti.dept_cd, '超时未书写' AS xAxisName, '1' AS xAxisID, v.res_doc_cd AS doct_cd, v.res_doc_name AS doct_name,
+        qar.EMR_TYPE_CODE as mr_type, p.PATIENT_NAME, v.record_no as inp_no, CEIL((eti.END_TIME - nvl(v.OUT_TIME,SYSDATE))* 24) remaining_time_int, eti.END_TIME
+        FROM emr_task_info eti
+        LEFT JOIN QC_AGI_RULE qar ON eti.BUS_ID = qar.id
+        LEFT JOIN PAT_VISITINFO v ON eti.patient_id = v.patient_id
+        LEFT JOIN PAT_PERSONALINFO p ON p.patient_id = v.patient_id
+        left join t_ar_medicalinformation_all a on a.ADMISSION_NO = eti.patient_id
+        <where>
+            eti.task_type = '1'
+            AND eti.TREAT_FLAG = '0'
+            and v.record_no is not null
+            AND eti.mr_file_id IS NULL
+            and a.ADMISSION_NO is not null
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and a.ENTRY_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.ENTRY_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and eti.begin_time &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and eti.begin_time &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        UNION ALL
+        SELECT a.ENTRY_DATE,a.LEAVE_HOSPITAL_DATE,ei.reco_date,ei.id as mr_file_id,ei.patient_id,to_number('') as task_id,
+        v.res_doc_cd, v.res_doc_name, v.dept_name, v.dept_cd, '超时已书写' AS xAxisName, '2' AS xAxisId, ei.CRE_PER_CODE AS doct_cd, ei.CRE_PER_NAME AS doct_name, ei.mr_type, p.PATIENT_NAME, v.inp_no, CEIL((ei.LAST_FINISH_TIME - ei.CRE_DATE)* 24) remaining_time_int, ei.LAST_FINISH_TIME as end_time
+        FROM
+        emr_index ei
+        LEFT JOIN PAT_VISITINFO v ON ei.patient_id = v.patient_id
+        LEFT JOIN PAT_PERSONALINFO p ON p.patient_id = v.patient_id
+        left join t_ar_medicalinformation_all a on a.ADMISSION_NO = ei.patient_id
+        <where>
+            ei.mr_type != 'MAINFILE'
+            AND ei.CRE_DATE > ei.LAST_FINISH_TIME
+            and a.ADMISSION_NO is not null
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and a.ENTRY_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.ENTRY_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and ei.reco_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and ei.reco_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        UNION ALL
+        SELECT a.ENTRY_DATE,a.LEAVE_HOSPITAL_DATE,esi.reco_date,esi.id as mr_file_id,ei.patient_id,to_number('') as task_id,
+        v.res_doc_cd, v.res_doc_name, v.dept_name, v.dept_cd, '超时已书写' AS xAxisName, '2' AS xAxisId, esi.CRE_PER_CODE AS doct_cd, esi.CRE_PER_NAME AS doct_name, esi.mr_type, p.PATIENT_NAME, v.inp_no, CEIL((esi.LAST_FINISH_TIME - esi.CRE_DATE)* 24) remaining_time_int, esi.LAST_FINISH_TIME as end_time
+        FROM
+        EMR_SUBFILE_INDEX esi
+        LEFT JOIN emr_index ei ON esi.main_id = ei.id
+        LEFT JOIN PAT_VISITINFO v ON ei.patient_id = v.patient_id
+        LEFT JOIN PAT_PERSONALINFO p ON p.patient_id = v.patient_id
+        left join t_ar_medicalinformation_all a on a.ADMISSION_NO = ei.patient_id
+        <where>
+            esi.CRE_DATE > esi.LAST_FINISH_TIME
+            and a.ADMISSION_NO is not null
+            <if test="dateType == '1'.toString()">
+                <if test="dateStart != null">
+                    and a.ENTRY_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.ENTRY_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '2'.toString()">
+                <if test="dateStart != null">
+                    and a.LEAVE_HOSPITAL_DATE &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and a.LEAVE_HOSPITAL_DATE &lt; #{dateEnd}
+                </if>
+            </if>
+            <if test="dateType == '3'.toString()">
+                <if test="dateStart != null">
+                    and esi.reco_date &gt;= #{dateStart}
+                </if>
+                <if test="dateEnd != null">
+                    and esi.reco_date &lt; #{dateEnd}
+                </if>
+            </if>
+        </where>
+        ) emr
+        left join TM_BS_DICT_DATA sdd on emr.mr_type = sdd.data_val and sdd.dict_type='s004'
+        LEFT JOIN SYS_EMR_TYPE_CONFIG se ON se.emr_type_code = emr.MR_TYPE
+        left join TM_BS_DICT_DATA sd on se.EMR_CLASS_CODE = sd.data_val and sd.dict_type='s003'
+        <where>
+            <if test="deptCd!=null and deptCd!=''"> and emr.dept_cd=#{deptCd}</if>
+            <if test="doctCd!=null and doctCd!=''"> and emr.doct_cd=#{doctCd}</if>
+            <if test="emrClassCode!=null and emrClassCode!=''"> and se.emr_class_code=#{emrClassCode}</if>
+            <if test="mrType!=null and mrType!=''"> and emr.mr_type=#{mrType}</if>
+            <if test="xAxisID!=null and xAxisID!=''"> and emr.xAxisID=#{xAxisID}</if>
+        </where>
+    </select>
+
+    <select id="selectScoreEmrTotal" parameterType="EmrQcFlowStatis" resultType="java.lang.Integer">
+        SELECT COUNT(*) valueTotal FROM EMR_QC_FLOW WHERE MR_STATE='16'
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+    </select>
+    <select id="selectDoctScorePie" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT TERM_GRADE_NO as xAxisID,TERM_GRADE_NAME as xAxisName,COUNT(*) valueTotal FROM EMR_QC_FLOW
+        WHERE MR_STATE='16' and TERM_GRADE_NO is not null
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+        group by TERM_GRADE_NO,TERM_GRADE_NAME
+    </select>
+    <select id="selectDoctScoreDeptPie" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT DEPT_GRADE_NO as xAxisID, DEPT_GRADE_NAME as xAxisName, COUNT( * ) valueTotal FROM EMR_QC_FLOW WHERE MR_STATE = '16' AND DEPT_GRADE_NO IS NOT NULL
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+        GROUP BY DEPT_GRADE_NO, DEPT_GRADE_NAME
+    </select>
+    <select id="selectDoctScoreCheckPie" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT CHECK_GRADE_NO AS xAxisID, CHECK_GRADE_NAME AS xAxisName, COUNT( * ) valueTotal FROM EMR_QC_FLOW WHERE MR_STATE = '16' AND CHECK_GRADE_NO IS NOT NULL
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+        GROUP BY CHECK_GRADE_NO, CHECK_GRADE_NAME
+    </select>
+    <select id="selectDoctScoreCloumn" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select RES_DOC_CD as xAxisID,RES_DOC_NAME as xAxisName,round(totalScore/valueTotal,2) as avgScore from (SELECT RES_DOC_CD, RES_DOC_NAME, SUM(TERM_SCORE) as totalScore, count(*) as valueTotal
+        FROM EMR_QC_FLOW
+        WHERE mr_state = '16'  and TERM_SCORE is not null
+        <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+        GROUP BY RES_DOC_CD,RES_DOC_NAME) score
+        order by avgScore desc
+    </select>
+    <select id="selectDoctScoreDeptCloumn" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select RES_DOC_CD as xAxisID,RES_DOC_NAME as xAxisName,round(totalScore/valueTotal,2) as avgScore from (SELECT RES_DOC_CD, RES_DOC_NAME, SUM(DEPT_SCORE) as totalScore, count(*) as valueTotal
+            FROM EMR_QC_FLOW
+            WHERE mr_state = '16' and DEPT_SCORE is not null
+        <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+            GROUP BY RES_DOC_CD,RES_DOC_NAME) score
+        order by avgScore desc
+    </select>
+    <select id="selectDoctScoreCheckCloumn" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select RES_DOC_CD as xAxisID,RES_DOC_NAME as xAxisName,round(totalScore/valueTotal,2) as avgScore from (SELECT RES_DOC_CD, RES_DOC_NAME, SUM(CHECK_SCORE) as totalScore, count(*) as valueTotal
+            FROM EMR_QC_FLOW
+            WHERE mr_state = '16' and check_score is not null
+        <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+            GROUP BY RES_DOC_CD,RES_DOC_NAME) score
+        order by avgScore desc
+    </select>
+    <select id="selectDeptScoreCloumn" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select DEPT_CD as xAxisID,b.DEPT_NAME as xAxisName,round(totalScore/valueTotal,2) as avgScore from (SELECT DEPT_CD, SUM(TERM_SCORE) as totalScore, count(*) as valueTotal
+          FROM EMR_QC_FLOW
+          WHERE mr_state = '16' and TERM_SCORE is not null
+        <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+          GROUP BY DEPT_CD) score
+        left join tm_bs_dept b on score.dept_cd = b.dept_code
+        where b.dept_code is not null
+        order by avgScore desc
+    </select>
+    <select id="selectDeptScoreDeptCloumn" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select DEPT_CD as xAxisID,b.DEPT_NAME as xAxisName,round(totalScore/valueTotal,2) as avgScore from (SELECT DEPT_CD, SUM(DEPT_SCORE) as totalScore, count(*) as valueTotal
+          FROM EMR_QC_FLOW a
+          WHERE mr_state = '16' and DEPT_SCORE is not null
+        <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+          GROUP BY DEPT_CD) score
+        left join tm_bs_dept b on score.dept_cd = b.dept_code
+        where b.dept_code is not null
+        order by avgScore desc
+    </select>
+    <select id="selectDeptScoreCheckCloumn" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        select DEPT_CD as xAxisID,b.DEPT_NAME as xAxisName,round(totalScore/valueTotal,2) as avgScore from (SELECT DEPT_CD, SUM(CHECK_SCORE) as totalScore, count(*) as valueTotal
+          FROM EMR_QC_FLOW
+          WHERE mr_state = '16' and CHECK_SCORE is not null
+        <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+        <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+          GROUP BY DEPT_CD) score
+        left join tm_bs_dept b on score.dept_cd = b.dept_code
+        where b.dept_code is not null
+        order by avgScore desc
+    </select>
+    <select id="selectScoreStatisTable" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT
+            RES_DOC_CD, RES_DOC_NAME, dept_cd, dept_name, valueTotal, checkAvg, deptAvg, termAvg,
+            checkJia ||' / '|| ROUND(checkJia*100/valueTotal,1) ||'%'|| '' as checkJ,
+            checkYi  ||' / '|| ROUND(checkYi*100/valueTotal,1)||'%'|| '' as checkY,
+            checkBing  ||' / '|| ROUND(checkBing*100/valueTotal,1)||'%'|| '' as checkB,
+            deptJia ||' / '|| ROUND(deptJia*100/valueTotal,1)||'%'|| '' as deptJ,
+            deptYi  ||' / '|| ROUND(deptYi*100/valueTotal,1)||'%'|| '' as deptY,
+            deptBing ||' / '|| ROUND(deptBing*100/valueTotal,1)||'%'|| '' as deptB,
+            termJia ||' / '|| ROUND(termJia*100/valueTotal,1)||'%'|| '' as termJ,
+            termYi ||' / '|| ROUND(termYi*100/valueTotal,1)||'%'|| '' as termY,
+            termBing ||' / '|| ROUND(termBing*100/valueTotal,1)||'%'|| '' as termB
+        FROM
+            (
+                SELECT RES_DOC_CD, RES_DOC_NAME, dept_cd, dept_name, count( * ) valueTotal, sum( CHECK_SCORE ) as checkAvg, sum( DEPT_SCORE ) as deptAvg, sum( TERM_SCORE ) as termAvg, sum( checkJia ) AS checkJia, sum( checkYi ) AS checkYi, sum( checkBing ) AS checkBing, sum( deptJia ) AS deptJia, sum( deptYi ) AS deptYi, sum( deptBing ) AS deptBing, sum( termJia ) AS termJia, sum( termYi ) AS termYi, sum( termBing ) AS termBing
+                FROM
+                    (
+                        SELECT
+                            RES_DOC_CD, RES_DOC_NAME, dept_cd, dept_name, CHECK_SCORE, DEPT_SCORE, TERM_SCORE,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND CHECK_GRADE_NO = '1' ) checkJia,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND CHECK_GRADE_NO = '2' ) checkYi,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND CHECK_GRADE_NO = '3' ) checkBing,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND DEPT_GRADE_NO = '1' ) deptJia,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND DEPT_GRADE_NO = '2' ) deptYi,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND DEPT_GRADE_NO = '3' ) deptBing,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND TERM_GRADE_NO = '1' ) termJia,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND TERM_GRADE_NO = '2' ) termYi,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND TERM_GRADE_NO = '3' ) termBing
+                        FROM
+                            emr_qc_flow eqf
+                        WHERE
+                            MR_STATE = '16'
+                            <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+                          <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+                    )
+                GROUP BY
+                    RES_DOC_CD,
+                    RES_DOC_NAME,
+                    dept_cd,
+                    dept_name
+                ORDER BY
+                    valueTotal DESC
+            )
+    </select>
+    <select id="selectScoreStatisDialogTable" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT
+            patient_name,
+            record_no as inp_no,
+            case when CHECK_SCORE is null then '-' else CHECK_SCORE||' / '|| CHECK_GRADE_NAME end as checkScore,
+            check_doc_name,
+            DEPT_SCORE||' / '|| DEPT_GRADE_NAME as deptScore,
+            dept_qc_name,
+            TERM_SCORE||' / '|| TERM_GRADE_NAME as termScore,
+            term_qc_name,
+            res_doc_name
+        FROM
+            emr_qc_flow where MR_STATE='16'
+            <if test="deptCd!=null and deptCd!=''"> and dept_cd=#{deptCd}</if>
+            <if test="resDocCd!=null and resDocCd!=''"> and res_doc_cd=#{resDocCd}</if>
+            <if test="qcSection=='02'">
+               <if test="gradeNo!=null and gradeNo!=''"> and DEPT_GRADE_NO=#{gradeNo}</if>
+            </if>
+            <if test="qcSection=='03'">
+               <if test="gradeNo!=null and gradeNo!=''"> and CHECK_GRADE_NO=#{gradeNo}</if>
+            </if>
+            <if test="qcSection=='05'">
+                <if test="gradeNo!=null and gradeNo!=''"> and TERM_GRADE_NO=#{gradeNo}</if>
+            </if>
+            <if test="qcSection==null || qcSection==''">
+                <if test="gradeNo!=null and gradeNo!=''"> and (TERM_GRADE_NO=#{gradeNo} or CHECK_GRADE_NO=#{gradeNo} or DEPT_GRADE_NO=#{gradeNo})</if>
+            </if>
+            <if test="scoreDoc!=null and scoreDoc!=''"> and (check_doc_cd=#{scoreDoc} or dept_qc_cd=#{scoreDoc} or term_qc_cd=#{scoreDoc})</if>
+            <if test="patientName!=null and patientName!=''"> and (patient_name like concat(concat('%', #{patientName}), '%') or record_no like concat(concat('%', #{patientName}), '%'))</if>
+            <if test="beginTime!=null and endTime!=null">and file_time between #{beginTime} and #{endTime}</if>
+    </select>
+    <select id="selectScoreStatisDeptTable" parameterType="EmrQcFlowStatis" resultMap="EmrQcFlowStatisResult">
+        SELECT
+            dept_cd, b.dept_name, valueTotal,checkTotal,deptTotal,termTotal, checkAvg, deptAvg, termAvg,
+            checkJia ||' / '|| ROUND(checkJia*100/valueTotal,1) ||'%'|| '' as checkJ,
+            checkYi  ||' / '|| ROUND(checkYi*100/valueTotal,1)||'%'|| '' as checkY,
+            checkBing  ||' / '|| ROUND(checkBing*100/valueTotal,1)||'%'|| '' as checkB,
+            deptJia ||' / '|| ROUND(deptJia*100/valueTotal,1)||'%'|| '' as deptJ,
+            deptYi  ||' / '|| ROUND(deptYi*100/valueTotal,1)||'%'|| '' as deptY,
+            deptBing ||' / '|| ROUND(deptBing*100/valueTotal,1)||'%'|| '' as deptB,
+            termJia ||' / '|| ROUND(termJia*100/valueTotal,1)||'%'|| '' as termJ,
+            termYi ||' / '|| ROUND(termYi*100/valueTotal,1)||'%'|| '' as termY,
+            termBing ||' / '|| ROUND(termBing*100/valueTotal,1)||'%'|| '' as termB
+        FROM
+            (
+                SELECT dept_cd, count( * ) valueTotal, sum( CHECK_SCORE ) as checkAvg, sum( DEPT_SCORE ) as deptAvg, sum( TERM_SCORE ) as termAvg, sum( checkJia ) AS checkJia, sum( checkYi ) AS checkYi, sum( checkBing ) AS checkBing, sum( deptJia ) AS deptJia, sum( deptYi ) AS deptYi, sum( deptBing ) AS deptBing, sum( termJia ) AS termJia, sum( termYi ) AS termYi, sum( termBing ) AS termBing
+                ,count(CHECK_SCORE) checkTotal,count(DEPT_SCORE) deptTotal,count(TERM_SCORE) termTotal
+                FROM
+                    (
+                        SELECT
+                             dept_cd, CHECK_SCORE, DEPT_SCORE, TERM_SCORE,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND CHECK_GRADE_NO = '1' ) checkJia,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND CHECK_GRADE_NO = '2' ) checkYi,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND CHECK_GRADE_NO = '3' ) checkBing,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND DEPT_GRADE_NO = '1' ) deptJia,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND DEPT_GRADE_NO = '2' ) deptYi,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND DEPT_GRADE_NO = '3' ) deptBing,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND TERM_GRADE_NO = '1' ) termJia,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND TERM_GRADE_NO = '2' ) termYi,
+                            ( SELECT count( * ) FROM emr_qc_flow WHERE id = eqf.id AND TERM_GRADE_NO = '3' ) termBing
+                        FROM
+                            emr_qc_flow eqf
+                        WHERE
+                            MR_STATE = '16'
+                          <if test="beginTime!=null and endTime!=null">and FILE_TIME between #{beginTime} and #{endTime}</if>
+                    )
+                GROUP BY
+                    dept_cd
+                ORDER BY
+                    valueTotal DESC
+            ) a
+        left join tm_bs_dept b
+            on a.dept_cd = b.dept_code
+        where b.dept_code is not null
+        order by valueTotal desc
+    </select>
+
+    <select id="selectHomeDeptFeeList" resultMap="EmrQcFlowStatisResult">
+        SELECT
+        s.*,
+        thi.FIRST_CODE,
+        fir.FIRS_NAME
+        FROM
+        (
+        SELECT
+        de.BILLS_NO,
+        de.FILING_DATE,
+        de.THREE_LEVEL_ACCOUNTING,
+        de.PAY_MARK,
+        de.TOTAL
+        FROM
+        T_IH_EXPENSEDETAIL de
+        left join TD_NA_PAT_FEE fee ON fee.PRESCRIPTION = de.PRESCRIPTION
+        <where>
+            <if test="beginTime != null and beginTime.trim() != ''">
+                and de.filing_date &gt;= to_date(#{beginTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and de.filing_date &lt; to_date(#{endTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="deptCode!=null and deptCode!=''">
+                and fee.PHYSICIAN_DPT_NO=#{deptCode}
+            </if>
+            <if test="docCd!=null and docCd!=''">
+                and fee.PHYSICIAN_NO=#{docCd}
+            </if>
+            and de.PAY_MARK = '-1'
+        </where>
+        UNION ALL
+        SELECT
+        dec.BILLS_NO,
+        dec.FILING_DATE,
+        dec.THREE_LEVEL_ACCOUNTING,
+        dec.PAY_MARK,
+        dec.TOTAL
+        FROM
+        T_IH_EXPENSEDETAIL_CYBR dec
+        left join TD_NA_PAT_FEE_CYBR feec ON feec.PRESCRIPTION = dec.PRESCRIPTION
+        <where>
+            <if test="beginTime != null and beginTime.trim() != ''">
+                and dec.filing_date &gt;= to_date(#{beginTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and dec.filing_date &lt; to_date(#{endTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="deptCode!=null and deptCode!=''">
+                and feec.PHYSICIAN_DPT_NO=#{deptCode}
+            </if>
+            <if test="docCd!=null and docCd!=''">
+                and feec.PHYSICIAN_NO=#{docCd}
+            </if>
+            and dec.PAY_MARK = '-1'
+        </where>
+         UNION ALL
+        SELECT
+        ded.BILLS_NO,
+        ded.FILING_DATE,
+        ded.THREE_LEVEL_ACCOUNTING,
+        ded.PAY_MARK,
+        ded.TOTAL
+        FROM
+        T_IH_EXPENSEDETAIL_DRCY ded
+        left join TD_NA_PAT_FEE_DRCY feed ON feed.PRESCRIPTION = ded.PRESCRIPTION
+        <where>
+            <if test="beginTime != null and beginTime.trim() != ''">
+                and ded.filing_date &gt;= to_date(#{beginTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and ded.filing_date &lt; to_date(#{endTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="deptCode!=null and deptCode!=''">
+                and feed.PHYSICIAN_DPT_NO=#{deptCode}
+            </if>
+            <if test="docCd!=null and docCd!=''">
+                and feed.PHYSICIAN_NO=#{docCd}
+            </if>
+            and ded.PAY_MARK = '-1'
+        </where>
+        UNION ALL
+        SELECT
+        deh.BILLS_NO,
+        deh.FILING_DATE,
+        deh.THREE_LEVEL_ACCOUNTING,
+        deh.PAY_MARK,
+        deh.TOTAL
+        FROM
+        T_IH_EXPENSEDETAIL_H deh
+        left join TD_NA_PAT_FEE_H feeh ON feeh.PRESCRIPTION = deh.PRESCRIPTION
+        <where>
+            <if test="beginTime != null and beginTime.trim() != ''">
+                and deh.filing_date &gt;= to_date(#{beginTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and deh.filing_date &lt; to_date(#{endTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="deptCode!=null and deptCode!=''">
+                and feeh.PHYSICIAN_DPT_NO=#{deptCode}
+            </if>
+            <if test="docCd!=null and docCd!=''">
+                and feeh.PHYSICIAN_NO=#{docCd}
+            </if>
+            and deh.PAY_MARK = '-1'
+        </where>
+        ) s
+        LEFT JOIN TM_BS_ACCOUNT_THIRD thi ON thi.CODE = s.THREE_LEVEL_ACCOUNTING
+        LEFT JOIN TM_BS_ACCOUNT_FIRST fir ON fir.FIRST_CODE = thi.FIRST_CODE
+        WHERE s.THREE_LEVEL_ACCOUNTING is not null
+    </select>
+
+    <select id="selectFirstItemList" resultMap="EmrQcFlowStatisResult">
+        select FIRST_CODE,FIRS_NAME from TM_BS_ACCOUNT_FIRST order by firs_sort
+    </select>
+
+    <select id="selectCheckDeptFlowTypeDiaLogTable" resultMap="EmrQcListVoResult"
+            parameterType="com.emr.project.qc.domain.EmrQcFlowStatis">
+        select
+        eql.main_id, eql.patient_id, eql.mr_type, eql.mr_type_name, eql.rule_name, eql.flaw_desc, eql.qcon_times, eql.emr_ele_id, eql.emr_ele_name, eql.defect_row, eql.ele_context, eql.qc_state,
+        eql.treat_time, eql.treat_cd, eql.treat_name, eql.treat_flag, eql.treat_desc, eql.con_time, eql.con_cd, eql.con_name, eql.deadline_unit, eql.con_result, eql.con_desc, eql.doct_cd, eql.doct_name,
+        eql.qc_section, eql.qcdoct_cd, eql.qcdoct_name, eql.qc_date, eql.treat_deadline, eql.mr_file_id, eql.alt_per_name, eql.alt_per_code, eql.alt_date, eql.cre_per_name, eql.cre_per_code,
+        eql.cre_date,eql.rule_id,eql.db_ele_id,eql.missing_file_flag,eql.defe_level,eql.flaw_date,
+        eqr.id,eqr.qc_bill_no,
+        pp.patient_name,pv.record_no as inp_no,eqr.IN_DEPT_NAME, qf.mr_state
+        from
+        (SELECT ID, MR_TYPE_CD, MR_TYPE_NAME FROM emr_index where del_flag = '0' UNION SELECT id, '01' AS MR_TYPE_CD, '病程记录' AS MR_TYPE_NAME FROM EMR_SUBFILE_INDEX where del_flag = '0') emr
+        LEFT JOIN emr_qc_list eql ON eql.MR_FILE_ID = emr.id
+        left join emr_qc_record eqr on eql.main_id=eqr.id
+        left join pat_visitinfo pv on pv.patient_id=eql.patient_id
+        left join PAT_PERSONALINFO pp on pp.patient_id=pv.patient_id
+        left join emr_qc_flow qf on eql.patient_id = qf.patient_id
+        <where>
+            <if test="qcSection!=null and qcSection!=''"> and eql.qc_section=#{qcSection}</if>
+            <if test="deptCd !=null and deptCd!=''">and eqr.IN_DEPT_CD=#{deptCd}</if>
+            <if test="beginTime!=null and  endTime!=null">and eqr.QC_DATE between #{beginTime} and #{endTime}</if>
+            <if test="patientName!=null and  patientName!=''">and (pp.patient_name like concat(concat('%', #{patientName}), '%') or pv.record_no like concat(concat('%', #{patientName}), '%'))</if>
+            <if test="mrType !=null and mrType!=''">and eql.MR_TYPE=#{mrType}</if>
+            <if test="qcStateList !=null">
+                and eql.QC_STATE in
+                <foreach collection="qcStateList" item="qcState" open="(" close=")" separator=",">
+                    #{qcState}
+                </foreach>
+
+            </if>
+            <if test="doctCd !=null and doctCd!=''">and eql.DOCT_CD=#{doctCd}</if>
+            <if test="dbEleId !=null ">and eql.DB_ELE_ID=#{dbEleId}</if>
+        </where>
+        order by eql.qc_date desc
+    </select>
+</mapper>
+

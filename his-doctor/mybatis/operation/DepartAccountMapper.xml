@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.DepartAccountMapper">
+
+    <!-- 根据条件获取科室记账列表 -->
+    <select id="getDepartAccountList" parameterType="java.util.Map" resultType="java.util.Map">
+        select t1.*,t2.*,t2.prescription as serial_number,(select staff_name from TM_BS_STAFF a where
+        a.staff_code=t1.operator) as operator_name
+        from td_na_pat_fee t1
+        right join t_ih_expensedetail t2 on t1.prescription = t2.prescription and t1.admission_no = t2.admission_no and
+        t1.hospitalized_count = t2.hospitalized_count
+        where 1 = 1 and t1.ACCOUNTING_DEPARTMENT_NO = #{deptCode}
+        <if test="list !=null and list.size>0">
+            and t2.THREE_LEVEL_ACCOUNTING in
+            <foreach collection="list" separator="," item="item" open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="admissionNo != null and admissionNo.trim() != ''">
+            and t1.admission_no = #{admissionNo,jdbcType=VARCHAR}
+        </if>
+
+        <if test="startTime != null and startTime.trim() != ''">
+            and to_char(t1.filing_date, 'yyyy-MM-dd HH24:mm:ss') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and to_char(t1.filing_date, 'yyyy-MM-dd HH24:mm:ss') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        order by t1.filing_date desc,t1.prescription
+    </select>
+
+    <resultMap id="DoctorDataResult" type="com.emr.project.operation.domain.resp.DoctorDataResp">
+        <result column="STAFF_NAME" jdbcType="VARCHAR" property="doctorName" />
+        <result column="STAFF_CODE" jdbcType="VARCHAR" property="doctorCode" />
+        <result column="STAFF_NO" jdbcType="VARCHAR" property="doctorNo" />
+        <result column="STAFF_NAME_PYM" jdbcType="VARCHAR" property="doctorNamePym" />
+        <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+        <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+        <result column="HOSPITAL_NO" jdbcType="VARCHAR" property="hospitalCode" />
+    </resultMap>
+    <select id="getDoctorList" resultMap="DoctorDataResult">
+        select * from (
+            SELECT
+            a.STAFF_CODE,
+            a.STAFF_NO,
+            a.STAFF_NAME,
+            c.DEPT_CODE,
+            c.DEPT_NAME,
+            a.STAFF_NAME_PYM,
+            c.HOSPITAL_NO
+            FROM
+            tm_bs_staff a
+            LEFT JOIN tm_bs_staff_dept b ON a.staff_code = b.staff_code
+            LEFT JOIN tm_bs_dept c ON b.dept_code = c.dept_code
+            WHERE
+             a.staff_type = 'c' AND c.DEPT_CODE IS NOT NULL
+            <if test="hospitalNo!=null and hospitalNo!= ''">
+                and c.hospital_no=#{hospitalNo,jdbcType=VARCHAR}
+            </if>
+            <if test="status!=null and status!= ''">
+                and a.status = #{status}
+            </if>
+            <if test="searchStr != null and searchStr.trim() != ''">
+                and (a.STAFF_NAME_PYM like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+                or a.STAFF_NO like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+                or a.STAFF_NAME like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%'))
+            </if>
+            <if test="type != null and type != '' and type == '1'.toString()">
+                and b.DEPT_CODE = #{deptCode}
+            </if>
+            order by b.number_use desc nulls last
+        )
+        where rownum &lt;= 20
+    </select>
+    <resultMap id="DeptDataResult" type="com.emr.project.operation.domain.resp.DeptDataResp">
+        <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+        <result column="dept_name_pym1" jdbcType="VARCHAR" property="deptNamePym" />
+        <result column="hospital_no" jdbcType="VARCHAR" property="hospitalCode" />
+    </resultMap>
+    <select id="getDeptList" resultMap="DeptDataResult">
+        select
+            dept.dept_name,
+            dept.dept_code,
+            dept.DEPT_NAME_PYM1,
+            dept.HOSPITAL_NO
+        from tm_bs_dept dept
+        LEFT JOIN TM_BS_DEPT_TYPE_CONTRAST dtc ON dtc.DEPT_CODE = dept.DEPT_CODE
+        WHERE dtc.DEPT_TYPE='11'
+        <if test="hospitalNo!=null and hospitalNo!= ''">
+            AND dept.HOSPITAL_NO=#{hospitalNo,jdbcType=VARCHAR}
+        </if>
+        <if test="searchStr != null and searchStr.trim() != ''">
+            and ( dept.DEPT_NAME_PYM1 like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+            or dept.dept_name like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+            or dept.dept_code like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+            )
+        </if>
+            AND dept.del_flag = '0'
+            /*AND rownum &lt;= 20*/
+        order by dept.SORT_ORDER
+    </select>
+    <resultMap id="NurseDataResult" type="com.emr.project.operation.domain.resp.NurseDataResp">
+        <result column="STAFF_NAME" jdbcType="VARCHAR" property="nurseName" />
+        <result column="STAFF_CODE" jdbcType="VARCHAR" property="nurseCode" />
+        <result column="STAFF_NO" jdbcType="VARCHAR" property="nurseNo" />
+        <result column="STAFF_NAME_PYM" jdbcType="VARCHAR" property="nurseNamePym" />
+        <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+        <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+        <result column="HOSPITAL_NO" jdbcType="VARCHAR" property="hospitalCode" />
+        <result column="WARD_NO" jdbcType="VARCHAR" property="wardNo" />
+    </resultMap>
+    <select id="getNurseList" resultMap="NurseDataResult">
+        SELECT
+            a.STAFF_CODE,
+            a.STAFF_NO,
+            a.STAFF_NAME,
+            c.DEPT_CODE,
+            c.DEPT_NAME,
+            a.STAFF_NAME_PYM,
+            c.HOSPITAL_NO,
+            c.WARD_NO
+        FROM
+        tm_bs_staff a
+        LEFT JOIN tm_bs_staff_dept b ON a.staff_code = b.staff_code
+        LEFT JOIN tm_bs_dept c ON b.dept_code = c.dept_code
+        WHERE
+        c.DEPT_CODE = #{deptCode,jdbcType=VARCHAR}
+        AND a.staff_type = 'd'
+        <if test="hospitalNo!=null and hospitalNo!= ''">
+            and c.hospital_no=#{hospitalNo,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null and status != ''">
+            and a.status=#{status}
+        </if>
+        <if test="searchStr != null and searchStr.trim() != ''">
+            and (a.STAFF_NAME_PYM like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+            or a.STAFF_NO like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+            or a.STAFF_NAME like concat( concat('%', #{searchStr,jdbcType=VARCHAR}), '%')
+            )
+        </if>
+        AND rownum &lt;= 20
+        order by a.staff_no
+    </select>
+    <resultMap id="CombinationResult" type="com.emr.project.operation.domain.resp.CombinationListResp">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+        <result column="ward_no" jdbcType="VARCHAR" property="deptCode" />
+        <result column="package_no" jdbcType="VARCHAR" property="packageNo" />
+        <result column="package_name" jdbcType="VARCHAR" property="packageName" />
+        <result column="package_pym" jdbcType="VARCHAR" property="packagePym" />
+        <result column="share_class" jdbcType="VARCHAR" property="shareClass" />
+        <result column="flag" jdbcType="VARCHAR" property="flag" />
+        <result column="operator_no" jdbcType="VARCHAR" property="operatorNo" />
+    </resultMap>
+    <select id="getCombinationList" resultMap="CombinationResult">
+        select
+            id,
+            hospital_code,
+            ward_no,
+            package_no,
+            package_name,
+            package_pym,
+            share_class,
+            flag,
+            operator_no
+        from (
+        select * from tm_na_tcwh where share_class = '1' and hospital_code=#{hospitalCode,jdbcType=VARCHAR}
+        union all
+        select * from tm_na_tcwh where share_class = '2' and hospital_code=#{hospitalCode,jdbcType=VARCHAR} and ward_no=#{deptCode,jdbcType=VARCHAR}
+        union all
+        select * from tm_na_tcwh where share_class = '3' and operator_no=#{userName,jdbcType=VARCHAR}
+        ) a where a.flag='0'
+        <if test="packagePym!=null and packagePym!=''">
+            and (
+            a.package_pym like concat(concat('%', #{packagePym}), '%')
+            or a.package_name like concat(concat('%', #{packagePym}), '%')
+            )
+        </if>
+        <if test="shareClass!=null and shareClass!=''">
+            and a.share_class = #{shareClass,jdbcType=VARCHAR}
+        </if>
+        and rownum &lt;= 50
+    </select>
+    <resultMap id="CombinationDetailsResult" type="com.emr.project.operation.domain.resp.CombinationDetailsResp">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="ward_no" jdbcType="VARCHAR" property="deptCode" />
+        <result column="package_no" jdbcType="VARCHAR" property="packageNo" />
+        <result column="package_order" jdbcType="INTEGER" property="packageOrder" />
+        <result column="charge_code" jdbcType="VARCHAR" property="chargeCode" />
+        <result column="charge_no" jdbcType="VARCHAR" property="chargeNo" />
+        <result column="charge_name" jdbcType="VARCHAR" property="chargeName" />
+        <result column="charge_name_pym" jdbcType="VARCHAR" property="chargeNamePym" />
+        <result column="hos_upper" jdbcType="VARCHAR" property="hosUpper" />
+        <result column="standard" jdbcType="VARCHAR" property="standard" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="dose" jdbcType="DECIMAL" property="dose" />
+        <result column="total" jdbcType="DECIMAL" property="total" />
+        <result column="dep_exec_no" jdbcType="VARCHAR" property="depExecNo" />
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    </resultMap>
+    <select id="getCombinationDetails" resultMap="CombinationDetailsResult">
+    select t1.* , t2.dept_name as dept_name
+    from tm_na_tcwh_mx t1
+    left join TM_BS_DEPT t2 on t1.dep_exec_no = t2.dept_code
+    where package_no = #{packageNo,jdbcType=VARCHAR}
+    </select>
+    <resultMap id="OperationApplyResult" type="com.emr.project.operation.domain.resp.OperationApplyResp">
+        <id column="PATIENT_NAME" jdbcType="VARCHAR" property="patientName" />
+        <id column="CASE_NO" jdbcType="VARCHAR" property="caseNo" />
+        <id column="ADMISSION_NO" jdbcType="VARCHAR" property="admissionNo" />
+        <id column="PLAN_OPER1_CD" jdbcType="VARCHAR" property="operationCode" />
+        <id column="PLAN_OPER1_NAME" jdbcType="VARCHAR" property="operationName" />
+        <id column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+        <id column="ORDER_TYPE" jdbcType="VARCHAR" property="orderType" />
+        <id column="ORDER_SORT_NUMBER" jdbcType="VARCHAR" property="orderSortNumber" />
+        <id column="ORDER_GROUP_SORT_NUMBER" jdbcType="VARCHAR" property="orderGroupSortNumber" />
+        <id column="ORDER_GROUP_NO" jdbcType="VARCHAR" property="orderGroupNo" />
+        <id column="ORDER_CLASS_CODE" jdbcType="VARCHAR" property="orderClassCode" />
+        <id column="PLAN_OPER_TIME" jdbcType="TIMESTAMP" property="planOperTime" />
+    </resultMap>
+    <select id="getOperationApply" resultMap="OperationApplyResult">
+        SELECT
+            oa.PATIENT_NAME,
+            oa.CASE_NO,
+            oa.ADMISSION_NO,
+            oa.PLAN_OPER1_CD,
+            oa.PLAN_OPER1_NAME,
+            od.ORDER_NO,
+            od.ORDER_TYPE,
+            od.ORDER_SORT_NUMBER,
+            od.ORDER_GROUP_SORT_NUMBER,
+            od.ORDER_GROUP_NO,
+            od.ORDER_CLASS_CODE,
+            oa.PLAN_OPER_TIME
+        FROM
+            TD_CA_OPERATION_APPLY oa
+            LEFT JOIN TD_PA_ORDER_DETAIL od ON oa.ORDER_NO = od.ORDER_NO
+          WHERE oa.STATUS = '06' AND oa.ADMISSION_NO = #{admissionNo}
+        GROUP BY
+            oa.PATIENT_NAME,
+            oa.CASE_NO,
+            oa.ADMISSION_NO,
+            oa.PLAN_OPER1_CD,
+            oa.PLAN_OPER1_NAME,
+            od.ORDER_NO,
+            od.ORDER_TYPE,
+            od.ORDER_SORT_NUMBER,
+            od.ORDER_GROUP_SORT_NUMBER,
+            od.ORDER_GROUP_NO,
+            od.ORDER_CLASS_CODE,
+            oa.PLAN_OPER_TIME
+    </select>
+    <!-- 查询诊疗项目可退数量 -->
+    <select id="checkRefundNum" parameterType="java.util.Map" resultType="Double">
+        SELECT sum(dose)
+        from td_na_tfsqb
+        where bills_no_old = #{prescription}
+          and mark != 9
+    </select>
+    <resultMap id="OperationPatientResult" type="com.emr.project.operation.domain.resp.OperationPatientDetailsResp">
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="bedId" jdbcType="VARCHAR" property="bedId" />
+        <result column="admissionNo" jdbcType="VARCHAR" property="admissionNo" />
+        <result column="caseNo" jdbcType="VARCHAR" property="caseNo" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
+        <result column="deptName" jdbcType="VARCHAR" property="deptName" />
+        <result column="deptCode" jdbcType="VARCHAR" property="deptCode" />
+        <result column="personAge" jdbcType="VARCHAR" property="personAge" />
+        <result column="expenseCategory" jdbcType="VARCHAR" property="expenseCategory" />
+        <result column="staffName" jdbcType="VARCHAR" property="staffName" />
+        <result column="staffNo" jdbcType="VARCHAR" property="staffNo" />
+        <result column="deposIt" jdbcType="VARCHAR" property="deposIt" />
+        <result column="money" jdbcType="VARCHAR" property="money" />
+        <result column="operationName" jdbcType="VARCHAR" property="operationName" />
+        <result column="operationRoom" jdbcType="VARCHAR" property="operationRoom" />
+        <result column="hospitalizedCount" jdbcType="VARCHAR" property="hospitalizedCount" />
+        <result column="expenseCategoryCode" jdbcType="VARCHAR" property="expenseCategoryCode" />
+
+        <result column="orderNo" jdbcType="VARCHAR" property="orderNo" />
+        <result column="orderType" jdbcType="VARCHAR" property="orderType" />
+        <result column="orderSortNumber" jdbcType="VARCHAR" property="orderSortNumber" />
+        <result column="orderGroupSortNumber" jdbcType="VARCHAR" property="orderGroupSortNumber" />
+        <result column="orderGroupNo" jdbcType="VARCHAR" property="orderGroupNo" />
+        <result column="orderClassCode" jdbcType="VARCHAR" property="orderClassCode" />
+
+        <result column="age_month"  property="ageMonth" />
+        <result column="age_day"  property="ageDay" />
+        <result column="age_hour"  property="ageHour" />
+        <result column="age_branch"  property="ageBranch" />
+    </resultMap>
+    <select id="getOperationPatientList" resultMap="OperationPatientResult">
+        <if test="type != null and type == 1">
+            select
+                t1.NAME AS name,
+                t1.BEDID AS bedId,
+                t1.ADMISSION_NO as admissionNo,
+                t1.CASE_NO as caseNo,
+                t1.HOSPITALIZED_COUNT as hospitalizedCount,
+                t2.expense_category AS expenseCategory,
+                t2.person_age AS personAge,
+                t2.expense_category_no AS expenseCategoryCode,
+                dd.DATA_TAG AS sex,
+                t5.staff_name AS staffName,
+                t10.depos_it AS deposIt,
+                (t10.depos_it - t10.cumulative_cost) AS money,
+                t5.staff_no AS staffNo,
+                t6.dept_name AS deptName,
+                t6.dept_code AS deptCode,
+                t2.age_month,
+                t2.age_day,
+                t2.age_hour,
+                t2.age_branch
+            from
+                t_ar_medicalinformation t1
+            left join t_ar_baseinfomation t2 on t1.admission_no = t2.admission_no
+            left join tm_na_beds t3 on t1.bed_no = t3.bed_no
+            left join TM_BS_STAFF t5 on t5.staff_no = t1.Resident_no
+            left join TM_BS_DEPT t6 on t6.dept_code = t1.department_no
+            left join t_ih_cumulativecost t10 on t1.admission_no = t10.admission_no
+            LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE='s028' and dd.DATA_VAL = t2.sex
+
+            where
+                t1.hospital_mark='1' and t1.bedid is not null
+            <if test="deptCode != null and deptCode.trim() != ''">
+                and t1.DEPARTMENT_NO = #{deptCode,jdbcType=VARCHAR}
+            </if>
+            <if test="searchStr != null and searchStr.trim() != ''">
+                and (t1.name like concat( concat('%', #{searchStr}), '%')
+                or t1.case_no like concat( concat('%', #{searchStr}), '%') )
+            </if>
+            order by t3.bed_order
+        </if>
+
+        <if test="type != null and type == 2">
+            SELECT
+                oa.OPER_ROOM AS operationRoom,
+                oa.PLAN_OPER1_NAME AS operationName,
+                t1.NAME AS name,
+                t1.BEDID AS bedId,
+                t2.person_age AS personAge,
+                t2.expense_category AS expenseCategory,
+                dd.DATA_TAG AS sex,
+                t5.staff_name AS staffName,
+                t5.STAFF_NO AS staffNo,
+                t6.dept_name AS deptName,
+                t6.dept_code AS deptCode,
+                t10.depos_it AS deposIt,
+                ( t10.depos_it - t10.cumulative_cost ) AS money,
+                t1.ADMISSION_NO as admissionNo,
+                t1.CASE_NO as caseNo,
+                t1.HOSPITALIZED_COUNT as hospitalizedCount,
+                t2.expense_category_no as expenseCategoryCode,
+                od.ORDER_NO as orderNo,
+                od.ORDER_TYPE as orderType,
+                od.ORDER_SORT_NUMBER as orderSortNumber,
+                od.ORDER_GROUP_SORT_NUMBER as orderGroupSortNumber,
+                od.ORDER_GROUP_NO as orderGroupNo,
+                od.ORDER_CLASS_CODE as orderClassCode,
+                t2.age_month,
+                t2.age_day,
+                t2.age_hour,
+                t2.age_branch
+            FROM
+                TD_CA_OPERATION_APPLY oa
+            LEFT JOIN t_ar_medicalinformation t1 ON t1.admission_no=oa.admission_no
+            LEFT JOIN t_ar_baseinfomation t2 ON t1.admission_no = t2.admission_no
+            LEFT JOIN TM_BS_STAFF t5 ON t5.staff_no = t1.Resident_no
+            LEFT JOIN TM_BS_DEPT t6 ON t6.dept_code = t1.department_no
+            LEFT JOIN TM_BS_WARD t9 ON t1.ward_no = t9.ward_no
+            LEFT JOIN t_ih_cumulativecost t10 ON t1.admission_no = t10.admission_no
+            LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE='s028' and dd.DATA_VAL = t2.sex
+            LEFT JOIN TD_PA_ORDER_DETAIL od ON oa.ORDER_NO = od.ORDER_NO
+            WHERE
+                oa.STATUS in ('06','07')
+            AND oa.SHIFT_DATE &gt;= to_date ( #{start,jdbcType=VARCHAR}, 'yyyy-MM-dd HH24:mi:ss' )
+            AND oa.SHIFT_DATE &lt; to_date ( #{end,jdbcType=VARCHAR}, 'yyyy-MM-dd HH24:mi:ss')
+            <if test="searchStr != null and searchStr.trim() != ''">
+                and (t1.name like concat( concat('%', #{searchStr}), '%')
+                or t1.case_no like concat( concat('%', #{searchStr}), '%') )
+            </if>
+            ORDER BY
+            oa.OPER_TYPE_CD
+        </if>
+    </select>
+    <select id="selectArrearsByDeptCode" resultType="java.lang.String">
+        select ARREARS_FLAG from TM_BS_DEPT where DEPT_CODE = #{patientDepCode}
+    </select>
+    <resultMap id="PrintRefundAccountResult" type="com.emr.project.operation.domain.vo.PrintRefundAccountVo">
+        <result column="admission_no" property="admissionNo"/>
+        <result column="case_no" property="caseNo"/>
+        <result column="patient_name" property="patientName"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="charge_name" property="chargeName"/>
+        <result column="total" property="total"/>
+        <result column="bedid" property="bedId"/>
+    </resultMap>
+    <select id="selectPrintRefundAccount" resultMap="PrintRefundAccountResult">
+        select
+        aa.*
+        from (
+        SELECT
+        t1.serial_number||t1.SERIAL_NUMBER_XH as serial,
+        t1.case_no,
+        t1.admission_no,
+        t1.patient_name,
+        t1.serial_number,
+        t1.charge_name,
+        t1.total,
+        m.bedid,
+        bed.bed_order,
+        t1.SERIAL_NUMBER_XH
+        FROM
+        td_na_tfsqb t1
+        left join t_ar_medicalinformation m on t1.admission_no = m.admission_no
+        left join TM_NA_BEDS bed on bed.WARD_NO = m.WARD_NO and bed.bedid = m.bedid
+        WHERE
+        t1.APPLY_NO=#{deptCode}
+        ) aa
+        <where>
+            <if test="list != null and list.size() > 0">
+                and aa.serial in
+                <foreach collection="list" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by aa.bed_order, aa.serial_number, aa.serial_number_xh
+    </select>
+    <resultMap id="NurseWorkloadResult" type="com.emr.project.operation.domain.resp.NurseWorkloadResp">
+        <result column="ADMISSION_NO" property="admissionNo"/>
+        <result column="HOSPITALIZED_COUNT" property="hospitalizedCount"/>
+        <result column="CASE_NO" property="caseNo"/>
+        <result column="NAME" property="name"/>
+        <result column="CHARGE_NO" property="chargeNo"/>
+        <result column="CHARGE_NAME" property="chargeName"/>
+        <result column="STANDARD" property="standard"/>
+        <result column="UNIT" property="unit"/>
+        <result column="DOSE" property="dose"/>
+        <result column="PRICE" property="price"/>
+        <result column="TOTAL" property="total"/>
+        <result column="FILING_DATE" property="filingDate"/>
+        <result column="OPERATOR_NAME" property="operatorName"/>
+        <result column="OPERATOR" property="operator"/>
+        <result column="EXECUTOR_DPT_NAME" property="executorDptName"/>
+        <result column="ACCOUNTING_DEPARTMENT_NAME" property="accountingDepartmentName"/>
+    </resultMap>
+    <select id="queryNurseWorkloadAllList" resultMap="NurseWorkloadResult">
+        SELECT
+        ex.ADMISSION_NO,
+        ex.HOSPITALIZED_COUNT,
+        pf.CASE_NO,
+        ma.NAME,
+        ex.CHARGE_NO,
+        ex.CHARGE_NAME,
+        ex.STANDARD,
+        ex.UNIT,
+        sum(ex.DOSE) as dose,
+        ex.PRICE,
+        sum(ex.TOTAL) as total,
+        ex.FILING_DATE,
+        pf.OPERATOR_NAME,
+        pf.OPERATOR,
+        pf.EXECUTOR_DPT_NAME,
+        pf.ACCOUNTING_DEPARTMENT_NAME
+        FROM
+        T_IH_EXPENSEDETAIL_all ex
+        LEFT JOIN TD_NA_PAT_FEE_all pf ON ex.PRESCRIPTION = pf.PRESCRIPTION
+        LEFT JOIN t_ar_medicalinformation_all ma ON ma.ADMISSION_NO = ex.ADMISSION_NO
+        WHERE
+        (pf.EXECUTOR_DPT_NO = #{depCode} or pf.PHYSICIAN_DPT_NO = #{depCode})and ex.CHARGE_NO is not null
+        <if test="selChargeNo != null and selChargeNo != ''">
+            and (ex.charge_no like CONCAT(CONCAT('%', #{selChargeNo}), '%')
+            or ex.charge_name like CONCAT(CONCAT('%', #{selChargeNo}), '%'))
+        </if>
+        <if test="list !=null and list.size>0">
+            and ex.three_level_accounting in
+            <foreach collection="list" separator="," item="item" open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="admissionNo!=null and admissionNo !=''">
+            and (ex.ADMISSION_NO like CONCAT(CONCAT('%', #{admissionNo}), '%')
+            or pf.CASE_NO like CONCAT(CONCAT('%', #{admissionNo}), '%')
+            or ma.NAME like CONCAT(CONCAT('%', #{admissionNo}), '%'))
+        </if>
+        <if test="startDate!=null and startDate!=''">
+            and ex.FILING_DATE &gt;= to_date(#{startDate},'yyyy-MM-dd')
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and ex.FILING_DATE &lt; to_date(#{endDate},'yyyy-MM-dd')
+        </if>
+        <if test="nurseNo !=null and nurseNo!=''">
+            and pf.OPERATOR = #{nurseNo}
+        </if>
+        <if test="returnFlag != null and returnFlag !='' and returnFlag == '1'.toString() ">
+            and ex.TOTAL &lt; 0
+        </if>
+        GROUP BY
+        ex.ADMISSION_NO,
+        ex.HOSPITALIZED_COUNT,
+        pf.CASE_NO,
+        ma.NAME,
+        ex.CHARGE_NO,
+        ex.CHARGE_NAME,
+        ex.STANDARD,
+        ex.UNIT,
+        ex.DOSE,
+        ex.PRICE,
+        ex.TOTAL,
+        ex.FILING_DATE,
+        pf.OPERATOR_NAME,
+        pf.OPERATOR,
+        pf.EXECUTOR_DPT_NAME,
+        pf.ACCOUNTING_DEPARTMENT_NAME
+        ORDER BY ex.CHARGE_NO, ex.FILING_DATE
+    </select>
+</mapper>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.ClinItemCollectionMapper">
+
+    <resultMap type="ClinItemCollection" id="ClinItemCollectionResult">
+        <result property="id"    column="id"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="docCd"    column="doc_cd"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="itemClassCd"    column="item_class_cd"    />
+        <result property="itemClassName"    column="item_class_name"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="usageTimes"    column="usage_times"    />
+        <result property="herbalFlag"    column="herbal_flag"    />
+        <result property="sort"    column="sort"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="stockNo"    column="stock_no"    />
+    </resultMap>
+<resultMap id="ClinItemCollectionVoResult" type="ClinItemCollectionVo" extends="ClinItemCollectionResult">
+
+</resultMap>
+    <sql id="selectClinItemCollectionVo">
+        select id, hospital_code, doc_cd, doc_name, item_class_cd, item_class_name, item_cd, item_name, standard,
+               usage_times, herbal_flag, sort, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,stock_no from tm_pm_clin_item_collection
+    </sql>
+
+    <select id="selectClinItemCollectionList" parameterType="ClinItemCollection" resultMap="ClinItemCollectionResult">
+        <include refid="selectClinItemCollectionVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="docCd != null  and docCd != ''"> and doc_cd = #{docCd}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="itemClassCd != null  and itemClassCd != ''"> and item_class_cd = #{itemClassCd}</if>
+            <if test="itemClassName != null  and itemClassName != ''"> and item_class_name like concat(concat('%', #{itemClassName}), '%')</if>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="usageTimes != null "> and usage_times = #{usageTimes}</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and herbal_flag = #{herbalFlag}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="stockNo != null and stockNo!=''"> and stock_no = #{stockNo}</if>
+             <if test="itemCdList !=null">
+                 and item_class_cd in
+                 <foreach item="item" collection="itemCdList" open="(" separator="," close=")">
+                     #{item}
+                 </foreach>
+             </if>
+        </where>
+    </select>
+
+    <select id="selectClinItemCollectionById" parameterType="Long" resultMap="ClinItemCollectionResult">
+        <include refid="selectClinItemCollectionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertClinItemCollection" parameterType="ClinItemCollection">
+        insert into tm_pm_clin_item_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="docCd != null">doc_cd,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="itemClassCd != null">item_class_cd,</if>
+            <if test="itemClassName != null">item_class_name,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="usageTimes != null">usage_times,</if>
+            <if test="herbalFlag != null">herbal_flag,</if>
+            <if test="sort != null">sort,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="stockNo != null">stock_No,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="docCd != null">#{docCd},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="itemClassCd != null">#{itemClassCd},</if>
+            <if test="itemClassName != null">#{itemClassName},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="usageTimes != null">#{usageTimes},</if>
+            <if test="herbalFlag != null">#{herbalFlag},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="stockNo != null">#{stockNo},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateClinItemCollection" parameterType="ClinItemCollection">
+        update tm_pm_clin_item_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="itemClassCd != null">item_class_cd = #{itemClassCd},</if>
+            <if test="itemClassName != null">item_class_name = #{itemClassName},</if>
+            <if test="itemCd != null">item_cd = #{itemCd},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="usageTimes != null">usage_times = #{usageTimes},</if>
+            <if test="herbalFlag != null">herbal_flag = #{herbalFlag},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="stockNo != null">stock_No = #{stockNo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClinItemCollectionById" parameterType="Long">
+        delete from tm_pm_clin_item_collection where id = #{id}
+    </delete>
+
+    <delete id="deleteClinItemCollectionByIds" parameterType="String">
+        delete from tm_pm_clin_item_collection where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteClinItemCollectionByItemCd" parameterType="ClinItemCollection">
+        delete from tm_pm_clin_item_collection where item_cd=#{itemCd}
+         <if test="docCd!=null and docCd!=''">and doc_Cd=#{docCd}</if>
+    </delete>
+    <select id="selectCommonDrugList" parameterType="ClinItemCollection" resultMap="ClinItemCollectionVoResult">
+        select * from tm_pm_clin_item_collection where item_class_cd=#{itemClassCd} and doc_cd=#{docCd} and HERBAL_FLAG=#{herbalFlag} order by SORT
+    </select>
+    <select id="selectUnDrugItemList" parameterType="ClinItemCollection" resultMap="ClinItemCollectionResult">
+        select * from tm_pm_clin_item_collection where item_class_cd in ('02','03','04','05','06','07','99') and doc_cd=#{docCd} and HERBAL_FLAG=#{herbalFlag} order by SORT
+    </select>
+</mapper>

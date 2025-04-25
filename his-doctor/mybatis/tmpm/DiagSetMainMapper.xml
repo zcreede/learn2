@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.DiagSetMainMapper">
+
+    <resultMap type="DiagSetMain" id="DiagSetMainResult">
+        <result property="setCd"    column="set_cd"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="setName"    column="set_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="shareType"    column="share_type"    />
+        <result property="shareObject"    column="share_object"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="diagClass"    column="diag_class"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="sortNumber"    column="sort_number"    />
+        <result property="diagTypeCd"    column="diag_type_cd"    />
+        <result property="diagTypeName"    column="diag_type_name"    />
+    </resultMap>
+
+    <sql id="selectDiagSetMainVo">
+        select set_cd, hospital_code, set_name, inputstrphtc, share_type, share_object, enabled, diag_class, cre_per_code, cre_per_name, cre_date,
+               alt_per_code, alt_per_name, alt_date, sort_number,diag_type_cd,diag_type_name from tm_pm_diag_set_main
+    </sql>
+
+    <select id="selectDiagSetMainList" parameterType="DiagSetMain" resultMap="DiagSetMainResult">
+        <include refid="selectDiagSetMainVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="setName != null  and setName != ''">
+             and (set_name like concat(concat('%', #{setName}), '%') or inputstrphtc like concat(concat('%', #{setName}), '%'))
+             </if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="shareType != null  and shareType != ''"> and share_type = #{shareType}</if>
+            <if test="shareObject != null  and shareObject != ''"> and share_object = #{shareObject}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="diagClass != null  and diagClass != ''"> and diag_class = #{diagClass}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="sortNumber != null "> and sort_number = #{sortNumber}</if>
+            <if test="diagTypeCd != null "> and diag_type_cd = #{diagTypeCd}</if>
+            <if test="diagTypeName != null "> and diag_type_name = #{diagTypeName}</if>
+        </where>
+        order by sort_number
+    </select>
+
+    <select id="selectDiagSetMainById" parameterType="String" resultMap="DiagSetMainResult">
+        <include refid="selectDiagSetMainVo"/>
+        where set_cd = #{setCd}
+    </select>
+
+    <insert id="insertDiagSetMain" parameterType="DiagSetMainVo">
+        insert into tm_pm_diag_set_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="setCd != null">set_cd,</if>
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="setName != null">set_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="shareType != null">share_type,</if>
+            <if test="shareObject != null">share_object,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="diagClass != null">diag_class,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="sortNumber != null">sort_number,</if>
+            <if test="diagTypeCd != null">diag_type_cd,</if>
+            <if test="diagTypeName != null">diag_type_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="setCd != null">#{setCd},</if>
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="setName != null">#{setName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="shareType != null">#{shareType},</if>
+            <if test="shareObject != null">#{shareObject},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="diagClass != null">#{diagClass},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="sortNumber != null">#{sortNumber},</if>
+            <if test="diagTypeCd != null">#{diagTypeCd},</if>
+            <if test="diagTypeName != null">#{diagTypeName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDiagSetMain" parameterType="DiagSetMain">
+        update tm_pm_diag_set_main
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="setName != null">set_name = #{setName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="shareType != null">share_type = #{shareType},</if>
+            <if test="shareObject != null">share_object = #{shareObject},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="diagClass != null">diag_class = #{diagClass},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="sortNumber != null">sort_number = #{sortNumber},</if>
+            <if test="diagTypeCd != null">diag_type_cd = #{diagTypeCd},</if>
+            <if test="diagTypeName != null">diag_type_name = #{diagTypeName},</if>
+        </trim>
+        where set_cd = #{setCd}
+    </update>
+
+    <delete id="deleteDiagSetMainById" parameterType="String">
+        delete from tm_pm_diag_set_main where set_cd = #{setCd}
+    </delete>
+
+    <delete id="deleteDiagSetMainByIds" parameterType="String">
+        delete from tm_pm_diag_set_main where set_cd in
+        <foreach item="setCd" collection="array" open="(" separator="," close=")">
+            #{setCd}
+        </foreach>
+    </delete>
+    <select id="selectSetMainMaxNumber" resultType="java.lang.Integer">
+        select max(sort_number) from tm_pm_diag_set_main
+    </select>
+</mapper>

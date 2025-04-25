@@ -1,0 +1,91 @@
+# 数据源配置
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+            # 主库数据源
+            master:
+                url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+                username: LBHIS
+                password: Lanbo123
+#                username: dn_mer
+#                password: dn_mer123456
+            # 从库数据源
+            slave:
+                # 从数据源开关/默认关闭  false
+                enabled: false
+                url: jdbc:sqlserver://192.168.123.126:1433;DatabaseName=yydb
+                username: sa
+                password: zzlb
+            slaveMz:
+                url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+                username: MZHIS
+                password: Lanbo123
+            # 初始连接数
+            initialSize: 30
+            # 最小连接池数量
+            minIdle: 10
+            # 最大连接池数量
+            maxActive: 200
+            # 配置获取连接等待超时的时间
+            maxWait: 60000
+            # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+            timeBetweenEvictionRunsMillis: 60000
+            # 配置一个连接在池中最小生存的时间，单位是毫秒
+            minEvictableIdleTimeMillis: 300000
+            # 配置一个连接在池中最大生存的时间，单位是毫秒
+            maxEvictableIdleTimeMillis: 900000
+            # 配置检测连接是否有效
+            validationQuery: SELECT 1 FROM DUAL
+            # sqlServer、mysql、ingres、H2、SQLite 检测连接语句
+            validationQuery1: SELECT 1
+            # 初始连接数
+            initialSize1: 1
+            # 最小连接池数量
+            minIdle1: 1
+            # 最大连接池数量
+            maxActive1: 2
+            testWhileIdle1: false
+            # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+            timeBetweenEvictionRunsMillis1: 60000
+            # 配置一个连接在池中最小生存的时间，单位是毫秒
+            minEvictableIdleTimeMillis1: 60000
+            # 配置一个连接在池中最大生存的时间，单位是毫秒
+            maxEvictableIdleTimeMillis1: 300000
+            # hsqldb 检测连接语句
+            validationQuery2: select 1 from INFORMATION_SCHEMA.SYSTEM_USERS
+            # DB2 检测连接语句
+            validationQuery3: select 1 from sysibm.sysdummy1
+            # postgresql 检测连接语句
+            validationQuery4: select version()
+            # Informix 检测连接语句
+            validationQuery5: select count(*) from systables
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+            # 是否打开强制回收连接功能
+            removeAbandoned: true
+            # 超时时间，单位：毫秒
+            removeAbandonedTimeoutMillis: 60000
+            # 连接回收时是否记录日志
+            logAbandoned: true
+            webStatFilter:
+                enabled: true
+            statViewServlet:
+                enabled: true
+                # 设置白名单，不填则允许所有访问
+                allow:
+                url-pattern: /druid/*
+                # 控制台管理用户名和密码
+                login-username: ruoyi
+                login-password: 123456
+            filter:
+                stat:
+                    enabled: true
+                    # 慢SQL记录
+                    log-slow-sql: true
+                    slow-sql-millis: 1000
+                    merge-sql: true
+                wall:
+                    config:
+                        multi-statement-allow: true

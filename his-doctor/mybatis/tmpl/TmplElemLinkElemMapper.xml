@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpl.mapper.TmplElemLinkElemMapper">
+
+    <resultMap type="TmplElemLinkElem" id="TmplElemLinkElemResult">
+        <result property="id"    column="id"    />
+        <result property="linkId"    column="link_id"    />
+        <result property="contElemName"    column="cont_elem_name"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="linkType"    column="link_type"    />
+        <result property="typeFlag"    column="type_flag"    />
+        <result property="contType"    column="cont_type"    />
+    </resultMap>
+
+    <resultMap type="TmplElemLinkElemVo" id="TmplElemLinkElemVoResult" extends="TmplElemLinkElemResult">
+        <result property="typeFlag"    column="type_flag"    />
+        <result property="contType"    column="cont_type"    />
+    </resultMap>
+
+    <sql id="selectTmplElemLinkElemVo">
+        select id, link_id, cont_elem_name, elem_id, elem_name, elem_cd, cre_date, cre_per_code, cre_per_name,link_type, type_flag, cont_type from tmpl_elem_link_elem
+    </sql>
+
+    <select id="selectTmplElemLinkElemList" parameterType="TmplElemLinkElem" resultMap="TmplElemLinkElemVoResult">
+        <include refid="selectTmplElemLinkElemVo"/>
+        <where>
+            <if test="linkId != null "> and link_id = #{linkId}</if>
+            <if test="contElemName != null  and contElemName != ''"> and cont_elem_name like concat(concat('%', #{contElemName}), '%')</if>
+            <if test="elemId != null "> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="linkType != null  and linkType != ''"> and link_type = #{linkType}</if>
+        </where>
+    </select>
+
+    <select id="selectTmplElemLinkElemById" parameterType="Long" resultMap="TmplElemLinkElemResult">
+        <include refid="selectTmplElemLinkElemVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmplElemLinkElem" parameterType="TmplElemLinkElem">
+        insert into tmpl_elem_link_elem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="linkId != null">link_id,</if>
+            <if test="contElemName != null">cont_elem_name,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="linkType != null">link_type,</if>
+            <if test="typeFlag != null and typeFlag != ''">type_flag,</if>
+            <if test="contType != null and contType != ''">cont_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="linkId != null">#{linkId},</if>
+            <if test="contElemName != null">#{contElemName},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="linkType != null">#{linkType},</if>
+            <if test="typeFlag != null and typeFlag != ''">#{typeFlag},</if>
+            <if test="contType != null and contType != ''">#{contType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmplElemLinkElem" parameterType="TmplElemLinkElem">
+        update tmpl_elem_link_elem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="linkId != null">link_id = #{linkId},</if>
+            <if test="contElemName != null">cont_elem_name = #{contElemName},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="linkType != null">link_type = #{linkType},</if>
+            <if test="typeFlag != null and typeFlag != ''">type_flag = #{typeFlag},</if>
+            <if test="contType != null and contType != ''">cont_type = #{contType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmplElemLinkElemById" parameterType="Long">
+        delete from tmpl_elem_link_elem where id = #{id}
+    </delete>
+
+    <delete id="deleteTmplElemLinkElemByIds" parameterType="String">
+        delete from tmpl_elem_link_elem where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByLinkId" parameterType="Long">
+        delete from tmpl_elem_link_elem where link_id = #{linkId}
+    </delete>
+
+    <delete id="deleteByLinkIdAndType">
+        delete from tmpl_elem_link_elem where link_id = #{linkId} and link_type = #{linkType}
+    </delete>
+
+    <insert id="insertList" parameterType="TmplElemLinkElem">
+        insert all
+        <foreach collection="list" item="item">
+            into tmpl_elem_link_elem
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.linkId != null">link_id,</if>
+                <if test="item.contElemName != null">cont_elem_name,</if>
+                <if test="item.elemId != null">elem_id,</if>
+                <if test="item.elemName != null">elem_name,</if>
+                <if test="item.elemCd != null">elem_cd,</if>
+                cre_date,
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.linkType != null">link_type,</if>
+                <if test="item.typeFlag != null and item.typeFlag != ''">type_flag,</if>
+                <if test="item.contType != null and item.contType != ''">cont_type,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.linkId != null">#{item.linkId},</if>
+                <if test="item.contElemName != null">#{item.contElemName},</if>
+                <if test="item.elemId != null">#{item.elemId},</if>
+                <if test="item.elemName != null">#{item.elemName},</if>
+                <if test="item.elemCd != null">#{item.elemCd},</if>
+                sysdate,
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.linkType != null">#{item.linkType},</if>
+                <if test="item.typeFlag != null and item.typeFlag != ''">#{item.typeFlag},</if>
+                <if test="item.contType != null and item.contType != ''">#{item.contType},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+    <select id="selectByLinkIdList" parameterType="Long" resultMap="TmplElemLinkElemVoResult">
+        select le.id, le.link_id, le.cont_elem_name, le.elem_id, le.elem_name, le.elem_cd, le.cre_date, le.cre_per_code, le.cre_per_name,le.link_type,le.type_flag,le.cont_type
+        from tmpl_elem_link_elem le
+        left join tmpl_elem_link l on le.link_id = l.id
+        where le.link_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

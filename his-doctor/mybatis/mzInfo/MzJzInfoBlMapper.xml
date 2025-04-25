@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mzInfo.mapper.MzJzInfoBlMapper">
+
+	<resultMap id="MzjzInfoBlListResult" type="MzjzInfoBl">
+		<result property="hzid" column="hzid" />
+		<result property="mzh" column="mzh" />
+		<result property="xm" column="xm" />
+		<result property="ajzksbm" column="ajzksbm" />
+		<result property="ajzksmc" column="ajzksmc" />
+		<result property="jzrq" column="jzrq" />
+		<result property="fbrq" column="fbrq" />
+		<result property="jzysbm" column="jzysbm" />
+		<result property="jzysxm" column="jzysxm" />
+		<result property="tw" column="tw" />
+		<result property="xl" column="xl" />
+		<result property="hx" column="hx" />
+		<result property="xy" column="xy" />
+		<result property="jzzt" column="jzzt" />
+		<result property="fb" column="fb" />
+		<result property="xxhm" column="xxhm" />
+		<result property="axdthm" column="axdthm" />
+		<result property="tz" column="tz" />
+		<result property="bah" column="bah" />
+		<result property="ybh" column="ybh" />
+		<result property="xb" column="xb" />
+		<result property="csrq" column="csrq" />
+		<result property="nlN" column="nl_n" />
+		<result property="nlY" column="nl_y" />
+		<result property="nlR" column="nl_r" />
+		<result property="sfzh" column="sfzh" />
+		<result property="hy" column="hy" />
+		<result property="zz" column="zz" />
+		<result property="tel" column="tel" />
+		<result property="szdw" column="szdw" />
+		<result property="lxr" column="lxr" />
+		<result property="lxrtel" column="lxrtel" />
+		<result property="jzxm" column="jzxm" />
+		<result property="jg" column="jg" />
+		<result property="zy" column="zy" />
+		<result property="mz" column="mz" />
+		<result property="zs" column="zs" />
+		<result property="xbs" column="xbs" />
+		<result property="jws" column="jws" />
+		<result property="hys" column="hys" />
+		<result property="yjs" column="yjs" />
+		<result property="gms" column="gms" />
+		<result property="jzs" column="jzs" />
+		<result property="zdxx" column="zdxx" />
+		<result property="thjc" column="thjc" />
+		<result property="zlyj" column="zlyj" />
+		<result property="jy" column="jy" />
+		<result property="fzjc" column="fzjc" />
+		<result property="zdxxIcd" column="zdxx_icd" />
+		<result property="ysbm" column="ysbm" />
+		<result property="ysxm" column="ysxm" />
+		<result property="rq" column="rq" />
+		<result property="zyzdMc" column="zyzd_mc" />
+
+	</resultMap>
+
+	<select id="selectMzjzInfoBldList" resultMap="MzjzInfoBlListResult">
+		exec proc_emr_get_mzbl #{mzh}
+	</select>
+
+</mapper>

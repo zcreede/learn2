@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrSignRecordMapper">
+
+    <resultMap type="EmrSignRecord" id="EmrSignRecordResult">
+        <result property="id"    column="id"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="signDataId"    column="sign_data_id"    />
+        <result property="docLevelCd"    column="doc_level_cd"    />
+        <result property="docLevelName"    column="doc_level_name"    />
+        <result property="docCode"    column="doc_code"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="signPos"    column="sign_pos"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="signCancFlag"    column="sign_canc_flag"    />
+        <result property="signCancReas"    column="sign_canc_reas"    />
+        <result property="signCancTime"    column="sign_canc_time"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="signImagePos"    column="sign_image_pos"    />
+        <result property="signSname"    column="sign_sname"    />
+        <result property="emrUpdateTime"    column="emr_update_time"    />
+    </resultMap>
+
+    <sql id="selectEmrSignRecordVo">
+        select id, mr_file_id, sign_data_id, doc_level_cd, doc_level_name, doc_code, doc_name, sign_pos, sign_time, sign_canc_flag, sign_canc_reas, sign_canc_time, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,sign_image_pos,sign_sname,emr_update_time from emr_sign_record
+    </sql>
+
+    <select id="selectEmrSignRecordList" parameterType="EmrSignRecord" resultMap="EmrSignRecordResult">
+        <include refid="selectEmrSignRecordVo"/>
+        <where>
+            <if test="mrFileId != null  and mrFileId != ''"> and mr_file_id = #{mrFileId}</if>
+            <if test="signDataId != null "> and sign_data_id = #{signDataId}</if>
+            <if test="docLevelCd != null  and docLevelCd != ''"> and doc_level_cd = #{docLevelCd}</if>
+            <if test="docLevelName != null  and docLevelName != ''"> and doc_level_name like concat(concat('%', #{docLevelName}), '%')</if>
+            <if test="docCode != null  and docCode != ''"> and doc_code = #{docCode}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="signPos != null  and signPos != ''"> and sign_pos = #{signPos}</if>
+            <if test="signSname != null  and signSname != ''"> and sign_sname = #{signSname}</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="signCancFlag != null  and signCancFlag != ''"> and sign_canc_flag = #{signCancFlag}</if>
+            <if test="signCancReas != null  and signCancReas != ''"> and sign_canc_reas = #{signCancReas}</if>
+            <if test="signCancTime != null "> and sign_canc_time = #{signCancTime}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="emrUpdateTime != null "> and emr_update_time = #{emrUpdateTime}</if>
+        </where>
+        order by sign_time desc
+    </select>
+
+    <select id="selectEmrSignRecordFreeList" parameterType="EmrSignRecord" resultMap="EmrSignRecordResult">
+        select * from emr_sign_record_move
+        <where>
+            <if test="mrFileId != null  and mrFileId != ''"> and mr_file_id = #{mrFileId}</if>
+            <if test="signDataId != null "> and sign_data_id = #{signDataId}</if>
+            <if test="docLevelCd != null  and docLevelCd != ''"> and doc_level_cd = #{docLevelCd}</if>
+            <if test="docLevelName != null  and docLevelName != ''"> and doc_level_name like concat(concat('%', #{docLevelName}), '%')</if>
+            <if test="docCode != null  and docCode != ''"> and doc_code = #{docCode}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="signPos != null  and signPos != ''"> and sign_pos = #{signPos}</if>
+            <if test="signSname != null  and signSname != ''"> and sign_sname = #{signSname}</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="signCancFlag != null  and signCancFlag != ''"> and sign_canc_flag = #{signCancFlag}</if>
+            <if test="signCancReas != null  and signCancReas != ''"> and sign_canc_reas = #{signCancReas}</if>
+            <if test="signCancTime != null "> and sign_canc_time = #{signCancTime}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="emrUpdateTime != null "> and emr_update_time = #{emrUpdateTime}</if>
+        </where>
+        order by sign_time desc
+    </select>
+
+    <select id="selectEmrSignRecordForFeeMoveList" parameterType="EmrSignRecord" resultMap="EmrSignRecordResult">
+        select * from emr_sign_record_move
+        <where>
+            <if test="mrFileId != null  and mrFileId != ''"> and mr_file_id = #{mrFileId}</if>
+            <if test="docCode != null  and docCode != ''"> and doc_code = #{docCode}</if>
+            <if test="signCancFlag != null  and signCancFlag != ''"> and sign_canc_flag = #{signCancFlag}</if>
+
+        </where>
+        order by sign_time desc
+    </select>
+
+    <select id="selectEmrSignRecordById" parameterType="Long" resultMap="EmrSignRecordResult">
+        <include refid="selectEmrSignRecordVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectEmrSignRecordListByMainFileId" parameterType="String" resultMap="EmrSignRecordResult">
+        <include refid="selectEmrSignRecordVo"/>
+        where mr_file_id = #{mrFileId} and sign_canc_flag='0' order by sign_time desc
+    </select>
+
+    <select id="selectEmrSignRecordListByMainFileIdForFree" parameterType="String" resultMap="EmrSignRecordResult">
+        select * from emr_sign_record_move
+        where mr_file_id = #{mrFileId} and sign_canc_flag='0' order by sign_time desc
+    </select>
+    <select id="selectEmrSignRecordListByMainFileIdForFreeMove" parameterType="String" resultMap="EmrSignRecordResult">
+        select * from emr_sign_record_move
+        where mr_file_id = #{mrFileId} and doc_code = #{docCode} and sign_canc_flag='0' order by sign_time desc
+    </select>
+
+    <select id="selectEmrSignRecordByFileIdAndDoc" parameterType="String" resultMap="EmrSignRecordResult">
+        <include refid="selectEmrSignRecordVo"/>
+        where mr_file_id = #{mrFileId} and sign_canc_flag='0' and doc_code=#{docCode}
+    </select>
+    <select id="selectEmrSignRecordListByIdAndFlag" resultMap="EmrSignRecordResult">
+        <include refid="selectEmrSignRecordVo"/>
+        where sign_canc_flag= #{signCancFlag}
+        <if test="idList != null and idList.size()>0">
+            and mr_file_id in
+            <foreach collection="idList" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <insert id="insertEmrSignRecord" parameterType="EmrSignRecord">
+        insert into emr_sign_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="signDataId != null">sign_data_id,</if>
+            <if test="docLevelCd != null">doc_level_cd,</if>
+            <if test="docLevelName != null">doc_level_name,</if>
+            <if test="docCode != null">doc_code,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="signPos != null">sign_pos,</if>
+            <if test="signTime != null">sign_time,</if>
+            <if test="signCancFlag != null">sign_canc_flag,</if>
+            <if test="signCancReas != null">sign_canc_reas,</if>
+            <if test="signCancTime != null">sign_canc_time,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            cre_date,
+            <if test="signImagePos != null and signImagePos != ''">sign_image_pos,</if>
+            <if test="signSname != null and signSname != ''">sign_sname,</if>
+            <if test="emrUpdateTime != null">emr_update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="signDataId != null">#{signDataId},</if>
+            <if test="docLevelCd != null">#{docLevelCd},</if>
+            <if test="docLevelName != null">#{docLevelName},</if>
+            <if test="docCode != null">#{docCode},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="signPos != null">#{signPos},</if>
+            <if test="signTime != null">#{signTime},</if>
+            <if test="signCancFlag != null">#{signCancFlag},</if>
+            <if test="signCancReas != null">#{signCancReas},</if>
+            <if test="signCancTime != null">#{signCancTime},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            sysdate,
+            <if test="signImagePos != null and signImagePos != ''">#{signImagePos},</if>
+            <if test="signSname != null and signSname != ''">#{signSname},</if>
+            <if test="emrUpdateTime != null">#{emrUpdateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrSignRecord" parameterType="EmrSignRecord">
+        update emr_sign_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="signDataId != null">sign_data_id = #{signDataId},</if>
+            <if test="docLevelCd != null">doc_level_cd = #{docLevelCd},</if>
+            <if test="docLevelName != null">doc_level_name = #{docLevelName},</if>
+            <if test="docCode != null">doc_code = #{docCode},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="signPos != null">sign_pos = #{signPos},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="signCancFlag != null">sign_canc_flag = #{signCancFlag},</if>
+            <if test="signCancReas != null">sign_canc_reas = #{signCancReas},</if>
+            <if test="signCancTime != null">sign_canc_time = #{signCancTime},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            <if test="signImagePos != null and signImagePos != ''">sign_image_pos=#{signImagePos},</if>
+            <if test="signSname != null and signSname != ''">sign_sname=#{signSname},</if>
+            <if test="emrUpdateTime != null">emr_update_time = #{emrUpdateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="updateEmrSignRecordByMrFileId" parameterType="EmrSignRecord">
+        update emr_sign_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="signDataId != null">sign_data_id = #{signDataId},</if>
+            <if test="docLevelCd != null">doc_level_cd = #{docLevelCd},</if>
+            <if test="docLevelName != null">doc_level_name = #{docLevelName},</if>
+            <if test="docCode != null">doc_code = #{docCode},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="signPos != null">sign_pos = #{signPos},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="signCancFlag != null">sign_canc_flag = #{signCancFlag},</if>
+            <if test="signCancReas != null">sign_canc_reas = #{signCancReas},</if>
+            <if test="signCancTime != null">sign_canc_time = #{signCancTime},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            <if test="signImagePos != null and signImagePos != ''">sign_image_pos=#{signImagePos},</if>
+            <if test="signSname != null and signSname != ''">sign_sname=#{signSname},</if>
+            <if test="emrUpdateTime != null">emr_update_time = #{emrUpdateTime},</if>
+        </trim>
+        where mr_file_id = #{mrFileId}
+    </update>
+
+    <update id="updateEmrSignRecordBySignDataId" parameterType="EmrSignRecord">
+        update emr_sign_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="signDataId != null">sign_data_id = #{signDataId},</if>
+            <if test="docLevelCd != null">doc_level_cd = #{docLevelCd},</if>
+            <if test="docLevelName != null">doc_level_name = #{docLevelName},</if>
+            <if test="docCode != null">doc_code = #{docCode},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="signPos != null">sign_pos = #{signPos},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="signCancFlag != null">sign_canc_flag = #{signCancFlag},</if>
+            <if test="signCancReas != null">sign_canc_reas = #{signCancReas},</if>
+            <if test="signCancTime != null">sign_canc_time = #{signCancTime},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            <if test="signImagePos != null and signImagePos != ''">sign_image_pos=#{signImagePos},</if>
+            <if test="signSname != null and signSname != ''">sign_sname=#{signSname},</if>
+            <if test="emrUpdateTime != null">emr_update_time = #{emrUpdateTime},</if>
+        </trim>
+        where sign_data_id = #{signDataId}
+    </update>
+
+    <update id="updateBySignDataId" parameterType="EmrSignRecord">
+        update emr_sign_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="docLevelCd != null">doc_level_cd = #{docLevelCd},</if>
+            <if test="docLevelName != null">doc_level_name = #{docLevelName},</if>
+            <if test="docCode != null">doc_code = #{docCode},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="signPos != null">sign_pos = #{signPos},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="signCancFlag != null">sign_canc_flag = #{signCancFlag},</if>
+            <if test="signCancReas != null">sign_canc_reas = #{signCancReas},</if>
+            <if test="signCancTime != null">sign_canc_time = #{signCancTime},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            <if test="signImagePos != null and signImagePos != ''">sign_image_pos=#{signImagePos},</if>
+            <if test="signSname != null and signSname != ''">sign_sname=#{signSname},</if>
+            <if test="emrUpdateTime != null">emr_update_time = #{emrUpdateTime},</if>
+        </trim>
+        where sign_data_id = #{signDataId}
+    </update>
+
+    <delete id="deleteEmrSignRecordById" parameterType="Long">
+        delete from emr_sign_record where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrSignRecordByIds" parameterType="String">
+        delete from emr_sign_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertList" parameterType="EmrSignRecord">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_sign_record
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.mrFileId != null">mr_file_id,</if>
+                <if test="item.signDataId != null">sign_data_id,</if>
+                <if test="item.docLevelCd != null">doc_level_cd,</if>
+                <if test="item.docLevelName != null">doc_level_name,</if>
+                <if test="item.docCode != null">doc_code,</if>
+                <if test="item.docName != null">doc_name,</if>
+                <if test="item.signPos != null">sign_pos,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.signCancFlag != null">sign_canc_flag,</if>
+                <if test="item.signCancReas != null">sign_canc_reas,</if>
+                <if test="item.signCancTime != null">sign_canc_time,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+                <if test="item.signImagePos != null and item.signImagePos != ''">sign_image_pos,</if>
+                <if test="item.signSname != null and item.signSname != ''">sign_sname,</if>
+                <if test="item.emrUpdateTime != null">emr_update_time,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.mrFileId != null">#{item.mrFileId},</if>
+                <if test="item.signDataId != null">#{item.signDataId},</if>
+                <if test="item.docLevelCd != null">#{item.docLevelCd},</if>
+                <if test="item.docLevelName != null">#{item.docLevelName},</if>
+                <if test="item.docCode != null">#{item.docCode},</if>
+                <if test="item.docName != null">#{item.docName},</if>
+                <if test="item.signPos != null">#{item.signPos},</if>
+                <if test="item.signTime != null">#{item.signTime},</if>
+                <if test="item.signCancFlag != null">#{item.signCancFlag},</if>
+                <if test="item.signCancReas != null">#{item.signCancReas},</if>
+                <if test="item.signCancTime != null">#{item.signCancTime},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.signImagePos != null and item.signImagePos != ''">#{item.signImagePos},</if>
+                <if test="item.signSname != null and item.signSname != ''">#{item.signSname},</if>
+                <if test="item.emrUpdateTime != null">#{item.emrUpdateTime},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <insert id="batchAddFreeMoveList" parameterType="EmrSignRecord">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_sign_record_move
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.mrFileId != null">mr_file_id,</if>
+                <if test="item.signDataId != null">sign_data_id,</if>
+                <if test="item.docLevelCd != null">doc_level_cd,</if>
+                <if test="item.docLevelName != null">doc_level_name,</if>
+                <if test="item.docCode != null">doc_code,</if>
+                <if test="item.docName != null">doc_name,</if>
+                <if test="item.signPos != null">sign_pos,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.signCancFlag != null">sign_canc_flag,</if>
+                <if test="item.signCancReas != null">sign_canc_reas,</if>
+                <if test="item.signCancTime != null">sign_canc_time,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+                <if test="item.signImagePos != null and item.signImagePos != ''">sign_image_pos,</if>
+                <if test="item.signSname != null and item.signSname != ''">sign_sname,</if>
+                <if test="item.emrUpdateTime != null">emr_update_time,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.mrFileId != null">#{item.mrFileId},</if>
+                <if test="item.signDataId != null">#{item.signDataId},</if>
+                <if test="item.docLevelCd != null">#{item.docLevelCd},</if>
+                <if test="item.docLevelName != null">#{item.docLevelName},</if>
+                <if test="item.docCode != null">#{item.docCode},</if>
+                <if test="item.docName != null">#{item.docName},</if>
+                <if test="item.signPos != null">#{item.signPos},</if>
+                <if test="item.signTime != null">#{item.signTime},</if>
+                <if test="item.signCancFlag != null">#{item.signCancFlag},</if>
+                <if test="item.signCancReas != null">#{item.signCancReas},</if>
+                <if test="item.signCancTime != null">#{item.signCancTime},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.signImagePos != null and item.signImagePos != ''">#{item.signImagePos},</if>
+                <if test="item.signSname != null and item.signSname != ''">#{item.signSname},</if>
+                <if test="item.emrUpdateTime != null">#{item.emrUpdateTime},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <insert id="insertPatList" parameterType="EmrSignRecord">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_sign_record_pat
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.mrFileId != null">mr_file_id,</if>
+                <if test="item.signDataId != null">sign_data_id,</if>
+                <if test="item.docLevelCd != null">doc_level_cd,</if>
+                <if test="item.docLevelName != null">doc_level_name,</if>
+                <if test="item.docCode != null">doc_code,</if>
+                <if test="item.docName != null">doc_name,</if>
+                <if test="item.signPos != null">sign_pos,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.signCancFlag != null">sign_canc_flag,</if>
+                <if test="item.signCancReas != null">sign_canc_reas,</if>
+                <if test="item.signCancTime != null">sign_canc_time,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+                <if test="item.signImagePos != null and item.signImagePos != ''">sign_image_pos,</if>
+                <if test="item.signSname != null and item.signSname != ''">sign_sname,</if>
+                <if test="item.emrUpdateTime != null">emr_update_time,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.mrFileId != null">#{item.mrFileId},</if>
+                <if test="item.signDataId != null">#{item.signDataId},</if>
+                <if test="item.docLevelCd != null">#{item.docLevelCd},</if>
+                <if test="item.docLevelName != null">#{item.docLevelName},</if>
+                <if test="item.docCode != null">#{item.docCode},</if>
+                <if test="item.docName != null">#{item.docName},</if>
+                <if test="item.signPos != null">#{item.signPos},</if>
+                <if test="item.signTime != null">#{item.signTime},</if>
+                <if test="item.signCancFlag != null">#{item.signCancFlag},</if>
+                <if test="item.signCancReas != null">#{item.signCancReas},</if>
+                <if test="item.signCancTime != null">#{item.signCancTime},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.signImagePos != null and item.signImagePos != ''">#{item.signImagePos},</if>
+                <if test="item.signSname != null and item.signSname != ''">#{item.signSname},</if>
+                <if test="item.emrUpdateTime != null">#{item.emrUpdateTime},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateCancelSign" parameterType="Long">
+        update emr_sign_record set sign_canc_flag = '1'
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateCancelSignForFreeMove" parameterType="Long">
+        update emr_sign_record_move set sign_canc_flag = '1'
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateCancelSignByFile" parameterType="Long">
+        update emr_sign_record set sign_canc_flag = '1'
+        where mr_file_id = #{mrFileId}
+    </update>
+
+    <update id="updateCancelSignByFreeMove">
+        update emr_sign_record_move set sign_canc_flag = '1',alt_date = sysdate
+        where id = (select b.id from (select * from emr_sign_record_move a where a.mr_file_id = #{mrFileId} and a.doc_code=#{docCode} and a.sign_canc_flag='0' order by a.sign_time desc) b where rownum &lt; 2)
+    </update>
+</mapper>

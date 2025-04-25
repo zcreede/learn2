@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TfsqbMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.Tfsqb">
+    <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+    <result column="case_no" jdbcType="VARCHAR" property="caseNo" />
+    <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
+    <result column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+    <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount" />
+    <result column="expense_category_no" jdbcType="VARCHAR" property="expenseCategoryNo" />
+    <result column="serial_number" jdbcType="VARCHAR" property="serialNumber" />
+    <result column="serial_number_xh" jdbcType="VARCHAR" property="serialNumberXh" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="Resident_code" jdbcType="VARCHAR" property="residentCode" />
+    <result column="Resident_no" jdbcType="VARCHAR" property="residentNo" />
+    <result column="Resident_name" jdbcType="VARCHAR" property="residentName" />
+    <result column="ward_no" jdbcType="VARCHAR" property="wardNo" />
+    <result column="ward_name" jdbcType="VARCHAR" property="wardName" />
+    <result column="charge_code" jdbcType="VARCHAR" property="chargeCode" />
+    <result column="charge_no" jdbcType="VARCHAR" property="chargeNo" />
+    <result column="charge_name" jdbcType="VARCHAR" property="chargeName" />
+    <result column="three_level_accounting" jdbcType="VARCHAR" property="threeLevelAccounting" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="dose" jdbcType="DECIMAL" property="dose" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="operator_code" jdbcType="VARCHAR" property="operatorCode" />
+    <result column="operator_no" jdbcType="VARCHAR" property="operatorNo" />
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+    <result column="operator_date" jdbcType="TIMESTAMP" property="operatorDate" />
+    <result column="bills_no_old" jdbcType="VARCHAR" property="billsNoOld" />
+    <result column="bills_no_new" jdbcType="VARCHAR" property="billsNoNew" />
+    <result column="operator_new_code" jdbcType="VARCHAR" property="operatorNewCode" />
+    <result column="operator_new_no" jdbcType="VARCHAR" property="operatorNewNo" />
+    <result column="operator_new_name" jdbcType="VARCHAR" property="operatorNewName" />
+    <result column="operator_new_date" jdbcType="TIMESTAMP" property="operatorNewDate" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_type" jdbcType="VARCHAR" property="orderType" />
+    <result column="order_sort_number" jdbcType="VARCHAR" property="orderSortNumber" />
+    <result column="item_sort_number" jdbcType="VARCHAR" property="itemSortNumber" />
+    <result column="baby_no" jdbcType="VARCHAR" property="babyNo" />
+    <result column="mark" jdbcType="VARCHAR" property="mark" />
+    <result column="apply_ward_no" jdbcType="VARCHAR" property="applyWardNo" />
+    <result column="apply_ward_name" jdbcType="VARCHAR" property="applyWardName" />
+    <result column="apply_no" jdbcType="VARCHAR" property="applyNo" />
+    <result column="apply_name" jdbcType="VARCHAR" property="applyName" />
+    <result column="project_no" jdbcType="VARCHAR" property="projectNo" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="standard_code" jdbcType="VARCHAR" property="standardCode" />
+    <result column="standard_name" jdbcType="VARCHAR" property="standardName" />
+  </resultMap>
+
+  <!-- 批量更新 退费 申请的状态（作废）-->
+  <update id="updateRefundBatch9" parameterType="com.emr.project.operation.domain.Tfsqb" >
+    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+      update td_na_tfsqb
+      <set>
+        mark = '9'
+      </set>
+      where admission_no = #{item.admissionNo,jdbcType=VARCHAR}
+        and hospitalized_count = #{item.hospitalizedCount,jdbcType=VARCHAR}
+        and serial_number = #{item.serialNumber,jdbcType=VARCHAR}
+        and serial_number_xh = #{item.serialNumberXh,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+
+  <!-- 退费申请批量保存 -->
+  <insert id="insertBatch" parameterType="com.emr.project.operation.domain.Tfsqb">
+    insert all
+    <foreach collection="list" item="item" index="index" >
+      into td_na_tfsqb (hospital_code, case_no, patient_id,
+      admission_no, hospitalized_count, expense_category_no, serial_number,serial_number_xh,
+      patient_name, Resident_code, Resident_no,
+      Resident_name, ward_no, ward_name,
+      charge_code, charge_no, charge_name,
+      three_level_accounting,
+      standard, unit, price,
+      dose, total, operator_code,
+      operator_no, operator_name, operator_date,
+      bills_no_old, bills_no_new, operator_new_code,
+      operator_new_no, operator_new_name, operator_new_date,
+      order_no,order_type,order_sort_number,item_sort_number,
+      baby_no, mark,
+      apply_ward_no,apply_ward_name,
+      apply_no,apply_name,
+      project_no,project_name,
+      standard_code,standard_name,three_level_name,perform_list_no)
+      values
+      (#{item.hospitalCode,jdbcType=VARCHAR}, #{item.caseNo,jdbcType=VARCHAR}, #{item.patientId,jdbcType=VARCHAR},
+        #{item.admissionNo,jdbcType=VARCHAR}, #{item.hospitalizedCount,jdbcType=INTEGER},
+        #{item.expenseCategoryNo,jdbcType=VARCHAR},#{item.serialNumber,jdbcType=VARCHAR},#{item.serialNumberXh,jdbcType=VARCHAR},
+        #{item.patientName,jdbcType=VARCHAR}, #{item.residentCode,jdbcType=VARCHAR}, #{item.residentNo,jdbcType=VARCHAR},
+        #{item.residentName,jdbcType=VARCHAR}, #{item.wardNo,jdbcType=VARCHAR} , #{item.wardName,jdbcType=VARCHAR} ,
+        #{item.chargeCode,jdbcType=VARCHAR} , #{item.chargeNo,jdbcType=VARCHAR} , #{item.chargeName,jdbcType=VARCHAR} ,
+        #{item.threeLevelAccounting,jdbcType=VARCHAR} ,
+        #{item.standard,jdbcType=VARCHAR} , #{item.unit,jdbcType=VARCHAR} , #{item.price,jdbcType=DECIMAL} ,
+        #{item.dose,jdbcType=DECIMAL} , #{item.total,jdbcType=DECIMAL} , #{item.operatorCode,jdbcType=VARCHAR},
+        #{item.operatorNo,jdbcType=VARCHAR} , #{item.operatorName,jdbcType=VARCHAR} , sysdate,
+        #{item.billsNoOld,jdbcType=VARCHAR} , #{item.billsNoNew,jdbcType=VARCHAR} , #{item.operatorNewCode,jdbcType=VARCHAR},
+        #{item.operatorNewNo,jdbcType=VARCHAR}, #{item.operatorNewName,jdbcType=VARCHAR}, #{item.operatorNewDate,jdbcType=TIMESTAMP} ,
+        #{item.orderNo,jdbcType=VARCHAR},#{item.orderType,jdbcType=VARCHAR},#{item.orderSortNumber,jdbcType=VARCHAR},#{item.itemSortNumber,jdbcType=VARCHAR},
+        #{item.babyNo,jdbcType=VARCHAR} , #{item.mark,jdbcType=VARCHAR} ,
+        #{item.applyWardNo,jdbcType=VARCHAR} ,#{item.applyWardName,jdbcType=VARCHAR},
+        #{item.applyNo,jdbcType=VARCHAR} , #{item.applyName,jdbcType=VARCHAR} ,
+        #{item.projectNo,jdbcType=VARCHAR} ,#{item.projectName,jdbcType=VARCHAR} ,
+        #{item.standardCode,jdbcType=VARCHAR} ,#{item.standardName,jdbcType=VARCHAR} ,
+        #{item.threeLevelName,jdbcType=VARCHAR} ,#{item.performListNo,jdbcType=VARCHAR}
+      )
+    </foreach>
+    SELECT 1 FROM DUAL
+  </insert>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.Tfsqb">
+    insert into td_na_tfsqb (hospital_code, case_no, patient_id,
+      admission_no, hospitalized_count, expense_category_no,
+      serial_number,serial_number_xh, patient_name, Resident_code,
+      Resident_no, Resident_name, ward_no,
+      ward_name, charge_code, charge_no,
+      charge_name, three_level_accounting, standard,
+      unit, price, dose,
+      total, operator_code, operator_no,
+      operator_name, operator_date, bills_no_old,
+      bills_no_new, operator_new_code, operator_new_no,
+      operator_new_name, operator_new_date, order_no,
+      order_type, order_sort_number,
+      item_sort_number, baby_no, mark,
+      apply_ward_no, apply_ward_name, apply_no,
+      apply_name, project_no, project_name,
+      standard_code,standard_name
+      )
+    values (#{hospitalCode,jdbcType=VARCHAR}, #{caseNo,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR},
+      #{admissionNo,jdbcType=VARCHAR}, #{hospitalizedCount,jdbcType=INTEGER}, #{expenseCategoryNo,jdbcType=VARCHAR},
+      #{serialNumber,jdbcType=VARCHAR}, #{serialNumberXh,jdbcType=VARCHAR}, #{patientName,jdbcType=VARCHAR}, #{residentCode,jdbcType=VARCHAR},
+      #{residentNo,jdbcType=VARCHAR}, #{residentName,jdbcType=VARCHAR}, #{wardNo,jdbcType=VARCHAR},
+      #{wardName,jdbcType=VARCHAR}, #{chargeCode,jdbcType=VARCHAR}, #{chargeNo,jdbcType=VARCHAR},
+      #{chargeName,jdbcType=VARCHAR}, #{threeLevelAccounting,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR},
+      #{unit,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{dose,jdbcType=DECIMAL},
+      #{total,jdbcType=DECIMAL}, #{operatorCode,jdbcType=VARCHAR}, #{operatorNo,jdbcType=VARCHAR},
+      #{operatorName,jdbcType=VARCHAR}, (SELECT sysdate FROM dual), #{billsNoOld,jdbcType=VARCHAR},
+      #{billsNoNew,jdbcType=VARCHAR}, #{operatorNewCode,jdbcType=VARCHAR}, #{operatorNewNo,jdbcType=VARCHAR},
+      #{operatorNewName,jdbcType=VARCHAR}, #{operatorNewDate,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=VARCHAR},
+      #{orderType,jdbcType=VARCHAR}, #{orderSortNumber,jdbcType=VARCHAR},
+      #{itemSortNumber,jdbcType=VARCHAR}, #{babyNo,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR},
+      #{applyWardNo,jdbcType=VARCHAR}, #{applyWardName,jdbcType=VARCHAR}, #{applyNo,jdbcType=VARCHAR},
+      #{applyName,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR},
+      #{standardCode,jdbcType=VARCHAR}, #{standardName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.Tfsqb">
+    insert into td_na_tfsqb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hospitalCode != null">
+        hospital_code,
+      </if>
+      <if test="caseNo != null">
+        case_no,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="admissionNo != null">
+        admission_no,
+      </if>
+      <if test="hospitalizedCount != null">
+        hospitalized_count,
+      </if>
+      <if test="expenseCategoryNo != null">
+        expense_category_no,
+      </if>
+      <if test="serialNumber != null">
+        serial_number,
+      </if>
+      <if test="serialNumberXh != null">
+        serial_number_xh,
+      </if>
+      <if test="patientName != null">
+        patient_name,
+      </if>
+      <if test="residentCode != null">
+        Resident_code,
+      </if>
+      <if test="residentNo != null">
+        Resident_no,
+      </if>
+      <if test="residentName != null">
+        Resident_name,
+      </if>
+      <if test="wardNo != null">
+        ward_no,
+      </if>
+      <if test="wardName != null">
+        ward_name,
+      </if>
+      <if test="chargeCode != null">
+        charge_code,
+      </if>
+      <if test="chargeNo != null">
+        charge_no,
+      </if>
+      <if test="chargeName != null">
+        charge_name,
+      </if>
+      <if test="threeLevelAccounting != null">
+        three_level_accounting,
+      </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="dose != null">
+        dose,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="operatorCode != null">
+        operator_code,
+      </if>
+      <if test="operatorNo != null">
+        operator_no,
+      </if>
+      <if test="operatorName != null">
+        operator_name,
+      </if>
+        operator_date,
+      <if test="billsNoOld != null">
+        bills_no_old,
+      </if>
+      <if test="billsNoNew != null">
+        bills_no_new,
+      </if>
+      <if test="operatorNewCode != null">
+        operator_new_code,
+      </if>
+      <if test="operatorNewNo != null">
+        operator_new_no,
+      </if>
+      <if test="operatorNewName != null">
+        operator_new_name,
+      </if>
+      <if test="operatorNewDate != null">
+        operator_new_date,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="orderSortNumber != null">
+        order_sort_number,
+      </if>
+      <if test="itemSortNumber != null">
+        item_sort_number,
+      </if>
+      <if test="babyNo != null">
+        baby_no,
+      </if>
+      <if test="mark != null">
+        mark,
+      </if>
+      <if test="applyWardNo != null">
+        apply_ward_no,
+      </if>
+      <if test="applyWardName != null">
+        apply_ward_name,
+      </if>
+      <if test="applyNo != null">
+        apply_no,
+      </if>
+      <if test="applyName != null">
+        apply_name,
+      </if>
+      <if test="projectNo != null">
+        project_no,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="standardCode != null">
+        standard_code,
+      </if>
+      <if test="standardName != null">
+        standard_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hospitalCode != null">
+        #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null">
+        #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionNo != null">
+        #{admissionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalizedCount != null">
+        #{hospitalizedCount,jdbcType=INTEGER},
+      </if>
+      <if test="expenseCategoryNo != null">
+        #{expenseCategoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null">
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumberXh != null">
+        #{serialNumberXh,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="residentCode != null">
+        #{residentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="residentNo != null">
+        #{residentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="residentName != null">
+        #{residentName,jdbcType=VARCHAR},
+      </if>
+      <if test="wardNo != null">
+        #{wardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wardName != null">
+        #{wardName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeCode != null">
+        #{chargeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeNo != null">
+        #{chargeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeName != null">
+        #{chargeName,jdbcType=VARCHAR},
+      </if>
+      <if test="threeLevelAccounting != null">
+        #{threeLevelAccounting,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="dose != null">
+        #{dose,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null">
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNo != null">
+        #{operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <!--<if test="operatorDate != null">
+        #{operatorDate,jdbcType=TIMESTAMP},
+      </if>-->
+      (SELECT sysdate FROM dual),
+      <if test="billsNoOld != null">
+        #{billsNoOld,jdbcType=VARCHAR},
+      </if>
+      <if test="billsNoNew != null">
+        #{billsNoNew,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNewCode != null">
+        #{operatorNewCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNewNo != null">
+        #{operatorNewNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNewName != null">
+        #{operatorNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNewDate != null">
+        #{operatorNewDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSortNumber != null">
+        #{orderSortNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="itemSortNumber != null">
+        #{itemSortNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="babyNo != null">
+        #{babyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="applyWardNo != null">
+        #{applyWardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyWardName != null">
+        #{applyWardName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null">
+        #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyName != null">
+        #{applyName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectNo != null">
+        #{projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardCode != null">
+        #{standardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="standardName != null">
+        #{standardName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="searchTfsqb" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from td_na_tfsqb
+    where admission_no= #{admissionNo,jdbcType=VARCHAR} and mark=#{mark,jdbcType=VARCHAR}
+  </select>
+  <select id="selectTfsqListByBillNoList" resultMap="BaseResultMap">
+    select * from td_na_tfsqb
+    where mark in ('-1','0','1') and bills_no_old in
+    <foreach collection="list" open="(" close=")" separator="," item="item">
+      #{item}
+    </foreach>
+  </select>
+  <!-- 批量更新 退费 申请的状态（退费）-->
+  <update id="updateRefundToFeeBatch" parameterType="Tfsqb" >
+    <foreach collection="tfsqbList" item="item" index="index" open="begin" close=";end;" separator=";">
+      update td_na_tfsqb
+      <set>
+        mark = '1',OPERATOR_NEW_CODE=#{item.operatorNewCode},OPERATOR_NEW_NO=#{item.operatorNewNo},
+        OPERATOR_NEW_NAME=#{item.operatorNewName},OPERATOR_NEW_DATE=#{item.operatorNewDate},BILLS_NO_NEW=#{item.billsNoNew}
+      </set>
+      where admission_no = #{item.admissionNo,jdbcType=VARCHAR}
+      and hospital_code = #{item.hospitalCode,jdbcType=VARCHAR}
+      and serial_number = #{item.serialNumber,jdbcType=VARCHAR}
+      and serial_number_xh = #{item.serialNumberXh,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+
+  <select id="selectByKey" parameterType="string" resultMap="BaseResultMap">
+    select * from td_na_tfsqb
+    where hospital_code = #{orgCd}
+      and admission_no = #{admissionNo}
+      and serial_number = #{serialNumber}
+      and serial_number_xh = #{serialNumberXh}
+  </select>
+</mapper>

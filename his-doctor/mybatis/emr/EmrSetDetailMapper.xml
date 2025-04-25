@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrSetDetailMapper">
+
+    <resultMap type="EmrSetDetail" id="EmrSetDetailResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="id"    column="id"    />
+        <result property="setCd"    column="set_cd"    />
+        <result property="tempId"    column="temp_id"    />
+        <result property="tempName"    column="temp_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="sort"    column="sort"    />
+    </resultMap>
+    <resultMap id="EmrSetDetailVoResult" type="EmrSetDetailVo" extends="EmrSetDetailResult">
+        <result property="checkedFlag"    column="checkedFlag"    />
+        <result property="emrTypeName"    column="emrTypeName"    />
+        <result property="emrTypeId"    column="emrTypeId"    />
+        <result property="tempName"    column="temp_name"    />
+        <result property="setCd"    column="set_cd"    />
+        <result property="setName"    column="set_name"    />
+        <result property="tempFile"    column="temp_file"    />
+        <result property="tempId"    column="temp_id"    />
+        <result property="tempClass"    column="temp_class"    />
+        <result property="mrType"    column="temp_type"    />
+    </resultMap>
+
+    <sql id="selectEmrSetDetailVo">
+        select hospital_code, id, set_cd, temp_id, temp_name, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, sort from emr_set_detail
+    </sql>
+
+    <select id="selectEmrSetDetailList" parameterType="EmrSetDetail" resultMap="EmrSetDetailResult">
+        <include refid="selectEmrSetDetailVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="setCd != null  and setCd != ''"> and set_cd = #{setCd}</if>
+            <if test="tempId != null "> and temp_id = #{tempId}</if>
+            <if test="tempName != null  and tempName != ''"> and temp_name like concat(concat('%', #{tempName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+        order by to_number(sort)
+    </select>
+
+    <select id="selectEmrSetDetailById" parameterType="Long" resultMap="EmrSetDetailResult">
+        <include refid="selectEmrSetDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrSetDetail" parameterType="EmrSetDetail">
+        insert into emr_set_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="id != null">id,</if>
+            <if test="setCd != null">set_cd,</if>
+            <if test="tempId != null">temp_id,</if>
+            <if test="tempName != null">temp_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="sort != null">sort,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="id != null">#{id},</if>
+            <if test="setCd != null">#{setCd},</if>
+            <if test="tempId != null">#{tempId},</if>
+            <if test="tempName != null">#{tempName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="sort != null">#{sort},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertEmrSetDetailList" parameterType="java.util.List">
+        insert all
+            <foreach collection="emrSetDetailList" item="setDetail" index= "index" >
+                into emr_set_detail
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="setDetail.hospitalCode != null">hospital_code,</if>
+                    <if test="setDetail.id != null">id,</if>
+                    <if test="setDetail.setCd != null">set_cd,</if>
+                    <if test="setDetail.tempId != null">temp_id,</if>
+                    <if test="setDetail.tempName != null">temp_name,</if>
+                    <if test="setDetail.crePerCode != null">cre_per_code,</if>
+                    <if test="setDetail.crePerName != null">cre_per_name,</if>
+                    <if test="setDetail.creDate != null">cre_date,</if>
+                    <if test="setDetail.altPerCode != null">alt_per_code,</if>
+                    <if test="setDetail.altPerName != null">alt_per_name,</if>
+                    <if test="setDetail.altDate != null">alt_date,</if>
+                    <if test="setDetail.sort != null">sort,</if>
+                </trim>
+                <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="setDetail.hospitalCode != null">#{setDetail.hospitalCode},</if>
+                    <if test="setDetail.id != null">#{setDetail.id},</if>
+                    <if test="setDetail.setCd != null">#{setDetail.setCd},</if>
+                    <if test="setDetail.tempId != null">#{setDetail.tempId},</if>
+                    <if test="setDetail.tempName != null">#{setDetail.tempName},</if>
+                    <if test="setDetail.crePerCode != null">#{setDetail.crePerCode},</if>
+                    <if test="setDetail.crePerName != null">#{setDetail.crePerName},</if>
+                    <if test="setDetail.creDate != null">#{setDetail.creDate},</if>
+                    <if test="setDetail.altPerCode != null">#{setDetail.altPerCode},</if>
+                    <if test="setDetail.altPerName != null">#{setDetail.altPerName},</if>
+                    <if test="setDetail.altDate != null">#{setDetail.altDate},</if>
+                    <if test="setDetail.sort != null">#{setDetail.sort},</if>
+                </trim>
+            </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateEmrSetDetail" parameterType="EmrSetDetail">
+        update emr_set_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="setCd != null">set_cd = #{setCd},</if>
+            <if test="tempId != null">temp_id = #{tempId},</if>
+            <if test="tempName != null">temp_name = #{tempName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="sort != null">sort = #{sort},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrSetDetailById" parameterType="Long">
+        delete from emr_set_detail where id = #{id}
+    </delete>
+    <delete id="deleteEmrSetDetailSetCd" parameterType="String">
+        delete from emr_set_detail where set_cd = #{setCd}
+    </delete>
+
+    <delete id="deleteEmrSetDetailByIds" parameterType="String">
+        delete from emr_set_detail where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectEmrSetDetailCheckedList" resultMap="EmrSetDetailVoResult" parameterType="EmrSetDetailVo">
+        SELECT distinct
+            de.*,dd.data_tag as emrTypeName, dd.DATA_VAL as emrTypeId,
+            CASE WHEN sd.id is null THEN '0' ELSE '1' END as checkedFlag
+        FROM emr_set_detail de
+        LEFT JOIN tmpl_index ti ON de.temp_id = ti.id
+        LEFT JOIN emr_set_doctor sd ON sd.SET_DETAIL_ID=de.id and sd.doc_code=#{docCd}
+        left join tm_bs_dict_data dd on dd.data_val=ti.TEMP_TYPE and dd.dict_type='s004'
+        <where>
+            <if test="setCd != null and setCd != ''">
+                de.set_cd = #{setCd}
+            </if>
+        </where>
+        order by to_number(de.sort)
+    </select>
+    <select id="selectEmrCheckedSetTree" resultMap="EmrSetDetailVoResult" parameterType="EmrSetDetailVo">
+        SELECT
+            sd.*,de.temp_name,sm.set_cd,sm.set_name,de.temp_id,ti.temp_class,ti.temp_type
+        FROM
+            EMR_SET_DETAIL de
+                LEFT JOIN emr_set_doctor sd ON sd.SET_DETAIL_ID = de.id
+                LEFT JOIN EMR_SET_MAIN sm ON sm.set_cd = de.set_cd
+                left join tmpl_index ti on ti.id= de.temp_id
+                LEFT JOIN SYS_EMR_TYPE_CONFIG TYPE on type.EMR_TYPE_CODE=ti.temp_type
+        <where>
+              <if test="patientId!=null and patientId!=''">
+                  and sd.admission_no=#{patientId}
+              </if>
+            <if test="docCd!=null and docCd!=''">
+                  and sd.doc_code=#{docCd}
+              </if>
+            <if test="mrType==null">
+                and (TYPE.EMR_CLASS_CODE!='01' or type.emr_type_code = '12')
+            </if>
+            <if test="mrType!=null">
+                and TYPE.EMR_CLASS_CODE='01'
+            </if>
+            <if test="setCd!=null and setCd!=''">
+                and sm.id=#{setCd}
+            </if>
+        </where>
+        order by to_number(de.sort)
+    </select>
+</mapper>

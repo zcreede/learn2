@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.CumulativeCostMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.CumulativeCost">
+    <id column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+    <result column="depos_it" jdbcType="DECIMAL" property="deposIt" />
+    <result column="cumulative_cost" jdbcType="DECIMAL" property="cumulativeCost" />
+    <result column="amount_guaranteed" jdbcType="DECIMAL" property="amountGuaranteed" />
+    <result column="V" jdbcType="INTEGER" property="v" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    admission_no, depos_it, cumulative_cost, amount_guaranteed, V
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_ih_cumulativecost
+    where admission_no = #{admissionNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_ih_cumulativecost
+    where admission_no = #{admissionNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.CumulativeCost">
+    insert into t_ih_cumulativecost (admission_no, depos_it, cumulative_cost,
+      amount_guaranteed, V)
+    values (#{admissionNo,jdbcType=VARCHAR}, #{deposIt,jdbcType=DECIMAL}, #{cumulativeCost,jdbcType=DECIMAL}, 
+      #{amountGuaranteed,jdbcType=DECIMAL}, #{v,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.CumulativeCost">
+    insert into t_ih_cumulativecost
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="admissionNo != null">
+        admission_no,
+      </if>
+      <if test="deposIt != null">
+        depos_it,
+      </if>
+      <if test="cumulativeCost != null">
+        cumulative_cost,
+      </if>
+      <if test="amountGuaranteed != null">
+        amount_guaranteed,
+      </if>
+      <if test="v != null">
+        V,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="admissionNo != null">
+        #{admissionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deposIt != null">
+        #{deposIt,jdbcType=DECIMAL},
+      </if>
+      <if test="cumulativeCost != null">
+        #{cumulativeCost,jdbcType=DECIMAL},
+      </if>
+      <if test="amountGuaranteed != null">
+        #{amountGuaranteed,jdbcType=DECIMAL},
+      </if>
+      <if test="v != null">
+        #{v,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.operation.domain.CumulativeCost">
+    update t_ih_cumulativecost
+    <set>
+      <if test="deposIt != null">
+        depos_it = #{deposIt,jdbcType=DECIMAL},
+      </if>
+      <if test="cumulativeCost != null">
+        cumulative_cost = #{cumulativeCost,jdbcType=DECIMAL},
+      </if>
+      <if test="amountGuaranteed != null">
+        amount_guaranteed = #{amountGuaranteed,jdbcType=DECIMAL},
+      </if>
+      <if test="v != null">
+        V = #{v,jdbcType=INTEGER},
+      </if>
+    </set>
+    where admission_no = #{admissionNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emr.project.operation.domain.CumulativeCost">
+    update t_ih_cumulativecost
+    set depos_it = #{deposIt,jdbcType=DECIMAL},
+      cumulative_cost = #{cumulativeCost,jdbcType=DECIMAL},
+      amount_guaranteed = #{amountGuaranteed,jdbcType=DECIMAL},
+      V = #{v,jdbcType=INTEGER}
+    where admission_no = #{admissionNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

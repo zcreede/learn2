@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.OrderExecutionRecordMapper">
+    <resultMap id="OrderExecutionDetailResult" type="com.emr.project.docOrder.domain.resp.OrderExecutionItemDetail">
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="orderNo" jdbcType="VARCHAR" column="ORDER_NO"/>
+        <result property="orderDoctorDepName" jdbcType="VARCHAR" column="ORDER_DOCTOR_DEP_NAME"/>
+        <result property="orderDoctorName" jdbcType="VARCHAR" column="ORDER_DOCTOR_NAME"/>
+        <result property="babyAdmissionNo" jdbcType="VARCHAR" column="BABY_ADMISSION_NO"/>
+        <result property="performDepName" jdbcType="VARCHAR" column="PERFORM_DEP_NAME"/>
+        <result property="firstPerformNum" jdbcType="VARCHAR" column="FIRST_PERFORM_NUM"/>
+        <result property="operationTime" jdbcType="TIMESTAMP" column="ORDER_START_TIME"/>
+        <result property="orderExecuteDocName" jdbcType="VARCHAR" column="EXECUTE_DOC_NAME"/>
+        <result property="performTime" jdbcType="TIMESTAMP" column="ORDER_EXECUTE_TIME"/>
+        <result property="orderAuditDocName" jdbcType="VARCHAR" column="AUDIT_DOC_NAME"/>
+        <result property="orderaAuditTime" jdbcType="TIMESTAMP" column="ORDER_AUDIT_TIME"/>
+
+        <result property="orderStopTime" jdbcType="TIMESTAMP" column="ORDER_STOP_TIME"/>
+        <result property="orderStopDocName" jdbcType="VARCHAR" column="STOP_DOC_NAME"/>
+        <result property="operatorName" jdbcType="VARCHAR" column="OPERATOR_NAME"/>
+        <result property="orderType" jdbcType="VARCHAR" column="ORDER_TYPE"/>
+        <result property="orderStatus" jdbcType="VARCHAR" column="ORDER_STATUS"/>
+        <result property="havaDrugFlag" jdbcType="VARCHAR" column="TAKE_DRUG_MODE"/>
+        <result property="orderGroupNo" jdbcType="VARCHAR" column="ORDER_GROUP_NO"/>
+        <result property="operationStopTime" jdbcType="TIMESTAMP" column="operationStopTime"/>
+        <result property="orderClassCode" column="ORDER_CLASS_CODE"/>
+    </resultMap>
+
+    <select id="selectOrderDetail" resultMap="OrderExecutionDetailResult">
+            SELECT
+                a.ORDER_TYPE,
+                a.NAME,
+                a.ORDER_NO,
+                a.ORDER_DOCTOR_DEP_NAME,
+                a.ORDER_DOCTOR_NAME,
+                a.BABY_ADMISSION_NO,
+                a.PERFORM_DEP_NAME,
+                a.FIRST_PERFORM_NUM,
+                a.ORDER_START_TIME,
+                a.EXECUTE_DOC_NAME,
+                a.AUDIT_DOC_NAME,
+                a.STOP_DOC_NAME,
+                a.ORDER_GROUP_NO,
+                a.ORDER_EXECUTE_TIME,
+                a.ORDER_AUDIT_TIME,
+                a.ORDER_STOP_TIME,
+                a.OPERATOR_NAME,
+                a.OPERATION_TIME AS operationStopTime,
+                a.ORDER_STATUS,
+                a.TAKE_DRUG_MODE,
+                a.ORDER_CLASS_CODE
+            FROM
+                (
+            SELECT
+                pa.ORDER_TYPE,
+                ab.NAME,
+                it.ORDER_NO,
+                pa.ORDER_DOCTOR_DEP_NAME,
+                pa.ORDER_DOCTOR_NAME,
+                pa.BABY_ADMISSION_NO,
+                pa.PERFORM_DEP_NAME,
+                od.FIRST_PERFORM_NUM,
+                it.ORDER_START_TIME,
+                bs1.STAFF_NAME as EXECUTE_DOC_NAME,
+                bs2.STAFF_NAME as AUDIT_DOC_NAME,
+                bs3.STAFF_NAME as STOP_DOC_NAME,
+                it.ORDER_GROUP_NO,
+                it.ORDER_EXECUTE_TIME,
+                it.ORDER_AUDIT_TIME,
+                it.ORDER_STOP_TIME,
+                os.OPERATOR_NAME,
+                os.OPERATION_TIME,
+                it.ORDER_STATUS,
+                it.TAKE_DRUG_MODE,
+                it.ORDER_CLASS_CODE
+            FROM
+                td_pa_order pa
+                LEFT JOIN TD_PA_ORDER_ITEM it ON pa.ORDER_NO = it.ORDER_NO
+                LEFT JOIN TD_PA_ORDER_PERFORM op ON op.ORDER_NO = it.ORDER_NO
+                LEFT JOIN TD_PA_ORDER_DETAIL od ON it.ORDER_NO = od.ORDER_NO
+                AND it.ORDER_SORT_NUMBER = od.ORDER_SORT_NUMBER
+                LEFT JOIN T_AR_BASEINFOMATION_ALL ab ON pa.ADMISSION_NO = ab.ADMISSION_NO
+                LEFT JOIN TD_PA_ORDER_STATUS os ON os.ORDER_NO = it.ORDER_NO
+                AND os.ORDER_GROUP_NO = it.ORDER_GROUP_NO
+                AND os.operation_type = '5'
+                LEFT JOIN TM_BS_STAFF bs1 ON bs1.STAFF_CODE = it.ORDER_EXECUTE_DOC
+                LEFT JOIN TM_BS_STAFF bs2 ON bs2.STAFF_CODE = it.ORDER_AUDIT_DOC
+                LEFT JOIN TM_BS_STAFF bs3 ON bs3.STAFF_CODE = it.ORDER_STOP_DOC UNION ALL
+            SELECT
+                pa.ORDER_TYPE,
+                ab.NAME,
+                it.ORDER_NO,
+                pa.ORDER_DOCTOR_DEP_NAME,
+                pa.ORDER_DOCTOR_NAME,
+                pa.BABY_ADMISSION_NO,
+                pa.PERFORM_DEP_NAME,
+                od.FIRST_PERFORM_NUM,
+                it.ORDER_START_TIME,
+                bs1.STAFF_NAME as EXECUTE_DOC_NAME,
+                bs2.STAFF_NAME as AUDIT_DOC_NAME,
+                bs3.STAFF_NAME as STOP_DOC_NAME,
+                it.ORDER_GROUP_NO,
+                it.ORDER_EXECUTE_TIME,
+                it.ORDER_AUDIT_TIME,
+                it.ORDER_STOP_TIME,
+                os.OPERATOR_NAME,
+                os.OPERATION_TIME,
+                it.ORDER_STATUS,
+                it.TAKE_DRUG_MODE,
+                it.ORDER_CLASS_CODE
+            FROM
+                td_pa_order_h pa
+                LEFT JOIN TD_PA_ORDER_ITEM_h it ON pa.ORDER_NO = it.ORDER_NO
+                LEFT JOIN TD_PA_ORDER_PERFORM op ON op.ORDER_NO = it.ORDER_NO
+                LEFT JOIN TD_PA_ORDER_DETAIL_H od ON it.ORDER_NO = od.ORDER_NO
+                AND it.ORDER_SORT_NUMBER = od.ORDER_SORT_NUMBER
+                LEFT JOIN T_AR_BASEINFOMATION_ALL ab ON pa.ADMISSION_NO = ab.ADMISSION_NO
+                LEFT JOIN TD_PA_ORDER_STATUS os ON os.ORDER_NO = it.ORDER_NO
+                AND os.ORDER_GROUP_NO = it.ORDER_GROUP_NO
+                AND os.operation_type = '5'
+                LEFT JOIN TM_BS_STAFF bs1 ON bs1.STAFF_CODE = it.ORDER_EXECUTE_DOC
+                LEFT JOIN TM_BS_STAFF bs2 ON bs2.STAFF_CODE = it.ORDER_AUDIT_DOC
+                LEFT JOIN TM_BS_STAFF bs3 ON bs3.STAFF_CODE = it.ORDER_STOP_DOC
+                ) a
+            WHERE
+                a.ORDER_NO = #{orderNo}
+                AND ROWNUM = 1
+            GROUP BY
+                a.ORDER_TYPE,
+                a.NAME,
+                a.ORDER_NO,
+                a.ORDER_DOCTOR_DEP_NAME,
+                a.ORDER_DOCTOR_NAME,
+                a.BABY_ADMISSION_NO,
+                a.PERFORM_DEP_NAME,
+                a.FIRST_PERFORM_NUM,
+                a.ORDER_START_TIME,
+                a.EXECUTE_DOC_NAME,
+                a.AUDIT_DOC_NAME,
+                a.ORDER_GROUP_NO,
+                a.ORDER_EXECUTE_TIME,
+                a.ORDER_AUDIT_TIME,
+                a.ORDER_STOP_TIME,
+                a.STOP_DOC_NAME,
+                a.OPERATOR_NAME,
+                a.OPERATION_TIME,
+                a.ORDER_STATUS,
+                a.TAKE_DRUG_MODE,
+                a.ORDER_CLASS_CODE
+    </select>
+    <resultMap id="OrderDetailListResult" type="com.emr.project.docOrder.domain.resp.OrderExecutionDetail">
+        <result property="chargeName" jdbcType="VARCHAR" column="CHARGE_NAME"/>
+        <result property="standard" jdbcType="VARCHAR" column="STANDARD"/>
+
+        <result property="sigName" jdbcType="VARCHAR" column="SIG_NAME"/>
+        <result property="freqName" jdbcType="VARCHAR" column="FREQ_NAME"/>
+        <result property="orderDose" jdbcType="VARCHAR" column="TOTAL_DOSE"/>
+
+        <result property="orderActualUsage" column="ORDER_ACTUAL_USAGE"/>
+        <result property="usageUnit"  column="USAGE_UNIT"/>
+
+        <result property="doctorInstructions" jdbcType="VARCHAR" column="DOCTOR_INSTRUCTIONS"/>
+        <result property="drippingSpeed" jdbcType="VARCHAR" column="DRIPPING_SPEED"/>
+        <result property="patientSelf" jdbcType="VARCHAR" column="PATIENT_SELF"/>
+        <result property="deptName" jdbcType="VARCHAR" column="DEPT_NAME"/>
+        <result property="antimicrobialUse" jdbcType="VARCHAR" column="ANTIMICROBIAL"/>
+    </resultMap>
+    <select id="selectOrderDetailList" resultMap="OrderDetailListResult">
+        SELECT
+            od.CHARGE_NAME,
+            od.STANDARD,
+            od.ORDER_ACTUAL_USAGE,
+            od.USAGE_UNIT,
+            sig.SIG_NAME,
+            freq.FREQ_NAME,
+            od.ORDER_TOTAL_DOSE||od.UNIT as TOTAL_DOSE,
+            od.DOCTOR_INSTRUCTIONS,
+            od.DRIPPING_SPEED,
+            dd.DATA_TAG AS PATIENT_SELF,
+            bd.DEPT_NAME,
+        CASE
+            od.PURPOSE_ANTIMICROBIAL_USE
+            WHEN '1' THEN '治疗性用药'
+			WHEN '2' THEN '预防性用药'
+			ELSE NULL
+            END AS ANTIMICROBIAL
+        FROM
+            TD_PA_ORDER_DETAIL od
+        LEFT JOIN TM_BS_DEPT bd ON bd.DEPT_CODE = od.DETAIL_PERFORM_DEP_CODE
+         LEFT JOIN TM_BS_ORDER_SIG sig ON od.ORDER_USAGE_WAY = sig.SIG_CD
+         left join TM_BS_ORDER_FREQ freq on freq.FREQ_CD = od.ORDER_FREQ
+         LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE = 's068'
+        AND dd.DATA_VAL = od.ORDER_ITEM_FLAG
+             WHERE od.ORDER_NO = #{orderNo}
+			 UNION ALL
+			SELECT
+            od.CHARGE_NAME,
+            od.STANDARD,
+            od.ORDER_ACTUAL_USAGE,
+            od.USAGE_UNIT,
+            sig.SIG_NAME,
+            freq.FREQ_NAME,
+            od.ORDER_TOTAL_DOSE||od.UNIT as TOTAL_DOSE,
+            od.DOCTOR_INSTRUCTIONS,
+            od.DRIPPING_SPEED,
+            dd.DATA_TAG AS PATIENT_SELF,
+            bd.DEPT_NAME,
+        CASE
+            od.PURPOSE_ANTIMICROBIAL_USE
+            WHEN '1' THEN '治疗性用药'
+			WHEN '2' THEN '预防性用药'
+			ELSE NULL
+            END AS ANTIMICROBIAL
+        FROM
+            TD_PA_ORDER_DETAIL_H od
+        LEFT JOIN TM_BS_DEPT bd ON bd.DEPT_CODE = od.DETAIL_PERFORM_DEP_CODE
+         LEFT JOIN TM_BS_ORDER_SIG sig ON od.ORDER_USAGE_WAY = sig.SIG_CD
+         left join TM_BS_ORDER_FREQ freq on freq.FREQ_CD = od.ORDER_FREQ
+         LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE = 's068'
+        AND dd.DATA_VAL = od.ORDER_ITEM_FLAG
+             WHERE od.ORDER_NO =#{orderNo}
+    </select>
+    <resultMap id="OrderExecutionPerformResult" type="com.emr.project.docOrder.domain.resp.OrderExecutionPerformDetail">
+        <result property="performListNo" jdbcType="VARCHAR" column="PERFORM_LIST_NO"/>
+        <result property="performListStatus" jdbcType="VARCHAR" column="PERFORM_LIST_STATUS"/>
+        <result property="performTime" jdbcType="TIMESTAMP" column="PERFORM_TIME"/>
+        <result property="orderDoctorNo" jdbcType="VARCHAR" column="PERFORM_NURSE_NO"/>
+        <result property="orderDoctorName" jdbcType="VARCHAR" column="STAFF_NAME"/>
+        <result property="chargeName" jdbcType="VARCHAR" column="CHARGE_NAME"/>
+        <result property="standard" jdbcType="VARCHAR" column="STANDARD"/>
+        <result property="orderActualUsage" column="ORDER_ACTUAL_USAGE"/>
+        <result property="usageUnit"  column="USAGE_UNIT"/>
+        <result property="sigName" jdbcType="VARCHAR" column="SIG_NAME"/>
+        <result property="freqName" jdbcType="VARCHAR" column="FREQ_NAME"/>
+    </resultMap>
+    <select id="selectPerformDetailList" resultMap="OrderExecutionPerformResult">
+    SELECT
+        pd.PERFORM_LIST_NO,
+        op.PERFORM_LIST_STATUS,
+        op.PERFORM_TIME,
+        op.PERFORM_NURSE_NO,
+        bs.STAFF_NAME,
+        pd.CHARGE_NAME,
+        pd.STANDARD,
+        pd.ORDER_ACTUAL_USAGE,
+        pd.USAGE_UNIT,
+        sig.SIG_NAME,
+        freq.FREQ_NAME
+    FROM
+        TD_PA_ORDER_PERFORM_DETAIL pd
+        LEFT JOIN TD_PA_ORDER_PERFORM op ON op.PERFORM_LIST_NO = pd.PERFORM_LIST_NO
+        AND pd.PERFORM_LIST_SORT_NUMBER = op.PERFORM_LIST_SORT_NUMBER
+        LEFT JOIN TM_BS_STAFF bs ON bs.STAFF_NO = op.PERFORM_NURSE_NO
+        LEFT JOIN TM_BS_ORDER_SIG sig ON pd.ORDER_USAGE_WAY = sig.SIG_CD
+      left join TM_BS_ORDER_FREQ freq on freq.FREQ_CD = pd.ORDER_FREQ
+    where op.ORDER_NO=#{orderNo} and op.ADMISSION_NO = #{admissionNo}
+    </select>
+    <resultMap id="OrderExecutionExpenseDetailResult" type="com.emr.project.docOrder.domain.resp.OrderExecutionExpenseDetail">
+        <result property="filingDate" jdbcType="TIMESTAMP" column="FILING_DATE"/>
+        <result property="chargeCode" jdbcType="VARCHAR" column="CHARGE_CODE"/>
+        <result property="chargeName" jdbcType="VARCHAR" column="CHARGE_NAME"/>
+        <result property="standard" jdbcType="VARCHAR" column="STANDARD"/>
+        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
+        <result property="price"  column="PRICE"/>
+        <result property="dose"  column="DOSE"/>
+        <result property="total"  column="TOTAL"/>
+        <result property="projectName" jdbcType="VARCHAR" column="PROJECT_NAME"/>
+        <result property="operatorName" jdbcType="VARCHAR" column="OPERATOR_NAME"/>
+        <result property="executorDptName" jdbcType="VARCHAR" column="EXECUTOR_DPT_NAME"/>
+        <result property="accountingDepartmentName" jdbcType="VARCHAR" column="ACCOUNTING_DEPARTMENT_NAME"/>
+
+    </resultMap>
+    <select id="selectExpenseDetailList" resultMap="OrderExecutionExpenseDetailResult">
+    SELECT
+        pf.FILING_DATE,
+        ie.CHARGE_CODE,
+        ie.CHARGE_NAME,
+        ie.STANDARD,
+        ie.UNIT,
+        ie.PRICE,
+        ie.DOSE,
+        ie.TOTAL,
+        ie.THREE_LEVEL_NAME as PROJECT_NAME,
+        pf.OPERATOR_NAME,
+        pf.EXECUTOR_DPT_NAME,
+        pf.ACCOUNTING_DEPARTMENT_NAME
+    FROM
+        T_IH_EXPENSEDETAIL_ALL ie
+        LEFT JOIN TD_NA_PAT_FEE_ALL pf ON pf.PRESCRIPTION = ie.PRESCRIPTION
+    where ie.ADMISSION_NO = #{admissionNo} and ie.COPE_NO = #{orderNo}
+    <if test="performListNo != null">
+        and ie.PERFORM_LIST_NO=#{performListNo}
+    </if>
+    order by pf.FILING_DATE desc
+    </select>
+    <resultMap id="ExpenseDetailListResult" type="com.emr.project.docOrder.domain.resp.OrderExecutionExpenseDetail">
+        <result property="filingDate" jdbcType="TIMESTAMP" column="FILING_DATE"/>
+        <result property="chargeCode" jdbcType="VARCHAR" column="CHARGE_CODE"/>
+        <result property="chargeName" jdbcType="VARCHAR" column="CHARGE_NAME"/>
+        <result property="standard" jdbcType="VARCHAR" column="STANDARD"/>
+        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
+        <result property="price"  column="PRICE"/>
+        <result property="dose"  column="DOSE"/>
+        <result property="total"  column="TOTAL"/>
+        <result property="projectName" jdbcType="VARCHAR" column="PROJECT_NAME"/>
+        <result property="operatorName" jdbcType="VARCHAR" column="OPERATOR_NAME"/>
+        <result property="executorDptName" jdbcType="VARCHAR" column="EXECUTOR_DPT_NAME"/>
+        <result property="accountingDepartmentName" jdbcType="VARCHAR" column="ACCOUNTING_DEPARTMENT_NAME"/>
+        <result property="performListNo"  column="perform_list_no"/>
+
+        <result property="physicianDptName"  column="physician_dpt_name"/>
+        <result property="physicianName"  column="physician_name"/>
+        <result property="billsNo"  column="bills_no"/>
+        <result property="billsNoOld"  column="bills_no_old"/>
+    </resultMap>
+    <select id="selectExpenseDetailListByPerformListNo" resultMap="ExpenseDetailListResult">
+        SELECT
+        pf.filing_date,
+        ie.charge_code,
+        ie.charge_name,
+        ie.standard,
+        ie.unit,
+        ie.price,
+        ie.dose,
+        ie.total as total,
+        ie.three_level_name as project_name,
+        pf.operator_name,
+        pf.executor_dpt_name,
+        pf.accounting_department_name,
+        ie.perform_list_no,
+        pf.physician_dpt_name,
+        pf.physician_name,
+        ie.bills_no
+        FROM
+        T_IH_EXPENSEDETAIL_all ie
+        LEFT JOIN TD_NA_PAT_FEE_all pf ON pf.PRESCRIPTION = ie.PRESCRIPTION
+        where  ie.COPE_NO = #{orderNo}
+        <if test="list != null and list.size()>0">
+            and ie.PERFORM_LIST_NO in
+            <foreach item="item" collection="list" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by pf.FILING_DATE desc
+    </select>
+    <resultMap id="TakeDrugDetailResult" type="com.emr.project.docOrder.domain.vo.OrderTakeDrugDTO">
+        <id column="takeDrugStatus" property="takeDrugStatus"/>
+        <id column="chargeNo" property="chargeNo"/>
+        <id column="chargeName" property="chargeName"/>
+        <id column="standard" property="standard"/>
+        <id column="orderUnit" property="orderUnit"/>
+        <id column="orderPrice" property="orderPrice"/>
+        <id column="orderDose" property="orderDose"/>
+        <id column="issueDate" property="issueDate"/>
+        <id column="takeDrugTime" property="takeDrugTime"/>
+        <id column="orderAuditDoName" property="orderAuditDoName"/>
+        <id column="takeDrugOperator" property="takeDrugOperator"/>
+        <id column="pharmacyName" property="pharmacyName"/>
+        <id column="returnDose" property="returnDose"/>
+        <id column="applyDose" property="applyDose"/>
+        <id column="orderGroupSortNumber" property="orderGroupSortNumber"/>
+        <id column="type" property="type"/>
+        <id column="perform_list_no" property="performListNo"/>
+        <id column="drug_stock_no" property="drugStockNo" />
+    </resultMap>
+    <select id="selectTakeDrugListByPerformListNo" resultMap="TakeDrugDetailResult">
+        SELECT * FROM (
+            SELECT
+                '0' as type,
+                dl.order_group_no,
+                dl.TAKE_DRUG_STATUS as takeDrugStatus,
+                dl.PHARMACOPOEIA_NO AS chargeNo,
+	            dl.DRUG_NAME AS chargeName,
+                dl.ORDER_STANDARD as standard,
+                dl.ORDER_UNIT as orderUnit,
+                dl.ORDER_DOSE as orderDose,
+                0 as returnDose,
+                dl.ORDER_PRICE as orderPrice,
+                ( SELECT DEPT_NAME FROM TM_BS_DEPT WHERE DEPT_CODE = dl.PHARMACY_NO ) AS pharmacyName,
+                null as issueDate,
+                null AS orderAuditDoName,
+                dl.TAKE_DRUG_TIME as takeDrugTime,
+                dl.ORDER_GROUP_SORT_NUMBER as orderGroupSortNumber,
+                ( SELECT staff_name FROM TM_BS_STAFF WHERE staff_code = dl.TAKE_DRUG_OPERATOR ) AS takeDrugOperator,
+                dl.PERFORM_LIST_NO,dl.drug_stock_no
+            FROM
+                td_pa_take_drug_list dl
+            WHERE
+                dl.valid = 1
+                <if test="list != null and list.size()>0">
+                    and dl.PERFORM_LIST_NO in
+                    <foreach item="item" collection="list" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                AND dl.ORDER_NO = #{orderNo}
+        union all
+            SELECT
+                '1' as type,
+                fy.order_group_no,
+                99 AS takeDrugStatus,
+                fy.PHARMACOPOEIA_NO AS chargeNo,
+	            fy.DRUG_NAME AS chargeName,
+                fy.ORDER_STANDARD AS standard,
+                fy.ORDER_UNIT AS orderUnit,
+                fy.ORDER_DOSE AS orderDose,
+                0 AS returnDose,
+                fy.ORDER_PRICE AS orderPrice,
+                ( SELECT DEPT_NAME FROM TM_BS_DEPT WHERE DEPT_CODE = fy.PHARMACY_NO ) AS pharmacyName,
+                fy.ISSUE_DATE AS issueDate,
+                ( SELECT staff_name FROM TM_BS_STAFF WHERE staff_code = fy.ISSUE_OPER ) AS orderAuditDoName,
+                fy.TAKE_DRUG_TIME AS takeDrugTime,
+                fy.ORDER_GROUP_SORT_NUMBER as orderGroupSortNumber,
+                ( SELECT staff_name FROM TM_BS_STAFF WHERE staff_code = fy.TAKE_DRUG_OPERATOR ) AS takeDrugOperator,
+                fy.PERFORM_LIST_NO,fy.drug_stock_no
+            FROM
+                TD_PA_TAKE_DRUG_LIST_FY fy
+            WHERE
+                fy.valid = 1
+                <if test="list != null and list.size()>0">
+                    and fy.PERFORM_LIST_NO in
+                    <foreach item="item" collection="list" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                AND fy.ORDER_NO = #{orderNo}
+            ) a
+        ORDER BY
+            a.order_group_no ,a.orderGroupSortNumber ASC
+
+    </select>
+    <select id="selectReturnDetail" resultMap="ExpenseDetailListResult">
+        SELECT
+        pf.filing_date,
+        ie.charge_code,
+        ie.charge_name,
+        ie.standard,
+        ie.unit,
+        ie.price,
+        ie.dose,
+        ie.total as total,
+        ie.project_name,
+        pf.operator_name,
+        pf.executor_dpt_name,
+        pf.accounting_department_name,
+        ie.perform_list_no,
+        pf.physician_dpt_name,
+        pf.physician_name,
+        ie.bills_no,
+        ie.bills_no_old
+        FROM
+        T_IH_EXPENSEDETAIL_all ie
+        LEFT JOIN TD_NA_PAT_FEE_all pf ON pf.PRESCRIPTION = ie.PRESCRIPTION
+        where  ie.COPE_NO = #{orderNo} and ie.TOTAL &lt; 0
+        <if test="list != null and list.size()>0">
+            and ie.BILLS_NO_OLD in
+            <foreach item="item" collection="list" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by pf.FILING_DATE desc
+    </select>
+</mapper>

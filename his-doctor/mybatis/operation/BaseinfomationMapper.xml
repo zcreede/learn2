@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.BaseinfomationMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.Baseinfomation">
+    <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+    <result column="case_no" jdbcType="VARCHAR" property="caseNo" />
+    <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
+    <result column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+    <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birdth_date" jdbcType="TIMESTAMP" property="birdthDate" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="occu_type" jdbcType="VARCHAR" property="occuType" />
+    <result column="card_ed_bg_cd" jdbcType="VARCHAR" property="cardEdBgCd" />
+    <result column="blood_type" jdbcType="VARCHAR" property="bloodType" />
+    <result column="marital_st" jdbcType="VARCHAR" property="maritalSt" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="postcode" jdbcType="VARCHAR" property="postcode" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+    <result column="woking_unit_name" jdbcType="VARCHAR" property="wokingUnitName" />
+    <result column="hr_id" jdbcType="VARCHAR" property="hrId" />
+    <result column="tuberculosis_marker" jdbcType="VARCHAR" property="tuberculosisMarker" />
+    <result column="birth_place_sheng" jdbcType="VARCHAR" property="birthPlaceSheng" />
+    <result column="birth_place_shi" jdbcType="VARCHAR" property="birthPlaceShi" />
+    <result column="birth_place_xian" jdbcType="VARCHAR" property="birthPlaceXian" />
+    <result column="birth_place_xiang" jdbcType="VARCHAR" property="birthPlaceXiang" />
+    <result column="birth_place_cun" jdbcType="VARCHAR" property="birthPlaceCun" />
+    <result column="pinyin_code" jdbcType="VARCHAR" property="pinyinCode" />
+    <result column="native_place_sheng" jdbcType="VARCHAR" property="nativePlaceSheng" />
+    <result column="native_place_shi" jdbcType="VARCHAR" property="nativePlaceShi" />
+    <result column="native_place_xian" jdbcType="VARCHAR" property="nativePlaceXian" />
+    <result column="filing_date" jdbcType="TIMESTAMP" property="filingDate" />
+    <result column="expense_category_no" jdbcType="VARCHAR" property="expenseCategoryNo" />
+    <result column="expense_category" jdbcType="VARCHAR" property="expenseCategory" />
+    <result column="person_age" jdbcType="INTEGER" property="personAge" />
+    <result column="age_month" jdbcType="INTEGER" property="ageMonth" />
+    <result column="age_day" jdbcType="INTEGER" property="ageDay" />
+    <result column="age_hour" jdbcType="INTEGER" property="ageHour" />
+    <result column="present_address_sheng" jdbcType="VARCHAR" property="presentAddressSheng" />
+    <result column="present_address_shi" jdbcType="VARCHAR" property="presentAddressShi" />
+    <result column="present_address_xian" jdbcType="VARCHAR" property="presentAddressXian" />
+    <result column="present_address_xiang" jdbcType="VARCHAR" property="presentAddressXiang" />
+    <result column="present_address_cun" jdbcType="VARCHAR" property="presentAddressCun" />
+  </resultMap>
+
+  <select id="findBaseInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select hospital_code, case_no, patient_id,admission_no, hospitalized_count, name,
+      sex, birdth_date, nation,occu_type, card_ed_bg_cd, blood_type,
+      marital_st, idcard, postcode,operator, operator_name, woking_unit_name,
+      hr_id, tuberculosis_marker, birth_place_sheng,
+      birth_place_shi, birth_place_xian, birth_place_xiang,
+      birth_place_cun, pinyin_code, native_place_sheng,
+      native_place_shi, native_place_xian, filing_date,
+      expense_category_no, expense_category, person_age,
+      age_month, age_day, age_hour,age_branch,
+      present_address_sheng, present_address_shi,
+      present_address_xian, present_address_xiang,
+      present_address_cun
+    from t_ar_baseinfomation_all
+    where admission_no=#{admissionNo}
+  </select>
+
+  <select id="findBaseInfoByIdcard" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select a.hospital_code, a.case_no, a.patient_id, a.admission_no, a.hospitalized_count, a.name,
+      a.sex, a.birdth_date, a.nation,occu_type, a.card_ed_bg_cd, a.blood_type,
+      a.marital_st, a.idcard, a.postcode,operator, a.operator_name, a.woking_unit_name,
+      a.hr_id, a.tuberculosis_marker, a.birth_place_sheng,
+      a.birth_place_shi, a.birth_place_xian, a.birth_place_xiang,
+      a.birth_place_cun, a.pinyin_code, a.native_place_sheng,
+      a.native_place_shi, a.native_place_xian, a.filing_date,
+      a.expense_category_no, a.expense_category, a.person_age,
+      a.age_month, a.age_day, a.age_hour,
+      a.present_address_sheng, a.present_address_shi,
+      a.present_address_xian, a.present_address_xiang,
+      a.present_address_cun
+    from t_ar_baseinfomation_all a left join t_ar_medicalinformation_all b on a.ADMISSION_NO= b.admission_no
+    where a.idcard = #{idcard}
+    order by b.entry_date desc
+  </select>
+</mapper>

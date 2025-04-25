@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.RuleAnalysisMapper">
+
+    <select id="selectPatientInfo" resultType="com.emr.project.docOrder.domain.req.RuleAnalysisPatientDto">
+        select
+            case when a.IDCARD is null then a.ADMISSION_NO else a.IDCARD end as patn_id,
+            a.NAME as patn_name,
+            a.SEX as gend,
+            to_char(a.BIRDTH_DATE,'yyyy-MM-dd') as brdy,
+            (select name from YBCONFIGURE where bz ='insuplc_admdvs' and rownum = 1) as poolarea,
+            a.ADMISSION_NO as curr_jzid
+        from T_AR_BASEINFOMATION a
+        where a.ADMISSION_NO = #{patientId}
+    </select>
+    <select id="selectVisitInfo" resultType="com.emr.project.docOrder.domain.req.FsiEncounterDto">
+        select
+            (select name from YBCONFIGURE where bz ='fixmedins_name' and rownum = 1) as medins_name,
+            (select name from YBCONFIGURE where bz ='fixmedins_code' and rownum = 1) as medins_id,
+            (select name from YBCONFIGURE where bz ='mdtrtarea_admvs' and rownum = 1) as medins_admdvs,
+            'A' as medins_type,
+            '9' as medins_lv,
+            bed.BEDROOM_NO AS wardno,
+            bed.BEDID AS bedno,
+            bed.BEDID AS bedno,
+            to_char(b.HOSPITALIZED_DATE,'yyyy-MM-dd HH24:mi:ss') AS adm_date,
+            to_char(sysdate,'yyyy-MM-dd HH24:mi:ss') AS dscg_date,
+            '2' AS med_mdtrt_type,
+            '92' AS med_type,
+            '0' AS matn_stas,
+            1 as setl_totlnum,
+            '310' as insutype,
+            '1' as reim_flag,
+            '0' as out_setl_flag
+        from T_AR_BASEINFOMATION a
+        left join T_AR_MEDICALINFORMATION b on a.ADMISSION_NO = b.ADMISSION_NO
+        left join TM_NA_BEDS bed on bed.BED_NO = b.BED_NO and bed.WARD_NO = b.WARD_NO
+        where a.ADMISSION_NO = #{patientId}
+    </select>
+    <select id="selectDiagInfo" resultType="com.emr.project.docOrder.domain.req.FsiDiagnoseDto">
+        select
+            a.ID as dise_id,
+            case when a.DIAG_TYPE_CD='02' then '1' else '2' end inout_dise_type,
+            case when jb.bzbm is null then a.DIAG_CD else jb.bzbm end as dise_codg,
+            case when jb.bzmc is null then a.DIAG_NAME else jb.bzmc end as dise_name,
+            '1' as maindise_flag,
+            a.DIAG_NO as dias_srt_no,
+            to_char(a.CRE_DATE,'yyyy-MM-dd HH24:mi:ss') as dise_date
+        from DIAG_INFO a
+        left join yy_bzbm_xmdz_jb jb on a.DIAG_CD = jb.xmbh
+        where a.PATIENT_ID = #{patientId} and a.DIAG_TYPE_CD in ('02','03') and a.DIAG_CLASS_CD='01'
+        order by a.DIAG_TYPE_CD
+    </select>
+    <select id="selectYbInfo" resultType="com.emr.project.docOrder.domain.req.ItemYbInfo">
+        select
+            xmbh as cpNo,
+            bzbm as ybCode,
+            bzmc as ybName,
+            xmdj as ybLv,
+            zfbl as ybZfbl
+        from V_YY_BZBM_DRUG_CLIN
+        where xmbh in
+        <foreach collection="list" separator="," close=")" open="(" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

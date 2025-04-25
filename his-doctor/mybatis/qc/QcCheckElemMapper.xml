@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcCheckElemMapper">
+    
+    <resultMap type="QcCheckElem" id="QcCheckElemResult">
+        <result property="checkId"    column="check_id"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="ruleType"    column="rule_type"    />
+    </resultMap>
+
+    <sql id="selectQcCheckElemVo">
+        select check_id, elem_id, elem_name,rule_type from qc_check_elem
+    </sql>
+
+    <select id="selectQcCheckElemList" parameterType="QcCheckElem" resultMap="QcCheckElemResult">
+        <include refid="selectQcCheckElemVo"/>
+        where check_id in
+        <foreach item="item" index="index" collection="checkIdList" open="(" separator="," close=")">
+              #{item}
+        </foreach>
+    </select>
+    
+    <select id="selectQcCheckElemById" parameterType="Long" resultMap="QcCheckElemResult">
+        <include refid="selectQcCheckElemVo"/>
+        where check_id = #{checkId}
+    </select>
+
+    <select id="selectQcCheckElemByRuleType" parameterType="Integer" resultMap="QcCheckElemResult">
+        <include refid="selectQcCheckElemVo"/>
+        where rule_type = #{ruleType}
+    </select>
+
+    <select id="selectQcCheckElemByIds" parameterType="Long" resultMap="QcCheckElemResult">
+        <include refid="selectQcCheckElemVo"/>
+        where check_id in
+        <foreach collection="checkIdList" item="checkId" open="(" separator="," close=")">
+            #{checkId}
+        </foreach>
+    </select>
+
+    <select id="selectVQcCheckElemList" parameterType="QcCheckElem" resultMap="QcCheckElemResult">
+        select elem_id, elem_name from (select elem_id, elem_name from v_qc_check_elem order by elem_id
+        <where>
+            <if test="elemName != null and elemName != ''"> and (elem_name like concat(concat('%', #{elemName}),'%') or inputstrphtc like concat(concat('%', #{elemName})),'%')</if>
+        </where>
+        ) where rownum &lt;=50 order by rownum asc
+
+    </select>
+
+    <insert id="insertQcCheckElem" parameterType="java.util.List">
+        insert into qc_check_elem
+        (check_id,elem_id,elem_name,rule_type)
+        <foreach collection ="list" item="qcCheckElemList" index= "index" separator="union all" >
+            select  #{qcCheckElemList.checkId,jdbcType=NUMERIC},
+            #{qcCheckElemList.elemId,jdbcType=VARCHAR},
+            #{qcCheckElemList.elemName,jdbcType=VARCHAR},
+            #{qcCheckElemList.ruleType,jdbcType=VARCHAR} from dual
+        </foreach >
+    </insert>
+
+    <update id="updateQcCheckElem" parameterType="QcCheckElem">
+        update qc_check_elem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null and elemName != ''">elem_name = #{elemName},</if>
+        </trim>
+        where check_id = #{checkId}
+    </update>
+
+    <delete id="deleteQcCheckElemById" parameterType="Long">
+        delete from qc_check_elem where check_id = #{checkId}
+    </delete>
+
+    <delete id="deleteQcCheckElemByIds" parameterType="String">
+        delete from qc_check_elem where check_id in 
+        <foreach item="checkId" collection="array" open="(" separator="," close=")">
+            #{checkId}
+        </foreach>
+    </delete>
+</mapper>

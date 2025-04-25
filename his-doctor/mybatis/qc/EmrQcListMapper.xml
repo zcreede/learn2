@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcListMapper">
+
+    <resultMap type="EmrQcList" id="EmrQcListResult">
+        <result property="id"    column="id"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="flawDesc"    column="flaw_desc"    />
+        <result property="qconTimes"    column="qcon_times"    />
+        <result property="emrEleId"    column="emr_ele_id"    />
+        <result property="emrEleName"    column="emr_ele_name"    />
+        <result property="defectRow"    column="defect_row"    />
+        <result property="eleContext"    column="ele_context"    />
+        <result property="qcState"    column="qc_state"    />
+        <result property="treatTime"    column="treat_time"    />
+        <result property="treatCd"    column="treat_cd"    />
+        <result property="treatName"    column="treat_name"    />
+        <result property="treatFlag"    column="treat_flag"    />
+        <result property="treatDesc"    column="treat_desc"    />
+        <result property="conTime"    column="con_time"    />
+        <result property="conCd"    column="con_cd"    />
+        <result property="conName"    column="con_name"    />
+        <result property="deadlineUnit"    column="deadline_unit"    />
+        <result property="conResult"    column="con_result"    />
+        <result property="conDesc"    column="con_desc"    />
+        <result property="doctCd"    column="doct_cd"    />
+        <result property="doctName"    column="doct_name"    />
+        <result property="qcSection"    column="qc_section"    />
+        <result property="qcdoctCd"    column="qcdoct_cd"    />
+        <result property="qcdoctName"    column="qcdoct_name"    />
+        <result property="qcDate"    column="qc_date"    />
+        <result property="treatDeadline"    column="treat_deadline"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="defeLevel"    column="defe_level"    />
+        <result property="dbEleId"    column="db_ele_id"    />
+        <result property="missingFileFlag"    column="missing_file_flag"    />
+        <result property="mrFileName"    column="mr_file_name"    />
+        <result property="recordId"    column="RECORD_ID"    />
+        <result property="flawDate"    column="flaw_date"    />
+    </resultMap>
+
+    <resultMap id="EmrQcListVoResult" type="EmrQcListVo" extends="EmrQcListResult">
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="recoDate"    column="RECO_DATE"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="emrMainId"    column="emrMainId"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="sex"    column="sex"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="dedType"    column="ded_type"    />
+        <result property="dedScoreSingle"    column="ded_score_single"    />
+        <result property="dedId"    column="ded_id"    />
+        <result property="schetotalscore"    column="schetotalscore"    />
+        <result property="dedDesc"    column="ded_desc"    />
+        <result property="itemId"    column="item_id"    />
+        <result property="dedScoreDesc"    column="ded_score_desc"    />
+        <result property="itemClassSort"    column="itemClassSort"    />
+        <result property="detailSort"    column="detailSort"    />
+        <result property="itemClassCd"    column="item_class_cd"    />
+        <result property="itemClassName"    column="item_class_name"    />
+        <result property="itemDesc"    column="item_desc"    />
+        <result property="itemTotalScore"    column="itemTotalScore"    />
+        <result property="itemSort"    column="itemSort"    />
+        <result property="ListScoreId"    column="List_score_id"    />
+        <result property="mrState"    column="mr_state"    />
+
+        <result property="visitId"    column="VISIT_ID"    />
+        <result property="deptCd"    column="DEPT_CD"    />
+        <result property="deptName"    column="DEPT_NAME"    />
+        <result property="outTime"    column="OUT_TIME"    />
+        <result property="resDocCd"    column="RES_DOC_CD"    />
+        <result property="resDocName"    column="RES_DOC_NAME"    />
+        <result property="recordNo"    column="RECORD_NO"    />
+        <result property="ageY"    column="AGE_Y"    />
+        <result property="ageM"    column="AGE_M"    />
+        <result property="ageD"    column="AGE_D"    />
+        <result property="ageH"    column="AGE_H"    />
+        <result property="ageMi"    column="AGE_MI"    />
+    </resultMap>
+    <resultMap id="StatisticsResultVoResult" type="StatisticsResultVo" >
+        <result property="qcdoctCd"    column="QCDOCT_CD"    />
+        <result property="qcdoctName"    column="QCDOCT_NAME"    />
+        <result property="flaws"    column="flaws"    />
+        <result property="checks"    column="checks"    />
+        <result property="unChecks"    column="unChecks"    />
+    </resultMap>
+
+    <resultMap id="EmrQcListStatisticVoResult" type="EmrQcListStatisticVo" >
+        <result property="deptCd"    column="department_no"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="patientName"    column="name"    />
+        <result property="inDeptTime"    column="hospitalized_date"    />
+        <result property="outDeptTime"    column="leave_hospital_date"    />
+        <result property="feedbackQcTime"    column="cre_date"    />
+        <result property="qcSection"    column="qc_section"    />
+        <result property="doctCd"    column="doct_cd"    />
+        <result property="doctName"    column="doct_name"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="qcState"    column="qc_state"    />
+        <result property="resDocCode"    column="resident_no"    />
+        <result property="resDocName"    column="resident_name"    />
+        <result property="flawDesc"    column="flaw_desc"    />
+        <result property="id"    column="id"    />
+        <result property="state"    column="state"    />
+        <result property="qcId"    column="qc_id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="mrState"    column="mr_state"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="dedScoreSingle"    column="ded_score_single"    />
+        <result property="qcBillNo"    column="qc_bill_no"    />
+    </resultMap>
+
+    <sql id="selectEmrQcListVo">
+        select id, main_id, patient_id, mr_type, mr_type_name, rule_name, flaw_desc, qcon_times, emr_ele_id, emr_ele_name, defect_row, ele_context, qc_state,
+               treat_time, treat_cd, treat_name, treat_flag, treat_desc, con_time, con_cd, con_name, deadline_unit, con_result, con_desc, doct_cd, doct_name,
+               qc_section, qcdoct_cd, qcdoct_name, qc_date, treat_deadline, mr_file_id, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code,
+               cre_date,rule_id,db_ele_id,missing_file_flag,defe_level,flaw_date from emr_qc_list
+    </sql>
+
+    <select id="selectEmrqcListListIndexName" parameterType="EmrQcListVo" resultMap="EmrQcListVoResult">
+        select l.id, l.main_id, l.patient_id, l.mr_type, l.mr_type_name, l.rule_name, l.flaw_desc, l.qcon_times,
+               l.emr_ele_id, l.emr_ele_name, l.defect_row, l.ele_context, l.qc_state, l.treat_time, l.treat_cd,
+               l.treat_name, l.treat_flag, l.treat_desc, l.con_time, l.con_cd, l.con_name, l.deadline_unit,
+               l.con_result, l.con_desc, l.doct_cd, l.doct_name, l.qc_section, l.qcdoct_cd, l.qcdoct_name,
+               l.qc_date, l.treat_deadline, l.mr_file_id, l.alt_per_name, l.alt_per_code, l.alt_date, l.cre_per_name,
+               l.cre_per_code, l.cre_date,rule_id,l.defe_level,l.mr_file_name,l.db_ele_id,l.missing_file_flag,l.flaw_date,
+               sc.item_cd,sc.item_name,sc.ded_type,sc.ded_score_single,sc.ded_id,sc.id as List_score_id
+        from emr_qc_list l
+        left join emr_index i on l.MR_FILE_ID = i.id
+        left join emr_qc_record r on l.main_id = r.id
+        left join emr_qc_list_score sc on sc.qc_list_id=l.id
+        <where>
+            <if test="randomCheckFlag ==null or (randomCheckFlag !=null and randomCheckFlag != 1)">
+                 and (r.qc_section !='03' or (r.qc_section = '03' and r.state in ('1','2', '3','31')))
+            </if>
+            <if test="qcdoctCd != null  and qcdoctCd != ''"> and l.qcdoct_cd = #{qcdoctCd}</if>
+            <if test="qcSectionList!=null and qcSectionList.size >0">
+                and l.qc_section in
+                <foreach collection="qcSectionList" item="qcSection" open="(" close=")" separator=",">
+                    #{qcSection}
+                </foreach>
+            </if>
+            <if test="qcStateList!=null and qcStateList.size >0">
+                and l.qc_state in
+                <foreach collection="qcStateList" item="qcState" open="(" close=")" separator=",">
+                    #{qcState}
+                </foreach>
+            </if>
+            <if test="recordBz != null">
+                and ((r.state in('2','3') and r.qc_section in('02','05')) or l.qc_section = '03')
+            </if>
+            <if test="qcSection != null  and qcSection != ''"> and l.qc_section = #{qcSection}</if>
+            <if test="qcState != null  and qcState != ''"> and l.qc_state = #{qcState}</if>
+            <if test="mrFileId != null  and mrFileId != ''"> and l.mr_file_id = #{mrFileId}</if>
+            <if test="patientId != null  and patientId != ''"> and l.patient_id = #{patientId}</if>
+            <if test="mainId != null "> and main_id = #{mainId}</if>
+            <if test="missingFileFlag != null">and missing_file_flag = #{missingFileFlag}</if>
+            <if test="mrFileIdList != null and mrFileIdList.size > 0"> and l.mr_file_id in
+                <foreach collection="mrFileIdList" item="mrFileId" open="(" separator="," close=")">
+                    #{mrFileId}
+                </foreach>
+            </if>
+        </where>
+        order by l.cre_date desc
+    </select>
+    <select id="selectEmrqcListById" parameterType="EmrQcListVo" resultMap="EmrQcListVoResult">
+        select l.id, l.main_id, l.patient_id, l.mr_type, l.mr_type_name, l.rule_name, l.flaw_desc, l.qcon_times,
+               l.emr_ele_id, l.emr_ele_name, l.defect_row, l.ele_context, l.qc_state, l.treat_time, l.treat_cd,
+               l.treat_name, l.treat_flag, l.treat_desc, l.con_time, l.con_cd, l.con_name, l.deadline_unit,
+               l.con_result, l.con_desc, l.doct_cd, l.doct_name, l.qc_section, l.qcdoct_cd, l.qcdoct_name,
+               l.qc_date, l.treat_deadline, l.mr_file_id, l.alt_per_name, l.alt_per_code, l.alt_date, l.cre_per_name,
+               l.cre_per_code, l.cre_date,rule_id,l.defe_level,l.mr_file_name,l.db_ele_id,l.missing_file_flag,l.flaw_date,
+               sc.item_cd,sc.item_name,sc.ded_type,sc.ded_score_single,sc.ded_id,sc.id as List_score_id
+        from emr_qc_list l
+        left join emr_index i on l.MR_FILE_ID = i.id
+        left join emr_qc_record r on l.main_id = r.id
+        left join emr_qc_list_score sc on sc.qc_list_id=l.id
+        <where>
+            <if test="id != null  and id != ''"> and l.id = #{id}</if>
+            <if test="ListScoreId != null  and ListScoreId != ''"> and sc.id = #{ListScoreId}</if>
+            <if test="qcSection != null  and qcSection != ''"> and l.qc_section = #{qcSection}</if>
+            <if test="qcState != null  and qcState != ''"> and l.qc_state = #{qcState}</if>
+            <if test="mrFileId != null  and mrFileId != ''"> and l.mr_file_id = #{mrFileId}</if>
+            <if test="patientId != null  and patientId != ''"> and l.patient_id = #{patientId}</if>
+            <if test="mainId != null "> and l.main_id = #{mainId}</if>
+            <if test="missingFileFlag != null">and missing_file_flag = #{missingFileFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrQcListList" parameterType="EmrQcListVo" resultMap="EmrQcListResult">
+        <include refid="selectEmrQcListVo"/>
+        <where>
+            <if test="mainId != null "> and main_id = #{mainId}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="mrType != null  and mrType != ''"> and mr_type = #{mrType}</if>
+            <if test="mrTypeName != null  and mrTypeName != ''"> and mr_type_name like concat(concat('%', #{mrTypeName}), '%')</if>
+            <if test="ruleName != null  and ruleName != ''"> and rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="flawDesc != null  and flawDesc != ''"> and flaw_desc = #{flawDesc}</if>
+            <if test="qconTimes != null "> and qcon_times = #{qconTimes}</if>
+            <if test="emrEleId != null  and emrEleId != ''"> and emr_ele_id = #{emrEleId}</if>
+            <if test="emrEleName != null  and emrEleName != ''"> and emr_ele_name like concat(concat('%', #{emrEleName}), '%')</if>
+            <if test="defectRow != null  and defectRow != ''"> and defect_row = #{defectRow}</if>
+            <if test="eleContext != null  and eleContext != ''"> and ele_context = #{eleContext}</if>
+            <if test="qcState != null  and qcState != ''"> and qc_state = #{qcState}</if>
+            <if test="treatTime != null "> and treat_time = #{treatTime}</if>
+            <if test="treatCd != null  and treatCd != ''"> and treat_cd = #{treatCd}</if>
+            <if test="treatName != null  and treatName != ''"> and treat_name like concat(concat('%', #{treatName}), '%')</if>
+            <if test="treatFlag != null  and treatFlag != ''"> and treat_flag = #{treatFlag}</if>
+            <if test="treatDesc != null  and treatDesc != ''"> and treat_desc = #{treatDesc}</if>
+            <if test="conTime != null "> and con_time = #{conTime}</if>
+            <if test="conCd != null  and conCd != ''"> and con_cd = #{conCd}</if>
+            <if test="conName != null  and conName != ''"> and con_name like concat(concat('%', #{conName}), '%')</if>
+            <if test="deadlineUnit != null  and deadlineUnit != ''"> and deadline_unit = #{deadlineUnit}</if>
+            <if test="conResult != null  and conResult != ''"> and con_result = #{conResult}</if>
+            <if test="conDesc != null  and conDesc != ''"> and con_desc = #{conDesc}</if>
+            <if test="doctCd != null  and doctCd != ''"> and doct_cd = #{doctCd}</if>
+            <if test="doctName != null  and doctName != ''"> and doct_name like concat(concat('%', #{doctName}), '%')</if>
+            <if test="qcSection != null  and qcSection != ''"> and qc_section = #{qcSection}</if>
+            <if test="qcdoctCd != null  and qcdoctCd != ''"> and qcdoct_cd = #{qcdoctCd}</if>
+            <if test="qcdoctName != null  and qcdoctName != ''"> and qcdoct_name like concat(concat('%', #{qcdoctName}), '%')</if>
+            <if test="qcDate != null "> and qc_date = #{qcDate}</if>
+            <if test="treatDeadline != null "> and treat_deadline = #{treatDeadline}</if>
+            <if test="mrFileId != null  and mrFileId != ''"> and mr_file_id = #{mrFileId}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="ruleId != null "> and rule_id = #{ruleId}</if>
+             <if test="qcSectionList!=null and qcSectionList.size >0">
+             and qc_section in
+                 <foreach collection="qcSectionList" item="qcSection" open="(" close=")" separator=",">
+                    #{qcSection}
+                 </foreach>
+             </if>
+            <if test="qcStateList!=null and qcStateList.size >0">
+             and qc_state in
+                 <foreach collection="qcStateList" item="qcState" open="(" close=")" separator=",">
+                    #{qcState}
+                 </foreach>
+             </if>
+        </where>
+        order by cre_date desc
+    </select>
+
+    <select id="selectEmrQcListById" parameterType="Long" resultMap="EmrQcListResult">
+        <include refid="selectEmrQcListVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrQcList" parameterType="EmrQcList">
+        insert into emr_qc_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="mainId != null">main_id,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="mrType != null">mr_type,</if>
+            <if test="mrTypeName != null">mr_type_name,</if>
+            <if test="ruleName != null">rule_name,</if>
+            <if test="flawDesc != null and flawDesc != ''">flaw_desc,</if>
+            <if test="qconTimes != null">qcon_times,</if>
+            <if test="emrEleId != null">emr_ele_id,</if>
+            <if test="emrEleName != null">emr_ele_name,</if>
+            <if test="defectRow != null">defect_row,</if>
+            <if test="eleContext != null">ele_context,</if>
+            <if test="qcState != null">qc_state,</if>
+            <if test="treatTime != null">treat_time,</if>
+            <if test="treatCd != null">treat_cd,</if>
+            <if test="treatName != null">treat_name,</if>
+            <if test="treatFlag != null">treat_flag,</if>
+            <if test="treatDesc != null">treat_desc,</if>
+            <if test="conTime != null">con_time,</if>
+            <if test="conCd != null">con_cd,</if>
+            <if test="conName != null">con_name,</if>
+            <if test="deadlineUnit != null">deadline_unit,</if>
+            <if test="conResult != null">con_result,</if>
+            <if test="conDesc != null">con_desc,</if>
+            <if test="doctCd != null">doct_cd,</if>
+            <if test="doctName != null">doct_name,</if>
+            <if test="qcSection != null and qcSection != ''">qc_section,</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">qcdoct_cd,</if>
+            <if test="qcdoctName != null and qcdoctName != ''">qcdoct_name,</if>
+            <if test="qcDate != null">qc_date,</if>
+            <if test="treatDeadline != null">treat_deadline,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            cre_date,
+            <if test="ruleId != null">rule_id,</if>
+            <if test="defeLevel != null">defe_level,</if>
+            <if test="dbEleId != null">db_ele_id,</if>
+            <if test="missingFileFlag != null">missing_file_flag,</if>
+            <if test="flawDate != null">flaw_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="mainId != null">#{mainId},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="mrType != null">#{mrType},</if>
+            <if test="mrTypeName != null">#{mrTypeName},</if>
+            <if test="ruleName != null">#{ruleName},</if>
+            <if test="flawDesc != null and flawDesc != ''">#{flawDesc},</if>
+            <if test="qconTimes != null">#{qconTimes},</if>
+            <if test="emrEleId != null">#{emrEleId},</if>
+            <if test="emrEleName != null">#{emrEleName},</if>
+            <if test="defectRow != null">#{defectRow},</if>
+            <if test="eleContext != null">#{eleContext},</if>
+            <if test="qcState != null">#{qcState},</if>
+            <if test="treatTime != null">#{treatTime},</if>
+            <if test="treatCd != null">#{treatCd},</if>
+            <if test="treatName != null">#{treatName},</if>
+            <if test="treatFlag != null">#{treatFlag},</if>
+            <if test="treatDesc != null">#{treatDesc},</if>
+            <if test="conTime != null">#{conTime},</if>
+            <if test="conCd != null">#{conCd},</if>
+            <if test="conName != null">#{conName},</if>
+            <if test="deadlineUnit != null">#{deadlineUnit},</if>
+            <if test="conResult != null">#{conResult},</if>
+            <if test="conDesc != null">#{conDesc},</if>
+            <if test="doctCd != null">#{doctCd},</if>
+            <if test="doctName != null">#{doctName},</if>
+            <if test="qcSection != null and qcSection != ''">#{qcSection},</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">#{qcdoctCd},</if>
+            <if test="qcdoctName != null and qcdoctName != ''">#{qcdoctName},</if>
+            <if test="qcDate != null">#{qcDate},</if>
+            <if test="treatDeadline != null">#{treatDeadline},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            sysdate,
+            <if test="ruleId != null">#{ruleId},</if>
+            <if test="defeLevel != null">#{defeLevel},</if>
+            <if test="dbEleId != null">#{dbEleId},</if>
+            <if test="missingFileFlag != null">#{missingFileFlag},</if>
+            <if test="flawDate != null">#{flawDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrQcList" parameterType="EmrQcList">
+        update emr_qc_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainId != null">main_id = #{mainId},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="mrType != null">mr_type = #{mrType},</if>
+            <if test="mrTypeName != null">mr_type_name = #{mrTypeName},</if>
+            <if test="ruleName != null">rule_name = #{ruleName},</if>
+            <if test="flawDesc != null and flawDesc != ''">flaw_desc = #{flawDesc},</if>
+            <if test="qconTimes != null">qcon_times = #{qconTimes},</if>
+            <if test="emrEleId != null">emr_ele_id = #{emrEleId},</if>
+            <if test="emrEleName != null">emr_ele_name = #{emrEleName},</if>
+            <if test="defectRow != null">defect_row = #{defectRow},</if>
+            <if test="eleContext != null">ele_context = #{eleContext},</if>
+            <if test="qcState != null">qc_state = #{qcState},</if>
+            <if test="treatTime != null">treat_time = #{treatTime},</if>
+            <if test="treatCd != null">treat_cd = #{treatCd},</if>
+            <if test="treatName != null">treat_name = #{treatName},</if>
+            <if test="treatFlag != null">treat_flag = #{treatFlag},</if>
+            <if test="treatDesc != null">treat_desc = #{treatDesc},</if>
+            <if test="conTime != null">con_time = #{conTime},</if>
+            <if test="conCd != null">con_cd = #{conCd},</if>
+            <if test="conName != null">con_name = #{conName},</if>
+            <if test="deadlineUnit != null">deadline_unit = #{deadlineUnit},</if>
+            <if test="conResult != null">con_result = #{conResult},</if>
+            <if test="conDesc != null">con_desc = #{conDesc},</if>
+            <if test="doctCd != null">doct_cd = #{doctCd},</if>
+            <if test="doctName != null">doct_name = #{doctName},</if>
+            <if test="qcSection != null and qcSection != ''">qc_section = #{qcSection},</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">qcdoct_cd = #{qcdoctCd},</if>
+            <if test="qcdoctName != null and qcdoctName != ''">qcdoct_name = #{qcdoctName},</if>
+            <if test="qcDate != null">qc_date = #{qcDate},</if>
+            <if test="treatDeadline != null">treat_deadline = #{treatDeadline},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+            <if test="ruleId != null">rule_id = #{ruleId},</if>
+            <if test="defeLevel != null">defe_level=#{defeLevel},</if>
+            <if test="dbEleId != null">db_ele_id=#{dbEleId},</if>
+            <if test="missingFileFlag != null">missing_file_flag=#{missingFileFlag},</if>
+            <if test="flawDate != null">flaw_date=#{flawDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateEmrQcListByMrFileId" parameterType="EmrQcList">
+        update emr_qc_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainId != null">main_id = #{mainId},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="mrType != null">mr_type = #{mrType},</if>
+            <if test="mrTypeName != null">mr_type_name = #{mrTypeName},</if>
+            <if test="ruleName != null">rule_name = #{ruleName},</if>
+            <if test="flawDesc != null and flawDesc != ''">flaw_desc = #{flawDesc},</if>
+            <if test="qconTimes != null">qcon_times = #{qconTimes},</if>
+            <if test="emrEleId != null">emr_ele_id = #{emrEleId},</if>
+            <if test="emrEleName != null">emr_ele_name = #{emrEleName},</if>
+            <if test="defectRow != null">defect_row = #{defectRow},</if>
+            <if test="eleContext != null">ele_context = #{eleContext},</if>
+            <if test="qcState != null">qc_state = #{qcState},</if>
+            <if test="treatTime != null">treat_time = #{treatTime},</if>
+            <if test="treatCd != null">treat_cd = #{treatCd},</if>
+            <if test="treatName != null">treat_name = #{treatName},</if>
+            <if test="treatFlag != null">treat_flag = #{treatFlag},</if>
+            <if test="treatDesc != null">treat_desc = #{treatDesc},</if>
+            <if test="conTime != null">con_time = #{conTime},</if>
+            <if test="conCd != null">con_cd = #{conCd},</if>
+            <if test="conName != null">con_name = #{conName},</if>
+            <if test="deadlineUnit != null">deadline_unit = #{deadlineUnit},</if>
+            <if test="conResult != null">con_result = #{conResult},</if>
+            <if test="conDesc != null">con_desc = #{conDesc},</if>
+            <if test="doctCd != null">doct_cd = #{doctCd},</if>
+            <if test="doctName != null">doct_name = #{doctName},</if>
+            <if test="qcSection != null and qcSection != ''">qc_section = #{qcSection},</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">qcdoct_cd = #{qcdoctCd},</if>
+            <if test="qcdoctName != null and qcdoctName != ''">qcdoct_name = #{qcdoctName},</if>
+            <if test="qcDate != null">qc_date = #{qcDate},</if>
+            <if test="treatDeadline != null">treat_deadline = #{treatDeadline},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+            <if test="ruleId != null">rule_id = #{ruleId},</if>
+            <if test="defeLevel != null">defe_level=#{defeLevel},</if>
+            <if test="dbEleId != null">db_ele_id=#{dbEleId},</if>
+            <if test="missingFileFlag != null">missing_file_flag=#{missingFileFlag},</if>
+            <if test="flawDate != null">flaw_date=#{flawDate},</if>
+        </trim>
+        where mr_file_id = #{mrFileId}
+    </update>
+
+    <update id="updateEmrQcLists" parameterType="EmrQcList">
+        <foreach item="item" index="index" collection="list" open="begin" separator=";" close=";end;">
+            update emr_qc_list
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.qconTimes != null">qcon_times = #{item.qconTimes},</if>
+                <if test="item.qcState != null">qc_state = #{item.qcState},</if>
+                <if test="item.conResult != null">con_time = sysdate,</if>
+                <if test="item.conCd != null">con_cd = #{item.conCd},</if>
+                <if test="item.conName != null">con_name = #{item.conName},</if>
+                <if test="item.deadlineUnit != null">deadline_unit = #{item.deadlineUnit},</if>
+                <if test="item.conResult != null">con_result = #{item.conResult},</if>
+                <if test="item.conDesc != null">con_desc = #{item.conDesc},</if>
+                <if test="item.altPerName != null">alt_per_name = #{item.altPerName},</if>
+                <if test="item.altPerCode != null">alt_per_code = #{item.altPerCode},</if>
+                <if test="item.missingFileFlag != null">missing_file_flag = #{missingFileFlag},</if>
+                <if test="item.flawDate != null">flaw_date = #{flawDate},</if>
+                alt_date = sysdate,
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteEmrQcListById" parameterType="Long">
+        delete from emr_qc_list where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcListByIds" parameterType="String">
+        delete from emr_qc_list where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertEmrQcLists" parameterType="EmrQcList">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_qc_list
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.mainId != null">main_id,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.mrType != null">mr_type,</if>
+                <if test="item.mrTypeName != null">mr_type_name,</if>
+                <if test="item.ruleName != null">rule_name,</if>
+                <if test="item.flawDesc != null and item.flawDesc != ''">flaw_desc,</if>
+                <if test="item.qconTimes != null">qcon_times,</if>
+                <if test="item.emrEleId != null">emr_ele_id,</if>
+                <if test="item.emrEleName != null">emr_ele_name,</if>
+                <if test="item.defectRow != null">defect_row,</if>
+                <if test="item.eleContext != null and item.eleContext !=''">ele_context,</if>
+                <if test="item.qcState != null">qc_state,</if>
+                <if test="item.treatTime != null">treat_time,</if>
+                <if test="item.treatCd != null">treat_cd,</if>
+                <if test="item.treatName != null">treat_name,</if>
+                <if test="item.treatFlag != null">treat_flag,</if>
+                <if test="item.treatDesc != null">treat_desc,</if>
+                <if test="item.conTime != null">con_time,</if>
+                <if test="item.conCd != null">con_cd,</if>
+                <if test="item.conName != null">con_name,</if>
+                <if test="item.deadlineUnit != null">deadline_unit,</if>
+                <if test="item.conResult != null">con_result,</if>
+                <if test="item.conDesc != null">con_desc,</if>
+                <if test="item.doctCd != null">doct_cd,</if>
+                <if test="item.doctName != null">doct_name,</if>
+                <if test="item.qcSection != null and item.qcSection != ''">qc_section,</if>
+                <if test="item.qcdoctCd != null and item.qcdoctCd != ''">qcdoct_cd,</if>
+                <if test="item.qcdoctName != null and item.qcdoctName != ''">qcdoct_name,</if>
+                <if test="item.qcDate != null">qc_date,</if>
+                <if test="item.treatDeadline != null">treat_deadline,</if>
+                <if test="item.mrFileId != null">mr_file_id,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.ruleId != null">rule_id,</if>
+                <if test="item.defeLevel != null">defe_level,</if>
+                <if test="item.dbEleId != null">db_ele_id,</if>
+                <if test="item.missingFileFlag != null">missing_file_flag,</if>
+                <if test="item.mrFileName != null">mr_file_name,</if>
+                <if test="item.flawDate != null">flaw_date,</if>
+                cre_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.mainId != null">#{item.mainId},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.mrType != null">#{item.mrType},</if>
+                <if test="item.mrTypeName != null">#{item.mrTypeName},</if>
+                <if test="item.ruleName != null">#{item.ruleName},</if>
+                <if test="item.flawDesc != null and item.flawDesc != ''">#{item.flawDesc},</if>
+                <if test="item.qconTimes != null">#{item.qconTimes},</if>
+                <if test="item.emrEleId != null">#{item.emrEleId},</if>
+                <if test="item.emrEleName != null">#{item.emrEleName},</if>
+                <if test="item.defectRow != null">#{item.defectRow},</if>
+                <if test="item.eleContext != null and item.eleContext !=''">#{item.eleContext},</if>
+                <if test="item.qcState != null">#{item.qcState},</if>
+                <if test="item.treatTime != null">#{item.treatTime},</if>
+                <if test="item.treatCd != null">#{item.treatCd},</if>
+                <if test="item.treatName != null">#{item.treatName},</if>
+                <if test="item.treatFlag != null">#{item.treatFlag},</if>
+                <if test="item.treatDesc != null">#{item.treatDesc},</if>
+                <if test="item.conTime != null">#{item.conTime},</if>
+                <if test="item.conCd != null">#{item.conCd},</if>
+                <if test="item.conName != null">#{item.conName},</if>
+                <if test="item.deadlineUnit != null">#{item.deadlineUnit},</if>
+                <if test="item.conResult != null">#{item.conResult},</if>
+                <if test="item.conDesc != null">#{item.conDesc},</if>
+                <if test="item.doctCd != null">#{item.doctCd},</if>
+                <if test="item.doctName != null">#{item.doctName},</if>
+                <if test="item.qcSection != null and item.qcSection != ''">#{item.qcSection},</if>
+                <if test="item.qcdoctCd != null and item.qcdoctCd != ''">#{item.qcdoctCd},</if>
+                <if test="item.qcdoctName != null and item.qcdoctName != ''">#{item.qcdoctName},</if>
+                <if test="item.qcDate != null">#{item.qcDate},</if>
+                <if test="item.treatDeadline != null">#{item.treatDeadline},</if>
+                <if test="item.mrFileId != null">#{item.mrFileId},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.ruleId != null">#{item.ruleId},</if>
+                <if test="item.defeLevel != null">#{item.defeLevel},</if>
+                <if test="item.dbEleId != null">#{item.dbEleId},</if>
+                <if test="item.missingFileFlag != null">#{item.missingFileFlag},</if>
+                <if test="item.mrFileName != null">#{item.mrFileName},</if>
+                <if test="item.flawDate != null">#{item.flawDate},</if>
+                sysdate,
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <select id="selectQcDoctByPatientSection" parameterType="EmrQcList" resultMap="EmrQcListResult">
+        select distinct QCDOCT_CD, qcdoct_name from emr_qc_list where PATIENT_ID = #{patientId}
+        <if test="qcSection!=null and qcSection!=''">
+            and QC_SECTION = #{qcSection}
+        </if>
+    </select>
+
+    <select id="selectByPatientsAndQcState" resultMap="EmrQcListResult">
+        select l.*,mh.RECORD_ID from emr_qc_list l
+        left join emr_qc_record r on l.main_id = r.id
+        left join MR_HP mh on mh.RECORD_ID = l.MR_FILE_ID
+        where l.patient_id = #{patientId}
+        <if test="mainId != null">and l.main_id = #{mainId}</if>
+        <if test="qcStateList!=null and qcStateList.size != 0">
+        and l.qc_state in
+            <foreach collection="qcStateList" item="qcState" open="(" separator="," close=")">#{qcState}</foreach>
+        </if>
+    </select>
+
+    <select id="selectByPatientsAndQcStateAndRecordBz" resultMap="EmrQcListResult">
+        select l.*,mh.RECORD_ID from emr_qc_list l
+        left join emr_qc_record r on l.main_id = r.id
+        left join MR_HP mh on mh.RECORD_ID = l.MR_FILE_ID
+        where l.patient_id = #{patientId}
+        <if test="mainId != null">and l.main_id = #{mainId}</if>
+        <if test="qcStateList!=null and qcStateList.size != 0">
+        and l.qc_state in
+            <foreach collection="qcStateList" item="qcState" open="(" separator="," close=")">#{qcState}</foreach>
+        </if>
+        <if test="recordBz != null">
+            and ((r.state in('2','3') and r.qc_section in('02','05')) or l.qc_section = '03')
+        </if>
+    </select>
+
+    <select id="selectEmrSubFileQcList" resultMap="EmrQcListResult">
+        select l.id, l.main_id, l.patient_id, l.mr_type, l.mr_type_name, l.rule_name, l.flaw_desc, l.qcon_times,
+        l.emr_ele_id, l.emr_ele_name, l.defect_row, l.ele_context, l.qc_state, l.treat_time, l.treat_cd,
+        l.treat_name, l.treat_flag, l.treat_desc, l.con_time, l.con_cd, l.con_name, l.deadline_unit,
+        l.con_result, l.con_desc, l.doct_cd, l.doct_name, l.qc_section, l.qcdoct_cd, l.qcdoct_name,
+        l.qc_date, l.treat_deadline,  l.alt_per_name, l.alt_per_code, l.alt_date, l.cre_per_name,
+        l.cre_per_code, l.cre_date,rule_id,l.defe_level,l.mr_file_name,l.db_ele_id,l.missing_file_flag,l.flaw_date,
+        CASE WHEN s.main_id is null THEN l.mr_file_id ELSE s.main_id||'' END as mr_file_id
+        from emr_qc_list l
+        left join EMR_SUBFILE_INDEX s on l.mr_file_id=s.id
+        where l.patient_id = #{patientId}
+        and (l.QC_SECTION=#{qcSection} or l.QC_SECTION='01')
+        <if test="qcStateList!=null and qcStateList.size != 0">
+            and l.qc_state in
+            <foreach collection="qcStateList" item="qcState" open="(" separator="," close=")">#{qcState}</foreach>
+        </if>
+    </select>
+
+    <select id="selectByQcStateList" resultMap="EmrQcListResult">
+        select * from emr_qc_list where 1=1
+        <if test="qcStateList!=null and qcStateList.size != 0">
+        and qc_state in
+            <foreach collection="qcStateList" item="qcState" open="(" separator="," close=")">#{qcState}</foreach>
+        </if>
+    </select>
+    <select id="selectUnUpdateEmrList" parameterType="String" resultMap="EmrQcListVoResult">
+        SELECT
+            lit.*, vis.inp_no,pp.patient_name,s.RECO_DATE,pp.patient_main_id,s.emrMainId,vis.bed_no,pp.sex,qf.mr_state,
+            pp.patient_name,vis.VISIT_ID,vis.DEPT_CD,vis.DEPT_NAME,vis.OUT_TIME,vis.RES_DOC_CD,vis.RES_DOC_NAME,vis.RECORD_NO,
+            pp.AGE_Y,pp.AGE_M,pp.AGE_D,pp.AGE_H,pp.AGE_MI
+        FROM EMR_QC_LIST lit
+                 left join (
+            SELECT id,RECO_DATE,id as emrMainId
+            FROM EMR_INDEX where del_flag='0' and mr_type!='MAINFILE'
+            UNION All
+            select es.id,es.RECO_DATE,es.main_id as emrMainId
+            from EMR_SUBFILE_INDEX es left join emr_index ei on es.main_id=ei.id where es.del_flag='0'
+        ) s on lit.mr_file_id=s.id
+                 left JOIN PAT_VISITINFO vis ON lit.PATIENT_ID = vis.PATIENT_ID
+                 left JOIN PAT_PERSONALINFO pp ON pp.PATIENT_ID = vis.PATIENT_ID
+                 left join EMR_QC_FLOW qf on qf.PATIENT_ID = vis.PATIENT_ID
+        WHERE
+            lit.QC_STATE in('0','3')
+            and (((qf.MR_STATE not in ('14','16') or qf.MR_STATE is null)
+            and (lit.DOCT_CD =#{docCode} or vis.RES_DOC_CD =#{docCode}))
+            or (vis.RES_DOC_CD =#{docCode} and qf.MR_STATE in('14','16'))
+            )
+            and lit.patient_id in(select a.ADMISSION_NO from t_ar_medicalinformation_all a)
+          <if test="patientId!=null and patientId!=''">
+              and lit.patient_id=#{patientId}
+          </if>
+    </select>
+
+    <update id="updateSystemQcState">
+        update emr_qc_list set qc_state = #{qcState}
+        where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </update>
+
+    <update id="updateQconTimesById" parameterType="Long">
+        update EMR_QC_LIST
+        set QCON_TIMES = (select case when QCON_TIMES is null then 1 else (QCON_TIMES+1) end QCON_TIMES  from EMR_QC_LIST where id= #{id} )
+        where id = #{id}
+    </update>
+    <select id="selectMissingFileListByMrFileId" parameterType="String" resultMap="EmrQcListResult">
+        select * from EMR_QC_LIST where mr_file_id = #{mrFileId} and qc_state = '0' and qc_section = '03'
+    </select>
+    <select id="selectEmrQcListScore" parameterType="EmrQcListVo" resultMap="EmrQcListVoResult">
+        select
+            l.*,sc.item_cd,sc.ded_type,sc.ded_score_single,sc.ded_id
+        from emr_qc_list l
+        left join emr_Qc_list_score sc ON l.id = sc.qc_list_id
+        <where>
+            <if test="qcStateList!=null and qcStateList.size >0">
+                and l.qc_state in
+                <foreach collection="qcStateList" item="qcState" open="(" close=")" separator=",">
+                    #{qcState}
+                </foreach>
+            </if>
+            <if test="patientId != null  and patientId != ''"> and l.patient_id = #{patientId}</if>
+            <if test="mainId != null "> and l.main_id = #{mainId}</if>
+        </where>
+    </select>
+    <select id="selectEmrQcListScoreVoList" resultMap="EmrQcListVoResult">
+        SELECT
+            l.*,
+            100 as  schetotalscore,
+            CASE WHEN qsdd.ded_desc is null THEN l.RULE_NAME ELSE qsdd.ded_desc END ded_desc,
+            sc.ITEM_CD as item_id,
+            sc.ITEM_NAME,
+            sc.DED_TYPE,
+            sc.DED_SCORE_SINGLE,
+            sc.DED_ID,
+            sc.ded_score_desc,
+            item.item_class_cd,item.item_class_name,item.item_desc,sdd.data_sort as itemClassSort,
+            CASE WHEN qsdd.sort is null THEN 999 ELSE qsdd.sort END detailSort,
+            item.score as itemTotalScore,
+            item.sort as itemSort
+        FROM
+            emr_qc_list_score sc
+                LEFT JOIN emr_Qc_list l ON sc.QC_LIST_ID = l.id
+                LEFT JOIN QC_SCORE_DED_DETAIL qsdd ON qsdd.id = sc.ded_id
+                LEFT JOIN QC_SCORE_ITEM item ON item.id = sc.item_cd
+                left join TM_BS_DICT_DATA sdd on sdd.data_val = item.item_class_cd and sdd.dict_type='s058'
+        where l.QC_SECTION=#{qcSection}
+        and l.patient_id=#{patientId}
+        and sc.ded_score_single is not null
+        <if test="qcStateList!=null and qcStateList.size >0">
+            and l.qc_state in
+            <foreach collection="qcStateList" item="qcState" open="(" close=")" separator=",">
+                #{qcState}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectEmrQcListByMrFileId" resultMap="EmrQcListResult">
+        <include refid="selectEmrQcListVo"/>
+        where MR_FILE_ID = #{mrFileId}
+        and qc_section in
+        <foreach collection="list" item="qcSection" open="(" separator="," close=")">
+            #{qcSection}
+        </foreach>
+    </select>
+
+    <select id="getQcFlowStatistic" resultMap="EmrQcListStatisticVoResult" parameterType="com.emr.project.qc.domain.vo.EmrQcFlowVo">
+        select e.dept_name,f.* from (
+        select c.department_no,
+                a.patient_id,
+                c.case_no,
+                c.name,
+                c.hospitalized_date,
+                c.leave_hospital_date,
+                a.cre_date,
+                a.qc_section,
+                a.qcdoct_cd as doct_cd,
+                a.qcdoct_name as doct_name,
+                a.mr_type,
+                a.mr_type_name,
+                a.rule_id,
+                a.rule_name ,
+                a.qc_state ,
+                c.resident_no ,
+                c.resident_name,
+                a.flaw_desc,
+                b.id,
+                b.state,
+                a.id as qc_id,
+                c.case_no as inp_no,
+                e.mr_state,
+                m.cre_per_name,
+                /*to_char(n.ded_score_single,'FM9999990.099') as ded_score_single,*/
+                n.ded_score_single,
+                b.qc_bill_no
+        from emr_qc_list a
+        left join emr_qc_flow e on a.patient_id=e.patient_id
+        left join emr_qc_record b
+        on a.main_id = b.id
+        left join t_ar_medicalinformation_all c
+        on a.patient_id = c.ADMISSION_NO
+        left join t_ar_baseinfomation_all d
+        on a.patient_id = d.ADMISSION_NO
+        left join (select id,cre_per_name from emr_index union all select id,cre_per_name from emr_subfile_index) m on m.id=a.mr_file_id
+        left join emr_qc_list_score n on a.id=n.qc_list_id
+        <where>
+            <if test="outHospitalTimeBegin != null and timeType == '1'.toString()">
+                and c.leave_hospital_date &gt; #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null and timeType == '1'.toString()">
+                and c.leave_hospital_date &lt;= #{outHospitalTimeEnd}
+            </if>
+            <if test="outHospitalTimeBegin != null and timeType == '2'.toString()">
+                and c.hospitalized_date&gt;  #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null  and timeType == '2'.toString()">
+                and c.hospitalized_date &lt;=  #{outHospitalTimeEnd}
+            </if>
+            <if test="outHospitalTimeBegin != null and timeType == '3'.toString()">
+                and a.cre_date &gt; #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null and timeType == '3'.toString()">
+                and a.cre_date &lt;= #{outHospitalTimeEnd}
+            </if>
+
+            <if test="resDocCd != null and resDocCd != '' and docType == '2'.toString()">
+                and a.qcdoct_cd = #{resDocCd}
+            </if>
+            <if test="resDocCd != null and resDocCd != '' and docType == '1'.toString()">
+                and c.resident_no = #{resDocCd}
+            </if>
+
+            <if test="deptCd != null and deptCd != ''">
+                and b.in_dept_cd = #{deptCd}
+            </if>
+            <if test="deptQcCd != null and deptQcCd != ''">
+                and b.dept_qc_cd = #{deptQcCd}
+            </if>
+            <if test="qcSection != null and qcSection != ''">
+                and a.qc_section = #{qcSection}
+            </if>
+            <if test="qcState != null and qcState != ''">
+                and a.qc_state = #{qcState}
+            </if>
+            <if test="mrState != null and mrState != ''">
+                and b.state = #{mrState}
+            </if>
+            <if test="patientName != null and patientName != ''">
+                and (a.PATIENT_ID like concat(concat('%', #{patientName}), '%')
+                or d.name like concat(concat('%', #{patientName}), '%')
+                or d.pinyin_code like concat(concat('%', #{patientName}), '%'))
+            </if>
+        </where>
+        ) f
+        left join tm_bs_dept e on f.DEPARTMENT_NO=e.dept_code and e.status='0'
+        order by f.department_no,f.name desc
+    </select>
+</mapper>

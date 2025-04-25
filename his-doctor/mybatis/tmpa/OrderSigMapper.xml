@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpa.mapper.OrderSigMapper">
+
+    <resultMap type="OrderSig" id="OrderSigResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="sigCd"    column="sig_cd"    />
+        <result property="sigName"    column="sig_name"    />
+        <result property="sigShowName"    column="sig_show_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="sort"    column="sort"    />
+        <result property="hasSub"    column="has_sub"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="drugType"    column="drug_type"    />
+        <result property="execTerm"    column="exec_term"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="standardCd"    column="standard_cd"    />
+        <result property="orderBookShow"    column="order_book_show"    />
+        <result property="ivDripFlag"    column="iv_drip_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <resultMap type="OrderSigStand" id="TmBsOrderSigStandResult">
+        <result property="standCode"    column="stand_code"    />
+        <result property="standName"    column="stand_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectOrderSigVo">
+        select hospital_code, sig_cd, sig_name, sig_show_name, inputstrphtc, sort, has_sub, order_type, drug_type, exec_term, enabled, standard_cd, order_book_show, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from TM_BS_ORDER_SIG
+    </sql>
+
+    <select id="selectUseTimeOrderSigList"  resultMap="OrderSigResult">
+        select * from (
+        select case when l.USAGE_TIMES is not null then l.USAGE_TIMES else 0 end as USAGE_TIMES,
+        s.hospital_code, s.sig_cd, s.sig_name, s.sig_show_name, s.inputstrphtc, s.sort, s.has_sub, s.order_type, s.drug_type, s.exec_term,
+        s.enabled, s.standard_cd, s.order_book_show, s.cre_per_code, s.cre_per_name, s.cre_date, s.alt_per_code, s.alt_per_name, s.alt_date, s.iv_drip_flag
+        from TM_BS_ORDER_SIG s
+        left join (select distinct b.item_cd,b.item_class_cd,b.doc_cd,b.hospital_code,b.item_class_name,b.item_name,b.standard,b.usage_times,b.herbal_flag from TM_PM_CLINITEM_USE_LOG b ) l on s.sig_cd = l.ITEM_CD and l.doc_cd = #{docCd} and l.item_class_cd = '40'
+        <where>
+            and s.del_flag = '0'
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="sigName != null  and sigName != ''">and (sig_name like concat(concat('%', #{sigName}), '%')
+                or sig_cd like concat(concat('%', #{sigName}), '%')
+                or sig_show_name like concat(concat('%', #{sigName}), '%')
+                or inputstrphtc like concat(concat('%', #{sigName}), '%')
+                )
+            </if>
+            <if test="sigShowName != null  and sigShowName != ''"> and sig_show_name like concat(concat('%', #{sigShowName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="hasSub != null  and hasSub != ''"> and has_sub = #{hasSub}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="drugType != null  and drugType != ''"> and drug_type = #{drugType}</if>
+            <if test="execTerm != null  and execTerm != ''"> and exec_term = #{execTerm}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="standardCd != null  and standardCd != ''"> and standard_cd = #{standardCd}</if>
+            <if test="orderBookShow != null  and orderBookShow != ''"> and order_book_show = #{orderBookShow}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+        ) a
+        <!-- order by s.sort -->
+        order by a.USAGE_TIMES desc
+    </select>
+
+    <select id="selectOrderSigList" parameterType="OrderSig" resultMap="OrderSigResult">
+        <include refid="selectOrderSigVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="sigName != null  and sigName != ''"> and sig_name like concat(concat('%', #{sigName}), '%')</if>
+            <if test="sigShowName != null  and sigShowName != ''"> and sig_show_name like concat(concat('%', #{sigShowName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="hasSub != null  and hasSub != ''"> and has_sub = #{hasSub}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="drugType != null  and drugType != ''"> and drug_type = #{drugType}</if>
+            <if test="execTerm != null  and execTerm != ''"> and exec_term = #{execTerm}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="standardCd != null  and standardCd != ''"> and standard_cd = #{standardCd}</if>
+            <if test="orderBookShow != null  and orderBookShow != ''"> and order_book_show = #{orderBookShow}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectOrderSigById" parameterType="String" resultMap="OrderSigResult">
+        <include refid="selectOrderSigVo"/>
+        where sig_cd = #{sigCd}
+    </select>
+
+    <insert id="insertOrderSig" parameterType="OrderSig">
+        insert into TM_BS_ORDER_SIG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="sigCd != null">sig_cd,</if>
+            <if test="sigName != null">sig_name,</if>
+            <if test="sigShowName != null">sig_show_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="sort != null">sort,</if>
+            <if test="hasSub != null">has_sub,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="drugType != null">drug_type,</if>
+            <if test="execTerm != null">exec_term,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="standardCd != null">standard_cd,</if>
+            <if test="orderBookShow != null">order_book_show,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="sigCd != null">#{sigCd},</if>
+            <if test="sigName != null">#{sigName},</if>
+            <if test="sigShowName != null">#{sigShowName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="hasSub != null">#{hasSub},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="drugType != null">#{drugType},</if>
+            <if test="execTerm != null">#{execTerm},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="standardCd != null">#{standardCd},</if>
+            <if test="orderBookShow != null">#{orderBookShow},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderSig" parameterType="OrderSig">
+        update TM_BS_ORDER_SIG
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="sigName != null">sig_name = #{sigName},</if>
+            <if test="sigShowName != null">sig_show_name = #{sigShowName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="hasSub != null">has_sub = #{hasSub},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="drugType != null">drug_type = #{drugType},</if>
+            <if test="execTerm != null">exec_term = #{execTerm},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="standardCd != null">standard_cd = #{standardCd},</if>
+            <if test="orderBookShow != null">order_book_show = #{orderBookShow},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where sig_cd = #{sigCd}
+    </update>
+
+    <delete id="deleteOrderSigById" parameterType="String">
+        delete from TM_BS_ORDER_SIG where sig_cd = #{sigCd}
+    </delete>
+
+    <delete id="deleteOrderSigByIds" parameterType="String">
+        delete from TM_BS_ORDER_SIG where sig_cd in
+        <foreach item="sigCd" collection="array" open="(" separator="," close=")">
+            #{sigCd}
+        </foreach>
+    </delete>
+
+    <select id="selectOrderSigListBySigCd" parameterType="OrderSig" resultMap="OrderSigResult">
+        <include refid="selectOrderSigVo"/>
+        where sig_cd in
+        <foreach item="sigCd" collection="sigCdList" open="(" separator="," close=")">
+            #{sigCd}
+        </foreach>
+    </select>
+
+    <select id="selectOrderSigStandList" parameterType="OrderSigStand" resultMap="TmBsOrderSigStandResult">
+        select stand_code, stand_name, create_time, update_time from tm_bs_order_sig_stand order by stand_code
+    </select>
+</mapper>

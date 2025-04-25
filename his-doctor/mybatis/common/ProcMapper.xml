@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.common.mapper.ProcMapper">
+
+    <select id="orderAutoFee" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+            call proc_9998_order_fee_pat(
+                        #{vs_zyh,mode=IN},
+                        #{vs_yzbh,mode=IN},
+                        #{vs_yzxh,mode=IN},
+                        #{vd_jzrq,mode=IN},
+                        #{vs_oper,mode=IN},
+                        #{vi_ret,jdbcType=INTEGER,mode=OUT},
+                        #{vs_errtext,jdbcType=VARCHAR,mode=OUT}
+                )
+		]]>
+	</select>
+</mapper>

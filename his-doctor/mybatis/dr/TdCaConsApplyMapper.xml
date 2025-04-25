@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.dr.mapper.TdCaConsApplyMapper">
+
+    <resultMap type="TdCaConsApply" id="TdCaConsApplyResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="visitId"    column="visit_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="sexCd"    column="sex_cd"    />
+        <result property="age"    column="age"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="inhosTime"    column="inhos_time"    />
+        <result property="consTypeCd"    column="cons_type_cd"    />
+        <result property="consTypeName"    column="cons_type_name"    />
+        <result property="applyDeptCd"    column="apply_dept_cd"    />
+        <result property="applyDeptName"    column="apply_dept_name"    />
+        <result property="applyDocCd"    column="apply_doc_cd"    />
+        <result property="applyDocName"    column="apply_doc_name"    />
+        <result property="applyDocTitleCd"    column="apply_doc_title_cd"    />
+        <result property="applyDocTitleName"    column="apply_doc_title_name"    />
+        <result property="applyDate"    column="apply_date"    />
+        <result property="applySignDate"    column="apply_sign_date"    />
+        <result property="consDeptCd"    column="cons_dept_cd"    />
+        <result property="consDeptName"    column="cons_dept_name"    />
+        <result property="invDocCd"    column="inv_doc_cd"    />
+        <result property="invDocName"    column="inv_doc_name"    />
+        <result property="invDocTitleCd"    column="inv_doc_title_cd"    />
+        <result property="invDocTitleName"    column="inv_doc_title_name"    />
+        <result property="consDocCd"    column="cons_doc_cd"    />
+        <result property="consDocName"    column="cons_doc_name"    />
+        <result property="consDate"    column="cons_date"    />
+        <result property="consSignDate"    column="cons_sign_date"    />
+        <result property="patCondSesc"    column="pat_cond_sesc"    />
+        <result property="consPurp"    column="cons_purp"    />
+        <result property="state"    column="state"    />
+        <result property="genReview"    column="gen_review"    />
+        <result property="phyExam"    column="phy_exam"    />
+        <result property="consDiag"    column="cons_diag"    />
+        <result property="consOpinion"    column="cons_opinion"    />
+        <result property="applySatiCd"    column="apply_sati_cd"    />
+        <result property="applySatiName"    column="apply_sati_name"    />
+        <result property="applyEavlCd"    column="apply_eavl_cd"    />
+        <result property="applyEavlName"    column="apply_eavl_name"    />
+        <result property="applyEavlDesc"    column="apply_eavl_desc"    />
+        <result property="consSatiCd"    column="cons_sati_cd"    />
+        <result property="consSatiName"    column="cons_sati_name"    />
+        <result property="consEavlCd"    column="cons_eavl_cd"    />
+        <result property="consEavlName"    column="cons_eavl_name"    />
+        <result property="consEavlDesc"    column="cons_eavl_desc"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="phone"    column="phone"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="linkMan"    column="link_man"    />
+        <result property="delDate"    column="del_date"    />
+        <result property="acceptDate"    column="accept_date"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="applyDiag"    column="apply_diag"    />
+    </resultMap>
+<resultMap id="TdCaConsApplyVoResult" type="TdCaConsApplyVo" extends="TdCaConsApplyResult">
+    <result property="patientMainId"    column="patient_main_id"    />
+    <result property="recordNo"    column="CASE_NO"    />
+</resultMap>
+    <sql id="selectTdCaConsApplyVo">
+        select id, patient_id, inp_no, visit_id, patient_name, sex, sex_cd, age, bed_no, inhos_time, cons_type_cd, cons_type_name,
+               apply_dept_cd, apply_dept_name, apply_doc_cd, apply_doc_name, apply_doc_title_cd, apply_doc_title_name, apply_date,
+               apply_sign_date, cons_dept_cd, cons_dept_name, inv_doc_cd, inv_doc_name, inv_doc_title_cd, inv_doc_title_name,
+               cons_doc_cd, cons_doc_name, cons_date, cons_sign_date, pat_cond_sesc, cons_purp, state, gen_review, phy_exam,
+               cons_diag, cons_opinion, apply_sati_cd, apply_sati_name, apply_eavl_cd, apply_eavl_name, apply_eavl_desc,
+               cons_sati_cd, cons_sati_name, cons_eavl_cd, cons_eavl_name, cons_eavl_desc, alt_date, alt_per_code,
+               alt_per_name, cre_date, cre_per_code, cre_per_name,phone,mr_file_id,link_man,del_date,accept_date,order_no,apply_diag from td_ca_cons_apply
+    </sql>
+
+    <select id="selectTdCaConsApplyList" parameterType="TdCaConsApplyVo" resultMap="TdCaConsApplyVoResult">
+        <include refid="selectTdCaConsApplyVo"/>
+        <where>
+            and state !='05'
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="inpNo != null  and inpNo != ''"> and inp_no = #{inpNo}</if>
+            <if test="visitId != null "> and visit_id = #{visitId}</if>
+            <if test="patientName != null  and patientName != ''">
+            and (
+                patient_name like concat(concat('%', #{patientName}), '%') or
+                inp_no like concat(concat('%', #{patientName}), '%')
+                )
+            </if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="sexCd != null  and sexCd != ''"> and sex_cd = #{sexCd}</if>
+            <if test="age != null  and age != ''"> and age = #{age}</if>
+            <if test="bedNo != null  and bedNo != ''"> and bed_no = #{bedNo}</if>
+            <if test="inhosTime != null "> and inhos_time = #{inhosTime}</if>
+            <if test="consTypeCd != null  and consTypeCd != ''"> and cons_type_cd = #{consTypeCd}</if>
+            <if test="consTypeName != null  and consTypeName != ''"> and cons_type_name like concat(concat('%', #{consTypeName}), '%')</if>
+            <if test="applyDeptCd != null  and applyDeptCd != ''"> and apply_dept_cd = #{applyDeptCd}</if>
+            <if test="applyDeptName != null  and applyDeptName != ''"> and apply_dept_name like concat(concat('%', #{applyDeptName}), '%')</if>
+            <if test="applyDocCd != null  and applyDocCd != ''"> and apply_doc_cd = #{applyDocCd}</if>
+            <if test="applyDocName != null  and applyDocName != ''"> and apply_doc_name like concat(concat('%', #{applyDocName}), '%')</if>
+            <if test="applyDocTitleCd != null  and applyDocTitleCd != ''"> and apply_doc_title_cd = #{applyDocTitleCd}</if>
+            <if test="applyDocTitleName != null  and applyDocTitleName != ''"> and apply_doc_title_name like concat(concat('%', #{applyDocTitleName}), '%')</if>
+            <if test="applyDate != null "> and apply_date = #{applyDate}</if>
+            <if test="applySignDate != null "> and apply_sign_date = #{applySignDate}</if>
+            <if test="consDeptCd != null  and consDeptCd != ''"> and cons_dept_cd = #{consDeptCd}</if>
+            <if test="consDeptName != null  and consDeptName != ''"> and cons_dept_name like concat(concat('%', #{consDeptName}), '%')</if>
+            <if test="invDocCd != null  and invDocCd != ''"> and inv_doc_cd = #{invDocCd}</if>
+            <if test="invDocName != null  and invDocName != ''"> and inv_doc_name like concat(concat('%', #{invDocName}), '%')</if>
+            <if test="invDocTitleCd != null  and invDocTitleCd != ''"> and inv_doc_title_cd = #{invDocTitleCd}</if>
+            <if test="invDocTitleName != null  and invDocTitleName != ''"> and inv_doc_title_name like concat(concat('%', #{invDocTitleName}), '%')</if>
+            <if test="consDocCd != null  and consDocCd != ''"> and cons_doc_cd = #{consDocCd}</if>
+            <if test="consDocName != null  and consDocName != ''"> and cons_doc_name like concat(concat('%', #{consDocName}), '%')</if>
+            <if test="consDate != null "> and cons_date = #{consDate}</if>
+            <if test="consSignDate != null "> and cons_sign_date = #{consSignDate}</if>
+            <if test="patCondSesc != null  and patCondSesc != ''"> and pat_cond_sesc = #{patCondSesc}</if>
+            <if test="consPurp != null  and consPurp != ''"> and cons_purp = #{consPurp}</if>
+            <if test="state != null  and state != '' and assignDocFlag != null and assignDocFlag == '1'.toString()">
+                and (state = #{state} or (state = '02' and inv_doc_cd is not null))
+            </if>
+            <if test="state != null  and state != '' and assignDocFlag == null">
+                and state = #{state}
+            </if>
+            <if test="genReview != null  and genReview != ''"> and gen_review = #{genReview}</if>
+            <if test="phyExam != null  and phyExam != ''"> and phy_exam = #{phyExam}</if>
+            <if test="consDiag != null  and consDiag != ''"> and cons_diag = #{consDiag}</if>
+            <if test="consOpinion != null  and consOpinion != ''"> and cons_opinion = #{consOpinion}</if>
+            <if test="applySatiCd != null  and applySatiCd != ''"> and apply_sati_cd = #{applySatiCd}</if>
+            <if test="applySatiName != null  and applySatiName != ''"> and apply_sati_name like concat(concat('%', #{applySatiName}), '%')</if>
+            <if test="applyEavlCd != null  and applyEavlCd != ''"> and apply_eavl_cd = #{applyEavlCd}</if>
+            <if test="applyEavlName != null  and applyEavlName != ''"> and apply_eavl_name like concat(concat('%', #{applyEavlName}), '%')</if>
+            <if test="applyEavlDesc != null  and applyEavlDesc != ''"> and apply_eavl_desc = #{applyEavlDesc}</if>
+            <if test="consSatiCd != null  and consSatiCd != ''"> and cons_sati_cd = #{consSatiCd}</if>
+            <if test="consSatiName != null  and consSatiName != ''"> and cons_sati_name like concat(concat('%', #{consSatiName}), '%')</if>
+            <if test="consEavlCd != null  and consEavlCd != ''"> and cons_eavl_cd = #{consEavlCd}</if>
+            <if test="consEavlName != null  and consEavlName != ''"> and cons_eavl_name like concat(concat('%', #{consEavlName}), '%')</if>
+            <if test="consEavlDesc != null  and consEavlDesc != ''"> and cons_eavl_desc = #{consEavlDesc}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="mrFileId != null "> and mr_file_id = #{mrFileId}</if>
+            <if test="orderNo != null "> and order_no = #{orderNo}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="linkMan != null  and linkMan != ''"> and link_Man like concat(concat('%', #{linkMan}), '%')</if>
+            <if test="stateList != null ">
+            and state in
+                <foreach item="state" collection="stateList" open="(" separator="," close=")">
+                    #{state}
+                </foreach>
+             </if>
+             <if test="startDate!=null and endDate!=null">
+                 and cons_date between #{startDate} and #{endDate}
+             </if>
+        </where>
+        order by apply_date desc
+    </select>
+    <select id="selectTdCaConsApplyStatisList" parameterType="TdCaConsApplyVo" resultMap="TdCaConsApplyVoResult">
+        <include refid="selectTdCaConsApplyVo"/>
+        <where>
+            <if test="patientName != null  and patientName != ''">
+            and (
+                patient_name like concat(concat('%', #{patientName}), '%') or
+                inp_no like concat(concat('%', #{patientName}), '%')
+                )
+            </if>
+            <if test="consTypeCd != null  and consTypeCd != ''"> and cons_type_cd = #{consTypeCd}</if>
+            <if test="applyDocCd != null  and applyDocCd != ''"> and apply_doc_cd = #{applyDocCd}</if>
+            <if test="consDeptCd != null  and consDeptCd != ''"> and cons_dept_cd = #{consDeptCd}</if>
+            <if test="consDocCd != null  and consDocCd != ''"> and cons_doc_cd = #{consDocCd}</if>
+            <if test="applyDeptCd != null  and applyDeptCd != ''"> and apply_dept_cd = #{applyDeptCd}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+             <if test="startDate!=null and endDate!=null">
+                 and cons_sign_date between #{startDate} and #{endDate}
+             </if>
+            <if test="docType!=null and docType!='' and docType=='1'.toString()">
+                <if test="satiCd!=null and satiCd!=''">
+                    and apply_sati_cd = #{satiCd}
+                </if>
+            </if>
+            <if test="docType!=null and docType!='' and docType=='2'.toString()">
+                <if test="satiCd!=null and satiCd!=''">
+                    and cons_sati_cd = #{satiCd}
+                </if>
+            </if>
+            <if test="exceedState!=null and exceedState!='' and exceedState=='1'.toString() ">
+                    and round(TO_NUMBER(CONS_SIGN_DATE-APPLY_DATE)*24)&lt;=24
+            </if>
+            <if test="exceedState!=null and exceedState!='' and exceedState=='2'.toString() ">
+                and round(TO_NUMBER(CONS_SIGN_DATE-APPLY_DATE)*24)>24
+            </if>
+            <if test="startHours!=null and endHours!=null">
+                and round(TO_NUMBER(CONS_SIGN_DATE-APPLY_DATE)*24) between #{startHours} and #{endHours}
+            </if>
+            <if test="startHours!=null and endHours==null">
+                and round(TO_NUMBER(CONS_SIGN_DATE-APPLY_DATE)*24)>24
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTdCaConsApplyById" parameterType="Long" resultMap="TdCaConsApplyResult">
+        <include refid="selectTdCaConsApplyVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectTdCaConsApplyByMrFileId" parameterType="Long" resultMap="TdCaConsApplyResult">
+        <include refid="selectTdCaConsApplyVo"/>
+        where mr_file_id = #{mrFileId}
+    </select>
+
+    <insert id="insertTdCaConsApply" parameterType="TdCaConsApplyVo">
+        insert into td_ca_cons_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="inpNo != null">inp_no,</if>
+            <if test="visitId != null">visit_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="sex != null">sex,</if>
+            <if test="sexCd != null">sex_cd,</if>
+            <if test="age != null">age,</if>
+            <if test="bedNo != null">bed_no,</if>
+            <if test="inhosTime != null">inhos_time,</if>
+            <if test="consTypeCd != null">cons_type_cd,</if>
+            <if test="consTypeName != null">cons_type_name,</if>
+            <if test="applyDeptCd != null">apply_dept_cd,</if>
+            <if test="applyDeptName != null">apply_dept_name,</if>
+            <if test="applyDocCd != null">apply_doc_cd,</if>
+            <if test="applyDocName != null">apply_doc_name,</if>
+            <if test="applyDocTitleCd != null">apply_doc_title_cd,</if>
+            <if test="applyDocTitleName != null">apply_doc_title_name,</if>
+            <if test="applyDate != null">apply_date,</if>
+            <if test="applySignDate != null">apply_sign_date,</if>
+            <if test="consDeptCd != null">cons_dept_cd,</if>
+            <if test="consDeptName != null">cons_dept_name,</if>
+            <if test="invDocCd != null">inv_doc_cd,</if>
+            <if test="invDocName != null">inv_doc_name,</if>
+            <if test="invDocTitleCd != null">inv_doc_title_cd,</if>
+            <if test="invDocTitleName != null">inv_doc_title_name,</if>
+            <if test="consDocCd != null">cons_doc_cd,</if>
+            <if test="consDocName != null">cons_doc_name,</if>
+            <if test="consDate != null">cons_date,</if>
+            <if test="consSignDate != null">cons_sign_date,</if>
+            <if test="patCondSesc != null">pat_cond_sesc,</if>
+            <if test="consPurp != null">cons_purp,</if>
+            <if test="state != null">state,</if>
+            <if test="genReview != null">gen_review,</if>
+            <if test="phyExam != null">phy_exam,</if>
+            <if test="consDiag != null">cons_diag,</if>
+            <if test="consOpinion != null">cons_opinion,</if>
+            <if test="applySatiCd != null">apply_sati_cd,</if>
+            <if test="applySatiName != null">apply_sati_name,</if>
+            <if test="applyEavlCd != null">apply_eavl_cd,</if>
+            <if test="applyEavlName != null">apply_eavl_name,</if>
+            <if test="applyEavlDesc != null">apply_eavl_desc,</if>
+            <if test="consSatiCd != null">cons_sati_cd,</if>
+            <if test="consSatiName != null">cons_sati_name,</if>
+            <if test="consEavlCd != null">cons_eavl_cd,</if>
+            <if test="consEavlName != null">cons_eavl_name,</if>
+            <if test="consEavlDesc != null">cons_eavl_desc,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="linkMan != null and linkMan!=''">link_Man,</if>
+            <if test="delDate != null ">del_date,</if>
+            <if test="acceptDate != null ">accept_date,</if>
+            <if test="orderNo != null ">order_no,</if>
+            <if test="applyDiag != null ">apply_diag,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="inpNo != null">#{inpNo},</if>
+            <if test="visitId != null">#{visitId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="sexCd != null">#{sexCd},</if>
+            <if test="age != null">#{age},</if>
+            <if test="bedNo != null">#{bedNo},</if>
+            <if test="inhosTime != null">#{inhosTime},</if>
+            <if test="consTypeCd != null">#{consTypeCd},</if>
+            <if test="consTypeName != null">#{consTypeName},</if>
+            <if test="applyDeptCd != null">#{applyDeptCd},</if>
+            <if test="applyDeptName != null">#{applyDeptName},</if>
+            <if test="applyDocCd != null">#{applyDocCd},</if>
+            <if test="applyDocName != null">#{applyDocName},</if>
+            <if test="applyDocTitleCd != null">#{applyDocTitleCd},</if>
+            <if test="applyDocTitleName != null">#{applyDocTitleName},</if>
+            <if test="applyDate != null">#{applyDate},</if>
+            <if test="applySignDate != null">#{applySignDate},</if>
+            <if test="consDeptCd != null">#{consDeptCd},</if>
+            <if test="consDeptName != null">#{consDeptName},</if>
+            <if test="invDocCd != null">#{invDocCd},</if>
+            <if test="invDocName != null">#{invDocName},</if>
+            <if test="invDocTitleCd != null">#{invDocTitleCd},</if>
+            <if test="invDocTitleName != null">#{invDocTitleName},</if>
+            <if test="consDocCd != null">#{consDocCd},</if>
+            <if test="consDocName != null">#{consDocName},</if>
+            <if test="consDate != null">#{consDate},</if>
+            <if test="consSignDate != null">#{consSignDate},</if>
+            <if test="patCondSesc != null">#{patCondSesc},</if>
+            <if test="consPurp != null">#{consPurp},</if>
+            <if test="state != null">#{state},</if>
+            <if test="genReview != null">#{genReview},</if>
+            <if test="phyExam != null">#{phyExam},</if>
+            <if test="consDiag != null">#{consDiag},</if>
+            <if test="consOpinion != null">#{consOpinion},</if>
+            <if test="applySatiCd != null">#{applySatiCd},</if>
+            <if test="applySatiName != null">#{applySatiName},</if>
+            <if test="applyEavlCd != null">#{applyEavlCd},</if>
+            <if test="applyEavlName != null">#{applyEavlName},</if>
+            <if test="applyEavlDesc != null">#{applyEavlDesc},</if>
+            <if test="consSatiCd != null">#{consSatiCd},</if>
+            <if test="consSatiName != null">#{consSatiName},</if>
+            <if test="consEavlCd != null">#{consEavlCd},</if>
+            <if test="consEavlName != null">#{consEavlName},</if>
+            <if test="consEavlDesc != null">#{consEavlDesc},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="linkMan != null and linkMan !=''">#{linkMan},</if>
+            <if test="delDate != null">#{delDate},</if>
+            <if test="acceptDate != null">#{acceptDate},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="applyDiag != null">#{applyDiag},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateTdCaConsApply" parameterType="TdCaConsApply">
+        update td_ca_cons_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="inpNo != null">inp_no = #{inpNo},</if>
+            <if test="visitId != null">visit_id = #{visitId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="sexCd != null">sex_cd = #{sexCd},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="inhosTime != null">inhos_time = #{inhosTime},</if>
+            <if test="consTypeCd != null">cons_type_cd = #{consTypeCd},</if>
+            <if test="consTypeName != null">cons_type_name = #{consTypeName},</if>
+            <if test="applyDeptCd != null">apply_dept_cd = #{applyDeptCd},</if>
+            <if test="applyDeptName != null">apply_dept_name = #{applyDeptName},</if>
+            <if test="applyDocCd != null">apply_doc_cd = #{applyDocCd},</if>
+            <if test="applyDocName != null">apply_doc_name = #{applyDocName},</if>
+            <if test="applyDocTitleCd != null">apply_doc_title_cd = #{applyDocTitleCd},</if>
+            <if test="applyDocTitleName != null">apply_doc_title_name = #{applyDocTitleName},</if>
+            <if test="applyDate != null">apply_date = #{applyDate},</if>
+            <if test="applySignDate != null">apply_sign_date = #{applySignDate},</if>
+            <if test="consDeptCd != null">cons_dept_cd = #{consDeptCd},</if>
+            <if test="consDeptName != null">cons_dept_name = #{consDeptName},</if>
+            <if test="invDocCd != null">inv_doc_cd = #{invDocCd},</if>
+            <if test="invDocName != null">inv_doc_name = #{invDocName},</if>
+            <if test="invDocTitleCd != null">inv_doc_title_cd = #{invDocTitleCd},</if>
+            <if test="invDocTitleName != null">inv_doc_title_name = #{invDocTitleName},</if>
+            <if test="consDocCd != null">cons_doc_cd = #{consDocCd},</if>
+            <if test="consDocName != null">cons_doc_name = #{consDocName},</if>
+            <if test="consDate != null">cons_date = #{consDate},</if>
+            <if test="consSignDate != null">cons_sign_date = #{consSignDate},</if>
+            <if test="patCondSesc != null">pat_cond_sesc = #{patCondSesc},</if>
+            <if test="consPurp != null">cons_purp = #{consPurp},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="genReview != null">gen_review = #{genReview},</if>
+            <if test="phyExam != null">phy_exam = #{phyExam},</if>
+            <if test="consDiag != null">cons_diag = #{consDiag},</if>
+            <if test="consOpinion != null">cons_opinion = #{consOpinion},</if>
+            <if test="applySatiCd != null">apply_sati_cd = #{applySatiCd},</if>
+            <if test="applySatiName != null">apply_sati_name = #{applySatiName},</if>
+            <if test="applyEavlCd != null">apply_eavl_cd = #{applyEavlCd},</if>
+            <if test="applyEavlName != null">apply_eavl_name = #{applyEavlName},</if>
+            <if test="applyEavlDesc != null">apply_eavl_desc = #{applyEavlDesc},</if>
+            <if test="consSatiCd != null">cons_sati_cd = #{consSatiCd},</if>
+            <if test="consSatiName != null">cons_sati_name = #{consSatiName},</if>
+            <if test="consEavlCd != null">cons_eavl_cd = #{consEavlCd},</if>
+            <if test="consEavlName != null">cons_eavl_name = #{consEavlName},</if>
+            <if test="consEavlDesc != null">cons_eavl_desc = #{consEavlDesc},</if>
+            alt_date = sysdate,
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="linkMan != null and linkMan!=''">link_Man = #{linkMan},</if>
+            <if test="delDate != null">del_date = #{delDate},</if>
+            <if test="acceptDate != null">accept_date = #{acceptDate},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="applyDiag != null">apply_diag = #{applyDiag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdCaConsApplyById" parameterType="Long">
+        delete from td_ca_cons_apply where id = #{id}
+    </delete>
+
+    <delete id="deleteTdCaConsApplyByIds" parameterType="String">
+        delete from td_ca_cons_apply where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectUnFinishConsList" parameterType="TdCaConsApplyVo" resultMap="TdCaConsApplyVoResult">
+        select apply.*,pp.patient_main_id,m.CASE_NO from td_ca_cons_apply apply left join PAT_PERSONALINFO pp on apply.patient_id=pp.patient_id
+        left join EMR_QC_FLOW qf on qf.PATIENT_ID = apply.patient_id
+        left join t_ar_medicalinformation_all m on apply.patient_id = m.ADMISSION_NO
+        where
+              ( (apply.APPLY_DOC_CD=#{docCd} and apply.APPLY_DEPT_CD=#{consDeptCd} )or (apply.INV_DOC_CD=#{docCd} and apply.CONS_DEPT_CD=#{consDeptCd} )
+                   <if test="archiaterFlag !=null and archiaterFlag=='TRUE'">
+                       or (apply.CONS_DEPT_CD=#{consDeptCd} and apply.CONS_DOC_CD is null )
+                   </if>
+               or (apply.CONS_DOC_CD=#{docCd} and apply.CONS_DEPT_CD=#{consDeptCd})) and apply.state not in ('01','04','05')
+               <if test="patientId!=null and patientId!=''">
+                   and apply.patient_id=#{patientId}
+               </if>
+            and (qf.MR_STATE not in ('14','16') or qf.MR_STATE is null)
+        order by apply.apply_date
+    </select>
+    <select id="selectListByIds" parameterType="Long" resultMap="TdCaConsApplyResult">
+        select id, state
+        from td_ca_cons_apply
+        where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <update id="updateStatusByIds" parameterType="Long">
+        update td_ca_cons_apply
+        set state = #{state}
+        where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <update id="updateToReturn" parameterType="TdCaConsApply">
+        update td_ca_cons_apply
+        set state = #{state},cons_doc_cd = null, cons_doc_name = null, accept_date = null,
+        alt_per_code = #{altPerCode},alt_per_name = #{altPerName}
+        where id = #{id}
+    </update>
+</mapper>

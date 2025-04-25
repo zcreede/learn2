@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrHpOpeMapper">
+
+    <resultMap type="MrHpOpe" id="MrHpOpeResult">
+        <result property="opeId"    column="ope_id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="opeNo"    column="ope_no"    />
+        <result property="oprIcd"    column="opr_icd"    />
+        <result property="oprName"    column="opr_name"    />
+        <result property="oprBeginDatetime"    column="opr_begin_datetime"    />
+        <result property="oprLevelCode"    column="opr_level_code"    />
+        <result property="oprLevel"    column="opr_level"    />
+        <result property="opeCode"    column="ope_code"    />
+        <result property="opeName"    column="ope_name"    />
+        <result property="aid1Code"    column="aid1_code"    />
+        <result property="aid1Name"    column="aid1_name"    />
+        <result property="aid2Code"    column="aid2_code"    />
+        <result property="aid2Name"    column="aid2_name"    />
+        <result property="oprInciCode"    column="opr_inci_code"    />
+        <result property="oprHealCode"    column="opr_heal_code"    />
+        <result property="anestMethCode"    column="anest_meth_code"    />
+        <result property="anestMethName"    column="anest_meth_name"    />
+        <result property="anestName"    column="anest_name"    />
+        <result property="anestCode"    column="anest_code"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="oprEndDatetime"    column="opr_end_datetime"    />
+        <result property="anestAsa"    column="anest_asa"    />
+        <result property="oprSiteCode"    column="opr_site_code"    />
+        <result property="oprSiteName"    column="opr_site_name"    />
+        <result property="oprNnis"    column="opr_nnis"    />
+        <result property="oprHealName"    column="opr_heal_name"    />
+        <result property="oprInciName"    column="opr_inci_name"    />
+        <result property="opeType"    column="ope_type"    />
+        <result property="opeMain"    column="ope_main"    />
+        <result property="anestBeginTime"    column="anest_begin_time"    />
+        <result property="anestEndTime"    column="anest_end_time"    />
+    </resultMap>
+
+    <sql id="selectMrHpOpeVo">
+        select ope_id, record_id, ope_no, opr_icd, opr_name, opr_begin_datetime, opr_level_code, opr_level,opr_inci_name,
+        ope_code,opr_heal_name, ope_name, aid1_code, aid1_name, aid2_code, aid2_name, opr_inci_code, opr_heal_code,
+        anest_meth_code, anest_meth_name, anest_name, anest_code, cre_per_code, cre_per_name, cre_date, alt_per_code,
+        alt_per_name, alt_date, opr_end_datetime, anest_asa, opr_site_code, opr_site_name, opr_nnis,ope_type,ope_main,
+        anest_begin_time,anest_end_time
+        from mr_hp_ope
+    </sql>
+
+    <select id="selectMrHpOpeList" parameterType="MrHpOpe" resultMap="MrHpOpeResult">
+        <include refid="selectMrHpOpeVo"/>
+        <where>
+            <if test="recordId != null  and recordId != ''"> and record_id = #{recordId}</if>
+            <if test="opeNo != null  and opeNo != ''"> and ope_no = #{opeNo}</if>
+            <if test="oprIcd != null  and oprIcd != ''"> and opr_icd = #{oprIcd}</if>
+            <if test="oprName != null  and oprName != ''"> and opr_name like concat(concat('%', #{oprName}), '%')</if>
+            <if test="oprBeginDatetime != null "> and opr_begin_datetime = #{oprBeginDatetime}</if>
+            <if test="oprLevelCode != null  and oprLevelCode != ''"> and opr_level_code = #{oprLevelCode}</if>
+            <if test="oprLevel != null  and oprLevel != ''"> and opr_level = #{oprLevel}</if>
+            <if test="opeCode != null  and opeCode != ''"> and ope_code = #{opeCode}</if>
+            <if test="opeName != null  and opeName != ''"> and ope_name like concat(concat('%', #{opeName}), '%')</if>
+            <if test="aid1Code != null  and aid1Code != ''"> and aid1_code = #{aid1Code}</if>
+            <if test="aid1Name != null  and aid1Name != ''"> and aid1_name like concat(concat('%', #{aid1Name}), '%')</if>
+            <if test="aid2Code != null  and aid2Code != ''"> and aid2_code = #{aid2Code}</if>
+            <if test="aid2Name != null  and aid2Name != ''"> and aid2_name like concat(concat('%', #{aid2Name}), '%')</if>
+            <if test="oprInciCode != null  and oprInciCode != ''"> and opr_inci_code = #{oprInciCode}</if>
+            <if test="oprHealCode != null  and oprHealCode != ''"> and opr_heal_code = #{oprHealCode}</if>
+            <if test="anestMethCode != null  and anestMethCode != ''"> and anest_meth_code = #{anestMethCode}</if>
+            <if test="anestMethName != null  and anestMethName != ''"> and anest_meth_name like concat(concat('%', #{anestMethName}), '%')</if>
+            <if test="anestName != null  and anestName != ''"> and anest_name like concat(concat('%', #{anestName}), '%')</if>
+            <if test="anestCode != null  and anestCode != ''"> and anest_code = #{anestCode}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="oprEndDatetime != null "> and opr_end_datetime = #{oprEndDatetime}</if>
+            <if test="anestAsa != null  and anestAsa != ''"> and anest_asa = #{anestAsa}</if>
+            <if test="oprSiteCode != null  and oprSiteCode != ''"> and opr_site_code = #{oprSiteCode}</if>
+            <if test="oprSiteName != null  and oprSiteName != ''"> and opr_site_name like concat(concat('%', #{oprSiteName}), '%')</if>
+            <if test="oprNnis != null  and oprNnis != ''"> and opr_nnis = #{oprNnis}</if>
+        </where>
+    </select>
+
+    <select id="selectMrHpOpeById" parameterType="String" resultMap="MrHpOpeResult">
+        <include refid="selectMrHpOpeVo"/>
+        where ope_id = #{opeId}
+    </select>
+
+    <select id="selectMrHpOpeByRecordId" parameterType="String" resultMap="MrHpOpeResult">
+        <include refid="selectMrHpOpeVo"/>
+        where record_id = #{recordId}
+    </select>
+
+    <insert id="insertMrHpOpe" parameterType="MrHpOpe">
+        <selectKey keyProperty="opeId" resultType="long" order="BEFORE">
+            SELECT seq_mr_hp_ope.NEXTVAL as opeId FROM DUAL
+        </selectKey>
+        insert into mr_hp_ope
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="opeId != null">ope_id,</if>
+            <if test="recordId != null and recordId != ''">record_id,</if>
+            <if test="opeNo != null and opeNo != ''">ope_no,</if>
+            <if test="oprIcd != null">opr_icd,</if>
+            <if test="oprName != null and oprName != ''">opr_name,</if>
+            <if test="oprBeginDatetime != null">opr_begin_datetime,</if>
+            <if test="oprLevelCode != null">opr_level_code,</if>
+            <if test="oprLevel != null">opr_level,</if>
+            <if test="opeCode != null">ope_code,</if>
+            <if test="opeName != null">ope_name,</if>
+            <if test="aid1Code != null">aid1_code,</if>
+            <if test="aid1Name != null">aid1_name,</if>
+            <if test="aid2Code != null">aid2_code,</if>
+            <if test="aid2Name != null">aid2_name,</if>
+            <if test="oprInciCode != null">opr_inci_code,</if>
+            <if test="oprHealCode != null">opr_heal_code,</if>
+            <if test="anestMethCode != null">anest_meth_code,</if>
+            <if test="anestMethName != null">anest_meth_name,</if>
+            <if test="anestName != null">anest_name,</if>
+            <if test="anestCode != null">anest_code,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="oprEndDatetime != null">opr_end_datetime,</if>
+            <if test="anestAsa != null">anest_asa,</if>
+            <if test="oprSiteCode != null">opr_site_code,</if>
+            <if test="oprSiteName != null">opr_site_name,</if>
+            <if test="oprNnis != null">opr_nnis,</if>
+            <if test="oprHealName != null">opr_heal_name,</if>
+            <if test="oprInciName != null">opr_inci_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="opeId != null">#{opeId},</if>
+            <if test="recordId != null and recordId != ''">#{recordId},</if>
+            <if test="opeNo != null and opeNo != ''">#{opeNo},</if>
+            <if test="oprIcd != null">#{oprIcd},</if>
+            <if test="oprName != null and oprName != ''">#{oprName},</if>
+            <if test="oprBeginDatetime != null">#{oprBeginDatetime},</if>
+            <if test="oprLevelCode != null">#{oprLevelCode},</if>
+            <if test="oprLevel != null">#{oprLevel},</if>
+            <if test="opeCode != null">#{opeCode},</if>
+            <if test="opeName != null">#{opeName},</if>
+            <if test="aid1Code != null">#{aid1Code},</if>
+            <if test="aid1Name != null">#{aid1Name},</if>
+            <if test="aid2Code != null">#{aid2Code},</if>
+            <if test="aid2Name != null">#{aid2Name},</if>
+            <if test="oprInciCode != null">#{oprInciCode},</if>
+            <if test="oprHealCode != null">#{oprHealCode},</if>
+            <if test="anestMethCode != null">#{anestMethCode},</if>
+            <if test="anestMethName != null">#{anestMethName},</if>
+            <if test="anestName != null">#{anestName},</if>
+            <if test="anestCode != null">#{anestCode},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="oprEndDatetime != null">#{oprEndDatetime},</if>
+            <if test="anestAsa != null">#{anestAsa},</if>
+            <if test="oprSiteCode != null">#{oprSiteCode},</if>
+            <if test="oprSiteName != null">#{oprSiteName},</if>
+            <if test="oprNnis != null">#{oprNnis},</if>
+            <if test="oprHealName != null">#{oprHealName},</if>
+            <if test="oprInciName != null">#{oprInciName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMrHpOpe" parameterType="MrHpOpe">
+        update mr_hp_ope
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null and recordId != ''">record_id = #{recordId},</if>
+            <if test="opeNo != null and opeNo != ''">ope_no = #{opeNo},</if>
+            <if test="oprIcd != null">opr_icd = #{oprIcd},</if>
+            <if test="oprName != null and oprName != ''">opr_name = #{oprName},</if>
+            <if test="oprBeginDatetime != null">opr_begin_datetime = #{oprBeginDatetime},</if>
+            <if test="oprLevelCode != null">opr_level_code = #{oprLevelCode},</if>
+            <if test="oprLevel != null">opr_level = #{oprLevel},</if>
+            <if test="opeCode != null">ope_code = #{opeCode},</if>
+            <if test="opeName != null">ope_name = #{opeName},</if>
+            <if test="aid1Code != null">aid1_code = #{aid1Code},</if>
+            <if test="aid1Name != null">aid1_name = #{aid1Name},</if>
+            <if test="aid2Code != null">aid2_code = #{aid2Code},</if>
+            <if test="aid2Name != null">aid2_name = #{aid2Name},</if>
+            <if test="oprInciCode != null">opr_inci_code = #{oprInciCode},</if>
+            <if test="oprHealCode != null">opr_heal_code = #{oprHealCode},</if>
+            <if test="anestMethCode != null">anest_meth_code = #{anestMethCode},</if>
+            <if test="anestMethName != null">anest_meth_name = #{anestMethName},</if>
+            <if test="anestName != null">anest_name = #{anestName},</if>
+            <if test="anestCode != null">anest_code = #{anestCode},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="oprEndDatetime != null">opr_end_datetime = #{oprEndDatetime},</if>
+            <if test="anestAsa != null">anest_asa = #{anestAsa},</if>
+            <if test="oprSiteCode != null">opr_site_code = #{oprSiteCode},</if>
+            <if test="oprSiteName != null">opr_site_name = #{oprSiteName},</if>
+            <if test="oprNnis != null">opr_nnis = #{oprNnis},</if>
+            <if test="oprHealName != null">opr_heal_name = #{oprHealName},</if>
+            <if test="oprInciName != null">opr_inci_name = #{oprInciName},</if>
+        </trim>
+        where ope_id = #{opeId}
+    </update>
+
+    <delete id="deleteMrHpOpeById" parameterType="String">
+        delete from mr_hp_ope where ope_id = #{opeId}
+    </delete>
+
+    <delete id="deleteMrHpOpeByRecordId" parameterType="String">
+        delete from mr_hp_ope where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteMrHpOpeByIds" parameterType="String">
+        delete from mr_hp_ope where ope_id in
+        <foreach item="opeId" collection="array" open="(" separator="," close=")">
+            #{opeId}
+        </foreach>
+    </delete>
+    <select id="selectMrHpOpeByRescordId" parameterType="String" resultMap="MrHpOpeVoResult">
+        <include refid="selectMrHpOpeVo"/>
+        where record_id = #{recordId} order by ope_no
+    </select>
+
+    <resultMap type="MrHpOpeVo" id="MrHpOpeVoResult">
+        <result property="opeId"    column="ope_id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="opeNo"    column="ope_no"    />
+        <result property="oprIcd"    column="opr_icd"    />
+        <result property="oprName"    column="opr_name"    />
+        <result property="oprBeginDatetime"    column="opr_begin_datetime"    />
+        <result property="oprLevelCode"    column="opr_level_code"    />
+        <result property="oprLevel"    column="opr_level"    />
+        <result property="opeCode"    column="ope_code"    />
+        <result property="opeName"    column="ope_name"    />
+        <result property="aid1Code"    column="aid1_code"    />
+        <result property="aid1Name"    column="aid1_name"    />
+        <result property="aid2Code"    column="aid2_code"    />
+        <result property="aid2Name"    column="aid2_name"    />
+        <result property="oprInciCode"    column="opr_inci_code"    />
+        <result property="oprHealCode"    column="opr_heal_code"    />
+        <result property="anestMethCode"    column="anest_meth_code"    />
+        <result property="anestMethName"    column="anest_meth_name"    />
+        <result property="anestName"    column="anest_name"    />
+        <result property="anestCode"    column="anest_code"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="oprEndDatetime"    column="opr_end_datetime"    />
+        <result property="anestAsa"    column="anest_asa"    />
+        <result property="oprSiteCode"    column="opr_site_code"    />
+        <result property="oprSiteName"    column="opr_site_name"    />
+        <result property="oprNnis"    column="opr_nnis"    />
+        <result property="oprHealName"    column="opr_heal_name"    />
+        <result property="oprInciName"    column="opr_inci_name"    />
+        <result property="opeType"    column="ope_type"    />
+        <result property="opeMain"    column="ope_main"    />
+        <result property="anestBeginTime"    column="anest_begin_time"    />
+        <result property="anestEndTime"    column="anest_end_time"    />
+    </resultMap>
+
+    <select id="selectOperatRecordByPatientId" parameterType="String" resultMap="MrHpOpeVoResult">
+        SELECT
+            apply.plan_oper1_cd as opr_icd ,
+            apply.plan_oper1_name as opr_name,
+            icd.ope_type,
+            apply.oper_level_cd as opr_level_code,
+            apply.oper_level_name as opr_level,
+            apply.oper_doc_cd as ope_code,
+            apply.oper_doc_name as ope_name,
+            apply.oper_aid1_cd as aid1_code,
+            apply.oper_aid1_name as aid1_name,
+            apply.oper_aid2_cd as aid2_code,
+            apply.oper_aid2_name as aid2_name,
+            apply.oper_inci_name as opr_inci_name,
+            apply.oper_inci_cd as opr_inci_code,
+            apply.anest_meth_cd as anest_meth_code,
+            apply.anest_meth_name as anest_meth_name,
+            apply.anest_cd as anest_code,
+            apply.anest_name as anest_name,
+            '1' as ope_main
+        FROM
+            td_ca_operation_apply apply
+            LEFT JOIN SYS_OPE_ICD icd on icd.ICD_CD = apply.PLAN_OPER1_CD
+        WHERE
+            patient_id = #{patientId} and STATUS in ('05','06')
+    </select>
+
+    <insert id ="insertMrHpOpeList" parameterType="java.util.List" >
+        insert all
+        <foreach collection="list" item="mrHpOpeList" index="index">
+            into mr_hp_ope(
+                <if test="mrHpOpeList.opeId != null and mrHpOpeList.opeId != ''">ope_id,</if>
+                <if test="mrHpOpeList.recordId != null and mrHpOpeList.recordId != ''">record_id,</if>
+                <if test="mrHpOpeList.recordId != null and mrHpOpeList.recordId != ''">ope_no,</if>
+                <if test="mrHpOpeList.oprBeginDatetime != null">opr_begin_datetime,</if>
+                <if test="mrHpOpeList.oprEndDatetime != null">opr_end_datetime,</if>
+                <if test="mrHpOpeList.oprName != null and mrHpOpeList.recordId != ''">opr_name,</if>
+                <if test="mrHpOpeList.oprIcd != null and mrHpOpeList.oprIcd != ''">opr_icd,</if>
+                <if test="mrHpOpeList.oprSiteCode != null and mrHpOpeList.oprSiteCode != ''">opr_site_code,</if>
+                <if test="mrHpOpeList.oprSiteName != null and mrHpOpeList.oprSiteName != ''">opr_site_name,</if>
+                <if test="mrHpOpeList.oprLevelCode != null and mrHpOpeList.oprLevelCode != ''">opr_level_code,</if>
+                <if test="mrHpOpeList.oprLevel != null and mrHpOpeList.oprLevel != ''">opr_level,</if>
+                <if test="mrHpOpeList.opeCode != null and mrHpOpeList.opeCode != ''">ope_code,</if>
+                <if test="mrHpOpeList.opeName != null and mrHpOpeList.opeName != ''">ope_name,</if>
+                <if test="mrHpOpeList.aid1Code != null and mrHpOpeList.aid1Code != ''">aid1_code,</if>
+                <if test="mrHpOpeList.aid1Name != null and mrHpOpeList.aid1Name != ''">aid1_name,</if>
+                <if test="mrHpOpeList.aid2Code != null and mrHpOpeList.aid2Code != ''">aid2_code,</if>
+                <if test="mrHpOpeList.aid2Name != null and mrHpOpeList.aid2Name != ''">aid2_name,</if>
+                <if test="mrHpOpeList.oprInciCode != null and mrHpOpeList.oprInciCode != ''">opr_inci_code,</if>
+                <if test="mrHpOpeList.oprHealCode != null and mrHpOpeList.oprHealCode != ''">opr_heal_code,</if>
+                <if test="mrHpOpeList.anestMethCode != null and mrHpOpeList.anestMethCode != ''">anest_meth_code,</if>
+                <if test="mrHpOpeList.anestMethName != null and mrHpOpeList.anestMethName != ''">anest_meth_name,</if>
+                <if test="mrHpOpeList.anestCode != null and mrHpOpeList.anestCode != ''">anest_code,</if>
+                <if test="mrHpOpeList.anestName != null and mrHpOpeList.anestName != ''">anest_name,</if>
+                <if test="mrHpOpeList.anestAsa != null and mrHpOpeList.anestAsa != ''">anest_asa,</if>
+                <if test="mrHpOpeList.oprNnis != null and mrHpOpeList.oprNnis != ''">opr_nnis,</if>
+                <if test="mrHpOpeList.crePerName != null and mrHpOpeList.crePerName != ''">cre_per_name,</if>
+                <if test="mrHpOpeList.crePerCode != null and mrHpOpeList.crePerCode != ''">cre_per_code,</if>
+                <if test="mrHpOpeList.oprHealName != null and mrHpOpeList.oprHealName != ''">opr_heal_name,</if>
+                <if test="mrHpOpeList.oprInciName != null and mrHpOpeList.oprInciName != ''">opr_inci_name,</if>
+                <if test="mrHpOpeList.opeType != null and mrHpOpeList.opeType != ''">ope_type,</if>
+                <if test="mrHpOpeList.opeMain != null and mrHpOpeList.opeMain != ''">ope_main,</if>
+                <if test="mrHpOpeList.anestBeginTime != null">anest_begin_time,</if>
+                <if test="mrHpOpeList.anestEndTime != null">anest_end_time,</if>
+                cre_date
+            )
+            values (
+                <if test="mrHpOpeList.opeId != null and mrHpOpeList.opeId != ''">#{mrHpOpeList.opeId,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.recordId != null and mrHpOpeList.recordId != ''">#{mrHpOpeList.recordId,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.opeNo != null and mrHpOpeList.opeNo != ''">#{mrHpOpeList.opeNo,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprBeginDatetime != null">#{mrHpOpeList.oprBeginDatetime},</if>
+                <if test="mrHpOpeList.oprEndDatetime != null">#{mrHpOpeList.oprEndDatetime},</if>
+                <if test="mrHpOpeList.oprName != null and mrHpOpeList.oprName != ''">#{mrHpOpeList.oprName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprIcd != null and mrHpOpeList.oprIcd != ''">#{mrHpOpeList.oprIcd,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprSiteCode != null and mrHpOpeList.oprSiteCode != ''">#{mrHpOpeList.oprSiteCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprSiteName != null and mrHpOpeList.oprSiteName != ''">#{mrHpOpeList.oprSiteName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprLevelCode != null and mrHpOpeList.oprLevelCode != ''">#{mrHpOpeList.oprLevelCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprLevel != null and mrHpOpeList.oprLevel != ''">#{mrHpOpeList.oprLevel,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.opeCode != null and mrHpOpeList.opeCode != ''">#{mrHpOpeList.opeCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.opeName != null and mrHpOpeList.opeName != ''">#{mrHpOpeList.opeName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.aid1Code != null and mrHpOpeList.aid1Code != ''">#{mrHpOpeList.aid1Code,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.aid1Name != null and mrHpOpeList.aid1Name != ''">#{mrHpOpeList.aid1Name,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.aid2Code != null and mrHpOpeList.aid2Code != ''">#{mrHpOpeList.aid2Code,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.aid2Name != null and mrHpOpeList.aid2Name != ''">#{mrHpOpeList.aid2Name,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprInciCode != null and mrHpOpeList.oprInciCode != ''">#{mrHpOpeList.oprInciCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprHealCode != null and mrHpOpeList.oprHealCode != ''">#{mrHpOpeList.oprHealCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.anestMethCode != null and mrHpOpeList.anestMethCode != ''">#{mrHpOpeList.anestMethCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.anestMethName != null and mrHpOpeList.anestMethName != ''">#{mrHpOpeList.anestMethName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.anestCode != null and mrHpOpeList.anestCode != ''">#{mrHpOpeList.anestCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.anestName != null and mrHpOpeList.anestName != ''">#{mrHpOpeList.anestName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.anestAsa != null and mrHpOpeList.anestAsa != ''">#{mrHpOpeList.anestAsa,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprNnis != null and mrHpOpeList.oprNnis != ''">#{mrHpOpeList.oprNnis,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.crePerName != null and mrHpOpeList.crePerName != ''">#{mrHpOpeList.crePerName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.crePerCode != null and mrHpOpeList.crePerCode != ''">#{mrHpOpeList.crePerCode,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprHealName != null and mrHpOpeList.oprHealName != ''">#{mrHpOpeList.oprHealName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.oprInciName != null and mrHpOpeList.oprInciName != ''">#{mrHpOpeList.oprInciName,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.opeType != null and mrHpOpeList.opeType != ''">#{mrHpOpeList.opeType,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.opeMain != null and mrHpOpeList.opeMain != ''">#{mrHpOpeList.opeMain,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.anestBeginTime != null">#{mrHpOpeList.anestBeginTime,jdbcType=VARCHAR},</if>
+                <if test="mrHpOpeList.anestEndTime != null">#{mrHpOpeList.anestEndTime,jdbcType=VARCHAR},</if>
+                sysdate
+            )
+        </foreach>
+        select 1 from dual
+    </insert >
+    <select id="selectPbHisMrHpOpe" parameterType="SqlVo" resultMap="MrHpOpeVoResult">
+        ${sqlStr}
+        where zyh = #{inpNo}
+    </select>
+    <select id="selectMrisOperatRecordByPatientId" resultType="com.emr.project.mrhp.domain.mris.TdCmOperSave">
+        SELECT
+            apply.plan_oper1_cd as oper_icd ,
+            apply.plan_oper1_name as oper_name,
+            icd.ope_type as oper_type,
+            apply.oper_level_cd as oper_level_code,
+            apply.oper_level_name as oper_level_name,
+            apply.oper_doc_cd as oper_doc_code,
+            apply.oper_doc_name as oper_doc_name,
+            apply.oper_aid1_cd as aid1_code,
+            apply.oper_aid1_name as aid1_name,
+            apply.oper_aid2_cd as aid2_code,
+            apply.oper_aid2_name as aid2_name,
+            apply.oper_inci_name as oper_inci_name,
+            apply.oper_inci_cd as oper_inci_code,
+            apply.anest_meth_cd as anest_meth_code,
+            apply.anest_meth_name as anest_meth_name,
+            apply.anest_cd as anest_code,
+            apply.anest_name as anest_name,
+            '1' as oper_main
+        FROM
+            td_ca_operation_apply apply
+            LEFT JOIN SYS_OPE_ICD icd on icd.ICD_CD = apply.PLAN_OPER1_CD
+        WHERE
+            patient_id = #{patientId} and STATUS in ('05','06')
+    </select>
+    <select id="selectMrisMrHpOpeByRescordId" resultType="com.emr.project.mrhp.domain.mris.TdCmOperSave">
+        select ope_id as oper_id, record_id as record_id, ope_no as oper_seq, opr_icd as oper_icd, opr_name as oper_name,
+        opr_begin_datetime as oper_begin_dt, opr_level_code as oper_level_code, opr_level as oper_level_name,opr_inci_name as oper_inci_name,
+        ope_code as oper_doc_code,opr_heal_name as oper_heal_name, ope_name as oper_doc_name, aid1_code as aid1_code, aid1_name as aid1_name,
+        aid2_code as aid2_code, aid2_name as aid2_name, opr_inci_code as oper_inci_code, opr_heal_code as oper_heal_code,
+        anest_meth_code as anest_meth_code, anest_meth_name as anest_meth_name, anest_name as anest_name, anest_code as anest_code,
+        cre_per_code as cre_per_code, cre_per_name as cre_per_name, cre_date as cre_date, alt_per_code as alt_per_code,
+        alt_per_name as alt_per_name, alt_date as alt_date, opr_end_datetime as oper_end_dt, anest_asa as anest_asa,
+        opr_site_code as oper_site_code, opr_site_name as oper_site_name, opr_nnis as oper_nnis,ope_type as oper_type,ope_main as oper_main,
+        anest_begin_time as anest_begin_time,anest_end_time as anest_end_time
+        from mr_hp_ope
+        where record_id = #{recordId} order by ope_no
+    </select>
+</mapper>

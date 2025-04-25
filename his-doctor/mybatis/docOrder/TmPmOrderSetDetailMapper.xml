@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TmPmOrderSetDetailMapper">
+
+    <resultMap type="TmPmOrderSetDetail" id="TmPmOrderSetDetailResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="id"    column="id"    />
+        <result property="setCd"    column="set_cd"    />
+        <result property="itemClassCd"    column="item_class_cd"    />
+        <result property="groupNo"    column="group_no"    />
+        <result property="groupSort"    column="group_sort"    />
+        <result property="masterOrder"    column="master_order"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="examPartCd"    column="exam_part_cd"    />
+        <result property="examPartName"    column="exam_part_name"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="actualUseage"    column="actual_useage"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="itemOrderUsageWay"    column="item_order_usage_way"    />
+        <result property="usageWayName"    column="usage_way_name"    />
+        <result property="freqCd"    column="freq_cd"    />
+        <result property="freqName"    column="freq_name"    />
+        <result property="usageDays"    column="usage_days"    />
+        <result property="drugForm"    column="drug_form"    />
+        <result property="drugClassCode"    column="drug_class_code"    />
+        <result property="purposeAntimicrobialUse"    column="purpose_antimicrobial_use"    />
+        <result property="drippingSpeed"    column="dripping_speed"    />
+        <result property="execDeptCd"    column="exec_dept_cd"    />
+        <result property="execDeptName"    column="exec_dept_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="itemOrderUsageWayName"    column="item_order_usage_way_name"    />
+        <result property="itemFlag"    column="item_flag"    />
+        <result property="doctorInstructions"    column="doctor_Instructions"    />
+        <result property="stockNo"    column="stock_no"    />
+        <result property="documentTypeNo"    column="DOCUMENT_TYPE_NO"    />
+        <result property="price"    column="PRICE"    />
+        <result property="purposeAntimicrobialUseName"    column="purposeAntimicrobialUseName"    />
+    </resultMap>
+    <resultMap id="OrderSearchVoResult" type="OrderSearchVo">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="orderDoctorCode"    column="order_doctor_code"    />
+        <result property="orderDoctorNo"    column="order_doctor_no"    />
+        <result property="orderDoctorName"    column="order_doctor_name"    />
+        <result property="orderDoctorWardNo"    column="order_doctor_ward_no"    />
+        <result property="orderDoctorDepCode"    column="order_doctor_dep_code"    />
+        <result property="orderDoctorDepName"    column="order_doctor_dep_name"    />
+        <result property="babyAdmissionNo"    column="baby_admission_no"    />
+        <result property="detailPerformDepCode"    column="detail_perform_dep_code"    />
+        <result property="detailPerformDepName"    column="detail_perform_dep_name"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderGroupSortNumber"    column="order_group_sort_number"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="orderStartTime"    column="order_start_time"    />
+        <result property="takeDrugMode"    column="take_drug_mode"    />
+        <result property="additionalFlag"    column="additional_flag"    />
+        <result property="unit"    column="unit"    />
+        <result property="orderActualUsage"    column="order_actual_usage"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="orderDose"    column="order_dose"    />
+        <result property="price"    column="price"    />
+        <result property="orderTotal"    column="order_total"    />
+        <result property="orderFreq"    column="order_freq"    />
+        <result property="orderFreqName"    column="order_freq_name"    />
+        <result property="orderUsageWay"    column="order_usage_way"    />
+        <result property="orderUsageWayName"    column="order_usage_way_name"    />
+        <result property="urgentFlag"    column="urgent_flag"    />
+        <result property="firstPerformNum"    column="first_perform_num"    />
+        <result property="orderUsageDays"    column="order_usage_days"    />
+        <result property="purposeAntimicrobialUse"    column="purpose_antimicrobial_use"    />
+        <result property="purposeAntimicrobialUseName"    column="purpose_antimicrobial_use_name"    />
+        <result property="doctorInstructions"    column="doctor_instructions"    />
+        <result property="orderTotal"    column="order_total"    />
+        <result property="masterOrder"    column="master_order"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="patientSelfDrugFlag"    column="patient_self_drug_flag"    />
+        <result property="drippingSpeed"    column="DRIPPING_SPEED"    />
+        <result property="orderItemFlag"    column="ORDER_ITEM_FLAG"    />
+        <result property="orderFlagCd"    column="ORDER_FLAG_CD"    />
+        <result property="orderFlagName"    column="ORDER_FLAG_NAME"    />
+        <result property="outHavaDrugFlag" column="out_hava_drug_flag"/>
+        <result property="highRiskFlag" column="high_risk_flag"/>
+        <result property="cancelTime" column="order_cancel_time"/>
+        <result property="stockNo" column="stock_no"/>
+        <result property="performDepCode" column="perform_dep_code"/>
+        <result property="performDepName" column="perform_dep_name"/>
+        <result property="price" column="price"/>
+        <result property="examPartCd" column="exam_part_cd"/>
+        <result property="examPartName" column="exam_part_name"/>
+        <result property="specCd" column="spec_cd"/>
+        <result property="specName" column="spec_name"/>
+        <result property="documentTypeNo" column="document_type_no"/>
+    </resultMap>
+    <resultMap type="DrugAndClin" id="DrugAndClinResult">
+        <result property="id"    column="id"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="cpNo"    column="item_cd"    />
+        <result property="cpName"    column="item_name"    />
+        <result property="orderClassCode"    column="item_class_cd"    />
+        <result property="orderClassName"    column="item_class_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="documentTypeNo"    column="DOCUMENT_TYPE_NO"    />
+        <result property="examPartCd"    column="exam_part_cd"    />
+        <result property="examPartName"    column="exam_part_name"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="performDepCode"    column="exec_dept_cd"    />
+        <result property="performDepName"    column="exec_dept_name"    />
+        <result property="itemFlagCd"    column="item_flag_cd"    />
+        <result property="itemFlagName"    column="item_flag_name"    />
+        <result property="doctorInstructions"    column="doctor_Instructions"    />
+        <result property="yongfaName"    column="item_order_usage_way_name"    />
+        <result property="yongfa"    column="item_order_usage_way"    />
+        <result property="orderFreq"    column="freq_cd"    />
+        <result property="orderActualUsage"    column="actual_useage"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="drugForm"    column="drug_form"    />
+        <result property="stockNo"    column="stock_no"    />
+        <result property="num"    column="num"    />
+    </resultMap>
+    <sql id="selectTmPmOrderSetDetailVo">
+        select hospital_code, id, set_cd, item_class_cd, group_no, group_sort, master_order, item_cd, item_name, standard, exam_part_cd, exam_part_name,
+               spec_cd, spec_name, actual_useage, usage_unit, item_order_usage_way, usage_way_name, freq_cd, freq_name, usage_days, drug_form, drug_class_code,
+               purpose_antimicrobial_use, dripping_speed, exec_dept_cd, exec_dept_name, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name,
+               alt_date,item_order_usage_way_name,item_flag,doctor_Instructions,stock_no,document_Type_No,1 as num,price from tm_pm_order_set_detail
+    </sql>
+
+    <select id="selectTmPmOrderSetDetailList" parameterType="TmPmOrderSetDetailVo" resultMap="TmPmOrderSetDetailResult">
+        <include refid="selectTmPmOrderSetDetailVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="setCd != null  and setCd != ''"> and set_cd = #{setCd}</if>
+            <if test="itemClassCd != null  and itemClassCd != ''"> and item_class_cd = #{itemClassCd}</if>
+            <if test="groupNo != null "> and group_no = #{groupNo}</if>
+            <if test="groupSort != null "> and group_sort = #{groupSort}</if>
+            <if test="masterOrder != null  and masterOrder != ''"> and master_order = #{masterOrder}</if>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="examPartCd != null  and examPartCd != ''"> and exam_part_cd = #{examPartCd}</if>
+            <if test="examPartName != null  and examPartName != ''"> and exam_part_name like concat(concat('%', #{examPartName}), '%')</if>
+            <if test="specCd != null  and specCd != ''"> and spec_cd = #{specCd}</if>
+            <if test="specName != null  and specName != ''"> and spec_name like concat(concat('%', #{specName}), '%')</if>
+            <if test="actualUseage != null "> and actual_useage = #{actualUseage}</if>
+            <if test="usageUnit != null  and usageUnit != ''"> and usage_unit = #{usageUnit}</if>
+            <if test="itemOrderUsageWay != null  and itemOrderUsageWay != ''"> and item_order_usage_way = #{itemOrderUsageWay}</if>
+            <if test="usageWayName != null  and usageWayName != ''"> and usage_way_name like concat(concat('%', #{usageWayName}), '%')</if>
+            <if test="freqCd != null  and freqCd != ''"> and freq_cd = #{freqCd}</if>
+            <if test="freqName != null  and freqName != ''"> and freq_name like concat(concat('%', #{freqName}), '%')</if>
+            <if test="usageDays != null "> and usage_days = #{usageDays}</if>
+            <if test="drugForm != null  and drugForm != ''"> and drug_form = #{drugForm}</if>
+            <if test="drugClassCode != null  and drugClassCode != ''"> and drug_class_code = #{drugClassCode}</if>
+            <if test="purposeAntimicrobialUse != null  and purposeAntimicrobialUse != ''"> and purpose_antimicrobial_use = #{purposeAntimicrobialUse}</if>
+            <if test="drippingSpeed != null  and drippingSpeed != ''"> and dripping_speed = #{drippingSpeed}</if>
+            <if test="execDeptCd != null  and execDeptCd != ''"> and exec_dept_cd = #{execDeptCd}</if>
+            <if test="execDeptName != null  and execDeptName != ''"> and exec_dept_name like concat(concat('%', #{execDeptName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="itemFlag != null "> and item_flag = #{itemFlag}</if>
+            <if test="stockNo != null "> and stock_no = #{stockNo}</if>
+            <if test="documentTypeNo != null "> and document_Type_No = #{documentTypeNo}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="mainIdList != null ">
+                and set_Cd in
+                <foreach item="setCd" collection="mainIdList" open="(" separator="," close=")">
+                    #{setCd}
+                </foreach>
+             </if>
+        </where>
+    </select>
+
+    <select id="selectTmPmOrderSetDetailById" parameterType="Long" resultMap="TmPmOrderSetDetailResult">
+        <include refid="selectTmPmOrderSetDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmPmOrderSetDetail" parameterType="TmPmOrderSetDetail">
+        insert into tm_pm_order_set_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="id != null">id,</if>
+            <if test="setCd != null">set_cd,</if>
+            <if test="itemClassCd != null">item_class_cd,</if>
+            <if test="groupNo != null">group_no,</if>
+            <if test="groupSort != null">group_sort,</if>
+            <if test="masterOrder != null">master_order,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="examPartCd != null">exam_part_cd,</if>
+            <if test="examPartName != null">exam_part_name,</if>
+            <if test="specCd != null">spec_cd,</if>
+            <if test="specName != null">spec_name,</if>
+            <if test="actualUseage != null">actual_useage,</if>
+            <if test="usageUnit != null">usage_unit,</if>
+            <if test="itemOrderUsageWay != null">item_order_usage_way,</if>
+            <if test="usageWayName != null">usage_way_name,</if>
+            <if test="freqCd != null">freq_cd,</if>
+            <if test="freqName != null">freq_name,</if>
+            <if test="usageDays != null">usage_days,</if>
+            <if test="drugForm != null">drug_form,</if>
+            <if test="drugClassCode != null">drug_class_code,</if>
+            <if test="purposeAntimicrobialUse != null">purpose_antimicrobial_use,</if>
+            <if test="drippingSpeed != null">dripping_speed,</if>
+            <if test="execDeptCd != null">exec_dept_cd,</if>
+            <if test="execDeptName != null">exec_dept_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="itemOrderUsageWayName != null">item_order_usage_way_name,</if>
+            <if test="itemFlag != null">item_Flag,</if>
+            <if test="doctorInstructions != null">doctor_Instructions,</if>
+            <if test="stockNo != null">stock_no,</if>
+            <if test="documentTypeNo != null">document_Type_No,</if>
+            <if test="price != null">price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="id != null">#{id},</if>
+            <if test="setCd != null">#{setCd},</if>
+            <if test="itemClassCd != null">#{itemClassCd},</if>
+            <if test="groupNo != null">#{groupNo},</if>
+            <if test="groupSort != null">#{groupSort},</if>
+            <if test="masterOrder != null">#{masterOrder},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="examPartCd != null">#{examPartCd},</if>
+            <if test="examPartName != null">#{examPartName},</if>
+            <if test="specCd != null">#{specCd},</if>
+            <if test="specName != null">#{specName},</if>
+            <if test="actualUseage != null">#{actualUseage},</if>
+            <if test="usageUnit != null">#{usageUnit},</if>
+            <if test="itemOrderUsageWay != null">#{itemOrderUsageWay},</if>
+            <if test="usageWayName != null">#{usageWayName},</if>
+            <if test="freqCd != null">#{freqCd},</if>
+            <if test="freqName != null">#{freqName},</if>
+            <if test="usageDays != null">#{usageDays},</if>
+            <if test="drugForm != null">#{drugForm},</if>
+            <if test="drugClassCode != null">#{drugClassCode},</if>
+            <if test="purposeAntimicrobialUse != null">#{purposeAntimicrobialUse},</if>
+            <if test="drippingSpeed != null">#{drippingSpeed},</if>
+            <if test="execDeptCd != null">#{execDeptCd},</if>
+            <if test="execDeptName != null">#{execDeptName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="itemOrderUsageWayName != null">#{itemOrderUsageWayName},</if>
+            <if test="itemFlag != null">#{itemFlag},</if>
+            <if test="doctorInstructions != null">#{doctorInstructions},</if>
+            <if test="stockNo != null">#{stockNo},</if>
+            <if test="documentTypeNo != null">#{documentTypeNo},</if>
+            <if test="price != null">#{price},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertTmPmOrderSetDetailList" parameterType="TmPmOrderSetDetail">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into tm_pm_order_set_detail
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null">hospital_code,</if>
+                <if test="item.id != null">id,</if>
+                <if test="item.setCd != null">set_cd,</if>
+                <if test="item.itemClassCd != null">item_class_cd,</if>
+                <if test="item.groupNo != null">group_no,</if>
+                <if test="item.groupSort != null">group_sort,</if>
+                <if test="item.masterOrder != null">master_order,</if>
+                <if test="item.itemCd != null">item_cd,</if>
+                <if test="item.itemName != null">item_name,</if>
+                <if test="item.standard != null">standard,</if>
+                <if test="item.examPartCd != null">exam_part_cd,</if>
+                <if test="item.examPartName != null">exam_part_name,</if>
+                <if test="item.specCd != null">spec_cd,</if>
+                <if test="item.specName != null">spec_name,</if>
+                <if test="item.actualUseage != null">actual_useage,</if>
+                <if test="item.usageUnit != null">usage_unit,</if>
+                <if test="item.itemOrderUsageWay != null">item_order_usage_way,</if>
+                <if test="item.usageWayName != null">usage_way_name,</if>
+                <if test="item.freqCd != null">freq_cd,</if>
+                <if test="item.freqName != null">freq_name,</if>
+                <if test="item.usageDays != null">usage_days,</if>
+                <if test="item.drugForm != null">drug_form,</if>
+                <if test="item.drugClassCode != null">drug_class_code,</if>
+                <if test="item.purposeAntimicrobialUse != null">purpose_antimicrobial_use,</if>
+                <if test="item.drippingSpeed != null">dripping_speed,</if>
+                <if test="item.execDeptCd != null">exec_dept_cd,</if>
+                <if test="item.execDeptName != null">exec_dept_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+                <if test="item.altPerCode != null">alt_per_code,</if>
+                <if test="item.altPerName != null">alt_per_name,</if>
+                <if test="item.altDate != null">alt_date,</if>
+                <if test="item.itemOrderUsageWayName != null">item_order_usage_way_name,</if>
+                <if test="item.itemFlag != null">item_Flag,</if>
+                <if test="item.doctorInstructions != null">doctor_Instructions,</if>
+                <if test="item.stockNo != null">stock_no,</if>
+                <if test="item.documentTypeNo != null">document_Type_No,</if>
+                <if test="item.price != null">price,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null">#{item.hospitalCode},</if>
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.setCd != null">#{item.setCd},</if>
+                <if test="item.itemClassCd != null">#{item.itemClassCd},</if>
+                <if test="item.groupNo != null">#{item.groupNo},</if>
+                <if test="item.groupSort != null">#{item.groupSort},</if>
+                <if test="item.masterOrder != null">#{item.masterOrder},</if>
+                <if test="item.itemCd != null">#{item.itemCd},</if>
+                <if test="item.itemName != null">#{item.itemName},</if>
+                <if test="item.standard != null">#{item.standard},</if>
+                <if test="item.examPartCd != null">#{item.examPartCd},</if>
+                <if test="item.examPartName != null">#{item.examPartName},</if>
+                <if test="item.specCd != null">#{item.specCd},</if>
+                <if test="item.specName != null">#{item.specName},</if>
+                <if test="item.actualUseage != null">#{item.actualUseage},</if>
+                <if test="item.usageUnit != null">#{item.usageUnit},</if>
+                <if test="item.itemOrderUsageWay != null">#{item.itemOrderUsageWay},</if>
+                <if test="item.usageWayName != null">#{item.usageWayName},</if>
+                <if test="item.freqCd != null">#{item.freqCd},</if>
+                <if test="item.freqName != null">#{item.freqName},</if>
+                <if test="item.usageDays != null">#{item.usageDays},</if>
+                <if test="item.drugForm != null">#{item.drugForm},</if>
+                <if test="item.drugClassCode != null">#{item.drugClassCode},</if>
+                <if test="item.purposeAntimicrobialUse != null">#{item.purposeAntimicrobialUse},</if>
+                <if test="item.drippingSpeed != null">#{item.drippingSpeed},</if>
+                <if test="item.execDeptCd != null">#{item.execDeptCd},</if>
+                <if test="item.execDeptName != null">#{item.execDeptName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.altPerCode != null">#{item.altPerCode},</if>
+                <if test="item.altPerName != null">#{item.altPerName},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+                <if test="item.itemOrderUsageWayName != null">#{item.itemOrderUsageWayName},</if>
+                <if test="item.itemFlag != null">#{item.itemFlag},</if>
+                <if test="item.doctorInstructions != null">#{item.doctorInstructions},</if>
+                <if test="item.stockNo != null">#{item.stockNo},</if>
+                <if test="item.documentTypeNo != null">#{item.documentTypeNo},</if>
+                <if test="item.price != null">#{item.price},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTmPmOrderSetDetail" parameterType="TmPmOrderSetDetail">
+        update tm_pm_order_set_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="setCd != null">set_cd = #{setCd},</if>
+            <if test="itemClassCd != null">item_class_cd = #{itemClassCd},</if>
+            <if test="groupNo != null">group_no = #{groupNo},</if>
+            <if test="groupSort != null">group_sort = #{groupSort},</if>
+            <if test="masterOrder != null">master_order = #{masterOrder},</if>
+            <if test="itemCd != null">item_cd = #{itemCd},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="examPartCd != null">exam_part_cd = #{examPartCd},</if>
+            <if test="examPartName != null">exam_part_name = #{examPartName},</if>
+            <if test="specCd != null">spec_cd = #{specCd},</if>
+            <if test="specName != null">spec_name = #{specName},</if>
+            <if test="actualUseage != null">actual_useage = #{actualUseage},</if>
+            <if test="usageUnit != null">usage_unit = #{usageUnit},</if>
+            <if test="itemOrderUsageWay != null">item_order_usage_way = #{itemOrderUsageWay},</if>
+            <if test="usageWayName != null">usage_way_name = #{usageWayName},</if>
+            <if test="freqCd != null">freq_cd = #{freqCd},</if>
+            <if test="freqName != null">freq_name = #{freqName},</if>
+            <if test="usageDays != null">usage_days = #{usageDays},</if>
+            <if test="drugForm != null">drug_form = #{drugForm},</if>
+            <if test="drugClassCode != null">drug_class_code = #{drugClassCode},</if>
+            <if test="purposeAntimicrobialUse != null">purpose_antimicrobial_use = #{purposeAntimicrobialUse},</if>
+            <if test="drippingSpeed != null">dripping_speed = #{drippingSpeed},</if>
+            <if test="execDeptCd != null">exec_dept_cd = #{execDeptCd},</if>
+            <if test="execDeptName != null">exec_dept_name = #{execDeptName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="itemOrderUsageWayName != null">item_order_usage_way_name = #{itemOrderUsageWayName},</if>
+            <if test="itemFlag != null">item_Flag = #{itemFlag},</if>
+            <if test="doctorInstructions != null">doctor_Instructions = #{doctorInstructions},</if>
+            <if test="stockNo != null">stock_no = #{stockNo},</if>
+            <if test="documentTypeNo != null">document_Type_No = #{documentTypeNo},</if>
+            <if test="price != null">price = #{price},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmPmOrderSetDetailById" parameterType="Long">
+        delete from tm_pm_order_set_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteTmPmOrderSetDetailByIds" parameterType="Long">
+        delete from tm_pm_order_set_detail where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteTmPmOrderSetDetailByGroupNos" >
+        delete from tm_pm_order_set_detail where group_no in
+        <foreach item="groupNo" collection="groupNoList" open="(" separator="," close=")">
+            #{groupNo}
+        </foreach>
+        and set_cd=#{setCd}
+    </delete>
+    <select id="selectTmPmOrderSetDetailBySetCd" parameterType="String" resultMap="TmPmOrderSetDetailResult">
+        select hospital_code, id, set_cd, item_class_cd, group_no, group_sort, master_order, item_cd, item_name, standard, exam_part_cd, exam_part_name,
+               spec_cd, spec_name, actual_useage, usage_unit, item_order_usage_way, usage_way_name, freq_cd, freq_name, usage_days, drug_form, drug_class_code,
+               purpose_antimicrobial_use, dripping_speed, exec_dept_cd, exec_dept_name, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name,
+               alt_date,item_order_usage_way_name,item_flag,doctor_Instructions,stock_no,document_Type_No,price,sdd.data_tag as purposeAntimicrobialUseName
+        from tm_pm_order_set_detail detail
+        left join TM_BS_DICT_DATA sdd on sdd.data_val=detail.purpose_antimicrobial_use and dict_type='s063'
+        where set_cd=#{setCd} order by group_no,group_sort
+    </select>
+    <select id="selectSetMaxGroupNo" parameterType="String" resultType="java.lang.Integer">
+        select max(group_no) from tm_pm_order_set_detail where set_cd=#{setCd}
+    </select>
+    <select id="selectOrderSetDetailByGroupNo" resultMap="TmPmOrderSetDetailResult" >
+        select id, set_cd, item_class_cd, group_no, group_sort, master_order
+        from tm_pm_order_set_detail where group_no=#{groupNo} and set_cd=#{setCd}
+    </select>
+    <select id="selectSetDetailBySortAfterList" resultMap="TmPmOrderSetDetailResult" >
+        select id, set_cd, item_class_cd, group_no, group_sort, master_order
+        from tm_pm_order_set_detail where group_no>=#{groupNo}
+        <if test="setCd!=null and setCd!=''"> and set_cd=#{setCd}</if>
+    </select>
+    <select id="selectSortAfterSonList" resultMap="TmPmOrderSetDetailResult" >
+        select id, set_cd, item_class_cd, group_no, group_sort, master_order
+        from tm_pm_order_set_detail where group_no=#{groupNo} and set_cd=#{setCd}
+        order by group_sort
+    </select>
+
+    <update id="updateTmPmOrderSetDetailList" parameterType="java.util.List">
+        <foreach collection="tmPmOrderSetDetailList" item="item" index="index" open="begin" close=";end;" separator=";">
+            update tm_pm_order_set_detail
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.hospitalCode != null">hospital_code = #{item.hospitalCode},</if>
+                <if test="item.setCd != null">set_cd = #{item.setCd},</if>
+                <if test="item.itemClassCd != null">item_class_cd = #{item.itemClassCd},</if>
+                <if test="item.groupNo != null">group_no = #{item.groupNo},</if>
+                <if test="item.groupSort != null">group_sort = #{item.groupSort},</if>
+                <if test="item.masterOrder != null">master_order = #{item.masterOrder},</if>
+                <if test="item.itemCd != null">item_cd = #{item.itemCd},</if>
+                <if test="item.itemName != null">item_name = #{item.itemName},</if>
+                <if test="item.standard != null">standard = #{item.standard},</if>
+                <if test="item.examPartCd != null">exam_part_cd = #{item.examPartCd},</if>
+                <if test="item.examPartName != null">exam_part_name = #{item.examPartName},</if>
+                <if test="item.specCd != null">spec_cd = #{item.specCd},</if>
+                <if test="item.specName != null">spec_name = #{item.specName},</if>
+                <if test="item.actualUseage != null">actual_useage = #{item.actualUseage},</if>
+                <if test="item.usageUnit != null">usage_unit = #{item.usageUnit},</if>
+                <if test="item.itemOrderUsageWay != null">item_order_usage_way = #{item.itemOrderUsageWay},</if>
+                <if test="item.usageWayName != null">usage_way_name = #{item.usageWayName},</if>
+                <if test="item.freqCd != null">freq_cd = #{item.freqCd},</if>
+                <if test="item.freqName != null">freq_name = #{item.freqName},</if>
+                <if test="item.usageDays != null">usage_days = #{item.usageDays},</if>
+                <if test="item.drugForm != null">drug_form = #{item.drugForm},</if>
+                <if test="item.drugClassCode != null">drug_class_code = #{item.drugClassCode},</if>
+                <if test="item.purposeAntimicrobialUse != null">purpose_antimicrobial_use = #{item.purposeAntimicrobialUse},</if>
+                <if test="item.drippingSpeed != null">dripping_speed = #{item.drippingSpeed},</if>
+                <if test="item.execDeptCd != null">exec_dept_cd = #{item.execDeptCd},</if>
+                <if test="item.execDeptName != null">exec_dept_name = #{item.execDeptName},</if>
+                <if test="item.crePerCode != null">cre_per_code = #{item.crePerCode},</if>
+                <if test="item.crePerName != null">cre_per_name = #{item.crePerName},</if>
+                <if test="item.creDate != null">cre_date = #{item.creDate},</if>
+                <if test="item.altPerCode != null">alt_per_code = #{item.altPerCode},</if>
+                <if test="item.altPerName != null">alt_per_name = #{item.altPerName},</if>
+                <if test="item.altDate != null">alt_date = #{item.altDate},</if>
+                <if test="item.itemOrderUsageWayName != null">item_order_usage_way_name = #{item.itemOrderUsageWayName},</if>
+                <if test="item.itemFlag != null">item_Flag = #{item.itemFlag},</if>
+                <if test="item.doctorInstructions != null">doctor_Instructions = #{item.doctorInstructions},</if>
+                <if test="item.stockNo != null">stock_no = #{item.stockNo},</if>
+                <if test="item.documentTypeNo != null">document_Type_No = #{item.documentTypeNo},</if>
+                <if test="item.price != null">price = #{item.price},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+    <delete id="deleteTmPmOrderSetDetailBySetCd">
+        delete from tm_pm_order_set_detail where set_cd=#{setCd}
+    </delete>
+
+    <select id="selectSetAsOrderList" parameterType="String" resultMap="OrderSearchVoResult">
+        SELECT ITEM_CLASS_CD as order_class_code,GROUP_NO as  order_group_no,GROUP_SORT as order_group_sort_number,MASTER_ORDER,ITEM_CD as cp_no,ITEM_NAME as cp_name,
+               STANDARD,EXAM_PART_CD,exam_part_name,spec_cd,spec_name,ACTUAL_USEAGE as order_actual_usage,USAGE_UNIT,ITEM_ORDER_USAGE_WAY as order_usage_way,
+               USAGE_WAY_NAME,FREQ_CD as order_freq,FREQ_NAME as order_freq_name,USAGE_DAYS as order_usage_days,DRUG_FORM,DRUG_CLASS_CODE,PURPOSE_ANTIMICROBIAL_USE,
+               DRIPPING_SPEED,EXEC_DEPT_CD as detail_perform_dep_code,EXEC_DEPT_NAME as detail_perform_dep_name,ITEM_FLAG as ORDER_ITEM_FLAG,
+               DOCTOR_INSTRUCTIONS as doctor_instructions,ITEM_ORDER_USAGE_WAY_NAME as order_usage_way_name,sdd.data_tag as purpose_antimicrobial_use_name,
+               EXEC_DEPT_CD as perform_dep_code,EXEC_DEPT_NAME as perform_dep_name,stock_no,1 as order_dose,USAGE_UNIT as unit,document_type_no
+        FROM TM_PM_ORDER_SET_DETAIL detail
+            left join TM_BS_DICT_DATA sdd on sdd.data_val= detail.PURPOSE_ANTIMICROBIAL_USE and sdd.dict_type='s063'
+        WHERE set_cd = #{setCd} order by detail.group_no,group_sort
+    </select>
+
+    <select id="selectSetAsOrderListBySets" parameterType="String" resultMap="TmPmOrderSetDetailResult">
+        <include refid="selectTmPmOrderSetDetailVo"/>
+        WHERE set_cd in
+        <foreach collection="list" item="setCd" open="(" separator="," close=")">
+            #{setCd}
+        </foreach>
+        order by group_no,group_sort
+    </select>
+
+    <select id="selectTmPmOrderSetDetailByIds" parameterType="Long" resultMap="TmPmOrderSetDetailResult">
+        select * from tm_pm_order_set_detail where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectCheckDetailListBySetCd" parameterType="String" resultMap="DrugAndClinResult">
+        SELECT detail.hospital_code,detail.id,detail.set_cd,detail.item_class_cd,detail.group_no,detail.group_sort,detail.master_order,detail.item_cd,
+               detail.item_name,detail.standard,detail.exam_part_cd,detail.exam_part_name,detail.spec_cd,detail.spec_name,detail.actual_useage,
+               detail.usage_unit,detail.item_order_usage_way,detail.usage_way_name,detail.freq_cd,detail.freq_name,detail.usage_days,detail.drug_form,
+               detail.drug_class_code,detail.purpose_antimicrobial_use,detail.dripping_speed,detail.exec_dept_cd,detail.exec_dept_name,detail.cre_per_code,
+               detail.cre_per_name,detail.cre_date,detail.alt_per_code,detail.alt_per_name,detail.alt_date,detail.item_order_usage_way_name,
+               detail.item_flag,detail.doctor_Instructions,detail.stock_no,detail.document_Type_No,1 AS num,detail.price,code.item_name AS item_class_name
+        FROM tm_pm_order_set_detail detail LEFT JOIN TM_BS_ORDER_ITEM_CODE code ON code.item_code = detail.item_class_cd
+        where detail.set_cd=#{setCd} order by detail.group_no,detail.group_sort
+    </select>
+    <update id="updateGroupNos" parameterType="TmPmOrderSetDetail">
+        <foreach collection="setDetailList" item="item" index="index" open="begin" close=";end;" separator=";">
+            update tm_pm_order_set_detail set group_no = #{item.groupNo} where id = #{item.id}
+        </foreach>
+    </update>
+</mapper>

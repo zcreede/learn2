@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcFlowMapper">
+
+    <resultMap type="EmrQcFlow" id="EmrQcFlowResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="visitId"    column="visit_id"    />
+        <result property="recordNo"    column="record_no"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="resDocCd"    column="res_doc_cd"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="inDeptTime"    column="in_dept_time"    />
+        <result property="outDeptTime"    column="out_dept_time"    />
+        <result property="checkDocCd"    column="check_doc_cd"    />
+        <result property="checkDocName"    column="check_doc_name"    />
+        <result property="checkTime"    column="check_time"    />
+        <result property="checkScore"    column="check_score"    />
+        <result property="checkGradeNo"    column="check_grade_no"    />
+        <result property="checkGradeName"    column="check_grade_name"    />
+        <result property="checkState"    column="check_state"    />
+        <result property="mrState"    column="mr_state"    />
+        <result property="mrSubCd"    column="mr_sub_cd"    />
+        <result property="mrSubName"    column="mr_sub_name"    />
+        <result property="mrSubTime"    column="mr_sub_time"    />
+        <result property="deptQcCd"    column="dept_qc_cd"    />
+        <result property="deptQcName"    column="dept_qc_name"    />
+        <result property="deptQcTime"    column="dept_qc_time"    />
+        <result property="deptQcState"    column="dept_qc_state"    />
+        <result property="deptScore"    column="dept_score"    />
+        <result property="deptGradeNo"    column="dept_grade_no"    />
+        <result property="deptGradeName"    column="dept_grade_name"    />
+        <result property="applyDeptCd"    column="apply_dept_cd"    />
+        <result property="applyDeptName"    column="apply_dept_name"    />
+        <result property="applyDocCd"    column="apply_doc_cd"    />
+        <result property="applyDocName"    column="apply_doc_name"    />
+        <result property="applyFileTime"    column="apply_file_time"    />
+        <result property="termQcCd"    column="term_qc_cd"    />
+        <result property="termQcName"    column="term_qc_name"    />
+        <result property="termQcState"    column="term_qc_state"    />
+        <result property="termQcTime"    column="term_qc_time"    />
+        <result property="termScore"    column="term_score"    />
+        <result property="termGradeNo"    column="term_grade_no"    />
+        <result property="termGradeName"    column="term_grade_name"    />
+        <result property="fileDocCd"    column="file_doc_cd"    />
+        <result property="fileDocName"    column="file_doc_name"    />
+        <result property="fileTime"    column="file_time"    />
+        <result property="checkQcSn"    column="check_qc_sn"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="firstFileTime"    column="first_file_time"    />
+        <result property="shelfNum"    column="shelf_num"    />
+        <result property="termQcBackTime" column="term_qc_back_time"  />
+        <result property="hpQcDate" column="hp_qc_date"/>
+    </resultMap>
+
+    <resultMap id="EmrQcFlowVoResult" type="EmrQcFlowVo" extends="EmrQcFlowResult">
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName" column="patient_name"/>
+        <result property="inpNo" column="inp_no"/>
+        <result property="bedNo" column="bed_no"/>
+        <result property="payTypeName" column="pay_type_name"/>
+        <result property="sex"    column="sex"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="inhosWmDiaName"    column="inhos_wm_dia_name"    />
+        <result property="inhosTime"    column="inhos_time"    />
+        <result property="outTime"    column="out_time"    />
+        <result property="pcName"    column="pc_name"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="operFlag"    column="oper_flag"    />
+        <result property="consFlag"    column="cons_flag"    />
+        <result property="dieFlag"    column="die_flag"    />
+        <result property="bloodTrans"    column="blood_trans"    />
+        <result property="changeFlag"    column="change_flag"    />
+        <result property="infectFlag"    column="infect_flag"    />
+        <result property="rescueFlag"    column="rescue_flag"    />
+        <result property="dayNumFlag"    column="day_num_flag"    />
+        <result property="costSumFlag"    column="cost_sum_flag"    />
+        <result property="state" column="state"/>
+        <result property="qcId" column="qc_id"/>
+        <result property="patName" column="patName"/>
+        <result property="patientMainId" column="patient_main_id"/>
+        <result property="ngName" column="ng_name"/>
+        <result property="ngCd" column="ng_cd"/>
+        <result property="backState" column="back_state"/>
+    </resultMap>
+    <resultMap id="EmrQcFlowStatisticVoResult" type="EmrQcFlowStatisticVo">
+        <result property="deptCd" column="dept_cd"/>
+        <result property="caseNo" column="case_no"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="patientId" column="patient_id"/>
+        <result property="patientName" column="patient_name"/>
+        <result property="inDeptTime" column="in_dept_time"/>
+        <result property="outDeptTime" column="out_dept_time"/>
+        <result property="firstFileTime" column="first_file_time"/>
+        <result property="fileTime" column="file_time"/>
+        <result property="termQcTime" column="term_qc_time"/>
+        <result property="operTime" column="oper_time"/>
+        <result property="operReason" column="oper_reason"/>
+        <result property="termGradeNo" column="term_grade_no"/>
+        <result property="termGradeName" column="term_grade_name"/>
+        <result property="termScore" column="term_score"/>
+        <result property="resDocCd" column="res_doc_cd"/>
+        <result property="resDocName" column="res_doc_name"/>
+        <result property="id" column="id"/>
+        <result property="deptScore" column="dept_score"/>
+        <result property="deptGradeNo" column="dept_grade_no"/>
+        <result property="deptGradeName" column="dept_grade_name"/>
+        <result property="checkScore" column="check_score"/>
+        <result property="checkGradeNo" column="check_grade_no"/>
+        <result property="checkGradeName" column="check_grade_name"/>
+        <result property="total" column="total"/>
+        <result property="caseFirstFileTime" column="case_first_file_time"/>
+        <result property="mrState" column="mr_state"/>
+        <result property="costTotal" column="cost_total"/>
+    </resultMap>
+
+    <sql id="selectEmrQcFlowVo">
+        select id, org_cd, patient_id, patient_name, inp_no, visit_id, record_no, dept_cd, dept_name, res_doc_cd, res_doc_name,
+        in_dept_time, out_dept_time, check_doc_cd, check_doc_name, check_time, check_score, check_grade_no, check_grade_name,
+        check_state, mr_state, mr_sub_cd, mr_sub_name, mr_sub_time, dept_qc_cd, dept_qc_name, dept_qc_time,
+        dept_qc_state, dept_score, dept_grade_no, dept_grade_name, apply_dept_cd, apply_dept_name, apply_doc_cd,
+        apply_doc_name, apply_file_time, term_qc_cd, term_qc_name, term_qc_state, term_qc_time, term_score,
+        term_grade_no, term_grade_name, file_doc_cd, file_doc_name, file_time, check_qc_sn, alt_per_name,
+        alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, first_file_time, shelf_num, hp_qc_date from emr_qc_flow
+    </sql>
+
+    <select id="selectEmrQcFlowList" parameterType="EmrQcFlow" resultMap="EmrQcFlowResult">
+        <include refid="selectEmrQcFlowVo"/>
+        <where>
+            <if test="id != null"> and id = #{id}</if>
+            <if test="patientId != null and patientId !=''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="inpNo != null  and inpNo != ''"> and inp_no = #{inpNo}</if>
+            <if test="visitId != null "> and visit_id = #{visitId}</if>
+            <if test="recordNo != null  and recordNo != ''"> and record_no = #{recordNo}</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="resDocCd != null  and resDocCd != ''"> and res_doc_cd = #{resDocCd}</if>
+            <if test="resDocName != null  and resDocName != ''"> and res_doc_name like concat(concat('%', #{resDocName}), '%')</if>
+            <if test="inDeptTime != null "> and in_dept_time = #{inDeptTime}</if>
+            <if test="outDeptTime != null "> and out_dept_time = #{outDeptTime}</if>
+            <if test="checkDocCd != null  and checkDocCd != ''"> and check_doc_cd = #{checkDocCd}</if>
+            <if test="checkDocName != null  and checkDocName != ''"> and check_doc_name like concat(concat('%', #{checkDocName}), '%')</if>
+            <if test="checkTime != null "> and check_time = #{checkTime}</if>
+            <if test="checkScore != null "> and check_score = #{checkScore}</if>
+            <if test="checkGradeNo != null  and checkGradeNo != ''"> and check_grade_no = #{checkGradeNo}</if>
+            <if test="checkGradeName != null  and checkGradeName != ''"> and check_grade_name like concat(concat('%', #{checkGradeName}), '%')</if>
+            <if test="checkState != null  and checkState != ''"> and check_state = #{checkState}</if>
+            <if test="mrState != null  and mrState != ''"> and mr_state = #{mrState}</if>
+            <if test="mrSubCd != null  and mrSubCd != ''"> and mr_sub_cd = #{mrSubCd}</if>
+            <if test="mrSubName != null  and mrSubName != ''"> and mr_sub_name like concat(concat('%', #{mrSubName}), '%')</if>
+            <if test="mrSubTime != null "> and mr_sub_time = #{mrSubTime}</if>
+            <if test="deptQcCd != null  and deptQcCd != ''"> and dept_qc_cd = #{deptQcCd}</if>
+            <if test="deptQcName != null  and deptQcName != ''"> and dept_qc_name like concat(concat('%', #{deptQcName}), '%')</if>
+            <if test="deptQcTime != null "> and dept_qc_time = #{deptQcTime}</if>
+            <if test="deptQcState != null  and deptQcState != ''"> and dept_qc_state = #{deptQcState}</if>
+            <if test="deptScore != null "> and dept_score = #{deptScore}</if>
+            <if test="deptGradeNo != null  and deptGradeNo != ''"> and dept_grade_no = #{deptGradeNo}</if>
+            <if test="deptGradeName != null  and deptGradeName != ''"> and dept_grade_name like concat(concat('%', #{deptGradeName}), '%')</if>
+            <if test="applyDeptCd != null  and applyDeptCd != ''"> and apply_dept_cd = #{applyDeptCd}</if>
+            <if test="applyDeptName != null  and applyDeptName != ''"> and apply_dept_name like concat(concat('%', #{applyDeptName}), '%')</if>
+            <if test="applyDocCd != null  and applyDocCd != ''"> and apply_doc_cd = #{applyDocCd}</if>
+            <if test="applyDocName != null  and applyDocName != ''"> and apply_doc_name like concat(concat('%', #{applyDocName}), '%')</if>
+            <if test="applyFileTime != null "> and apply_file_time = #{applyFileTime}</if>
+            <if test="termQcCd != null  and termQcCd != ''"> and term_qc_cd = #{termQcCd}</if>
+            <if test="termQcName != null  and termQcName != ''"> and term_qc_name like concat(concat('%', #{termQcName}), '%')</if>
+            <if test="termQcState != null  and termQcState != ''"> and term_qc_state = #{termQcState}</if>
+            <if test="termQcTime != null "> and term_qc_time = #{termQcTime}</if>
+            <if test="termScore != null "> and term_score = #{termScore}</if>
+            <if test="termGradeNo != null  and termGradeNo != ''"> and term_grade_no = #{termGradeNo}</if>
+            <if test="termGradeName != null  and termGradeName != ''"> and term_grade_name like concat(concat('%', #{termGradeName}), '%')</if>
+            <if test="fileDocCd != null  and fileDocCd != ''"> and file_doc_cd = #{fileDocCd}</if>
+            <if test="fileDocName != null  and fileDocName != ''"> and file_doc_name like concat(concat('%', #{fileDocName}), '%')</if>
+            <if test="fileTime != null "> and file_time = #{fileTime}</if>
+            <if test="checkQcSn != null  and checkQcSn != ''"> and check_qc_sn = #{checkQcSn}</if>
+            <if test="shelfNum != null  and shelfNum != ''"> and shelf_num = #{shelfNum}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrQcFlowVoListOrderByOutTime" parameterType="EmrQcFlowVo" resultMap="EmrQcFlowVoResult">
+        select v.bed_no,v.PAY_TYPE_NAME, p.sex, p.age_y, p.age_m, p.age_d, p.age_h, p.age_mi,diag.DIAG_NAME as inhos_wm_dia_name,
+        v.inhos_time, v.out_time,v.pc_name, o.oper_flag, o.cons_flag, o.die_flag,
+        o.blood_flag,o.change_flag,o.infect_flag,o.rescue_flag,
+        case when v.OUT_TIME is not null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;=#{dayNum}  then 1 else 0 end day_num_flag,
+        case when v.cost_sum &gt;= #{costSum} then 1 else 0 end cost_sum_flag,f.*,f.dept_qc_state state,eqr.id qc_id,
+        (select case when count(1)>0 then 1 else 0 end from emr_index_revoke_log rl where rl.admission_no = f.patient_id) as back_state
+        from emr_qc_flow f
+        left join pat_visitinfo v on f.patient_id = v.patient_id
+        left join pat_personalinfo p on f.patient_id = p.patient_id
+        left join PAT_OTHERINFO o on v.PATIENT_ID = o.PATIENT_ID
+        LEFT JOIN DIAG_INFO diag on diag.PATIENT_ID = v.patient_id and diag.DIAG_TYPE_CD='02' and diag.DIAG_CLASS_CD='01'
+        left join (select d.* from emr_qc_record d where d.qc_section = #{qcSection}) eqr on f.patient_id = eqr.patient_id
+        <where>
+            <if test="orgCd != null"> and f.org_cd = #{orgCd}</if>
+            <if test="deptCd != null  and deptCd != ''"> and v.dept_cd = #{deptCd}</if>
+            <!--&#45;&#45;             <if test="inpNo != null  and inpNo != ''"> and f.inp_no = #{inpNo}</if>-->
+            <if test="inpNo != null  and inpNo != ''">
+                and (v.record_no like concat(concat('%', #{inpNo}), '%')
+                or f.PATIENT_NAME like concat(concat('%', #{inpNo}), '%')
+                or p.INPUTSTRPHTC like upper(concat(concat('%', #{inpNo}), '%')))
+            </if>
+            <if test="deptQcStateList != null  and deptQcStateList.size != 0">
+                and (f.dept_qc_state is null or f.dept_qc_state in
+                <foreach collection="deptQcStateList" item="deptQcState" open="(" separator="," close=")">#{deptQcState}</foreach>
+                )
+            </if>
+            <if test="outTimeBegin != null">and v.out_time &gt;= #{outTimeBegin}</if>
+            <if test="outTimeEnd != null">and v.out_time &lt; #{outTimeEnd}</if>
+            <if test="mrSubCd != null  and mrSubCd != ''"> and f.mr_sub_cd = #{mrSubCd}</if>
+            <if test="deptQcState != null  and deptQcState != ''"> and f.dept_qc_state = #{deptQcState}</if>
+            <if test="mrState != null  and mrState != ''"> and f.mr_state = #{mrState}</if>
+        </where>
+        order by v.out_time asc
+    </select>
+
+    <select id="selectEmrQcFlowVoListOrderByApplyFileTime" parameterType="EmrQcFlowVo" resultMap="EmrQcFlowVoResult">
+        select v.bed_no,v.PAY_TYPE_NAME, p.sex, p.age_y, p.age_m, p.age_d, p.age_h, p.age_mi,
+        diag.DIAG_NAME as inhos_wm_dia_name,f.shelf_num,
+        v.inhos_time, v.out_time,v.pc_name, o.oper_flag, o.cons_flag, o.die_flag,
+        o.blood_flag,o.change_flag,o.infect_flag,o.rescue_flag,
+        case when v.OUT_TIME is not null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;=#{dayNum}  then 1 else 0 end day_num_flag,
+        case when v.cost_sum &gt;= #{costSum} then 1 else 0 end cost_sum_flag,f.term_qc_state state,eqr.id qc_id,f.ID, f.ORG_CD, f.PATIENT_ID, f.PATIENT_NAME,
+        f.INP_NO, f.VISIT_ID, f.RECORD_NO, f.DEPT_CD, v.RES_DOC_CD, v.RES_DOC_NAME, f.IN_DEPT_TIME, f.OUT_DEPT_TIME, f.CHECK_DOC_CD,
+        f.CHECK_DOC_NAME, f.CHECK_TIME, f.CHECK_SCORE, f.CHECK_GRADE_NO, f.CHECK_GRADE_NAME, f.CHECK_STATE, f.MR_STATE, f.MR_SUB_CD,
+        f.MR_SUB_NAME, f.MR_SUB_TIME, f.DEPT_QC_CD, f.DEPT_QC_NAME, f.DEPT_QC_TIME, f.DEPT_QC_STATE, f.DEPT_SCORE, f.DEPT_GRADE_NO,
+        f.DEPT_GRADE_NAME, f.APPLY_DEPT_CD, f.APPLY_DEPT_NAME, f.APPLY_DOC_CD, f.APPLY_DOC_NAME, f.APPLY_FILE_TIME, f.TERM_QC_CD,
+        f.TERM_QC_NAME, f.TERM_QC_STATE, f.TERM_QC_TIME, f.TERM_SCORE, f.TERM_GRADE_NO, f.TERM_GRADE_NAME, f.FILE_DOC_CD, f.FILE_DOC_NAME,
+        f.FILE_TIME, f.CHECK_QC_SN, f.ALT_PER_NAME, f.ALT_PER_CODE, f.ALT_DATE, f.CRE_PER_NAME, f.CRE_PER_CODE, f.CRE_DATE,
+        v.IN_DEPT_NAME DEPT_NAME, (select case when count(1)>0 then 1 else 0 end from emr_index_revoke_log rl where rl.admission_no = f.patient_id) as back_state,
+        f.hp_qc_date
+        from emr_qc_flow f
+        left join pat_visitinfo v on f.patient_id = v.patient_id
+        left join pat_personalinfo p on f.patient_id = p.patient_id
+        left join PAT_OTHERINFO o on v.PATIENT_ID = o.PATIENT_ID
+        LEFT JOIN DIAG_INFO diag on diag.PATIENT_ID = v.patient_id and diag.DIAG_TYPE_CD='02' and diag.DIAG_CLASS_CD='01'
+        left join emr_qc_record eqr on f.patient_id = eqr.patient_id and eqr.qc_section = #{qcSection}
+        left join (select distinct (patient_id)
+            from (select patient_id from exam_item where alter_flag = '1'
+            union all
+            select patient_id from test_report where alter_flag = '1'
+            union all
+            select b.pat_id from test_alert_report b
+            )
+        ) wjz
+        on wjz.patient_id = v.PATIENT_ID
+        <where>
+            <if test="orgCd != null"> and f.org_cd = #{orgCd}</if>
+            <if test="deptCd != null  and deptCd != ''"> and v.in_dept_cd = #{deptCd}</if>
+            <if test="applyFileTimeBegin != null">and f.apply_file_time &gt;= #{applyFileTimeBegin}</if>
+            <if test="applyFileTimeEnd != null">and f.apply_file_time &lt; #{applyFileTimeEnd}</if>
+            <if test="deptGradeNo != null  and deptGradeNo != ''"> and f.dept_grade_no = #{deptGradeNo}</if>
+            <!--            <if test="inpNo != null  and inpNo != ''"> and f.inp_no = #{inpNo}</if>-->
+            <if test="inpNo != null  and inpNo != ''">
+                and (f.record_no like concat(concat('%', #{inpNo}), '%')
+                or f.PATIENT_NAME like concat(concat('%', #{inpNo}), '%')
+                or p.INPUTSTRPHTC like upper(concat(concat('%', #{inpNo}), '%')))
+            </if>
+            <if test="deptQcState != null  and deptQcState != ''"> and f.dept_qc_state = #{deptQcState}</if>
+            <if test="mrState != null  and mrState != ''"> and f.mr_state = #{mrState}</if>
+            <if test="termQcStateList != null  and termQcStateList.size != 0">
+                and (f.term_qc_state is null or f.term_qc_state in
+                <foreach collection="termQcStateList" item="termQcState" open="(" separator="," close=")">#{termQcState}</foreach>
+                )
+            </if>
+            <if test="mrStateList != null  and mrStateList.size != 0"> and f.mr_state in
+                <foreach collection="mrStateList" item="mrState" open="(" separator="," close=")">#{mrState}</foreach>
+            </if>
+            <if test="deptGradeNo != null  and deptGradeNo != ''"> and dept_grade_no = #{deptGradeNo}</if>
+            <if test='operFlag!=null and operFlag=="1"'>
+                and o.oper_flag = #{operFlag}
+            </if>
+            <if test='consFlag!=null and consFlag=="1"'>
+                and o.cons_flag = #{consFlag}
+            </if>
+            <if test='dieFlag!=null and dieFlag=="1"'>
+                and o.die_flag = #{dieFlag}
+            </if>
+            <if test='bloodTrans!=null and bloodTrans=="1"'>
+                and o.blood_trans = #{bloodTrans}
+            </if>
+            <if test='changeFlag!=null and changeFlag=="1"'>
+                and o.change_flag = #{changeFlag}
+            </if>
+            <if test='infectFlag!=null and infectFlag=="1"'>
+                and o.infect_flag = #{infectFlag}
+            </if>
+            <if test='pcCdFlag!=null and pcCdFlag=="1"'>
+                and v.pc_cd in ('1','2')
+            </if>
+            <if test='rescueFlag!=null and rescueFlag=="1"'>
+                and o.rescue_flag = #{rescueFlag}
+            </if>
+            <if test="alertFlag != null and alertFlag == 1">
+                and wjz.patient_id is not null
+            </if>
+            <if test='dayNumFlag!=null and dayNumFlag=="1"'>
+                and (
+                (v.OUT_TIME!=null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;= #{dayNum})
+                or (v.OUT_TIME is null and TO_NUMBER(sysdate- v.INHOS_TIME) &gt;= #{dayNum})
+                )
+            </if>
+            <if test='costSumFlag!=null and costSumFlag=="1"'>
+                and v.cost_sum &gt;= #{costSum}
+            </if>
+
+        </where>
+        order by f.apply_file_time asc
+    </select>
+
+    <select id="selectEmrQcFlowVoListOrderByFileTime" parameterType="EmrQcFlowVo" resultMap="EmrQcFlowVoResult">
+        select v.bed_no,v.PAY_TYPE_NAME, p.sex, p.age_y, p.age_m, p.age_d, p.age_h, p.age_mi,
+        diag.DIAG_NAME as inhos_wm_dia_name,f.shelf_num,
+        v.inhos_time, v.out_time,v.pc_name, o.oper_flag, o.cons_flag, o.die_flag,
+        o.blood_flag,o.change_flag,o.infect_flag,o.rescue_flag,
+        case when v.OUT_TIME is not null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;=#{dayNum}  then 1 else 0 end day_num_flag,
+        case when v.cost_sum &gt;= #{costSum} then 1 else 0 end cost_sum_flag,eqr.id qc_id,f.ID, f.ORG_CD, f.PATIENT_ID, f.PATIENT_NAME,
+        f.INP_NO, f.VISIT_ID, f.RECORD_NO, f.DEPT_CD, f.RES_DOC_CD, f.RES_DOC_NAME, f.IN_DEPT_TIME, f.OUT_DEPT_TIME, f.CHECK_DOC_CD,
+        f.CHECK_DOC_NAME, f.CHECK_TIME, f.CHECK_SCORE, f.CHECK_GRADE_NO, f.CHECK_GRADE_NAME, f.CHECK_STATE, f.MR_STATE, f.MR_SUB_CD,
+        f.MR_SUB_NAME, f.MR_SUB_TIME, f.DEPT_QC_CD, f.DEPT_QC_NAME, f.DEPT_QC_TIME, f.DEPT_QC_STATE, f.DEPT_SCORE, f.DEPT_GRADE_NO,
+        f.DEPT_GRADE_NAME, f.APPLY_DEPT_CD, f.APPLY_DEPT_NAME, f.APPLY_DOC_CD, f.APPLY_DOC_NAME, f.APPLY_FILE_TIME, f.TERM_QC_CD,
+        f.TERM_QC_NAME, f.TERM_QC_STATE, f.TERM_QC_TIME, f.TERM_SCORE, f.TERM_GRADE_NO, f.TERM_GRADE_NAME, f.FILE_DOC_CD, f.FILE_DOC_NAME,
+        f.FILE_TIME, f.CHECK_QC_SN, f.ALT_PER_NAME, f.ALT_PER_CODE, f.ALT_DATE, f.CRE_PER_NAME, f.CRE_PER_CODE, f.CRE_DATE,
+        v.IN_DEPT_NAME DEPT_NAME,v.ng_name,ng_cd
+        from emr_qc_flow f
+        left join pat_visitinfo v on f.patient_id = v.patient_id
+        left join pat_personalinfo p on f.patient_id = p.patient_id
+        left join PAT_OTHERINFO o on v.PATIENT_ID = o.PATIENT_ID
+        left join emr_qc_record eqr on f.patient_id = eqr.patient_id
+        LEFT JOIN DIAG_INFO diag on diag.PATIENT_ID = v.patient_id and diag.DIAG_TYPE_CD='02' and diag.DIAG_CLASS_CD='01'
+        <where>
+            and eqr.qc_section = #{qcSection}
+            <if test="orgCd != null"> and f.org_cd = #{orgCd}</if>
+            <if test="deptCd != null  and deptCd != ''"> and v.IN_DEPT_CD = #{deptCd}</if>
+            <if test="termQcCd != null  and termQcCd != ''"> and f.term_qc_cd = #{termQcCd}</if>
+            <if test="fileTimeBegin != null">and f.file_time &gt;= #{fileTimeBegin}</if>
+            <if test="fileTimeEnd != null">and f.file_time &lt; #{fileTimeEnd}</if>
+            <if test="termGradeNo != null  and termGradeNo != ''"> and f.term_grade_no = #{termGradeNo}</if>
+            <!--            <if test="inpNo != null  and inpNo != ''"> and f.inp_no = #{inpNo}</if>-->
+            <if test="inpNo != null  and inpNo != ''">
+                and (f.record_no like concat(concat('%', #{inpNo}), '%')
+                or f.PATIENT_NAME like concat(concat('%', #{inpNo}), '%')
+                or p.INPUTSTRPHTC like upper(concat(concat('%', #{inpNo}), '%')))
+            </if>
+            <if test="mrState != null  and mrState != ''"> and f.mr_state = #{mrState}</if>
+            <if test="fileDocCd != null  and fileDocCd != ''"> and f.file_doc_cd = #{fileDocCd}</if>
+        </where>
+        order by f.file_time asc
+    </select>
+
+    <select id="selectEmrQcFlowVoAllList" parameterType="EmrQcFlowVo" resultMap="EmrQcFlowVoResult">
+        select v.patient_id,p.patient_name, v.inp_no,v.bed_no,v.PAY_TYPE_NAME, p.sex, p.age_y, p.age_m, p.age_d, p.age_h,
+        p.age_mi,v.dept_name,diag.DIAG_NAME as inhos_wm_dia_name,v.inhos_time, v.out_time,v.pc_name,v.res_doc_name,v.record_no,
+        case when f.mr_state is null then '00' else f.mr_state end mr_state,v.dept_cd, f.alt_date,f.id,f.shelf_num
+        from pat_visitinfo v
+        left join pat_personalinfo p on v.patient_id = p.patient_id
+        left join emr_qc_flow f on f.patient_id = v.patient_id
+        LEFT JOIN DIAG_INFO diag on diag.PATIENT_ID = v.patient_id and diag.DIAG_TYPE_CD='02' and diag.DIAG_CLASS_CD='01'
+        <where>
+            and v.out_time is not null
+            <if test="deptCd != null  and deptCd != ''"> and v.dept_cd = #{deptCd}</if>
+            <if test="outTimeBegin != null">and v.out_time &gt;= #{outTimeBegin}</if>
+            <if test="outTimeEnd != null">and v.out_time &lt; #{outTimeEnd}</if>
+            <if test="mrState != null and mrState == '00'"> and (f.mr_state = #{mrState} or f.mr_state is null)</if>
+            <if test="mrState != null and mrState != '' and mrState != '00'"> and f.mr_state = #{mrState}</if>
+            <if test="resDocCd != null  and resDocCd != ''"> and v.res_doc_cd = #{resDocCd}</if>
+            <!--            <if test="inpNo != null  and inpNo != ''"> and v.inp_no = #{inpNo}</if>-->
+            <if test="inpNo != null  and inpNo != ''">
+                and (v.record_no like concat(concat('%', #{inpNo}), '%')
+                or p.PATIENT_NAME like concat(concat('%', #{inpNo}), '%')
+                or p.INPUTSTRPHTC like upper(concat(concat('%', #{inpNo}), '%')))
+            </if>
+        </where>
+        order by v.out_time asc
+    </select>
+
+    <select id="selectEmrQcFlowByPatientId" resultMap="EmrQcFlowResult">
+        <include refid="selectEmrQcFlowVo"/>
+        where org_cd = #{orgCd}
+        and patient_id = #{patientId}
+    </select>
+    <select id="selectEmrQcFlowById" parameterType="Long" resultMap="EmrQcFlowResult">
+        <include refid="selectEmrQcFlowVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrQcFlow" parameterType="EmrQcFlow">
+        insert into emr_qc_flow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null"> id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="inpNo != null">inp_no,</if>
+            <if test="visitId != null">visit_id,</if>
+            <if test="recordNo != null">record_no,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="resDocCd != null">res_doc_cd,</if>
+            <if test="resDocName != null">res_doc_name,</if>
+            <if test="inDeptTime != null">in_dept_time,</if>
+            <if test="outDeptTime != null">out_dept_time,</if>
+            <if test="checkDocCd != null">check_doc_cd,</if>
+            <if test="checkDocName != null">check_doc_name,</if>
+            <if test="checkTime != null">check_time,</if>
+            <if test="checkScore != null">check_score,</if>
+            <if test="checkGradeNo != null">check_grade_no,</if>
+            <if test="checkGradeName != null">check_grade_name,</if>
+            <if test="checkState != null">check_state,</if>
+            <if test="mrState != null">mr_state,</if>
+            <if test="mrSubCd != null">mr_sub_cd,</if>
+            <if test="mrSubName != null">mr_sub_name,</if>
+            <if test="mrSubTime != null">mr_sub_time,</if>
+            <if test="deptQcCd != null">dept_qc_cd,</if>
+            <if test="deptQcName != null">dept_qc_name,</if>
+            <if test="deptQcTime != null">dept_qc_time,</if>
+            <if test="deptQcState != null">dept_qc_state,</if>
+            <if test="deptScore != null">dept_score,</if>
+            <if test="deptGradeNo != null">dept_grade_no,</if>
+            <if test="deptGradeName != null">dept_grade_name,</if>
+            <if test="applyDeptCd != null">apply_dept_cd,</if>
+            <if test="applyDeptName != null">apply_dept_name,</if>
+            <if test="applyDocCd != null">apply_doc_cd,</if>
+            <if test="applyDocName != null">apply_doc_name,</if>
+            <if test="applyFileTime != null">apply_file_time,</if>
+            <if test="termQcCd != null">term_qc_cd,</if>
+            <if test="termQcName != null">term_qc_name,</if>
+            <if test="termQcState != null">term_qc_state,</if>
+            <if test="termQcTime != null">term_qc_time,</if>
+            <if test="termScore != null">term_score,</if>
+            <if test="termGradeNo != null">term_grade_no,</if>
+            <if test="termGradeName != null">term_grade_name,</if>
+            <if test="fileDocCd != null">file_doc_cd,</if>
+            <if test="fileDocName != null">file_doc_name,</if>
+            <if test="fileTime != null">file_time,</if>
+            <if test="checkQcSn != null">check_qc_sn,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="firstFileTime != null">first_file_time,</if>
+            <if test="shelfNum != null">shelf_num,</if>
+            cre_date,
+            <if test="hpQcDate != null">hp_qc_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="inpNo != null">#{inpNo},</if>
+            <if test="visitId != null">#{visitId},</if>
+            <if test="recordNo != null">#{recordNo},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="resDocCd != null">#{resDocCd},</if>
+            <if test="resDocName != null">#{resDocName},</if>
+            <if test="inDeptTime != null">#{inDeptTime},</if>
+            <if test="outDeptTime != null">#{outDeptTime},</if>
+            <if test="checkDocCd != null">#{checkDocCd},</if>
+            <if test="checkDocName != null">#{checkDocName},</if>
+            <if test="checkTime != null">#{checkTime},</if>
+            <if test="checkScore != null">#{checkScore},</if>
+            <if test="checkGradeNo != null">#{checkGradeNo},</if>
+            <if test="checkGradeName != null">#{checkGradeName},</if>
+            <if test="checkState != null">#{checkState},</if>
+            <if test="mrState != null">#{mrState},</if>
+            <if test="mrSubCd != null">#{mrSubCd},</if>
+            <if test="mrSubName != null">#{mrSubName},</if>
+            <if test="mrSubTime != null">#{mrSubTime},</if>
+            <if test="deptQcCd != null">#{deptQcCd},</if>
+            <if test="deptQcName != null">#{deptQcName},</if>
+            <if test="deptQcTime != null">#{deptQcTime},</if>
+            <if test="deptQcState != null">#{deptQcState},</if>
+            <if test="deptScore != null">#{deptScore},</if>
+            <if test="deptGradeNo != null">#{deptGradeNo},</if>
+            <if test="deptGradeName != null">#{deptGradeName},</if>
+            <if test="applyDeptCd != null">#{applyDeptCd},</if>
+            <if test="applyDeptName != null">#{applyDeptName},</if>
+            <if test="applyDocCd != null">#{applyDocCd},</if>
+            <if test="applyDocName != null">#{applyDocName},</if>
+            <if test="applyFileTime != null">#{applyFileTime},</if>
+            <if test="termQcCd != null">#{termQcCd},</if>
+            <if test="termQcName != null">#{termQcName},</if>
+            <if test="termQcState != null">#{termQcState},</if>
+            <if test="termQcTime != null">#{termQcTime},</if>
+            <if test="termScore != null">#{termScore},</if>
+            <if test="termGradeNo != null">#{termGradeNo},</if>
+            <if test="termGradeName != null">#{termGradeName},</if>
+            <if test="fileDocCd != null">#{fileDocCd},</if>
+            <if test="fileDocName != null">#{fileDocName},</if>
+            <if test="fileTime != null">#{fileTime},</if>
+            <if test="checkQcSn != null">#{checkQcSn},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="firstFileTime != null">#{firstFileTime},</if>
+            <if test="shelfNum != null">#{shelfNum},</if>
+            sysdate,
+            <if test="hpQcDate != null">#{hpQcDate},</if>
+        </trim>
+    </insert>
+    <insert id="insertSqgd" parameterType="com.emr.project.qc.domain.DzblSqgd">
+        insert into yy_dzbl_sqgd
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="zyh != null and zyh !=''"> zyh,</if>
+            <if test="rycs != null"> rycs,</if>
+            <if test="sqsj != null"> sqsj,</if>
+            <if test="sqys != null and sqys != ''"> sqys,</if>
+            <if test="pfsj != null"> pfsj,</if>
+            <if test="gdsj != null"> gdsj,</if>
+            <if test="pfczy != null and pfczy!=''"> pfczy,</if>
+            <if test="gdczy != null and gdczy!=''"> gdczy,</if>
+            <if test="zf != null"> zf,</if>
+            <if test="bldj != null and bldj != ''"> bldj,</if>
+            <if test="brxm != null and brxm != ''"> brxm,</if>
+            <if test="xb != null and xb != ''"> xb,</if>
+            <if test="nl != null and nl != ''"> nl,</if>
+            <if test="bqbh != null and bqbh != ''"> bqbh,</if>
+            <if test="ryrq != null"> ryrq,</if>
+            <if test="bah != null and bah !=''"> bah,</if>
+            <if test="blzt != null and blzt !=''"> blzt,</if>
+            <if test="zksj != null"> zksj,</if>
+            <if test="zkczy != null and zkczy!=''"> zkczy,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="zyh != null and zyh !=''">#{zyh},</if>
+            <if test="rycs != null ">#{rycs},</if>
+            <if test="sqsj != null ">#{sqsj},</if>
+            <if test="sqys != null and sqys != ''">#{sqys},</if>
+            <if test="pfsj != null">#{pfsj},</if>
+            <if test="gdsj != null">#{gdsj},</if>
+            <if test="pfczy != null and pfczy!=''">#{pfczy},</if>
+            <if test="gdczy != null and gdczy!=''">#{gdczy},</if>
+            <if test="zf != null">#{zf},</if>
+            <if test="bldj != null and bldj != ''">#{bldj},</if>
+            <if test="brxm != null and brxm != ''">#{brxm},</if>
+            <if test="xb != null and xb != ''">#{xb},</if>
+            <if test="nl != null and nl != ''">#{nl},</if>
+            <if test="bqbh != null and bqbh != ''">#{bqbh},</if>
+            <if test="ryrq != null">#{ryrq},</if>
+            <if test="bah != null and bah !=''">#{bah},</if>
+            <if test="blzt != null and blzt !=''">#{blzt},</if>
+            <if test="zksj != null">#{zksj},</if>
+            <if test="zkczy != null and zkczy !=''">#{zkczy},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEmrQcFlow" parameterType="EmrQcFlow">
+        update emr_qc_flow
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="inpNo != null">inp_no = #{inpNo},</if>
+            <if test="visitId != null">visit_id = #{visitId},</if>
+            <if test="recordNo != null">record_no = #{recordNo},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="resDocCd != null">res_doc_cd = #{resDocCd},</if>
+            <if test="resDocName != null">res_doc_name = #{resDocName},</if>
+            <if test="inDeptTime != null">in_dept_time = #{inDeptTime},</if>
+            <if test="outDeptTime != null">out_dept_time = #{outDeptTime},</if>
+            <if test="checkDocCd != null">check_doc_cd = #{checkDocCd},</if>
+            <if test="checkDocName != null">check_doc_name = #{checkDocName},</if>
+            <if test="checkTime != null">check_time = #{checkTime},</if>
+            <if test="checkScore != null">check_score = #{checkScore},</if>
+            <if test="checkGradeNo != null">check_grade_no = #{checkGradeNo},</if>
+            <if test="checkGradeName != null">check_grade_name = #{checkGradeName},</if>
+            <if test="checkState != null">check_state = #{checkState},</if>
+            <if test="mrState != null">mr_state = #{mrState},</if>
+            <if test="mrSubCd != null">mr_sub_cd = #{mrSubCd},</if>
+            <if test="mrSubName != null">mr_sub_name = #{mrSubName},</if>
+            <if test="mrSubTime != null">mr_sub_time = #{mrSubTime},</if>
+            <if test="deptQcCd != null">dept_qc_cd = #{deptQcCd},</if>
+            <if test="deptQcName != null">dept_qc_name = #{deptQcName},</if>
+            <if test="deptQcTime != null">dept_qc_time = #{deptQcTime},</if>
+            <if test="deptQcState != null">dept_qc_state = #{deptQcState},</if>
+            <if test="deptScore != null">dept_score = #{deptScore},</if>
+            <if test="deptGradeNo != null">dept_grade_no = #{deptGradeNo},</if>
+            <if test="deptGradeName != null">dept_grade_name = #{deptGradeName},</if>
+            <if test="applyDeptCd != null">apply_dept_cd = #{applyDeptCd},</if>
+            <if test="applyDeptName != null">apply_dept_name = #{applyDeptName},</if>
+            <if test="applyDocCd != null">apply_doc_cd = #{applyDocCd},</if>
+            <if test="applyDocName != null">apply_doc_name = #{applyDocName},</if>
+            <if test="applyFileTime != null">apply_file_time = #{applyFileTime},</if>
+            <if test="termQcCd != null">term_qc_cd = #{termQcCd},</if>
+            <if test="termQcName != null">term_qc_name = #{termQcName},</if>
+            <if test="termQcState != null">term_qc_state = #{termQcState},</if>
+            <if test="termQcTime != null">term_qc_time = #{termQcTime},</if>
+            <if test="termScore != null">term_score = #{termScore},</if>
+            <if test="termGradeNo != null">term_grade_no = #{termGradeNo},</if>
+            <if test="termGradeName != null">term_grade_name = #{termGradeName},</if>
+            <if test="fileDocCd != null">file_doc_cd = #{fileDocCd},</if>
+            <if test="fileDocName != null">file_doc_name = #{fileDocName},</if>
+            <if test="fileTime != null">file_time = #{fileTime},</if>
+            <if test="checkQcSn != null">check_qc_sn = #{checkQcSn},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="firstFileTime != null">first_file_time = #{firstFileTime},</if>
+            <if test="shelfNum != null">shelf_num = #{shelfNum},</if>
+            <if test="termQcBackTime != null">term_qc_back_time = #{termQcBackTime},</if>
+            <if test="hpQcDate != null">hp_Qc_Date = #{hpQcDate},</if>
+            alt_date=sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="updateMrStateByAdmissionNoList">
+        update emr_qc_flow SET MR_STATE='13', term_qc_back_time=sysdate
+        <where>
+            <if test="list != null and list.size()>0">
+                and inp_no in
+                <foreach collection="list" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </update>
+    <update id="updateFirstFileTimeById">
+        update emr_qc_flow set FIRST_FILE_TIME = #{dbSysdate}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcFlowById" parameterType="Long">
+        delete from emr_qc_flow where id = #{id}
+    </delete>
+    <delete id="deleteHisSqgd">
+        delete from yy_dzbl_sqgd where zyh=#{admissionNo} and rycs=#{hospitalizedCount}
+    </delete>
+
+    <select id="selectUnSubmitQcList" parameterType="String" resultMap="EmrQcFlowVoResult">
+        SELECT pp.patient_name as patName,vis.out_time,SYSDATE,CEIL((sysdate-vis.out_time)* 24) as limitHours,pp.patient_main_id,vis.inp_no,vis.patient_id,vis.bed_no,pp.sex,vis.record_no FROM pat_visitinfo vis
+        LEFT JOIN emr_qc_flow flw ON vis.PATIENT_ID = flw.PATIENT_ID
+        LEFT JOIN pat_personalinfo pp ON pp.PATIENT_ID = vis.PATIENT_ID  WHERE vis.OUT_TIME > SYSDATE - 10
+        AND vis.RES_DOC_CD =#{docCode} AND nvl( flw.MR_STATE,'00') = '00'
+        <if test="patientId!=null and patientId!=''">
+            and vis.patient_id=#{patientId}
+        </if>
+    </select>
+
+    <select id="selectUnReturnRecordList" parameterType="String" resultMap="EmrQcFlowVoResult">
+        SELECT flw.*,pp.patient_name as patName,vis.out_time,CEIL((sysdate-vis.out_time)* 24) as limitHours FROM pat_visitinfo vis
+        LEFT JOIN emr_qc_flow flw ON vis.PATIENT_ID = flw.PATIENT_ID
+        LEFT JOIN pat_personalinfo pp ON pp.PATIENT_ID = vis.PATIENT_ID
+        WHERE vis.OUT_TIME > SYSDATE - 10 AND vis.RES_DOC_CD =#{docCode} AND nvl( flw.MR_STATE,'00') = '10'
+        <if test="patientId!=null and patientId!=''">
+            and vis.patient_id=#{patientId}
+        </if>
+    </select>
+    <select id="checkMedicalRecord" resultMap="EmrQcFlowResult" parameterType="String">
+        <include refid="selectEmrQcFlowVo"/>
+        where inp_no = #{admissionNo}
+    </select>
+    <select id="selectEmrQcFlowListByInpNoList" resultMap="EmrQcFlowResult">
+        <include refid="selectEmrQcFlowVo"/>
+        where org_cd = #{orgCode}
+        <if test="list !=null and list.size>0">
+            and inp_no in
+            <foreach collection="list" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="getQcFlowStatistic" resultMap="EmrQcFlowStatisticVoResult" parameterType="EmrQcFlowVo">
+        select a.mr_state,e.DEPARTMENT_NO as dept_cd,
+        (select h.dept_name from tm_bs_dept h where h.dept_code=e.DEPARTMENT_NO) as dept_name,
+        e.admission_no as patient_id,
+        e.name as patient_name,
+        e.case_no,
+        e.entry_date as in_dept_time,
+        e.LEAVE_HOSPITAL_DATE as out_dept_time,
+        a.first_file_time,
+        case when a.mr_state='16' then a.first_file_time else null end as case_first_file_time,
+        a.term_qc_time,
+        a.file_time,
+        c.oper_time,
+        c.oper_reason,
+        a.term_grade_no ,
+        a.term_grade_name,
+        a.term_score,
+        e.resident_code as res_doc_cd,
+        e.resident_name as res_doc_name,
+        a.id,
+        a.DEPT_SCORE,
+        a.DEPT_GRADE_NO,
+        a.DEPT_GRADE_NAME,
+        a.CHECK_SCORE,
+        a.CHECK_GRADE_NO,
+        a.CHECK_GRADE_NAME,
+        a.shelf_num,
+        tic.cumulative_cost as cost_total
+        from t_ar_medicalinformation_all e
+        left join t_ar_baseinfomation_all d
+        on e.patient_id = d.ADMISSION_NO
+        left join emr_qc_flow a
+        on a.patient_id=e.ADMISSION_NO
+        left join mr_hp k on k.patient_id = e.ADMISSION_NO
+        left join t_ih_cumulativecost tic on tic.admission_no = e.ADMISSION_NO
+        left join (select t.*
+        from (select b.*,
+        row_number() OVER(PARTITION BY b.qc_sn ORDER BY b.oper_time DESC) rn
+        from emr_qc_flow_record b
+        where b.oper_type_cd = '13') t
+        where t.rn = 1) c
+        on a.id = c.qc_sn
+        <where>
+            e.LEAVE_HOSPITAL_DATE is not null
+            and e.department_no in(
+            select d.dept_code
+            from tm_bs_dept d
+            inner join tm_bs_dept_type_contrast e
+            on d.dept_code = e.dept_code
+            where (d.del_flag = '0' or d.del_flag is null)
+            and (d.status = '0' or d.status is null)
+            and e.dept_type = '11'
+            )
+            <if test="outHospitalTimeBegin != null">
+                and e.LEAVE_HOSPITAL_DATE &gt;= #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null">
+                and e.LEAVE_HOSPITAL_DATE &lt; #{outHospitalTimeEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and e.DEPARTMENT_NO = #{deptCd}
+            </if>
+            <if test="resDocCd != null and resDocCd != ''">
+                and e.resident_code = #{resDocCd}
+            </if>
+            <if test="mrState != null and mrState != '' and mrState != '00'">
+                and a.mr_state = #{mrState}
+            </if>
+            <if test="mrState != null and mrState != '' and mrState == '00'">
+                and (a.mr_state = #{mrState} or a.mr_state is null)
+            </if>
+            <if test="patientName != null and patientName != ''">
+                and (a.PATIENT_ID like concat(concat('%', #{patientName}), '%')
+                or a.patient_name like concat(concat('%', #{patientName}), '%')
+                or d.pinyin_code like concat(concat('%', #{patientName}), '%'))
+            </if>
+        </where>
+        order by e.DEPARTMENT_NO,a.term_qc_time desc
+    </select>
+
+    <select id="getQcFlowStatisticAllCount" resultMap="EmrQcFlowStatisticVoResult" parameterType="EmrQcFlowVo">
+        select count(distinct(e.ADMISSION_NO)) as total
+        from t_ar_medicalinformation_all e
+        left join t_ar_baseinfomation_all d
+        on e.patient_id = d.ADMISSION_NO
+        left join emr_qc_flow a
+        on a.patient_id=e.ADMISSION_NO
+        left join (select t.*
+        from (select b.*,
+        row_number() OVER(PARTITION BY b.qc_sn ORDER BY b.oper_time DESC) rn
+        from emr_qc_flow_record b
+        where b.oper_type_cd = '13') t
+        where t.rn = 1) c
+        on a.id = c.qc_sn
+        <where>
+            e.LEAVE_HOSPITAL_DATE is not null
+            and e.DEPARTMENT_NO  in(select d.dept_code
+            from tm_bs_dept d
+            inner join tm_bs_dept_type_contrast e
+            on d.dept_code = e.dept_code
+            where (d.del_flag = '0' or d.del_flag is null)
+            and (d.status = '0' or d.status is null)
+            and e.dept_type = '11')
+            <if test="outHospitalTimeBegin !=null">
+                and e.LEAVE_HOSPITAL_DATE &gt;= #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null">
+                and e.LEAVE_HOSPITAL_DATE &lt;= #{outHospitalTimeEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and e.DEPARTMENT_NO = #{deptCd}
+            </if>
+            <if test="resDocCd != null and resDocCd != ''">
+                and a.res_doc_cd = #{resDocCd}
+            </if>
+            <if test="mrState != null and mrState != '' and mrState != '00'">
+                and a.mr_state = #{mrState}
+            </if>
+            <if test="mrState != null and mrState != '' and mrState == '00'">
+                and (a.mr_state = #{mrState} or a.mr_state is null)
+            </if>
+            <if test="patientName != null and patientName != ''">
+                and (a.PATIENT_ID like concat(concat('%', #{patientName}), '%')
+                or a.patient_name like concat(concat('%', #{patientName}), '%')
+                or d.pinyin_code like concat(concat('%', #{patientName}), '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="getQcFlowVoStatistic" resultType="com.emr.project.qc.domain.vo.EmrQcFlowVo" parameterType="com.emr.project.qc.domain.vo.EmrQcFlowVo">
+        select ${outDeptTotal} as outHospitalTotal,
+        count(case
+        when a.mr_state = '16' then
+        0
+        end) as ygdTotal,
+        count(case
+        when a.term_grade_no = '1' then
+        0
+        end) as jj,
+        case when count(1) > 0 then
+        to_char(round(count(case
+        when a.term_grade_no = '1' then
+        0
+        end) / ${outDeptTotal},
+        4) * 100,
+        'FM99999990.099') || '%'
+        else '-' end as jjProportion,
+        count(case
+        when a.file_time != a.first_file_time then
+        0
+        end) as fx,
+        case when count(1) > 0 then
+        to_char(round(count(case
+        when a.file_time != a.first_file_time then
+        0
+        end) / ${outDeptTotal},
+        4) * 100,
+        'FM99999990.099') || '%'
+        else '-' end as fxlProportion
+        from emr_qc_flow a
+        right join t_ar_baseinfomation_all d
+        on a.patient_id = d.ADMISSION_NO
+        left join t_ar_medicalinformation_all c
+        on a.patient_id = c.ADMISSION_NO
+        <where>
+            <if test="outHospitalTimeBegin != null">
+                and c.LEAVE_HOSPITAL_DATE &gt;= #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null">
+                and c.LEAVE_HOSPITAL_DATE &lt; #{outHospitalTimeEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and c.department_no = #{deptCd}
+            </if>
+            <if test="resDocCd != null and resDocCd != ''">
+                and c.resident_code = #{resDocCd}
+            </if>
+            <if test="mrState != null and mrState != '' and mrState != '00'">
+                and a.mr_state = #{mrState}
+            </if>
+            <if test="mrState != null and mrState != '' and mrState == '00'">
+                and (a.mr_state = #{mrState} or a.mr_state is null)
+            </if>
+            <if test="patientName != null and patientName != ''">
+                and (a.PATIENT_ID like concat(concat('%', #{patientName}), '%')
+                or a.patient_name like concat(concat('%', #{patientName}), '%')
+                or d.pinyin_code like concat(concat('%', #{patientName}), '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="getOutDeptTotal" parameterType="com.emr.project.qc.domain.vo.EmrQcFlowVo" resultType="int">
+        select count(1) from t_ar_medicalinformation_all a
+        <where>
+            a.LEAVE_HOSPITAL_DATE is not null
+            <if test="outHospitalTimeBegin != null">
+                and a.LEAVE_HOSPITAL_DATE &gt;= #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null">
+                and a.LEAVE_HOSPITAL_DATE &lt; #{outHospitalTimeEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and a.dept_cd = #{deptCd}
+            </if>
+        </where>
+    </select>
+
+    <select id="getOutDeptListTotal" parameterType="com.emr.project.qc.domain.vo.EmrQcFlowVo" resultType="com.emr.project.qc.domain.vo.EmrQcFlowStatisticVo">
+        select a.DEPARTMENT_NO as deptCd,count(1) as outHospitalTotal from t_ar_medicalinformation_all a
+        <where>
+            a.LEAVE_HOSPITAL_DATE is not null
+            <if test="outHospitalTimeBegin != null">
+                and a.LEAVE_HOSPITAL_DATE &gt;= #{outHospitalTimeBegin}
+            </if>
+            <if test="outHospitalTimeEnd != null">
+                and a.LEAVE_HOSPITAL_DATE &lt;= #{outHospitalTimeEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+
+                and a.dept_cd = #{deptCd}
+            </if>
+        </where>
+        group by a.DEPARTMENT_NO
+    </select>
+    <select id="selectCountSqgd" resultType="java.lang.Integer">
+        select count(0) from yy_dzbl_sqgd where zyh =#{admissionNo} and rycs=#{hospitalizedCount}
+    </select>
+    <select id="selectTermBackLimitHourList" resultMap="EmrQcFlowResult">
+        select * from emr_qc_flow where mr_state = #{mrState} and term_qc_back_time >= to_date(#{termQcBackTimeBegin},'yyyy-MM-dd HH24:mi:ss')
+    </select>
+    <select id="selectDipFlag" resultType="java.lang.String">
+        select shbz from v_dip_zdss_yssh where zyh= #{patientId}
+    </select>
+    <resultMap id="DipMidRespResult" type="com.emr.project.qc.domain.DipMidResp">
+        <result property="bah"    column="bah"    />
+        <result property="zyh"    column="zyh"    />
+        <result property="xm"    column="xm"    />
+    </resultMap>
+    <select id="selectDipMid" parameterType="com.emr.project.docOrder.domain.vo.PhysignDayVo" resultMap="DipMidRespResult">
+        ${sqlStr} where a.zyh = #{zyh}
+    </select>
+</mapper>

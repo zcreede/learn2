@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.OperationPlanMapper">
+
+
+    <resultMap type="com.emr.project.docOrder.domain.TdCaOperationApply" id="TdCaOperationApplyResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="applyDeptCd"    column="apply_dept_cd"    />
+        <result property="applyDeptName"    column="apply_dept_name"    />
+        <result property="applyDocCd"    column="apply_doc_cd"    />
+        <result property="applyDocName"    column="apply_doc_name"    />
+        <result property="applyDate"    column="apply_date"    />
+        <result property="execDeptCd"    column="exec_dept_cd"    />
+        <result property="execDeptName"    column="exec_dept_name"    />
+        <result property="planOperTime"    column="plan_oper_time"    />
+        <result property="operTypeCd"    column="oper_type_cd"    />
+        <result property="unplanOperFlag"    column="unplan_oper_flag"    />
+        <result property="majorOperFlag"    column="major_oper_flag"    />
+        <result property="preoperDiag1Cd"    column="preoper_diag1_cd"    />
+        <result property="preoperDiag1Name"    column="preoper_diag1_name"    />
+        <result property="preoperDiag1Prefix"    column="preoper_diag1_prefix"    />
+        <result property="preoperDiag1Suffix"    column="preoper_diag1_suffix"    />
+        <result property="preoperDiag2Cd"    column="preoper_diag2_cd"    />
+        <result property="preoperDiag2Name"    column="preoper_diag2_name"    />
+        <result property="preoperDiag2Prefix"    column="preoper_diag2_prefix"    />
+        <result property="preoperDiag2Suffix"    column="preoper_diag2_suffix"    />
+        <result property="preoperDiag3Cd"    column="preoper_diag3_cd"    />
+        <result property="preoperDiag3Name"    column="preoper_diag3_name"    />
+        <result property="preoperDiag3Prefix"    column="preoper_diag3_prefix"    />
+        <result property="preoperDiag3Suffix"    column="preoper_diag3_suffix"    />
+        <result property="preoperDiag4Cd"    column="preoper_diag4_cd"    />
+        <result property="preoperDiag4Name"    column="preoper_diag4_name"    />
+        <result property="preoperDiag4Prefix"    column="preoper_diag4_prefix"    />
+        <result property="preoperDiag4Suffix"    column="preoper_diag4_suffix"    />
+        <result property="planOper1Cd"    column="plan_oper1_cd"    />
+        <result property="planOper1Name"    column="plan_oper1_name"    />
+        <result property="planOper1Prefix"    column="plan_oper1_prefix"    />
+        <result property="planOper1Suffix"    column="plan_oper1_suffix"    />
+        <result property="planOper2Cd"    column="plan_oper2_cd"    />
+        <result property="planOper2Name"    column="plan_oper2_name"    />
+        <result property="planOper2Prefix"    column="plan_oper2_prefix"    />
+        <result property="planOper2Suffix"    column="plan_oper2_suffix"    />
+        <result property="planOper3Cd"    column="plan_oper3_cd"    />
+        <result property="planOper3Name"    column="plan_oper3_name"    />
+        <result property="planOper3Prefix"    column="plan_oper3_prefix"    />
+        <result property="planOper3Suffix"    column="plan_oper3_suffix"    />
+        <result property="planOper4Cd"    column="plan_oper4_cd"    />
+        <result property="planOper4Name"    column="plan_oper4_name"    />
+        <result property="planOper4Prefix"    column="plan_oper4_prefix"    />
+        <result property="planOper4Suffix"    column="plan_oper4_suffix"    />
+        <result property="operLevelCd"    column="oper_level_cd"    />
+        <result property="operLevelName"    column="oper_level_name"    />
+        <result property="operInciCd"    column="oper_inci_cd"    />
+        <result property="operInciName"    column="oper_inci_name"    />
+        <result property="operPositionCd"    column="oper_position_cd"    />
+        <result property="operPositionName"    column="oper_position_name"    />
+        <result property="operSiteCd"    column="oper_site_cd"    />
+        <result property="operSiteName"    column="oper_site_name"    />
+        <result property="operDocCd"    column="oper_doc_cd"    />
+        <result property="operDocName"    column="oper_doc_name"    />
+        <result property="operAid1Cd"    column="oper_aid1_cd"    />
+        <result property="operAid1Name"    column="oper_aid1_name"    />
+        <result property="operAid2Cd"    column="oper_aid2_cd"    />
+        <result property="operAid2Name"    column="oper_aid2_name"    />
+        <result property="operAid3Cd"    column="oper_aid3_cd"    />
+        <result property="operAid3Name"    column="oper_aid3_name"    />
+        <result property="circulatNurse1Cd"    column="circulat_nurse1_cd"    />
+        <result property="circulatNurse1Name"    column="circulat_nurse1_name"    />
+        <result property="circulatNurse2Cd"    column="circulat_nurse2_cd"    />
+        <result property="circulatNurse2Name"    column="circulat_nurse2_name"    />
+        <result property="anestMethCd"    column="anest_meth_cd"    />
+        <result property="anestMethName"    column="anest_meth_name"    />
+        <result property="anestCd"    column="anest_cd"    />
+        <result property="anestName"    column="anest_name"    />
+        <result property="planOperDurationHour"    column="plan_oper_duration_hour"    />
+        <result property="planOperDurationMin"    column="plan_oper_duration_min"    />
+        <result property="operRoom"    column="oper_room"    />
+        <result property="operTable"    column="oper_table"    />
+        <result property="aboCd"    column="abo_cd"    />
+        <result property="aboName"    column="abo_name"    />
+        <result property="rhCd"    column="rh_cd"    />
+        <result property="rhName"    column="rh_name"    />
+        <result property="hbv"    column="hbv"    />
+        <result property="hiv"    column="hiv"    />
+        <result property="hcv"    column="hcv"    />
+        <result property="tp"    column="tp"    />
+        <result property="hbvName"    column="hbv_name"    />
+        <result property="hivName"    column="hiv_name"    />
+        <result property="hcvName"    column="hcv_name"    />
+        <result property="tpName"    column="tp_name"    />
+        <result property="redBloodCell"    column="red_blood_cell"    />
+        <result property="platelet"    column="platelet"    />
+        <result property="plasma"    column="plasma"    />
+        <result property="wholeBlood"    column="whole_blood"    />
+        <result property="deviceReq"    column="device_req"    />
+        <result property="otherNote"    column="other_note"    />
+        <result property="visitors"    column="visitors"    />
+        <result property="status"    column="status"    />
+        <result property="operDate"    column="oper_date"    />
+        <result property="auditDocCd"    column="audit_doc_cd"    />
+        <result property="auditDocName"    column="audit_doc_name"    />
+        <result property="auditDate"    column="audit_date"    />
+        <result property="shiftNurseCd"    column="shift_nurse_cd"    />
+        <result property="shiftNurseName"    column="shift_nurse_name"    />
+        <result property="shiftDate"    column="shift_date"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="auditRemark"    column="audit_remark"    />
+        <result property="deviceNurseCd1"    column="device_nurse_cd1"    />
+        <result property="deviceNurseName1"    column="device_nurse_name1"    />
+        <result property="deviceNurseCd2"    column="device_nurse_cd2"    />
+        <result property="deviceNurseName2"    column="device_nurse_name2"    />
+        <result property="anestAidCd"    column="anest_aid_cd"    />
+        <result property="anestAidName"    column="anest_aid_name"    />
+    </resultMap>
+
+    <sql id="selectTdCaOperationApply">
+        select hospital_code, apply_form_no, order_no, patient_id, case_no, admission_no, hospitalized_count, patient_name, sex, age, apply_dept_cd, apply_dept_name, apply_doc_cd, apply_doc_name, apply_date, exec_dept_cd, exec_dept_name, plan_oper_time, oper_type_cd, unplan_oper_flag, major_oper_flag, preoper_diag1_cd, preoper_diag1_name, preoper_diag1_prefix, preoper_diag1_suffix, preoper_diag2_cd, preoper_diag2_name, preoper_diag2_prefix, preoper_diag2_suffix, preoper_diag3_cd, preoper_diag3_name, preoper_diag3_prefix, preoper_diag3_suffix, preoper_diag4_cd, preoper_diag4_name, preoper_diag4_prefix, preoper_diag4_suffix, plan_oper1_cd, plan_oper1_name, plan_oper1_prefix, plan_oper1_suffix, plan_oper2_cd, plan_oper2_name, plan_oper2_prefix, plan_oper2_suffix, plan_oper3_cd, plan_oper3_name, plan_oper3_prefix, plan_oper3_suffix, plan_oper4_cd, plan_oper4_name, plan_oper4_prefix, plan_oper4_suffix, oper_level_cd, oper_level_name, oper_inci_cd, oper_inci_name, oper_position_cd, oper_position_name, oper_site_cd, oper_site_name, oper_doc_cd, oper_doc_name, oper_aid1_cd, oper_aid1_name, oper_aid2_cd, oper_aid2_name, oper_aid3_cd, oper_aid3_name, circulat_nurse1_cd, circulat_nurse1_name, circulat_nurse2_cd, circulat_nurse2_name, anest_meth_cd, anest_meth_name, anest_cd, anest_name, plan_oper_duration_hour, plan_oper_duration_min, oper_room, oper_table, abo_cd, abo_name, rh_cd, rh_name,
+               hbv, hiv, hcv, tp,hbv_name, hiv_name, hcv_name, tp_name, red_blood_cell, platelet, plasma, whole_blood, device_req, other_note, visitors, status, oper_date, audit_doc_cd, audit_doc_name, audit_date, shift_nurse_cd, shift_nurse_name, shift_date, alt_date, alt_per_code, alt_per_name,audit_remark,device_nurse_cd1,device_nurse_name1,device_nurse_cd2,device_nurse_name2,anest_aid_cd,anest_aid_name from td_ca_operation_apply
+    </sql>
+    <select id="queryPlanList" resultMap="TdCaOperationApplyResult">
+        <include refid="selectTdCaOperationApply"/>
+        where HOSPITAL_CODE=#{orgCode}
+        <if test="status != null  and status != ''">
+            and status = #{status}
+        </if>
+        <if test="startDate != null  and startDate != ''">
+            and PLAN_OPER_TIME &gt;= to_date(#{startDate},'yyyy-MM-dd')
+        </if>
+        <if test="endDate != null  and endDate != ''">
+            and PLAN_OPER_TIME &lt;= to_date(#{endDate},'yyyy-MM-dd')
+        </if>
+        <if test="statistType != null  and statistType != '' and statistType == '1'.toString()">
+            order by PLAN_OPER_TIME
+        </if>
+        <if test="statistType != null  and statistType != '' and statistType == '2'.toString()">
+            order by OPER_ROOM
+        </if>
+        <if test="statistType != null  and statistType != '' and statistType == '3'.toString()">
+            order by APPLY_DOC_CD
+        </if>
+
+    </select>
+
+
+    <resultMap id="OperPlanListReslt" type="OperPlanListResp" extends="TdCaOperationApplyResult">
+        <result property="operRoomName"    column="oper_room_name"    />
+    </resultMap>
+
+    <select id="selectOperPlanList" parameterType="OperPlanListReq" resultMap="OperPlanListReslt">
+        select a.*,b.surgical_room_name as oper_room_name
+        from td_ca_operation_apply a
+        left join td_ca_operation_room b on b.surgical_room_code = a.oper_room
+        left join T_AR_BASEINFOMATION_all ba on ba.ADMISSION_NO = a.ADMISSION_NO
+        where a.hospital_code = #{orgCode}
+        <if test="statusList != null and statusList.size() > 0">
+            and a.status in
+            <foreach item="item" collection="statusList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="planDate != null  and planDate != ''">
+            and to_char(a.plan_oper_time,'yyyy-MM-dd') = #{planDate}
+        </if>
+        <if test="operDate != null  and operDate != ''">
+            and to_char(a.oper_date,'yyyy-MM-dd') = #{operDate}
+        </if>
+        <if test="deptCd != null and deptCd != ''">
+            and a.apply_dept_cd = #{deptCd}
+        </if>
+        <if test="operRoom != null and operRoom != ''">
+            and a.oper_room = #{operRoom}
+        </if>
+        <if test="searchValue != null and searchValue != ''">
+            and (
+            a.patient_name like concat(concat('%', #{searchValue}), '%')
+            or a.admission_no like concat(concat('%', #{searchValue}), '%')
+            or a.oper_room like concat(concat('%', #{searchValue}), '%')
+            or ba.PINYIN_CODE like concat(concat('%', lower(#{searchValue})), '%')
+            or ba.PINYIN_CODE like concat(concat('%', upper(#{searchValue})), '%')
+            )
+        </if>
+        order by a.oper_type_cd,a.plan_oper_time
+    </select>
+
+    <select id="getOperTableByShiftDate" parameterType="String" resultType="java.lang.Integer">
+        select count(1)+1 from td_ca_operation_apply a where to_char(a.shift_date,'yyyy-MM-dd') = #{shiftDate}
+    </select>
+</mapper>

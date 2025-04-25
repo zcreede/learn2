@@ -1,0 +1,3054 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.VisitinfoMapper">
+
+    <resultMap type="Visitinfo" id="VisitinfoResult">
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="visitId"    column="visit_id"    />
+        <result property="recordNo"    column="record_no"    />
+        <result property="inhosCard"    column="inhos_card"    />
+        <result property="sdOutNo"    column="sd_out_no"    />
+        <result property="patTypeCd"    column="pat_type_cd"    />
+        <result property="patTypeName"    column="pat_type_name"    />
+        <result property="insuTypeCd"    column="insu_type_cd"    />
+        <result property="insuTypeName"    column="insu_type_name"    />
+        <result property="payTypeCd"    column="pay_type_cd"    />
+        <result property="payTypeName"    column="pay_type_name"    />
+        <result property="inDocCd"    column="in_doc_cd"    />
+        <result property="inDocName"    column="in_doc_name"    />
+        <result property="inDeptCd"    column="in_dept_cd"    />
+        <result property="inDeptName"    column="in_dept_name"    />
+        <result property="inAreaCd"    column="in_area_cd"    />
+        <result property="inAreaName"    column="in_area_name"    />
+        <result property="inhosTime"    column="inhos_time"    />
+        <result property="inDeptTime"    column="in_dept_time"    />
+        <result property="inhosCond"    column="inhos_cond"    />
+        <result property="inhosCondCd"    column="inhos_cond_cd"    />
+        <result property="inhosReason"    column="inhos_reason"    />
+        <result property="inhosWayCd"    column="inhos_way_cd"    />
+        <result property="inhosWayName"    column="inhos_way_name"    />
+        <result property="inhosDiagCd"    column="inhos_diag_cd"    />
+        <result property="inhosDiag"    column="inhos_diag"    />
+        <result property="inhosWmDiaName"    column="inhos_wm_dia_name"    />
+        <result property="inhosWmDiaCd"    column="inhos_wm_dia_cd"    />
+        <result property="inhosCmSymName"    column="inhos_cm_sym_name"    />
+        <result property="inhosCmSymCd"    column="inhos_cm_sym_cd"    />
+        <result property="inhosCmIllName"    column="inhos_cm_ill_name"    />
+        <result property="inhosCmIllCd"    column="inhos_cm_ill_cd"    />
+        <result property="areaCode"    column="area_code"    />
+        <result property="wardName"    column="ward_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="resDocCd"    column="res_doc_cd"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="attDocCd"    column="att_doc_cd"    />
+        <result property="attDocName"    column="att_doc_name"    />
+        <result property="arcDocCd"    column="arc_doc_cd"    />
+        <result property="arcDocName"    column="arc_doc_name"    />
+        <result property="dutyNurName"    column="duty_nur_name"    />
+        <result property="dutyNurCd"    column="duty_nur_cd"    />
+        <result property="roomNo"    column="room_no"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="ngCd"    column="ng_cd"    />
+        <result property="ngName"    column="ng_name"    />
+        <result property="pcCd"    column="pc_cd"    />
+        <result property="pcName"    column="pc_name"    />
+        <result property="outCon"    column="out_con"    />
+        <result property="outTime"    column="out_time"    />
+        <result property="outAreaCd"    column="out_area_cd"    />
+        <result property="outAreaName"    column="out_area_name"    />
+        <result property="outDeptCd"    column="out_dept_cd"    />
+        <result property="outDeptName"    column="out_dept_name"    />
+        <result property="wmIllStateCd"    column="wm_ill_state_cd"    />
+        <result property="leaveWmIllName"    column="leave_wm_ill_name"    />
+        <result property="leaveWmIllCd"    column="leave_wm_ill_cd"    />
+        <result property="wmProStateCd"    column="wm_pro_state_cd"    />
+        <result property="leaveWmProName"    column="leave_wm_pro_name"    />
+        <result property="leaveWmProCd"    column="leave_wm_pro_cd"    />
+        <result property="leaveCmIllCd"    column="leave_cm_ill_cd"    />
+        <result property="leaveCmIllName"    column="leave_cm_ill_name"    />
+        <result property="leaveCmSymCd"    column="leave_cm_sym_cd"    />
+        <result property="leaveCmSymName"    column="leave_cm_sym_name"    />
+        <result property="leaveMainIllCd"    column="leave_main_ill_cd"    />
+        <result property="leaveMainDiaName"    column="leave_main_dia_name"    />
+        <result property="leaveMainDiaCd"    column="leave_main_dia_cd"    />
+        <result property="leaveOthIllCd"    column="leave_oth_ill_cd"    />
+        <result property="leaveOthDiaName"    column="leave_oth_dia_name"    />
+        <result property="leaveOthDiaCd"    column="leave_oth_dia_cd"    />
+        <result property="leaveWmDiaCd"    column="leave_wm_dia_cd"    />
+        <result property="leaveWmDiaName"    column="leave_wm_dia_name"    />
+        <result property="mainPatFlag"    column="main_pat_flag"    />
+        <result property="cpFlag"    column="cp_flag"    />
+        <result property="cpId"    column="cp_id"    />
+        <result property="cpFirstDate"    column="cp_first_date"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="cpDayNo"    column="cp_day_no"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="costSum"    column="cost_sum"    />
+        <result property="foreSum"    column="fore_sum"    />
+        <result property="weight"    column="weight"    />
+        <result property="gathMhTime"    column="gath_mh_time"    />
+        <result property="markDate"    column="mark_date"    />
+        <result property="totalPatAva"    column="total_pat_ava"    />
+        <result property="modiFlag"    column="modi_flag"    />
+        <result property="birWeight"    column="bir_weight"    />
+        <result property="inhosWeight"    column="inhos_weight"    />
+        <result property="isQuality"    column="is_quality"    />
+        <result property="qualityDate"    column="quality_date"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="height"    column="height"    />
+        <result property="specialGroupCd"    column="special_group_cd"    />
+        <result property="specialGroupName"    column="special_group_name"    />
+        <result property="referralHospital" column="referral_hospital" />
+        <result property="outType" column="outType" />
+        <result property="modifyTime" column="modify_time" />
+    </resultMap>
+
+    <resultMap id="VisitinfoVoResult" type="VisitinfoVo" extends="VisitinfoResult">
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="sex"    column="sex"    />
+        <result property="sexCd"    column="sex_cd"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="marSta"    column="mar_sta"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="polStatName"    column="pol_stat_name"    />
+        <result property="birDate"    column="bir_date"    />
+        <result property="contName"    column="cont_name"    />
+        <result property="weight"    column="weight"    />
+        <result property="patientTel"    column="patient_tel"    />
+        <result property="contTel"    column="cont_tel"    />
+        <result property="secLevel"    column="sec_level"    />
+        <result property="nowAddrHouseNo"    column="now_addr_house_no"    />
+        <result property="nowAddrPost"    column="now_addr_post"    />
+        <result property="nowAddrPro"    column="now_addr_pro"    />
+        <result property="nowAddrVil"    column="now_addr_vil"    />
+        <result property="nowAddrFlagty"    column="now_addr_flagty"    />
+        <result property="nowAddrCou"    column="now_addr_cou"    />
+        <result property="nowAddrTown"    column="now_addr_town"    />
+        <result property="nowAddr"    column="now_addr"    />
+        <result property="nowAddrTel"    column="now_addr_tel"    />
+        <result property="catFlag"    column="cat_flag"    />
+        <result property="infectFlag"    column="infect_flag"    />
+        <result property="alleFlag"    column="alle_flag"    />
+        <result property="operFlag"    column="oper_flag"    />
+        <result property="consFlag"    column="cons_flag"    />
+        <result property="bloodFlag"    column="blood_flag"    />
+        <result property="interFlag"    column="inter_flag"    />
+        <result property="anesFlag"    column="anes_flag"    />
+        <result property="dieFlag"    column="die_flag"    />
+        <result property="changeFlag"    column="change_flag"    />
+        <result property="bloodTrans"    column="blood_trans"    />
+        <result property="singleFlag"    column="single_flag"    />
+        <result property="medicineFlag"    column="medicine_flag"    />
+        <result property="feverFlag"    column="fever_flag"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="outType"    column="outType"    />
+        <result property="mainPatName"    column="mainPatName"    />
+        <result property="impType"    column="imp_type"    />
+        <result property="impEndTime"    column="imp_end_time"    />
+        <result property="outTranTime"    column="outTranTime"    />
+        <result property="colorId"    column="colorId"    />
+        <result property="planType"    column="plan_type"    />
+        <result property="colorTypeName"    column="colorTypeName"    />
+        <result property="colorTypeCd"    column="colorTypeCd"    />
+        <result property="colorValue"    column="color_value"    />
+        <result property="secLevelName"    column="secLevelName"    />
+        <result property="workAddr"    column="work_addr"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="qcMrState"    column="qc_mr_state"    />
+        <result property="hospitalMark" column="hospital_mark" />
+        <result property="hospitalMarkName" column="hospital_mark_name" />
+        <result property="outTime" column="out_time" />
+        <result property="total" column="total" />
+        <result property="visitDeptCd"    column="visit_dept_cd"    />
+        <result property="visitDeptName"    column="visit_dept_name"    />
+        <result property="visitDocCd"    column="visit_doc_cd"    />
+        <result property="visitDocName"    column="visit_doc_name"    />
+        <result property="visitNo"    column="visit_no"    />
+        <result property="daycaseFlag" column="daycase_flag" />
+    </resultMap>
+
+    <resultMap id="VisitinfoPersonalVoResult" type="VisitinfoPersonalVo" extends="VisitinfoResult">
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="sex"    column="sex"    />
+        <result property="sexCd"    column="sex_cd"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="secLevel"    column="sec_level"    />
+        <result property="proTypeName"    column="pro_type_name"    />
+        <result property="nowAddrTel"    column="now_addr_tel"    />
+        <result property="birDate" column="bir_date"/>
+        <result property="idCard" column="ID_CARD"/>
+        <result property="weight" column="weight"/>
+        <result property="address" column="address"/>
+        <result property="hospitalType" column="hospital_type"/>
+        <result property="cpFlag" column="CP_FLAG"/>
+        <result property="patientTel" column="patient_tel"/>
+    </resultMap>
+
+    <resultMap id="RunTimeQcCheckVoResult" type="RunTimeQcCheckVo">
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName" column="patient_name"/>
+        <result property="inpNo" column="inp_no"/>
+        <result property="bedNo" column="bed_no"/>
+        <result property="payTypeName" column="pay_type_name"/>
+        <result property="sex"    column="sex"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="inhosWmDiaName"    column="inhos_wm_dia_name"    />
+        <result property="inhosTime"    column="inhos_time"    />
+        <result property="outTime"    column="out_time"    />
+        <result property="pcName"    column="pc_name"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="operFlag"    column="oper_flag"    />
+        <result property="consFlag"    column="cons_flag"    />
+        <result property="dieFlag"    column="die_flag"    />
+        <result property="bloodTrans"    column="blood_trans"    />
+        <result property="changeFlag"    column="change_flag"    />
+        <result property="infectFlag"    column="infect_flag"    />
+        <result property="rescueFlag"    column="rescue_flag"    />
+        <result property="dayNumFlag"    column="day_num_flag"    />
+        <result property="costSumFlag"    column="cost_sum_flag"    />
+        <result property="checkNum" column="check_num"/>
+        <result property="recordNo" column="record_no"/>
+        <result property="bloodFlag" column="blood_flag"/>
+        <result property="alertFlag" column="alert_flag"/>
+    </resultMap>
+
+    <sql id="selectVisitinfoVo">
+        select org_cd, org_name, patient_id, inp_no, visit_id, record_no, inhos_card, sd_out_no, pat_type_cd, pat_type_name, insu_type_cd, insu_type_name,
+               pay_type_cd, pay_type_name, in_doc_cd, in_doc_name, in_dept_cd, in_dept_name, in_area_cd, in_area_name, inhos_time, in_dept_time, inhos_cond,
+               inhos_cond_cd, inhos_reason, inhos_way_cd, inhos_way_name, inhos_diag_cd, inhos_diag, inhos_wm_dia_name, inhos_wm_dia_cd, inhos_cm_sym_name,
+               inhos_cm_sym_cd, inhos_cm_ill_name, inhos_cm_ill_cd, area_code, ward_name, dept_cd, dept_name, res_doc_cd, res_doc_name, att_doc_cd,
+               att_doc_name, arc_doc_cd, arc_doc_name, duty_nur_name, duty_nur_cd, room_no, bed_no, ng_cd, ng_name, pc_cd, pc_name, out_con, out_time,
+               out_area_cd, out_area_name, out_dept_cd, out_dept_name, wm_ill_state_cd, leave_wm_ill_name, leave_wm_ill_cd, wm_pro_state_cd, leave_wm_pro_name,
+               leave_wm_pro_cd, leave_cm_ill_cd, leave_cm_ill_name, leave_cm_sym_cd, leave_cm_sym_name, leave_main_ill_cd, leave_main_dia_name, leave_main_dia_cd,
+               leave_oth_ill_cd, leave_oth_dia_name, leave_oth_dia_cd, leave_wm_dia_cd, leave_wm_dia_name, main_pat_flag, cp_flag, cp_id, cp_first_date, cp_name,
+               cp_day_no, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, cost_sum, fore_sum, weight, gath_mh_time, mark_date,
+               total_pat_ava, modi_flag, bir_weight, inhos_weight, is_quality, quality_date,height,special_group_cd,special_group_name,referral_hospital from pat_visitinfo
+    </sql>
+
+    <select id="selectVisitinfoList" parameterType="Visitinfo" resultMap="VisitinfoResult">
+        select pv.org_cd, pv.org_name, pv.patient_id, pv.inp_no, pv.visit_id, pv.record_no, pv.inhos_card, pv.sd_out_no, pv.pat_type_cd,
+        pv.pat_type_name, pv.insu_type_cd, pv.insu_type_name, pv.pay_type_cd, pv.pay_type_name, pv.in_doc_cd, pv.in_doc_name,
+        pv.in_dept_cd, pv.in_dept_name, pv.in_area_cd, pv.in_area_name, pv.inhos_time, pv.in_dept_time, pv.inhos_cond,
+        pv.inhos_cond_cd, pv.inhos_reason, pv.inhos_way_cd, pv.inhos_way_name, pv.inhos_diag_cd, pv.inhos_diag,
+        pv.inhos_wm_dia_name, pv.inhos_wm_dia_cd, pv.inhos_cm_sym_name, pv.inhos_cm_sym_cd, pv.inhos_cm_ill_name,
+        pv.inhos_cm_ill_cd, pv.area_code, pv.ward_name, pv.dept_cd, pv.dept_name, pv.res_doc_cd, pv.res_doc_name, pv.att_doc_cd,
+        pv.att_doc_name, pv.arc_doc_cd, pv.arc_doc_name, pv.duty_nur_name, pv.duty_nur_cd, pv.room_no, pv.bed_no, pv.ng_cd,
+        pv.ng_name, pv.pc_cd, pv.pc_name, pv.out_con, pv.out_time, pv.out_area_cd, pv.out_area_name, pv.out_dept_cd, pv.out_dept_name,
+        pv.wm_ill_state_cd, pv.leave_wm_ill_name, pv.leave_wm_ill_cd, pv.wm_pro_state_cd, pv.leave_wm_pro_name,
+        pv.leave_wm_pro_cd, pv.leave_cm_ill_cd, pv.leave_cm_ill_name, pv.leave_cm_sym_cd, pv.leave_cm_sym_name,
+        pv.leave_main_ill_cd, pv.leave_main_dia_name, pv.leave_main_dia_cd, pv.leave_oth_ill_cd, pv.leave_oth_dia_name,
+        pv.leave_oth_dia_cd, pv.leave_wm_dia_cd, pv.leave_wm_dia_name, pv.main_pat_flag, pv.cp_flag, pv.cp_id, pv.cp_first_date,
+        pv.cp_name, pv.cp_day_no, pv.alt_per_name, pv.alt_per_code, pv.alt_date, pv.cre_per_name, pv.cre_per_code, pv.cre_date,
+        pv.cost_sum, pv.fore_sum, pv.weight, pv.gath_mh_time, pv.mark_date, pv.total_pat_ava, pv.modi_flag, pv.bir_weight,
+        pv.inhos_weight, pv.is_quality, pv.quality_date, pp.patient_name
+        from pat_visitinfo pv
+        left join pat_personalinfo pp on pv.patient_id = pp.patient_id
+        <where>
+            and out_time is null
+            <if test="patientName != null and patientName != ''"> and (
+                pp.patient_name like concat(concat('%', #{patientName}), '%')
+                or pv.inp_no like concat(concat('%', #{patientName}), '%')
+                or pv.bed_no like concat(concat('%', #{patientName}), '%')
+                )
+            </if>
+            <if test="orgName != null  and orgName != ''"> and org_name like concat(concat('%', #{orgName}), '%')</if>
+            <if test="inpNo != null "> and inp_no = #{inpNo}</if>
+            <if test="visitId != null "> and visit_id = #{visitId}</if>
+            <if test="recordNo != null  and recordNo != ''"> and record_no = #{recordNo}</if>
+            <if test="inhosCard != null  and inhosCard != ''"> and inhos_card = #{inhosCard}</if>
+            <if test="sdOutNo != null  and sdOutNo != ''"> and sd_out_no = #{sdOutNo}</if>
+            <if test="patTypeCd != null  and patTypeCd != ''"> and pat_type_cd = #{patTypeCd}</if>
+            <if test="patTypeName != null  and patTypeName != ''"> and pat_type_name like concat(concat('%', #{patTypeName}), '%')</if>
+            <if test="insuTypeCd != null  and insuTypeCd != ''"> and insu_type_cd = #{insuTypeCd}</if>
+            <if test="insuTypeName != null  and insuTypeName != ''"> and insu_type_name like concat(concat('%', #{insuTypeName}), '%')</if>
+            <if test="payTypeCd != null  and payTypeCd != ''"> and pay_type_cd = #{payTypeCd}</if>
+            <if test="payTypeName != null  and payTypeName != ''"> and pay_type_name like concat(concat('%', #{payTypeName}), '%')</if>
+            <if test="inDocCd != null  and inDocCd != ''"> and in_doc_cd = #{inDocCd}</if>
+            <if test="inDocName != null  and inDocName != ''"> and in_doc_name like concat(concat('%', #{inDocName}), '%')</if>
+            <if test="inDeptCd != null  and inDeptCd != ''"> and in_dept_cd = #{inDeptCd}</if>
+            <if test="inDeptName != null  and inDeptName != ''"> and in_dept_name like concat(concat('%', #{inDeptName}), '%')</if>
+            <if test="inAreaCd != null  and inAreaCd != ''"> and in_area_cd = #{inAreaCd}</if>
+            <if test="inAreaName != null  and inAreaName != ''"> and in_area_name like concat(concat('%', #{inAreaName}), '%')</if>
+            <if test="inhosTime != null "> and inhos_time = #{inhosTime}</if>
+            <if test="inDeptTime != null "> and in_dept_time = #{inDeptTime}</if>
+            <if test="inhosCond != null  and inhosCond != ''"> and inhos_cond = #{inhosCond}</if>
+            <if test="inhosCondCd != null  and inhosCondCd != ''"> and inhos_cond_cd = #{inhosCondCd}</if>
+            <if test="inhosReason != null  and inhosReason != ''"> and inhos_reason = #{inhosReason}</if>
+            <if test="inhosWayCd != null  and inhosWayCd != ''"> and inhos_way_cd = #{inhosWayCd}</if>
+            <if test="inhosWayName != null  and inhosWayName != ''"> and inhos_way_name like concat(concat('%', #{inhosWayName}), '%')</if>
+            <if test="inhosDiagCd != null  and inhosDiagCd != ''"> and inhos_diag_cd = #{inhosDiagCd}</if>
+            <if test="inhosDiag != null  and inhosDiag != ''"> and inhos_diag = #{inhosDiag}</if>
+            <if test="inhosWmDiaName != null  and inhosWmDiaName != ''"> and inhos_wm_dia_name like concat(concat('%', #{inhosWmDiaName}), '%')</if>
+            <if test="inhosWmDiaCd != null  and inhosWmDiaCd != ''"> and inhos_wm_dia_cd = #{inhosWmDiaCd}</if>
+            <if test="inhosCmSymName != null  and inhosCmSymName != ''"> and inhos_cm_sym_name like concat(concat('%', #{inhosCmSymName}), '%')</if>
+            <if test="inhosCmSymCd != null  and inhosCmSymCd != ''"> and inhos_cm_sym_cd = #{inhosCmSymCd}</if>
+            <if test="inhosCmIllName != null  and inhosCmIllName != ''"> and inhos_cm_ill_name like concat(concat('%', #{inhosCmIllName}), '%')</if>
+            <if test="inhosCmIllCd != null  and inhosCmIllCd != ''"> and inhos_cm_ill_cd = #{inhosCmIllCd}</if>
+            <if test="areaCode != null  and areaCode != ''"> and area_code = #{areaCode}</if>
+            <if test="wardName != null  and wardName != ''"> and ward_name like concat(concat('%', #{wardName}), '%')</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="resDocCd != null  and resDocCd != ''"> and res_doc_cd = #{resDocCd}</if>
+            <if test="resDocName != null  and resDocName != ''"> and res_doc_name like concat(concat('%', #{resDocName}), '%')</if>
+            <if test="attDocCd != null  and attDocCd != ''"> and att_doc_cd = #{attDocCd}</if>
+            <if test="attDocName != null  and attDocName != ''"> and att_doc_name like concat(concat('%', #{attDocName}), '%')</if>
+            <if test="arcDocCd != null  and arcDocCd != ''"> and arc_doc_cd = #{arcDocCd}</if>
+            <if test="arcDocName != null  and arcDocName != ''"> and arc_doc_name like concat(concat('%', #{arcDocName}), '%')</if>
+            <if test="dutyNurName != null  and dutyNurName != ''"> and duty_nur_name like concat(concat('%', #{dutyNurName}), '%')</if>
+            <if test="dutyNurCd != null  and dutyNurCd != ''"> and duty_nur_cd = #{dutyNurCd}</if>
+            <if test="roomNo != null  and roomNo != ''"> and room_no = #{roomNo}</if>
+            <if test="bedNo != null  and bedNo != ''"> and bed_no = #{bedNo}</if>
+            <if test="ngCd != null  and ngCd != ''"> and ng_cd = #{ngCd}</if>
+            <if test="ngName != null  and ngName != ''"> and ng_name like concat(concat('%', #{ngName}), '%')</if>
+            <if test="pcCd != null  and pcCd != ''"> and pc_cd = #{pcCd}</if>
+            <if test="pcName != null  and pcName != ''"> and pc_name like concat(concat('%', #{pcName}), '%')</if>
+            <if test="outCon != null  and outCon != ''"> and out_con = #{outCon}</if>
+            <if test="outTime != null "> and out_time = #{outTime}</if>
+            <if test="outAreaCd != null  and outAreaCd != ''"> and out_area_cd = #{outAreaCd}</if>
+            <if test="outAreaName != null  and outAreaName != ''"> and out_area_name like concat(concat('%', #{outAreaName}), '%')</if>
+            <if test="outDeptCd != null  and outDeptCd != ''"> and out_dept_cd = #{outDeptCd}</if>
+            <if test="outDeptName != null  and outDeptName != ''"> and out_dept_name like concat(concat('%', #{outDeptName}), '%')</if>
+            <if test="wmIllStateCd != null  and wmIllStateCd != ''"> and wm_ill_state_cd = #{wmIllStateCd}</if>
+            <if test="leaveWmIllName != null  and leaveWmIllName != ''"> and leave_wm_ill_name like concat(concat('%', #{leaveWmIllName}), '%')</if>
+            <if test="leaveWmIllCd != null  and leaveWmIllCd != ''"> and leave_wm_ill_cd = #{leaveWmIllCd}</if>
+            <if test="wmProStateCd != null  and wmProStateCd != ''"> and wm_pro_state_cd = #{wmProStateCd}</if>
+            <if test="leaveWmProName != null  and leaveWmProName != ''"> and leave_wm_pro_name like concat(concat('%', #{leaveWmProName}), '%')</if>
+            <if test="leaveWmProCd != null  and leaveWmProCd != ''"> and leave_wm_pro_cd = #{leaveWmProCd}</if>
+            <if test="leaveCmIllCd != null  and leaveCmIllCd != ''"> and leave_cm_ill_cd = #{leaveCmIllCd}</if>
+            <if test="leaveCmIllName != null  and leaveCmIllName != ''"> and leave_cm_ill_name like concat(concat('%', #{leaveCmIllName}), '%')</if>
+            <if test="leaveCmSymCd != null  and leaveCmSymCd != ''"> and leave_cm_sym_cd = #{leaveCmSymCd}</if>
+            <if test="leaveCmSymName != null  and leaveCmSymName != ''"> and leave_cm_sym_name like concat(concat('%', #{leaveCmSymName}), '%')</if>
+            <if test="leaveMainIllCd != null  and leaveMainIllCd != ''"> and leave_main_ill_cd = #{leaveMainIllCd}</if>
+            <if test="leaveMainDiaName != null  and leaveMainDiaName != ''"> and leave_main_dia_name like concat(concat('%', #{leaveMainDiaName}), '%')</if>
+            <if test="leaveMainDiaCd != null  and leaveMainDiaCd != ''"> and leave_main_dia_cd = #{leaveMainDiaCd}</if>
+            <if test="leaveOthIllCd != null  and leaveOthIllCd != ''"> and leave_oth_ill_cd = #{leaveOthIllCd}</if>
+            <if test="leaveOthDiaName != null  and leaveOthDiaName != ''"> and leave_oth_dia_name like concat(concat('%', #{leaveOthDiaName}), '%')</if>
+            <if test="leaveOthDiaCd != null  and leaveOthDiaCd != ''"> and leave_oth_dia_cd = #{leaveOthDiaCd}</if>
+            <if test="leaveWmDiaCd != null  and leaveWmDiaCd != ''"> and leave_wm_dia_cd = #{leaveWmDiaCd}</if>
+            <if test="leaveWmDiaName != null  and leaveWmDiaName != ''"> and leave_wm_dia_name like concat(concat('%', #{leaveWmDiaName}), '%')</if>
+            <if test="mainPatFlag != null  and mainPatFlag != ''"> and main_pat_flag = #{mainPatFlag}</if>
+            <if test="cpFlag != null  and cpFlag != ''"> and cp_flag = #{cpFlag}</if>
+            <if test="cpId != null  and cpId != ''"> and cp_id = #{cpId}</if>
+            <if test="cpFirstDate != null "> and cp_first_date = #{cpFirstDate}</if>
+            <if test="cpName != null  and cpName != ''"> and cp_name like concat(concat('%', #{cpName}), '%')</if>
+            <if test="cpDayNo != null "> and cp_day_no = #{cpDayNo}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="costSum != null "> and cost_sum = #{costSum}</if>
+            <if test="foreSum != null "> and fore_sum = #{foreSum}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="gathMhTime != null "> and gath_mh_time = #{gathMhTime}</if>
+            <if test="markDate != null "> and mark_date = #{markDate}</if>
+            <if test="totalPatAva != null "> and total_pat_ava = #{totalPatAva}</if>
+            <if test="modiFlag != null  and modiFlag != ''"> and modi_flag = #{modiFlag}</if>
+            <if test="birWeight != null "> and bir_weight = #{birWeight}</if>
+            <if test="inhosWeight != null "> and inhos_weight = #{inhosWeight}</if>
+            <if test="isQuality != null  and isQuality != ''"> and is_quality = #{isQuality}</if>
+            <if test="qualityDate != null "> and quality_date = #{qualityDate}</if>
+        </where>
+    </select>
+
+    <select id="selectVisitinfoVoList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+       <if test="browsType == '3'.toString()  ">select * from ( </if>
+        select vis.bed_no, per.patient_name,vis.inp_no,
+        per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi,vis.inhos_diag,vis.inhos_time,
+        vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+        per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+        per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,vis.out_time
+        as outTranTime,sdd.data_tag as secLevelName,
+        per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+        other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+        other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+        vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+        vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'出院'
+        as outType,
+        <if test="browsType == '4'.toString()  ">TO_CHAR(temp.imp_end_time,'YYYY-MM-DD HH24:mi') as
+            imp_end_time,temp.imp_type,</if>
+        vis.dept_cd,sd.data_tag as mainPatName
+        FROM PAT_PERSONALINFO per
+        LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+        LEFT JOIN PAT_VISITINFO vis ON per.PATIENT_ID = vis.PATIENT_ID
+        LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+        LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+        <if test="browsType == '4'.toString()  ">LEFT JOIN IMP_DOCTOR_TEMP temp ON per.PATIENT_ID = temp.PATIENT_ID </if>
+        <where>
+        <if test="searchName != null and searchName != ''"> AND (
+            per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.inp_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="resDocCd != null">
+             <if test="browsType == '1'.toString() and deptCd != null"> AND vis.RES_DOC_CD =#{resDocCd} and vis.DEPT_CD=#{deptCd} AND vis.OUT_TIME IS NULL </if>
+             <if test="browsType == '2'.toString() and deptCd != null"> AND vis.OUT_TIME IS NULL  AND  vis.DEPT_CD=#{deptCd}</if>
+             <if test="browsType == '3'.toString() and deptCd != null ">
+                 AND vis.OUT_DEPT_CD =#{deptCd}
+             <if test="outStartTime !=null and outEndTime !=null"> AND vis.out_Time >=#{outStartTime} AND vis.out_Time &lt;=#{outEndTime}</if>
+                 and  to_char(vis.out_time, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')
+             </if>
+        </if>
+            <if test="browsType == '4'.toString() ">
+                <if test="dateTime != null "> AND temp.imp_end_time>#{dateTime}</if>
+                <if test="impDocCd !=null and impDeptCd !=null">AND (temp.imp_dept_cd=#{impDeptCd} or temp.imp_doc_cd=#{impDocCd})</if>
+                <if test="inDeptCd !=null and inDeptCd !=''">AND vis.dept_cd=#{inDeptCd} </if>
+            </if>
+        </where>
+        <if test="browsType == '3'.toString()">
+            union all select vis.bed_no, per.patient_name,vis.inp_no, per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi, vis.inhos_diag,vis.inhos_time,
+            vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+            per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+            per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,pt.OPERATOR_DATE_OUT as outTranTime,sdd.data_tag as secLevelName,
+            per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+            other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+            other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+            vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+            vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'转出' as outType,
+            vis.dept_cd,sd.data_tag as mainPatName
+            FROM td_na_change_dep pt
+            LEFT JOIN PAT_PERSONALINFO per on pt.ADMISSION_NO=per.PATIENT_ID AND pt.flag = '3'
+            LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+            LEFT JOIN PAT_VISITINFO vis ON per.PATIENT_ID = vis.PATIENT_ID
+            LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+            LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+            left join tm_bs_dept outDept on pt.WARD_NO_OUT=outDept.WARD_NO
+            <where>
+                <if test="searchName != null and searchName != ''"> AND (
+                    per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+                    OR vis.inp_no LIKE concat(concat('%', #{searchName}), '%')
+                    OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+                    )
+                </if>
+                    AND outDept.dept_code=#{deptCd}
+                    AND vis.out_time IS NULL
+                    <if test="outStartTime !=null and outEndTime !=null"> AND pt.OPERATOR_DATE_OUT >= #{outStartTime} AND pt.OPERATOR_DATE_OUT &lt;=#{outEndTime}</if>
+                    and  to_char(pt.OPERATOR_DATE_OUT, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')
+            </where>
+            )order by outTranTime desc
+        </if>
+    </select>
+<select id="selectAdminPatList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    SELECT
+        m.BEDID as bed_no,
+        b.NAME as patient_name,
+        m.ADMISSION_NO as inp_no,
+        case when SEX = 1 then '男' when SEX = 2 then '女' else '未知' end as sex,
+        b.PERSON_AGE as age_y,
+        b.AGE_MONTH as age_m,
+        b.AGE_DAY as age_d,
+        b.AGE_HOUR as age_h,
+        b.AGE_BRANCH as age_mi,
+        m.inhos_diag,
+        m.HOSPITALIZED_DATE as  inhos_time,
+        b.EXPENSE_CATEGORY as pat_type_name,
+        null as cost_sum,
+        m.SUPERVISOR_NURSE_NAME as duty_nur_name,
+        m.main_pat_flag,
+        case when b.IDCARD is null then b.CASE_NO else b.IDCARD end as PATIENT_MAIN_ID,
+        b.ADMISSION_NO as patient_id,
+        b.card_type,
+        b.mar_sta,
+        b.IDCARD as id_card,
+        b.pol_stat_name,
+        b.BIRDTH_DATE as bir_date,
+        b.CONTACTS as cont_name,
+        m.LEAVE_HOSPITAL_DATE as out_time,
+        m.tel as patient_tel,
+        b.cont_tel,
+        b.sec_level,
+        b.now_addr_house_no,
+        b.now_addr_post,
+        b.PRESENT_ADDRESS_SHENG as now_addr_pro,
+        m.LEAVE_HOSPITAL_DATE as outTranTime,
+        sdd.data_tag AS secLevelName,
+        b.PRESENT_ADDRESS_CUN as now_addr_vil,
+        b.PRESENT_ADDRESS_SHI as now_addr_flagty,
+        b.PRESENT_ADDRESS_XIAN as now_addr_cou,
+        b.PRESENT_ADDRESS_XIANG as now_addr_town,
+        b.now_addr_tel,
+        other.cat_flag,
+        other.infect_flag,
+        other.alle_flag,
+        other.oper_flag,
+        other.cons_flag,
+        other.blood_flag,
+        other.inter_flag,
+        other.anes_flag,
+        m.insu_type_name,
+        other.die_flag,
+        other.change_flag,
+        other.blood_trans,
+        other.single_flag,
+        other.medicine_flag,
+        leve.level_name as ng_name,
+        m.LEVEL_CARE as ng_cd,
+        m.RESIDENT_NAME as res_doc_name,
+        dept.dept_name,
+        m.inhos_way_name,
+        m.ENTRY_DATE as in_dept_time,
+        m.VISITING_STAFF_NAME as att_doc_name,
+        m.inhos_cond,
+        m.HOSPITAL_CONDITION as inhos_cond_cd,
+        m.gath_mh_time,
+        m.ARCHIATER_NAME as arc_doc_name,
+        CASE WHEN m.TOTAL_PAT_AVA is null THEN (ic.DEPOS_IT-ic.CUMULATIVE_COST) ELSE m.TOTAL_PAT_AVA END total_pat_ava,
+        m.RESIDENT_NO as res_doc_cd,
+        m.weight,
+        m.cp_flag,
+        m.pc_cd,
+        m.pc_name,
+        other.fever_flag,
+        '出院' AS outType,
+        m.DEPARTMENT_NO as dept_cd,
+        sd.data_tag AS mainPatName,
+        m.height,
+        m.HOSPITALIZED_COUNT as visit_id,
+        m.CASE_NO as RECORD_NO,m.daycase_flag
+    FROM
+        t_ar_baseinfomation b
+    left join t_ar_medicalinformation m on b.ADMISSION_NO = m.ADMISSION_NO
+    LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+    left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+    AND sd.DICT_TYPE = 's012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+    AND sdd.DICT_TYPE = 's017'
+    left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+    left join tm_na_beds nb ON m.BEDID = nb.bedid  AND nb.ward_no = #{deptCd}
+    left join t_ih_cumulativecost ic on ic.ADMISSION_NO = m.ADMISSION_NO
+    <where>
+        AND m.LEAVE_HOSPITAL_DATE IS NULL and m.BEDID is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            b.name LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+            and m.DEPARTMENT_NO =#{deptCd}
+        </if>
+        <if test="resDocCd != null and resDocCd!=''">
+            and m.RESIDENT_NO =#{resDocCd}
+        </if>
+    </where>
+    <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+        <if test="orderField=='patientName'">
+            order by b.NAME ${orderDesc}
+        </if>
+        <if test="orderField=='resDocName'">
+            order by m.RESIDENT_NAME ${orderDesc}
+        </if>
+        <if test="orderField=='bedNo'">
+            order by nb.bed_order ${orderDesc}
+        </if>
+        <if test="orderField=='totalPatAva'">
+            order by total_pat_ava ${orderDesc}
+        </if>
+        <if test="orderField=='sex'">
+            order by b.sex ${orderDesc}
+        </if>
+        <if test="orderField=='age'">
+            order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+        </if>
+    </if>
+    <if test="orderDesc==null or orderDesc==''">
+        <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+            order by m.ADMISSION_NO desc
+        </if>
+        <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+            order by m.BEDID
+        </if>
+    </if>
+</select>
+<select id="selectAdminPatListTotal" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    SELECT
+        count(1) as total
+    FROM
+        t_ar_baseinfomation b
+    left join t_ar_medicalinformation m on b.ADMISSION_NO = m.ADMISSION_NO
+    LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+    left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+    AND sd.DICT_TYPE = 's012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+    AND sdd.DICT_TYPE = 's017'
+    left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+    left join tm_na_beds nb ON m.BEDID = nb.bedid  AND nb.ward_no = #{deptCd}
+    left join t_ih_cumulativecost ic on ic.ADMISSION_NO = m.ADMISSION_NO
+    <where>
+        AND m.LEAVE_HOSPITAL_DATE IS NULL and m.BEDID is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            b.name LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+            and m.DEPARTMENT_NO =#{deptCd}
+        </if>
+        <if test="resDocCd != null and resDocCd!=''">
+            and m.RESIDENT_NO =#{resDocCd}
+        </if>
+    </where>
+    <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+        <if test="orderField=='patientName'">
+            order by b.NAME ${orderDesc}
+        </if>
+        <if test="orderField=='resDocName'">
+            order by m.RESIDENT_NAME ${orderDesc}
+        </if>
+        <if test="orderField=='bedNo'">
+            order by nb.bed_order ${orderDesc}
+        </if>
+        <if test="orderField=='totalPatAva'">
+            order by total_pat_ava ${orderDesc}
+        </if>
+        <if test="orderField=='sex'">
+            order by b.sex ${orderDesc}
+        </if>
+        <if test="orderField=='age'">
+            order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+        </if>
+    </if>
+    <if test="orderDesc==null or orderDesc==''">
+        <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+            order by m.ADMISSION_NO desc
+        </if>
+        <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+            order by m.BEDID
+        </if>
+    </if>
+</select>
+<select id="selectDeptPatientList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    SELECT
+    m.BEDID as bed_no,
+    b.NAME as patient_name,
+    m.ADMISSION_NO as inp_no,
+    case
+    when b.SEX = 1 then
+    '男'
+    when b.SEX = 2 then
+    '女'
+    else
+    '未知'
+    end as sex,
+    b.PERSON_AGE as age_y,
+    b.AGE_MONTH as age_m,
+    b.AGE_DAY as age_d,
+    b.AGE_HOUR as age_h,
+    b.AGE_BRANCH as age_mi,
+    m.inhos_diag,
+    m.HOSPITALIZED_DATE as inhos_time,
+    b.EXPENSE_CATEGORY as pat_type_name,
+    null as cost_sum,
+    m.SUPERVISOR_NURSE_NAME as duty_nur_name,
+    m.main_pat_flag,
+    case when b.IDCARD is null then b.CASE_NO else b.IDCARD end as patient_main_id,
+    b.ADMISSION_NO as patient_id,
+    b.card_type,
+    b.mar_sta,
+    b.IDCARD as id_card,
+    b.pol_stat_name,
+    b.BIRDTH_DATE as bir_date,
+    b.CONTACTS as  cont_name,
+    m.LEAVE_HOSPITAL_DATE as out_time,
+    m.tel as patient_tel,
+    b.cont_tel,
+    b.sec_level,
+    b.now_addr_house_no,
+    b.now_addr_post,
+    b.PRESENT_ADDRESS_SHENG as now_addr_pro,
+    m.LEAVE_HOSPITAL_DATE AS outTranTime,
+    sdd.data_tag AS secLevelName,
+    b.PRESENT_ADDRESS_CUN as now_addr_vil,
+    b.PRESENT_ADDRESS_SHI as now_addr_flagty,
+    b.PRESENT_ADDRESS_XIAN as  now_addr_cou,
+    b.PRESENT_ADDRESS_XIANG as now_addr_town,
+    b.now_addr_tel,
+    other.cat_flag,
+    other.infect_flag,
+    other.alle_flag,
+    other.oper_flag,
+    other.cons_flag,
+    other.blood_flag,
+    other.inter_flag,
+    other.anes_flag,
+    m.insu_type_name,
+    other.die_flag,
+    other.change_flag,
+    other.blood_trans,
+    other.single_flag,
+    other.medicine_flag,
+    leve.level_name as  ng_name,
+    m.LEVEL_CARE as ng_cd,
+    m.RESIDENT_NAME as res_doc_name,
+    dept.dept_name,
+    m.inhos_way_name,
+    m.ENTRY_DATE as in_dept_time,
+    m.VISITING_STAFF_NAME as att_doc_name,
+    m.inhos_cond,
+    m.HOSPITAL_CONDITION as inhos_cond_cd,
+    m.gath_mh_time,
+    m.ARCHIATER_NAME as arc_doc_name,
+    CASE WHEN m.TOTAL_PAT_AVA is null THEN (ic.DEPOS_IT-ic.CUMULATIVE_COST) ELSE m.TOTAL_PAT_AVA END as total_pat_ava,
+    ic.depos_it AS fore_sum,
+    m.RESIDENT_NO as res_doc_cd,
+    m.weight,
+    m.cp_flag,
+    m.pc_cd,
+    m.pc_name,
+    other.fever_flag,
+    '出院' AS outType,
+    m.DEPARTMENT_NO as  dept_cd,
+    sd.data_tag AS mainPatName,
+    m.height,
+    m.HOSPITALIZED_COUNT as visit_id,
+    m.CASE_NO as RECORD_NO,m.daycase_flag
+    FROM
+    T_AR_BASEINFOMATION b
+    left join T_AR_MEDICALINFORMATION m on m.ADMISSION_NO = b.ADMISSION_NO
+    LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+    left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+    AND sd.DICT_TYPE = 's012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+    AND sdd.DICT_TYPE = 's017'
+    LEFT JOIN T_IH_CUMULATIVECOST ic ON ic.ADMISSION_NO = m.ADMISSION_NO
+    left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+    LEFT JOIN tm_na_beds nb ON m.BEDID = nb.bedid
+    AND nb.ward_no = #{deptCd}
+    <where>
+        AND m.LEAVE_HOSPITAL_DATE IS NULL  and m.BEDID is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            b.NAME LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+            and m.DEPARTMENT_NO= #{deptCd}
+        </if>
+    </where>
+    <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+        <if test="orderField=='patientName'">
+            order by b.NAME ${orderDesc}
+        </if>
+        <if test="orderField=='resDocName'">
+            order by m.RESIDENT_NAME ${orderDesc}
+        </if>
+        <if test="orderField=='bedNo'">
+            order by nb.bed_order ${orderDesc}
+        </if>
+        <if test="orderField=='totalPatAva'">
+            order by total_pat_ava ${orderDesc}
+        </if>
+        <if test="orderField=='sex'">
+            order by sex ${orderDesc}
+        </if>
+        <if test="orderField=='age'">
+            order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH  ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+        </if>
+    </if>
+    <if test="orderDesc==null or orderDesc==''">
+        <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+            order by m.ADMISSION_NO desc
+        </if>
+        <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+            order by m.BEDID
+        </if>
+    </if>
+</select>
+<select id="selectDeptPatientListTotal" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    SELECT
+    count(1) as total
+    FROM
+    T_AR_BASEINFOMATION b
+    left join T_AR_MEDICALINFORMATION m on m.ADMISSION_NO = b.ADMISSION_NO
+    LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+    left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+    AND sd.DICT_TYPE = 's012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+    AND sdd.DICT_TYPE = 's017'
+    LEFT JOIN T_IH_CUMULATIVECOST ic ON ic.ADMISSION_NO = m.ADMISSION_NO
+    left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+    LEFT JOIN tm_na_beds nb ON m.BEDID = nb.bedid
+    AND nb.ward_no = #{deptCd}
+    <where>
+        AND m.LEAVE_HOSPITAL_DATE IS NULL  and m.BEDID is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            b.NAME LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+            and m.DEPARTMENT_NO= #{deptCd}
+        </if>
+    </where>
+    <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+        <if test="orderField=='patientName'">
+            order by b.NAME ${orderDesc}
+        </if>
+        <if test="orderField=='resDocName'">
+            order by m.RESIDENT_NAME ${orderDesc}
+        </if>
+        <if test="orderField=='bedNo'">
+            order by nb.bed_order ${orderDesc}
+        </if>
+        <if test="orderField=='totalPatAva'">
+            order by total_pat_ava ${orderDesc}
+        </if>
+        <if test="orderField=='sex'">
+            order by sex ${orderDesc}
+        </if>
+        <if test="orderField=='age'">
+            order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH  ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+        </if>
+    </if>
+    <if test="orderDesc==null or orderDesc==''">
+        <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+            order by m.ADMISSION_NO desc
+        </if>
+        <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+            order by m.BEDID
+        </if>
+    </if>
+</select>
+<select id="selectOutHosPatList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    select * from (
+    select vis.bed_no, per.patient_name,vis.inp_no,
+    per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi,vis.inhos_diag,vis.inhos_time,
+    vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+    per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+    per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,vis.out_time as outTranTime,
+    sdd.data_tag as secLevelName,
+    per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+    other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+    other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+    vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+    vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'出院'
+    as outType,vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+    case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+    ,m.daycase_flag
+    FROM PAT_PERSONALINFO per
+    LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+    LEFT JOIN PAT_VISITINFO vis ON per.PATIENT_ID = vis.PATIENT_ID
+    left join t_ar_medicalinformation_all m on per.patient_id = m.admission_no
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+    left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+    <where>
+        <if test="searchName != null and searchName != ''"> AND (
+            per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.record_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+           and vis.DEPT_CD=#{deptCd}
+        </if>
+        <if test="outStartTime ==null or outEndTime ==null"> AND vis.out_Time is not null</if>
+        <if test="outStartTime !=null and outEndTime !=null"> AND vis.out_Time >=#{outStartTime} AND vis.out_Time &lt;=#{outEndTime}</if>
+<!--        <if test="outStartTime ==null and outEndTime ==null"> and  to_char(vis.out_time, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+    </where>
+        union all
+        select distinct vis.bed_no, per.patient_name,vis.inp_no, per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi, vis.inhos_diag,vis.inhos_time,
+        vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+        per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+        per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,pt.OPERATOR_DATE_OUT as outTranTime,sdd.data_tag as secLevelName,
+        per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+        other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+        other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+        vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+        vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'转出' as outType,
+        vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+        case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+        ,m.daycase_flag
+        FROM td_na_change_dep pt
+        inner join PAT_VISITINFO vis  ON pt.ADMISSION_NO = vis.INP_NO
+        inner JOIN PAT_PERSONALINFO per  ON per.PATIENT_ID = vis.PATIENT_ID
+        LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+        left join t_ar_medicalinformation_all m on per.patient_id = m.admission_no
+        LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+        LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+        inner join tm_bs_dept outDept on pt.WARD_NO_OUT=outDept.WARD_NO
+        left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+        <where>
+            AND pt.SERVICE_TYPE_CODE ='01' and   (pt.flag = '0'  or pt.flag = '1')
+            <if test="searchName != null and searchName != ''"> AND (
+                per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+                OR per.patient_main_id LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+                )
+            </if>
+            <if test="deptCd != null and deptCd!=''">
+                AND outDept.DEPT_CODE=#{deptCd} AND vis.DEPT_CD!=#{deptCd}
+            </if>
+            <if test="outStartTime ==null or outEndTime ==null"> AND pt.OPERATOR_DATE_OUT is not null</if>
+            <if test="outStartTime !=null and outEndTime !=null"> AND pt.OPERATOR_DATE_OUT >= #{outStartTime} AND pt.OPERATOR_DATE_OUT &lt;=#{outEndTime}</if>
+<!--            <if test="outStartTime ==null and outEndTime ==null">and  to_char(pt.OPERATOR_DATE_OUT, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+        </where>
+        )
+        <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+            <if test="orderField=='patientName'">
+                order by patient_name ${orderDesc}
+            </if>
+            <if test="orderField=='resDocName'">
+                order by res_doc_name ${orderDesc}
+            </if>
+            <if test="orderField=='bedNo'">
+                order by bed_order ${orderDesc}
+            </if>
+            <if test="orderField=='totalPatAva'">
+                order by total_pat_ava ${orderDesc}
+            </if>
+            <if test="orderField=='outTranTime'">
+                order by outTranTime ${orderDesc}
+            </if>
+            <if test="orderField=='sex'">
+                order by sex ${orderDesc}
+            </if>
+            <if test="orderField=='age'">
+                order by age_y ${orderDesc},age_m ${orderDesc},age_d ${orderDesc},age_h ${orderDesc},age_mi ${orderDesc}
+            </if>
+        </if>
+        <if test="orderField==null or orderField == '' or orderDesc==null or orderDesc==''">
+            order by outTranTime desc
+        </if>
+</select>
+<select id="selectOutHosPatListTotal" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    select count(1) as total from (
+    select vis.bed_no, per.patient_name,vis.inp_no,
+    per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi,vis.inhos_diag,vis.inhos_time,
+    vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+    per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+    per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,vis.out_time as outTranTime,
+    sdd.data_tag as secLevelName,
+    per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+    other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+    other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+    vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+    vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'出院'
+    as outType,vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+    case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+    FROM PAT_PERSONALINFO per
+    LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+    LEFT JOIN PAT_VISITINFO vis ON per.PATIENT_ID = vis.PATIENT_ID
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+    left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+    <where>
+        <if test="searchName != null and searchName != ''"> AND (
+            per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.record_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+           and vis.DEPT_CD=#{deptCd}
+        </if>
+        <if test="outStartTime ==null or outEndTime ==null"> AND vis.out_Time is not null</if>
+        <if test="outStartTime !=null and outEndTime !=null"> AND vis.out_Time >=#{outStartTime} AND vis.out_Time &lt;=#{outEndTime}</if>
+<!--        <if test="outStartTime ==null and outEndTime ==null"> and  to_char(vis.out_time, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+    </where>
+        union all
+        select distinct vis.bed_no, per.patient_name,vis.inp_no, per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi, vis.inhos_diag,vis.inhos_time,
+        vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+        per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+        per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,pt.OPERATOR_DATE_OUT as outTranTime,sdd.data_tag as secLevelName,
+        per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+        other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+        other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+        vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+        vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'转出' as outType,
+        vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+        case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+        FROM td_na_change_dep pt
+        inner join PAT_VISITINFO vis  ON pt.ADMISSION_NO = vis.INP_NO
+        inner JOIN PAT_PERSONALINFO per  ON per.PATIENT_ID = vis.PATIENT_ID
+        LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+        LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+        LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+        inner join tm_bs_dept outDept on pt.WARD_NO_OUT=outDept.WARD_NO
+        left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+        <where>
+            AND pt.SERVICE_TYPE_CODE ='01' and   (pt.flag = '0'  or pt.flag = '1')
+            <if test="searchName != null and searchName != ''"> AND (
+                per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+                OR per.patient_main_id LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+                )
+            </if>
+            <if test="deptCd != null and deptCd!=''">
+                AND outDept.DEPT_CODE=#{deptCd} AND vis.DEPT_CD!=#{deptCd}
+            </if>
+            <if test="outStartTime ==null or outEndTime ==null"> AND pt.OPERATOR_DATE_OUT is not null</if>
+            <if test="outStartTime !=null and outEndTime !=null"> AND pt.OPERATOR_DATE_OUT >= #{outStartTime} AND pt.OPERATOR_DATE_OUT &lt;=#{outEndTime}</if>
+<!--            <if test="outStartTime ==null and outEndTime ==null">and  to_char(pt.OPERATOR_DATE_OUT, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+        </where>
+        )
+        <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+            <if test="orderField=='patientName'">
+                order by patient_name ${orderDesc}
+            </if>
+            <if test="orderField=='resDocName'">
+                order by res_doc_name ${orderDesc}
+            </if>
+            <if test="orderField=='bedNo'">
+                order by bed_order ${orderDesc}
+            </if>
+            <if test="orderField=='totalPatAva'">
+                order by total_pat_ava ${orderDesc}
+            </if>
+            <if test="orderField=='outTranTime'">
+                order by outTranTime ${orderDesc}
+            </if>
+            <if test="orderField=='sex'">
+                order by sex ${orderDesc}
+            </if>
+            <if test="orderField=='age'">
+                order by age_y ${orderDesc},age_m ${orderDesc},age_d ${orderDesc},age_h ${orderDesc},age_mi ${orderDesc}
+            </if>
+        </if>
+        <if test="orderField==null or orderField == '' or orderDesc==null or orderDesc==''">
+            order by outTranTime desc
+        </if>
+</select>
+<select id="selectOutHosAndNotFiledPatList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    select * from (
+    select vis.bed_no, per.patient_name,vis.inp_no,
+    per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi,vis.inhos_diag,vis.inhos_time,
+    vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+    per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+    per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,vis.out_time as outTranTime,
+    sdd.data_tag as secLevelName,
+    per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+    other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+    other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+    vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+    vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'出院'
+    as outType,vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+    case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+    FROM PAT_PERSONALINFO per
+    LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+    LEFT JOIN PAT_VISITINFO vis ON per.PATIENT_ID = vis.PATIENT_ID
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+    left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+    <where>
+        per.PATIENT_ID not in(select a.patient_id from emr_qc_flow a where a.mr_state ='16')
+        and vis.OUT_TIME is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.record_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+           and vis.DEPT_CD=#{deptCd}
+        </if>
+        <if test="outStartTime ==null or outEndTime ==null"> AND vis.out_Time is not null</if>
+        <if test="outStartTime !=null and outEndTime !=null"> AND vis.out_Time >=#{outStartTime} AND vis.out_Time &lt;=#{outEndTime}</if>
+<!--        <if test="outStartTime ==null and outEndTime ==null"> and  to_char(vis.out_time, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+    </where>
+        union all
+        select distinct vis.bed_no, per.patient_name,vis.inp_no, per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi, vis.inhos_diag,vis.inhos_time,
+        vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+        per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+        per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,pt.OPERATOR_DATE_OUT as outTranTime,sdd.data_tag as secLevelName,
+        per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+        other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+        other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+        vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+        vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'转出' as outType,
+        vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+        case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+        FROM td_na_change_dep pt
+        inner join PAT_VISITINFO vis  ON pt.ADMISSION_NO = vis.INP_NO
+        inner JOIN PAT_PERSONALINFO per  ON per.PATIENT_ID = vis.PATIENT_ID
+        LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+        LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+        LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+        inner join tm_bs_dept outDept on pt.WARD_NO_OUT=outDept.WARD_NO
+        left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+        <where>
+            AND pt.SERVICE_TYPE_CODE ='01' and   (pt.flag = '0'  or pt.flag = '1')
+            and vis.OUT_TIME is not null
+            and pt.admission_no not in(select a.patient_id from emr_qc_flow a where a.mr_state ='16')
+            <if test="searchName != null and searchName != ''"> AND (
+                per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+                OR per.patient_main_id LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+                )
+            </if>
+            <if test="deptCd != null and deptCd!=''">
+                AND outDept.DEPT_CODE=#{deptCd} AND vis.DEPT_CD!=#{deptCd}
+            </if>
+            <if test="outStartTime ==null or outEndTime ==null"> AND pt.OPERATOR_DATE_OUT is not null</if>
+            <if test="outStartTime !=null and outEndTime !=null"> AND pt.OPERATOR_DATE_OUT >= #{outStartTime} AND pt.OPERATOR_DATE_OUT &lt;=#{outEndTime}</if>
+<!--            <if test="outStartTime ==null and outEndTime ==null">and  to_char(pt.OPERATOR_DATE_OUT, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+        </where>
+        )
+        <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+            <if test="orderField=='patientName'">
+                order by patient_name ${orderDesc}
+            </if>
+            <if test="orderField=='resDocName'">
+                order by res_doc_name ${orderDesc}
+            </if>
+            <if test="orderField=='bedNo'">
+                order by bed_order ${orderDesc}
+            </if>
+            <if test="orderField=='totalPatAva'">
+                order by total_pat_ava ${orderDesc}
+            </if>
+            <if test="orderField=='outTranTime'">
+                order by outTranTime ${orderDesc}
+            </if>
+            <if test="orderField=='sex'">
+                order by sex ${orderDesc}
+            </if>
+            <if test="orderField=='age'">
+                order by age_y ${orderDesc},age_m ${orderDesc},age_d ${orderDesc},age_h ${orderDesc},age_mi ${orderDesc}
+            </if>
+        </if>
+        <if test="orderField==null or orderField == '' or orderDesc==null or orderDesc==''">
+            order by outTranTime desc
+        </if>
+</select>
+<select id="selectOutHosAndNotFiledPatListTotal" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    select count(1) as total from (
+    select vis.bed_no, per.patient_name,vis.inp_no,
+    per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi,vis.inhos_diag,vis.inhos_time,
+    vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+    per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+    per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,vis.out_time as outTranTime,
+    sdd.data_tag as secLevelName,
+    per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+    other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+    other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+    vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+    vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'出院'
+    as outType,vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+    case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+    FROM PAT_PERSONALINFO per
+    LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+    LEFT JOIN PAT_VISITINFO vis ON per.PATIENT_ID = vis.PATIENT_ID
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+    left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+    <where>
+        per.PATIENT_ID not in(select a.patient_id from emr_qc_flow a where a.mr_state ='16')
+        and vis.OUT_TIME is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.record_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+            OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="deptCd != null and deptCd!=''">
+           and vis.DEPT_CD=#{deptCd}
+        </if>
+        <if test="outStartTime ==null or outEndTime ==null"> AND vis.out_Time is not null</if>
+        <if test="outStartTime !=null and outEndTime !=null"> AND vis.out_Time >=#{outStartTime} AND vis.out_Time &lt;=#{outEndTime}</if>
+<!--        <if test="outStartTime ==null and outEndTime ==null"> and  to_char(vis.out_time, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+    </where>
+        union all
+        select distinct vis.bed_no, per.patient_name,vis.inp_no, per.sex,per.age_y,per.age_m,per.age_d,per.age_h,per.age_mi, vis.inhos_diag,vis.inhos_time,
+        vis.pat_type_name,vis.cost_sum, vis.duty_nur_name, vis.main_pat_flag,per.patient_main_id,
+        per.patient_id,per.card_type,per.mar_sta,per.id_card,per.pol_stat_name,per.bir_date,per.cont_name,vis.out_time,
+        per.patient_tel,per.cont_tel,per.sec_level,per.now_addr_house_no,per.now_addr_post,per.now_addr_pro,pt.OPERATOR_DATE_OUT as outTranTime,sdd.data_tag as secLevelName,
+        per.now_addr_vil,per.now_addr_flagty,per.now_addr_cou,per.now_addr_town,per.now_addr_tel,other.cat_flag,other.infect_flag,
+        other.alle_flag,other.oper_flag,other.cons_flag,other.blood_flag,other.inter_flag,other.anes_flag,vis.insu_type_name,
+        other.die_flag,other.change_flag,other.blood_trans,other.single_flag,other.medicine_flag,vis.ng_name,vis.ng_cd,vis.res_doc_name,
+        vis.dept_name,vis.inhos_way_name,vis.in_dept_time,vis.att_doc_name,vis.inhos_cond,vis.inhos_cond_cd,vis.gath_mh_time,
+        vis.arc_doc_name,vis.total_pat_ava,vis.res_doc_cd,vis.weight,vis.cp_flag,vis.pc_cd,vis.pc_name,other.fever_flag,'转出' as outType,
+        vis.dept_cd,sd.data_tag as mainPatName,vis.height,vis.visit_id,vis.RECORD_NO,nb.bed_order,
+        case when vis.hospital_mark='3' then '未结' when vis.hospital_mark='4' then '已结' else '' end as hospital_mark_name
+        FROM td_na_change_dep pt
+        inner join PAT_VISITINFO vis  ON pt.ADMISSION_NO = vis.INP_NO
+        inner JOIN PAT_PERSONALINFO per  ON per.PATIENT_ID = vis.PATIENT_ID
+        LEFT JOIN PAT_OTHERINFO other ON per.PATIENT_ID = other.PATIENT_ID
+        LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = vis.main_pat_flag and sd.DICT_TYPE='s012'
+        LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = per.sec_level and sdd.DICT_TYPE='s017'
+        inner join tm_bs_dept outDept on pt.WARD_NO_OUT=outDept.WARD_NO
+        left join tm_na_beds nb on vis.bed_no = nb.bedid and nb.ward_no = #{deptCd}
+        <where>
+            AND pt.SERVICE_TYPE_CODE ='01' and   (pt.flag = '0'  or pt.flag = '1')
+            and vis.OUT_TIME is not null
+            and pt.admission_no not in(select a.patient_id from emr_qc_flow a where a.mr_state ='16')
+            <if test="searchName != null and searchName != ''"> AND (
+                per.patient_name LIKE concat(concat('%', #{searchName}), '%')
+                OR per.patient_main_id LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.bed_no LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_CD LIKE concat(concat('%', #{searchName}), '%')
+                OR vis.RES_DOC_NAME LIKE concat(concat('%', #{searchName}), '%')
+                )
+            </if>
+            <if test="deptCd != null and deptCd!=''">
+                AND outDept.DEPT_CODE=#{deptCd} AND vis.DEPT_CD!=#{deptCd}
+            </if>
+            <if test="outStartTime ==null or outEndTime ==null"> AND pt.OPERATOR_DATE_OUT is not null</if>
+            <if test="outStartTime !=null and outEndTime !=null"> AND pt.OPERATOR_DATE_OUT >= #{outStartTime} AND pt.OPERATOR_DATE_OUT &lt;=#{outEndTime}</if>
+<!--            <if test="outStartTime ==null and outEndTime ==null">and  to_char(pt.OPERATOR_DATE_OUT, 'yy-mm-dd hh24:mi:ss') >= to_char(sysdate-3,'yy-mm-dd hh24:mi:ss')</if>-->
+        </where>
+        )
+        <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+            <if test="orderField=='patientName'">
+                order by patient_name ${orderDesc}
+            </if>
+            <if test="orderField=='resDocName'">
+                order by res_doc_name ${orderDesc}
+            </if>
+            <if test="orderField=='bedNo'">
+                order by bed_order ${orderDesc}
+            </if>
+            <if test="orderField=='totalPatAva'">
+                order by total_pat_ava ${orderDesc}
+            </if>
+            <if test="orderField=='outTranTime'">
+                order by outTranTime ${orderDesc}
+            </if>
+            <if test="orderField=='sex'">
+                order by sex ${orderDesc}
+            </if>
+            <if test="orderField=='age'">
+                order by age_y ${orderDesc},age_m ${orderDesc},age_d ${orderDesc},age_h ${orderDesc},age_mi ${orderDesc}
+            </if>
+        </if>
+        <if test="orderField==null or orderField == '' or orderDesc==null or orderDesc==''">
+            order by outTranTime desc
+        </if>
+</select>
+<select id="selectImpPatList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    SELECT
+    m.BEDID as bed_no,
+    b.NAME as patient_name,
+    m.ADMISSION_NO as inp_no,
+    case
+    when b.SEX = 1 then
+    '男'
+    when b.SEX = 2 then
+    '女'
+    else
+    '未知'
+    end as sex,
+    b.PERSON_AGE as age_y,
+    b.AGE_MONTH as age_m,
+    b.AGE_DAY as age_d,
+    b.AGE_HOUR as age_h,
+    b.AGE_BRANCH as age_mi,
+    m.inhos_diag,
+    m.HOSPITALIZED_DATE as inhos_time,
+    b.EXPENSE_CATEGORY as pat_type_name,
+    null as cost_sum,
+    m.SUPERVISOR_NURSE_NAME as duty_nur_name,
+    m.main_pat_flag,
+    case when b.IDCARD is null then b.CASE_NO else b.IDCARD end as patient_main_id,
+    b.ADMISSION_NO as patient_id,
+    b.card_type,
+    b.mar_sta,
+    b.IDCARD as id_card,
+    b.pol_stat_name,
+    b.BIRDTH_DATE as bir_date,
+    b.CONTACTS as cont_name,
+    m.LEAVE_HOSPITAL_DATE as out_time,
+    m.tel as patient_tel,
+    b.cont_tel,
+    b.sec_level,
+    b.now_addr_house_no,
+    b.now_addr_post,
+    b.now_addr_post,
+    m.LEAVE_HOSPITAL_DATE AS outTranTime,
+    sdd.data_tag AS secLevelName,
+    b.PRESENT_ADDRESS_CUN as now_addr_vil,
+    b.PRESENT_ADDRESS_SHI as now_addr_flagty,
+    b.PRESENT_ADDRESS_XIAN as now_addr_cou,
+    b.PRESENT_ADDRESS_XIANG as now_addr_town,
+    b.now_addr_tel,
+    other.cat_flag,
+    other.infect_flag,
+    other.alle_flag,
+    other.oper_flag,
+    other.cons_flag,
+    other.blood_flag,
+    other.inter_flag,
+    other.anes_flag,
+    m.insu_type_name,
+    other.die_flag,
+    other.change_flag,
+    other.blood_trans,
+    other.single_flag,
+    other.medicine_flag,
+    leve.level_name as ng_name,
+    m.LEVEL_CARE as ng_cd,
+    m.RESIDENT_NAME as res_doc_name,
+    dept.dept_name,
+    m.inhos_way_name,
+    m.ENTRY_DATE as in_dept_time,
+    m.VISITING_STAFF_NAME as att_doc_name,
+    m.inhos_cond,
+    m.HOSPITAL_CONDITION as inhos_cond_cd,
+    m.gath_mh_time,
+    m.ARCHIATER_NAME as arc_doc_name,
+    CASE WHEN m.TOTAL_PAT_AVA is null THEN (ic.DEPOS_IT-ic.CUMULATIVE_COST) ELSE m.TOTAL_PAT_AVA END as total_pat_ava,
+    m.RESIDENT_NO as res_doc_cd,
+    m.weight,
+    m.cp_flag,
+    m.pc_cd,
+    m.pc_name,
+    other.fever_flag,
+    '出院' AS outType,
+    TO_CHAR ( temp.imp_end_time, 'YYYY-MM-DD HH24:mi' ) AS imp_end_time,
+    temp.imp_type,
+    m.DEPARTMENT_NO as dept_cd,
+    sd.data_tag AS mainPatName,
+    m.height,
+    m.HOSPITALIZED_COUNT as visit_id,
+    m.CASE_NO as RECORD_NO,m.daycase_flag
+    FROM
+    T_AR_BASEINFOMATION b
+    left join T_AR_MEDICALINFORMATION m on m.ADMISSION_NO = b.ADMISSION_NO
+    LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+    left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+    left join t_ih_cumulativecost ic on ic.ADMISSION_NO = m.ADMISSION_NO
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+    AND sd.DICT_TYPE = 's012'
+    left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+    AND sdd.DICT_TYPE = 's017'
+    LEFT JOIN
+        (select a.* from IMP_DOCTOR_TEMP a where a.imp_doc_cd =#{impDocCd} and a.imp_range = '0'
+        union all
+        select b.* from IMP_DOCTOR_TEMP b where b.IMP_DEPT_CD = #{impDeptCd} and b.imp_range = '1')
+     temp ON b.ADMISSION_NO = temp.PATIENT_ID
+    AND (
+    temp.imp_doc_cd = #{impDocCd} or temp.IMP_DEPT_CD=#{impDeptCd})
+    LEFT JOIN tm_na_beds nb ON m.BEDID = nb.bedid
+    AND nb.ward_no = #{deptCd}
+    <where>
+        AND temp.imp_end_time>sysdate  and temp.VALID_FLAG='1' and m.BEDID is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            b.NAME LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test='inDeptCd != null and inDeptCd!="" and inDeptCd!="000000"'>
+            and m.DEPARTMENT_NO = #{inDeptCd}
+        </if>
+    </where>
+    <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+        <if test="orderField=='patientName'">
+            order by b.NAME ${orderDesc}
+        </if>
+        <if test="orderField=='resDocName'">
+            order by m.RESIDENT_NAME ${orderDesc}
+        </if>
+        <if test="orderField=='bedNo'">
+            order by nb.bed_order ${orderDesc}
+        </if>
+        <if test="orderField=='totalPatAva'">
+            order by total_pat_ava ${orderDesc}
+        </if>
+        <if test="orderField=='sex'">
+            order by b.sex ${orderDesc}
+        </if>
+        <if test="orderField=='age'">
+            order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+        </if>
+    </if>
+    <if test="orderDesc==null or orderDesc==''">
+        <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+            order by m.ADMISSION_NO desc
+        </if>
+        <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+            order by m.BEDID
+        </if>
+    </if>
+</select>
+<select id="selectImpPatListTotal" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+    SELECT
+    count(1) as total
+    FROM
+    T_AR_BASEINFOMATION b
+    left join T_AR_MEDICALINFORMATION m on m.ADMISSION_NO = b.ADMISSION_NO
+    LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+    left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+    left join t_ih_cumulativecost ic on ic.ADMISSION_NO = m.ADMISSION_NO
+    LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+    AND sd.DICT_TYPE = 's012'
+    left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+    LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+    AND sdd.DICT_TYPE = 's017'
+    LEFT JOIN IMP_DOCTOR_TEMP temp ON b.ADMISSION_NO = temp.PATIENT_ID
+    AND (
+    temp.imp_doc_cd = #{impDocCd} or temp.IMP_DEPT_CD=#{impDeptCd})
+    LEFT JOIN tm_na_beds nb ON m.BEDID = nb.bedid
+    AND nb.ward_no = #{deptCd}
+    <where>
+        AND temp.imp_end_time>sysdate  and temp.VALID_FLAG='1' and m.BEDID is not null
+        <if test="searchName != null and searchName != ''"> AND (
+            b.NAME LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test='inDeptCd != null and inDeptCd!="" and inDeptCd!="000000"'>
+            and m.DEPARTMENT_NO = #{inDeptCd}
+        </if>
+    </where>
+    <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+        <if test="orderField=='patientName'">
+            order by b.NAME ${orderDesc}
+        </if>
+        <if test="orderField=='resDocName'">
+            order by m.RESIDENT_NAME ${orderDesc}
+        </if>
+        <if test="orderField=='bedNo'">
+            order by nb.bed_order ${orderDesc}
+        </if>
+        <if test="orderField=='totalPatAva'">
+            order by total_pat_ava ${orderDesc}
+        </if>
+        <if test="orderField=='sex'">
+            order by b.sex ${orderDesc}
+        </if>
+        <if test="orderField=='age'">
+            order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+        </if>
+    </if>
+    <if test="orderDesc==null or orderDesc==''">
+        <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+            order by m.ADMISSION_NO desc
+        </if>
+        <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+            order by m.BEDID
+        </if>
+    </if>
+</select>
+    <select id="selectVisitinfoById" parameterType="String" resultMap="VisitinfoVoResult">
+        <include refid="selectVisitinfoVo"/>
+        where patient_id = #{patientId}
+    </select>
+
+    <select id="selectPatientByInpNo" parameterType="String" resultMap="VisitinfoVoResult">
+        <include refid="selectVisitinfoVo"/>
+        where inp_no = #{inpNo}
+    </select>
+
+    <select id="selectColorplan" parameterType="String" resultMap="VisitinfoVoResult">
+        select ID as colorId,plan_type ,type_cd as colorTypeCd,type_name as colorTypeName,color_value from sys_color_plan
+    </select>
+
+    <select id="selectPatientGroupList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+        SELECT
+        m.BEDID as bed_no,
+        b.NAME as patient_name,
+        m.ADMISSION_NO as inp_no,
+        case
+        when b.SEX = 1 then
+        '男'
+        when b.SEX = 2 then
+        '女'
+        else
+        '未知'
+        end as sex,
+        b.PERSON_AGE as age_y,
+        b.AGE_MONTH as age_m,
+        b.AGE_DAY as age_d,
+        b.AGE_HOUR as age_h,
+        b.AGE_BRANCH as age_mi,
+        m.inhos_diag,
+        m.HOSPITALIZED_DATE as inhos_time,
+        b.EXPENSE_CATEGORY as pat_type_name,
+        null as cost_sum,
+        m.SUPERVISOR_NURSE_NAME as duty_nur_name,
+        m.main_pat_flag,
+        case when b.IDCARD is null then b.CASE_NO else b.IDCARD end as patient_main_id,
+        b.ADMISSION_NO as patient_id,
+        b.card_type,
+        b.mar_sta,
+        b.IDCARD as id_card,
+        b.pol_stat_name,
+        b.BIRDTH_DATE as bir_date,
+        b.CONTACTS as cont_name,
+        m.LEAVE_HOSPITAL_DATE as out_time,
+        m.tel as patient_tel,
+        b.cont_tel,
+        b.sec_level,
+        b.now_addr_house_no,
+        b.now_addr_post,
+        b.PRESENT_ADDRESS_SHENG as now_addr_pro,
+        m.LEAVE_HOSPITAL_DATE AS outTranTime,
+        sdd.data_tag AS secLevelName,
+        b.PRESENT_ADDRESS_CUN as now_addr_vil,
+        b.PRESENT_ADDRESS_SHI as now_addr_flagty,
+        b.PRESENT_ADDRESS_XIAN as now_addr_cou,
+        b.PRESENT_ADDRESS_XIANG as now_addr_town,
+        b.now_addr_tel,
+        other.cat_flag,
+        other.infect_flag,
+        other.alle_flag,
+        other.oper_flag,
+        other.cons_flag,
+        other.blood_flag,
+        other.inter_flag,
+        other.anes_flag,
+        m.insu_type_name,
+        other.die_flag,
+        other.change_flag,
+        other.blood_trans,
+        other.single_flag,
+        other.medicine_flag,
+        leve.level_name as ng_name,
+        m.LEVEL_CARE as ng_cd,
+        m.RESIDENT_NAME as res_doc_name,
+        dept.dept_name,
+        m.inhos_way_name,
+        m.ENTRY_DATE as in_dept_time,
+        m.VISITING_STAFF_NAME as att_doc_name,
+        m.inhos_cond,
+        m.HOSPITAL_CONDITION as inhos_cond_cd,
+        m.gath_mh_time,
+        m.ARCHIATER_NAME as arc_doc_name,
+        CASE WHEN m.TOTAL_PAT_AVA is null THEN (ic.DEPOS_IT-ic.CUMULATIVE_COST) ELSE m.TOTAL_PAT_AVA END as total_pat_ava,
+        m.RESIDENT_NO as res_doc_cd,
+        m.weight,
+        m.cp_flag,
+        m.pc_cd,
+        m.pc_name,
+        other.fever_flag,
+        m.DEPARTMENT_NO as dept_cd,
+        sd.data_tag AS mainPatName,
+        m.height,
+        m.HOSPITALIZED_COUNT as visit_id,
+        m.CASE_NO as RECORD_NO,m.daycase_flag
+        FROM
+        T_AR_BASEINFOMATION b
+        left join T_AR_MEDICALINFORMATION m on m.ADMISSION_NO = b.ADMISSION_NO
+        LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+        left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+        left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+        left join t_ih_cumulativecost ic on ic.ADMISSION_NO = m.ADMISSION_NO
+        LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+        AND sd.DICT_TYPE = 's012'
+        LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+        AND sdd.DICT_TYPE = 's017'
+        LEFT JOIN tm_na_beds nb ON m.BEDID = nb.bedid
+        AND nb.ward_no = #{deptCd}
+        WHERE
+        m.RESIDENT_NO IN (
+        SELECT
+        DOC_CODE
+        FROM
+        bas_doct_group_member
+        WHERE
+        group_id = (
+        SELECT
+        bdg.id AS group_id
+        FROM
+        bas_doct_group bdg
+        INNER JOIN bas_doct_group_member dgm ON bdg.id = dgm.group_id
+        AND DOC_CODE = #{resDocCd}
+        WHERE
+        bdg.dept_cd = #{deptCd}  )
+        )
+        AND m.BEDID IS NOT NULL
+        AND m.DEPARTMENT_NO  = #{deptCd}
+        <if test="searchName != null and searchName != ''"> AND (
+            b.NAME LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+            <if test="orderField=='patientName'">
+                order by b.NAME ${orderDesc}
+            </if>
+            <if test="orderField=='resDocName'">
+                order by m.RESIDENT_NAME ${orderDesc}
+            </if>
+            <if test="orderField=='bedNo'">
+                order by nb.bed_order ${orderDesc}
+            </if>
+            <if test="orderField=='totalPatAva'">
+                order by total_pat_ava ${orderDesc}
+            </if>
+            <if test="orderField=='sex'">
+                order by b.sex ${orderDesc}
+            </if>
+            <if test="orderField=='age'">
+                order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH  ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+            </if>
+        </if>
+        <if test="orderDesc==null or orderDesc==''">
+            <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+                order by m.ADMISSION_NO desc
+            </if>
+            <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+                order by m.BEDID
+            </if>
+        </if>
+    </select>
+    <select id="selectPatientGroupListTotal" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+        SELECT
+        count(1) as total
+        FROM
+        T_AR_BASEINFOMATION b
+        left join T_AR_MEDICALINFORMATION m on m.ADMISSION_NO = b.ADMISSION_NO
+        LEFT JOIN PAT_OTHERINFO other ON b.ADMISSION_NO = other.PATIENT_ID
+        left join tm_bs_dept dept on dept.dept_code = m.DEPARTMENT_NO
+        left join TM_NA_NURSING_LEVEL leve on leve.level_code = m.LEVEL_CARE
+        left join t_ih_cumulativecost ic on ic.ADMISSION_NO = m.ADMISSION_NO
+        LEFT JOIN TM_BS_DICT_DATA sd ON sd.data_val = m.main_pat_flag
+        AND sd.DICT_TYPE = 's012'
+        LEFT JOIN TM_BS_DICT_DATA sdd ON sdd.data_val = b.sec_level
+        AND sdd.DICT_TYPE = 's017'
+        LEFT JOIN tm_na_beds nb ON m.BEDID = nb.bedid
+        AND nb.ward_no = #{deptCd}
+        WHERE
+        m.RESIDENT_NO IN (
+        SELECT
+        DOC_CODE
+        FROM
+        bas_doct_group_member
+        WHERE
+        group_id = (
+        SELECT
+        bdg.id AS group_id
+        FROM
+        bas_doct_group bdg
+        INNER JOIN bas_doct_group_member dgm ON bdg.id = dgm.group_id
+        AND DOC_CODE = #{resDocCd}
+        WHERE
+        bdg.dept_cd = #{deptCd}  )
+        )
+        AND m.BEDID IS NOT NULL
+        AND m.DEPARTMENT_NO  = #{deptCd}
+        <if test="searchName != null and searchName != ''"> AND (
+            b.NAME LIKE concat(concat('%', #{searchName}), '%')
+            OR m.CASE_NO LIKE concat(concat('%', #{searchName}), '%')
+            OR m.BEDID LIKE concat(concat('%', #{searchName}), '%')
+            )
+        </if>
+        <if test="orderField!=null and orderField!='' and orderDesc!=null and orderDesc!=''">
+            <if test="orderField=='patientName'">
+                order by b.NAME ${orderDesc}
+            </if>
+            <if test="orderField=='resDocName'">
+                order by m.RESIDENT_NAME ${orderDesc}
+            </if>
+            <if test="orderField=='bedNo'">
+                order by nb.bed_order ${orderDesc}
+            </if>
+            <if test="orderField=='totalPatAva'">
+                order by total_pat_ava ${orderDesc}
+            </if>
+            <if test="orderField=='sex'">
+                order by b.sex ${orderDesc}
+            </if>
+            <if test="orderField=='age'">
+                order by b.PERSON_AGE ${orderDesc},b.AGE_MONTH  ${orderDesc},b.AGE_DAY ${orderDesc},b.AGE_HOUR ${orderDesc},b.AGE_BRANCH ${orderDesc}
+            </if>
+        </if>
+        <if test="orderDesc==null or orderDesc==''">
+            <if test="isInpNoOrder!=null and isInpNoOrder=='1'.toString()">
+                order by m.ADMISSION_NO desc
+            </if>
+            <if test="isInpNoOrder!=null and isInpNoOrder=='0'.toString()">
+                order by m.BEDID
+            </if>
+        </if>
+    </select>
+
+    <select id="selectBackoutList" parameterType="com.emr.project.pat.domain.vo.VisitinfoVo" resultMap="VisitinfoVoResult">
+    select b.admission_no as inp_no
+      from t_ar_medicalinformation b
+     <where>
+         b.ward_no = #{deptCode}
+         and b.resident_code = #{resDocCd}
+     </where>
+    </select>
+
+    <insert id="insertVisitinfo" parameterType="Visitinfo">
+        insert into pat_visitinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="inpNo != null">inp_no,</if>
+            <if test="visitId != null">visit_id,</if>
+            <if test="recordNo != null">record_no,</if>
+            <if test="inhosCard != null">inhos_card,</if>
+            <if test="sdOutNo != null">sd_out_no,</if>
+            <if test="patTypeCd != null">pat_type_cd,</if>
+            <if test="patTypeName != null">pat_type_name,</if>
+            <if test="insuTypeCd != null">insu_type_cd,</if>
+            <if test="insuTypeName != null">insu_type_name,</if>
+            <if test="payTypeCd != null">pay_type_cd,</if>
+            <if test="payTypeName != null">pay_type_name,</if>
+            <if test="inDocCd != null">in_doc_cd,</if>
+            <if test="inDocName != null">in_doc_name,</if>
+            <if test="inDeptCd != null">in_dept_cd,</if>
+            <if test="inDeptName != null">in_dept_name,</if>
+            <if test="inAreaCd != null">in_area_cd,</if>
+            <if test="inAreaName != null">in_area_name,</if>
+            <if test="inhosTime != null">inhos_time,</if>
+            <if test="inDeptTime != null">in_dept_time,</if>
+            <if test="inhosCond != null">inhos_cond,</if>
+            <if test="inhosCondCd != null">inhos_cond_cd,</if>
+            <if test="inhosReason != null">inhos_reason,</if>
+            <if test="inhosWayCd != null">inhos_way_cd,</if>
+            <if test="inhosWayName != null">inhos_way_name,</if>
+            <if test="inhosDiagCd != null">inhos_diag_cd,</if>
+            <if test="inhosDiag != null">inhos_diag,</if>
+            <if test="inhosWmDiaName != null">inhos_wm_dia_name,</if>
+            <if test="inhosWmDiaCd != null">inhos_wm_dia_cd,</if>
+            <if test="inhosCmSymName != null">inhos_cm_sym_name,</if>
+            <if test="inhosCmSymCd != null">inhos_cm_sym_cd,</if>
+            <if test="inhosCmIllName != null">inhos_cm_ill_name,</if>
+            <if test="inhosCmIllCd != null">inhos_cm_ill_cd,</if>
+            <if test="areaCode != null">area_code,</if>
+            <if test="wardName != null">ward_name,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="resDocCd != null">res_doc_cd,</if>
+            <if test="resDocName != null">res_doc_name,</if>
+            <if test="attDocCd != null">att_doc_cd,</if>
+            <if test="attDocName != null">att_doc_name,</if>
+            <if test="arcDocCd != null">arc_doc_cd,</if>
+            <if test="arcDocName != null">arc_doc_name,</if>
+            <if test="dutyNurName != null">duty_nur_name,</if>
+            <if test="dutyNurCd != null">duty_nur_cd,</if>
+            <if test="roomNo != null">room_no,</if>
+            <if test="bedNo != null">bed_no,</if>
+            <if test="ngCd != null">ng_cd,</if>
+            <if test="ngName != null">ng_name,</if>
+            <if test="pcCd != null">pc_cd,</if>
+            <if test="pcName != null">pc_name,</if>
+            <if test="outCon != null">out_con,</if>
+            <if test="outTime != null">out_time,</if>
+            <if test="outAreaCd != null">out_area_cd,</if>
+            <if test="outAreaName != null">out_area_name,</if>
+            <if test="outDeptCd != null">out_dept_cd,</if>
+            <if test="outDeptName != null">out_dept_name,</if>
+            <if test="wmIllStateCd != null">wm_ill_state_cd,</if>
+            <if test="leaveWmIllName != null">leave_wm_ill_name,</if>
+            <if test="leaveWmIllCd != null">leave_wm_ill_cd,</if>
+            <if test="wmProStateCd != null">wm_pro_state_cd,</if>
+            <if test="leaveWmProName != null">leave_wm_pro_name,</if>
+            <if test="leaveWmProCd != null">leave_wm_pro_cd,</if>
+            <if test="leaveCmIllCd != null">leave_cm_ill_cd,</if>
+            <if test="leaveCmIllName != null">leave_cm_ill_name,</if>
+            <if test="leaveCmSymCd != null">leave_cm_sym_cd,</if>
+            <if test="leaveCmSymName != null">leave_cm_sym_name,</if>
+            <if test="leaveMainIllCd != null">leave_main_ill_cd,</if>
+            <if test="leaveMainDiaName != null">leave_main_dia_name,</if>
+            <if test="leaveMainDiaCd != null">leave_main_dia_cd,</if>
+            <if test="leaveOthIllCd != null">leave_oth_ill_cd,</if>
+            <if test="leaveOthDiaName != null">leave_oth_dia_name,</if>
+            <if test="leaveOthDiaCd != null">leave_oth_dia_cd,</if>
+            <if test="leaveWmDiaCd != null">leave_wm_dia_cd,</if>
+            <if test="leaveWmDiaName != null">leave_wm_dia_name,</if>
+            <if test="mainPatFlag != null">main_pat_flag,</if>
+            <if test="cpFlag != null">cp_flag,</if>
+            <if test="cpId != null">cp_id,</if>
+            <if test="cpFirstDate != null">cp_first_date,</if>
+            <if test="cpName != null">cp_name,</if>
+            <if test="cpDayNo != null">cp_day_no,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="costSum != null">cost_sum,</if>
+            <if test="foreSum != null">fore_sum,</if>
+            <if test="weight != null">weight,</if>
+            <if test="gathMhTime != null">gath_mh_time,</if>
+            <if test="markDate != null">mark_date,</if>
+            <if test="totalPatAva != null">total_pat_ava,</if>
+            <if test="modiFlag != null">modi_flag,</if>
+            <if test="birWeight != null">bir_weight,</if>
+            <if test="inhosWeight != null">inhos_weight,</if>
+            <if test="isQuality != null">is_quality,</if>
+            <if test="qualityDate != null">quality_date,</if>
+            <if test="height != null">height,</if>
+            <if test="specialGroupCd != null">special_group_cd,</if>
+            <if test="specialGroupName != null">special_group_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="inpNo != null">#{inpNo},</if>
+            <if test="visitId != null">#{visitId},</if>
+            <if test="recordNo != null">#{recordNo},</if>
+            <if test="inhosCard != null">#{inhosCard},</if>
+            <if test="sdOutNo != null">#{sdOutNo},</if>
+            <if test="patTypeCd != null">#{patTypeCd},</if>
+            <if test="patTypeName != null">#{patTypeName},</if>
+            <if test="insuTypeCd != null">#{insuTypeCd},</if>
+            <if test="insuTypeName != null">#{insuTypeName},</if>
+            <if test="payTypeCd != null">#{payTypeCd},</if>
+            <if test="payTypeName != null">#{payTypeName},</if>
+            <if test="inDocCd != null">#{inDocCd},</if>
+            <if test="inDocName != null">#{inDocName},</if>
+            <if test="inDeptCd != null">#{inDeptCd},</if>
+            <if test="inDeptName != null">#{inDeptName},</if>
+            <if test="inAreaCd != null">#{inAreaCd},</if>
+            <if test="inAreaName != null">#{inAreaName},</if>
+            <if test="inhosTime != null">#{inhosTime},</if>
+            <if test="inDeptTime != null">#{inDeptTime},</if>
+            <if test="inhosCond != null">#{inhosCond},</if>
+            <if test="inhosCondCd != null">#{inhosCondCd},</if>
+            <if test="inhosReason != null">#{inhosReason},</if>
+            <if test="inhosWayCd != null">#{inhosWayCd},</if>
+            <if test="inhosWayName != null">#{inhosWayName},</if>
+            <if test="inhosDiagCd != null">#{inhosDiagCd},</if>
+            <if test="inhosDiag != null">#{inhosDiag},</if>
+            <if test="inhosWmDiaName != null">#{inhosWmDiaName},</if>
+            <if test="inhosWmDiaCd != null">#{inhosWmDiaCd},</if>
+            <if test="inhosCmSymName != null">#{inhosCmSymName},</if>
+            <if test="inhosCmSymCd != null">#{inhosCmSymCd},</if>
+            <if test="inhosCmIllName != null">#{inhosCmIllName},</if>
+            <if test="inhosCmIllCd != null">#{inhosCmIllCd},</if>
+            <if test="areaCode != null">#{areaCode},</if>
+            <if test="wardName != null">#{wardName},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="resDocCd != null">#{resDocCd},</if>
+            <if test="resDocName != null">#{resDocName},</if>
+            <if test="attDocCd != null">#{attDocCd},</if>
+            <if test="attDocName != null">#{attDocName},</if>
+            <if test="arcDocCd != null">#{arcDocCd},</if>
+            <if test="arcDocName != null">#{arcDocName},</if>
+            <if test="dutyNurName != null">#{dutyNurName},</if>
+            <if test="dutyNurCd != null">#{dutyNurCd},</if>
+            <if test="roomNo != null">#{roomNo},</if>
+            <if test="bedNo != null">#{bedNo},</if>
+            <if test="ngCd != null">#{ngCd},</if>
+            <if test="ngName != null">#{ngName},</if>
+            <if test="pcCd != null">#{pcCd},</if>
+            <if test="pcName != null">#{pcName},</if>
+            <if test="outCon != null">#{outCon},</if>
+            <if test="outTime != null">#{outTime},</if>
+            <if test="outAreaCd != null">#{outAreaCd},</if>
+            <if test="outAreaName != null">#{outAreaName},</if>
+            <if test="outDeptCd != null">#{outDeptCd},</if>
+            <if test="outDeptName != null">#{outDeptName},</if>
+            <if test="wmIllStateCd != null">#{wmIllStateCd},</if>
+            <if test="leaveWmIllName != null">#{leaveWmIllName},</if>
+            <if test="leaveWmIllCd != null">#{leaveWmIllCd},</if>
+            <if test="wmProStateCd != null">#{wmProStateCd},</if>
+            <if test="leaveWmProName != null">#{leaveWmProName},</if>
+            <if test="leaveWmProCd != null">#{leaveWmProCd},</if>
+            <if test="leaveCmIllCd != null">#{leaveCmIllCd},</if>
+            <if test="leaveCmIllName != null">#{leaveCmIllName},</if>
+            <if test="leaveCmSymCd != null">#{leaveCmSymCd},</if>
+            <if test="leaveCmSymName != null">#{leaveCmSymName},</if>
+            <if test="leaveMainIllCd != null">#{leaveMainIllCd},</if>
+            <if test="leaveMainDiaName != null">#{leaveMainDiaName},</if>
+            <if test="leaveMainDiaCd != null">#{leaveMainDiaCd},</if>
+            <if test="leaveOthIllCd != null">#{leaveOthIllCd},</if>
+            <if test="leaveOthDiaName != null">#{leaveOthDiaName},</if>
+            <if test="leaveOthDiaCd != null">#{leaveOthDiaCd},</if>
+            <if test="leaveWmDiaCd != null">#{leaveWmDiaCd},</if>
+            <if test="leaveWmDiaName != null">#{leaveWmDiaName},</if>
+            <if test="mainPatFlag != null">#{mainPatFlag},</if>
+            <if test="cpFlag != null">#{cpFlag},</if>
+            <if test="cpId != null">#{cpId},</if>
+            <if test="cpFirstDate != null">#{cpFirstDate},</if>
+            <if test="cpName != null">#{cpName},</if>
+            <if test="cpDayNo != null">#{cpDayNo},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="costSum != null">#{costSum},</if>
+            <if test="foreSum != null">#{foreSum},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="gathMhTime != null">#{gathMhTime},</if>
+            <if test="markDate != null">#{markDate},</if>
+            <if test="totalPatAva != null">#{totalPatAva},</if>
+            <if test="modiFlag != null">#{modiFlag},</if>
+            <if test="birWeight != null">#{birWeight},</if>
+            <if test="inhosWeight != null">#{inhosWeight},</if>
+            <if test="isQuality != null">#{isQuality},</if>
+            <if test="qualityDate != null">#{qualityDate},</if>
+            <if test="height != null">#{height},</if>
+            <if test="specialGroupCd != null">#{specialGroupCd},</if>
+            <if test="specialGroupName != null">#{specialGroupName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateVisitinfo" parameterType="Visitinfo">
+        update t_ar_medicalinformation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">HOSPITAL_CODE = #{orgCd},</if>
+            <if test="orgName != null">HOSPITAL_CODE = #{orgName},</if>
+            <if test="inpNo != null">ADMISSION_NO = #{inpNo},</if>
+            <if test="visitId != null">HOSPITALIZED_COUNT = #{visitId},</if>
+            <if test="recordNo != null">CASE_NO = #{recordNo},</if>
+            <if test="inhosCard != null">inhos_card = #{inhosCard},</if>
+            <if test="sdOutNo != null">sd_out_no = #{sdOutNo},</if>
+            <if test="patTypeCd != null">pat_type_cd = #{patTypeCd},</if>
+            <if test="patTypeName != null">pat_type_name = #{patTypeName},</if>
+            <if test="insuTypeCd != null">insu_type_cd = #{insuTypeCd},</if>
+            <if test="insuTypeName != null">insu_type_name = #{insuTypeName},</if>
+            <if test="payTypeCd != null">pay_type_cd = #{payTypeCd},</if>
+            <if test="payTypeName != null">pay_type_name = #{payTypeName},</if>
+            <if test="inDocCd != null">DEPARTMENT_NO = #{inDocCd},</if>
+            <if test="inDocName != null">in_doc_name = #{inDocName},</if>
+            <if test="inDeptCd != null">WARD_NO = #{inDeptCd},</if>
+            <if test="inDeptName != null">in_dept_name = #{inDeptName},</if>
+            <if test="inAreaCd != null">WARD_NO = #{inAreaCd},</if>
+            <if test="inAreaName != null">in_area_name = #{inAreaName},</if>
+            <if test="inhosTime != null">HOSPITALIZED_DATE = #{inhosTime},</if>
+            <if test="inDeptTime != null">ENTRY_DATE = #{inDeptTime},</if>
+            <if test="inhosCond != null">inhos_cond = #{inhosCond},</if>
+            <if test="inhosCondCd != null">HOSPITAL_CONDITION = #{inhosCondCd},</if>
+            <if test="inhosReason != null">inhos_reason = #{inhosReason},</if>
+            <if test="inhosWayCd != null">HOSPITAL_WAY = #{inhosWayCd},</if>
+            <if test="inhosWayName != null">inhos_way_name = #{inhosWayName},</if>
+            <if test="inhosDiagCd != null">inhos_diag_cd = #{inhosDiagCd},</if>
+            <if test="inhosDiagCd != null">admitting_diagnosis = #{inhosDiagCd},</if>
+            <if test="inhosDiag != null">inhos_diag = #{inhosDiag},</if>
+            <if test="inhosWmDiaName != null">inhos_wm_dia_name = #{inhosWmDiaName},</if>
+            <if test="inhosWmDiaCd != null">inhos_wm_dia_cd = #{inhosWmDiaCd},</if>
+            <if test="inhosCmSymName != null">inhos_cm_sym_name = #{inhosCmSymName},</if>
+            <if test="inhosCmSymCd != null">inhos_cm_sym_cd = #{inhosCmSymCd},</if>
+            <if test="inhosCmIllName != null">inhos_cm_ill_name = #{inhosCmIllName},</if>
+            <if test="inhosCmIllCd != null">inhos_cm_ill_cd = #{inhosCmIllCd},</if>
+            <if test="areaCode != null">WARD_NO = #{areaCode},</if>
+            <if test="wardName != null">ward_name = #{wardName},</if>
+            <if test="deptCd != null">DEPARTMENT_NO = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="resDocCd != null">RESIDENT_NO = #{resDocCd},</if>
+            <if test="resDocName != null">RESIDENT_NAME = #{resDocName},</if>
+            <if test="attDocCd != null">VISITING_STAFF_NO = #{attDocCd},</if>
+            <if test="attDocName != null">VISITING_STAFF_NAME = #{attDocName},</if>
+            <if test="arcDocCd != null">ARCHIATER_NO = #{arcDocCd},</if>
+            <if test="arcDocName != null">ARCHIATER_NAME = #{arcDocName},</if>
+            <if test="dutyNurName != null">SUPERVISOR_NURSE_NO = #{dutyNurName},</if>
+            <if test="dutyNurCd != null">SUPERVISOR_NURSE_NAME = #{dutyNurCd},</if>
+            <if test="roomNo != null">room_no = #{roomNo},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="ngCd != null">LEVEL_CARE = #{ngCd},</if>
+<!--            <if test="ngName != null">level_name = #{ngName},</if>-->
+            <if test="pcCd != null">pc_cd = #{pcCd},</if>
+            <if test="pcName != null">pc_name = #{pcName},</if>
+            <if test="outCon != null">LEAVE_HOSPITAL_CONDITION = #{outCon},</if>
+            <if test="outTime != null">LEAVE_HOSPITAL_DATE = #{outTime},</if>
+            <if test="outAreaCd != null">DISCHARGE_WARD_NO = #{outAreaCd},</if>
+            <if test="outAreaName != null">out_area_name = #{outAreaName},</if>
+            <if test="outDeptCd != null">DISCHARGE_DEPARTMENT_NO = #{outDeptCd},</if>
+<!--            <if test="outDeptName != null">out_dept_name = #{outDeptName},</if>-->
+<!--            <if test="wmIllStateCd != null">wm_ill_state_cd = #{wmIllStateCd},</if>-->
+<!--            <if test="leaveWmIllName != null">leave_wm_ill_name = #{leaveWmIllName},</if>-->
+<!--            <if test="leaveWmIllCd != null">leave_wm_ill_cd = #{leaveWmIllCd},</if>-->
+<!--            <if test="wmProStateCd != null">wm_pro_state_cd = #{wmProStateCd},</if>-->
+<!--            <if test="leaveWmProName != null">leave_wm_pro_name = #{leaveWmProName},</if>-->
+<!--            <if test="leaveWmProCd != null">leave_wm_pro_cd = #{leaveWmProCd},</if>-->
+<!--            <if test="leaveCmIllCd != null">leave_cm_ill_cd = #{leaveCmIllCd},</if>-->
+<!--            <if test="leaveCmIllName != null">leave_cm_ill_name = #{leaveCmIllName},</if>-->
+<!--            <if test="leaveCmSymCd != null">leave_cm_sym_cd = #{leaveCmSymCd},</if>-->
+<!--            <if test="leaveCmSymName != null">leave_cm_sym_name = #{leaveCmSymName},</if>-->
+<!--            <if test="leaveMainIllCd != null">leave_main_ill_cd = #{leaveMainIllCd},</if>-->
+<!--            <if test="leaveMainDiaName != null">leave_main_dia_name = #{leaveMainDiaName},</if>-->
+<!--            <if test="leaveMainDiaCd != null">leave_main_dia_cd = #{leaveMainDiaCd},</if>-->
+<!--            <if test="leaveOthIllCd != null">leave_oth_ill_cd = #{leaveOthIllCd},</if>-->
+<!--            <if test="leaveOthDiaName != null">leave_oth_dia_name = #{leaveOthDiaName},</if>-->
+<!--            <if test="leaveOthDiaCd != null">leave_oth_dia_cd = #{leaveOthDiaCd},</if>-->
+<!--            <if test="leaveWmDiaCd != null">leave_wm_dia_cd = #{leaveWmDiaCd},</if>-->
+<!--            <if test="leaveWmDiaName != null">leave_wm_dia_name = #{leaveWmDiaName},</if>-->
+            <if test="mainPatFlag != null">main_pat_flag = #{mainPatFlag},</if>
+            <if test="cpFlag != null">cp_flag = #{cpFlag},</if>
+            <if test="cpId != null">cp_no = #{cpId},</if>
+            <if test="cpFirstDate != null">cp_first_date = #{cpFirstDate},</if>
+            <if test="cpName != null">cp_name = #{cpName},</if>
+            <if test="cpDayNo != null">cp_day_no = #{cpDayNo},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+<!--            <if test="costSum != null">cost_sum = #{costSum},</if>-->
+<!--            <if test="foreSum != null">fore_sum = #{foreSum},</if>-->
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="gathMhTime != null">gath_mh_time = #{gathMhTime},</if>
+            <if test="markDate != null">mark_date = #{markDate},</if>
+<!--            <if test="totalPatAva != null">total_pat_ava = #{totalPatAva},</if>-->
+            <if test="modiFlag != null">modi_flag = #{modiFlag},</if>
+            <if test="birWeight != null">bir_weight = #{birWeight},</if>
+            <if test="inhosWeight != null">inhos_weight = #{inhosWeight},</if>
+            <if test="isQuality != null">is_quality = #{isQuality},</if>
+            <if test="qualityDate != null">quality_date = #{qualityDate},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="specialGroupCd != null">special_group_cd = #{specialGroupCd},</if>
+            <if test="specialGroupName != null">special_group_name = #{specialGroupName},</if>
+            <if test="referralHospital != null">referral_hospital = #{referralHospital},</if>
+            <if test="patientTel != null">tel = #{patientTel},</if>
+            <if test="daycaseFlag != null and daycaseFlag != ''">DAYCASE_FLAG=#{daycaseFlag}</if>
+        </trim>
+        where ADMISSION_NO = #{patientId}
+    </update>
+
+    <update id="updateVisitSave" parameterType="VisitinfoVo">
+        update pat_visitinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gathMhTime != null ">gath_Mh_Time = #{gathMhTime},</if>
+            <if test="attDocCd != null ">att_Doc_Cd = #{attDocCd},</if>
+            <if test="attDocName != null ">att_Doc_Name = #{attDocName},</if>
+            <if test="arcDocName != null ">arc_Doc_Name = #{arcDocName},</if>
+            <if test="arcDocCd != null ">arc_Doc_Cd = #{arcDocCd},</if>
+            <if test="mainPatFlag != null">main_Pat_Flag = #{mainPatFlag},</if>
+            cre_per_name = #{crePerName},
+            cre_per_code = #{crePerCode},
+            cre_date =sysdate,
+        </trim>
+        where patient_id = #{patientId}
+    </update>
+
+    <delete id="deleteVisitinfoById" parameterType="Long">
+        delete from pat_visitinfo where patient_id = #{patientId}
+    </delete>
+
+    <delete id="deleteVisitinfoByIds" parameterType="String">
+        delete from pat_visitinfo where patient_id in
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </delete>
+    <insert id="insertMap" parameterType="map">
+        insert into pat_visitinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ORG_CD != null and ORG_CD != ''">ORG_CD,</if>
+            <if test="ORG_NAME != null and ORG_NAME != ''">ORG_NAME,</if>
+            <if test="PATIENT_ID != null and PATIENT_ID != ''">PATIENT_ID,</if>
+            <if test="INP_NO != null and INP_NO != ''">INP_NO,</if>
+            <if test="VISIT_ID != null">VISIT_ID,</if>
+            <if test="RECORD_NO != null and RECORD_NO != ''">RECORD_NO,</if>
+            <if test="INHOS_CARD != null and INHOS_CARD != ''">INHOS_CARD,</if>
+            <if test="SD_OUT_NO != null and SD_OUT_NO != ''">SD_OUT_NO,</if>
+            <if test="PAT_TYPE_CD != null and PAT_TYPE_CD != ''">PAT_TYPE_CD,</if>
+            <if test="PAT_TYPE_NAME != null and PAT_TYPE_NAME != ''">PAT_TYPE_NAME,</if>
+            <if test="INSU_TYPE_CD != null and INSU_TYPE_CD != ''">INSU_TYPE_CD,</if>
+            <if test="INSU_TYPE_NAME != null and INSU_TYPE_NAME != ''">INSU_TYPE_NAME,</if>
+            <if test="PAY_TYPE_CD != null and PAY_TYPE_CD != ''">PAY_TYPE_CD,</if>
+            <if test="PAY_TYPE_NAME != null and PAY_TYPE_NAME != ''">PAY_TYPE_NAME,</if>
+            <if test="IN_DOC_CD != null and IN_DOC_CD != ''">IN_DOC_CD,</if>
+            <if test="IN_DOC_NAME != null and IN_DOC_NAME != ''">IN_DOC_NAME,</if>
+            <if test="IN_DEPT_CD != null and IN_DEPT_CD != ''">IN_DEPT_CD,</if>
+            <if test="IN_DEPT_NAME != null and IN_DEPT_NAME != ''">IN_DEPT_NAME,</if>
+            <if test="IN_AREA_CD != null and IN_AREA_CD != ''">IN_AREA_CD,</if>
+            <if test="IN_AREA_NAME != null and IN_AREA_NAME != ''">IN_AREA_NAME,</if>
+            <if test="INHOS_TIME != null">INHOS_TIME,</if>
+            <if test="IN_DEPT_TIME != null">IN_DEPT_TIME,</if>
+            <if test="INHOS_COND != null and INHOS_COND != ''">INHOS_COND,</if>
+            <if test="INHOS_COND_CD != null and INHOS_COND_CD != ''">INHOS_COND_CD,</if>
+            <if test="INHOS_REASON != null and INHOS_REASON != ''">INHOS_REASON,</if>
+            <if test="INHOS_WAY_CD != null and INHOS_WAY_CD != ''">INHOS_WAY_CD,</if>
+            <if test="INHOS_WAY_NAME != null and INHOS_WAY_NAME != ''">INHOS_WAY_NAME,</if>
+            <if test="INHOS_DIAG_CD != null and INHOS_DIAG_CD != ''">INHOS_DIAG_CD,</if>
+            <if test="INHOS_DIAG != null and INHOS_DIAG != ''">INHOS_DIAG,</if>
+            <if test="INHOS_WM_DIA_NAME != null and INHOS_WM_DIA_NAME != ''">INHOS_WM_DIA_NAME,</if>
+            <if test="INHOS_WM_DIA_CD != null and INHOS_WM_DIA_CD != ''">INHOS_WM_DIA_CD,</if>
+            <if test="INHOS_CM_SYM_NAME != null and INHOS_CM_SYM_NAME != ''">INHOS_CM_SYM_NAME,</if>
+            <if test="INHOS_CM_SYM_CD != null and INHOS_CM_SYM_CD != ''">INHOS_CM_SYM_CD,</if>
+            <if test="INHOS_CM_ILL_NAME != null and INHOS_CM_ILL_NAME != ''">INHOS_CM_ILL_NAME,</if>
+            <if test="INHOS_CM_ILL_CD != null and INHOS_CM_ILL_CD != ''">INHOS_CM_ILL_CD,</if>
+            <if test="AREA_CODE != null and AREA_CODE != ''">AREA_CODE,</if>
+            <if test="WARD_NAME != null and WARD_NAME != ''">WARD_NAME,</if>
+            <if test="DEPT_CD != null and DEPT_CD != ''">DEPT_CD,</if>
+            <if test="DEPT_NAME != null and DEPT_NAME != ''">DEPT_NAME,</if>
+            <if test="RES_DOC_CD != null and RES_DOC_CD != ''">RES_DOC_CD,</if>
+            <if test="RES_DOC_NAME != null and RES_DOC_NAME != ''">RES_DOC_NAME,</if>
+            <if test="ATT_DOC_CD != null and ATT_DOC_CD != ''">ATT_DOC_CD,</if>
+            <if test="ATT_DOC_NAME != null and ATT_DOC_NAME != ''">ATT_DOC_NAME,</if>
+            <if test="ARC_DOC_CD != null and ARC_DOC_CD != ''">ARC_DOC_CD,</if>
+            <if test="ARC_DOC_NAME != null and ARC_DOC_NAME != ''">ARC_DOC_NAME,</if>
+            <if test="DUTY_NUR_NAME != null and DUTY_NUR_NAME != ''">DUTY_NUR_NAME,</if>
+            <if test="DUTY_NUR_CD != null and DUTY_NUR_CD != ''">DUTY_NUR_CD,</if>
+            <if test="ROOM_NO != null and ROOM_NO != ''">ROOM_NO,</if>
+            <if test="BED_NO != null and BED_NO != ''">BED_NO,</if>
+            <if test="NG_CD != null and NG_CD != ''">NG_CD,</if>
+            <if test="NG_NAME != null and NG_NAME != ''">NG_NAME,</if>
+            <if test="PC_CD != null and PC_CD != ''">PC_CD,</if>
+            <if test="PC_NAME != null and PC_NAME != ''">PC_NAME,</if>
+            <if test="OUT_CON != null and OUT_CON != ''">OUT_CON,</if>
+            <if test="OUT_TIME != null">OUT_TIME,</if>
+            <if test="OUT_AREA_CD != null and OUT_AREA_CD != ''">OUT_AREA_CD,</if>
+            <if test="OUT_AREA_NAME != null and OUT_AREA_NAME != ''">OUT_AREA_NAME,</if>
+            <if test="OUT_DEPT_CD != null and OUT_DEPT_CD != ''">OUT_DEPT_CD,</if>
+            <if test="OUT_DEPT_NAME != null and OUT_DEPT_NAME != ''">OUT_DEPT_NAME,</if>
+            <if test="WM_ILL_STATE_CD != null and WM_ILL_STATE_CD != ''">WM_ILL_STATE_CD,</if>
+            <if test="LEAVE_WM_ILL_NAME != null and LEAVE_WM_ILL_NAME != ''">LEAVE_WM_ILL_NAME,</if>
+            <if test="LEAVE_WM_ILL_CD != null and LEAVE_WM_ILL_CD != ''">LEAVE_WM_ILL_CD,</if>
+            <if test="WM_PRO_STATE_CD != null and WM_PRO_STATE_CD != ''">WM_PRO_STATE_CD,</if>
+            <if test="LEAVE_WM_PRO_NAME != null and LEAVE_WM_PRO_NAME != ''">LEAVE_WM_PRO_NAME,</if>
+            <if test="LEAVE_WM_PRO_CD != null and LEAVE_WM_PRO_CD != ''">LEAVE_WM_PRO_CD,</if>
+            <if test="LEAVE_CM_ILL_CD != null and LEAVE_CM_ILL_CD != ''">LEAVE_CM_ILL_CD,</if>
+            <if test="LEAVE_CM_ILL_NAME != null and LEAVE_CM_ILL_NAME != ''">LEAVE_CM_ILL_NAME,</if>
+            <if test="LEAVE_CM_SYM_CD != null and LEAVE_CM_SYM_CD != ''">LEAVE_CM_SYM_CD,</if>
+            <if test="LEAVE_CM_SYM_NAME != null and LEAVE_CM_SYM_NAME != ''">LEAVE_CM_SYM_NAME,</if>
+            <if test="LEAVE_MAIN_ILL_CD != null and LEAVE_MAIN_ILL_CD != ''">LEAVE_MAIN_ILL_CD,</if>
+            <if test="LEAVE_MAIN_DIA_NAME != null and LEAVE_MAIN_DIA_NAME != ''">LEAVE_MAIN_DIA_NAME,</if>
+            <if test="LEAVE_MAIN_DIA_CD != null and LEAVE_MAIN_DIA_CD != ''">LEAVE_MAIN_DIA_CD,</if>
+            <if test="LEAVE_OTH_ILL_CD != null and LEAVE_OTH_ILL_CD != ''">LEAVE_OTH_ILL_CD,</if>
+            <if test="LEAVE_OTH_DIA_NAME != null and LEAVE_OTH_DIA_NAME != ''">LEAVE_OTH_DIA_NAME,</if>
+            <if test="LEAVE_OTH_DIA_CD != null and LEAVE_OTH_DIA_CD != ''">LEAVE_OTH_DIA_CD,</if>
+            <if test="LEAVE_WM_DIA_CD != null and LEAVE_WM_DIA_CD != ''">LEAVE_WM_DIA_CD,</if>
+            <if test="LEAVE_WM_DIA_NAME != null and LEAVE_WM_DIA_NAME != ''">LEAVE_WM_DIA_NAME,</if>
+            <if test="MAIN_PAT_FLAG != null and MAIN_PAT_FLAG != ''">MAIN_PAT_FLAG,</if>
+            <if test="CP_FLAG != null and CP_FLAG != ''">CP_FLAG,</if>
+            <if test="CP_ID != null and CP_ID != ''">CP_ID,</if>
+            <if test="CP_FIRST_DATE != null">CP_FIRST_DATE,</if>
+            <if test="CP_NAME != null and CP_NAME != ''">CP_NAME,</if>
+            <if test="CP_DAY_NO != null">CP_DAY_NO,</if>
+            <if test="ALT_PER_NAME != null and ALT_PER_NAME != ''">ALT_PER_NAME,</if>
+            <if test="ALT_PER_CODE != null and ALT_PER_CODE != ''">ALT_PER_CODE,</if>
+            <if test="ALT_DATE != null">ALT_DATE,</if>
+            <if test="CRE_PER_NAME != null and CRE_PER_NAME != ''">CRE_PER_NAME,</if>
+            <if test="CRE_PER_CODE != null and CRE_PER_CODE != ''">CRE_PER_CODE,</if>
+            <if test="CRE_DATE != null">CRE_DATE,</if>
+            <if test="COST_SUM != null">COST_SUM,</if>
+            <if test="FORE_SUM != null">FORE_SUM,</if>
+            <if test="WEIGHT != null">WEIGHT,</if>
+            <if test="GATH_MH_TIME != null">GATH_MH_TIME,</if>
+            <if test="MARK_DATE != null">MARK_DATE,</if>
+            <if test="TOTAL_PAT_AVA != null">TOTAL_PAT_AVA,</if>
+            <if test="MODI_FLAG != null and MODI_FLAG != ''">MODI_FLAG,</if>
+            <if test="BIR_WEIGHT != null">BIR_WEIGHT,</if>
+            <if test="INHOS_WEIGHT != null">INHOS_WEIGHT,</if>
+            <if test="IS_QUALITY != null and IS_QUALITY != ''">IS_QUALITY,</if>
+            <if test="QUALITY_DATE != null">QUALITY_DATE,</if>
+            <if test="HEIGHT != null">HEIGHT,</if>
+            <if test="SPECIAL_GROUP_CD != null">SPECIAL_GROUP_CD,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ORG_CD != null and ORG_CD != ''">#{ORG_CD},</if>
+            <if test="ORG_NAME != null and ORG_NAME != ''">#{ORG_NAME},</if>
+            <if test="PATIENT_ID != null and PATIENT_ID != ''">#{PATIENT_ID},</if>
+            <if test="INP_NO != null and INP_NO != ''">#{INP_NO},</if>
+            <if test="VISIT_ID != null">#{VISIT_ID},</if>
+            <if test="RECORD_NO != null and RECORD_NO != ''">#{RECORD_NO},</if>
+            <if test="INHOS_CARD != null and INHOS_CARD != ''">#{INHOS_CARD},</if>
+            <if test="SD_OUT_NO != null and SD_OUT_NO != ''">#{SD_OUT_NO},</if>
+            <if test="PAT_TYPE_CD != null and PAT_TYPE_CD != ''">#{PAT_TYPE_CD},</if>
+            <if test="PAT_TYPE_NAME != null and PAT_TYPE_NAME != ''">#{PAT_TYPE_NAME},</if>
+            <if test="INSU_TYPE_CD != null and INSU_TYPE_CD != ''">#{INSU_TYPE_CD},</if>
+            <if test="INSU_TYPE_NAME != null and INSU_TYPE_NAME != ''">#{INSU_TYPE_NAME},</if>
+            <if test="PAY_TYPE_CD != null and PAY_TYPE_CD != ''">#{PAY_TYPE_CD},</if>
+            <if test="PAY_TYPE_NAME != null and PAY_TYPE_NAME != ''">#{PAY_TYPE_NAME},</if>
+            <if test="IN_DOC_CD != null and IN_DOC_CD != ''">#{IN_DOC_CD},</if>
+            <if test="IN_DOC_NAME != null and IN_DOC_NAME != ''">#{IN_DOC_NAME},</if>
+            <if test="IN_DEPT_CD != null and IN_DEPT_CD != ''">#{IN_DEPT_CD},</if>
+            <if test="IN_DEPT_NAME != null and IN_DEPT_NAME != ''">#{IN_DEPT_NAME},</if>
+            <if test="IN_AREA_CD != null and IN_AREA_CD != ''">#{IN_AREA_CD},</if>
+            <if test="IN_AREA_NAME != null and IN_AREA_NAME != ''">#{IN_AREA_NAME},</if>
+            <if test="INHOS_TIME != null">#{INHOS_TIME},</if>
+            <if test="IN_DEPT_TIME != null">#{IN_DEPT_TIME},</if>
+            <if test="INHOS_COND != null and INHOS_COND != ''">#{INHOS_COND},</if>
+            <if test="INHOS_COND_CD != null and INHOS_COND_CD != ''">#{INHOS_COND_CD},</if>
+            <if test="INHOS_REASON != null and INHOS_REASON != ''">#{INHOS_REASON},</if>
+            <if test="INHOS_WAY_CD != null and INHOS_WAY_CD != ''">#{INHOS_WAY_CD},</if>
+            <if test="INHOS_WAY_NAME != null and INHOS_WAY_NAME != ''">#{INHOS_WAY_NAME},</if>
+            <if test="INHOS_DIAG_CD != null and INHOS_DIAG_CD != ''">#{INHOS_DIAG_CD},</if>
+            <if test="INHOS_DIAG != null and INHOS_DIAG != ''">#{INHOS_DIAG},</if>
+            <if test="INHOS_WM_DIA_NAME != null and INHOS_WM_DIA_NAME != ''">#{INHOS_WM_DIA_NAME},</if>
+            <if test="INHOS_WM_DIA_CD != null and INHOS_WM_DIA_CD != ''">#{INHOS_WM_DIA_CD},</if>
+            <if test="INHOS_CM_SYM_NAME != null and INHOS_CM_SYM_NAME != ''">#{INHOS_CM_SYM_NAME},</if>
+            <if test="INHOS_CM_SYM_CD != null and INHOS_CM_SYM_CD != ''">#{INHOS_CM_SYM_CD},</if>
+            <if test="INHOS_CM_ILL_NAME != null and INHOS_CM_ILL_NAME != ''">#{INHOS_CM_ILL_NAME},</if>
+            <if test="INHOS_CM_ILL_CD != null and INHOS_CM_ILL_CD != ''">#{INHOS_CM_ILL_CD},</if>
+            <if test="AREA_CODE != null and AREA_CODE != ''">#{AREA_CODE},</if>
+            <if test="WARD_NAME != null and WARD_NAME != ''">#{WARD_NAME},</if>
+            <if test="DEPT_CD != null and DEPT_CD != ''">#{DEPT_CD},</if>
+            <if test="DEPT_NAME != null and DEPT_NAME != ''">#{DEPT_NAME},</if>
+            <if test="RES_DOC_CD != null and RES_DOC_CD != ''">#{RES_DOC_CD},</if>
+            <if test="RES_DOC_NAME != null and RES_DOC_NAME != ''">#{RES_DOC_NAME},</if>
+            <if test="ATT_DOC_CD != null and ATT_DOC_CD != ''">#{ATT_DOC_CD},</if>
+            <if test="ATT_DOC_NAME != null and ATT_DOC_NAME != ''">#{ATT_DOC_NAME},</if>
+            <if test="ARC_DOC_CD != null and ARC_DOC_CD != ''">#{ARC_DOC_CD},</if>
+            <if test="ARC_DOC_NAME != null and ARC_DOC_NAME != ''">#{ARC_DOC_NAME},</if>
+            <if test="DUTY_NUR_NAME != null and DUTY_NUR_NAME != ''">#{DUTY_NUR_NAME},</if>
+            <if test="DUTY_NUR_CD != null and DUTY_NUR_CD != ''">#{DUTY_NUR_CD},</if>
+            <if test="ROOM_NO != null and ROOM_NO != ''">#{ROOM_NO},</if>
+            <if test="BED_NO != null and BED_NO != ''">#{BED_NO},</if>
+            <if test="NG_CD != null and NG_CD != ''">#{NG_CD},</if>
+            <if test="NG_NAME != null and NG_NAME != ''">#{NG_NAME},</if>
+            <if test="PC_CD != null and PC_CD != ''">#{PC_CD},</if>
+            <if test="PC_NAME != null and PC_NAME != ''">#{PC_NAME},</if>
+            <if test="OUT_CON != null and OUT_CON != ''">#{OUT_CON},</if>
+            <if test="OUT_TIME != null">#{OUT_TIME},</if>
+            <if test="OUT_AREA_CD != null and OUT_AREA_CD != ''">#{OUT_AREA_CD},</if>
+            <if test="OUT_AREA_NAME != null and OUT_AREA_NAME != ''">#{OUT_AREA_NAME},</if>
+            <if test="OUT_DEPT_CD != null and OUT_DEPT_CD != ''">#{OUT_DEPT_CD},</if>
+            <if test="OUT_DEPT_NAME != null and OUT_DEPT_NAME != ''">#{OUT_DEPT_NAME},</if>
+            <if test="WM_ILL_STATE_CD != null and WM_ILL_STATE_CD != ''">#{WM_ILL_STATE_CD},</if>
+            <if test="LEAVE_WM_ILL_NAME != null and LEAVE_WM_ILL_NAME != ''">#{LEAVE_WM_ILL_NAME},</if>
+            <if test="LEAVE_WM_ILL_CD != null and LEAVE_WM_ILL_CD != ''">#{LEAVE_WM_ILL_CD},</if>
+            <if test="WM_PRO_STATE_CD != null and WM_PRO_STATE_CD != ''">#{WM_PRO_STATE_CD},</if>
+            <if test="LEAVE_WM_PRO_NAME != null and LEAVE_WM_PRO_NAME != ''">#{LEAVE_WM_PRO_NAME},</if>
+            <if test="LEAVE_WM_PRO_CD != null and LEAVE_WM_PRO_CD != ''">#{LEAVE_WM_PRO_CD},</if>
+            <if test="LEAVE_CM_ILL_CD != null and LEAVE_CM_ILL_CD != ''">#{LEAVE_CM_ILL_CD},</if>
+            <if test="LEAVE_CM_ILL_NAME != null and LEAVE_CM_ILL_NAME != ''">#{LEAVE_CM_ILL_NAME},</if>
+            <if test="LEAVE_CM_SYM_CD != null and LEAVE_CM_SYM_CD != ''">#{LEAVE_CM_SYM_CD},</if>
+            <if test="LEAVE_CM_SYM_NAME != null and LEAVE_CM_SYM_NAME != ''">#{LEAVE_CM_SYM_NAME},</if>
+            <if test="LEAVE_MAIN_ILL_CD != null and LEAVE_MAIN_ILL_CD != ''">#{LEAVE_MAIN_ILL_CD},</if>
+            <if test="LEAVE_MAIN_DIA_NAME != null and LEAVE_MAIN_DIA_NAME != ''">#{LEAVE_MAIN_DIA_NAME},</if>
+            <if test="LEAVE_MAIN_DIA_CD != null and LEAVE_MAIN_DIA_CD != ''">#{LEAVE_MAIN_DIA_CD},</if>
+            <if test="LEAVE_OTH_ILL_CD != null and LEAVE_OTH_ILL_CD != ''">#{LEAVE_OTH_ILL_CD},</if>
+            <if test="LEAVE_OTH_DIA_NAME != null and LEAVE_OTH_DIA_NAME != ''">#{LEAVE_OTH_DIA_NAME},</if>
+            <if test="LEAVE_OTH_DIA_CD != null and LEAVE_OTH_DIA_CD != ''">#{LEAVE_OTH_DIA_CD},</if>
+            <if test="LEAVE_WM_DIA_CD != null and LEAVE_WM_DIA_CD != ''">#{LEAVE_WM_DIA_CD},</if>
+            <if test="LEAVE_WM_DIA_NAME != null and LEAVE_WM_DIA_NAME != ''">#{LEAVE_WM_DIA_NAME},</if>
+            <if test="MAIN_PAT_FLAG != null and MAIN_PAT_FLAG != ''">#{MAIN_PAT_FLAG},</if>
+            <if test="CP_FLAG != null and CP_FLAG != ''">#{CP_FLAG},</if>
+            <if test="CP_ID != null and CP_ID != ''">#{CP_ID},</if>
+            <if test="CP_FIRST_DATE != null">#{CP_FIRST_DATE},</if>
+            <if test="CP_NAME != null and CP_NAME != ''">#{CP_NAME},</if>
+            <if test="CP_DAY_NO != null">#{CP_DAY_NO},</if>
+            <if test="ALT_PER_NAME != null and ALT_PER_NAME != ''">#{ALT_PER_NAME},</if>
+            <if test="ALT_PER_CODE != null and ALT_PER_CODE != ''">#{ALT_PER_CODE},</if>
+            <if test="ALT_DATE != null">#{ALT_DATE},</if>
+            <if test="CRE_PER_NAME != null and CRE_PER_NAME != ''">#{CRE_PER_NAME},</if>
+            <if test="CRE_PER_CODE != null and CRE_PER_CODE != ''">#{CRE_PER_CODE},</if>
+            <if test="CRE_DATE != null">#{CRE_DATE},</if>
+            <if test="COST_SUM != null">#{COST_SUM},</if>
+            <if test="FORE_SUM != null">#{FORE_SUM},</if>
+            <if test="WEIGHT != null">#{WEIGHT},</if>
+            <if test="GATH_MH_TIME != null">#{GATH_MH_TIME},</if>
+            <if test="MARK_DATE != null">#{MARK_DATE},</if>
+            <if test="TOTAL_PAT_AVA != null">#{TOTAL_PAT_AVA},</if>
+            <if test="MODI_FLAG != null and MODI_FLAG != ''">#{MODI_FLAG},</if>
+            <if test="BIR_WEIGHT != null">#{BIR_WEIGHT},</if>
+            <if test="INHOS_WEIGHT != null">#{INHOS_WEIGHT},</if>
+            <if test="IS_QUALITY != null and IS_QUALITY != ''">#{IS_QUALITY},</if>
+            <if test="QUALITY_DATE != null">#{QUALITY_DATE},</if>
+            <if test="HEIGHT != null">#{HEIGHT},</if>
+            <if test="SPECIAL_GROUP_CD != null">#{SPECIAL_GROUP_CD},</if>
+        </trim>
+    </insert>
+
+    <insert id="updateMap" parameterType="map">
+        update pat_visitinfo set
+            INP_NO = 	#{INP_NO},
+            VISIT_ID = 	#{VISIT_ID},
+            RECORD_NO = 	#{RECORD_NO},
+            INHOS_CARD = 	#{INHOS_CARD},
+            SD_OUT_NO = 	#{SD_OUT_NO},
+            PAT_TYPE_CD = 	#{PAT_TYPE_CD},
+            PAT_TYPE_NAME = 	#{PAT_TYPE_NAME},
+            INSU_TYPE_CD = 	#{INSU_TYPE_CD},
+            INSU_TYPE_NAME = 	#{INSU_TYPE_NAME},
+            PAY_TYPE_CD = 	#{PAY_TYPE_CD},
+            PAY_TYPE_NAME = 	#{PAY_TYPE_NAME},
+            IN_DOC_CD = 	#{IN_DOC_CD},
+            IN_DOC_NAME = 	#{IN_DOC_NAME},
+            IN_DEPT_CD = 	#{IN_DEPT_CD},
+            IN_DEPT_NAME = 	#{IN_DEPT_NAME},
+            IN_AREA_CD = 	#{IN_AREA_CD},
+            IN_AREA_NAME = 	#{IN_AREA_NAME},
+            INHOS_TIME = 	#{INHOS_TIME},
+            IN_DEPT_TIME = 	#{IN_DEPT_TIME},
+            INHOS_COND = 	#{INHOS_COND},
+            INHOS_COND_CD = 	#{INHOS_COND_CD},
+            INHOS_REASON = 	#{INHOS_REASON},
+            INHOS_WAY_CD = 	#{INHOS_WAY_CD},
+            INHOS_WAY_NAME = 	#{INHOS_WAY_NAME},
+            INHOS_DIAG_CD = 	#{INHOS_DIAG_CD},
+            INHOS_DIAG = 	#{INHOS_DIAG},
+            INHOS_WM_DIA_NAME = 	#{INHOS_WM_DIA_NAME},
+            INHOS_WM_DIA_CD = 	#{INHOS_WM_DIA_CD},
+            INHOS_CM_SYM_NAME = 	#{INHOS_CM_SYM_NAME},
+            INHOS_CM_SYM_CD = 	#{INHOS_CM_SYM_CD},
+            INHOS_CM_ILL_NAME = 	#{INHOS_CM_ILL_NAME},
+            INHOS_CM_ILL_CD = 	#{INHOS_CM_ILL_CD},
+            AREA_CODE = 	#{AREA_CODE},
+            WARD_NAME = 	#{WARD_NAME},
+            DEPT_CD = 	#{DEPT_CD},
+            DEPT_NAME = 	#{DEPT_NAME},
+            RES_DOC_CD = 	#{RES_DOC_CD},
+            RES_DOC_NAME = 	#{RES_DOC_NAME},
+            ATT_DOC_CD = 	#{ATT_DOC_CD},
+            ATT_DOC_NAME = 	#{ATT_DOC_NAME},
+            ARC_DOC_CD = 	#{ARC_DOC_CD},
+            ARC_DOC_NAME = 	#{ARC_DOC_NAME},
+            DUTY_NUR_NAME = 	#{DUTY_NUR_NAME},
+            DUTY_NUR_CD = 	#{DUTY_NUR_CD},
+            ROOM_NO = 	#{ROOM_NO},
+            BED_NO = 	#{BED_NO},
+            NG_CD = 	#{NG_CD},
+            NG_NAME = 	#{NG_NAME},
+            PC_CD = 	#{PC_CD},
+            PC_NAME = 	#{PC_NAME},
+            OUT_CON = 	#{OUT_CON},
+            OUT_TIME = 	#{OUT_TIME},
+            OUT_AREA_CD = 	#{OUT_AREA_CD},
+            OUT_AREA_NAME = 	#{OUT_AREA_NAME},
+            OUT_DEPT_CD = 	#{OUT_DEPT_CD},
+            OUT_DEPT_NAME = 	#{OUT_DEPT_NAME},
+            WM_ILL_STATE_CD = 	#{WM_ILL_STATE_CD},
+            LEAVE_WM_ILL_NAME = 	#{LEAVE_WM_ILL_NAME},
+            LEAVE_WM_ILL_CD = 	#{LEAVE_WM_ILL_CD},
+            WM_PRO_STATE_CD = 	#{WM_PRO_STATE_CD},
+            LEAVE_WM_PRO_NAME = 	#{LEAVE_WM_PRO_NAME},
+            LEAVE_WM_PRO_CD = 	#{LEAVE_WM_PRO_CD},
+            LEAVE_CM_ILL_CD = 	#{LEAVE_CM_ILL_CD},
+            LEAVE_CM_ILL_NAME = 	#{LEAVE_CM_ILL_NAME},
+            LEAVE_CM_SYM_CD = 	#{LEAVE_CM_SYM_CD},
+            LEAVE_CM_SYM_NAME = 	#{LEAVE_CM_SYM_NAME},
+            LEAVE_MAIN_ILL_CD = 	#{LEAVE_MAIN_ILL_CD},
+            LEAVE_MAIN_DIA_NAME = 	#{LEAVE_MAIN_DIA_NAME},
+            LEAVE_MAIN_DIA_CD = 	#{LEAVE_MAIN_DIA_CD},
+            LEAVE_OTH_ILL_CD = 	#{LEAVE_OTH_ILL_CD},
+            LEAVE_OTH_DIA_NAME = 	#{LEAVE_OTH_DIA_NAME},
+            LEAVE_OTH_DIA_CD = 	#{LEAVE_OTH_DIA_CD},
+            LEAVE_WM_DIA_CD = 	#{LEAVE_WM_DIA_CD},
+            LEAVE_WM_DIA_NAME = 	#{LEAVE_WM_DIA_NAME},
+            CP_FLAG = 	#{CP_FLAG},
+            CP_ID = 	#{CP_ID},
+            CP_FIRST_DATE = 	#{CP_FIRST_DATE},
+            CP_NAME = 	#{CP_NAME},
+            CP_DAY_NO = 	#{CP_DAY_NO},
+            WEIGHT = 	#{WEIGHT},
+            BIR_WEIGHT = 	#{BIR_WEIGHT},
+            INHOS_WEIGHT = 	#{INHOS_WEIGHT}
+        where patient_id = #{PATIENT_ID}
+    </insert>
+
+    <select id="selectPatientById" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+        select  pv.PATIENT_ID,pp.PATIENT_MAIN_ID,pp.patient_name, pv.inp_no, pv.bed_no, pp.age_y, pp.age_m, pp.age_d, pp.age_h, pp.age_mi, pv.INHOS_TIME, pv.inhos_cond,pv.pat_type_name, pp.card_type,pp.mar_sta,pv.ng_name,pv.ng_cd,
+        pp.id_card, pp.POL_STAT_NAME, pp.bir_date, pp.cont_name, pv.weight, pv.dept_cd,pv.dept_name, pp.PATIENT_TEL, pv.INHOS_WAY_NAME,pv.ATT_DOC_CD,pv.ATT_DOC_NAME, pv.GATH_MH_TIME, pv.ARC_DOC_CD, pv.ARC_DOC_NAME,pv.record_no,
+        pp.SEC_LEVEL,pp.NOW_ADDR_PRO||pp.NOW_ADDR_FLAGTY||pp.NOW_ADDR_COU||pp.NOW_ADDR_TOWN||pp.NOW_ADDR_VIL NOW_ADDR,pp.NOW_ADDR_PRO,pp.NOW_ADDR_FLAGTY,pp.NOW_ADDR_COU,pp.NOW_ADDR_TOWN,pp.NOW_ADDR_VIL,
+        pv.INHOS_DIAG,pv.INHOS_DIAG_CD,pv.MAIN_PAT_FLAG,pv.RES_DOC_CD,pp.sex,pp.sex_cd,pv.VISIT_ID,pv.AREA_CODE,pp.WORK_ADDR,pv.PAY_TYPE_CD,pv.PAY_TYPE_NAME,pv.height,pv.SPECIAL_GROUP_CD,pv.SPECIAL_GROUP_NAME,
+        pv.INHOS_COND_CD,pv.INHOS_WAY_CD,pv.IN_DEPT_TIME,pv.RES_DOC_NAME,pv.total_pat_ava,pv.out_time,pv.record_no,pv.org_cd,pv.duty_nur_name, pv.duty_nur_cd
+        from pat_visitinfo pv left join PAT_PERSONALINFO pp on pv.PATIENT_ID = pp.PATIENT_ID
+        left join TD_NA_PAT_ATT pa on pv.patient_id=pa.admission_no
+        <where>
+            <if test="patientId != null and patientId != ''">
+                and pv.patient_id = #{patientId}
+            </if>
+            <if test="inpNo != null and inpNo != ''">
+                and pv.inp_no = #{inpNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectVisitinfosById" parameterType="String" resultMap="VisitinfoVoResult">
+        select  pv.PATIENT_ID,pp.PATIENT_MAIN_ID,pp.patient_name, pv.inp_no, pv.bed_no, pp.age_y, pp.age_m, pp.age_d, pp.age_h, pp.age_mi, pv.INHOS_TIME, pv.inhos_cond,pv.pat_type_name, pv.TOTAL_PAT_AVA, pp.card_type,pp.mar_sta,pv.ng_name,
+                pp.id_card, pp.POL_STAT_NAME, pp.bir_date, pp.cont_name, pv.WEIGHT, pv.dept_name, pp.PATIENT_TEL, pv.INHOS_WAY_NAME,pv.ATT_DOC_CD,pv.ATT_DOC_NAME, pv.GATH_MH_TIME, pv.ARC_DOC_CD, pv.ARC_DOC_NAME,
+                pp.SEC_LEVEL,pp.NOW_ADDR_PRO||pp.NOW_ADDR_FLAGTY||pp.NOW_ADDR_COU||pp.NOW_ADDR_TOWN||pp.NOW_ADDR_VIL NOW_ADDR,pp.NOW_ADDR_PRO,pp.NOW_ADDR_FLAGTY,pp.NOW_ADDR_COU,pp.NOW_ADDR_TOWN,pp.NOW_ADDR_VIL,
+                pv.INHOS_DIAG,pv.INHOS_DIAG_CD,pv.MAIN_PAT_FLAG,pv.in_dept_name,pv.visit_id,pv.out_time,pv.record_no,pv.DEPT_CD
+        from pat_personalinfo pp left join pat_visitinfo pv on pp.patient_id = pv.patient_id
+        where (pp.patient_main_id = (select lower(patient_main_id) from pat_personalinfo where patient_id = #{patientId})
+        or pp.patient_main_id = (select upper(patient_main_id) from pat_personalinfo where patient_id = #{patientId}))
+        order by pv.INHOS_TIME desc
+    </select>
+
+    <select id="selectVisitinfosByPatientId" parameterType="String" resultMap="VisitinfoVoResult">
+        select a.patient_id,
+               a.pat_name        as patient_name,
+               a.visit_no        as inp_no,
+               a.visit_no,
+               a.age_year        as age_y,
+               a.age_month       as age_m,
+               a.age_day         as age_d,
+               a.visit_date      as inhos_time,
+               a.birthday        as bir_date,
+               a.visit_dept_name as dept_name,
+               a.visit_doc_cd,
+               a.visit_doc_name,
+               a.visit_dept_name,
+               a.visit_dept_cd
+          from td_dr_visit_info a
+          left join TD_DR_DIAG_INFO b
+            on a.org_cd = b.org_cd
+           and a.patient_id = b.patient_id
+         where a.patient_id = #{patientId}
+           and a.visit_no = #{visitNo}
+        union all
+        select a.patient_id,
+               a.pat_name        as patient_name,
+               a.visit_no        as inp_no,
+               a.visit_no,
+               a.age_year        as age_y,
+               a.age_month       as age_m,
+               a.age_day         as age_d,
+               a.visit_date      as inhos_time,
+               a.birthday        as bir_date,
+               a.visit_dept_name as dept_name,
+               a.visit_doc_cd,
+               a.visit_doc_name,
+               a.visit_dept_name,
+               a.visit_dept_cd
+          from td_dr_visit_info_h a
+          left join TD_DR_DIAG_INFO b
+            on a.org_cd = b.org_cd
+           and a.patient_id = b.patient_id
+         where a.patient_id = #{patientId}
+           and a.visit_no = #{visitNo}
+
+    </select>
+
+    <select id="selectResDocPersonList" parameterType="String" resultMap="VisitinfoVoResult">
+        select pp.patient_id,pp.patient_name,pv.inp_no,pv.inhos_time,pv.out_time
+        from pat_visitinfo pv left join  pat_personalinfo pp  on pp.patient_id = pv.patient_id
+        where pv.res_doc_cd=#{resDocCd}
+<if test="deptCd!=null and deptCd!=''">
+    and pv.DEPT_CD=#{deptCd}
+</if>
+    </select>
+
+    <select id="selectVisitinfoPersonalList" parameterType="VisitinfoPersonalVo" resultMap="VisitinfoPersonalVoResult">
+        select pv.org_cd, pv.org_name, pv.patient_id, pv.inp_no, pv.visit_id, pv.record_no, pv.inhos_card, pv.sd_out_no, pv.pat_type_cd,
+        pv.pat_type_name, pv.insu_type_cd, pv.insu_type_name, pv.pay_type_cd, pv.pay_type_name, pv.in_doc_cd, pv.in_doc_name,
+        pv.in_dept_cd, pv.in_dept_name, pv.in_area_cd, pv.in_area_name, pv.inhos_time, pv.in_dept_time, pv.inhos_cond,
+        pv.inhos_cond_cd, pv.inhos_reason, pv.inhos_way_cd, pv.inhos_way_name, pv.inhos_diag_cd, pv.inhos_diag,
+        pv.inhos_wm_dia_name, pv.inhos_wm_dia_cd, pv.inhos_cm_sym_name, pv.inhos_cm_sym_cd, pv.inhos_cm_ill_name,
+        pv.inhos_cm_ill_cd, pv.area_code, pv.ward_name, pv.dept_cd, pv.dept_name, pv.res_doc_cd, pv.res_doc_name, pv.att_doc_cd,
+        pv.att_doc_name, pv.arc_doc_cd, pv.arc_doc_name, pv.duty_nur_name, pv.duty_nur_cd, pv.room_no, pv.bed_no, pv.ng_cd,
+        pv.ng_name, pv.pc_cd, pv.pc_name, pv.out_con, pv.out_time, pv.out_area_cd, pv.out_area_name, pv.out_dept_cd, pv.out_dept_name,
+        pv.wm_ill_state_cd, pv.leave_wm_ill_name, pv.leave_wm_ill_cd, pv.wm_pro_state_cd, pv.leave_wm_pro_name,
+        pv.leave_wm_pro_cd, pv.leave_cm_ill_cd, pv.leave_cm_ill_name, pv.leave_cm_sym_cd, pv.leave_cm_sym_name,
+        pv.leave_main_ill_cd, pv.leave_main_dia_name, pv.leave_main_dia_cd, pv.leave_oth_ill_cd, pv.leave_oth_dia_name,
+        pv.leave_oth_dia_cd, pv.leave_wm_dia_cd, pv.leave_wm_dia_name, pv.main_pat_flag, pv.cp_flag, pv.cp_id, pv.cp_first_date,
+        pv.cp_name, pv.cp_day_no, pv.alt_per_name, pv.alt_per_code, pv.alt_date, pv.cre_per_name, pv.cre_per_code, pv.cre_date,
+        pv.cost_sum, pv.fore_sum, pv.weight, pv.gath_mh_time, pv.mark_date, pv.total_pat_ava, pv.modi_flag, pv.bir_weight,
+        pv.inhos_weight, pv.is_quality, pv.quality_date, pp.patient_main_id,pp.patient_name,pp.inputstrphtc,pp.sex,pp.sex_cd,pp.age_y,
+        pp.age_m, pp.age_d, pp.age_h, pp.age_mi, pp.sec_level,pp.patient_tel
+        from pat_visitinfo pv
+        left join pat_personalinfo pp on pv.patient_id = pp.patient_id
+        <where>
+            <if test="patientName != null and patientName != ''"> and (
+                pp.patient_name like concat(concat('%', #{patientName}), '%') or pv.record_no like concat(concat('%',#{patientName}),'%')
+                )
+            </if>
+            <if test="inpNo != null and inpNo != ''"> and pv.inp_no = #{inpNo}</if>
+            <if test="deptCd != null  and deptCd != '' and deptCd != '000000'.toString()"> and pv.dept_cd = #{deptCd} </if>
+            <if test="deptName != null  and deptName != ''"> and pv.dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="inHosState!=null and inHosState!=''">
+                <if test="inHosState=='2'.toString()">and pv.out_time is not null </if>
+                <if test="inHosState=='1'.toString()">and pv.out_time is null </if>
+            </if>
+            <if test="outHosStartTime!= null and outHosEndTime != null">
+                and pv.out_time &gt;= #{outHosStartTime}
+                and pv.out_time &lt; #{outHosEndTime} +1
+            </if>
+            <if test="inhosStartTime!=null and inhosEndTime!=null ">
+                and pv.inhos_time &gt;= #{inhosStartTime}
+                and pv.inhos_time &lt; #{inhosEndTime} +1
+            </if>
+            <if test="resDocCd != null and resDocCd != ''">
+                and pv.res_doc_cd = #{resDocCd}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectVisitinfoPersonalVoById" parameterType="String" resultMap="VisitinfoPersonalVoResult">
+        select  pv.*,pp.patient_main_id,pp.patient_name,pp.inputstrphtc,pp.sex,pp.sex_cd,pp.age_y, pp.age_m, pp.age_d, pp.age_h, pp.age_mi, pp.sec_level,
+               pp.now_addr_tel,pp.pro_type_name,pp.pro_type_name,pp.bir_date,pp.ID_CARD,pv.weight,pv.bed_no,pp.now_addr_tel,
+               (pp.NOW_ADDR_PRO ||pp.NOW_ADDR_FLAGTY || pp.NOW_ADDR_COU || pp.NOW_ADDR_TOWN || pp.NOW_ADDR_VIL || pp.NOW_ADDR_HOUSE_NO) as address,tmr.hospital_type,
+               pv.CP_FLAG
+        from pat_personalinfo pp left join pat_visitinfo pv on pp.patient_id = pv.patient_id left join t_mi_registration tmr on tmr.admission_no = pp.patient_id
+        where pp.patient_id =  #{patientId}
+    </select>
+
+    <select id="inspectReportTimes" parameterType="String" resultMap="VisitinfoVoResult">
+        <include refid="selectVisitinfoVo"/>
+         where patient_id in(select patient_id from pat_personalinfo where (patient_main_id=upper(#{patientMainId}) or patient_main_id=lower(#{patientMainId}))) and out_time is not null and patient_id!=#{patientId}  order by inhos_time desc
+    </select>
+    <select id="selectRunTimeQcCheck" parameterType="RunTimeQcCheckVo" resultMap="RunTimeQcCheckVoResult">
+        select v.patient_id,p.patient_name, v.inp_no,v.bed_no,v.PAY_TYPE_NAME, p.sex, p.age_y, p.age_m, p.age_d, p.age_h, p.age_mi,v.dept_cd,
+               v.dept_name,diag.DIAG_NAME as inhos_wm_dia_name,v.record_no,
+               v.inhos_time, v.out_time,v.pc_name,v.res_doc_name, v.res_doc_cd, o.oper_flag, o.cons_flag, o.die_flag,
+               o.blood_flag,o.change_flag,o.infect_flag,o.rescue_flag,qcr.check_num,o.blood_trans,
+               case when v.OUT_TIME is not null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;= #{dayNum} then 1
+                when v.OUT_TIME is null and TO_NUMBER(sysdate- v.INHOS_TIME) >= #{dayNum} then 1
+                else 0 end day_num_flag,
+               case when v.cost_sum &gt;= #{costSum} then 1 else 0 end cost_sum_flag,
+                case when wjz.patient_id is not null then '1' else '0' end as alert_flag
+        from PAT_VISITINFO v
+        left join PAT_PERSONALINFO p on v.PATIENT_ID = p.PATIENT_ID
+        left join PAT_OTHERINFO o on v.PATIENT_ID = o.PATIENT_ID
+        left join (select patient_id, count(patient_id) check_num from EMR_QC_RECORD where QC_SECTION = '03' group by PATIENT_ID) qcr on qcr.PATIENT_ID = v.PATIENT_ID
+        left join emr_qc_flow f on v.PATIENT_ID = f.PATIENT_ID and f.mr_state != '00'
+        LEFT JOIN DIAG_INFO diag on diag.PATIENT_ID = v.patient_id and diag.DIAG_TYPE_CD='02' and diag.DIAG_CLASS_CD='01'
+        left join (select distinct (patient_id)
+                from (select patient_id from exam_item where alter_flag = '1'
+                    union all
+                    select patient_id from test_report where alter_flag = '1'
+                    union all
+                    select b.pat_id from test_alert_report b
+                        )
+                    ) wjz
+            on wjz.patient_id = v.PATIENT_ID
+        <where>
+                v.IN_DEPT_TIME is not null
+            <if test="patientId!=null and patientId!=''">
+                and v.patient_id = #{patientId}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==1">
+                and f.id is null
+                and v.out_time is null
+            </if>
+            <if test="alertFlag != null and alertFlag == 1">
+                and wjz.patient_id is not null
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==1 and beginDateTime!=null and beginDateTime!=''">
+                and to_char(v.inhos_time, 'yyyy-mm-dd hh24:mi:ss') &gt;= #{beginDateTime}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==1 and endDateTime != null and endDateTime != ''">
+                and to_char(v.inhos_time, 'yyyy-mm-dd hh24:mi:ss') &lt; #{endDateTime}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==2">
+                and f.id is not null
+                and v.out_time is not null
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==2 and beginDateTime!=null and beginDateTime!=''">
+                and to_char(v.out_time, 'yyyy-mm-dd hh24:mi:ss') &gt;= #{beginDateTime}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==2 and endDateTime != null and endDateTime != ''">
+                and to_char(v.out_time, 'yyyy-mm-dd hh24:mi:ss') &lt; #{endDateTime}
+            </if>
+            <if test="inpNo!=null and inpNo!=''">
+                and (v.record_no like concat(concat('%', #{inpNo}), '%')
+                    or p.PATIENT_NAME like concat(concat('%', #{inpNo}), '%')
+                    or p.INPUTSTRPHTC like upper(concat(concat('%', #{inpNo}), '%')))
+            </if>
+            <if test="resDocCd!=null and resDocCd!=''">
+                and v.res_doc_cd like concat(concat('%', #{resDocCd}), '%')
+            </if>
+            <if test="deptCd!=null and deptCd!=''">
+                and v.dept_cd = #{deptCd}
+            </if>
+            <if test='operFlag!=null and operFlag=="1"'>
+                and o.oper_flag = #{operFlag}
+            </if>
+            <if test='consFlag!=null and consFlag=="1"'>
+                and o.cons_flag = #{consFlag}
+            </if>
+            <if test='dieFlag!=null and dieFlag=="1"'>
+                and o.die_flag = #{dieFlag}
+            </if>
+            <if test='bloodTrans!=null and bloodTrans=="1"'>
+                and o.blood_trans = #{bloodTrans}
+            </if>
+            <if test='changeFlag!=null and changeFlag=="1"'>
+                and o.change_flag = #{changeFlag}
+            </if>
+            <if test='infectFlag!=null and infectFlag=="1"'>
+                and o.infect_flag = #{infectFlag}
+            </if>
+            <if test='pcCdFlag!=null and pcCdFlag=="1"'>
+                and v.pc_cd in ('1','2')
+            </if>
+            <if test='rescueFlag!=null and rescueFlag=="1"'>
+                and o.rescue_flag = #{rescueFlag}
+            </if>
+            <if test='dayNumFlag!=null and dayNumFlag=="1"'>
+                and (
+                (v.OUT_TIME!=null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;= #{dayNum})
+                 or (v.OUT_TIME is null and TO_NUMBER(sysdate- v.INHOS_TIME) &gt;= #{dayNum})
+                )
+            </if>
+            <if test='costSumFlag!=null and costSumFlag=="1"'>
+                and v.cost_sum &gt;= #{costSum}
+            </if>
+        </where>
+        <if test="inOrOutFlag!=null and inOrOutFlag==1">
+            order by v.inhos_time
+        </if>
+        <if test="inOrOutFlag!=null and inOrOutFlag==2">
+            order by v.out_time
+        </if>
+    </select>
+
+    <select id="selectRunTimeQcCheckCount" parameterType="RunTimeQcCheckVo" resultType="Integer">
+        select count(0)
+        from PAT_VISITINFO v
+        left join PAT_PERSONALINFO p on v.PATIENT_ID = p.PATIENT_ID
+        left join PAT_OTHERINFO o on v.PATIENT_ID = o.PATIENT_ID
+        left join (select patient_id, count(patient_id) check_num from EMR_QC_RECORD where QC_SECTION = '03' group by PATIENT_ID) qcr on qcr.PATIENT_ID = v.PATIENT_ID
+        left join emr_qc_flow f on v.PATIENT_ID = f.PATIENT_ID and f.mr_state != '00'
+        <where>
+            and f.id is null
+            <if test="checkNumFlag!=null and checkNumFlag==1">
+                and qcr.check_num is not null
+            </if>
+            <if test="checkNumFlag!=null and checkNumFlag==0">
+                and qcr.check_num is null
+            </if>
+            <if test="patientId!=null and patientId!=''">
+                and v.patient_id = #{patientId}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==1">
+                and v.out_time is null
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==1 and beginDateTime!=null and beginDateTime!=''">
+                and to_char(v.inhos_time, 'yyyy-mm-dd hh24:mi:ss') &gt;= #{beginDateTime}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==1 and endDateTime != null and endDateTime != ''">
+                and to_char(v.inhos_time, 'yyyy-mm-dd hh24:mi:ss') &lt; #{endDateTime}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==2">
+                and v.out_time is not null
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==2 and beginDateTime!=null and beginDateTime!=''">
+                and to_char(v.out_time, 'yyyy-mm-dd hh24:mi:ss') &gt;= #{beginDateTime}
+            </if>
+            <if test="inOrOutFlag!=null and inOrOutFlag==2 and endDateTime != null and endDateTime != ''">
+                and to_char(v.out_time, 'yyyy-mm-dd hh24:mi:ss') &lt; #{endDateTime}
+            </if>
+            <if test="inpNo!=null and inpNo!=''">
+                and v.inp_no like concat(concat('%', #{inpNo}), '%')
+            </if>
+            <if test="resDocCd!=null and resDocCd!=''">
+                and v.res_doc_cd like concat(concat('%', #{resDocCd}), '%')
+            </if>
+            <if test="deptCd!=null and deptCd!=''">
+                and v.dept_cd = #{deptCd}
+            </if>
+            <if test='operFlag!=null and operFlag=="1"'>
+                and o.oper_flag = #{operFlag}
+            </if>
+            <if test='consFlag!=null and consFlag=="1"'>
+                and o.cons_flag = #{consFlag}
+            </if>
+            <if test='dieFlag!=null and dieFlag=="1"'>
+                and o.die_flag = #{dieFlag}
+            </if>
+            <if test='bloodTrans!=null and bloodTrans=="1"'>
+                and o.blood_trans = #{bloodTrans}
+            </if>
+            <if test='changeFlag!=null and changeFlag=="1"'>
+                and o.change_flag = #{changeFlag}
+            </if>
+            <if test='infectFlag!=null and infectFlag=="1"'>
+                and o.infect_flag = #{infectFlag}
+            </if>
+            <if test='pcCdFlag!=null and pcCdFlag=="1"'>
+                and v.pc_cd in ('1','2')
+            </if>
+            <if test='rescueFlag!=null and rescueFlag=="1"'>
+                and o.rescue_flag = #{rescueFlag}
+            </if>
+            <if test='dayNumFlag!=null and dayNumFlag=="1"'>
+                and (
+                (v.OUT_TIME != null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;= #{dayNum})
+                or (v.OUT_TIME is null and TO_NUMBER(sysdate- v.INHOS_TIME) &gt;= #{dayNum})
+                )
+            </if>
+            <if test='costSumFlag!=null and costSumFlag=="1"'>
+                and v.cost_sum &gt;= #{costSum}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDeptPatList" parameterType="String" resultMap="VisitinfoVoResult">
+        select * from PAT_VISITINFO where dept_cd=#{deptCode}
+    </select>
+
+    <select id="selectInHosList" parameterType="Visitinfo" resultMap="VisitinfoResult">
+        select org_cd, org_name, patient_id, inp_no, visit_id, record_no, inhos_card, sd_out_no, pat_type_cd,
+               pat_type_name, insu_type_cd, insu_type_name, pay_type_cd, pay_type_name, in_doc_cd, in_doc_name,
+               in_dept_cd, in_dept_name, in_area_cd, in_area_name, inhos_time, in_dept_time, inhos_cond,
+               inhos_cond_cd, inhos_reason, inhos_way_cd, inhos_way_name, inhos_diag_cd, inhos_diag, inhos_wm_dia_name,
+               inhos_wm_dia_cd, inhos_cm_sym_name, inhos_cm_sym_cd, inhos_cm_ill_name, inhos_cm_ill_cd, area_code, ward_name,
+               dept_cd, dept_name, res_doc_cd, res_doc_name, att_doc_cd, att_doc_name, arc_doc_cd, arc_doc_name,
+               duty_nur_name, duty_nur_cd, room_no, bed_no, ng_cd, ng_name, pc_cd, pc_name, out_con, out_time,
+               out_area_cd, out_area_name, out_dept_cd, out_dept_name, wm_ill_state_cd, leave_wm_ill_name, leave_wm_ill_cd, wm_pro_state_cd, leave_wm_pro_name, leave_wm_pro_cd, leave_cm_ill_cd, leave_cm_ill_name, leave_cm_sym_cd, leave_cm_sym_name, leave_main_ill_cd, leave_main_dia_name, leave_main_dia_cd, leave_oth_ill_cd, leave_oth_dia_name, leave_oth_dia_cd, leave_wm_dia_cd, leave_wm_dia_name, main_pat_flag, cp_flag, cp_id, cp_first_date, cp_name, cp_day_no, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, cost_sum, fore_sum, weight, gath_mh_time, mark_date, total_pat_ava, modi_flag, bir_weight, inhos_weight, is_quality, quality_date
+
+        select org_cd, org_name, patient_id, inp_no, visit_id, record_no,dept_cd, dept_name, inhos_time, out_time
+        from pat_visitinfo
+        where out_time is null
+        <if test="deptCode != null">and dept_cd=#{deptCode}</if>
+    </select>
+    <select id="selectInHosPersonList" parameterType="VisitinfoVo" resultMap="VisitinfoVoResult">
+        select pv.org_cd, pv.org_name, pv.patient_id, pv.inp_no, pv.visit_id, pv.record_no, pv.inhos_card, pv.sd_out_no, pv.pat_type_cd,
+        pv.pat_type_name, pv.insu_type_cd, pv.insu_type_name, pv.pay_type_cd, pv.pay_type_name, pv.in_doc_cd, pv.in_doc_name,
+        pv.in_dept_cd, pv.in_dept_name, pv.in_area_cd, pv.in_area_name, pv.inhos_time, pv.in_dept_time, pv.inhos_cond,
+        pv.inhos_cond_cd, pv.inhos_reason, pv.inhos_way_cd, pv.inhos_way_name, pv.inhos_diag_cd, pv.inhos_diag,
+        pv.inhos_wm_dia_name, pv.inhos_wm_dia_cd, pv.inhos_cm_sym_name, pv.inhos_cm_sym_cd, pv.inhos_cm_ill_name,
+        pv.inhos_cm_ill_cd, pv.area_code, pv.ward_name, pv.dept_cd, pv.dept_name, pv.res_doc_cd, pv.res_doc_name, pv.att_doc_cd,
+        pv.att_doc_name, pv.arc_doc_cd, pv.arc_doc_name, pv.duty_nur_name, pv.duty_nur_cd, pv.room_no, pv.bed_no, pv.ng_cd,
+        pv.ng_name, pv.pc_cd, pv.pc_name, pv.out_con, pv.out_time, pv.out_area_cd, pv.out_area_name, pv.out_dept_cd, pv.out_dept_name,
+        pv.wm_ill_state_cd, pv.leave_wm_ill_name, pv.leave_wm_ill_cd, pv.wm_pro_state_cd, pv.leave_wm_pro_name,
+        pv.leave_wm_pro_cd, pv.leave_cm_ill_cd, pv.leave_cm_ill_name, pv.leave_cm_sym_cd, pv.leave_cm_sym_name,
+        pv.leave_main_ill_cd, pv.leave_main_dia_name, pv.leave_main_dia_cd, pv.leave_oth_ill_cd, pv.leave_oth_dia_name,
+        pv.leave_oth_dia_cd, pv.leave_wm_dia_cd, pv.leave_wm_dia_name, pv.main_pat_flag, pv.cp_flag, pv.cp_id, pv.cp_first_date,
+        pv.cp_name, pv.cp_day_no, pv.alt_per_name, pv.alt_per_code, pv.alt_date, pv.cre_per_name, pv.cre_per_code, pv.cre_date,
+        pv.cost_sum, pv.fore_sum, pv.weight, pv.gath_mh_time, pv.mark_date, pv.total_pat_ava, pv.modi_flag, pv.bir_weight,
+        pv.inhos_weight, pv.is_quality, pv.quality_date, pp.patient_main_id,pp.patient_name,pp.inputstrphtc,pp.sex,pp.sex_cd,pp.age_y,
+        pp.age_m, pp.age_d, pp.age_h, pp.age_mi, pp.sec_level
+        from pat_visitinfo pv
+        left join pat_personalinfo pp on pv.patient_id = pp.patient_id
+        left join tm_na_beds b on pv.bed_no = b.bedid and b.ward_no = pv.DEPT_CD
+        where (pv.out_time is null or pv.out_time>=sysdate-1)
+        <if test="searchName != null and searchName != ''"> and (
+            pp.patient_name like concat(concat('%', #{searchName}), '%') or pv.inp_no like concat(concat('%',#{searchName}),'%')
+            )
+        </if>
+        <if test="deptCode != null and deptCode!=''">and pv.dept_cd=#{deptCode}</if>
+        order by b.bed_order
+    </select>
+    <select id="selectVistinfoListByPatList"  resultMap="VisitinfoResult">
+        select * from pat_visitinfo where patient_id in
+        <foreach item="patientId" collection="patientIdList" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </select>
+    <select id="selectVistinfoListByInpNoList"  resultMap="VisitinfoResult">
+        select * from pat_visitinfo where inp_no in
+        <foreach item="inpNo" collection="inpNoList" open="(" separator="," close=")">
+            #{inpNo}
+        </foreach>
+    </select>
+    <select id="selectHisVisitinfoListByPatientId" parameterType="String" resultMap="VisitinfoResult">
+        select pv.patient_id,pv.inp_no, pv.visit_id, pv.record_no, pv.inhos_card, pv.sd_out_no, pv.pat_type_cd,
+               pv.pat_type_name, pv.inhos_time,pv.dept_cd, pv.dept_name
+                from pat_visitinfo pv
+        left join pat_personalinfo pp on pp.patient_id = pv.patient_id where
+        pp.patient_main_id=(select patient_main_id from pat_personalinfo where patient_id=#{patientId}) and pp.patient_id!=#{patientId}
+    </select>
+    <select id="selectTodayInhosNum" parameterType="String" resultType="java.lang.Integer">
+        select count(patient_Id) from pat_visitinfo where trunc(INHOS_TIME)=trunc(sysdate) and DEPT_CD=#{deptCode}
+    </select>
+    <select id="selectTodayOutHosNum" parameterType="String" resultType="java.lang.Integer">
+        select count(patient_Id) from pat_visitinfo where trunc(OUT_TIME)=trunc(sysdate) and DEPT_CD=#{deptCode}
+    </select>
+
+
+    <insert id="insertMapList" parameterType="java.util.Map">
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test=" hospital_code != null and  hospital_code != ''">hospital_code,</if>
+            <if test=" patient_id != null and  patient_id != ''">patient_id,</if>
+            <if test=" case_no != null and  case_no != ''">case_no,</if>
+            <if test=" admission_no != null and  admission_no != ''">admission_no,</if>
+            <if test=" name != null and  name != ''">name,</if>
+            <if test=" hospitalized_count != null">hospitalized_count,</if>
+            <if test=" tel != null and  tel != ''">tel,</if>
+            <if test=" department_no != null and  department_no != ''">department_no,</if>
+            <if test=" ward_no != null and  ward_no != ''">ward_no,</if>
+            <if test=" bed_no != null and  bed_no != ''">bed_no,</if>
+            <if test=" bedid != null and  bedid != ''">bedid,</if>
+            <if test=" bed_surcharge != null">bed_surcharge,</if>
+            <if test=" bed_charge_date != null ">bed_charge_date,</if>
+            <if test=" hospital_way != null and  hospital_way != ''">hospital_way,</if>
+            <if test=" hospital_condition != null and  hospital_condition != ''">hospital_condition,</if>
+            <if test=" level_care != null and  level_care != ''">level_care,</if>
+            <if test=" archiater_no != null and  archiater_no != ''">archiater_no,</if>
+            <if test=" archiater_name != null and  archiater_name != ''">archiater_name,</if>
+            <if test=" visiting_staff_no != null and  visiting_staff_no != ''">visiting_staff_no,</if>
+            <if test=" visiting_staff_name != null and  visiting_staff_name != ''">visiting_staff_name,</if>
+            <if test=" visiting_staff_no != null and  visiting_staff_no != ''">resident_code,</if>
+            <if test=" visiting_staff_no != null and  visiting_staff_no != ''">resident_no,</if>
+            <if test=" visiting_staff_name != null and  visiting_staff_name != ''">resident_name,</if>
+            <if test=" supervisor_nurse_no != null and  supervisor_nurse_no!=''">supervisor_nurse_no,</if>
+            <if test=" supervisor_nurse_name != null and  supervisor_nurse_name!=''">supervisor_nurse_name,</if>
+            <if test=" hospitalized_date != null ">hospitalized_date,</if>
+            <if test=" leave_hospital_date != null ">leave_hospital_date,</if>
+            <if test=" hospital_mark != null and  hospital_mark != ''">hospital_mark,</if>
+            <if test=" leave_hospital_condition != null and  leave_hospital_condition != ''">leave_hospital_condition,</if>
+            <if test=" discharge_department_no != null and  discharge_department_no != ''">discharge_department_no,</if>
+            <if test=" discharge_ward_no != null and  discharge_ward_no != ''">discharge_ward_no,</if>
+            <if test=" closing_date != null">closing_date,</if>
+            <if test=" outpatient_diagnosis != null and  outpatient_diagnosis != ''">outpatient_diagnosis,</if>
+            <if test=" outpatient_doctor != null and  outpatient_doctor != ''">outpatient_doctor,</if>
+            <if test=" inhos_diag_cd != null and  inhos_diag_cd != ''">inhos_diag_cd,</if>
+            <if test=" inhos_diag != null and  inhos_diag != ''">inhos_diag,</if>
+            <if test=" leave_hospital_diagnosis != null and  leave_hospital_diagnosis != ''">leave_hospital_diagnosis,</if>
+            <if test=" entry_date != null ">entry_date,</if>
+            <if test=" actual_discharge_time != null ">actual_discharge_time,</if>
+            <if test=" single_disease_mark != null and  single_disease_mark != ''">single_disease_mark,</if>
+            <if test=" inpat_arrearage_mark != null and  inpat_arrearage_mark != ''">inpat_arrearage_mark,</if>
+            <if test=" approver != null and  approver != ''">approver,</if>
+            <if test=" blood_pressure != null and  blood_pressure != ''">blood_pressure,</if>
+            <if test=" bingqing_dq != null and  bingqing_dq != ''">bingqing_dq,</if>
+            <if test=" gms != null and  gms != ''">gms,</if>
+            <if test=" total_pat_ava!= null">total_pat_ava,</if>
+            <if test=" modify_time!= null">modify_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test=" hospital_code != null and  hospital_code != ''">#{hospital_code,jdbcType=VARCHAR},</if>
+            <if test=" patient_id != null and  patient_id != ''">#{patient_id,jdbcType=VARCHAR},</if>
+            <if test=" case_no != null and  case_no != ''">#{case_no,jdbcType=VARCHAR},</if>
+            <if test=" admission_no != null and  admission_no != ''">#{admission_no,jdbcType=VARCHAR},</if>
+            <if test=" name != null and  name != ''">#{name,jdbcType=VARCHAR},</if>
+            <if test=" hospitalized_count != null">#{hospitalized_count,jdbcType=INTEGER},</if>
+            <if test=" tel != null and  tel != ''">#{tel,jdbcType=VARCHAR},</if>
+            <if test=" department_no != null and  department_no != ''">#{department_no,jdbcType=VARCHAR},</if>
+            <if test=" ward_no != null and  ward_no != ''">#{ward_no,jdbcType=VARCHAR},</if>
+            <if test=" bed_no != null and  bed_no != ''">#{bed_no,jdbcType=VARCHAR},</if>
+            <if test=" bedid != null and  bedid != ''">#{bedid,jdbcType=VARCHAR},</if>
+            <if test=" bed_surcharge != null">#{bed_surcharge,jdbcType=DOUBLE},</if>
+            <if test=" bed_charge_date != null ">#{bed_charge_date,jdbcType=DATE},</if>
+            <if test=" hospital_way != null and  hospital_way != ''">#{hospital_way,jdbcType=VARCHAR},</if>
+            <if test=" hospital_condition != null and  hospital_condition != ''">#{hospital_condition,jdbcType=VARCHAR},</if>
+            <if test=" level_care != null and  level_care != ''">#{level_care,jdbcType=VARCHAR},</if>
+            <if test=" archiater_no != null and  archiater_no != ''">#{archiater_no,jdbcType=VARCHAR},</if>
+            <if test=" archiater_name != null and  archiater_name != ''">#{archiater_name,jdbcType=VARCHAR},</if>
+            <if test=" visiting_staff_no != null and  visiting_staff_no != ''">#{visiting_staff_no,jdbcType=VARCHAR},</if>
+            <if test=" visiting_staff_name != null and  visiting_staff_name != ''">#{visiting_staff_name,jdbcType=VARCHAR},</if>
+            <if test=" visiting_staff_no != null and  visiting_staff_no != ''">#{visiting_staff_no,jdbcType=VARCHAR},</if>
+            <if test=" visiting_staff_no != null and  visiting_staff_no != ''">#{visiting_staff_no,jdbcType=VARCHAR},</if>
+            <if test=" visiting_staff_name != null and  visiting_staff_name != ''">#{visiting_staff_name,jdbcType=VARCHAR},</if>
+            <if test=" supervisor_nurse_no != null and  supervisor_nurse_no!=''">#{supervisor_nurse_no,jdbcType=VARCHAR},</if>
+            <if test=" supervisor_nurse_name != null and  supervisor_nurse_name!=''">#{supervisor_nurse_name,jdbcType=VARCHAR},</if>
+            <if test=" hospitalized_date != null ">#{hospitalized_date,jdbcType=DATE},</if>
+            <if test=" leave_hospital_date != null ">#{leave_hospital_date,jdbcType=DATE},</if>
+            <if test=" hospital_mark != null and  hospital_mark != ''">#{hospital_mark,jdbcType=VARCHAR},</if>
+            <if test=" leave_hospital_condition != null and  leave_hospital_condition != ''">#{leave_hospital_condition,jdbcType=VARCHAR},</if>
+            <if test=" discharge_department_no != null and  discharge_department_no != ''">#{discharge_department_no,jdbcType=VARCHAR},</if>
+            <if test=" discharge_ward_no != null and  discharge_ward_no != ''">#{discharge_ward_no,jdbcType=VARCHAR},</if>
+            <if test=" closing_date != null">#{closing_date,jdbcType=DATE},</if>
+            <if test=" outpatient_diagnosis != null and  outpatient_diagnosis != ''">#{outpatient_diagnosis,jdbcType=VARCHAR},</if>
+            <if test=" outpatient_doctor != null and  outpatient_doctor != ''">#{outpatient_doctor,jdbcType=VARCHAR},</if>
+            <if test=" inhos_diag_cd != null and  inhos_diag_cd != ''">#{inhos_diag_cd,jdbcType=VARCHAR},</if>
+            <if test=" inhos_diag != null and  inhos_diag != ''">#{inhos_diag,jdbcType=VARCHAR},</if>
+            <if test=" leave_hospital_diagnosis != null and  leave_hospital_diagnosis != ''">#{leave_hospital_diagnosis,jdbcType=VARCHAR},</if>
+            <if test=" entry_date != null ">#{entry_date,jdbcType=DATE},</if>
+            <if test=" actual_discharge_time != null ">#{actual_discharge_time,jdbcType=DATE},</if>
+            <if test=" single_disease_mark != null and  single_disease_mark != ''">#{single_disease_mark,jdbcType=VARCHAR},</if>
+            <if test=" inpat_arrearage_mark != null and  inpat_arrearage_mark != ''">#{inpat_arrearage_mark,jdbcType=VARCHAR},</if>
+            <if test=" approver != null and  approver != ''">#{approver,jdbcType=VARCHAR},</if>
+            <if test=" blood_pressure != null and  blood_pressure != ''">#{blood_pressure,jdbcType=VARCHAR},</if>
+            <if test=" bingqing_dq != null and  bingqing_dq != ''">#{bingqing_dq,jdbcType=VARCHAR},</if>
+            <if test=" gms != null and  gms != ''">#{gms,jdbcType=VARCHAR},</if>
+            <if test=" total_pat_ava != null">#{total_pat_ava,jdbcType=DOUBLE},</if>
+            <if test=" modify_time != null">#{modify_time,jdbcType=DATE},</if>
+        </trim>
+    </insert>
+    <delete id="deleteVisitinfoByTableName" parameterType="String">
+        delete from ${tableName}
+        <where>
+            <if test="inpNo!=null and inpNo!=''">
+                and admission_no=#{inpNo}
+            </if>
+        </where>
+    </delete>
+    <delete id="deleteVisitinfoByInpNoList" >
+        delete from ${tableName}
+        <where>
+            <if test="inpNoList!=null and inpNoList.size()>0">
+                and admission_no in
+                <foreach item="inpNo" collection="inpNoList" open="(" separator="," close=")">
+                    #{inpNo}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+    <select id="selectSyncVisitinfoList" parameterType="SqlVo" resultMap="VisitinfoResult">
+        select b.admission_no as inp_no,b.modify_time from ${tableName} b
+        <where>
+            <if test="deptCode!=null and deptCode!=''">
+                and b.DEPARTMENT_NO=#{deptCode}
+            </if>
+            <if test="resDocCd!=null and resDocCd!=''">
+                and b.visiting_staff_no=#{resDocCd}
+            </if>
+            <if test="inpNoList!=null and inpNoList.size()>0">
+                and b.admission_no in
+                <foreach item="inpNo" collection="inpNoList" open="(" separator="," close=")">
+                    #{inpNo}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSyncVisitinfoOutTimeList"  resultMap="VisitinfoResult">
+        select admission_no as inp_no,department_no as dept_cd,'2' as outType,modify_time from t_ar_medicalinformation_h where admission_no in
+        <foreach collection="inpNoList" item="inpNo" open="(" separator="," close=")">
+            #{inpNo}
+        </foreach>
+        <if test="deptCode!=null and deptCode!=''"> and department_no=#{deptCode}</if>
+        union all
+        select admission_no as inp_no,department_no as dept_cd,'1' as outType,modify_time from t_ar_medicalinformation_day where admission_no in
+        <foreach collection="inpNoList" item="inpNo" open="(" separator="," close=")">
+            #{inpNo}
+        </foreach>
+        <if test="deptCode!=null and deptCode!=''"> and department_no=#{deptCode}</if>
+    </select>
+
+    <select id="selectHisAddPatientList" parameterType="SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+        <if test="deptCode!=null and deptCode!=''">
+            and b.ward_no=#{deptCode}
+        </if>
+        <if test="resDocCd!=null and resDocCd!=''">
+            and b.visiting_staff_no=#{resDocCd}
+        </if>
+        <if test="inpNo!=null and inpNo!=''">
+            or b.admission_no=#{inpNo}
+        </if>
+    </select>
+
+    <select id="selectCriticalInfo" parameterType="SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+        <where>
+            <if test="inpNo!=null and inpNo!=''">
+                and p.hospital_number = #{inpNo}
+            </if>
+        </where>
+    </select>
+    <select id="selectHisPatByInpNo" parameterType="String" resultMap="VisitinfoResult">
+        select case_no as RECORD_NO,admission_no as inp_no,department_no as dept_cd from T_AR_MEDICALINFORMATION_ALL where admission_no=#{inpNo}
+    </select>
+    <select id="selectDeptArchiveList" resultMap="VisitinfoVoResult">
+        select cy.CASE_NO as record_no,cy.ADMISSION_NO as patient_id,cy.NAME as patient_name,dept.dept_code as dept_cd,dept.dept_name,cy.VISITING_STAFF_NO as res_doc_cd,cy.VISITING_STAFF_NAME as res_doc_name,
+               cy.HOSPITALIZED_COUNT as visit_id,cy.HOSPITALIZED_DATE as in_dept_time,cy.LEAVE_HOSPITAL_DATE as out_time,
+               CASE WHEN qc.mr_state is null THEN '00' ELSE qc.mr_state END as qc_mr_state,cy.HOSPITAL_CODE as org_cd
+        from T_AR_MEDICALINFORMATION_ALL cy left join emr_qc_flow qc on cy.ADMISSION_NO=qc.patient_id
+        left join tm_bs_dept dept on dept.dept_code=cy.DEPARTMENT_NO
+        where LEAVE_HOSPITAL_DATE &lt;=(sysdate-#{days}) and (qc.id is null
+        <if test="mrStateList != null and mrStateList.size>0">
+            or qc.mr_state in
+            <foreach collection="mrStateList" item="mrState" open="(" separator="," close=")">
+                #{mrState}
+            </foreach>
+        </if>
+        )
+    </select>
+
+    <select id="selectOperVisitinfoList" parameterType="OperRoomVisitinfoVo" resultMap="com.emr.project.docOrder.mapper.TdCaOperationApplyMapper.OperRoomVisitinfoVoResult">
+        SELECT
+        app.oper_date as operDateTime,
+        app.oper_room,
+        app.oper_table,
+        app.preoper_diag1_name as operDiag,
+        app.plan_oper1_name as operName,
+        app.oper_doc_name as operatorName,
+        app.oper_aid1_name as operAid1,
+        app.anest_meth_name as anesthesia,
+        app.anest_name as anesthetist,
+        app.status as oper_status,
+        pv.dept_name,
+        PP.patient_name,
+        PP.sex,
+        PP.AGE_y,PP.AGE_M,PP.AGE_D,PP.AGE_H,PP.AGE_MI,
+        pv.inp_no,
+        pv.record_no,
+        app.oper_type_cd,
+        pv.bed_no
+        FROM
+        PAT_VISITINFO pv
+        LEFT JOIN PAT_PERSONALINFO PP ON PP.PATIENT_ID=PV.PATIENT_ID
+        LEFT JOIN TD_CA_OPERATION_APPLY app ON pv.inp_no = app.ADMISSION_NO
+        <if test="noStatusList!=null and noStatusList.size >0">
+            and app.status not in
+            <foreach collection="noStatusList" item="operStatus" open="(" separator="," close=")">
+                #{operStatus}
+            </foreach>
+        </if>
+        <if test="execDeptCd!=null and execDeptCd!=''">
+            and app.exec_dept_cd=#{execDeptCd}
+        </if>
+        <where>
+            and pv.out_time is null
+            <if test="deptCd!=null and deptCd!=''">
+               and pv.DEPT_CD=#{deptCd}
+            </if>
+            <if test="inpNo!=null and inpNo!=''">
+                and (pp.patient_name like concat(concat('%', #{inpNo}), '%')
+                or pv.record_no like concat(concat('%', #{inpNo}), '%'))
+            </if>
+        </where>
+    </select>
+    <select id="selectVistinfoListByOuTime" resultMap="VisitinfoResult">
+        SELECT
+            pp.patient_name,pv.*
+        FROM
+            PAT_VISITINFO pv
+        left join pat_personalinfo pp on pp.patient_id = pv.patient_id
+        left join emr_qc_flow ef on ef.PATIENT_ID = pv.PATIENT_ID
+        where pv.OUT_TIME IS NOT NULL
+        and (ef.MR_STATE is null or ef.MR_STATE = '00' or ef.MR_STATE='11')
+         and to_char(pv.OUT_TIME,'yyyy-MM-dd') &lt;= #{endDate}
+    </select>
+    <resultMap type="com.emr.project.pat.domain.DiagInfo" id="DigInfoResult">
+        <result property="id"    column="ID"    />
+        <result property="diagName"    column="DIAG_NAME"    />
+        <result property="diagClass"    column="diag_class"    />
+        <result property="diagTypeCd"    column="diag_type_cd"    />
+        <result property="diagClassCd"    column="diag_class_cd"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="outcomeCd"    column="outcome_cd"    />
+    </resultMap>
+    <select id="selectDiagInfo" resultMap="DigInfoResult">
+        select *
+       from diag_info
+       where patient_id=#{patientId}
+    </select>
+    <select id="selectDiagInfoByAdmissionNo" resultMap="DigInfoResult">
+        select *
+       from diag_info
+       where patient_id=#{patientId} and DIAG_TYPE_CD ='02' and DIAG_CLASS_CD ='01'
+    </select>
+    <select id="selectCaMesByUserName" resultType="java.lang.String">
+        select CAxlh from YY_CA_GHDZ where gh= #{emplNumber}
+    </select>
+
+    <update id="updatePatientCareLevel" parameterType="String">
+        update t_ar_medicalinformation set level_care = #{levelCare} where admission_no = #{admissionNo}
+    </update>
+    <update id="updatePatientIllness" parameterType="String">
+        update t_ar_medicalinformation set illness = #{illness} where admission_no = #{admissionNo}
+    </update>
+    <update id="updateStaffCa">
+        update BAS_CERT_INFO set CERT_SN = #{ca} where EMPLOYEENUMBER=#{emplNumber}
+    </update>
+</mapper>

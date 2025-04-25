@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcListScoreMapper">
+
+    <resultMap type="EmrQcListScore" id="EmrQcListScoreResult">
+        <result property="id"    column="id"    />
+        <result property="qcListId"    column="qc_list_id"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="dedType"    column="ded_type"    />
+        <result property="dedScoreSingle"    column="ded_score_single"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="dedId"    column="ded_id"    />
+        <result property="dedScoreDesc"    column="ded_score_desc"    />
+    </resultMap>
+
+    <sql id="selectEmrQcListScoreVo">
+        select id, qc_list_id, item_cd, item_name, ded_type, ded_score_single, cre_date, cre_per_code, cre_per_name,ded_id,ded_score_desc from emr_qc_list_score
+    </sql>
+
+    <select id="selectEmrQcListScoreList" parameterType="EmrQcListScore" resultMap="EmrQcListScoreResult">
+        <include refid="selectEmrQcListScoreVo"/>
+        <where>
+            <if test="qcListId != null "> and qc_list_id = #{qcListId}</if>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="dedType != null  and dedType != ''"> and ded_type = #{dedType}</if>
+            <if test="dedScoreSingle != null "> and ded_score_single = #{dedScoreSingle}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="dedId != null"> and ded_id=#{dedId}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrQcListScoreById" parameterType="Long" resultMap="EmrQcListScoreResult">
+        <include refid="selectEmrQcListScoreVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrQcListScore" parameterType="EmrQcListScore">
+        insert into emr_qc_list_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="qcListId != null">qc_list_id,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="dedType != null">ded_type,</if>
+            <if test="dedScoreSingle != null">ded_score_single,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="dedId != null">ded_id,</if>
+            <if test="dedScoreDesc != null and dedScoreDesc!=''">ded_score_desc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="qcListId != null">#{qcListId},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="dedType != null">#{dedType},</if>
+            <if test="dedScoreSingle != null">#{dedScoreSingle},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="dedId != null">#{dedId},</if>
+            <if test="dedScoreDesc != null and dedScoreDesc!=''">#{dedScoreDesc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrQcListScore" parameterType="EmrQcListScore">
+        update emr_qc_list_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="qcListId != null">qc_list_id = #{qcListId},</if>
+            <if test="itemCd != null">item_cd = #{itemCd},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="dedType != null">ded_type = #{dedType},</if>
+            <if test="dedScoreSingle != null">ded_score_single = #{dedScoreSingle},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="dedId != null">ded_id = #{dedId},</if>
+            <if test="dedScoreDesc != null and dedScoreDesc!=''">ded_score_desc = #{dedScoreDesc},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcListScoreById" parameterType="Long">
+        delete from emr_qc_list_score where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcListScoreByIds" parameterType="String">
+        delete from emr_qc_list_score where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteEmrQcListScoreByQcId" parameterType="Long">
+        delete from emr_qc_list_score where QC_LIST_ID=#{qcId}
+    </delete>
+</mapper>

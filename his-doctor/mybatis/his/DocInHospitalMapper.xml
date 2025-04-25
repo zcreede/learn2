@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.his.mapper.DocInHospitalMapper">
+    <resultMap id="DocInHospitalVoMap" type="DocInHospitalVo">
+        <result property="payTypeName" column="PAY_TYPE_NAME" />
+        <result property="outpatientNo" column="mzh" />
+        <result property="inHospitalNo" column="ryzh" />
+        <result property="patientName" column="xm" />
+        <result property="sex" column="xb" />
+        <result property="ageY" column="nl" />
+        <result property="ageM" column="nl_y" />
+        <result property="ageD" column="nl_r" />
+        <result property="ageH" column="nl_s" />
+        <result property="ageMin" column="nl_f" />
+        <result property="nativePlace" column="jg" />
+        <result property="tel" column="tel" />
+        <result property="idCard" column="sfzh" />
+        <result property="address" column="zz" />
+        <result property="outpatientDiag" column="mzzd" />
+        <result property="inhosType" column="ryfsmc" />
+        <result property="inhosDeptName" column="bqmc" />
+        <result property="inhosCond" column="ryqk" />
+        <result property="advanceDeposit" column="add3" />
+        <result property="remark" column="bz" />
+        <result property="inhosTime" column="ryrq" />
+        <result property="outpatientDoc" column="doc_mz_mc" />
+        <result property="lxr" column="lxr" />
+        <result property="mzksMc" column="mzks_mc" />
+        <result property="mzh" column="mzh" />
+    </resultMap>
+    <select id="selectDocInHospitalByInpNo" parameterType="SqlVo" resultMap="DocInHospitalVoMap">
+        ${sqlStr}
+        <if test="inpNo!=null and inpNo!=''">
+            where t1.add1 = #{inpNo}
+        </if>
+    </select>
+</mapper>

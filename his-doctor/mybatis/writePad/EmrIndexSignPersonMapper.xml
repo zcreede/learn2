@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.writePad.mapper.EmrIndexSignPersonMapper">
+
+    <resultMap type="EmrIndexSignPerson" id="EmrIndexSignPersonResult">
+        <result property="id"    column="id"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="name"    column="name"    />
+        <result property="relationCode"    column="relation_code"    />
+        <result property="relationName"    column="relation_name"    />
+        <result property="kinsfolk"    column="kinsfolk"    />
+        <result property="cardCode"    column="card_code"    />
+        <result property="cardName"    column="card_name"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="signPersonType"    column="sign_person_type"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEmrIndexSignPersonVo">
+        select id, admission_no, name, relation_code, relation_name, kinsfolk, card_code, card_name, id_card, cre_per_name, cre_per_code, cre_date, sign_person_type, remark from emr_index_sign_person
+    </sql>
+
+    <select id="selectEmrIndexSignPersonList" parameterType="EmrIndexSignPerson" resultMap="EmrIndexSignPersonResult">
+        <include refid="selectEmrIndexSignPersonVo"/>
+        <where>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="name != null  and name != ''"> and name like concat(concat('%', #{name}), '%')</if>
+            <if test="relationCode != null  and relationCode != ''"> and relation_code = #{relationCode}</if>
+            <if test="relationName != null  and relationName != ''"> and relation_name like concat(concat('%', #{relationName}), '%')</if>
+            <if test="kinsfolk != null  and kinsfolk != ''"> and kinsfolk = #{kinsfolk}</if>
+            <if test="cardCode != null  and cardCode != ''"> and card_code = #{cardCode}</if>
+            <if test="cardName != null  and cardName != ''"> and card_name like concat(concat('%', #{cardName}), '%')</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="signPersonType != null "> and sign_person_type = #{signPersonType}</if>
+            <if test="remark != null "> and remark = #{remark}</if>
+        </where>
+        order by cre_date desc
+    </select>
+
+    <select id="selectEmrIndexSignPersonById" parameterType="Long" resultMap="EmrIndexSignPersonResult">
+        <include refid="selectEmrIndexSignPersonVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrIndexSignPerson" parameterType="EmrIndexSignPerson">
+        insert into emr_index_sign_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="name != null">name,</if>
+            <if test="relationCode != null">relation_code,</if>
+            <if test="relationName != null">relation_name,</if>
+            <if test="kinsfolk != null">kinsfolk,</if>
+            <if test="cardCode != null">card_code,</if>
+            <if test="cardName != null">card_name,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="signPersonType != null">sign_person_type,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="name != null">#{name},</if>
+            <if test="relationCode != null">#{relationCode},</if>
+            <if test="relationName != null">#{relationName},</if>
+            <if test="kinsfolk != null">#{kinsfolk},</if>
+            <if test="cardCode != null">#{cardCode},</if>
+            <if test="cardName != null">#{cardName},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="signPersonType != null">#{signPersonType},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrIndexSignPerson" parameterType="EmrIndexSignPerson">
+        update emr_index_sign_person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="relationCode != null">relation_code = #{relationCode},</if>
+            <if test="relationName != null">relation_name = #{relationName},</if>
+            <if test="kinsfolk != null">kinsfolk = #{kinsfolk},</if>
+            <if test="cardCode != null">card_code = #{cardCode},</if>
+            <if test="cardName != null">card_name = #{cardName},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="signPersonType != null">sign_person_type = #{signPersonType},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where admission_no = #{admissionNo} and id_card = #{idCard} and relation_code = #{relationCode}
+    </update>
+
+    <update id="updateEmrIndexSignPersonBr" parameterType="EmrIndexSignPerson">
+        update emr_index_sign_person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="relationCode != null">relation_code = #{relationCode},</if>
+            <if test="relationName != null">relation_name = #{relationName},</if>
+            <if test="kinsfolk != null">kinsfolk = #{kinsfolk},</if>
+            <if test="cardCode != null">card_code = #{cardCode},</if>
+            <if test="cardName != null">card_name = #{cardName},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="signPersonType != null">sign_person_type = #{signPersonType},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where admission_no = #{admissionNo} and relation_code = '0'
+    </update>
+
+    <delete id="deleteEmrIndexSignPersonById" parameterType="Long">
+        delete from emr_index_sign_person where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrIndexSignPersonByIds" parameterType="String">
+        delete from emr_index_sign_person where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

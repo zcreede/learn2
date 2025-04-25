@@ -1,0 +1,24 @@
+template header
+
+rule
+ruleCode
+eventVariable
+errorMsg
+
+
+package com.ai.prd
+
+import com.emr.project.mrhp.domain.vo.MrHpVo;
+import com.emr.project.mrhp.domain.vo.MrHpCheckResultVo;
+import com.emr.common.utils.DroolsUtil;
+import com.emr.common.utils.StringUtils;
+import com.emr.project.mrhp.domain.MrHpDia;
+import com.emr.project.mrhp.domain.MrHpOpe;
+import java.util.List;
+import java.nio.charset.StandardCharsets;
+
+template "judge condition"
+
+
+
+end template

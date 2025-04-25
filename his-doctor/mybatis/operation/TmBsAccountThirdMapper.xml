@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TmBsAccountThirdMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TmBsAccountThird">
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PYM" jdbcType="VARCHAR" property="pym" />
+    <result column="DETAIL_MARK" jdbcType="VARCHAR" property="detailMark" />
+    <result column="PREFER_RATIO" jdbcType="DECIMAL" property="preferRatio" />
+    <result column="PRINT_NAME" jdbcType="VARCHAR" property="printName" />
+    <result column="PRINT_SORT" jdbcType="DECIMAL" property="printSort" />
+    <result column="OUT_FLAG" jdbcType="VARCHAR" property="outFlag" />
+    <result column="HOS_FLAG" jdbcType="VARCHAR" property="hosFlag" />
+    <result column="FIRST_CODE" jdbcType="VARCHAR" property="firstCode" />
+    <result column="SORT" jdbcType="DECIMAL" property="sort" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap id="ProjectVoMap" type="com.emr.project.operation.domain.vo.TmBsAccountThirdProjectVo">
+    <result column="project_no" jdbcType="VARCHAR" property="projectNo" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+  </resultMap>
+  <sql id="selectTmBsAccountThirdVo">
+    select CODE, NAME, PYM, DETAIL_MARK, PREFER_RATIO, PRINT_NAME, PRINT_SORT, OUT_FLAG, HOS_FLAG, FIRST_CODE, SORT, CREATE_TIME, UPDATE_TIME
+    from TM_BS_ACCOUNT_THIRD
+  </sql>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.TmBsAccountThird">
+    insert into TM_BS_ACCOUNT_THIRD (CODE, NAME, PYM,
+      DETAIL_MARK, PREFER_RATIO, PRINT_NAME,
+      PRINT_SORT, OUT_FLAG, HOS_FLAG,
+      FIRST_CODE, SORT, CREATE_TIME,
+      UPDATE_TIME)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pym,jdbcType=VARCHAR},
+      #{detailMark,jdbcType=VARCHAR}, #{preferRatio,jdbcType=DECIMAL}, #{printName,jdbcType=VARCHAR},
+      #{printSort,jdbcType=DECIMAL}, #{outFlag,jdbcType=VARCHAR}, #{hosFlag,jdbcType=VARCHAR},
+      #{firstCode,jdbcType=VARCHAR}, #{sort,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.TmBsAccountThird">
+    insert into TM_BS_ACCOUNT_THIRD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="pym != null">
+        PYM,
+      </if>
+      <if test="detailMark != null">
+        DETAIL_MARK,
+      </if>
+      <if test="preferRatio != null">
+        PREFER_RATIO,
+      </if>
+      <if test="printName != null">
+        PRINT_NAME,
+      </if>
+      <if test="printSort != null">
+        PRINT_SORT,
+      </if>
+      <if test="outFlag != null">
+        OUT_FLAG,
+      </if>
+      <if test="hosFlag != null">
+        HOS_FLAG,
+      </if>
+      <if test="firstCode != null">
+        FIRST_CODE,
+      </if>
+      <if test="sort != null">
+        SORT,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pym != null">
+        #{pym,jdbcType=VARCHAR},
+      </if>
+      <if test="detailMark != null">
+        #{detailMark,jdbcType=VARCHAR},
+      </if>
+      <if test="preferRatio != null">
+        #{preferRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="printName != null">
+        #{printName,jdbcType=VARCHAR},
+      </if>
+      <if test="printSort != null">
+        #{printSort,jdbcType=DECIMAL},
+      </if>
+      <if test="outFlag != null">
+        #{outFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="hosFlag != null">
+        #{hosFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="firstCode != null">
+        #{firstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectThirdAndProjectByCodeList" parameterType="String" resultMap="ProjectVoMap">
+    select t1.CODE, t1.NAME, t1.PYM, t1.DETAIL_MARK, t1.PREFER_RATIO, t1.PRINT_NAME, t1.PRINT_SORT, t1.OUT_FLAG, t1.HOS_FLAG,
+    t1.FIRST_CODE, t1.SORT, t1.CREATE_TIME, t1.UPDATE_TIME, t2.sec_item_code project_no, t2.sec_item_name project_name
+    from TM_BS_ACCOUNT_THIRD t1
+    left join tm_BS_account_third_dygx t2 on t1.code = t2.third_code and t2.sec_code = '04'
+    where code in
+    <foreach collection="list" item="code" open="(" separator="," close=")">
+      #{code}
+    </foreach>
+  </select>
+  <select id="selectThirdAndProjectByCode" parameterType="String" resultMap="ProjectVoMap">
+    select t1.CODE, t1.NAME, t1.PYM, t1.DETAIL_MARK, t1.PREFER_RATIO, t1.PRINT_NAME, t1.PRINT_SORT, t1.OUT_FLAG, t1.HOS_FLAG,
+    t1.FIRST_CODE, t1.SORT, t1.CREATE_TIME, t1.UPDATE_TIME, t2.sec_item_code project_no, t2.sec_item_name project_name
+    from TM_BS_ACCOUNT_THIRD t1
+    left join tm_BS_account_third_dygx t2 on t1.code = t2.third_code and t2.sec_code = '04'
+    where t1.code = #{code}
+  </select>
+  <select id="selectTmBsAccountThirdList" parameterType="com.emr.project.operation.domain.TmBsAccountThird" resultMap="BaseResultMap">
+    <include refid="selectTmBsAccountThirdVo"></include>
+    <where>
+      <if test="code != null">
+        and CODE = #{code}
+      </if>
+      <if test="name != null">
+        and NAME = #{name}
+      </if>
+      <if test="pym != null">
+        and PYM = #{pym}
+      </if>
+      <if test="detailMark != null">
+        and DETAIL_MARK = #{detailMark}
+      </if>
+      <if test="preferRatio != null">
+        and PREFER_RATIO = #{preferRatio}
+      </if>
+      <if test="printName != null">
+        and PRINT_NAME = #{printName}
+      </if>
+      <if test="printSort != null">
+        and PRINT_SORT = #{printSort}
+      </if>
+      <if test="outFlag != null">
+        and OUT_FLAG = #{outFlag}
+      </if>
+      <if test="hosFlag != null">
+        and HOS_FLAG = #{hosFlag}
+      </if>
+      <if test="firstCode != null">
+        and FIRST_CODE = #{firstCode}
+      </if>
+      <if test="sort != null">
+        and SORT = #{sort}
+      </if>
+      <if test="createTime != null">
+        and CREATE_TIME = #{createTime}
+      </if>
+      <if test="updateTime != null">
+        and UPDATE_TIME = #{updateTime}
+      </if>
+    </where>
+  </select>
+  <select id="selectThirdCodeByFirst" resultType="java.lang.String">
+    select code from TM_BS_ACCOUNT_THIRD where FIRST_CODE='1'
+  </select>
+</mapper>

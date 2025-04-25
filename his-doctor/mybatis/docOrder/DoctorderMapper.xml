@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.DoctorderMapper">
+
+    <resultMap type="Doctorder" id="DoctorderResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="maCd"    column="ma_cd"    />
+        <result property="maNo"    column="ma_no"    />
+        <result property="maOpenTime"    column="ma_open_time"    />
+        <result property="maDeptCd"    column="ma_dept_cd"    />
+        <result property="maDeptName"    column="ma_dept_name"    />
+        <result property="maDocCd"    column="ma_doc_cd"    />
+        <result property="maDocName"    column="ma_doc_name"    />
+        <result property="dutyDocCd"    column="duty_doc_cd"    />
+        <result property="dutyDocName"    column="duty_doc_name"    />
+        <result property="dutyNurCd"    column="duty_nur_cd"    />
+        <result property="dutyNurName"    column="duty_nur_name"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="bconNurCd"    column="bcon_nur_cd"    />
+        <result property="bconNurName"    column="bcon_nur_name"    />
+        <result property="bconTime"    column="bcon_time"    />
+        <result property="firExeTime"    column="fir_exe_time"    />
+        <result property="firExePerson"    column="fir_exe_person"    />
+        <result property="maExeTime"    column="ma_exe_time"    />
+        <result property="maExePerson"    column="ma_exe_person"    />
+        <result property="inDeptCd"    column="in_dept_cd"    />
+        <result property="inDeptName"    column="in_dept_name"    />
+        <result property="maTypeCd"    column="ma_type_cd"    />
+        <result property="maTypeName"    column="ma_type_name"    />
+        <result property="maTypeId"    column="ma_type_id"    />
+        <result property="maItemCd"    column="ma_item_cd"    />
+        <result property="maStateCd"    column="ma_state_cd"    />
+        <result property="maStateName"    column="ma_state_name"    />
+        <result property="maStopTime"    column="ma_stop_time"    />
+        <result property="maStopReason"    column="ma_stop_reason"    />
+        <result property="stopDocCd"    column="stop_doc_cd"    />
+        <result property="stopDocName"    column="stop_doc_name"    />
+        <result property="stopNurCd"    column="stop_nur_cd"    />
+        <result property="stopNurName"    column="stop_nur_name"    />
+        <result property="stopTime"    column="stop_time"    />
+        <result property="presFlag"    column="pres_flag"    />
+        <result property="lastTime"    column="last_time"    />
+        <result property="lastTimeU"    column="last_time_u"    />
+        <result property="useDrugTime"    column="use_drug_time"    />
+        <result property="putdFlag"    column="putd_flag"    />
+        <result property="printFlag"    column="print_flag"    />
+        <result property="getdType"    column="getd_type"    />
+        <result property="outCdFlag"    column="out_cd_flag"    />
+        <result property="orderFlag"    column="order_flag"    />
+        <result property="rmaFlag"    column="rma_flag"    />
+        <result property="udTimeExp"    column="ud_time_exp"    />
+        <result property="herbDose"    column="herb_dose"    />
+        <result property="isHerb"    column="is_herb"    />
+        <result property="presCd"    column="pres_cd"    />
+        <result property="presName"    column="pres_name"    />
+        <result property="maCanTime"    column="ma_can_time"    />
+        <result property="operFlag"    column="oper_flag"    />
+        <result property="maCanDocName"    column="ma_can_doc_name"    />
+        <result property="maCanDocCd"    column="ma_can_doc_cd"    />
+        <result property="ageIdCard"    column="age_id_card"    />
+        <result property="ageName"    column="age_name"    />
+        <result property="exeTimes"    column="exe_times"    />
+        <result property="babyInhosNo"    column="baby_inhos_no"    />
+        <result property="inCompIp"    column="in_comp_ip"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="dieFlag"    column="die_flag"    />
+    </resultMap>
+
+    <resultMap type="DoctorderVo" id="DoctorderVoResult">
+        <result property="id"    column="ID"    />
+        <result property="maNo"    column="MA_NO"    />
+        <result property="maGroupNo"    column="MA_GROUP_NO"    />
+        <result property="patientId"    column="PATIENT_ID"    />
+        <result property="maTypeCd"    column="MA_TYPE_CD"    />
+        <result property="maTypeName"    column="MA_TYPE_NAME"    />
+        <result property="maOpenTime"    column="MA_OPEN_TIME"    />
+        <result property="maTypeId"    column="MA_TYPE_ID"    />
+        <result property="maTypeIdName"    column="MA_TYPE_ID_NAME"    />
+        <result property="status"    column="STATUS"    />
+        <result property="clinProName"    column="CLIN_PRO_NAME"    />
+        <result property="spec"    column="SPEC"    />
+        <result property="usage"    column="USAGE"    />
+        <result property="rate"    column="RATE"    />
+        <result property="realDosage"    column="REAL_DOSAGE"    />
+        <result property="unit"    column="UNIT"    />
+        <result property="antiUseAim"    column="ANTI_USE_AIM"    />
+        <result property="udTimeExp"    column="UD_TIME_EXP"    />
+        <result property="skinTestFlag"    column="SKIN_TEST_FLAG"    />
+        <result property="exeTime"    column="EXE_TIME"    />
+        <result property="stopTime"    column="STOP_TIME"    />
+    </resultMap>
+    <resultMap id="OrderSearchVoResult" type="OrderSearchVo">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="patinetId"    column="patinet_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="orderDoctorCode"    column="order_doctor_code"    />
+        <result property="orderDoctorNo"    column="order_doctor_no"    />
+        <result property="orderDoctorName"    column="order_doctor_name"    />
+        <result property="orderDoctorWardNo"    column="order_doctor_ward_no"    />
+        <result property="orderDoctorDepCode"    column="order_doctor_dep_code"    />
+        <result property="orderDoctorDepName"    column="order_doctor_dep_name"    />
+        <result property="babyAdmissionNo"    column="baby_admission_no"    />
+        <result property="performWardNo"    column="perform_ward_no"    />
+        <result property="detailPerformDepCode"    column="detail_perform_dep_code"    />
+        <result property="detailPerformDepName"    column="detail_perform_dep_name"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderGroupSortNumber"    column="order_group_sort_number"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="orderStartTime"    column="order_start_time"    />
+        <result property="takeDrugMode"    column="take_drug_mode"    />
+        <result property="additionalFlag"    column="additional_flag"    />
+        <result property="unit"    column="unit"    />
+        <result property="orderActualUsage"    column="order_actual_usage"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="orderDose"    column="order_dose"    />
+        <result property="orderTotalDose"    column="order_total_dose"    />
+        <result property="price"    column="price"    />
+        <result property="orderTotal"    column="order_total"    />
+        <result property="orderFreq"    column="order_freq"    />
+        <result property="orderUsageWayName"    column="order_usage_way_name"    />
+        <result property="orderFreqName"    column="order_freq_name"    />
+        <result property="orderUsageWay"    column="order_usage_way"    />
+        <result property="urgentFlag"    column="urgent_flag"    />
+        <result property="firstPerformNum"    column="first_perform_num"    />
+        <result property="orderUsageDays"    column="order_usage_days"    />
+        <result property="purposeAntimicrobialUse"    column="purpose_antimicrobial_use"    />
+        <result property="doctorInstructions"    column="doctor_instructions"    />
+        <result property="orderTotal"    column="order_total"    />
+        <result property="masterOrder"    column="master_order"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="patientSelfDrugFlag"    column="patient_self_drug_flag"    />
+        <result property="drippingSpeed"    column="DRIPPING_SPEED"    />
+        <result property="orderItemFlag"    column="ORDER_ITEM_FLAG"    />
+        <result property="orderFlagCd"    column="ORDER_FLAG_CD"    />
+        <result property="orderFlagName"    column="ORDER_FLAG_NAME"    />
+        <result property="outHavaDrugFlag" column="out_hava_drug_flag"/>
+        <result property="highRiskFlag" column="high_risk_flag"/>
+        <result property="cancelTime" column="order_cancel_time"/>
+        <result property="stockNo" column="stock_no"/>
+        <result property="performDepCode" column="perform_dep_code"/>
+        <result property="performDepName" column="perform_dep_name"/>
+        <result property="price" column="price"/>
+        <result property="orderStopTime" column="order_stop_time"/>
+        <result property="orderStopDoc"    column="order_stop_doc"    />
+        <result property="orderStopDocName"    column="order_stop_doc_name"    />
+        <result property="orderAuditDeptName"    column="order_audit_dept_name"    />
+        <result property="orderAuditDeptCode" column="order_audit_dept_code"/>
+        <result property="standard"    column="STANDARD"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="orderItemType" column="ORDER_ITEM_TYPE"/>
+        <result property="documentTypeNo" column="document_type_no"/>
+        <result property="skinTestResults" column="skin_test_results"/>
+    </resultMap>
+    <sql id="selectDoctorderVo">
+        select id, org_cd, org_name, patient_id, ma_cd, ma_no, ma_open_time, ma_dept_cd, ma_dept_name, ma_doc_cd, ma_doc_name, duty_doc_cd, duty_doc_name, duty_nur_cd, duty_nur_name, begin_time, bcon_nur_cd, bcon_nur_name, bcon_time, fir_exe_time, fir_exe_person, ma_exe_time, ma_exe_person, in_dept_cd, in_dept_name, ma_type_cd, ma_type_name, ma_type_id, ma_item_cd, ma_state_cd, ma_state_name, ma_stop_time, ma_stop_reason, stop_doc_cd, stop_doc_name, stop_nur_cd, stop_nur_name, stop_time, pres_flag, last_time, last_time_u, use_drug_time, putd_flag, print_flag, getd_type, out_cd_flag, order_flag, rma_flag, ud_time_exp, herb_dose, is_herb, pres_cd, pres_name, ma_can_time, oper_flag, ma_can_doc_name, ma_can_doc_cd, age_id_card, age_name, exe_times, baby_inhos_no, in_comp_ip, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, die_flag from clin_doctorder
+    </sql>
+
+    <select id="selectDoctorderList" parameterType="Doctorder" resultMap="DoctorderResult">
+        <include refid="selectDoctorderVo"/>
+        <where>
+            <if test="orgName != null  and orgName != ''"> and org_name like concat(concat('%', #{orgName}), '%')</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="maCd != null  and maCd != ''"> and ma_cd = #{maCd}</if>
+            <if test="maNo != null "> and ma_no = #{maNo}</if>
+            <if test="maOpenTime != null "> and ma_open_time = #{maOpenTime}</if>
+            <if test="maDeptCd != null  and maDeptCd != ''"> and ma_dept_cd = #{maDeptCd}</if>
+            <if test="maDeptName != null  and maDeptName != ''"> and ma_dept_name like concat(concat('%', #{maDeptName}), '%')</if>
+            <if test="maDocCd != null  and maDocCd != ''"> and ma_doc_cd = #{maDocCd}</if>
+            <if test="maDocName != null  and maDocName != ''"> and ma_doc_name like concat(concat('%', #{maDocName}), '%')</if>
+            <if test="dutyDocCd != null  and dutyDocCd != ''"> and duty_doc_cd = #{dutyDocCd}</if>
+            <if test="dutyDocName != null  and dutyDocName != ''"> and duty_doc_name like concat(concat('%', #{dutyDocName}), '%')</if>
+            <if test="dutyNurCd != null  and dutyNurCd != ''"> and duty_nur_cd = #{dutyNurCd}</if>
+            <if test="dutyNurName != null  and dutyNurName != ''"> and duty_nur_name like concat(concat('%', #{dutyNurName}), '%')</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="bconNurCd != null  and bconNurCd != ''"> and bcon_nur_cd = #{bconNurCd}</if>
+            <if test="bconNurName != null  and bconNurName != ''"> and bcon_nur_name like concat(concat('%', #{bconNurName}), '%')</if>
+            <if test="bconTime != null "> and bcon_time = #{bconTime}</if>
+            <if test="firExeTime != null "> and fir_exe_time = #{firExeTime}</if>
+            <if test="firExePerson != null  and firExePerson != ''"> and fir_exe_person = #{firExePerson}</if>
+            <if test="maExeTime != null "> and ma_exe_time = #{maExeTime}</if>
+            <if test="maExePerson != null  and maExePerson != ''"> and ma_exe_person = #{maExePerson}</if>
+            <if test="inDeptCd != null  and inDeptCd != ''"> and in_dept_cd = #{inDeptCd}</if>
+            <if test="inDeptName != null  and inDeptName != ''"> and in_dept_name like concat(concat('%', #{inDeptName}), '%')</if>
+            <if test="maTypeCd != null  and maTypeCd != ''"> and ma_type_cd = #{maTypeCd}</if>
+            <if test="maTypeName != null  and maTypeName != ''"> and ma_type_name like concat(concat('%', #{maTypeName}), '%')</if>
+            <if test="maTypeId != null  and maTypeId != ''"> and ma_type_id = #{maTypeId}</if>
+            <if test="maItemCd != null  and maItemCd != ''"> and ma_item_cd = #{maItemCd}</if>
+            <if test="maStateCd != null  and maStateCd != ''"> and ma_state_cd = #{maStateCd}</if>
+            <if test="maStateName != null  and maStateName != ''"> and ma_state_name like concat(concat('%', #{maStateName}), '%')</if>
+            <if test="maStopTime != null "> and ma_stop_time = #{maStopTime}</if>
+            <if test="maStopReason != null  and maStopReason != ''"> and ma_stop_reason = #{maStopReason}</if>
+            <if test="stopDocCd != null  and stopDocCd != ''"> and stop_doc_cd = #{stopDocCd}</if>
+            <if test="stopDocName != null  and stopDocName != ''"> and stop_doc_name like concat(concat('%', #{stopDocName}), '%')</if>
+            <if test="stopNurCd != null  and stopNurCd != ''"> and stop_nur_cd = #{stopNurCd}</if>
+            <if test="stopNurName != null  and stopNurName != ''"> and stop_nur_name like concat(concat('%', #{stopNurName}), '%')</if>
+            <if test="stopTime != null "> and stop_time = #{stopTime}</if>
+            <if test="presFlag != null  and presFlag != ''"> and pres_flag = #{presFlag}</if>
+            <if test="lastTime != null "> and last_time = #{lastTime}</if>
+            <if test="lastTimeU != null  and lastTimeU != ''"> and last_time_u = #{lastTimeU}</if>
+            <if test="useDrugTime != null "> and use_drug_time = #{useDrugTime}</if>
+            <if test="putdFlag != null  and putdFlag != ''"> and putd_flag = #{putdFlag}</if>
+            <if test="printFlag != null  and printFlag != ''"> and print_flag = #{printFlag}</if>
+            <if test="getdType != null  and getdType != ''"> and getd_type = #{getdType}</if>
+            <if test="outCdFlag != null  and outCdFlag != ''"> and out_cd_flag = #{outCdFlag}</if>
+            <if test="orderFlag != null  and orderFlag != ''"> and order_flag = #{orderFlag}</if>
+            <if test="rmaFlag != null  and rmaFlag != ''"> and rma_flag = #{rmaFlag}</if>
+            <if test="udTimeExp != null  and udTimeExp != ''"> and ud_time_exp = #{udTimeExp}</if>
+            <if test="herbDose != null "> and herb_dose = #{herbDose}</if>
+            <if test="isHerb != null  and isHerb != ''"> and is_herb = #{isHerb}</if>
+            <if test="presCd != null  and presCd != ''"> and pres_cd = #{presCd}</if>
+            <if test="presName != null  and presName != ''"> and pres_name like concat(concat('%', #{presName}), '%')</if>
+            <if test="maCanTime != null "> and ma_can_time = #{maCanTime}</if>
+            <if test="operFlag != null  and operFlag != ''"> and oper_flag = #{operFlag}</if>
+            <if test="maCanDocName != null  and maCanDocName != ''"> and ma_can_doc_name like concat(concat('%', #{maCanDocName}), '%')</if>
+            <if test="maCanDocCd != null  and maCanDocCd != ''"> and ma_can_doc_cd = #{maCanDocCd}</if>
+            <if test="ageIdCard != null  and ageIdCard != ''"> and age_id_card = #{ageIdCard}</if>
+            <if test="ageName != null  and ageName != ''"> and age_name like concat(concat('%', #{ageName}), '%')</if>
+            <if test="exeTimes != null "> and exe_times = #{exeTimes}</if>
+            <if test="babyInhosNo != null  and babyInhosNo != ''"> and baby_inhos_no = #{babyInhosNo}</if>
+            <if test="inCompIp != null  and inCompIp != ''"> and in_comp_ip = #{inCompIp}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="dieFlag != null  and dieFlag != ''"> and die_flag = #{dieFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectDoctorderById" parameterType="String" resultMap="DoctorderResult">
+        <include refid="selectDoctorderVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDoctorder" parameterType="Doctorder">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_clin_doctorder.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into clin_doctorder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="orgName != null and orgName != ''">org_name,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="maCd != null and maCd != ''">ma_cd,</if>
+            <if test="maNo != null">ma_no,</if>
+            <if test="maOpenTime != null">ma_open_time,</if>
+            <if test="maDeptCd != null">ma_dept_cd,</if>
+            <if test="maDeptName != null">ma_dept_name,</if>
+            <if test="maDocCd != null">ma_doc_cd,</if>
+            <if test="maDocName != null">ma_doc_name,</if>
+            <if test="dutyDocCd != null">duty_doc_cd,</if>
+            <if test="dutyDocName != null">duty_doc_name,</if>
+            <if test="dutyNurCd != null">duty_nur_cd,</if>
+            <if test="dutyNurName != null">duty_nur_name,</if>
+            <if test="beginTime != null">begin_time,</if>
+            <if test="bconNurCd != null">bcon_nur_cd,</if>
+            <if test="bconNurName != null">bcon_nur_name,</if>
+            <if test="bconTime != null">bcon_time,</if>
+            <if test="firExeTime != null">fir_exe_time,</if>
+            <if test="firExePerson != null">fir_exe_person,</if>
+            <if test="maExeTime != null">ma_exe_time,</if>
+            <if test="maExePerson != null">ma_exe_person,</if>
+            <if test="inDeptCd != null">in_dept_cd,</if>
+            <if test="inDeptName != null">in_dept_name,</if>
+            <if test="maTypeCd != null">ma_type_cd,</if>
+            <if test="maTypeName != null">ma_type_name,</if>
+            <if test="maTypeId != null">ma_type_id,</if>
+            <if test="maItemCd != null">ma_item_cd,</if>
+            <if test="maStateCd != null">ma_state_cd,</if>
+            <if test="maStateName != null">ma_state_name,</if>
+            <if test="maStopTime != null">ma_stop_time,</if>
+            <if test="maStopReason != null">ma_stop_reason,</if>
+            <if test="stopDocCd != null">stop_doc_cd,</if>
+            <if test="stopDocName != null">stop_doc_name,</if>
+            <if test="stopNurCd != null">stop_nur_cd,</if>
+            <if test="stopNurName != null">stop_nur_name,</if>
+            <if test="stopTime != null">stop_time,</if>
+            <if test="presFlag != null">pres_flag,</if>
+            <if test="lastTime != null">last_time,</if>
+            <if test="lastTimeU != null">last_time_u,</if>
+            <if test="useDrugTime != null">use_drug_time,</if>
+            <if test="putdFlag != null">putd_flag,</if>
+            <if test="printFlag != null">print_flag,</if>
+            <if test="getdType != null">getd_type,</if>
+            <if test="outCdFlag != null">out_cd_flag,</if>
+            <if test="orderFlag != null">order_flag,</if>
+            <if test="rmaFlag != null">rma_flag,</if>
+            <if test="udTimeExp != null">ud_time_exp,</if>
+            <if test="herbDose != null">herb_dose,</if>
+            <if test="isHerb != null">is_herb,</if>
+            <if test="presCd != null">pres_cd,</if>
+            <if test="presName != null">pres_name,</if>
+            <if test="maCanTime != null">ma_can_time,</if>
+            <if test="operFlag != null">oper_flag,</if>
+            <if test="maCanDocName != null">ma_can_doc_name,</if>
+            <if test="maCanDocCd != null">ma_can_doc_cd,</if>
+            <if test="ageIdCard != null">age_id_card,</if>
+            <if test="ageName != null">age_name,</if>
+            <if test="exeTimes != null">exe_times,</if>
+            <if test="babyInhosNo != null">baby_inhos_no,</if>
+            <if test="inCompIp != null">in_comp_ip,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="dieFlag != null">die_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="orgName != null and orgName != ''">#{orgName},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="maCd != null and maCd != ''">#{maCd},</if>
+            <if test="maNo != null">#{maNo},</if>
+            <if test="maOpenTime != null">#{maOpenTime},</if>
+            <if test="maDeptCd != null">#{maDeptCd},</if>
+            <if test="maDeptName != null">#{maDeptName},</if>
+            <if test="maDocCd != null">#{maDocCd},</if>
+            <if test="maDocName != null">#{maDocName},</if>
+            <if test="dutyDocCd != null">#{dutyDocCd},</if>
+            <if test="dutyDocName != null">#{dutyDocName},</if>
+            <if test="dutyNurCd != null">#{dutyNurCd},</if>
+            <if test="dutyNurName != null">#{dutyNurName},</if>
+            <if test="beginTime != null">#{beginTime},</if>
+            <if test="bconNurCd != null">#{bconNurCd},</if>
+            <if test="bconNurName != null">#{bconNurName},</if>
+            <if test="bconTime != null">#{bconTime},</if>
+            <if test="firExeTime != null">#{firExeTime},</if>
+            <if test="firExePerson != null">#{firExePerson},</if>
+            <if test="maExeTime != null">#{maExeTime},</if>
+            <if test="maExePerson != null">#{maExePerson},</if>
+            <if test="inDeptCd != null">#{inDeptCd},</if>
+            <if test="inDeptName != null">#{inDeptName},</if>
+            <if test="maTypeCd != null">#{maTypeCd},</if>
+            <if test="maTypeName != null">#{maTypeName},</if>
+            <if test="maTypeId != null">#{maTypeId},</if>
+            <if test="maItemCd != null">#{maItemCd},</if>
+            <if test="maStateCd != null">#{maStateCd},</if>
+            <if test="maStateName != null">#{maStateName},</if>
+            <if test="maStopTime != null">#{maStopTime},</if>
+            <if test="maStopReason != null">#{maStopReason},</if>
+            <if test="stopDocCd != null">#{stopDocCd},</if>
+            <if test="stopDocName != null">#{stopDocName},</if>
+            <if test="stopNurCd != null">#{stopNurCd},</if>
+            <if test="stopNurName != null">#{stopNurName},</if>
+            <if test="stopTime != null">#{stopTime},</if>
+            <if test="presFlag != null">#{presFlag},</if>
+            <if test="lastTime != null">#{lastTime},</if>
+            <if test="lastTimeU != null">#{lastTimeU},</if>
+            <if test="useDrugTime != null">#{useDrugTime},</if>
+            <if test="putdFlag != null">#{putdFlag},</if>
+            <if test="printFlag != null">#{printFlag},</if>
+            <if test="getdType != null">#{getdType},</if>
+            <if test="outCdFlag != null">#{outCdFlag},</if>
+            <if test="orderFlag != null">#{orderFlag},</if>
+            <if test="rmaFlag != null">#{rmaFlag},</if>
+            <if test="udTimeExp != null">#{udTimeExp},</if>
+            <if test="herbDose != null">#{herbDose},</if>
+            <if test="isHerb != null">#{isHerb},</if>
+            <if test="presCd != null">#{presCd},</if>
+            <if test="presName != null">#{presName},</if>
+            <if test="maCanTime != null">#{maCanTime},</if>
+            <if test="operFlag != null">#{operFlag},</if>
+            <if test="maCanDocName != null">#{maCanDocName},</if>
+            <if test="maCanDocCd != null">#{maCanDocCd},</if>
+            <if test="ageIdCard != null">#{ageIdCard},</if>
+            <if test="ageName != null">#{ageName},</if>
+            <if test="exeTimes != null">#{exeTimes},</if>
+            <if test="babyInhosNo != null">#{babyInhosNo},</if>
+            <if test="inCompIp != null">#{inCompIp},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="dieFlag != null">#{dieFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDoctorder" parameterType="Doctorder">
+        update clin_doctorder
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="orgName != null and orgName != ''">org_name = #{orgName},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="maCd != null and maCd != ''">ma_cd = #{maCd},</if>
+            <if test="maNo != null">ma_no = #{maNo},</if>
+            <if test="maOpenTime != null">ma_open_time = #{maOpenTime},</if>
+            <if test="maDeptCd != null">ma_dept_cd = #{maDeptCd},</if>
+            <if test="maDeptName != null">ma_dept_name = #{maDeptName},</if>
+            <if test="maDocCd != null">ma_doc_cd = #{maDocCd},</if>
+            <if test="maDocName != null">ma_doc_name = #{maDocName},</if>
+            <if test="dutyDocCd != null">duty_doc_cd = #{dutyDocCd},</if>
+            <if test="dutyDocName != null">duty_doc_name = #{dutyDocName},</if>
+            <if test="dutyNurCd != null">duty_nur_cd = #{dutyNurCd},</if>
+            <if test="dutyNurName != null">duty_nur_name = #{dutyNurName},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="bconNurCd != null">bcon_nur_cd = #{bconNurCd},</if>
+            <if test="bconNurName != null">bcon_nur_name = #{bconNurName},</if>
+            <if test="bconTime != null">bcon_time = #{bconTime},</if>
+            <if test="firExeTime != null">fir_exe_time = #{firExeTime},</if>
+            <if test="firExePerson != null">fir_exe_person = #{firExePerson},</if>
+            <if test="maExeTime != null">ma_exe_time = #{maExeTime},</if>
+            <if test="maExePerson != null">ma_exe_person = #{maExePerson},</if>
+            <if test="inDeptCd != null">in_dept_cd = #{inDeptCd},</if>
+            <if test="inDeptName != null">in_dept_name = #{inDeptName},</if>
+            <if test="maTypeCd != null">ma_type_cd = #{maTypeCd},</if>
+            <if test="maTypeName != null">ma_type_name = #{maTypeName},</if>
+            <if test="maTypeId != null">ma_type_id = #{maTypeId},</if>
+            <if test="maItemCd != null">ma_item_cd = #{maItemCd},</if>
+            <if test="maStateCd != null">ma_state_cd = #{maStateCd},</if>
+            <if test="maStateName != null">ma_state_name = #{maStateName},</if>
+            <if test="maStopTime != null">ma_stop_time = #{maStopTime},</if>
+            <if test="maStopReason != null">ma_stop_reason = #{maStopReason},</if>
+            <if test="stopDocCd != null">stop_doc_cd = #{stopDocCd},</if>
+            <if test="stopDocName != null">stop_doc_name = #{stopDocName},</if>
+            <if test="stopNurCd != null">stop_nur_cd = #{stopNurCd},</if>
+            <if test="stopNurName != null">stop_nur_name = #{stopNurName},</if>
+            <if test="stopTime != null">stop_time = #{stopTime},</if>
+            <if test="presFlag != null">pres_flag = #{presFlag},</if>
+            <if test="lastTime != null">last_time = #{lastTime},</if>
+            <if test="lastTimeU != null">last_time_u = #{lastTimeU},</if>
+            <if test="useDrugTime != null">use_drug_time = #{useDrugTime},</if>
+            <if test="putdFlag != null">putd_flag = #{putdFlag},</if>
+            <if test="printFlag != null">print_flag = #{printFlag},</if>
+            <if test="getdType != null">getd_type = #{getdType},</if>
+            <if test="outCdFlag != null">out_cd_flag = #{outCdFlag},</if>
+            <if test="orderFlag != null">order_flag = #{orderFlag},</if>
+            <if test="rmaFlag != null">rma_flag = #{rmaFlag},</if>
+            <if test="udTimeExp != null">ud_time_exp = #{udTimeExp},</if>
+            <if test="herbDose != null">herb_dose = #{herbDose},</if>
+            <if test="isHerb != null">is_herb = #{isHerb},</if>
+            <if test="presCd != null">pres_cd = #{presCd},</if>
+            <if test="presName != null">pres_name = #{presName},</if>
+            <if test="maCanTime != null">ma_can_time = #{maCanTime},</if>
+            <if test="operFlag != null">oper_flag = #{operFlag},</if>
+            <if test="maCanDocName != null">ma_can_doc_name = #{maCanDocName},</if>
+            <if test="maCanDocCd != null">ma_can_doc_cd = #{maCanDocCd},</if>
+            <if test="ageIdCard != null">age_id_card = #{ageIdCard},</if>
+            <if test="ageName != null">age_name = #{ageName},</if>
+            <if test="exeTimes != null">exe_times = #{exeTimes},</if>
+            <if test="babyInhosNo != null">baby_inhos_no = #{babyInhosNo},</if>
+            <if test="inCompIp != null">in_comp_ip = #{inCompIp},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="dieFlag != null">die_flag = #{dieFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDoctorderById" parameterType="String">
+        delete from clin_doctorder where id = #{id}
+    </delete>
+
+    <delete id="deleteDoctorderByIds" parameterType="String">
+        delete from clin_doctorder where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectHisDocorderParentList" parameterType="DoctorderVo" resultMap="DoctorderVoResult">
+        ${doctorderVo.sqlStr}
+        <where>
+            and MA_GROUP_NO = '1'
+            <if test="doctorderVo.patientId != null and doctorderVo.patientId != ''">
+                and patient_id = #{doctorderVo.patientId}
+            </if>
+            <if test="doctorderVo.patientIds != null and doctorderVo.patientIds.size > 0">
+                and patient_id in
+                <foreach collection="doctorderVo.patientIds" item="patientId" open="(" separator="," close=")">
+                    #{patientId}
+                </foreach>
+            </if>
+            <if test="doctorderVo.maTypeIdList != null and doctorderVo.maTypeIdList.size > 0">
+                and MA_TYPE_ID in
+                <foreach collection="doctorderVo.maTypeIdList" item="maTypeId" open="(" separator="," close=")">
+                    #{maTypeId}
+                </foreach>
+            </if>
+            <if test="doctorderVo.maTypeCd != null and doctorderVo.maTypeCd != ''">
+                and MA_TYPE_CD = #{doctorderVo.maTypeCd}
+            </if>
+            <if test="doctorderVo.status != null and doctorderVo.status != ''"></if>
+            <if test="doctorderVo.beginTimeStr != null and doctorderVo.beginTimeStr != ''">
+                and MA_OPEN_TIME &gt;= #{doctorderVo.beginTimeStr}
+            </if>
+            <if test="doctorderVo.endTimeStr != null and doctorderVo.endTimeStr != ''">
+                and MA_OPEN_TIME &lt; #{doctorderVo.endTimeStr}
+            </if>
+            <if test="doctorderVo.clinProName != null and doctorderVo.clinProName != ''">
+                and CLIN_PRO_NAME like CONCAT(CONCAT('%', #{doctorderVo.clinProName}), '%')
+            </if>
+        </where>
+        order by ma_open_time, ma_no, ma_group_no
+    </select>
+    <select id="selectHisDocorderParentListCount" parameterType="DoctorderVo" resultType="Integer">
+        ${sqlStr}
+        <where>
+            and MA_GROUP_NO = '1'
+            <if test="patientId != null and patientId != ''">
+                and patient_id = #{patientId}
+            </if>
+            <if test="patientIds != null and patientIds.size > 0">
+                and patient_id in
+                <foreach collection="patientIds" item="patientId" open="(" separator="," close=")">
+                    #{patientId}
+                </foreach>
+            </if>
+            <if test="maTypeIdList != null and maTypeIdList.size > 0">
+                and MA_TYPE_ID in
+                <foreach collection="maTypeIdList" item="maTypeId" open="(" separator="," close=")">
+                    #{maTypeId}
+                </foreach>
+            </if>
+            <if test="maTypeCd != null and maTypeCd != ''">
+                and MA_TYPE_CD = #{maTypeCd}
+            </if>
+            <if test="status != null and status != ''"></if>
+            <if test="beginTimeStr != null and beginTimeStr != ''">
+                and MA_OPEN_TIME &gt;= #{beginTimeStr}
+            </if>
+            <if test="endTimeStr != null and endTimeStr != ''">
+                and MA_OPEN_TIME &lt; #{endTimeStr}
+            </if>
+            <if test="clinProName != null and clinProName != ''">
+                and CLIN_PRO_NAME like CONCAT(CONCAT('%', #{clinProName}), '%')
+            </if>
+        </where>
+    </select>
+    <select id="selectHisDocorderChildList" parameterType="DoctorderVo" resultMap="DoctorderVoResult">
+        ${sqlStr}
+        <where>
+            and MA_GROUP_NO &lt;&gt; '1'
+            <if test="patientId != null and patientId != ''">
+                and patient_id = #{patientId}
+            </if>
+            <if test="patientIds != null and patientIds.size > 0">
+                and patient_id in
+                <foreach collection="patientIds" item="patientId" open="(" separator="," close=")">
+                    #{patientId}
+                </foreach>
+            </if>
+            <if test="maNoList != null and maNoList.size > 0">
+                and MA_NO in
+                <foreach collection="maNoList" item="maNo" open="(" separator="," close=")">
+                    #{maNo}
+                </foreach>
+            </if>
+            <if test="maTypeIdList != null and maTypeIdList.size > 0">
+                and MA_TYPE_ID in
+                <foreach collection="maTypeIdList" item="maTypeId" open="(" separator="," close=")">
+                    #{maTypeId}
+                </foreach>
+            </if>
+            <if test="maTypeCd != null and maTypeCd != ''">
+                and MA_TYPE_CD = #{maTypeCd}
+            </if>
+            <if test="status != null and status != ''"></if>
+            <if test="beginTimeStr != null and beginTimeStr != ''">
+                and MA_OPEN_TIME &gt;= #{beginTimeStr}
+            </if>
+            <if test="endTimeStr != null and endTimeStr != ''">
+                and MA_OPEN_TIME &lt; #{endTimeStr}
+            </if>
+            <if test="clinProName != null and clinProName != ''">
+                and CLIN_PRO_NAME like CONCAT(CONCAT('%', #{clinProName}), '%')
+            </if>
+        </where>
+        order by ma_open_time, ma_no, ma_group_no
+    </select>
+    <select id="selectHisDocorderVoList" parameterType="OrderSearchVo" resultMap="OrderSearchVoResult">
+        ${sqlStr}
+        <where>
+            and (ORDER_CLASS_CODE != '01' or (ORDER_CLASS_CODE = '01' and ORDER_GROUP_SORT_NUMBER = '1'))
+            <if test="patientId != null and patientId != ''">
+                and patient_id = #{patientId}
+            </if>
+            <if test="orderStartTimeBegin != null"> and order_start_time >= #{orderStartTimeBegin}</if>
+            <if test="orderStartTimeEnd != null"> and order_start_time &lt; #{orderStartTimeEnd}</if>
+            <if test="orderType != null and orderType != ''">
+                and order_type = #{orderType}
+            </if>
+        </where>
+        order by ORDER_GROUP_NO,ORDER_GROUP_SORT_NUMBER
+    </select>
+    <select id="selectHisSubDocorderVoList" parameterType="OrderSearchVo" resultMap="OrderSearchVoResult">
+        ${sqlStr}
+        <where>
+            and ORDER_CLASS_CODE = '01' and ORDER_GROUP_SORT_NUMBER != '1'
+            and order_group_no in
+            <foreach collection="mainOrderNoList" item="orderGroupNo" open="(" separator="," close=")">
+                #{orderGroupNo}
+            </foreach>
+            <if test="patientId != null and patientId != ''">
+                and patient_id = #{patientId}
+            </if>
+            <if test="orderStartTimeBegin != null"> and order_start_time >= #{orderStartTimeBegin}</if>
+            <if test="orderStartTimeEnd != null"> and order_start_time &lt; #{orderStartTimeEnd}</if>
+            <if test="orderType != null and orderType != ''">
+                and order_type = #{orderType}
+            </if>
+        </where>
+        order by ORDER_GROUP_NO,ORDER_GROUP_SORT_NUMBER
+    </select>
+</mapper>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.RefundAccountMapper">
+
+    <resultMap id="RefundListResult" type="com.emr.project.operation.domain.resp.RefundAccountListResp">
+        <result column="chargeCode" jdbcType="VARCHAR" property="chargeCode"/>
+        <result column="chargeName" jdbcType="VARCHAR" property="chargeName"/>
+        <result column="standard" jdbcType="VARCHAR" property="standard"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="total" jdbcType="VARCHAR" property="total"/>
+        <result column="price" jdbcType="VARCHAR" property="price"/>
+        <result column="dose" jdbcType="VARCHAR" property="dose"/>
+        <result column="prescription" jdbcType="VARCHAR" property="prescription"/>
+        <result column="executorDeptName" jdbcType="VARCHAR" property="executorDeptName"/>
+        <result column="executorDeptNo" jdbcType="VARCHAR" property="executorDeptNo"/>
+        <result column="physicianNo" jdbcType="VARCHAR" property="physicianNo"/>
+        <result column="physicianName" jdbcType="VARCHAR" property="physicianName"/>
+        <result column="billsNo" jdbcType="VARCHAR" property="billsNo"/>
+        <result column="returnedCount" jdbcType="VARCHAR" property="returnedCount"/>
+        <result column="applyCount" jdbcType="VARCHAR" property="applyCount"/>
+        <result column="refundCount" jdbcType="VARCHAR" property="refundCount"/>
+        <result column="projectName" jdbcType="VARCHAR" property="projectName"/>
+        <result column="projectNo" jdbcType="VARCHAR" property="projectNo"/>
+
+        <result column="physicianDeptName" jdbcType="VARCHAR" property="physicianDeptName"/>
+        <result column="physicianDeptNo" jdbcType="VARCHAR" property="physicianDeptNo"/>
+        <result column="operatorName" jdbcType="VARCHAR" property="operatorName"/>
+        <result column="filingDate" jdbcType="VARCHAR" property="filingDate"/>
+
+        <result column="copeNo" jdbcType="VARCHAR" property="copeNo"/>
+        <result column="copeType" jdbcType="VARCHAR" property="copeType"/>
+        <result column="copeGroup" jdbcType="VARCHAR" property="copeGroup"/>
+        <result column="copeClass" jdbcType="VARCHAR" property="copeClass"/>
+        <result column="copeSortNumber" jdbcType="VARCHAR" property="copeSortNumber"/>
+
+        <result column="threeLevelAccounting" jdbcType="VARCHAR" property="threeLevelAccounting"/>
+        <result column="threeLevelName" jdbcType="VARCHAR" property="threeLevelName"/>
+        <result column="operationName" jdbcType="VARCHAR" property="operationName"/>
+    </resultMap>
+    <select id="getRefundList" resultMap="RefundListResult">
+        select
+        CASE WHEN t2.cope_no= '' THEN '' ELSE t2.cope_no END AS copeNo,
+        CASE WHEN t2.cope_type= '' THEN '' ELSE t2.cope_type END AS copeType,
+        CASE WHEN t2.cope_group IS NULL THEN '' ELSE to_char(t2.cope_group) END AS copeGroup,
+        t2.cope_class AS copeClass,
+        oa.plan_oper1_name as operationName,
+        t2.cope_sort_number AS copeSortNumber,
+        t2.charge_code AS chargeCode,
+        t2.charge_no,
+        t2.charge_name AS chargeName,
+        t2.standard AS standard,
+        to_char((t2.price * t2.dose),'fm99999990.00') AS total,
+        t2.unit AS unit,
+        to_char(t2.price,'fm99999990.00') AS price,
+        t2.dose AS dose,
+        t2.prescription AS prescription,
+        t1.executor_dpt_name AS executorDeptName,
+        t1.executor_dpt_no AS executorDeptNo,
+        t1.physician_no AS physicianNo,
+        t1.physician_name AS physicianName,
+        t1.physician_dpt_no AS physicianDeptNo,
+        t1.physician_dpt_name AS physicianDeptName,
+        t1.operator_name AS operatorName,
+        to_char(t1.filing_date,'yyyy-MM-dd HH24:mi') AS filingDate,
+        t2.bills_no AS billsNo,
+        t2.project_name AS projectName,
+        t2.project_no AS projectNo,
+        t2.three_level_accounting AS threeLevelAccounting,
+        t2.three_level_name AS threeLevelName,
+        NVL((select sum(dose)*-1 from td_na_tfsqb where bills_no_old = t2.bills_no and mark='1'),0) as returnedCount,
+        NVL((select sum(dose)*-1 from td_na_tfsqb where bills_no_old = t2.bills_no and mark='0'),0) as applyCount,
+        (t2.dose+NVL((select sum(dose) from td_na_tfsqb where bills_no_old = t2.bills_no and mark='1'),0)+NVL((select
+        sum(dose) from td_na_tfsqb where bills_no_old = t2.bills_no and mark='0'),0)) as refundCount,
+        ((t2.dose+NVL((select sum(dose) from td_na_tfsqb where bills_no_old = t2.bills_no and
+        mark='1'),0)+NVL((select sum(dose) from td_na_tfsqb where bills_no_old = t2.bills_no and
+        mark='0'),0)))*t2.price as refundAmount
+        from td_na_pat_fee t1
+        left join t_ih_expensedetail t2
+        on t1.prescription = t2.prescription
+        left join TD_CA_OPERATION_APPLY oa ON oa.ORDER_NO = t2.COPE_NO
+        where 1 = 1 and t1.ACCOUNTING_DEPARTMENT_NO=#{deptCode}
+        <!--排除是否药费-->
+        <if test="list !=null and list.size>0 and materiallist == null">
+            and t2.THREE_LEVEL_ACCOUNTING in
+            <foreach collection="list" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="admissionNo != null and admissionNo.trim() != ''">
+            and t1.admission_no = #{admissionNo,jdbcType=VARCHAR} and t1.baby_no is
+            null <!--and t1.baby_no = #{baby_no,jdbcType=VARCHAR}  是否应该是 or t1.baby_no = #{admission_no,jdbcType=VARCHAR}-->
+        </if>
+
+        <if test="startTime != null and startTime.trim() != ''">
+            and t1.filing_date &gt;= to_date(#{startTime,jdbcType=VARCHAR}, 'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and t1.filing_date &lt;= to_date(#{endTime,jdbcType=VARCHAR}, 'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        <if test="threeLevelCode != null and threeLevelCode.trim() != ''">
+            and t2.THREE_LEVEL_ACCOUNTING = #{threeLevelCode,jdbcType=VARCHAR}
+        </if>
+        <if test="chargeName != null and chargeName.trim() != ''">
+            and t2.charge_name like concat( concat('%', #{chargeName}), '%')
+        </if>
+        <if test="list !=null and list.size>0 and materiallist != null and materiallist.size>0">
+            and (t2.THREE_LEVEL_ACCOUNTING in
+            <foreach collection="list" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+            or
+            (t2.THREE_LEVEL_ACCOUNTING in
+            <foreach collection="materiallist" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+            and (t2.perform_list_no is null or (t2.perform_list_no is not null and t2.drug_stock_no is null))
+            ))
+        </if>
+        order by t1.filing_date desc
+    </select>
+    <resultMap id="RefundApplyResult" type="com.emr.project.operation.domain.resp.RefundApplyResp">
+        <result column="patientName" jdbcType="VARCHAR" property="patientName"/>
+        <result column="mark" jdbcType="VARCHAR" property="mark"/>
+        <result column="markStr" jdbcType="VARCHAR" property="markStr"/>
+        <result column="serialNumber" jdbcType="VARCHAR" property="serialNumber"/>
+        <result column="serialNumberXh" jdbcType="VARCHAR" property="serialNumberXh"/>
+        <result column="operatorDate" jdbcType="VARCHAR" property="operatorDate"/>
+        <result column="operatorName" jdbcType="VARCHAR" property="operatorName"/>
+        <result column="chargeName" jdbcType="VARCHAR" property="chargeName"/>
+        <result column="chargeCode" jdbcType="VARCHAR" property="chargeCode"/>
+        <result column="standard" jdbcType="VARCHAR" property="standard"/>
+        <result column="price" jdbcType="VARCHAR" property="price"/>
+        <result column="dose" jdbcType="VARCHAR" property="dose"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="total" jdbcType="VARCHAR" property="total"/>
+        <result column="executorDptName" jdbcType="VARCHAR" property="executorDptName"/>
+        <result column="physicianDptName" jdbcType="VARCHAR" property="physicianDptName"/>
+        <result column="physicianName" jdbcType="VARCHAR" property="physicianName"/>
+        <result column="admissionNo" jdbcType="VARCHAR" property="admissionNo"/>
+        <result column="caseNo" jdbcType="VARCHAR" property="caseNo"/>
+        <result column="hospitalizedCount" jdbcType="VARCHAR" property="hospitalizedCount"/>
+        <result column="copeNo" jdbcType="VARCHAR" property="copeNo"/>
+        <result column="copeGroup" jdbcType="VARCHAR" property="copeGroup"/>
+        <result column="copeType" jdbcType="VARCHAR" property="copeType"/>
+        <result column="copeClass" jdbcType="VARCHAR" property="copeClass"/>
+        <result column="copeSortNumber" jdbcType="VARCHAR" property="copeSortNumber"/>
+    </resultMap>
+    <select id="getRefundApplyList" resultMap="RefundApplyResult">
+        SELECT
+            t1.patient_name as patientName,
+            CASE WHEN t1.mark= '0' THEN '申请' WHEN t1.mark= '1' THEN '退费' ELSE '作废' END  as markStr,
+            t1.mark as mark,
+            t1.serial_number as serialNumber,
+            t1.serial_number_xh as serialNumberXh,
+            to_char(t1.operator_date,'yyyy-MM-dd HH24:mi') AS operatorDate,
+            t1.operator_name AS operatorName,
+            t1.charge_name AS chargeName,
+            t1.charge_no AS chargeCode,
+            t1.standard AS standard,
+            to_char(t1.price,'fm99999990.00') AS price,
+            t1.dose AS dose,
+            t1.unit AS unit,
+            to_char(t1.total,'fm99999990.00') AS total,
+            t2.executor_dpt_name AS executorDptName,
+            t2.physician_dpt_name AS physicianDptName,
+            t2.physician_name AS physicianName,
+            t1.admission_no AS admissionNo,
+            t1.case_no AS caseNo,
+            t1.hospitalized_count AS hospitalizedCount,
+            t3.cope_no as copeNo,
+            t3.cope_group AS copeGroup,
+            t3.cope_sort_number AS copeSortNumber,
+            t3.cope_type AS copeType,
+            t3.cope_class AS copeClass
+        FROM
+        td_na_tfsqb t1
+        LEFT JOIN t_ih_expensedetail t3 ON t1.bills_no_old = t3.bills_no
+        LEFT JOIN td_na_pat_fee t2 ON t2.prescription = t3.prescription
+        WHERE
+        1 = 1 and (t2.executor_dpt_no = #{deptCode} or t2.ACCOUNTING_DEPARTMENT_NO = #{deptCode})
+        <if test="admissionNo != null and admissionNo.trim() != ''">
+            and t1.admission_no = #{admissionNo,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null and startTime.trim() != ''">
+            and to_char(t1.operator_date, 'yyyy-MM-dd HH24:mi:ss') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and to_char(t1.operator_date, 'yyyy-MM-dd HH24:mi:ss') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        order by t3.cope_group asc ,t1.operator_date desc
+    </select>
+</mapper>
+

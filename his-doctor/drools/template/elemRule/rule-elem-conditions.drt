@@ -1,0 +1,39 @@
+template header
+
+rule
+ruleId
+ruleName
+ruleCode
+eventVariable
+errorMsg
+errorColumn
+eventType
+otherRule
+ruleConditions
+ruleOrder
+ruleResuleVo
+
+
+template "judge condition"
+
+rule "@{ruleName}_条件"
+salience @{ruleOrder}
+when
+   @{eventVariable} : @{eventType}()
+   Boolean(this == true) from accumulate(
+      		$qcElemList: List() from collect(ElemAttriVo() from $IndexSaveVo.qcElemList),
+      		init(boolean res = false;),
+      		action(
+   			if(@{ruleConditions}){
+   			   res = true;
+   			}
+      		),
+      		result(res)
+      	)
+then
+   @{ruleResuleVo} $checkResult = new @{ruleResuleVo}("@{ruleId}", "");
+   $checkResult.setIsConditionsRes(true);
+   @{eventVariable}.getResultVoList().add($checkResult);
+end
+
+end template

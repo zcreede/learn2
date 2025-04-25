@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TakeDrugListMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TakeDrugList">
+        <id column="perform_list_no" jdbcType="VARCHAR" property="performListNo"/>
+        <id column="perform_list_sort_number" jdbcType="INTEGER" property="performListSortNumber"/>
+        <id column="order_sort_number" jdbcType="VARCHAR" property="orderSortNumber"/>
+        <id column="order_group_sort_number" jdbcType="VARCHAR" property="orderGroupSortNumber"/>
+        <id column="order_group_no" jdbcType="VARCHAR" property="orderGroupNo"/>
+        <result column="admission_no" jdbcType="VARCHAR" property="admissionNo"/>
+        <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount"/>
+        <result column="take_drug_ward_no" jdbcType="VARCHAR" property="takeDrugWardNo"/>
+        <result column="patient_name" jdbcType="VARCHAR" property="patientName"/>
+        <result column="bedid" jdbcType="VARCHAR" property="bedid"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="order_type" jdbcType="VARCHAR" property="orderType"/>
+        <result column="drug_name" jdbcType="VARCHAR" property="drugName"/>
+        <result column="drug_name_pym" jdbcType="VARCHAR" property="drugNamePym"/>
+        <result column="order_standard" jdbcType="VARCHAR" property="orderStandard"/>
+        <result column="drug_actual_usage" jdbcType="DECIMAL" property="drugActualUsage"/>
+        <result column="usage_unit" jdbcType="VARCHAR" property="usageUnit"/>
+        <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
+        <result column="order_dose" jdbcType="DECIMAL" property="orderDose"/>
+        <result column="order_unit" jdbcType="VARCHAR" property="orderUnit"/>
+        <result column="drug_form" jdbcType="VARCHAR" property="drugForm"/>
+        <result column="drug_class_code" jdbcType="VARCHAR" property="drugClassCode"/>
+        <result column="drug_stock_no" jdbcType="VARCHAR" property="drugStockNo"/>
+        <result column="pharmacopoeia_no" jdbcType="VARCHAR" property="pharmacopoeiaNo"/>
+        <result column="take_drug_time" jdbcType="TIMESTAMP" property="takeDrugTime"/>
+        <result column="take_drug_operator" jdbcType="VARCHAR" property="takeDrugOperator"/>
+        <result column="take_drug_operator_name" jdbcType="VARCHAR" property="takeDrugOperatorName"/>
+        <result column="drug_usage_way" jdbcType="VARCHAR" property="drugUsageWay"/>
+        <result column="drug_freq" jdbcType="VARCHAR" property="drugFreq"/>
+        <result column="order_doctor_code" jdbcType="VARCHAR" property="orderDoctorCode"/>
+        <result column="order_doctor_name" jdbcType="VARCHAR" property="orderDoctorName"/>
+        <result column="drug_eat_time" jdbcType="TIMESTAMP" property="drugEatTime"/>
+        <result column="hygienic_material_flag" jdbcType="INTEGER" property="hygienicMaterialFlag"/>
+        <result column="herbal_dose" jdbcType="INTEGER" property="herbalDose"/>
+        <result column="herbal_flag" jdbcType="INTEGER" property="herbalFlag"/>
+        <result column="out_drug_flag" jdbcType="VARCHAR" property="outDrugFlag"/>
+        <result column="patient_dep_code" jdbcType="VARCHAR" property="patientDepCode"/>
+        <result column="patient_dep_name" jdbcType="VARCHAR" property="patientDepName"/>
+        <result column="pharmacy_no" jdbcType="VARCHAR" property="pharmacyNo"/>
+        <result column="today_account_times" jdbcType="INTEGER" property="todayAccountTimes"/>
+        <result column="performed_times" jdbcType="INTEGER" property="performedTimes"/>
+        <result column="purpose_antimicrobial_use" jdbcType="INTEGER" property="purposeAntimicrobialUse"/>
+        <result column="prescribe_no" jdbcType="VARCHAR" property="prescribeNo"/>
+        <result column="prescribe_name" jdbcType="VARCHAR" property="prescribeName"/>
+        <result column="cp_no" jdbcType="VARCHAR" property="cpNo"/>
+        <result column="doctor_instructions" jdbcType="VARCHAR" property="doctorInstructions"/>
+        <result column="baby_admission_no" jdbcType="VARCHAR" property="babyAdmissionNo"/>
+        <result column="surgical_form_no" jdbcType="VARCHAR" property="surgicalFormNo"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="take_drug_status" jdbcType="INTEGER" property="takeDrugStatus"/>
+        <result column="return_drug_status" jdbcType="INTEGER" property="returnDrugStatus"/>
+        <result column="valid" jdbcType="INTEGER" property="valid"/>
+        <result column="pharmacy_name" jdbcType="VARCHAR" property="pharmacyName"/>
+        <result column="order_doctor_name" jdbcType="VARCHAR" property="orderDoctorName"/>
+        <result column="deptName" jdbcType="VARCHAR" property="deptName"/>
+
+        <result column="PRESCRIPTION"  property="prescription"/>
+        <result column="UP_STATUS"  property="upStatus"/>
+        <result column="APPLY_NO"  property="applyNo"/>
+        <result column="PHYSICIAN_DPT_NO"  property="physicianDptNo"/>
+        <result column="PHYSICIAN_DPT_NAME"  property="physicianDptName"/>
+        <result column="SOURCE_FLAG"  property="sourceFlag"/>
+        <result column="CHECKER_NAME"  property="checkerCode"/>
+        <result column="CHECKER_CODE"  property="checkerName"/>
+        <result column="CHECKER_TIME"  property="checkerTime"/>
+        <result column="CHECKER_DESC"  property="checkerDesc"/>
+        <result column="CHECKER_STATUS"  property="checkerStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        perform_list_no, perform_list_sort_number, order_sort_number, order_group_sort_number,
+        order_group_no, admission_no, hospitalized_count, take_drug_ward_no, patient_name,
+        bedid, order_no, order_type, drug_name, drug_name_pym, order_standard, drug_actual_usage,
+        usage_unit, order_price, order_dose, order_unit, drug_form, drug_class_code, drug_stock_no,
+        pharmacopoeia_no, take_drug_time, take_drug_operator, drug_usage_way, drug_freq,
+        order_doctor_code, drug_eat_time, hygienic_material_flag, herbal_dose, herbal_flag,
+        out_drug_flag, patient_dep_code, patient_dep_name, pharmacy_no, today_account_times,
+        performed_times, purpose_antimicrobial_use, prescribe_no, prescribe_name, cp_no,
+        doctor_instructions, baby_admission_no, surgical_form_no, remark, take_drug_status,
+        return_drug_status, valid,id,PRESCRIPTION,UP_STATUS,APPLY_NO,PHYSICIAN_DPT_NO,PHYSICIAN_DPT_NAME,
+        SOURCE_FLAG,CHECKER_NAME,CHECKER_CODE,CHECKER_TIME,CHECKER_DESC,CHECKER_STATUS
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="com.emr.project.operation.domain.TakeDrugListKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from td_pa_take_drug_list
+        where perform_list_no = #{performListNo,jdbcType=VARCHAR}
+        and perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER}
+        and order_sort_number = #{orderSortNumber,jdbcType=VARCHAR}
+        and order_group_sort_number = #{orderGroupSortNumber,jdbcType=VARCHAR}
+        and order_group_no = #{orderGroupNo,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="moveToDeleteTable" parameterType="com.emr.project.operation.domain.TakeDrugList">
+        insert all
+        <foreach collection="list" item="item" index="index">
+            into td_pa_take_drug_list_delete (id, perform_list_no, perform_list_sort_number,
+            admission_no, hospitalized_count, take_drug_ward_no,
+            patient_name, bedid, order_no,
+            order_sort_number, order_group_sort_number, order_group_no, order_type,
+            drug_name, drug_name_pym, order_standard,
+            drug_actual_usage, usage_unit, order_price,
+            order_dose, order_unit, drug_form,
+            drug_class_code, drug_stock_no, pharmacopoeia_no,
+            take_drug_time, take_drug_operator, drug_usage_way,drug_usage_way_code,
+            drug_freq,drug_freq_code, order_doctor_code, drug_eat_time,
+            hygienic_material_flag, herbal_dose, herbal_flag,
+            out_drug_flag, patient_dep_code, patient_dep_name,
+            pharmacy_no, today_account_times, performed_times,
+            purpose_antimicrobial_use, prescribe_no, prescribe_name,
+            cp_no, doctor_instructions, baby_admission_no,
+            surgical_form_no, remark, take_drug_status,
+            return_drug_status,valid,
+            PRESCRIPTION,UP_STATUS,APPLY_NO,PHYSICIAN_DPT_NO,PHYSICIAN_DPT_NAME,SOURCE_FLAG,
+            CHECKER_CODE,CHECKER_NAME,CHECKER_TIME,CHECKER_DESC,CHECKER_STATUS) values  (
+            #{item.id,jdbcType=INTEGER},
+            #{item.performListNo,jdbcType=VARCHAR},
+            #{item.performListSortNumber,jdbcType=INTEGER},
+            #{item.admissionNo,jdbcType=VARCHAR},
+            #{item.hospitalizedCount,jdbcType=INTEGER},
+            #{item.takeDrugWardNo,jdbcType=VARCHAR},
+            #{item.patientName,jdbcType=VARCHAR},
+            #{item.bedid,jdbcType=VARCHAR},
+            #{item.orderNo,jdbcType=VARCHAR},
+            #{item.orderSortNumber,jdbcType=VARCHAR},
+            #{item.orderGroupSortNumber,jdbcType=VARCHAR},
+            #{item.orderGroupNo,jdbcType=VARCHAR},
+            #{item.orderType,jdbcType=VARCHAR},
+            #{item.drugName,jdbcType=VARCHAR},
+            #{item.drugNamePym,jdbcType=VARCHAR},
+            #{item.orderStandard,jdbcType=VARCHAR},
+            #{item.drugActualUsage,jdbcType=DECIMAL},
+            #{item.usageUnit,jdbcType=VARCHAR},
+            #{item.orderPrice,jdbcType=DECIMAL},
+            #{item.orderDose,jdbcType=DECIMAL},
+            #{item.orderUnit,jdbcType=VARCHAR},
+            #{item.drugForm,jdbcType=VARCHAR},
+            #{item.drugClassCode,jdbcType=VARCHAR},
+            #{item.drugStockNo,jdbcType=VARCHAR},
+            #{item.pharmacopoeiaNo,jdbcType=VARCHAR},
+            #{item.takeDrugTime,jdbcType=TIMESTAMP},
+            #{item.takeDrugOperator,jdbcType=VARCHAR},
+            #{item.drugUsageWay,jdbcType=VARCHAR},
+            #{item.drugUsageWayCode,jdbcType=VARCHAR},
+            #{item.drugFreq,jdbcType=VARCHAR},
+            #{item.drugFreqCode,jdbcType=VARCHAR},
+            #{item.orderDoctorCode,jdbcType=VARCHAR},
+            #{item.drugEatTime,jdbcType=TIMESTAMP},
+            #{item.hygienicMaterialFlag,jdbcType=INTEGER},
+            #{item.herbalDose,jdbcType=INTEGER},
+            #{item.herbalFlag,jdbcType=INTEGER},
+            #{item.outDrugFlag,jdbcType=VARCHAR},
+            #{item.patientDepCode,jdbcType=VARCHAR},
+            #{item.patientDepName,jdbcType=VARCHAR},
+            #{item.pharmacyNo,jdbcType=VARCHAR},
+            #{item.todayAccountTimes,jdbcType=INTEGER},
+            #{item.performedTimes,jdbcType=INTEGER},
+            #{item.purposeAntimicrobialUse,jdbcType=INTEGER},
+            #{item.prescribeNo,jdbcType=VARCHAR},
+            #{item.prescribeName,jdbcType=VARCHAR},
+            #{item.cpNo,jdbcType=VARCHAR},
+            #{item.doctorInstructions,jdbcType=VARCHAR},
+            #{item.babyAdmissionNo,jdbcType=VARCHAR},
+            #{item.surgicalFormNo,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.takeDrugStatus,jdbcType=INTEGER},
+            #{item.returnDrugStatus,jdbcType=INTEGER},
+            #{item.valid,jdbcType=INTEGER},
+
+            #{item.prescription,jdbcType=INTEGER},
+            #{item.upStatus,jdbcType=VARCHAR},
+            #{item.applyNo,jdbcType=VARCHAR},
+            #{item.physicianDptNo,jdbcType=VARCHAR},
+            #{item.physicianDptName,jdbcType=VARCHAR},
+            #{item.sourceFlag,jdbcType=VARCHAR},
+            #{item.checkerCode,jdbcType=VARCHAR},
+            #{item.checkerName,jdbcType=VARCHAR},
+            #{item.checkerTime,jdbcType=TIMESTAMP},
+            #{item.checkerDesc,jdbcType=VARCHAR},
+            #{item.checkerStatus,jdbcType=VARCHAR}
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <delete id="deleteList" parameterType="com.emr.project.operation.domain.TakeDrugList">
+        <foreach collection="list" item="item" index="index" open="begin" separator=";" close=";end;">
+            delete
+            from td_pa_take_drug_list
+            where perform_list_no = #{item.performListNo,jdbcType=VARCHAR}
+            and perform_list_sort_number = #{item.performListSortNumber,jdbcType=INTEGER}
+            and order_sort_number = #{item.orderSortNumber,jdbcType=VARCHAR}
+            and order_group_sort_number = #{item.orderGroupSortNumber,jdbcType=VARCHAR}
+            and order_group_no = #{item.orderGroupNo,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+
+    <update id="updateOrderDose" parameterType="com.emr.project.operation.domain.TakeDrugList">
+        <foreach collection="list" item="item" index="index" separator=";" open="begin" close=";end;"   >
+            update td_pa_take_drug_list
+            set order_dose = #{item.orderDose},
+            return_drug_status = 1
+            where valid = 1
+            and take_drug_status in ('0','1')
+            and perform_list_no = #{item.performListNo,jdbcType=VARCHAR}
+            and perform_list_sort_number = #{item.performListSortNumber,jdbcType=INTEGER}
+            and order_no = #{item.orderNo,jdbcType=VARCHAR}
+            and order_sort_number = #{item.orderSortNumber,jdbcType=VARCHAR}
+            and order_group_no = #{item.orderGroupNo,jdbcType=VARCHAR}
+            and order_group_sort_number = #{item.orderGroupSortNumber,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+    <update id="updateStatusTakeDrugLists">
+        <foreach collection="list" item="item" index="index" separator=";" open="begin" close=";end;"   >
+            update td_pa_take_drug_list
+            set take_drug_status = #{item.takeDrugStatus,jdbcType=INTEGER}
+            where
+            perform_list_no = #{item.performListNo,jdbcType=VARCHAR}
+            and perform_list_sort_number = #{item.performListSortNumber,jdbcType=INTEGER}
+            and order_no = #{item.orderNo,jdbcType=VARCHAR}
+            and order_sort_number = #{item.orderSortNumber,jdbcType=VARCHAR}
+            and order_group_no = #{item.orderGroupNo,jdbcType=VARCHAR}
+            and order_group_sort_number = #{item.orderGroupSortNumber,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+    <select id="searchTakeDrugListByStockNo" parameterType="com.emr.project.operation.domain.TakeDrugList" resultType="java.lang.String">
+        select sum(order_dose) from td_pa_take_drug_list where drug_stock_no=#{drugStockNo,jdbcType=INTEGER}
+      AND perform_list_no != #{performListNo,jdbcType=VARCHAR}
+       AND perform_list_sort_number != #{performListSortNumber,jdbcType=VARCHAR}
+        AND order_no != #{orderNo,jdbcType=VARCHAR}  and order_sort_number != #{orderSortNumber,jdbcType=VARCHAR}
+        And order_group_no != #{orderGroupNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPerformListNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from td_pa_take_drug_list
+        where perform_list_no = #{performListNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectUnTakeDrugListByPerformListNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from td_pa_take_drug_list where perform_list_no = #{performListNo} and TAKE_DRUG_STATUS='1' and valid = 1
+        <if test="performListSortNumber != null and performListSortNumber != '-1'.toString()">
+            and perform_list_sort_number=#{performListSortNumber,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <insert id="insertList" parameterType="TakeDrugList">
+        insert all
+        <foreach collection="list" item="item" index="index">
+            into td_pa_take_drug_list (id,perform_list_no, perform_list_sort_number,
+            admission_no, case_no, hospitalized_count, take_drug_ward_no,
+            patient_name, bedid, order_no,
+            order_sort_number, order_group_sort_number, order_group_no, order_type,
+            drug_name, drug_name_pym, order_standard,
+            drug_actual_usage, usage_unit, order_price,
+            order_dose, order_unit, drug_form,
+            drug_class_code, drug_stock_no, pharmacopoeia_no,
+            take_drug_time, take_drug_operator, drug_usage_way,drug_usage_way_code,
+            drug_freq,drug_freq_code, order_doctor_code, drug_eat_time,
+            hygienic_material_flag, herbal_dose, herbal_flag,
+            out_drug_flag, patient_dep_code, patient_dep_name,
+            pharmacy_no, today_account_times, performed_times,
+            purpose_antimicrobial_use, prescribe_no, prescribe_name,
+            cp_no, doctor_instructions, baby_admission_no,
+            surgical_form_no, remark, take_drug_status,
+            return_drug_status,valid) values
+            (
+            #{item.id,jdbcType=LONGVARBINARY},
+            #{item.performListNo,jdbcType=VARCHAR},
+            #{item.performListSortNumber,jdbcType=INTEGER} ,
+            #{item.admissionNo,jdbcType=VARCHAR} ,
+            #{item.caseNo,jdbcType=VARCHAR} ,
+            #{item.hospitalizedCount,jdbcType=INTEGER} ,
+            #{item.takeDrugWardNo,jdbcType=VARCHAR} ,
+            #{item.patientName,jdbcType=VARCHAR},
+            #{item.bedid,jdbcType=VARCHAR},
+            #{item.orderNo,jdbcType=VARCHAR} ,
+            #{item.orderSortNumber,jdbcType=VARCHAR} ,
+            #{item.orderGroupSortNumber,jdbcType=VARCHAR} ,
+            #{item.orderGroupNo,jdbcType=VARCHAR} ,
+            #{item.orderType,jdbcType=VARCHAR},
+            #{item.drugName,jdbcType=VARCHAR},
+            #{item.drugNamePym,jdbcType=VARCHAR},
+            #{item.orderStandard,jdbcType=VARCHAR},
+            #{item.drugActualUsage,jdbcType=DECIMAL},
+            #{item.usageUnit,jdbcType=VARCHAR},
+            #{item.orderPrice,jdbcType=DECIMAL},
+            #{item.orderDose,jdbcType=DECIMAL},
+            #{item.orderUnit,jdbcType=VARCHAR},
+            #{item.drugForm,jdbcType=VARCHAR},
+            #{item.drugClassCode,jdbcType=VARCHAR},
+            #{item.drugStockNo,jdbcType=VARCHAR},
+            #{item.pharmacopoeiaNo,jdbcType=VARCHAR},
+            #{item.takeDrugTime,jdbcType=TIMESTAMP},
+            #{item.takeDrugOperator,jdbcType=VARCHAR},
+            #{item.drugUsageWay,jdbcType=VARCHAR},
+            #{item.drugUsageWayCode,jdbcType=VARCHAR},
+            #{item.drugFreq,jdbcType=VARCHAR},
+            #{item.drugFreqCode,jdbcType=VARCHAR},
+            #{item.orderDoctorCode,jdbcType=VARCHAR},
+            #{item.drugEatTime,jdbcType=TIMESTAMP},
+            #{item.hygienicMaterialFlag,jdbcType=INTEGER},
+            #{item.herbalDose,jdbcType=INTEGER},
+            #{item.herbalFlag,jdbcType=INTEGER},
+            #{item.outDrugFlag,jdbcType=VARCHAR},
+            #{item.patientDepCode,jdbcType=VARCHAR},
+            #{item.patientDepName,jdbcType=VARCHAR},
+            #{item.pharmacyNo,jdbcType=VARCHAR},
+            #{item.todayAccountTimes,jdbcType=INTEGER},
+            #{item.performedTimes,jdbcType=INTEGER},
+            #{item.purposeAntimicrobialUse,jdbcType=INTEGER},
+            #{item.prescribeNo,jdbcType=VARCHAR},
+            #{item.prescribeName,jdbcType=VARCHAR},
+            #{item.cpNo,jdbcType=VARCHAR},
+            #{item.doctorInstructions,jdbcType=VARCHAR},
+            #{item.babyAdmissionNo,jdbcType=VARCHAR},
+            #{item.surgicalFormNo,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.takeDrugStatus,jdbcType=INTEGER},
+            #{item.returnDrugStatus,jdbcType=INTEGER},
+            #{item.valid,jdbcType=INTEGER}
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+    <select id="selectListByReturnVo" parameterType="DrugListAndPerformReturnVo" resultMap="BaseResultMap">
+        select
+        dl.*,dt.dept_name AS deptName
+        from td_pa_take_drug_list dl
+        left join TM_BS_DEPT dt ON dl.TAKE_DRUG_WARD_NO = dt.dept_code
+        <where>
+            and dl.TAKE_DRUG_STATUS in ('0' , '1' , '10' , '11' , '2' , '3') and dl.valid = 1 and
+            <foreach collection="returnVoList" item="returnVo" open="((" separator=") or (" close="))">
+                <if test="returnVo.id != null"> dl.id = #{returnVo.id} </if>
+                <if test="returnVo.id != null and returnVo.performListNo != null and returnVo.performListNo != ''">and dl.perform_list_no = #{returnVo.performListNo}</if>
+                <if test="returnVo.id == null and returnVo.performListNo != null and returnVo.performListNo != ''"> dl.perform_list_no = #{returnVo.performListNo}</if>
+            </foreach>
+        </where>
+    </select>
+    <select id="selectOrderTakeDrugLists" parameterType="String" resultMap="BaseResultMap">
+        select * from td_pa_take_drug_list
+        where order_no in
+        <foreach collection="orderNoList" item="orderNo" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+</mapper>

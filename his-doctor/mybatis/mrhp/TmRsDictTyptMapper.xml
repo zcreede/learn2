@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.TmRsDictTyptMapper">
+
+    <resultMap type="TmRsDictTypt" id="TmRsDictTyptResult">
+        <result property="id"    column="id"    />
+        <result property="sourceName"    column="source_name"    />
+        <result property="sourceCode"    column="source_code"    />
+        <result property="dictTypeCode"    column="dict_type_code"    />
+        <result property="dictTypeName"    column="dict_type_name"    />
+        <result property="state"    column="state"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerDate"    column="alt_per_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="defineId"    column="define_id"    />
+    </resultMap>
+
+    <sql id="selectTmRsDictTyptVo">
+        select id, source_name, source_code, dict_type_code, dict_type_name, state, cre_date, cre_per_name, alt_per_name, alt_per_date, remark, define_id from tm_rs_dict_typt
+    </sql>
+
+    <select id="selectTmRsDictTyptList" parameterType="TmRsDictTypt" resultMap="TmRsDictTyptResult">
+        <include refid="selectTmRsDictTyptVo"/>
+        <where>
+            <if test="sourceName != null  and sourceName != ''"> and source_name like concat(concat('%', #{sourceName}), '%')</if>
+            <if test="sourceCode != null  and sourceCode != ''"> and source_code = #{sourceCode}</if>
+            <if test="dictTypeCode != null  and dictTypeCode != ''"> and dict_type_code = #{dictTypeCode}</if>
+            <if test="dictTypeName != null  and dictTypeName != ''"> and dict_type_name like concat(concat('%', #{dictTypeName}), '%')</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerDate != null "> and alt_per_date = #{altPerDate}</if>
+            <if test="defineId != null "> and define_id = #{defineId}</if>
+            <if test="searchValue != null  and searchValue != ''"> and dict_type_name like concat(concat('%', #{searchValue}), '%')</if>
+        </where>
+        order by dict_type_code
+    </select>
+
+    <select id="selectTmRsDictTyptById" parameterType="Long" resultMap="TmRsDictTyptResult">
+        <include refid="selectTmRsDictTyptVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectListByDefineId" resultMap="TmRsDictTyptResult">
+        <include refid="selectTmRsDictTyptVo"/>
+        where define_id = #{id}
+    </select>
+    <select id="selectDictTypeByTypeCode" resultMap="TmRsDictTyptResult">
+        <include refid="selectTmRsDictTyptVo"/>
+        where dict_type_code = #{typeCode}
+    </select>
+
+    <insert id="insertTmRsDictTypt" parameterType="TmRsDictTypt">
+        insert into tm_rs_dict_typt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="sourceName != null">source_name,</if>
+            <if test="sourceCode != null">source_code,</if>
+            <if test="dictTypeCode != null and dictTypeCode != ''">dict_type_code,</if>
+            <if test="dictTypeName != null and dictTypeName != ''">dict_type_name,</if>
+            <if test="state != null">state,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="remark != null">remark,</if>
+            <if test="defineId != null">define_id,</if>
+            cre_date
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="sourceName != null">#{sourceName},</if>
+            <if test="sourceCode != null">#{sourceCode},</if>
+            <if test="dictTypeCode != null and dictTypeCode != ''">#{dictTypeCode},</if>
+            <if test="dictTypeName != null and dictTypeName != ''">#{dictTypeName},</if>
+            <if test="state != null">#{state},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="defineId != null">#{defineId},</if>
+            sysdate
+         </trim>
+    </insert>
+
+    <update id="updateTmRsDictTypt" parameterType="TmRsDictTypt">
+        update tm_rs_dict_typt
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sourceName != null">source_name = #{sourceName},</if>
+            <if test="sourceCode != null">source_code = #{sourceCode},</if>
+            <if test="dictTypeCode != null and dictTypeCode != ''">dict_type_code = #{dictTypeCode},</if>
+            <if test="dictTypeName != null and dictTypeName != ''">dict_type_name = #{dictTypeName},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            alt_per_date = sysdate
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmRsDictTyptById" parameterType="Long">
+        delete from tm_rs_dict_typt where id = #{id}
+    </delete>
+
+    <delete id="deleteTmRsDictTyptByIds" parameterType="String">
+        delete from tm_rs_dict_typt where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

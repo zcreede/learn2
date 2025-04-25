@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TcwhMxMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TcwhMx">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="ward_no" jdbcType="VARCHAR" property="wardNo" />
+    <result column="package_no" jdbcType="VARCHAR" property="packageNo" />
+    <result column="package_order" jdbcType="INTEGER" property="packageOrder" />
+    <result column="charge_code" jdbcType="VARCHAR" property="chargeCode" />
+    <result column="charge_no" jdbcType="VARCHAR" property="chargeNo" />
+    <result column="charge_name" jdbcType="VARCHAR" property="chargeName" />
+    <result column="charge_name_pym" jdbcType="VARCHAR" property="chargeNamePym" />
+    <result column="hos_upper" jdbcType="VARCHAR" property="hosUpper" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="dose" jdbcType="DECIMAL" property="dose" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="dep_exec_no" jdbcType="VARCHAR" property="depExecNo" />
+    <result column="dep_name" jdbcType="VARCHAR" property="depName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, ward_no, package_no, package_order, charge_code, charge_no, charge_name, hos_upper,
+    standard, unit, price, dose, total, dep_exec_no,charge_name_pym
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_na_tcwh_mx
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tm_na_tcwh_mx
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.TcwhMx">
+    insert into tm_na_tcwh_mx (id, ward_no, package_no,
+      package_order, charge_code, charge_no,
+      charge_name, hos_upper, standard,
+      unit, price, dose,
+      total, dep_exec_no,charge_name_pym)
+    values (seq_tm_na_tcwh_mx.nextval, #{wardNo,jdbcType=VARCHAR}, #{packageNo,jdbcType=VARCHAR},
+      #{packageOrder,jdbcType=INTEGER}, #{chargeCode,jdbcType=VARCHAR}, #{chargeNo,jdbcType=VARCHAR},
+      #{chargeName,jdbcType=VARCHAR}, #{hosUpper,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR},
+      #{unit,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{dose,jdbcType=DECIMAL},
+      #{total,jdbcType=DECIMAL}, #{depExecNo,jdbcType=VARCHAR}, #{chargeNamePym,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.TcwhMx">
+    insert into tm_na_tcwh_mx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="wardNo != null">
+        ward_no,
+      </if>
+      <if test="packageNo != null">
+        package_no,
+      </if>
+      <if test="packageOrder != null">
+        package_order,
+      </if>
+      <if test="chargeCode != null">
+        charge_code,
+      </if>
+      <if test="chargeNo != null">
+        charge_no,
+      </if>
+      <if test="chargeName != null">
+        charge_name,
+      </if>
+      <if test="hosUpper != null">
+        hos_upper,
+      </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="dose != null">
+        dose,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="depExecNo != null">
+        dep_exec_no,
+      </if>
+      <if test="chargeNamePym != null">
+        charge_name_pym,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      seq_tm_na_tcwh_mx.nextval,
+      <if test="wardNo != null">
+        #{wardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageNo != null">
+        #{packageNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageOrder != null">
+        #{packageOrder,jdbcType=INTEGER},
+      </if>
+      <if test="chargeCode != null">
+        #{chargeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeNo != null">
+        #{chargeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeName != null">
+        #{chargeName,jdbcType=VARCHAR},
+      </if>
+      <if test="hosUpper != null">
+        #{hosUpper,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="dose != null">
+        #{dose,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="depExecNo != null">
+        #{depExecNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeNamePym != null">
+        #{chargeNamePym,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.operation.domain.TcwhMx">
+    update tm_na_tcwh_mx
+    <set>
+      <if test="wardNo != null">
+        ward_no = #{wardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageNo != null">
+        package_no = #{packageNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageOrder != null">
+        package_order = #{packageOrder,jdbcType=INTEGER},
+      </if>
+      <if test="chargeCode != null">
+        charge_code = #{chargeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeNo != null">
+        charge_no = #{chargeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeName != null">
+        charge_name = #{chargeName,jdbcType=VARCHAR},
+      </if>
+      <if test="hosUpper != null">
+        hos_upper = #{hosUpper,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="dose != null">
+        dose = #{dose,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="depExecNo != null">
+        dep_exec_no = #{depExecNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeNamePym != null">
+        charge_name_pym = #{chargeNamePym,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emr.project.operation.domain.TcwhMx">
+    update tm_na_tcwh_mx
+    set ward_no = #{wardNo,jdbcType=VARCHAR},
+      package_no = #{packageNo,jdbcType=VARCHAR},
+      package_order = #{packageOrder,jdbcType=INTEGER},
+      charge_code = #{chargeCode,jdbcType=VARCHAR},
+      charge_no = #{chargeNo,jdbcType=VARCHAR},
+      charge_name = #{chargeName,jdbcType=VARCHAR},
+      hos_upper = #{hosUpper,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      dose = #{dose,jdbcType=DECIMAL},
+      total = #{total,jdbcType=DECIMAL},
+      dep_exec_no = #{depExecNo,jdbcType=VARCHAR},
+      charge_name_pym = #{chargeNamePym,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="listPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+      m.id, m.ward_no, m.package_no, m.package_order, m.charge_code, m.charge_no, m.charge_name, m.hos_upper,
+      m.standard, m.unit, m.price, m.dose, m.total, m.dep_exec_no, d.dept_name as dep_name,m.charge_name_pym
+    from tm_na_tcwh_mx m
+    left join TM_BS_DEPT d on m.dep_exec_no = d.dept_code
+    where m.package_no = #{packageNo}
+    <if test="chargeNamePym != null and chargeNamePym != ''">
+      and charge_name_pym like CONCAT(CONCAT('%', #{chargeNamePym}), '%')
+    </if>
+    order by m.id
+  </select>
+  <select id="listPageCount" parameterType="java.util.Map" resultType="int">
+    select count(1)
+    from tm_na_tcwh_mx
+    where package_no = #{packageNo}
+    <if test="chargeNamePym != null and chargeNamePym != ''">
+      and charge_name_pym like CONCAT(CONCAT('%', #{chargeNamePym}), '%')
+    </if>
+  </select>
+  <insert id="insertList" parameterType="java.util.List">
+    insert into tm_na_tcwh_mx (id,ward_no, package_no,
+    package_order, charge_code, charge_no,
+    charge_name, hos_upper, standard,
+    unit, price, dose,
+    total, dep_exec_no,charge_name_pym)
+    select SEQ_TM_NA_TCWH_MX.nextval, a.* from (
+    <foreach collection="list" item="item" index="index" separator="union all" >
+
+
+      select #{item.wardNo,jdbcType=VARCHAR} as ward_no,
+        #{item.packageNo,jdbcType=VARCHAR} as package_no,
+        #{item.packageOrder,jdbcType=INTEGER} as package_order,
+        #{item.chargeCode,jdbcType=VARCHAR} as charge_code,
+        #{item.chargeNo,jdbcType=VARCHAR} as charge_no,
+        #{item.chargeName,jdbcType=VARCHAR} as charge_name,
+        #{item.hosUpper,jdbcType=VARCHAR} as hos_upper,
+        #{item.standard,jdbcType=VARCHAR} as standard,
+        #{item.unit,jdbcType=VARCHAR} as unit,
+        #{item.price,jdbcType=DECIMAL} as price,
+        #{item.dose,jdbcType=DECIMAL} as dose,
+        #{item.total,jdbcType=DECIMAL} as total,
+        #{item.depExecNo,jdbcType=VARCHAR} as dep_exec_no,
+        #{item.chargeNamePym,jdbcType=VARCHAR} as charge_name_pym
+       from dual
+    </foreach>
+    ) a
+  </insert>
+  <update id="updateList" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" separator=";"  open="begin" close=";end;">
+      update tm_na_tcwh_mx
+      set ward_no = #{item.wardNo,jdbcType=VARCHAR},
+      package_no = #{item.packageNo,jdbcType=VARCHAR},
+      package_order = #{item.packageOrder,jdbcType=INTEGER},
+      charge_code = #{item.chargeCode,jdbcType=VARCHAR},
+      charge_no = #{item.chargeNo,jdbcType=VARCHAR},
+      charge_name = #{item.chargeName,jdbcType=VARCHAR},
+      hos_upper = #{item.hosUpper,jdbcType=VARCHAR},
+      standard = #{item.standard,jdbcType=VARCHAR},
+      unit = #{item.unit,jdbcType=VARCHAR},
+      price = #{item.price,jdbcType=DECIMAL},
+      dose = #{item.dose,jdbcType=DECIMAL},
+      total = #{item.total,jdbcType=DECIMAL},
+      dep_exec_no = #{item.depExecNo,jdbcType=VARCHAR},
+      charge_name_pym = #{item.chargeNamePym,jdbcType=VARCHAR}
+      where id = #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <delete id="delByIdList" parameterType="java.util.List">
+    delete from tm_na_tcwh_mx
+    where id in
+    <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+  <select id="selectListByConn" parameterType="com.emr.project.operation.domain.TcwhMx" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_na_tcwh_mx
+    <where>
+      <if test="wardNo != null">
+        and ward_no = #{wardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="packageNo != null">
+        and package_no = #{packageNo,jdbcType=VARCHAR}
+      </if>
+      <if test="packageOrder != null">
+        and package_order = #{packageOrder,jdbcType=INTEGER}
+      </if>
+      <if test="chargeCode != null">
+        and charge_code = #{chargeCode,jdbcType=VARCHAR}
+      </if>
+      <if test="chargeNo != null">
+        and charge_no = #{chargeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="chargeName != null">
+        and charge_name = #{chargeName,jdbcType=VARCHAR}
+      </if>
+      <if test="hosUpper != null">
+        and hos_upper = #{hosUpper,jdbcType=VARCHAR}
+      </if>
+      <if test="standard != null">
+        and standard = #{standard,jdbcType=VARCHAR}
+      </if>
+      <if test="unit != null">
+        and unit = #{unit,jdbcType=VARCHAR}
+      </if>
+      <if test="price != null">
+        and price = #{price,jdbcType=DECIMAL}
+      </if>
+      <if test="dose != null">
+        and dose = #{dose,jdbcType=DECIMAL}
+      </if>
+      <if test="total != null">
+        and total = #{total,jdbcType=DECIMAL}
+      </if>
+      <if test="depExecNo != null">
+        and dep_exec_no = #{depExecNo,jdbcType=VARCHAR}
+      </if>
+      <if test="chargeNamePym != null">
+        and charge_name_pym = #{chargeNamePym,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <!-- 根据项目编号查询明细列表 -->
+  <select id="selectListByNo" parameterType="com.emr.project.operation.domain.TcwhMx" resultMap="BaseResultMap">
+    select t1.* , t2.dept_name as dep_name
+    from tm_na_tcwh_mx t1
+    left join TM_BS_DEPT t2 on t1.dep_exec_no = t2.dept_code
+    where package_no = #{packageNo,jdbcType=VARCHAR}
+  </select>
+</mapper>

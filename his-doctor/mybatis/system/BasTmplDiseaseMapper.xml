@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.BasTmplDiseaseMapper">
+    
+    <resultMap type="BasTmplDisease" id="BasTmplDiseaseResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="medicineId"    column="medicine_id"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="medicineName"    column="medicine_name"    />
+    </resultMap>
+
+    <sql id="selectBasTmplDiseaseVo">
+        select d.id, d.code, d.name, d.inputstrphtc, d.medicine_id, d.valid_flag, d.remark, d.cre_per_code, d.cre_per_name, d.cre_date, d.alt_per_code, d.alt_per_name, d.alt_date, m.name medicine_name
+        from bas_tmpl_disease d
+        left join bas_dict_medicine m on d.medicine_id = m.id
+    </sql>
+
+    <select id="selectBasTmplDiseaseList" parameterType="BasTmplDisease" resultMap="BasTmplDiseaseResult">
+        <include refid="selectBasTmplDiseaseVo"/>
+        <where>
+            <if test="name != null  and name != ''">
+            and (
+                d.name like concat(concat('%', #{name}), '%')
+                or d.code like concat(concat('%', #{name}), '%')
+                or d.inputstrphtc like concat(concat('%', #{name}), '%')
+            )
+            </if>
+            <if test="code != null  and code != ''"> and d.code = #{code}</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and d.inputstrphtc = #{inputstrphtc}</if>
+            <if test="medicineId != null  and medicineId != ''"> and d.medicine_id = #{medicineId}</if>
+            <if test="validFlag != null  and validFlag != ''"> and d.valid_flag = #{validFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and d.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and d.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and d.cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and d.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and d.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and d.alt_date = #{altDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasTmplDiseaseById" parameterType="Long" resultMap="BasTmplDiseaseResult">
+        <include refid="selectBasTmplDiseaseVo"/>
+        where d.id = #{id}
+    </select>
+
+    <select id="basTmplDiseaseTreeSelect" parameterType="Long" resultMap="BasTmplDiseaseResult">
+        select * from bas_tmpl_disease
+        where valid_flag = '1'
+        <if test="medicineId != null "> and medicine_id = #{medicineId}</if>
+    </select>
+
+    <insert id="insertBasTmplDisease" parameterType="BasTmplDisease">
+        insert into bas_tmpl_disease
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="medicineId != null">medicine_id,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="medicineId != null">#{medicineId},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateBasTmplDisease" parameterType="BasTmplDisease">
+        update bas_tmpl_disease
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="medicineId != null">medicine_id = #{medicineId},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasTmplDiseaseById" parameterType="Long">
+        delete from bas_tmpl_disease where id = #{id}
+    </delete>
+
+    <delete id="deleteBasTmplDiseaseByIds" parameterType="String">
+        delete from bas_tmpl_disease where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasTmplDiseaseByMedicineIds" parameterType="Long">
+        delete from bas_tmpl_disease where medicine_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectBasTmplDiseaseIsUse" resultType="java.lang.Integer">
+        select count(1)
+        from tmpl_index
+        where temp_disease in
+              (select code from bas_tmpl_disease where id = #{id})
+    </select>
+    <select id="getDiseaseIsExistCount" resultType="java.lang.Integer" parameterType="com.emr.project.system.domain.BasTmplDisease">
+        select count(1)
+        from bas_tmpl_disease
+        where code =  #{code}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+    <select id="selectListByMedicineIds" parameterType="Long" resultMap="BasTmplDiseaseResult">
+        select id, code, name, inputstrphtc, medicine_id, valid_flag, remark, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date
+        from bas_tmpl_disease
+        where valid_flag = '1'
+        and medicine_id in
+        <if test="ids != null and ids.size > 0">
+            <foreach collection="ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+</mapper>

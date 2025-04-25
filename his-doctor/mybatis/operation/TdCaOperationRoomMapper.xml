@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TdCaOperationRoomMapper">
+
+    <resultMap type="com.emr.project.operation.domain.TdCaOperationRoom" id="TdCaOperationRoomResult">
+        <result property="id"    column="id"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="belongingDepartmentCode"    column="belonging_department_code"    />
+        <result property="belongingDepartmentName"    column="belonging_department_name"    />
+        <result property="surgicalRoomCode"    column="surgical_room_code"    />
+        <result property="surgicalRoomName"    column="surgical_room_name"    />
+        <result property="pinyinCode"    column="pinyin_code"    />
+        <result property="serialNumber"    column="serial_number"    />
+        <result property="notes"    column="notes"    />
+        <result property="status"    column="status"    />
+        <result property="creName"    column="cre_name"    />
+        <result property="creCode"    column="cre_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="isUse"    column="is_use"    />
+    </resultMap>
+
+    <sql id="selectTdCaOperationRoomVo">
+        select id, hospital_code, belonging_department_code, belonging_department_name, surgical_room_code, surgical_room_name, pinyin_code, serial_number, notes, status, cre_name, cre_code, cre_date, is_use from td_ca_operation_room
+    </sql>
+
+    <select id="selectTdCaOperationRoomList" parameterType="TdCaOperationRoom" resultMap="TdCaOperationRoomResult">
+        <include refid="selectTdCaOperationRoomVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="belongingDepartmentCode != null  and belongingDepartmentCode != ''"> and belonging_department_code = #{belongingDepartmentCode}</if>
+            <if test="belongingDepartmentName != null  and belongingDepartmentName != ''"> and belonging_department_name like concat(concat('%', #{belongingDepartmentName}), '%')</if>
+            <if test="surgicalRoomCode != null  and surgicalRoomCode != ''"> and surgical_room_code = #{surgicalRoomCode}</if>
+            <if test="surgicalRoomName != null  and surgicalRoomName != ''"> and surgical_room_name like concat(concat('%', #{surgicalRoomName}), '%')</if>
+            <if test="pinyinCode != null  and pinyinCode != ''"> and pinyin_code = #{pinyinCode}</if>
+            <if test="serialNumber != null "> and serial_number = #{serialNumber}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="creName != null  and creName != ''"> and cre_name like concat(concat('%', #{creName}), '%')</if>
+            <if test="creCode != null  and creCode != ''"> and cre_code = #{creCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="isUse != null  and isUse != ''"> and is_use = #{isUse}</if>
+        </where>
+    </select>
+
+    <select id="selectTdCaOperationRoomById" parameterType="Long" resultMap="TdCaOperationRoomResult">
+        <include refid="selectTdCaOperationRoomVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectTdCaOperationRoomListOfSearch" resultMap="TdCaOperationRoomResult">
+        <include refid="selectTdCaOperationRoomVo"/>
+        where HOSPITAL_CODE=#{orgCode} and status!='0' and (PINYIN_CODE like concat(concat('%', #{searchValue}), '%') or SURGICAL_ROOM_NAME like concat(concat('%', #{searchValue}), '%'))
+    </select>
+    <select id="selectMaxId" resultType="java.lang.Long">
+        select SEQ_TD_CA_OPERATIONROOM.nextval from dual
+    </select>
+    <select id="queryMaxNumber" resultType="java.lang.Long" parameterType="java.lang.String">
+        select count(1)  as maxNumber from TD_CA_OPERATION_ROOM where HOSPITAL_CODE=#{OrgCode} and BELONGING_DEPARTMENT_CODE=#{deptCode}
+    </select>
+
+    <insert id="insertTdCaOperationRoom" parameterType="TdCaOperationRoom">
+        insert into td_ca_operation_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code,</if>
+            <if test="belongingDepartmentCode != null and belongingDepartmentCode != ''">belonging_department_code,</if>
+            <if test="belongingDepartmentName != null and belongingDepartmentName != ''">belonging_department_name,</if>
+            <if test="surgicalRoomCode != null and surgicalRoomCode != ''">surgical_room_code,</if>
+            <if test="surgicalRoomName != null and surgicalRoomName != ''">surgical_room_name,</if>
+            <if test="pinyinCode != null and pinyinCode != ''">pinyin_code,</if>
+            <if test="serialNumber != null">serial_number,</if>
+            <if test="notes != null">notes,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="creName != null">cre_name,</if>
+            <if test="creCode != null">cre_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="isUse != null">is_use,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="hospitalCode != null and hospitalCode != ''">#{hospitalCode},</if>
+            <if test="belongingDepartmentCode != null and belongingDepartmentCode != ''">#{belongingDepartmentCode},</if>
+            <if test="belongingDepartmentName != null and belongingDepartmentName != ''">#{belongingDepartmentName},</if>
+            <if test="surgicalRoomCode != null and surgicalRoomCode != ''">#{surgicalRoomCode},</if>
+            <if test="surgicalRoomName != null and surgicalRoomName != ''">#{surgicalRoomName},</if>
+            <if test="pinyinCode != null and pinyinCode != ''">#{pinyinCode},</if>
+            <if test="serialNumber != null">#{serialNumber},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="creName != null">#{creName},</if>
+            <if test="creCode != null">#{creCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="isUse != null">#{isUse},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT ALL
+        <foreach item="item" collection="list">
+            into td_ca_operation_room
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">id,
+                    </if>
+                    <if test="item.hospitalCode != null and item.hospitalCode != ''">hospital_code,
+                    </if>
+                    <if test="item.belongingDepartmentCode != null and item.belongingDepartmentCode != ''">belonging_department_code,
+                    </if>
+                    <if test="item.belongingDepartmentName != null and item.belongingDepartmentName != ''">belonging_department_name,
+                    </if>
+                    <if test="item.surgicalRoomCode != null and item.surgicalRoomCode != ''">surgical_room_code,
+                    </if>
+                    <if test="item.surgicalRoomName != null and item.surgicalRoomName != ''">surgical_room_name,
+                    </if>
+                    <if test="item.pinyinCode != null and item.pinyinCode != ''">pinyin_code,
+                    </if>
+                    <if test="item.serialNumber != null">serial_number,
+                    </if>
+                    <if test="item.notes != null">notes,
+                    </if>
+                    <if test="item.status != null and item.status != ''">status,
+                    </if>
+                    <if test="item.creName != null">cre_name,
+                    </if>
+                    <if test="item.creCode != null">cre_code,
+                    </if>
+                    <if test="item.creDate != null">cre_date,
+                    </if>
+                    <if test="item.isUse != null">is_use,
+                    </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">#{item.id},
+                    </if>
+                    <if test="item.hospitalCode != null and item.hospitalCode != ''">#{item.hospitalCode},
+                    </if>
+                    <if test="item.belongingDepartmentCode != null and item.belongingDepartmentCode != ''">#{item.belongingDepartmentCode},
+                    </if>
+                    <if test="item.belongingDepartmentName != null and item.belongingDepartmentName != ''">#{item.belongingDepartmentName},
+                    </if>
+                    <if test="item.surgicalRoomCode != null and item.surgicalRoomCode != ''">#{item.surgicalRoomCode},
+                    </if>
+                    <if test="item.surgicalRoomName != null and item.surgicalRoomName != ''">#{item.surgicalRoomName},
+                    </if>
+                    <if test="item.pinyinCode != null and item.pinyinCode != ''">#{item.pinyinCode},
+                    </if>
+                    <if test="item.serialNumber != null">#{item.serialNumber},
+                    </if>
+                    <if test="item.notes != null">#{item.notes},
+                    </if>
+                    <if test="item.status != null and item.status != ''">#{item.status},
+                    </if>
+                    <if test="item.creName != null">#{item.creName},
+                    </if>
+                    <if test="item.creCode != null">#{item.creCode},
+                    </if>
+                    <if test="item.creDate != null">#{item.creDate},
+                    </if>
+                    <if test="item.isUse != null">#{item.isUse},
+                    </if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateTdCaOperationRoom" parameterType="TdCaOperationRoom">
+        update td_ca_operation_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code = #{hospitalCode},</if>
+            <if test="belongingDepartmentCode != null and belongingDepartmentCode != ''">belonging_department_code = #{belongingDepartmentCode},</if>
+            <if test="belongingDepartmentName != null and belongingDepartmentName != ''">belonging_department_name = #{belongingDepartmentName},</if>
+            <if test="surgicalRoomCode != null and surgicalRoomCode != ''">surgical_room_code = #{surgicalRoomCode},</if>
+            <if test="surgicalRoomName != null and surgicalRoomName != ''">surgical_room_name = #{surgicalRoomName},</if>
+            <if test="pinyinCode != null and pinyinCode != ''">pinyin_code = #{pinyinCode},</if>
+            <if test="serialNumber != null">serial_number = #{serialNumber},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="creName != null">cre_name = #{creName},</if>
+            <if test="creCode != null">cre_code = #{creCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="isUse != null">is_use = #{isUse},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update td_ca_operation_room
+            <trim prefix="SET" suffixOverrides=",">
+                        <if test="item.hospitalCode != null and item.hospitalCode != ''">hospital_code = #{item.hospitalCode},</if>
+                        <if test="item.belongingDepartmentCode != null and item.belongingDepartmentCode != ''">belonging_department_code = #{item.belongingDepartmentCode},</if>
+                        <if test="item.belongingDepartmentName != null and item.belongingDepartmentName != ''">belonging_department_name = #{item.belongingDepartmentName},</if>
+                        <if test="item.surgicalRoomCode != null and item.surgicalRoomCode != ''">surgical_room_code = #{item.surgicalRoomCode},</if>
+                        <if test="item.surgicalRoomName != null and item.surgicalRoomName != ''">surgical_room_name = #{item.surgicalRoomName},</if>
+                        <if test="item.pinyinCode != null and item.pinyinCode != ''">pinyin_code = #{item.pinyinCode},</if>
+                        <if test="item.serialNumber != null">serial_number = #{item.serialNumber},</if>
+                        <if test="item.notes != null">notes = #{item.notes},</if>
+                        <if test="item.status != null and item.status != ''">status = #{item.status},</if>
+                        <if test="item.creName != null">cre_name = #{item.creName},</if>
+                        <if test="item.creCode != null">cre_code = #{item.creCode},</if>
+                        <if test="item.creDate != null">cre_date = #{item.creDate},</if>
+                        <if test="item.isUse != null">is_use = #{item.isUse},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+    <update id="removeCaOperationRoomById" parameterType="java.lang.Long">
+        update TD_CA_OPERATION_ROOM set status='0' where id =#{id}
+    </update>
+
+    <delete id="deleteTdCaOperationRoomById" parameterType="Long">
+        delete from td_ca_operation_room where id = #{id}
+    </delete>
+
+    <delete id="deleteTdCaOperationRoomByIds" parameterType="String">
+        delete from td_ca_operation_room where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

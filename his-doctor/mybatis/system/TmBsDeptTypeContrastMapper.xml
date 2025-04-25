@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.TmBsDeptTypeContrastMapper">
+
+    <resultMap type="TmBsDeptTypeContrast" id="TmBsDeptTypeContrastResult">
+        <result property="deptCode"    column="dept_code"    />
+        <result property="deptType"    column="dept_type"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTmBsDeptTypeContrastVo">
+        select dept_code, dept_type, create_time, update_time from tm_bs_dept_type_contrast
+    </sql>
+
+    <select id="selectTmBsDeptTypeContrastList" parameterType="TmBsDeptTypeContrast" resultMap="TmBsDeptTypeContrastResult">
+        <include refid="selectTmBsDeptTypeContrastVo"/>
+        <where>
+        </where>
+    </select>
+
+    <!--<select id="selectTmBsDeptTypeContrastVoList" parameterType="com.emr.project.system.domain.vo.TmBsDeptTypeContrastVo" resultType="com.emr.project.system.domain.vo.TmBsDeptTypeContrastVo">
+        select b.hospital_no as hospitalNo, a.dept_code as deptCode, b.dept_name as deptName, b.dept_name_pym1 as deptNamePym1
+            from tm_bs_dept_type_contrast a
+            left join tm_bs_dept b
+            on a.dept_code = b.dept_code
+            <where>
+                a.dept_type = '11'
+                b.status = '0'
+                and b.del_flag = '0'
+                <if test="deptCode != null and deptCode!= ''">
+                    and a.dept_code = #{deptCode}
+                </if>
+                <if test="selDept != null and selDept!= ''">
+                    and (a.dept_code like concat(concat('%', #{selDept}), '%')
+                        or b.dept_name like concat(concat('%', #{selDept}), '%')
+                        or b.dept_name_pym1 like concat(concat('%', lower(#{selDept})), '%')
+                    )
+                </if>
+            </where>
+    </select>-->
+    <select id="selectTmBsDeptTypeContrastVoList" parameterType="com.emr.project.system.domain.vo.TmBsDeptTypeContrastVo" resultType="com.emr.project.system.domain.vo.TmBsDeptTypeContrastVo">
+        select a.hospital_no as hospitalNo, a.dept_code as deptCode, a.dept_name as deptName, a.dept_name_pym1 as deptNamePym1
+            from tm_bs_dept a
+            <where>
+                a.status = '0'
+                and a.del_flag = '0'
+                <if test="deptCode != null and deptCode!= ''">
+                    and a.dept_code = #{deptCode}
+                </if>
+                <if test="selDept != null and selDept!= ''">
+                    and (a.dept_code like concat(concat('%', #{selDept}), '%')
+                        or a.dept_name like concat(concat('%', #{selDept}), '%')
+                        or a.dept_name_pym1 like concat(concat('%', lower(#{selDept})), '%')
+                    )
+                </if>
+            </where>
+    </select>
+
+    <select id="selectTmBsDeptTypeContrastById" parameterType="String" resultMap="TmBsDeptTypeContrastResult">
+        <include refid="selectTmBsDeptTypeContrastVo"/>
+        where dept_code = #{deptCode}
+    </select>
+
+    <insert id="insertTmBsDeptTypeContrast" parameterType="TmBsDeptTypeContrast">
+        <selectKey keyProperty="deptCode" resultType="long" order="BEFORE">
+            SELECT seq_tm_bs_dept_type_contrast.NEXTVAL as deptCode FROM DUAL
+        </selectKey>
+        insert into tm_bs_dept_type_contrast
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptCode != null">dept_code,</if>
+            <if test="deptType != null">dept_type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptCode != null">#{deptCode},</if>
+            <if test="deptType != null">#{deptType},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmBsDeptTypeContrast" parameterType="TmBsDeptTypeContrast">
+        update tm_bs_dept_type_contrast
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptType != null">dept_type = #{deptType},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where dept_code = #{deptCode}
+    </update>
+
+    <delete id="deleteTmBsDeptTypeContrastById" parameterType="String">
+        delete from tm_bs_dept_type_contrast where dept_code = #{deptCode}
+    </delete>
+
+    <delete id="deleteTmBsDeptTypeContrastByIds" parameterType="String">
+        delete from tm_bs_dept_type_contrast where dept_code in
+        <foreach item="deptCode" collection="array" open="(" separator="," close=")">
+            #{deptCode}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcRuleConRelaMapper">
+
+    <resultMap type="QcRuleConRela" id="QcRuleConRelaResult">
+        <result property="id"    column="id"    />
+        <result property="ruleCode"    column="rule_code"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="eleId1"    column="ele_id1"    />
+        <result property="eleName1"    column="ele_name1"    />
+        <result property="eleId2"    column="ele_id2"    />
+        <result property="eleName2"    column="ele_name2"    />
+        <result property="defeLevel"    column="defe_level"    />
+        <result property="addMeth"    column="add_meth"    />
+        <result property="comChar"    column="com_char"    />
+        <result property="ruleDesc"    column="rule_desc"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="expres"    column="expres"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="ruleFile"    column="rule_file"    />
+    </resultMap>
+    <resultMap id="QcRuleConRelaVoResult" type="QcRuleConRelaVo" extends="QcRuleConRelaResult">
+        <result property="defeLevelName"    column="defeLevelName"    />
+    </resultMap>
+    <sql id="selectQcRuleConRelaVo">
+        select id, rule_code, rule_name, emr_type_code, emr_type_name, ele_id1,rule_file, ele_name1, ele_id2, ele_name2, defe_level, add_meth, com_char, rule_desc, valid_flag, expres, del_flag, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date from qc_rule_con_rela
+    </sql>
+
+    <select id="selectQcRuleConRelaList" parameterType="QcRuleConRela" resultMap="QcRuleConRelaVoResult">
+        select DISTINCT qc.id, qc.rule_code, qc.rule_name, qc.emr_type_code, qc.emr_type_name, qc.ele_id2, qc.ele_name2,
+        qc.defe_level, qc.add_meth, qc.com_char, qc.rule_desc, qc.valid_flag, qc.expres,qc.rule_file, qc.del_flag, qc.alt_per_name, qc.alt_per_code,
+        qc.alt_date, qc.cre_per_name, qc.cre_per_code, qc.cre_date,qce.elem_id as ele_id1,qce.elem_name as ele_name1,sdd.data_tag AS defeLevelName from qc_rule_con_rela qc
+        LEFT JOIN qc_check_elem qce ON qc.id = qce.check_id
+        LEFT JOIN TM_BS_DICT_DATA sdd ON qc.defe_level = sdd.data_val AND dict_type = 's052'
+        <where>
+            <if test="ruleCode != null  and ruleCode != ''"> and qc.rule_code = #{ruleCode}</if>
+            <if test="ruleName != null  and ruleName != ''"> and qc.rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="emrTypeCode != null  and emrTypeCode != ''"> and qc.emr_type_code = #{emrTypeCode}</if>
+            <if test="emrTypeName != null  and emrTypeName != ''"> and qc.emr_type_name like concat(concat('%', #{emrTypeName}), '%')</if>
+            <if test="eleId1 != null  and eleId1 != ''"> and qc.ele_id1 = #{eleId1}</if>
+            <if test="eleName1 != null  and eleName1 != ''"> and qc.ele_name1 = #{eleName1}</if>
+            <if test="eleId2 != null  and eleId2 != ''"> and qc.ele_id2 = #{eleId2}</if>
+            <if test="eleName2 != null  and eleName2 != ''"> and qc.ele_name2 = #{eleName2}</if>
+            <if test="defeLevel != null  and defeLevel != ''"> and qc.defe_level = #{defeLevel}</if>
+            <if test="addMeth != null  and addMeth != ''"> and qc.add_meth = #{addMeth}</if>
+            <if test="comChar != null  and comChar != ''"> and qc.com_char = #{comChar}</if>
+            <if test="ruleDesc != null  and ruleDesc != ''"> and qc.rule_desc = #{ruleDesc}</if>
+            <if test="validFlag != null  and validFlag != ''"> and qc.valid_flag = #{validFlag}</if>
+            <if test="expres != null  and expres != ''"> and qc.expres = #{expres}</if>
+            <if test="altPerName != null  and altPerName != ''"> and qc.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and qc.alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and qc.alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and qc.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and qc.cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and qc.cre_date = #{creDate}</if>
+            <if test="ruleFile != null "> and qc.rule_file = #{ruleFile}</if>
+             and qc.del_flag='0' order by qc.cre_date desc
+        </where>
+    </select>
+
+    <select id="selectQcRuleConRelaById" parameterType="Long" resultMap="QcRuleConRelaResult">
+        <include refid="selectQcRuleConRelaVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectQcRuleConRela" parameterType="String" resultMap="QcRuleConRelaResult">
+        <include refid="selectQcRuleConRelaVo"/>
+        where valid_flag='1' and del_flag = '0'
+        <if test="emrTypeCode !=null and emrTypeCode!=''">
+            and emr_type_code=#{emrTypeCode}
+        </if>
+    </select>
+
+    <insert id="insertQcRuleConRela" parameterType="QcRuleConRela">
+        insert into qc_rule_con_rela
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="ruleCode != null">rule_code,</if>
+            <if test="ruleName != null">rule_name,</if>
+            <if test="emrTypeCode != null">emr_type_code,</if>
+            <if test="emrTypeName != null">emr_type_name,</if>
+            <if test="eleId1 != null">ele_id1,</if>
+            <if test="eleName1 != null">ele_name1,</if>
+            <if test="eleId2 != null">ele_id2,</if>
+            <if test="eleName2 != null">ele_name2,</if>
+            <if test="defeLevel != null">defe_level,</if>
+            <if test="addMeth != null">add_meth,</if>
+            <if test="comChar != null">com_char,</if>
+            <if test="ruleDesc != null">rule_desc,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="expres != null">expres,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="ruleFile != null">rule_file,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="ruleCode != null">#{ruleCode},</if>
+            <if test="ruleName != null">#{ruleName},</if>
+            <if test="emrTypeCode != null">#{emrTypeCode},</if>
+            <if test="emrTypeName != null">#{emrTypeName},</if>
+            <if test="eleId1 != null">#{eleId1},</if>
+            <if test="eleName1 != null">#{eleName1},</if>
+            <if test="eleId2 != null">#{eleId2},</if>
+            <if test="eleName2 != null">#{eleName2},</if>
+            <if test="defeLevel != null">#{defeLevel},</if>
+            <if test="addMeth != null">#{addMeth},</if>
+            <if test="comChar != null">#{comChar},</if>
+            <if test="ruleDesc != null">#{ruleDesc},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="expres != null">#{expres},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="ruleFile != null">#{ruleFile},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateQcRuleConRela" parameterType="QcRuleConRela">
+        update qc_rule_con_rela
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ruleCode != null">rule_code = #{ruleCode},</if>
+            <if test="ruleName != null">rule_name = #{ruleName},</if>
+            <if test="emrTypeCode != null">emr_type_code = #{emrTypeCode},</if>
+            <if test="emrTypeName != null">emr_type_name = #{emrTypeName},</if>
+            <if test="eleId1 != null">ele_id1 = #{eleId1},</if>
+            <if test="eleName1 != null">ele_name1 = #{eleName1},</if>
+            <if test="eleId2 != null">ele_id2 = #{eleId2},</if>
+            <if test="eleName2 != null">ele_name2 = #{eleName2},</if>
+            <if test="defeLevel != null">defe_level = #{defeLevel},</if>
+            <if test="addMeth != null">add_meth = #{addMeth},</if>
+            <if test="comChar != null">com_char = #{comChar},</if>
+            <if test="ruleDesc != null">rule_desc = #{ruleDesc},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="expres != null">expres = #{expres},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="ruleFile != null">rule_file = #{ruleFile},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcRuleConRelaById" parameterType="Long">
+        delete from qc_rule_con_rela where id = #{id}
+    </delete>
+
+    <delete id="deleteQcRuleConRelaByIds" parameterType="String">
+        delete from qc_rule_con_rela where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

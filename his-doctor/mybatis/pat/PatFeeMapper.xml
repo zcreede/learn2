@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.PatFeeMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.pat.domain.ExpenseDetail">
+        <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode"/>
+        <result column="admission_no" jdbcType="VARCHAR" property="admissionNo"/>
+        <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount"/>
+        <result column="bills_no" jdbcType="VARCHAR" property="billsNo"/>
+        <result column="prescription" jdbcType="VARCHAR" property="prescription"/>
+        <result column="filing_date" jdbcType="TIMESTAMP" property="filingDate"/>
+        <result column="project_no" jdbcType="VARCHAR" property="projectNo"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="three_level_accounting" jdbcType="VARCHAR" property="threeLevelAccounting"/>
+        <result column="three_level_name" jdbcType="VARCHAR" property="threeLevelName"/>
+        <result column="standard_code" jdbcType="VARCHAR" property="standardCode"/>
+        <result column="standard_name" jdbcType="VARCHAR" property="standardName"/>
+        <result column="charge_code" jdbcType="VARCHAR" property="chargeCode"/>
+        <result column="charge_no" jdbcType="VARCHAR" property="chargeNo"/>
+        <result column="charge_name" jdbcType="VARCHAR" property="chargeName"/>
+        <result column="standard" jdbcType="VARCHAR" property="standard"/>
+        <result column="insurance_code" jdbcType="VARCHAR" property="insuranceCode"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="dose" jdbcType="DECIMAL" property="dose"/>
+        <result column="total" jdbcType="DECIMAL" property="total"/>
+        <result column="cope_no" jdbcType="VARCHAR" property="copeNo"/>
+        <result column="cope_sort_number" jdbcType="VARCHAR" property="copeSortNumber"/>
+        <result column="item_sort_number" jdbcType="VARCHAR" property="itemSortNumber"/>
+        <result column="cope_group" jdbcType="VARCHAR" property="copeGroup"/>
+        <result column="cope_type" jdbcType="VARCHAR" property="copeType"/>
+        <result column="cope_class" jdbcType="VARCHAR" property="copeClass"/>
+        <result column="item_code" jdbcType="VARCHAR" property="itemCode"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="bills_no_old" jdbcType="VARCHAR" property="billsNoOld"/>
+        <result column="pay_mark" jdbcType="VARCHAR" property="payMark"/>
+        <result column="validity" jdbcType="TIMESTAMP" property="validity"/>
+        <result column="closing_date" jdbcType="TIMESTAMP" property="closingDate"/>
+        <result column="middle_settlement_mark" jdbcType="VARCHAR" property="middleSettlementMark"/>
+        <result column="settle_account" jdbcType="VARCHAR" property="settleAccount"/>
+        <result column="settle_account_no" jdbcType="VARCHAR" property="settleAccountNo"/>
+        <result column="settle_account_name" jdbcType="VARCHAR" property="settleAccountName"/>
+        <result column="statistics_date" jdbcType="TIMESTAMP" property="statisticsDate"/>
+        <result column="cp_code" jdbcType="VARCHAR" property="cpCode"/>
+        <result column="cp_name" jdbcType="VARCHAR" property="cpName"/>
+        <result column="operation_no" jdbcType="VARCHAR" property="operationNo"/>
+        <result column="operation_name" jdbcType="VARCHAR" property="operationName"/>
+        <result column="baby_fee_mark" jdbcType="VARCHAR" property="babyFeeMark"/>
+        <result column="uploading_mark" jdbcType="VARCHAR" property="uploadingMark"/>
+        <result column="reg_no" jdbcType="VARCHAR" property="regNo"/>
+        <result column="source_program" jdbcType="VARCHAR" property="sourceProgram"/>
+
+        <result column="medicalInsuranceCode"  property="medicalInsuranceCode"/>
+        <result column="medicalInsuranceName"  property="medicalInsuranceName"/>
+        <result column="ratioOwnExpense"  property="ratioOwnExpense"/>
+        <result column="projectGrade"  property="projectGrade"/>
+    </resultMap>
+
+    <resultMap id="ExpenseDetailVoResultMap" extends="BaseResultMap"
+               type="com.emr.project.pat.domain.vo.ExpenseDetailVo">
+        <result column="filing_date_str" jdbcType="VARCHAR" property="filingDateStr"/>
+        <result column="PHYSICIAN_CODE" jdbcType="VARCHAR" property="physicianCode"/>
+        <result column="PHYSICIAN_NO" jdbcType="VARCHAR" property="physicianNo"/>
+        <result column="PHYSICIAN_NAME" jdbcType="VARCHAR" property="physicianName"/>
+        <result column="PHYSICIAN_DPT_NAME" jdbcType="VARCHAR" property="physicianDptName"/>
+        <result column="PHYSICIAN_DPT_NO" jdbcType="VARCHAR" property="physicianDptNo"/>
+        <result column="EXECUTOR_DPT_NO" jdbcType="VARCHAR" property="executorDptNo"/>
+        <result column="EXECUTOR_DPT_NAME" jdbcType="VARCHAR" property="executorDptName"/>
+        <result column="patient_name" jdbcType="VARCHAR" property="patientName"/>
+        <result column="thirdName" jdbcType="VARCHAR" property="thirdName"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="operator_name" jdbcType="VARCHAR" property="operatorName"/>
+        <result column="department_no" jdbcType="VARCHAR" property="departmentNo"/>
+    </resultMap>
+
+    <select id="selectFeeList" parameterType="com.emr.project.pat.domain.vo.PatFeeVo"
+            resultType="com.emr.project.pat.domain.vo.PatFeeVo">
+		select  cc.first_code as xmbh,cc.firs_name as feeName,sum(je) as  feeAmount from(
+																  select THREE_LEVEL_ACCOUNTING as  xmbh,TOTAL as je
+																  from td_na_pat_fee a,t_ih_expensedetail b
+																  where a.admission_no=b.admission_no and a.prescription=b.prescription and a.admission_no=#{inpNo} and PAY_MARK='-1'
+																  union all
+																  select  THREE_LEVEL_ACCOUNTING as xmbh,TOTAL as je
+																  from td_na_pat_fee_cybr a,t_ih_expensedetail_cybr b
+																  where a.admission_no=b.admission_no and a.prescription=b.prescription and a.admission_no=#{inpNo} and PAY_MARK='-1'
+																  union all
+																  select   THREE_LEVEL_ACCOUNTING as xmbh,TOTAL as je
+																  from td_na_pat_fee_drcy a,t_ih_expensedetail_drcy  b
+																  where a.admission_no=b.admission_no and a.prescription=b.prescription and a.admission_no=#{inpNo} and PAY_MARK='-1'
+																  union all
+																  select  THREE_LEVEL_ACCOUNTING as xmbh,TOTAL as je
+																  from td_na_pat_fee_h a,t_ih_expensedetail_h  b
+																  where a.admission_no=b.admission_no and a.prescription=b.prescription and a.admission_no=#{inpNo} and PAY_MARK='-1'
+															  )  aa, TM_BS_ACCOUNT_THIRD bb,TM_BS_ACCOUNT_FIRST cc
+		where aa.xmbh = bb.code and bb.first_code = cc.first_code
+		group by   cc.first_code,cc.firs_name
+		order by  cc.first_code
+    </select>
+
+    <select id="selectAmount" parameterType="com.emr.project.pat.domain.vo.PatFeeVo"
+            resultType="com.emr.project.pat.domain.vo.PatFeeVo">
+         select DEPOS_IT as deposit,CUMULATIVE_COST as total,(DEPOS_IT-CUMULATIVE_COST) as depositRemaining from t_ih_cumulativecost where ADMISSION_NO=#{inpNo}
+    </select>
+
+    <select id="selectFeeByChargeCode" parameterType="com.emr.project.pat.domain.vo.ExpenseDetailVo"
+            resultMap="BaseResultMap">
+		select nvl(b.three_level_accounting, '') as three_level_accounting,
+				   nvl(b.three_level_name, '') as three_level_name,
+				   b.charge_code,
+				   b.charge_name,
+				   b.standard,
+				   unit,
+				   price,
+				   sum(dose) as dose,
+				   sum(total) as total,
+				    case xmdj when '01' then '甲类' when '02' then '乙类' when '03' then '自费' else '' end bzmc,
+					 b.medicalInsuranceCode,b.medicalInsuranceName,b.ratioOwnExpense,b.projectGrade
+		from (
+			select b.*,mu.xmdj,
+				clin.bzbm as medicalInsuranceCode,
+				clin.bzmc as medicalInsuranceName,
+				clin.zfbl as ratioOwnExpense,
+				clin.xmdj AS projectGrade
+			from t_ih_expensedetail b
+			left join td_na_pat_fee a on a.prescription = b.prescription
+			left join t_mi_uploaddetail_all mu on b.BILLS_NO = mu.bills_no
+			LEFT JOIN V_YY_BZBM_DRUG_CLIN clin on clin.xmbh = b.STANDARD_CODE
+			where b.pay_mark = '-1'
+			and a.admission_no = #{inpNo}
+			union all
+			select b.*,mu.xmdj,
+				clin.bzbm as medicalInsuranceCode,
+				clin.bzmc as medicalInsuranceName,
+				clin.zfbl as ratioOwnExpense,
+				clin.xmdj AS projectGrade
+			from v_ih_expensedetail_h b
+			left join v_na_pa_fee_h a on a.prescription = b.prescription
+			left join t_mi_uploaddetail_all mu on b.BILLS_NO = mu.bills_no
+			LEFT JOIN V_YY_BZBM_DRUG_CLIN clin on clin.xmbh = b.STANDARD_CODE
+			where b.pay_mark = '-1'
+			and a.admission_no = #{inpNo}
+		) b
+		where b.dose != 0
+		group by nvl(b.three_level_accounting, ''),
+					  nvl(b.three_level_name, ''),
+					  b.charge_code,
+					  b.charge_name,
+					  b.standard,
+					  unit,
+					  price,xmdj,
+						b.medicalInsuranceCode,b.medicalInsuranceName,b.ratioOwnExpense,b.projectGrade
+			order by nvl(b.three_level_accounting, ''),
+					  nvl(b.three_level_name, '')
+	</select>
+
+    <select id="selectFeeByThreeLevelAccounting" parameterType="com.emr.project.pat.domain.vo.ExpenseDetailVo"
+            resultMap="BaseResultMap">
+		select nvl(three_level_accounting, '') as three_level_accounting,
+		nvl(three_level_name, '') as three_level_name,
+		sum(total) as total
+		from (
+			select b.*
+			from td_na_pat_fee a, t_ih_expensedetail b
+			where b.pay_mark = '-1'
+			and a.prescription = b.prescription
+			and a.admission_no = #{inpNo}
+			and charge_no != '00'
+			union all
+			select b.*
+			from v_na_pa_fee_h a, v_ih_expensedetail_h b
+			where b.pay_mark = '-1'
+			and a.prescription = b.prescription
+			and a.admission_no = #{inpNo}
+			and charge_no != '00'
+		)
+		group by nvl(three_level_accounting, ''), nvl(three_level_name, '')
+		order by nvl(three_level_accounting, '')
+	</select>
+
+    <select id="selectFeeByDate" parameterType="com.emr.project.pat.domain.vo.ExpenseDetailVo"
+            resultMap="ExpenseDetailVoResultMap">
+		select '' as charge_name, to_char(filing_date, 'yyyy-mm-dd') as filing_date_str, sum(total) as total
+		from (
+			select b.*
+			from td_na_pat_fee a, t_ih_expensedetail b
+			where b.pay_mark = '-1'
+			and a.prescription = b.prescription
+			and a.admission_no = #{inpNo}
+			and charge_no != '00'
+			union all
+			select b.*
+			from v_na_pa_fee_h a, v_ih_expensedetail_h b
+			where b.pay_mark ='-1'
+			and a.prescription = b.prescription
+			and a.admission_no = #{inpNo}
+			and charge_no != '00'
+		)
+		group by to_char(filing_date, 'yyyy-mm-dd')
+		order by filing_date_str desc
+	</select>
+
+    <select id="selectFeeByType" parameterType="com.emr.project.pat.domain.vo.ExpenseDetailVo"
+            resultMap="ExpenseDetailVoResultMap">
+        select * from (
+        select a.filing_date
+        ,a.prescription
+        ,b.three_level_accounting
+        ,b.three_level_name
+        ,b.charge_code
+        ,b.charge_no
+        ,b.charge_name
+        ,b.standard
+        ,b.unit
+        ,b.price
+        ,b.dose
+        ,b.total
+        ,b.cope_group
+        ,b.cope_type
+        ,b.cope_class
+        ,b.item_name,baby_no
+        ,a.operator_code
+        ,a.operator
+        ,a.operator_name
+        ,a.department_no
+        ,a.department_name
+        ,a.visiting_staff_name
+        ,a.physician_name
+        ,a.physician_dpt_name
+        ,a.executor_name
+        ,a.executor_dpt_name
+        ,a.accounting_department_name ,b.cope_no
+        from td_na_pat_fee a,t_ih_expensedetail b
+        where b.pay_mark ='-1' and a.prescription = b.prescription and a.admission_no =#{inpNo}
+        union all
+        select a.filing_date
+        ,a.prescription
+        ,b.three_level_accounting
+        ,b.three_level_name
+        ,b.charge_code
+        ,b.charge_no
+        ,b.charge_name
+        ,b.standard
+        ,b.unit
+        ,b.price
+        ,b.dose
+        ,b.total
+        ,b.cope_group
+        ,b.cope_type
+        ,b.cope_class
+        ,b.item_name,baby_no
+        ,a.operator_code
+        ,a.operator
+        ,a.operator_name
+        ,a.department_no
+        ,a.department_name
+        ,a.visiting_staff_name
+        ,a.physician_name
+        ,a.physician_dpt_name
+        ,a.executor_name
+        ,a.executor_dpt_name
+        ,a.accounting_department_name ,b.cope_no
+        from v_na_pa_fee_h a, v_ih_expensedetail_h b
+        where b.pay_mark ='-1' and a.prescription = b.prescription and a.admission_no =#{inpNo}
+        ) a
+        <where>
+            <if test="filingDateStr != null and filingDateStr != ''">
+                and filing_date >= to_date(#{filingDateStart},'yyyy-mm-dd')
+                and filing_date <![CDATA[ < ]]> to_date(#{filingDateEnd},'yyyy-mm-dd')
+            </if>
+            <if test="threeLevelAccounting != null and threeLevelAccounting != ''">
+                and three_level_accounting = #{threeLevelAccounting}
+            </if>
+            <if test="chargeNo != null and chargeNo != ''">
+                and charge_no = #{chargeNo}
+            </if>
+        </where>
+        order by filing_date desc
+    </select>
+
+    <!-- 批量插入费用主表 -->
+    <insert id="insertBatch" parameterType="com.emr.project.operation.domain.PatFee">
+        insert into td_na_pat_fee (hospital_code, case_no, admission_no,
+        hospitalized_count, baby_no, prescription,
+        filing_date, operator_code, operator,
+        operator_name, ward_no, ward_name,
+        department_no, department_name, medical_group_v,
+        visiting_staff_code, visiting_staff_no, visiting_staff_name,
+        medical_group_p, physician_code, physician_no,
+        physician_name, physician_dpt_no, physician_dpt_name,
+        nursing_group, executor_code, executor_no,
+        executor_name, executor_dpt_no, executor_dpt_name,
+        accounting_department_no, accounting_department_name,source_program
+        )
+        select a.* from (
+        <foreach collection="list" item="item" index="index" separator="union all ">
+            select
+            #{item.hospitalCode,jdbcType=VARCHAR} as hospital_code, #{item.caseNo,jdbcType=VARCHAR} as case_no,
+            #{item.admissionNo,jdbcType=VARCHAR} as admission_no,
+            #{item.hospitalizedCount,jdbcType=INTEGER} as hospitalized_count, #{item.babyNo,jdbcType=VARCHAR} as
+            baby_no,
+            #{item.prescription,jdbcType=VARCHAR} as prescription,
+            (SELECT sysdate FROM dual) as filing_date, #{item.operatorCode,jdbcType=VARCHAR} as operator_code,
+            #{item.operator,jdbcType=VARCHAR} as operator,
+            #{item.operatorName,jdbcType=VARCHAR} as operator_name, #{item.wardNo,jdbcType=VARCHAR} as ward_no,
+            #{item.wardName,jdbcType=VARCHAR} as ward_name,
+            #{item.departmentNo,jdbcType=VARCHAR} as department_no, #{item.departmentName,jdbcType=VARCHAR} as
+            department_name, #{item.medicalGroupV,jdbcType=VARCHAR} as medical_group_v,
+            #{item.visitingStaffCode,jdbcType=VARCHAR} as visiting_staff_code, #{item.visitingStaffNo,jdbcType=VARCHAR}
+            as visiting_staff_no, #{item.visitingStaffName,jdbcType=VARCHAR} as visiting_staff_name,
+            #{item.medicalGroupP,jdbcType=VARCHAR} as medical_group_p, #{item.physicianCode,jdbcType=VARCHAR} as
+            physician_code, #{item.physicianNo,jdbcType=VARCHAR} as physician_no,
+            #{item.physicianName,jdbcType=VARCHAR} as physician_name, #{item.physicianDptNo,jdbcType=VARCHAR} as
+            physician_dpt_no, #{item.physicianDptName,jdbcType=VARCHAR} as physician_dpt_name,
+            #{item.nursingGroup,jdbcType=VARCHAR} as nursing_group, #{item.executorCode,jdbcType=VARCHAR} as
+            executor_code, #{item.executorNo,jdbcType=VARCHAR} as executor_no,
+            #{item.executorName,jdbcType=VARCHAR} as executor_name, #{item.executorDptNo,jdbcType=VARCHAR} as
+            executor_dpt_no, #{item.executorDptName,jdbcType=VARCHAR} as executor_dpt_name,
+            #{item.accountingDepartmentNo,jdbcType=VARCHAR} as accounting_department_no,
+            #{item.accountingDepartmentName,jdbcType=VARCHAR} as accounting_department_name,
+            #{item.sourceProgram,jdbcType=VARCHAR} as source_program
+            from dual
+        </foreach>
+        ) a
+    </insert>
+
+    <!-- 批量插入费用主表 -->
+    <insert id="insertBatchApp" parameterType="com.emr.project.operation.domain.PatFee">
+        insert into td_na_ope_fee_app (hospital_code, case_no, admission_no,
+        hospitalized_count, baby_no, prescription,
+        filing_date, operator_code, operator,
+        operator_name, ward_no, ward_name,
+        department_no, department_name, medical_group_v,
+        visiting_staff_code, visiting_staff_no, visiting_staff_name,
+        medical_group_p, physician_code, physician_no,
+        physician_name, physician_dpt_no, physician_dpt_name,
+        nursing_group, executor_code, executor_no,
+        executor_name, executor_dpt_no, executor_dpt_name,
+        accounting_department_no, accounting_department_name,source_program
+        )
+        select a.* from (
+        <foreach collection="list" item="item" index="index" separator="union all ">
+            select
+            #{item.hospitalCode,jdbcType=VARCHAR} as hospital_code, #{item.caseNo,jdbcType=VARCHAR} as case_no,
+            #{item.admissionNo,jdbcType=VARCHAR} as admission_no,
+            #{item.hospitalizedCount,jdbcType=INTEGER} as hospitalized_count, #{item.babyNo,jdbcType=VARCHAR} as
+            baby_no,
+            #{item.prescription,jdbcType=VARCHAR} as prescription,
+            (SELECT sysdate FROM dual) as filing_date, #{item.operatorCode,jdbcType=VARCHAR} as operator_code,
+            #{item.operator,jdbcType=VARCHAR} as operator,
+            #{item.operatorName,jdbcType=VARCHAR} as operator_name, #{item.wardNo,jdbcType=VARCHAR} as ward_no,
+            #{item.wardName,jdbcType=VARCHAR} as ward_name,
+            #{item.departmentNo,jdbcType=VARCHAR} as department_no, #{item.departmentName,jdbcType=VARCHAR} as
+            department_name, #{item.medicalGroupV,jdbcType=VARCHAR} as medical_group_v,
+            #{item.visitingStaffCode,jdbcType=VARCHAR} as visiting_staff_code, #{item.visitingStaffNo,jdbcType=VARCHAR}
+            as visiting_staff_no, #{item.visitingStaffName,jdbcType=VARCHAR} as visiting_staff_name,
+            #{item.medicalGroupP,jdbcType=VARCHAR} as medical_group_p, #{item.physicianCode,jdbcType=VARCHAR} as
+            physician_code, #{item.physicianNo,jdbcType=VARCHAR} as physician_no,
+            #{item.physicianName,jdbcType=VARCHAR} as physician_name, #{item.physicianDptNo,jdbcType=VARCHAR} as
+            physician_dpt_no, #{item.physicianDptName,jdbcType=VARCHAR} as physician_dpt_name,
+            #{item.nursingGroup,jdbcType=VARCHAR} as nursing_group, #{item.executorCode,jdbcType=VARCHAR} as
+            executor_code, #{item.executorNo,jdbcType=VARCHAR} as executor_no,
+            #{item.executorName,jdbcType=VARCHAR} as executor_name, #{item.executorDptNo,jdbcType=VARCHAR} as
+            executor_dpt_no, #{item.executorDptName,jdbcType=VARCHAR} as executor_dpt_name,
+            #{item.accountingDepartmentNo,jdbcType=VARCHAR} as accounting_department_no,
+            #{item.accountingDepartmentName,jdbcType=VARCHAR} as accounting_department_name,
+            #{item.sourceProgram,jdbcType=VARCHAR} as source_program
+            from dual
+        </foreach>
+        ) a
+    </insert>
+
+    <select id="getTempFyxxYz" parameterType="map" resultType="map">
+        select
+        b.filing_date ,
+        rtrim(b.three_level_name) as three_level_name ,
+        b.charge_no ,
+        b.charge_name ,
+        b.standard ,
+        b.unit ,
+        b.price ,
+        b.dose ,
+        b.total,a.physician_name,a.physician_dpt_name,a.executor_dpt_name,a.executor_dpt_no,a.accounting_department_name,a.operator_name,c.admission_no,c.name,
+        c.bedid,case d.sex when '1' then '男' else '女' end as sex, d.person_age||'岁' as person_age,sysdate as printDate
+        from td_na_pat_fee a,
+        t_ih_expensedetail b,
+        t_ar_medicalinformation c ,
+        t_ar_baseinfomation d
+        where a.prescription = b.prescription
+        and a.admission_no =#{admission_no} and a.hospitalized_count = #{hospitalized_count}
+        and a.admission_no=c.admission_no and a.hospitalized_count=c.hospitalized_count
+        and a.admission_no=d.admission_no and a.hospitalized_count=d.hospitalized_count
+        and b.cope_no = #{order_no} and b.cope_sort_number =#{order_sort_number}
+        order by b.filing_date
+    </select>
+    <select id="selectListPerformNo" parameterType="map" resultType="map">
+        select
+        b.filing_date ,
+        rtrim(b.three_level_name) as three_level_name ,
+        b.charge_no ,
+        b.charge_name ,
+        b.standard ,
+        b.unit ,
+        b.price ,
+        b.dose ,
+        b.total,
+        a.physician_name,
+        a.physician_dpt_name,
+        a.executor_dpt_name,a.executor_dpt_no,a.accounting_department_name,a.operator_name,c.admission_no,c.name,
+        c.bedid,case d.sex when '1' then '男' else '女' end as sex, d.person_age||'岁' as person_age,sysdate as printDate
+        from td_na_pat_fee a,
+        t_ih_expensedetail b,
+        t_ar_medicalinformation c,
+        t_ar_baseinfomation d
+        where a.prescription = b.prescription
+        and a.admission_no =#{admission_no} and a.hospitalized_count = #{hospitalized_count}
+        and a.admission_no=c.admission_no and a.hospitalized_count=c.hospitalized_count
+        and a.admission_no=d.admission_no and a.hospitalized_count=d.hospitalized_count
+        and b.perform_list_no = #{order_no}
+        order by b.filing_date
+    </select>
+    <select id="getTempFyxxZlf" parameterType="map" resultType="map">
+     select b.filing_date ,
+       rtrim(b.three_level_name) as three_level_name ,
+       b.charge_no ,
+       b.charge_name ,
+       b.standard ,
+       b.unit ,
+       b.price ,
+       b.dose ,
+       b.total,a.physician_name,a.physician_dpt_name,a.executor_dpt_name,a.executor_dpt_no,a.accounting_department_name,a.operator_name,c.admission_no,c.name,
+       c.bedid,case d.sex when '1' then '男' else '女' end as sex  ,d.person_age||'岁' as person_age,sysdate as printDate
+  from
+      td_na_pat_fee a,
+      t_ih_expensedetail b,
+      t_ar_medicalinformation c ,
+      t_ar_baseinfomation d
+  where a.prescription = b.prescription
+    and a.admission_no =#{admission_no} and a.hospitalized_count = #{hospitalized_count}
+    and a.admission_no=c.admission_no and a.hospitalized_count=c.hospitalized_count
+    and a.admission_no=d.admission_no and a.hospitalized_count=d.hospitalized_count
+    and a.prescription = #{order_no}
+    order by b.filing_date
+  </select>
+
+    <select id="selectOperRoomFeeDetailList" resultMap="ExpenseDetailVoResultMap" parameterType="FeeDetailReq">
+        SELECT
+        fee.department_name,
+        fee.admission_no,
+        pp.name patient_name,
+        de.charge_code,
+        de.charge_name,
+        de.standard,
+        de.unit,
+        de.price,
+        de.dose,
+        de.total,
+        third.name as thirdname,
+        de.project_name,
+        de.filing_date,
+        fee.operator_name,
+        case when f.FIRST_CODE = '1' then null else fee.physician_name end as physician_name,
+        fee.physician_dpt_name,
+        fee.executor_dpt_name,
+        fee.case_no as caseNo,
+        fee.department_no
+        FROM
+        T_IH_EXPENSEDETAIL_all de
+        left join TD_NA_PAT_FEE_all fee on de.PRESCRIPTION=fee.PRESCRIPTION
+        left join TM_BS_ACCOUNT_THIRD third on third.CODE=de.THREE_LEVEL_ACCOUNTING
+        left join TM_BS_ACCOUNT_FIRST f on f.FIRST_CODE=third.FIRST_CODE
+        left join T_AR_MEDICALINFORMATION_all pp on pp.admission_no=fee.admission_no
+        left join td_pa_order_detail od on de.cope_no = od.order_no and de.ITEM_SORT_NUMBER = od.ORDER_GROUP_SORT_NUMBER
+        <where>
+            and (fee.ACCOUNTING_DEPARTMENT_NO=#{accountingDepartmentNo} or (f.first_code = '1' and
+            fee.PHYSICIAN_DPT_NO=#{accountingDepartmentNo}) or fee.APPLY_DEPT_CD = #{accountingDepartmentNo})
+            <if test="filingDateStart != null and filingDateStart != '' and filingDateEnd != null and filingDateEnd != ''">
+                and de.filing_date >= to_date(#{filingDateStart},'yyyy-mm-dd')
+                and de.filing_date <![CDATA[ < ]]> to_date(#{filingDateEnd},'yyyy-mm-dd')
+            </if>
+            <if test="admissionNo!=null and admissionNo!=''">
+                and (fee.case_no like concat(concat('%', #{admissionNo}), '%') or pp.name like
+                concat(concat('%', #{admissionNo}), '%'))
+            </if>
+            <if test="chargeName!=null and chargeName!=''">
+                and (de.charge_name like concat(concat('%', #{chargeName}), '%') or de.charge_code like
+                concat(concat('%', #{chargeName}), '%'))
+            </if>
+            <if test="firstType!=null">
+                <if test="firstType=='1'.toString()">
+                    and f.FIRST_CODE='1'
+                </if>
+                <if test="firstType=='2'.toString()">
+                    and f.FIRST_CODE!='1'
+                </if>
+            </if>
+
+            <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "1"'>
+                and f.FIRST_CODE = '1'
+            </if>
+            <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "0"'>
+                and f.FIRST_CODE != '1' and f.FIRST_CODE != '3'
+            </if>
+            <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "2"'>
+                and f.FIRST_CODE = '3'
+            </if>
+
+            <if test='groupType != null and groupType == "2"'>
+                and f.FIRST_CODE != '1'
+            </if>
+
+            <if test="departmentNo != null and departmentNo != ''">
+                and fee.department_no = #{departmentNo}
+            </if>
+        </where>
+        <if test="groupType == null">
+            order by pp.admission_no,de.filing_date, od.order_group_no, od.order_group_sort_number
+        </if>
+        <if test='groupType != null and groupType == "1"'>
+            order by fee.DEPARTMENT_Name,pp.admission_no,de.filing_date, od.order_group_no, od.order_group_sort_number
+        </if>
+        <if test='groupType != null and groupType == "2"'>
+            order by fee.PHYSICIAN_Name,pp.admission_no,de.filing_date, od.order_group_no, od.order_group_sort_number
+        </if>
+    </select>
+
+    <select id="selectOperRoomFeeDetailGroupProject" resultMap="ExpenseDetailVoResultMap" parameterType="FeeDetailReq">
+        SELECT de.CHARGE_CODE,de.CHARGE_NAME,de.STANDARD,de.UNIT,de.PRICE,sum(de.DOSE) dose,
+        sum(de.TOTAL) total
+        <if test="groupType == null">
+            ,de.THREE_LEVEL_ACCOUNTING,third.name as thirdname
+        </if>
+        <if test='groupType != null and groupType == "1"'>
+            ,fee.DEPARTMENT_NO,fee.DEPARTMENT_NAME
+        </if>
+        <if test='groupType != null and groupType == "2"'>
+            ,de.THREE_LEVEL_ACCOUNTING,third.name as thirdname,fee.PHYSICIAN_NO,fee.PHYSICIAN_NAME
+        </if>
+        FROM T_IH_EXPENSEDETAIL_all de
+        left join TD_NA_PAT_FEE_all fee on de.PRESCRIPTION=fee.PRESCRIPTION
+        left join TM_BS_ACCOUNT_THIRD third on third.CODE=de.THREE_LEVEL_ACCOUNTING
+        left join TM_BS_ACCOUNT_FIRST f on f.FIRST_CODE=third.FIRST_CODE
+        left join T_AR_MEDICALINFORMATION_all pp on pp.admission_no=fee.admission_no
+        <where>
+            and (fee.ACCOUNTING_DEPARTMENT_NO=#{accountingDepartmentNo} or (f.first_code = '1' and
+            fee.PHYSICIAN_DPT_NO=#{accountingDepartmentNo}) or fee.APPLY_DEPT_CD = #{accountingDepartmentNo})
+            <if test="filingDateStart != null and filingDateStart != '' and filingDateEnd != null and filingDateEnd != ''">
+                and de.filing_date >= to_date(#{filingDateStart},'yyyy-mm-dd')
+                and de.filing_date <![CDATA[ < ]]> to_date(#{filingDateEnd},'yyyy-mm-dd')
+            </if>
+            <if test="admissionNo!=null and admissionNo!=''">
+                and (fee.case_no like concat(concat('%', #{admissionNo}), '%') or pp.name like
+                concat(concat('%', #{admissionNo}), '%'))
+            </if>
+            <if test="chargeName!=null and chargeName!=''">
+                and (de.charge_name like concat(concat('%', #{chargeName}), '%') or de.charge_code like
+                concat(concat('%', #{chargeName}), '%'))
+            </if>
+            <if test="firstType!=null">
+                <if test="firstType=='1'.toString()">
+                    and f.FIRST_CODE='1'
+                </if>
+                <if test="firstType=='2'.toString()">
+                    and f.FIRST_CODE!='1'
+                </if>
+            </if>
+
+            <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "1"'>
+                and f.FIRST_CODE = '1'
+            </if>
+            <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "0"'>
+                and f.FIRST_CODE != '1' and f.FIRST_CODE != '3'
+            </if>
+            <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "2"'>
+                and f.FIRST_CODE = '3'
+            </if>
+            <if test="departmentNo != null and departmentNo != ''">
+                and fee.department_no = #{departmentNo}
+            </if>
+        </where>
+        <if test="groupType == null">
+            group by de.CHARGE_CODE,de.CHARGE_NAME,de.STANDARD,de.UNIT,de.PRICE,de.THREE_LEVEL_ACCOUNTING,third.name
+            order by third.name,de.CHARGE_NAME
+        </if>
+        <if test='groupType != null and groupType == "1"'>
+            group by de.CHARGE_CODE,de.CHARGE_NAME,de.STANDARD,de.UNIT,de.PRICE,fee.DEPARTMENT_NO,fee.DEPARTMENT_NAME
+            order by fee.DEPARTMENT_NAME,de.CHARGE_NAME
+        </if>
+        <if test='groupType != null and groupType == "2"'>
+            group by de.CHARGE_CODE,de.CHARGE_NAME,de.STANDARD,de.UNIT,de.PRICE,de.THREE_LEVEL_ACCOUNTING,third.name,fee.PHYSICIAN_NO,fee.PHYSICIAN_NAME
+            order by fee.PHYSICIAN_NAME,third.name,de.CHARGE_NAME
+        </if>
+    </select>
+
+    <resultMap id="PatFeeResult" type="com.emr.project.operation.domain.PatFee">
+        <result column="HOSPITAL_CODE" property="hospitalCode"/>
+        <result column="CASE_NO" property="caseNo"/>
+        <result column="ADMISSION_NO" property="admissionNo"/>
+        <result column="HOSPITALIZED_COUNT" property="hospitalizedCount"/>
+        <result column="BABY_NO" property="babyNo"/>
+        <result column="PRESCRIPTION" property="prescription"/>
+        <result column="FILING_DATE" property="filingDate"/>
+        <result column="OPERATOR_CODE" property="operatorCode"/>
+        <result column="OPERATOR" property="operator"/>
+        <result column="OPERATOR_NAME" property="operatorName"/>
+        <result column="WARD_NO" property="wardNo"/>
+        <result column="WARD_NAME" property="wardName"/>
+        <result column="DEPARTMENT_NO" property="departmentNo"/>
+        <result column="DEPARTMENT_NAME" property="departmentName"/>
+        <result column="MEDICAL_GROUP_V" property="medicalGroupV"/>
+        <result column="VISITING_STAFF_CODE" property="visitingStaffCode"/>
+        <result column="VISITING_STAFF_NO" property="visitingStaffNo"/>
+        <result column="VISITING_STAFF_NAME" property="visitingStaffName"/>
+        <result column="MEDICAL_GROUP_P" property="medicalGroupP"/>
+        <result column="PHYSICIAN_CODE" property="physicianCode"/>
+        <result column="PHYSICIAN_NO" property="physicianNo"/>
+        <result column="PHYSICIAN_NAME" property="physicianName"/>
+        <result column="PHYSICIAN_DPT_NO" property="physicianDptNo"/>
+        <result column="PHYSICIAN_DPT_NAME" property="physicianDptName"/>
+        <result column="NURSING_GROUP" property="nursingGroup"/>
+        <result column="EXECUTOR_CODE" property="executorCode"/>
+        <result column="EXECUTOR_NO" property="executorNo"/>
+        <result column="EXECUTOR_NAME" property="executorName"/>
+        <result column="EXECUTOR_DPT_NO" property="executorDptNo"/>
+        <result column="EXECUTOR_DPT_NAME" property="executorDptName"/>
+        <result column="ACCOUNTING_DEPARTMENT_NO" property="accountingDepartmentNo"/>
+        <result column="ACCOUNTING_DEPARTMENT_NAME" property="accountingDepartmentName"/>
+        <result column="SOURCE_PROGRAM" property="sourceProgram"/>
+    </resultMap>
+    <select id="selectFeeByPrescription" resultMap="PatFeeResult">
+	    SELECT * FROM TD_NA_PAT_FEE WHERE PRESCRIPTION = #{prescription} and rowNum=1
+	</select>
+
+    <select id="selectFeeAppByPrescription" resultMap="PatFeeResult">
+	    SELECT * FROM td_na_ope_fee_app WHERE PRESCRIPTION = #{prescription} and rowNum=1
+	</select>
+    <delete id="delFeeAppByPrescription">
+        delete from td_na_ope_fee_app WHERE PRESCRIPTION in
+        <foreach collection="list" item="prescription" open="(" separator="," close=")">
+            #{prescription}
+        </foreach>
+    </delete>
+
+    <select id="selectByPrescriptionList" parameterType="string" resultMap="PatFeeResult">
+        select * from TD_NA_PAT_FEE where HOSPITAL_CODE = #{orgCd} and PRESCRIPTION in
+        <foreach collection="prescriptionList" item="prescription" open="(" separator="," close=")">
+            #{prescription}
+        </foreach>
+    </select>
+    <resultMap id="DrugsAndPriceYyResult" type="com.emr.project.pat.domain.resp.DrugsAndPriceYyResp">
+        <result column="ypmc" property="ypmc"/>
+        <result column="ypbm" property="ypbm"/>
+        <result column="pybm" property="pybm"/>
+        <result column="gg" property="gg"/>
+    </resultMap>
+    <select id="searchPriceYy" parameterType="java.util.Map" resultMap="DrugsAndPriceYyResult">
+        select t1.standard_name as ypmc,t1.standard_code as ypbm, t1.standard_name_pym as pybm,nvl(t1.STANDARD,'') as gg
+        from TM_BS_PRICE_YY t1
+        left join TM_BS_DEPT_PRICE dp on dp.YYXM_CODE= t1.ITEM_NO and dp.ks_code = #{dep_code,jdbcType=VARCHAR}
+        left join tm_BS_account_third_dygx t5 on t1.hos_upper = t5.third_code and sec_code = '04'
+        left join YY_BZBM_XMDZ_ZL y on t1.item_no = y.xmbh
+        where t1.HOS_FLAG = '1'
+        and (t1.DEP_EXEC_NO = #{dep_code,jdbcType=VARCHAR} or dp.ks_code = #{dep_code,jdbcType=VARCHAR} or t1.share_flag='0')
+        <if test="xmmc != null and xmmc.trim() != ''">
+            and (t1.standard_name_pym like concat( concat('%', #{xmmc}), '%')
+            or t1.standard_name like concat( concat('%', #{xmmc}), '%')
+            or t1.standard_code like concat( concat('%', #{xmmc}), '%'))
+        </if>
+        and rownum &lt;= 20
+    </select>
+    <select id="searchdrugs2Resp" resultMap="DrugsAndPriceYyResult">
+        SELECT top 20 rtrim(yy_p_ypwh.pybm) as pybm,
+			   rtrim(yy_p_ypwh.ypmc) as ypmc,
+			   rtrim(yy_p_ypwh.ypbm) as ypbm,
+			   rtrim(yy_p_ypwh.gg) as gg
+		FROM yy_p_ypwh
+		where yy_p_ypwh.pybm like concat( concat('%', #{keyword}), '%') or yy_p_ypwh.ypmc like concat( concat('%', #{keyword}), '%')
+    </select>
+</mapper>

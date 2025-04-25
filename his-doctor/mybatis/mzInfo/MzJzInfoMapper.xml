@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mzInfo.mapper.MzJzInfoMapper">
+
+	<resultMap type="MzOrderDetail" id="MzOrderDetailResult">
+		<result property="prescriptionNum"          column="cfbh"          />
+		<result property="orderGroupNo"          column="group_num"          />
+		<result property="orderStartTime"          column="klsj"          />
+		<result property="orderStatus"          column="yzzt"          />
+		<result property="cpName"          column="yzmc"          />
+		<result property="standard"          column="guige"          />
+		<result property="orderActualUsage"          column="mcyl"          />
+		<result property="orderFreq"          column="pl_mc"          />
+		<result property="orderUsageWay"          column="sig_mc"          />
+		<result property="orderUsageDays"          column="yyts"          />
+		<result property="doctorInstructions"          column="yssm"          />
+		<result property="detailPerformName"          column="zxksmc"          />
+		<result property="price"          column="dj"          />
+		<result property="mzh"          column="mzh"          />
+		<result property="orderDose"          column="sl"          />
+		<result property="unit"          column="dw"          />
+	</resultMap>
+
+	<!--<select id="selectMzOrderDetail" parameterType="SqlVo" resultMap="MzOrderDetailResult">
+        exec proc_emr_get_mzcf #{mzh},#{orderClassCode}
+    </select>-->
+
+	<select id="selectMzOrderDetail" parameterType="MzOrderDetail" resultMap="MzOrderDetailResult">
+        select * from (
+        select b.order_no      as cfbh, --处方号
+			   b.group_no      as group_num, --组号
+			   b.group_sort_no as yzxh, --医嘱序号
+			   b.cre_date      as klsj, --开立时间
+			   b.staus         as yzzt, --状态
+			   b.item_cd       as yzbm, --医嘱编码
+			   b.item_name     as yzmc, --医嘱名称
+			   b.standard      as guige, --规格
+			   to_char(b.once_dose,'FM9999990.9999')     as mcyl, --每次用量
+			   b.usage_cd      as sig_bh, --用法编码
+			   b.usage_name    as sig_mc, --用法名称
+			   b.freq_cd       as pl_bh, --频率编码
+			   b.freq_name     as pl_mc, --频率名称
+			   b.days          as yyts, --天数
+			   b.oeder_desc    as yssm, --医师说明
+			   b.exec_dept_cd  as zxksbh, --执行科室编号
+			   c.dept_name     as zxksmc, --执行科室名称
+			   to_char(b.item_price,'FM9999990.9999')    as dj, --单价
+			   b.item_num      as sl, --数量
+			   b.item_unit     as dw, --单位
+			   b.group_no,
+       		   b.group_sort_no
+		  from td_dr_order_item b
+		  left join tm_bs_dept c
+			on b.exec_dept_cd = c.dept_code
+		 where b.patient_id = #{mzh}
+		   and b.visit_no = #{visitNo}
+		   and b.order_class_cd = #{orderClassCode}
+		union all
+		select b.order_no      as cfbh, --处方号
+			   b.group_no      as group_num, --组号
+			   b.group_sort_no as yzxh, --医嘱序号
+			   b.cre_date      as klsj, --开立时间
+			   b.staus         as yzzt, --状态
+			   b.item_cd       as yzbm, --医嘱编码
+			   b.item_name     as yzmc, --医嘱名称
+			   b.standard      as guige, --规格
+			   to_char(b.once_dose,'FM9999990.9999')     as mcyl, --每次用量
+			   b.usage_cd      as sig_bh, --用法编码
+			   b.usage_name    as sig_mc, --用法名称
+			   b.freq_cd       as pl_bh, --频率编码
+			   b.freq_name     as pl_mc, --频率名称
+			   b.days          as yyts, --天数
+			   b.oeder_desc    as yssm, --医师说明
+			   b.exec_dept_cd  as zxksbh, --执行科室编号
+			   c.dept_name     as zxksmc, --执行科室名称
+			   to_char(b.item_price,'FM9999990.9999')    as dj, --单价
+			   b.item_num      as sl, --数量
+			   b.item_unit     as dw, --单位
+			   b.group_no,
+       		   b.group_sort_no
+		  from td_dr_order_item_h b
+		  left join tm_bs_dept c
+			on b.exec_dept_cd = c.dept_code
+		 where b.patient_id = #{mzh}
+		   and b.visit_no = #{visitNo}
+		   and b.order_class_cd = #{orderClassCode}
+		   )
+		order by group_no,group_sort_no
+    </select>
+</mapper>

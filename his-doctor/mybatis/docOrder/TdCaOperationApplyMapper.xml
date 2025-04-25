@@ -1,0 +1,1099 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdCaOperationApplyMapper">
+
+    <resultMap type="TdCaOperationApply" id="TdCaOperationApplyResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="applyDeptCd"    column="apply_dept_cd"    />
+        <result property="applyDeptName"    column="apply_dept_name"    />
+        <result property="applyDocCd"    column="apply_doc_cd"    />
+        <result property="applyDocName"    column="apply_doc_name"    />
+        <result property="applyDate"    column="apply_date"    />
+        <result property="execDeptCd"    column="exec_dept_cd"    />
+        <result property="execDeptName"    column="exec_dept_name"    />
+        <result property="planOperTime"    column="plan_oper_time"    />
+        <result property="operTypeCd"    column="oper_type_cd"    />
+        <result property="unplanOperFlag"    column="unplan_oper_flag"    />
+        <result property="majorOperFlag"    column="major_oper_flag"    />
+        <result property="preoperDiag1Cd"    column="preoper_diag1_cd"    />
+        <result property="preoperDiag1Name"    column="preoper_diag1_name"    />
+        <result property="preoperDiag1Prefix"    column="preoper_diag1_prefix"    />
+        <result property="preoperDiag1Suffix"    column="preoper_diag1_suffix"    />
+        <result property="preoperDiag2Cd"    column="preoper_diag2_cd"    />
+        <result property="preoperDiag2Name"    column="preoper_diag2_name"    />
+        <result property="preoperDiag2Prefix"    column="preoper_diag2_prefix"    />
+        <result property="preoperDiag2Suffix"    column="preoper_diag2_suffix"    />
+        <result property="preoperDiag3Cd"    column="preoper_diag3_cd"    />
+        <result property="preoperDiag3Name"    column="preoper_diag3_name"    />
+        <result property="preoperDiag3Prefix"    column="preoper_diag3_prefix"    />
+        <result property="preoperDiag3Suffix"    column="preoper_diag3_suffix"    />
+        <result property="preoperDiag4Cd"    column="preoper_diag4_cd"    />
+        <result property="preoperDiag4Name"    column="preoper_diag4_name"    />
+        <result property="preoperDiag4Prefix"    column="preoper_diag4_prefix"    />
+        <result property="preoperDiag4Suffix"    column="preoper_diag4_suffix"    />
+        <result property="planOper1Cd"    column="plan_oper1_cd"    />
+        <result property="planOper1Name"    column="plan_oper1_name"    />
+        <result property="planOper1Prefix"    column="plan_oper1_prefix"    />
+        <result property="planOper1Suffix"    column="plan_oper1_suffix"    />
+        <result property="planOper2Cd"    column="plan_oper2_cd"    />
+        <result property="planOper2Name"    column="plan_oper2_name"    />
+        <result property="planOper2Prefix"    column="plan_oper2_prefix"    />
+        <result property="planOper2Suffix"    column="plan_oper2_suffix"    />
+        <result property="planOper3Cd"    column="plan_oper3_cd"    />
+        <result property="planOper3Name"    column="plan_oper3_name"    />
+        <result property="planOper3Prefix"    column="plan_oper3_prefix"    />
+        <result property="planOper3Suffix"    column="plan_oper3_suffix"    />
+        <result property="planOper4Cd"    column="plan_oper4_cd"    />
+        <result property="planOper4Name"    column="plan_oper4_name"    />
+        <result property="planOper4Prefix"    column="plan_oper4_prefix"    />
+        <result property="planOper4Suffix"    column="plan_oper4_suffix"    />
+        <result property="operLevelCd"    column="oper_level_cd"    />
+        <result property="operLevelName"    column="oper_level_name"    />
+        <result property="operInciCd"    column="oper_inci_cd"    />
+        <result property="operInciName"    column="oper_inci_name"    />
+        <result property="operPositionCd"    column="oper_position_cd"    />
+        <result property="operPositionName"    column="oper_position_name"    />
+        <result property="operSiteCd"    column="oper_site_cd"    />
+        <result property="operSiteName"    column="oper_site_name"    />
+        <result property="operDocCd"    column="oper_doc_cd"    />
+        <result property="operDocName"    column="oper_doc_name"    />
+        <result property="operAid1Cd"    column="oper_aid1_cd"    />
+        <result property="operAid1Name"    column="oper_aid1_name"    />
+        <result property="operAid2Cd"    column="oper_aid2_cd"    />
+        <result property="operAid2Name"    column="oper_aid2_name"    />
+        <result property="operAid3Cd"    column="oper_aid3_cd"    />
+        <result property="operAid3Name"    column="oper_aid3_name"    />
+        <result property="circulatNurse1Cd"    column="circulat_nurse1_cd"    />
+        <result property="circulatNurse1Name"    column="circulat_nurse1_name"    />
+        <result property="circulatNurse2Cd"    column="circulat_nurse2_cd"    />
+        <result property="circulatNurse2Name"    column="circulat_nurse2_name"    />
+        <result property="anestMethCd"    column="anest_meth_cd"    />
+        <result property="anestMethName"    column="anest_meth_name"    />
+        <result property="anestCd"    column="anest_cd"    />
+        <result property="anestName"    column="anest_name"    />
+        <result property="planOperDurationHour"    column="plan_oper_duration_hour"    />
+        <result property="planOperDurationMin"    column="plan_oper_duration_min"    />
+        <result property="operRoom"    column="oper_room"    />
+        <result property="operRoomCd"    column="oper_room_cd"    />
+        <result property="operTable"    column="oper_table"    />
+        <result property="aboCd"    column="abo_cd"    />
+        <result property="aboName"    column="abo_name"    />
+        <result property="rhCd"    column="rh_cd"    />
+        <result property="rhName"    column="rh_name"    />
+        <result property="hbv"    column="hbv"    />
+        <result property="hiv"    column="hiv"    />
+        <result property="hcv"    column="hcv"    />
+        <result property="tp"    column="tp"    />
+        <result property="hbvName"    column="hbv_name"    />
+        <result property="hivName"    column="hiv_name"    />
+        <result property="hcvName"    column="hcv_name"    />
+        <result property="tpName"    column="tp_name"    />
+        <result property="redBloodCell"    column="red_blood_cell"    />
+        <result property="platelet"    column="platelet"    />
+        <result property="plasma"    column="plasma"    />
+        <result property="wholeBlood"    column="whole_blood"    />
+        <result property="deviceReq"    column="device_req"    />
+        <result property="otherNote"    column="other_note"    />
+        <result property="visitors"    column="visitors"    />
+        <result property="status"    column="status"    />
+        <result property="operDate"    column="oper_date"    />
+        <result property="auditDocCd"    column="audit_doc_cd"    />
+        <result property="auditDocName"    column="audit_doc_name"    />
+        <result property="auditDate"    column="audit_date"    />
+        <result property="shiftNurseCd"    column="shift_nurse_cd"    />
+        <result property="shiftNurseName"    column="shift_nurse_name"    />
+        <result property="shiftDate"    column="shift_date"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="auditRemark"    column="audit_remark"    />
+        <result property="deviceNurseCd1"    column="device_nurse_cd1"    />
+        <result property="deviceNurseName1"    column="device_nurse_name1"    />
+        <result property="deviceNurseCd2"    column="device_nurse_cd2"    />
+        <result property="deviceNurseName2"    column="device_nurse_name2"    />
+        <result property="anestAidCd"    column="anest_aid_cd"    />
+        <result property="anestAidName"    column="anest_aid_name"    />
+        <result property="operBeginDate"    column="oper_begin_date"    />
+        <result property="operEndDate"    column="oper_end_date"    />
+        <result property="operName"    column="oper_name"    />
+        <result property="opeAnestMethCd"    column="ope_anest_meth_cd"    />
+        <result property="opeAnestMethName"    column="ope_anest_meth_name"    />
+        <result property="inRoomTime"    column="in_room_time"    />
+        <result property="outRoomTime"    column="out_room_time"    />
+        <result property="anestStartTime"    column="anest_start_time"    />
+        <result property="anestEndTime"    column="anest_end_time"    />
+        <result property="asaTypeCode"    column="asa_type_code"    />
+        <result property="asaTypeName"    column="asa_type_name"    />
+    </resultMap>
+    <resultMap id="TdCaOperationApplyVoResult" type="TdCaOperationApplyVo" extends="TdCaOperationApplyResult">
+        <result property="bedNo"    column="bed_no"    />
+        <result property="patDeptName"    column="patDeptName"    />
+        <result property="editPersonCd"    column="edit_person_cd"    />
+    </resultMap>
+    <resultMap id="OperRoomVisitinfoVoResult" type="OperRoomVisitinfoVo" >
+        <result property="operDateTime" column="operDateTime"/>
+        <result property="planOperTime" column="plan_oper_time"/>
+        <result property="applyDate" column="APPLY_DATE" />
+        <result property="operRoom" column="oper_room"/>
+        <result property="operRoomCd" column="oper_room_cd"/>
+        <result property="operTable" column="oper_table"/>
+        <result property="operDiag" column="operDiag"/>
+        <result property="operName" column="operName"/>
+        <result property="operatorName" column="operatorName"/>
+        <result property="operAid1" column="operAid1"/>
+        <result property="anesthesia" column="anesthesia"/>
+        <result property="anesthetist" column="anesthetist"/>
+        <result property="operStatus" column="oper_status"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="patientName" column="patient_name"/>
+        <result property="admissionNo" column="admission_no"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="inpNo" column="inp_no"/>
+        <result property="recordNo" column="record_no"/>
+        <result property="operTypeCd" column="oper_type_cd"/>
+        <result property="ageY" column="age_y"/>
+        <result property="ageM" column="age_m"/>
+        <result property="ageD" column="age_d"/>
+        <result property="ageH" column="age_h"/>
+        <result property="ageMi" column="age_mi"/>
+        <result property="bedNo" column="bed_no"/>
+    </resultMap>
+    <sql id="selectTdCaOperationApplyVo">
+        select hospital_code, apply_form_no, order_no, patient_id, case_no, admission_no, hospitalized_count, patient_name, sex, age, apply_dept_cd, apply_dept_name, apply_doc_cd, apply_doc_name, apply_date, exec_dept_cd, exec_dept_name, plan_oper_time, oper_type_cd, unplan_oper_flag, major_oper_flag, preoper_diag1_cd, preoper_diag1_name, preoper_diag1_prefix, preoper_diag1_suffix, preoper_diag2_cd, preoper_diag2_name, preoper_diag2_prefix, preoper_diag2_suffix, preoper_diag3_cd, preoper_diag3_name, preoper_diag3_prefix, preoper_diag3_suffix, preoper_diag4_cd, preoper_diag4_name, preoper_diag4_prefix, preoper_diag4_suffix, plan_oper1_cd, plan_oper1_name, plan_oper1_prefix, plan_oper1_suffix, plan_oper2_cd, plan_oper2_name, plan_oper2_prefix, plan_oper2_suffix, plan_oper3_cd, plan_oper3_name, plan_oper3_prefix, plan_oper3_suffix, plan_oper4_cd, plan_oper4_name, plan_oper4_prefix, plan_oper4_suffix, oper_level_cd, oper_level_name, oper_inci_cd, oper_inci_name, oper_position_cd, oper_position_name, oper_site_cd, oper_site_name, oper_doc_cd, oper_doc_name, oper_aid1_cd, oper_aid1_name, oper_aid2_cd, oper_aid2_name, oper_aid3_cd, oper_aid3_name, circulat_nurse1_cd, circulat_nurse1_name, circulat_nurse2_cd, circulat_nurse2_name, anest_meth_cd, anest_meth_name, anest_cd, anest_name, plan_oper_duration_hour, plan_oper_duration_min, oper_room, oper_table, abo_cd, abo_name, rh_cd, rh_name,
+               hbv, hiv, hcv, tp,hbv_name, hiv_name, hcv_name, tp_name, red_blood_cell, platelet, plasma, whole_blood, device_req, other_note, visitors, status, oper_date, audit_doc_cd, audit_doc_name, audit_date, shift_nurse_cd, shift_nurse_name, shift_date, alt_date, alt_per_code, alt_per_name,audit_remark,device_nurse_cd1,device_nurse_name1,device_nurse_cd2,device_nurse_name2,anest_aid_cd,anest_aid_name, oper_begin_date, oper_end_date, oper_name, ope_anest_meth_cd, ope_anest_meth_name, in_room_time, out_room_time, anest_start_time, anest_end_time, asa_type_code, asa_type_name,oper_room_cd from td_ca_operation_apply
+    </sql>
+
+    <select id="selectTdCaOperationApplyList" parameterType="TdCaOperationApplyVo" resultMap="TdCaOperationApplyVoResult">
+        <include refid="selectTdCaOperationApplyVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="age != null  and age != ''"> and age = #{age}</if>
+            <if test="applyDeptCd != null  and applyDeptCd != ''"> and apply_dept_cd = #{applyDeptCd}</if>
+            <if test="applyDeptName != null  and applyDeptName != ''"> and apply_dept_name like concat(concat('%', #{applyDeptName}), '%')</if>
+            <if test="applyDocCd != null  and applyDocCd != ''"> and apply_doc_cd = #{applyDocCd}</if>
+            <if test="applyDocName != null  and applyDocName != ''"> and apply_doc_name like concat(concat('%', #{applyDocName}), '%')</if>
+            <if test="applyDate != null "> and apply_date = #{applyDate}</if>
+            <if test="execDeptCd != null  and execDeptCd != ''"> and exec_dept_cd = #{execDeptCd}</if>
+            <if test="execDeptName != null  and execDeptName != ''"> and exec_dept_name like concat(concat('%', #{execDeptName}), '%')</if>
+            <if test="planOperTime != null "> and plan_oper_time = #{planOperTime}</if>
+            <if test="operTypeCd != null  and operTypeCd != ''"> and oper_type_cd = #{operTypeCd}</if>
+            <if test="unplanOperFlag != null  and unplanOperFlag != ''"> and unplan_oper_flag = #{unplanOperFlag}</if>
+            <if test="majorOperFlag != null  and majorOperFlag != ''"> and major_oper_flag = #{majorOperFlag}</if>
+            <if test="preoperDiag1Cd != null  and preoperDiag1Cd != ''"> and preoper_diag1_cd = #{preoperDiag1Cd}</if>
+            <if test="preoperDiag1Name != null  and preoperDiag1Name != ''"> and preoper_diag1_name like concat(concat('%', #{preoperDiag1Name}), '%')</if>
+            <if test="preoperDiag1Prefix != null  and preoperDiag1Prefix != ''"> and preoper_diag1_prefix = #{preoperDiag1Prefix}</if>
+            <if test="preoperDiag1Suffix != null  and preoperDiag1Suffix != ''"> and preoper_diag1_suffix = #{preoperDiag1Suffix}</if>
+            <if test="preoperDiag2Cd != null  and preoperDiag2Cd != ''"> and preoper_diag2_cd = #{preoperDiag2Cd}</if>
+            <if test="preoperDiag2Name != null  and preoperDiag2Name != ''"> and preoper_diag2_name like concat(concat('%', #{preoperDiag2Name}), '%')</if>
+            <if test="preoperDiag2Prefix != null  and preoperDiag2Prefix != ''"> and preoper_diag2_prefix = #{preoperDiag2Prefix}</if>
+            <if test="preoperDiag2Suffix != null  and preoperDiag2Suffix != ''"> and preoper_diag2_suffix = #{preoperDiag2Suffix}</if>
+            <if test="preoperDiag3Cd != null  and preoperDiag3Cd != ''"> and preoper_diag3_cd = #{preoperDiag3Cd}</if>
+            <if test="preoperDiag3Name != null  and preoperDiag3Name != ''"> and preoper_diag3_name like concat(concat('%', #{preoperDiag3Name}), '%')</if>
+            <if test="preoperDiag3Prefix != null  and preoperDiag3Prefix != ''"> and preoper_diag3_prefix = #{preoperDiag3Prefix}</if>
+            <if test="preoperDiag3Suffix != null  and preoperDiag3Suffix != ''"> and preoper_diag3_suffix = #{preoperDiag3Suffix}</if>
+            <if test="preoperDiag4Cd != null  and preoperDiag4Cd != ''"> and preoper_diag4_cd = #{preoperDiag4Cd}</if>
+            <if test="preoperDiag4Name != null  and preoperDiag4Name != ''"> and preoper_diag4_name like concat(concat('%', #{preoperDiag4Name}), '%')</if>
+            <if test="preoperDiag4Prefix != null  and preoperDiag4Prefix != ''"> and preoper_diag4_prefix = #{preoperDiag4Prefix}</if>
+            <if test="preoperDiag4Suffix != null  and preoperDiag4Suffix != ''"> and preoper_diag4_suffix = #{preoperDiag4Suffix}</if>
+            <if test="planOper1Cd != null  and planOper1Cd != ''"> and plan_oper1_cd = #{planOper1Cd}</if>
+            <if test="planOper1Name != null  and planOper1Name != ''"> and plan_oper1_name like concat(concat('%', #{planOper1Name}), '%')</if>
+            <if test="planOper1Prefix != null  and planOper1Prefix != ''"> and plan_oper1_prefix = #{planOper1Prefix}</if>
+            <if test="planOper1Suffix != null  and planOper1Suffix != ''"> and plan_oper1_suffix = #{planOper1Suffix}</if>
+            <if test="planOper2Cd != null  and planOper2Cd != ''"> and plan_oper2_cd = #{planOper2Cd}</if>
+            <if test="planOper2Name != null  and planOper2Name != ''"> and plan_oper2_name like concat(concat('%', #{planOper2Name}), '%')</if>
+            <if test="planOper2Prefix != null  and planOper2Prefix != ''"> and plan_oper2_prefix = #{planOper2Prefix}</if>
+            <if test="planOper2Suffix != null  and planOper2Suffix != ''"> and plan_oper2_suffix = #{planOper2Suffix}</if>
+            <if test="planOper3Cd != null  and planOper3Cd != ''"> and plan_oper3_cd = #{planOper3Cd}</if>
+            <if test="planOper3Name != null  and planOper3Name != ''"> and plan_oper3_name like concat(concat('%', #{planOper3Name}), '%')</if>
+            <if test="planOper3Prefix != null  and planOper3Prefix != ''"> and plan_oper3_prefix = #{planOper3Prefix}</if>
+            <if test="planOper3Suffix != null  and planOper3Suffix != ''"> and plan_oper3_suffix = #{planOper3Suffix}</if>
+            <if test="planOper4Cd != null  and planOper4Cd != ''"> and plan_oper4_cd = #{planOper4Cd}</if>
+            <if test="planOper4Name != null  and planOper4Name != ''"> and plan_oper4_name like concat(concat('%', #{planOper4Name}), '%')</if>
+            <if test="planOper4Prefix != null  and planOper4Prefix != ''"> and plan_oper4_prefix = #{planOper4Prefix}</if>
+            <if test="planOper4Suffix != null  and planOper4Suffix != ''"> and plan_oper4_suffix = #{planOper4Suffix}</if>
+            <if test="operLevelCd != null  and operLevelCd != ''"> and oper_level_cd = #{operLevelCd}</if>
+            <if test="operLevelName != null  and operLevelName != ''"> and oper_level_name like concat(concat('%', #{operLevelName}), '%')</if>
+            <if test="operInciCd != null  and operInciCd != ''"> and oper_inci_cd = #{operInciCd}</if>
+            <if test="operInciName != null  and operInciName != ''"> and oper_inci_name like concat(concat('%', #{operInciName}), '%')</if>
+            <if test="operPositionCd != null  and operPositionCd != ''"> and oper_position_cd = #{operPositionCd}</if>
+            <if test="operPositionName != null  and operPositionName != ''"> and oper_position_name like concat(concat('%', #{operPositionName}), '%')</if>
+            <if test="operSiteCd != null  and operSiteCd != ''"> and oper_site_cd = #{operSiteCd}</if>
+            <if test="operSiteName != null  and operSiteName != ''"> and oper_site_name like concat(concat('%', #{operSiteName}), '%')</if>
+            <if test="operDocCd != null  and operDocCd != ''"> and oper_doc_cd = #{operDocCd}</if>
+            <if test="operDocName != null  and operDocName != ''"> and oper_doc_name like concat(concat('%', #{operDocName}), '%')</if>
+            <if test="operAid1Cd != null  and operAid1Cd != ''"> and oper_aid1_cd = #{operAid1Cd}</if>
+            <if test="operAid1Name != null  and operAid1Name != ''"> and oper_aid1_name like concat(concat('%', #{operAid1Name}), '%')</if>
+            <if test="operAid2Cd != null  and operAid2Cd != ''"> and oper_aid2_cd = #{operAid2Cd}</if>
+            <if test="operAid2Name != null  and operAid2Name != ''"> and oper_aid2_name like concat(concat('%', #{operAid2Name}), '%')</if>
+            <if test="operAid3Cd != null  and operAid3Cd != ''"> and oper_aid3_cd = #{operAid3Cd}</if>
+            <if test="operAid3Name != null  and operAid3Name != ''"> and oper_aid3_name like concat(concat('%', #{operAid3Name}), '%')</if>
+            <if test="circulatNurse1Cd != null  and circulatNurse1Cd != ''"> and circulat_nurse1_cd = #{circulatNurse1Cd}</if>
+            <if test="circulatNurse1Name != null  and circulatNurse1Name != ''"> and circulat_nurse1_name like concat(concat('%', #{circulatNurse1Name}), '%')</if>
+            <if test="circulatNurse2Cd != null  and circulatNurse2Cd != ''"> and circulat_nurse2_cd = #{circulatNurse2Cd}</if>
+            <if test="circulatNurse2Name != null  and circulatNurse2Name != ''"> and circulat_nurse2_name like concat(concat('%', #{circulatNurse2Name}), '%')</if>
+            <if test="anestMethCd != null  and anestMethCd != ''"> and anest_meth_cd = #{anestMethCd}</if>
+            <if test="anestMethName != null  and anestMethName != ''"> and anest_meth_name like concat(concat('%', #{anestMethName}), '%')</if>
+            <if test="anestCd != null  and anestCd != ''"> and anest_cd = #{anestCd}</if>
+            <if test="anestName != null  and anestName != ''"> and anest_name like concat(concat('%', #{anestName}), '%')</if>
+            <if test="planOperDurationHour != null "> and plan_oper_duration_hour = #{planOperDurationHour}</if>
+            <if test="planOperDurationMin != null "> and plan_oper_duration_min = #{planOperDurationMin}</if>
+            <if test="operRoom != null  and operRoom != ''"> and oper_room = #{operRoom}</if>
+            <if test="operRoomCd != null  and operRoomCd != ''"> and oper_room_cd = #{operRoomCd}</if>
+            <if test="operTable != null  and operTable != ''"> and oper_table = #{operTable}</if>
+            <if test="aboCd != null  and aboCd != ''"> and abo_cd = #{aboCd}</if>
+            <if test="aboName != null  and aboName != ''"> and abo_name like concat(concat('%', #{aboName}), '%')</if>
+            <if test="rhCd != null  and rhCd != ''"> and rh_cd = #{rhCd}</if>
+            <if test="rhName != null  and rhName != ''"> and rh_name like concat(concat('%', #{rhName}), '%')</if>
+            <if test="hbv != null  and hbv != ''"> and hbv = #{hbv}</if>
+            <if test="hiv != null  and hiv != ''"> and hiv = #{hiv}</if>
+            <if test="hcv != null  and hcv != ''"> and hcv = #{hcv}</if>
+            <if test="tp != null  and tp != ''"> and tp = #{tp}</if>
+            <if test="hbvName != null  and hbvName != ''"> and hbv_name = #{hbvName}</if>
+            <if test="hivName != null  and hivName != ''"> and hiv_name = #{hivName}</if>
+            <if test="hcvName != null  and hcvName != ''"> and hcv_name = #{hcvName}</if>
+            <if test="tpName != null  and tpName != ''"> and tp_name = #{tpName}</if>
+            <if test="redBloodCell != null "> and red_blood_cell = #{redBloodCell}</if>
+            <if test="platelet != null "> and platelet = #{platelet}</if>
+            <if test="plasma != null "> and plasma = #{plasma}</if>
+            <if test="wholeBlood != null "> and whole_blood = #{wholeBlood}</if>
+            <if test="deviceReq != null  and deviceReq != ''"> and device_req = #{deviceReq}</if>
+            <if test="otherNote != null  and otherNote != ''"> and other_note = #{otherNote}</if>
+            <if test="visitors != null  and visitors != ''"> and visitors = #{visitors}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="operDate != null "> and oper_date = #{operDate}</if>
+            <if test="auditDocCd != null  and auditDocCd != ''"> and audit_doc_cd = #{auditDocCd}</if>
+            <if test="auditDocName != null  and auditDocName != ''"> and audit_doc_name like concat(concat('%', #{auditDocName}), '%')</if>
+            <if test="auditDate != null "> and audit_date = #{auditDate}</if>
+            <if test="shiftNurseCd != null  and shiftNurseCd != ''"> and shift_nurse_cd = #{shiftNurseCd}</if>
+            <if test="shiftNurseName != null  and shiftNurseName != ''"> and shift_nurse_name like concat(concat('%', #{shiftNurseName}), '%')</if>
+            <if test="shiftDate != null "> and shift_date = #{shiftDate}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="statusList != null ">
+                and status in
+                <foreach item="status" collection="statusList" open="(" separator="," close=")">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        </where>
+        order by PLAN_OPER_TIME desc
+    </select>
+
+    <select id="selectTdCaOperationApplyById" parameterType="String" resultMap="TdCaOperationApplyResult">
+        <include refid="selectTdCaOperationApplyVo"/>
+        where apply_form_no = #{applyFormNo}
+    </select>
+
+    <select id="selectTdCaOperationApplyByIds" parameterType="java.util.List" resultMap="TdCaOperationApplyResult">
+        <include refid="selectTdCaOperationApplyVo"/>
+        <where>
+            <if test="admissionNos != null and admissionNos.size() >0">
+                and admission_no in
+                <foreach collection="admissionNos" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertTdCaOperationApply" parameterType="TdCaOperationApply">
+        insert into td_ca_operation_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="applyFormNo != null">apply_form_no,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="caseNo != null and caseNo != ''">case_no,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="sex != null">sex,</if>
+            <if test="age != null">age,</if>
+            <if test="applyDeptCd != null">apply_dept_cd,</if>
+            <if test="applyDeptName != null">apply_dept_name,</if>
+            <if test="applyDocCd != null">apply_doc_cd,</if>
+            <if test="applyDocName != null">apply_doc_name,</if>
+            <if test="applyDate != null">apply_date,</if>
+            <if test="execDeptCd != null">exec_dept_cd,</if>
+            <if test="execDeptName != null">exec_dept_name,</if>
+            <if test="planOperTime != null">plan_oper_time,</if>
+            <if test="operTypeCd != null">oper_type_cd,</if>
+            <if test="unplanOperFlag != null">unplan_oper_flag,</if>
+            <if test="majorOperFlag != null">major_oper_flag,</if>
+            <if test="preoperDiag1Cd != null">preoper_diag1_cd,</if>
+            <if test="preoperDiag1Name != null">preoper_diag1_name,</if>
+            <if test="preoperDiag1Prefix != null">preoper_diag1_prefix,</if>
+            <if test="preoperDiag1Suffix != null">preoper_diag1_suffix,</if>
+            <if test="preoperDiag2Cd != null">preoper_diag2_cd,</if>
+            <if test="preoperDiag2Name != null">preoper_diag2_name,</if>
+            <if test="preoperDiag2Prefix != null">preoper_diag2_prefix,</if>
+            <if test="preoperDiag2Suffix != null">preoper_diag2_suffix,</if>
+            <if test="preoperDiag3Cd != null">preoper_diag3_cd,</if>
+            <if test="preoperDiag3Name != null">preoper_diag3_name,</if>
+            <if test="preoperDiag3Prefix != null">preoper_diag3_prefix,</if>
+            <if test="preoperDiag3Suffix != null">preoper_diag3_suffix,</if>
+            <if test="preoperDiag4Cd != null">preoper_diag4_cd,</if>
+            <if test="preoperDiag4Name != null">preoper_diag4_name,</if>
+            <if test="preoperDiag4Prefix != null">preoper_diag4_prefix,</if>
+            <if test="preoperDiag4Suffix != null">preoper_diag4_suffix,</if>
+            <if test="planOper1Cd != null">plan_oper1_cd,</if>
+            <if test="planOper1Name != null">plan_oper1_name,</if>
+            <if test="planOper1Prefix != null">plan_oper1_prefix,</if>
+            <if test="planOper1Suffix != null">plan_oper1_suffix,</if>
+            <if test="planOper2Cd != null">plan_oper2_cd,</if>
+            <if test="planOper2Name != null">plan_oper2_name,</if>
+            <if test="planOper2Prefix != null">plan_oper2_prefix,</if>
+            <if test="planOper2Suffix != null">plan_oper2_suffix,</if>
+            <if test="planOper3Cd != null">plan_oper3_cd,</if>
+            <if test="planOper3Name != null">plan_oper3_name,</if>
+            <if test="planOper3Prefix != null">plan_oper3_prefix,</if>
+            <if test="planOper3Suffix != null">plan_oper3_suffix,</if>
+            <if test="planOper4Cd != null">plan_oper4_cd,</if>
+            <if test="planOper4Name != null">plan_oper4_name,</if>
+            <if test="planOper4Prefix != null">plan_oper4_prefix,</if>
+            <if test="planOper4Suffix != null">plan_oper4_suffix,</if>
+            <if test="operLevelCd != null">oper_level_cd,</if>
+            <if test="operLevelName != null">oper_level_name,</if>
+            <if test="operInciCd != null">oper_inci_cd,</if>
+            <if test="operInciName != null">oper_inci_name,</if>
+            <if test="operPositionCd != null">oper_position_cd,</if>
+            <if test="operPositionName != null">oper_position_name,</if>
+            <if test="operSiteCd != null">oper_site_cd,</if>
+            <if test="operSiteName != null">oper_site_name,</if>
+            <if test="operDocCd != null">oper_doc_cd,</if>
+            <if test="operDocName != null">oper_doc_name,</if>
+            <if test="operAid1Cd != null">oper_aid1_cd,</if>
+            <if test="operAid1Name != null">oper_aid1_name,</if>
+            <if test="operAid2Cd != null">oper_aid2_cd,</if>
+            <if test="operAid2Name != null">oper_aid2_name,</if>
+            <if test="operAid3Cd != null">oper_aid3_cd,</if>
+            <if test="operAid3Name != null">oper_aid3_name,</if>
+            <if test="circulatNurse1Cd != null">circulat_nurse1_cd,</if>
+            <if test="circulatNurse1Name != null">circulat_nurse1_name,</if>
+            <if test="circulatNurse2Cd != null">circulat_nurse2_cd,</if>
+            <if test="circulatNurse2Name != null">circulat_nurse2_name,</if>
+            <if test="anestMethCd != null">anest_meth_cd,</if>
+            <if test="anestMethName != null">anest_meth_name,</if>
+            <if test="anestCd != null">anest_cd,</if>
+            <if test="anestName != null">anest_name,</if>
+            <if test="planOperDurationHour != null">plan_oper_duration_hour,</if>
+            <if test="planOperDurationMin != null">plan_oper_duration_min,</if>
+            <if test="operRoom != null">oper_room,</if>
+            <if test="operRoomCd != null">oper_room_cd,</if>
+            <if test="operTable != null">oper_table,</if>
+            <if test="aboCd != null">abo_cd,</if>
+            <if test="aboName != null">abo_name,</if>
+            <if test="rhCd != null">rh_cd,</if>
+            <if test="rhName != null">rh_name,</if>
+            <if test="hbv != null">hbv,</if>
+            <if test="hiv != null">hiv,</if>
+            <if test="hcv != null">hcv,</if>
+            <if test="tp != null">tp,</if>
+            <if test="hbvName != null">hbv_name,</if>
+            <if test="hivName != null">hiv_name,</if>
+            <if test="hcvName != null">hcv_name,</if>
+            <if test="tpName != null">tp_name,</if>
+            <if test="redBloodCell != null">red_blood_cell,</if>
+            <if test="platelet != null">platelet,</if>
+            <if test="plasma != null">plasma,</if>
+            <if test="wholeBlood != null">whole_blood,</if>
+            <if test="deviceReq != null">device_req,</if>
+            <if test="otherNote != null">other_note,</if>
+            <if test="visitors != null">visitors,</if>
+            <if test="status != null">status,</if>
+            <if test="operDate != null">oper_date,</if>
+            <if test="auditDocCd != null">audit_doc_cd,</if>
+            <if test="auditDocName != null">audit_doc_name,</if>
+            <if test="auditDate != null">audit_date,</if>
+            <if test="shiftNurseCd != null">shift_nurse_cd,</if>
+            <if test="shiftNurseName != null">shift_nurse_name,</if>
+            <if test="shiftDate != null">shift_date,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="auditRemark != null and auditRemark!=''">audit_remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="applyFormNo != null">#{applyFormNo},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="caseNo != null and caseNo != ''">#{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="age != null">#{age},</if>
+            <if test="applyDeptCd != null">#{applyDeptCd},</if>
+            <if test="applyDeptName != null">#{applyDeptName},</if>
+            <if test="applyDocCd != null">#{applyDocCd},</if>
+            <if test="applyDocName != null">#{applyDocName},</if>
+            <if test="applyDate != null">#{applyDate},</if>
+            <if test="execDeptCd != null">#{execDeptCd},</if>
+            <if test="execDeptName != null">#{execDeptName},</if>
+            <if test="planOperTime != null">#{planOperTime},</if>
+            <if test="operTypeCd != null">#{operTypeCd},</if>
+            <if test="unplanOperFlag != null">#{unplanOperFlag},</if>
+            <if test="majorOperFlag != null">#{majorOperFlag},</if>
+            <if test="preoperDiag1Cd != null">#{preoperDiag1Cd},</if>
+            <if test="preoperDiag1Name != null">#{preoperDiag1Name},</if>
+            <if test="preoperDiag1Prefix != null">#{preoperDiag1Prefix},</if>
+            <if test="preoperDiag1Suffix != null">#{preoperDiag1Suffix},</if>
+            <if test="preoperDiag2Cd != null">#{preoperDiag2Cd},</if>
+            <if test="preoperDiag2Name != null">#{preoperDiag2Name},</if>
+            <if test="preoperDiag2Prefix != null">#{preoperDiag2Prefix},</if>
+            <if test="preoperDiag2Suffix != null">#{preoperDiag2Suffix},</if>
+            <if test="preoperDiag3Cd != null">#{preoperDiag3Cd},</if>
+            <if test="preoperDiag3Name != null">#{preoperDiag3Name},</if>
+            <if test="preoperDiag3Prefix != null">#{preoperDiag3Prefix},</if>
+            <if test="preoperDiag3Suffix != null">#{preoperDiag3Suffix},</if>
+            <if test="preoperDiag4Cd != null">#{preoperDiag4Cd},</if>
+            <if test="preoperDiag4Name != null">#{preoperDiag4Name},</if>
+            <if test="preoperDiag4Prefix != null">#{preoperDiag4Prefix},</if>
+            <if test="preoperDiag4Suffix != null">#{preoperDiag4Suffix},</if>
+            <if test="planOper1Cd != null">#{planOper1Cd},</if>
+            <if test="planOper1Name != null">#{planOper1Name},</if>
+            <if test="planOper1Prefix != null">#{planOper1Prefix},</if>
+            <if test="planOper1Suffix != null">#{planOper1Suffix},</if>
+            <if test="planOper2Cd != null">#{planOper2Cd},</if>
+            <if test="planOper2Name != null">#{planOper2Name},</if>
+            <if test="planOper2Prefix != null">#{planOper2Prefix},</if>
+            <if test="planOper2Suffix != null">#{planOper2Suffix},</if>
+            <if test="planOper3Cd != null">#{planOper3Cd},</if>
+            <if test="planOper3Name != null">#{planOper3Name},</if>
+            <if test="planOper3Prefix != null">#{planOper3Prefix},</if>
+            <if test="planOper3Suffix != null">#{planOper3Suffix},</if>
+            <if test="planOper4Cd != null">#{planOper4Cd},</if>
+            <if test="planOper4Name != null">#{planOper4Name},</if>
+            <if test="planOper4Prefix != null">#{planOper4Prefix},</if>
+            <if test="planOper4Suffix != null">#{planOper4Suffix},</if>
+            <if test="operLevelCd != null">#{operLevelCd},</if>
+            <if test="operLevelName != null">#{operLevelName},</if>
+            <if test="operInciCd != null">#{operInciCd},</if>
+            <if test="operInciName != null">#{operInciName},</if>
+            <if test="operPositionCd != null">#{operPositionCd},</if>
+            <if test="operPositionName != null">#{operPositionName},</if>
+            <if test="operSiteCd != null">#{operSiteCd},</if>
+            <if test="operSiteName != null">#{operSiteName},</if>
+            <if test="operDocCd != null">#{operDocCd},</if>
+            <if test="operDocName != null">#{operDocName},</if>
+            <if test="operAid1Cd != null">#{operAid1Cd},</if>
+            <if test="operAid1Name != null">#{operAid1Name},</if>
+            <if test="operAid2Cd != null">#{operAid2Cd},</if>
+            <if test="operAid2Name != null">#{operAid2Name},</if>
+            <if test="operAid3Cd != null">#{operAid3Cd},</if>
+            <if test="operAid3Name != null">#{operAid3Name},</if>
+            <if test="circulatNurse1Cd != null">#{circulatNurse1Cd},</if>
+            <if test="circulatNurse1Name != null">#{circulatNurse1Name},</if>
+            <if test="circulatNurse2Cd != null">#{circulatNurse2Cd},</if>
+            <if test="circulatNurse2Name != null">#{circulatNurse2Name},</if>
+            <if test="anestMethCd != null">#{anestMethCd},</if>
+            <if test="anestMethName != null">#{anestMethName},</if>
+            <if test="anestCd != null">#{anestCd},</if>
+            <if test="anestName != null">#{anestName},</if>
+            <if test="planOperDurationHour != null">#{planOperDurationHour},</if>
+            <if test="planOperDurationMin != null">#{planOperDurationMin},</if>
+            <if test="operRoom != null">#{operRoom},</if>
+            <if test="operRoomCd != null">#{operRoomCd},</if>
+            <if test="operTable != null">#{operTable},</if>
+            <if test="aboCd != null">#{aboCd},</if>
+            <if test="aboName != null">#{aboName},</if>
+            <if test="rhCd != null">#{rhCd},</if>
+            <if test="rhName != null">#{rhName},</if>
+            <if test="hbv != null">#{hbv},</if>
+            <if test="hiv != null">#{hiv},</if>
+            <if test="hcv != null">#{hcv},</if>
+            <if test="tp != null">#{tp},</if>
+            <if test="hbvName != null">#{hbvName},</if>
+            <if test="hivName != null">#{hivName},</if>
+            <if test="hcvName != null">#{hcvName},</if>
+            <if test="tpName != null">#{tpName},</if>
+            <if test="redBloodCell != null">#{redBloodCell},</if>
+            <if test="platelet != null">#{platelet},</if>
+            <if test="plasma != null">#{plasma},</if>
+            <if test="wholeBlood != null">#{wholeBlood},</if>
+            <if test="deviceReq != null">#{deviceReq},</if>
+            <if test="otherNote != null">#{otherNote},</if>
+            <if test="visitors != null">#{visitors},</if>
+            <if test="status != null">#{status},</if>
+            <if test="operDate != null">#{operDate},</if>
+            <if test="auditDocCd != null">#{auditDocCd},</if>
+            <if test="auditDocName != null">#{auditDocName},</if>
+            <if test="auditDate != null">#{auditDate},</if>
+            <if test="shiftNurseCd != null">#{shiftNurseCd},</if>
+            <if test="shiftNurseName != null">#{shiftNurseName},</if>
+            <if test="shiftDate != null">#{shiftDate},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="auditRemark != null and auditRemark!=''">#{auditRemark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTdCaOperationApply" parameterType="TdCaOperationApply">
+        update td_ca_operation_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="applyDeptCd != null">apply_dept_cd = #{applyDeptCd},</if>
+            <if test="applyDeptName != null">apply_dept_name = #{applyDeptName},</if>
+            <if test="applyDocCd != null">apply_doc_cd = #{applyDocCd},</if>
+            <if test="applyDocName != null">apply_doc_name = #{applyDocName},</if>
+            <if test="applyDate != null">apply_date = #{applyDate},</if>
+            <if test="execDeptCd != null">exec_dept_cd = #{execDeptCd},</if>
+            <if test="execDeptName != null">exec_dept_name = #{execDeptName},</if>
+            <if test="planOperTime != null">plan_oper_time = #{planOperTime},</if>
+            <if test="operTypeCd != null">oper_type_cd = #{operTypeCd},</if>
+            <if test="unplanOperFlag != null">unplan_oper_flag = #{unplanOperFlag},</if>
+            <if test="majorOperFlag != null">major_oper_flag = #{majorOperFlag},</if>
+            <if test="preoperDiag1Cd != null">preoper_diag1_cd = #{preoperDiag1Cd},</if>
+            <if test="preoperDiag1Name != null">preoper_diag1_name = #{preoperDiag1Name},</if>
+            <if test="preoperDiag1Prefix != null">preoper_diag1_prefix = #{preoperDiag1Prefix},</if>
+            <if test="preoperDiag1Suffix != null">preoper_diag1_suffix = #{preoperDiag1Suffix},</if>
+            <if test="preoperDiag2Cd != null">preoper_diag2_cd = #{preoperDiag2Cd},</if>
+            <if test="preoperDiag2Name != null">preoper_diag2_name = #{preoperDiag2Name},</if>
+            <if test="preoperDiag2Prefix != null">preoper_diag2_prefix = #{preoperDiag2Prefix},</if>
+            <if test="preoperDiag2Suffix != null">preoper_diag2_suffix = #{preoperDiag2Suffix},</if>
+            <if test="preoperDiag3Cd != null">preoper_diag3_cd = #{preoperDiag3Cd},</if>
+            <if test="preoperDiag3Name != null">preoper_diag3_name = #{preoperDiag3Name},</if>
+            <if test="preoperDiag3Prefix != null">preoper_diag3_prefix = #{preoperDiag3Prefix},</if>
+            <if test="preoperDiag3Suffix != null">preoper_diag3_suffix = #{preoperDiag3Suffix},</if>
+            <if test="preoperDiag4Cd != null">preoper_diag4_cd = #{preoperDiag4Cd},</if>
+            <if test="preoperDiag4Name != null">preoper_diag4_name = #{preoperDiag4Name},</if>
+            <if test="preoperDiag4Prefix != null">preoper_diag4_prefix = #{preoperDiag4Prefix},</if>
+            <if test="preoperDiag4Suffix != null">preoper_diag4_suffix = #{preoperDiag4Suffix},</if>
+            <if test="planOper1Cd != null">plan_oper1_cd = #{planOper1Cd},</if>
+            <if test="planOper1Name != null">plan_oper1_name = #{planOper1Name},</if>
+            <if test="planOper1Prefix != null">plan_oper1_prefix = #{planOper1Prefix},</if>
+            <if test="planOper1Suffix != null">plan_oper1_suffix = #{planOper1Suffix},</if>
+            <if test="planOper2Cd != null">plan_oper2_cd = #{planOper2Cd},</if>
+            <if test="planOper2Name != null">plan_oper2_name = #{planOper2Name},</if>
+            <if test="planOper2Prefix != null">plan_oper2_prefix = #{planOper2Prefix},</if>
+            <if test="planOper2Suffix != null">plan_oper2_suffix = #{planOper2Suffix},</if>
+            <if test="planOper3Cd != null">plan_oper3_cd = #{planOper3Cd},</if>
+            <if test="planOper3Name != null">plan_oper3_name = #{planOper3Name},</if>
+            <if test="planOper3Prefix != null">plan_oper3_prefix = #{planOper3Prefix},</if>
+            <if test="planOper3Suffix != null">plan_oper3_suffix = #{planOper3Suffix},</if>
+            <if test="planOper4Cd != null">plan_oper4_cd = #{planOper4Cd},</if>
+            <if test="planOper4Name != null">plan_oper4_name = #{planOper4Name},</if>
+            <if test="planOper4Prefix != null">plan_oper4_prefix = #{planOper4Prefix},</if>
+            <if test="planOper4Suffix != null">plan_oper4_suffix = #{planOper4Suffix},</if>
+            <if test="operLevelCd != null">oper_level_cd = #{operLevelCd},</if>
+            <if test="operLevelName != null">oper_level_name = #{operLevelName},</if>
+            <if test="operInciCd != null">oper_inci_cd = #{operInciCd},</if>
+            <if test="operInciName != null">oper_inci_name = #{operInciName},</if>
+            <if test="operPositionCd != null">oper_position_cd = #{operPositionCd},</if>
+            <if test="operPositionName != null">oper_position_name = #{operPositionName},</if>
+            <if test="operSiteCd != null">oper_site_cd = #{operSiteCd},</if>
+            <if test="operSiteName != null">oper_site_name = #{operSiteName},</if>
+            <if test="operDocCd != null">oper_doc_cd = #{operDocCd},</if>
+            <if test="operDocName != null">oper_doc_name = #{operDocName},</if>
+            <if test="operAid1Cd != null">oper_aid1_cd = #{operAid1Cd},</if>
+            <if test="operAid1Name != null">oper_aid1_name = #{operAid1Name},</if>
+            <if test="operAid2Cd != null">oper_aid2_cd = #{operAid2Cd},</if>
+            <if test="operAid2Name != null">oper_aid2_name = #{operAid2Name},</if>
+            <if test="operAid3Cd != null">oper_aid3_cd = #{operAid3Cd},</if>
+            <if test="operAid3Name != null">oper_aid3_name = #{operAid3Name},</if>
+            <if test="circulatNurse1Cd != null">circulat_nurse1_cd = #{circulatNurse1Cd},</if>
+            <if test="circulatNurse1Name != null">circulat_nurse1_name = #{circulatNurse1Name},</if>
+            <if test="circulatNurse2Cd != null">circulat_nurse2_cd = #{circulatNurse2Cd},</if>
+            <if test="circulatNurse2Name != null">circulat_nurse2_name = #{circulatNurse2Name},</if>
+            <if test="anestMethCd != null">anest_meth_cd = #{anestMethCd},</if>
+            <if test="anestMethName != null">anest_meth_name = #{anestMethName},</if>
+            <if test="anestCd != null">anest_cd = #{anestCd},</if>
+            <if test="anestName != null">anest_name = #{anestName},</if>
+            <if test="planOperDurationHour != null">plan_oper_duration_hour = #{planOperDurationHour},</if>
+            <if test="planOperDurationMin != null">plan_oper_duration_min = #{planOperDurationMin},</if>
+            <if test="operRoom != null">oper_room = #{operRoom},</if>
+            <if test="operRoomCd != null">oper_room_cd = #{operRoomCd},</if>
+            <if test="operTable != null">oper_table = #{operTable},</if>
+            <if test="aboCd != null">abo_cd = #{aboCd},</if>
+            <if test="aboName != null">abo_name = #{aboName},</if>
+            <if test="rhCd != null">rh_cd = #{rhCd},</if>
+            <if test="rhName != null">rh_name = #{rhName},</if>
+            <if test="hbv != null">hbv = #{hbv},</if>
+            <if test="hiv != null">hiv = #{hiv},</if>
+            <if test="hcv != null">hcv = #{hcv},</if>
+            <if test="tp != null">tp = #{tp},</if>
+            <if test="hbvName != null">hbv_name = #{hbvName},</if>
+            <if test="hivName != null">hiv_name = #{hivName},</if>
+            <if test="hcvName != null">hcv_name = #{hcvName},</if>
+            <if test="tpName != null">tp_name = #{tpName},</if>
+            <if test="redBloodCell != null">red_blood_cell = #{redBloodCell},</if>
+            <if test="platelet != null">platelet = #{platelet},</if>
+            <if test="plasma != null">plasma = #{plasma},</if>
+            <if test="wholeBlood != null">whole_blood = #{wholeBlood},</if>
+            <if test="deviceReq != null">device_req = #{deviceReq},</if>
+            <if test="otherNote != null">other_note = #{otherNote},</if>
+            <if test="visitors != null">visitors = #{visitors},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="operDate != null">oper_date = #{operDate},</if>
+            <if test="auditDocCd != null">audit_doc_cd = #{auditDocCd},</if>
+            <if test="auditDocName != null">audit_doc_name = #{auditDocName},</if>
+            <if test="auditDate != null">audit_date = #{auditDate},</if>
+            <if test="shiftNurseCd != null">shift_nurse_cd = #{shiftNurseCd},</if>
+            <if test="shiftNurseName != null">shift_nurse_name = #{shiftNurseName},</if>
+            <if test="shiftDate != null">shift_date = #{shiftDate},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="auditRemark != null and auditRemark!=''">audit_remark = #{auditRemark},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+
+
+    <update id="updateOperationApplyManage" parameterType="TdCaOperationApply">
+        update td_ca_operation_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="applyDeptCd != null">apply_dept_cd = #{applyDeptCd},</if>
+            <if test="applyDeptName != null">apply_dept_name = #{applyDeptName},</if>
+            <if test="applyDocCd != null">apply_doc_cd = #{applyDocCd},</if>
+            <if test="applyDocName != null">apply_doc_name = #{applyDocName},</if>
+            <if test="applyDate != null">apply_date = #{applyDate},</if>
+            <if test="execDeptCd != null">exec_dept_cd = #{execDeptCd},</if>
+            <if test="execDeptName != null">exec_dept_name = #{execDeptName},</if>
+            <if test="planOperTime != null">plan_oper_time = #{planOperTime},</if>
+            <if test="operTypeCd != null">oper_type_cd = #{operTypeCd},</if>
+            <if test="unplanOperFlag != null">unplan_oper_flag = #{unplanOperFlag},</if>
+            <if test="majorOperFlag != null">major_oper_flag = #{majorOperFlag},</if>
+            <if test="preoperDiag1Cd != null">preoper_diag1_cd = #{preoperDiag1Cd},</if>
+            <if test="preoperDiag1Name != null">preoper_diag1_name = #{preoperDiag1Name},</if>
+            <if test="preoperDiag1Prefix != null">preoper_diag1_prefix = #{preoperDiag1Prefix},</if>
+            <if test="preoperDiag1Suffix != null">preoper_diag1_suffix = #{preoperDiag1Suffix},</if>
+            <if test="preoperDiag2Cd != null">preoper_diag2_cd = #{preoperDiag2Cd},</if>
+            <if test="preoperDiag2Name != null">preoper_diag2_name = #{preoperDiag2Name},</if>
+            <if test="preoperDiag2Prefix != null">preoper_diag2_prefix = #{preoperDiag2Prefix},</if>
+            <if test="preoperDiag2Suffix != null">preoper_diag2_suffix = #{preoperDiag2Suffix},</if>
+            <if test="preoperDiag3Cd != null">preoper_diag3_cd = #{preoperDiag3Cd},</if>
+            <if test="preoperDiag3Name != null">preoper_diag3_name = #{preoperDiag3Name},</if>
+            <if test="preoperDiag3Prefix != null">preoper_diag3_prefix = #{preoperDiag3Prefix},</if>
+            <if test="preoperDiag3Suffix != null">preoper_diag3_suffix = #{preoperDiag3Suffix},</if>
+            <if test="preoperDiag4Cd != null">preoper_diag4_cd = #{preoperDiag4Cd},</if>
+            <if test="preoperDiag4Name != null">preoper_diag4_name = #{preoperDiag4Name},</if>
+            <if test="preoperDiag4Prefix != null">preoper_diag4_prefix = #{preoperDiag4Prefix},</if>
+            <if test="preoperDiag4Suffix != null">preoper_diag4_suffix = #{preoperDiag4Suffix},</if>
+            <if test="planOper1Cd != null">plan_oper1_cd = #{planOper1Cd},</if>
+            <if test="planOper1Name != null">plan_oper1_name = #{planOper1Name},</if>
+            <if test="planOper1Prefix != null">plan_oper1_prefix = #{planOper1Prefix},</if>
+            <if test="planOper1Suffix != null">plan_oper1_suffix = #{planOper1Suffix},</if>
+            <if test="planOper2Cd != null">plan_oper2_cd = #{planOper2Cd},</if>
+            <if test="planOper2Name != null">plan_oper2_name = #{planOper2Name},</if>
+            <if test="planOper2Prefix != null">plan_oper2_prefix = #{planOper2Prefix},</if>
+            <if test="planOper2Suffix != null">plan_oper2_suffix = #{planOper2Suffix},</if>
+            <if test="planOper3Cd != null">plan_oper3_cd = #{planOper3Cd},</if>
+            <if test="planOper3Name != null">plan_oper3_name = #{planOper3Name},</if>
+            <if test="planOper3Prefix != null">plan_oper3_prefix = #{planOper3Prefix},</if>
+            <if test="planOper3Suffix != null">plan_oper3_suffix = #{planOper3Suffix},</if>
+            <if test="planOper4Cd != null">plan_oper4_cd = #{planOper4Cd},</if>
+            <if test="planOper4Name != null">plan_oper4_name = #{planOper4Name},</if>
+            <if test="planOper4Prefix != null">plan_oper4_prefix = #{planOper4Prefix},</if>
+            <if test="planOper4Suffix != null">plan_oper4_suffix = #{planOper4Suffix},</if>
+            <if test="operLevelCd != null">oper_level_cd = #{operLevelCd},</if>
+            <if test="operLevelName != null">oper_level_name = #{operLevelName},</if>
+            <if test="operInciCd != null">oper_inci_cd = #{operInciCd},</if>
+            <if test="operInciName != null">oper_inci_name = #{operInciName},</if>
+            <if test="operPositionCd != null">oper_position_cd = #{operPositionCd},</if>
+            <if test="operPositionName != null">oper_position_name = #{operPositionName},</if>
+            <if test="operSiteCd != null">oper_site_cd = #{operSiteCd},</if>
+            <if test="operSiteName != null">oper_site_name = #{operSiteName},</if>
+            <if test="operDocCd != null">oper_doc_cd = #{operDocCd},</if>
+            <if test="operDocName != null">oper_doc_name = #{operDocName},</if>
+            <if test="operAid1Cd != null">oper_aid1_cd = #{operAid1Cd},</if>
+            <if test="operAid1Name != null">oper_aid1_name = #{operAid1Name},</if>
+            <if test="operAid2Cd != null">oper_aid2_cd = #{operAid2Cd},</if>
+            <if test="operAid2Name != null">oper_aid2_name = #{operAid2Name},</if>
+            <if test="operAid3Cd != null">oper_aid3_cd = #{operAid3Cd},</if>
+            <if test="operAid3Name != null">oper_aid3_name = #{operAid3Name},</if>
+            <if test="circulatNurse1Cd != null">circulat_nurse1_cd = #{circulatNurse1Cd},</if>
+            <if test="circulatNurse1Name != null">circulat_nurse1_name = #{circulatNurse1Name},</if>
+            <if test="circulatNurse2Cd != null">circulat_nurse2_cd = #{circulatNurse2Cd},</if>
+            <if test="circulatNurse2Name != null">circulat_nurse2_name = #{circulatNurse2Name},</if>
+            <if test="anestMethCd != null">anest_meth_cd = #{anestMethCd},</if>
+            <if test="anestMethName != null">anest_meth_name = #{anestMethName},</if>
+            <if test="anestCd != null">anest_cd = #{anestCd},</if>
+            <if test="anestName != null">anest_name = #{anestName},</if>
+            <if test="planOperDurationHour != null">plan_oper_duration_hour = #{planOperDurationHour},</if>
+            <if test="planOperDurationMin != null">plan_oper_duration_min = #{planOperDurationMin},</if>
+            <if test="operRoom != null">oper_room = #{operRoom},</if>
+            <if test="operRoomCd != null">oper_room_cd = #{operRoomCd},</if>
+            <if test="operTable != null">oper_table = #{operTable},</if>
+            <if test="aboCd != null">abo_cd = #{aboCd},</if>
+            <if test="aboName != null">abo_name = #{aboName},</if>
+            <if test="rhCd != null">rh_cd = #{rhCd},</if>
+            <if test="rhName != null">rh_name = #{rhName},</if>
+            <if test="hbv != null">hbv = #{hbv},</if>
+            <if test="hiv != null">hiv = #{hiv},</if>
+            <if test="hcv != null">hcv = #{hcv},</if>
+            <if test="tp != null">tp = #{tp},</if>
+            <if test="redBloodCell != null">red_blood_cell = #{redBloodCell},</if>
+            <if test="platelet != null">platelet = #{platelet},</if>
+            <if test="plasma != null">plasma = #{plasma},</if>
+            <if test="wholeBlood != null">whole_blood = #{wholeBlood},</if>
+            <if test="deviceReq != null">device_req = #{deviceReq},</if>
+            <if test="otherNote != null">other_note = #{otherNote},</if>
+            <if test="visitors != null">visitors = #{visitors},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="operDate != null">oper_date = #{operDate},</if>
+            <if test="auditDocCd != null">audit_doc_cd = #{auditDocCd},</if>
+            <if test="auditDocName != null">audit_doc_name = #{auditDocName},</if>
+            <if test="auditDate != null">audit_date = #{auditDate},</if>
+            <if test="shiftNurseCd != null">shift_nurse_cd = #{shiftNurseCd},</if>
+            <if test="shiftNurseName != null">shift_nurse_name = #{shiftNurseName},</if>
+            <if test="shiftDate != null">shift_date = #{shiftDate},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="auditRemark != null">audit_remark = #{auditRemark},</if>
+            <if test="hbvName != null">hbv_name = #{hbvName},</if>
+            <if test="hivName != null">hiv_name = #{hivName},</if>
+            <if test="hcvName != null">hcv_name = #{hcvName},</if>
+            <if test="tpName != null">tp_name = #{tpName},</if>
+            <if test="deviceNurseCd1 != null">device_nurse_cd1 = #{deviceNurseCd1},</if>
+            <if test="deviceNurseName1 != null">device_nurse_name1 = #{deviceNurseName1},</if>
+            <if test="deviceNurseCd2 != null">device_nurse_cd2 = #{deviceNurseCd2},</if>
+            <if test="deviceNurseName2 != null">device_nurse_name2 = #{deviceNurseName2},</if>
+            <if test="anestAidCd != null">anest_aid_cd = #{anestAidCd},</if>
+            <if test="anestAidName != null">anest_aid_name = #{anestAidName},</if>
+            <if test="operBeginDate != null">oper_begin_date = #{operBeginDate},</if>
+            <if test="operEndDate != null">oper_end_date = #{operEndDate},</if>
+            <if test="operName != null">oper_name = #{operName},</if>
+            <if test="opeAnestMethCd != null">ope_anest_meth_cd = #{opeAnestMethCd},</if>
+            <if test="opeAnestMethName != null">ope_anest_meth_name = #{opeAnestMethName},</if>
+            <if test="inRoomTime != null">in_room_time = #{inRoomTime},</if>
+            <if test="outRoomTime != null">out_room_time = #{outRoomTime},</if>
+            <if test="anestStartTime != null">anest_start_time = #{anestStartTime},</if>
+            <if test="anestEndTime != null">anest_end_time = #{anestEndTime},</if>
+            <if test="asaTypeCode != null">asa_type_code = #{asaTypeCode},</if>
+            <if test="asaTypeName != null">asa_type_name = #{asaTypeName},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+
+
+    <update id="revokeTdCaOperationApply" parameterType="TdCaOperationApply">
+        update td_ca_operation_apply
+        <trim prefix="SET" suffixOverrides=",">
+            oper_date = null,
+            shift_date = null,
+            shift_nurse_cd = null,
+            shift_nurse_name = null,
+            oper_room = null,
+            oper_table = null,
+            plan_oper_duration_hour = null,
+            plan_oper_duration_min = null,
+            anest_meth_cd = null,
+            anest_meth_name = null,
+            anest_cd = null,
+            anest_name = null,
+            anest_aid_cd = null,
+            anest_aid_name = null,
+            circulat_nurse1_cd = null,
+            circulat_nurse1_name = null,
+            circulat_nurse2_cd = null,
+            circulat_nurse2_name = null,
+            device_nurse_cd1 = null,
+            device_nurse_name1 = null,
+            device_nurse_cd2 = null,
+            device_nurse_name2 = null,
+            <if test="status != null">status = #{status},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+
+    <update id="revokeInRoomOperationApply" parameterType="TdCaOperationApply">
+        update td_ca_operation_apply
+        <trim prefix="SET" suffixOverrides=",">
+            in_room_time = null,
+            <if test="status != null">status = #{status},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+
+    <delete id="deleteTdCaOperationApplyById" parameterType="String">
+        delete from td_ca_operation_apply where apply_form_no = #{applyFormNo}
+    </delete>
+
+    <delete id="deleteTdCaOperationApplyByIds" parameterType="String">
+        delete from td_ca_operation_apply where apply_form_no in
+        <foreach item="applyFormNo" collection="array" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </delete>
+    <select id="selectOperAuditList" parameterType="TdCaOperationApplyVo" resultMap="TdCaOperationApplyVoResult">
+        select tc.*,pv.bed_no,dept.dept_name as patDeptName,
+        case when tc.unplan_oper_flag = '1' then '是' else '否' end as edit_person_cd
+        from td_ca_operation_apply tc
+        left join pat_visitinfo pv on tc.patient_id=pv.patient_id
+        left join tm_bs_dept dept on dept.dept_code=pv.dept_cd
+        <where>
+            <if test="patientId != null  and patientId != ''"> and tc.patient_id = #{patientId}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and tc.admission_no = #{admissionNo}</if>
+            <if test="patientName != null  and patientName != ''">
+                and (tc.patient_name like concat(concat('%', #{patientName}), '%') or
+                tc.admission_no like concat(concat('%', #{patientName}), '%')
+                or
+                tc.case_no like concat(concat('%', #{patientName}), '%')
+                )
+            </if>
+            <if test="applyDocCd != null  and applyDocCd != ''"> and tc.apply_doc_cd = #{applyDocCd}</if>
+            <if test="applyDocName != null  and applyDocName != ''"> and (tc.apply_doc_name like concat(concat('%', #{applyDocName}), '%') or tc.apply_doc_cd like concat(concat('%', #{applyDocName}), '%'))</if>
+            <if test="applyDate != null "> and tc.apply_date = #{applyDate}</if>
+            <if test="execDeptCd != null  and execDeptCd != ''"> and tc.exec_dept_cd = #{execDeptCd}</if>
+            <if test="execDeptName != null  and execDeptName != ''"> and tc.exec_dept_name like concat(concat('%', #{execDeptName}), '%')</if>
+            <if test="planOperTime != null "> and tc.plan_oper_time = #{planOperTime}</if>
+            <if test="operTypeCd != null  and operTypeCd != ''"> and tc.oper_type_cd = #{operTypeCd}</if>
+            <if test="applyDeptCd != null  and applyDeptCd != ''"> and (tc.apply_dept_cd = #{applyDeptCd} or tc.exec_dept_cd = #{applyDeptCd})</if>
+            <if test="auditDocCd != null  and auditDocCd != ''"> and tc.audit_doc_cd = #{auditDocCd}</if>
+            <if test="status != null  and status != ''"> and tc.status = #{status}</if>
+            <if test="operDocCd != null  and operDocCd != ''"> and tc.oper_doc_cd = #{operDocCd}</if>
+            <if test="operDocName != null  and operDocName != ''"> and (tc.oper_doc_name like concat(concat('%', #{operDocName}), '%') or tc.oper_doc_cd like concat(concat('%', #{operDocName}), '%'))</if>
+            <if test="statusList != null ">
+                and tc.status in
+                <foreach item="status" collection="statusList" open="(" separator="," close=")">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="planOperStartTime !=null  and planOperEndTime !=null"> and tc.plan_oper_time between #{planOperStartTime} and #{planOperEndTime}</if>
+            <if test="operStartDate !=null">
+                and tc.apply_date &gt;= #{operStartDate}
+            </if>
+            <if test=" operEndDate !=null">
+                and tc.apply_date &lt; #{operEndDate}
+            </if>
+            <if test="operStartDate !=null  and operEndDate !=null and dateStatus!=null ">
+                <if test="dateStatus=='1'.toString() "> and tc.oper_date between #{operStartDate} and #{operEndDate}</if>
+                <if test="dateStatus=='2'.toString() "> and tc.apply_date between #{operStartDate} and #{operEndDate}</if>
+            </if>
+        </where>
+        order by tc.apply_date
+    </select>
+
+    <update id="updateApplyNoByApplyNo" parameterType="String">
+        update td_ca_operation_apply set apply_form_no =#{newApplyFormNo} where apply_form_no =#{oldApplyFormNo}
+    </update>
+
+    <select id="selectListByOrderNos" parameterType="String" resultMap="TdCaOperationApplyResult">
+        select apply_form_no, order_no, status
+        from td_ca_operation_apply
+        where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+
+    <update id="updateStatusByIds" parameterType="String">
+        update td_ca_operation_apply
+        set status = #{status}
+        where apply_form_no in
+        <foreach item="applyFormNo" collection="applyFormNoList" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </update>
+    <update id="updateTdCaOperationApplyByVo" parameterType="OperationInfoVo">
+        update td_ca_operation_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status != null">status = #{status},</if>
+            <if test="operDate != null">oper_date = to_date(#{operDate},'yyyy-MM-dd HH24:mi:ss'),</if>
+            <if test="auditDocCd != null">audit_doc_cd = #{auditDocCd},</if>
+            <if test="auditDocName != null">audit_doc_name = #{auditDocName},</if>
+            <if test="auditDate != null">audit_date = to_date(#{auditDate},'yyyy-MM-dd HH24:mi:ss'),</if>
+            <if test="shiftNurseCd != null">shift_nurse_cd = #{shiftNurseCd},</if>
+            <if test="shiftNurseName != null">shift_nurse_name = #{shiftNurseName},</if>
+            <if test="shiftDate != null">shift_date = to_date(#{shiftDate},'yyyy-MM-dd HH24:mi:ss'),</if>
+            <if test="altDate != null">alt_date =#{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="auditRemark != null and auditRemark!=''">audit_remark = #{auditRemark},</if>
+            <if test="deviceNurseCd1 != null and deviceNurseCd1!=''">device_nurse_cd1 = #{deviceNurseCd1},</if>
+            <if test="deviceNurseName1 != null and deviceNurseName1!=''">device_nurse_name1 = #{deviceNurseName1},</if>
+            <if test="deviceNurseCd2 != null and deviceNurseCd2!=''">device_nurse_cd2 = #{deviceNurseCd2},</if>
+            <if test="deviceNurseName2 != null and deviceNurseName2!=''">device_nurse_name2 = #{deviceNurseName2},</if>
+            <if test="anestAidCd != null and anestAidCd!=''">anest_aid_cd = #{anestAidCd},</if>
+            <if test="anestAidName != null and anestAidName!=''">anest_aid_name = #{anestAidName},</if>
+
+            <if test="anestMethCd != null and anestMethCd!=''">OPE_ANEST_METH_CD = #{anestMethCd},</if>
+            <if test="anestMethName != null and anestMethName!=''">OPE_ANEST_METH_NAME = #{anestMethName},</if>
+            <if test="anestCd != null and anestCd!=''">anest_cd = #{anestCd},</if>
+            <if test="anestName != null and anestName!=''">anest_name = #{anestName},</if>
+            <if test="operRoom != null and operRoom!=''">oper_room = #{operRoom},</if>
+            <if test="operTable != null and operTable!=''">oper_table = #{operTable},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+    <select id="selectOperPatNum" parameterType="String" resultType="java.lang.Integer">
+        select count(PATIENT_ID) from TD_CA_OPERATION_APPLY where trunc(OPER_DATE)=trunc(sysdate) and APPLY_DEPT_CD=#{deptCode}
+    </select>
+
+    <select id="selectOperPlanStatusList" parameterType="String" resultMap="OperRoomVisitinfoVoResult">
+        select
+        app.oper_date as operDateTime,
+        app.oper_room,
+        app.oper_room_cd,
+        app.oper_table,
+        app.preoper_diag1_name as operDiag,
+        app.plan_oper1_name as operName,
+        app.oper_doc_name as operatorName,
+        app.oper_aid1_name as operAid1,
+        app.anest_meth_name as anesthesia,
+        app.anest_name as anesthetist,
+        app.status as oper_status,
+        app.apply_dept_name dept_name,
+        app.patient_name,
+        app.admission_no as inp_no,
+        app.sex,
+        app.age,
+        app.case_no record_no,
+        app.oper_type_cd,
+        app.PLAN_OPER_TIME,
+        app.APPLY_DATE,
+        b.bedid as bed_no
+        from
+        td_ca_operation_apply app
+        left join t_ar_medicalinformation_all b
+        on app.admission_no = b.admission_no
+        <where>
+            <if test="noStatusList!=null and noStatusList.size >0">
+                and app.status not in
+                <foreach collection="noStatusList" item="operStatus" open="(" separator="," close=")">
+                    #{operStatus}
+                </foreach>
+            </if>
+            <if test="shiftDateBegin!=null">
+                and app.SHIFT_DATE &gt;= #{shiftDateBegin}
+            </if>
+            <if test="shiftDateEnd!=null">
+                and app.SHIFT_DATE &lt; #{shiftDateEnd}
+            </if>
+            <if test="planOperTimeBegin!=null">
+                and app.plan_oper_time &gt;= #{planOperTimeBegin}
+            </if>
+            <if test="planOperTimeEnd!=null">
+                and app.plan_oper_time &lt; #{planOperTimeEnd}
+            </if>
+            <if test="deptCd!=null and deptCd!=''">and app.APPLY_DEPT_CD=#{deptCd}</if>
+            <if test="inpNo!=null and inpNo!=''">
+                and (app.admission_no like concat(concat('%', #{inpNo}), '%')
+                or app.patient_name like concat(concat('%', #{inpNo}), '%')
+                or app.case_no like concat(concat('%', #{inpNo}), '%'))
+            </if>
+            <if test="execDeptCd!=null and execDeptCd!=''">
+                and app.exec_dept_cd=#{execDeptCd}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectOperRoomDocWorkload" parameterType="TdCaOperationApplyVo" resultMap="TdCaOperationApplyVoResult">
+        SELECT
+        *
+        FROM
+        TD_CA_OPERATION_APPLY
+        where STATUS='06' and OPER_DATE is not null and EXEC_DEPT_CD=#{execDeptCd}
+        <if test="operStartDate !=null  and operEndDate !=null">
+            and oper_date between #{operStartDate} and #{operEndDate}
+        </if>
+    </select>
+
+    <resultMap id="TmBsStaffOperlevelMap" type="TmBsStaffOperlevel">
+        <result column="ID" property="id"/>
+        <result column="STAFF_CODE" property="staffCode"/>
+        <result column="OPER_GRADE_CODE" property="operGradeCode"/>
+    </resultMap>
+    <select id="selectDocOpeAuth" parameterType="String" resultMap="TmBsStaffOperlevelMap">
+        select * from tm_bs_staff_operlevel where staff_code = #{staffCode}
+    </select>
+
+    <resultMap id="OperResultMap" type="com.emr.project.docOrder.domain.vo.OperTestResultVo">
+        <result column="HIS_ITEM_CD" property="hisItemCd"/>
+        <result column="HIS_ITEM_NAME" property="hisItemName"/>
+        <result column="HIS_RESULT_CD" property="hisResultCd"/>
+        <result column="HIS_RESULT_NAME" property="hisResultName"/>
+    </resultMap>
+    <select id="selectOperResultList" statementType="CALLABLE" parameterType="java.util.Map">
+		<![CDATA[
+			call proc_emr_get_test(
+				#{patientId,mode=IN,jdbcType=VARCHAR},
+				#{resultList,jdbcType=CURSOR,mode=OUT,resultMap=OperResultMap}
+			)
+		]]>
+    </select>
+
+    <select id="selectOperPlanCount" parameterType="OperPlanDetailReq" resultType="OperPlanCountResp">
+        select count(1) as totalCount,
+               sum(case
+                     when OPER_TYPE_CD = 1 then
+                      1
+                     else
+                      0
+                   end) as jzCount,
+               sum(case
+                     when OPER_TYPE_CD = 2 then
+                      1
+                     else
+                      0
+                   end) as zqCount
+
+          from td_ca_operation_apply t
+         where t.status in ('08') and to_char(t.in_room_time, 'yyyy-MM-dd') = #{currentDate} and exec_dept_cd = #{deptCd}
+    </select>
+
+    <select id="selectOperRoomInfo" parameterType="OperPlanDetailReq" resultType="OperRoomInfoResp">
+        select
+        a.surgical_room_code as surgicalRoomCode,
+        count(1) as count
+        from td_ca_operation_room a
+        left join td_ca_operation_apply b on b.oper_room = a.surgical_room_code
+        <where>
+            a.status = '1' and b.status in('06','08')
+            <if test="deptCd != null and deptCd != ''">
+                and b.apply_dept_cd = #{deptCd}
+            </if>
+            <if test="currentDate != null and currentDate != ''">
+                and to_char(b.oper_date,'yyyy-MM-dd') = #{currentDate}
+            </if>
+        </where>
+        group by a.surgical_room_code
+    </select>
+</mapper>

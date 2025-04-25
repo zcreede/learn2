@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcScoreScheDeptMapper">
+    
+    <resultMap type="QcScoreScheDept" id="QcScoreScheDeptResult">
+        <result property="scheId"    column="sche_id"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="id"    column="id"    />
+        <result property="deptName"    column="deptName"    />
+        <result property="deptCode"    column="deptCode"    />
+
+    </resultMap>
+    <sql id="selectQcScoreScheDeptVo">
+        select sche_id, dept_cd, valid_flag, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, id from qc_score_sche_dept
+    </sql>
+
+    <select id="selectQcScoreScheDeptList" parameterType="QcScoreScheDept" resultMap="QcScoreScheDeptResult">
+        <include refid="selectQcScoreScheDeptVo"/>
+        <where>  
+            <if test="scheId != null "> and sche_id = #{scheId}</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="validFlag != null  and validFlag != ''"> and valid_flag = #{validFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+    <select id="selectQcScoreScheDeptListByScheId" parameterType="Long" resultMap="QcScoreScheDeptResult">
+        select qsd.sche_id, qsd.dept_cd, qsd.valid_flag, qsd.cre_per_code, qsd.cre_per_name, qsd.cre_date, qsd.alt_per_code, qsd.alt_per_name,
+        qsd.alt_date, qsd.id,sd.dept_name as deptName from qc_score_sche_dept qsd
+        left join tm_bs_dept sd on sd.dept_code=qsd.dept_cd
+         <where>
+             <if test="scheId != null "> and qsd.sche_id = #{scheId}</if>
+         </where>
+    </select>
+    <select id="selectQcScoreScheDeptAllList" resultMap="QcScoreScheDeptResult">
+        select  dept_code as dept_cd,dept_name as deptName from  tm_bs_dept
+    </select>
+    <select id="selectUnDeptList"  parameterType="QcScoreScheDept"  resultMap="QcScoreScheDeptResult">
+        select qc.sche_id,  qc.valid_flag, qc.cre_per_code, qc.cre_per_name, qc.cre_date, qc.alt_per_code, qc.alt_per_name,
+        qc.alt_date, qc.id,sd.dept_name as deptName,sd.dept_code as dept_cd from tm_bs_dept sd
+        left join (select qss.app_seg,qsd.* from qc_score_sche qss left join qc_score_sche_dept qsd on qss.sche_id=qsd.sche_id
+        <if test="appSeg !=null">
+            where qss.app_Seg=#{appSeg}
+        </if>
+         ) qc on qc.dept_cd=sd.dept_code
+        where qc.id is null
+        <if test="deptName !=null">
+            and sd.dept_name like concat(concat('%', #{deptName}), '%')
+        </if>
+    </select>
+    
+    <select id="selectQcScoreScheDeptById" parameterType="Long" resultMap="QcScoreScheDeptResult">
+        <include refid="selectQcScoreScheDeptVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQcScoreScheDept" parameterType="QcScoreScheDept">
+        insert into qc_score_sche_dept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="scheId != null">sche_id,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="id != null">id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="scheId != null">#{scheId},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="id != null">#{id},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertQcScoreScheDeptList" parameterType="java.util.List">
+        insert into qc_score_sche_dept(sche_id, id, dept_cd, valid_flag, cre_per_code, cre_per_name, cre_date)
+        <foreach collection ="list" item="qcScoreScheDeptList" index= "index" separator="union all" >
+            select  #{qcScoreScheDeptList.scheId,jdbcType=NUMERIC},
+            #{qcScoreScheDeptList.id,jdbcType=NUMERIC},
+            #{qcScoreScheDeptList.deptCd,jdbcType=VARCHAR},
+            #{qcScoreScheDeptList.validFlag,jdbcType=VARCHAR},
+            #{qcScoreScheDeptList.crePerCode,jdbcType=VARCHAR},
+            #{qcScoreScheDeptList.crePerName,jdbcType=VARCHAR},
+            sysdate from dual
+        </foreach>
+    </insert>
+
+    <update id="updateQcScoreScheDept" parameterType="QcScoreScheDept">
+        update qc_score_sche_dept
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="scheId != null">sche_id = #{scheId},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcScoreScheDeptById" parameterType="Long">
+        delete from qc_score_sche_dept where id = #{id}
+    </delete>
+ <delete id="deleteQcScoreScheDeptByScheId" parameterType="Long">
+        delete from qc_score_sche_dept where sche_id = #{scheId}
+    </delete>
+
+    <delete id="deleteQcScoreScheDeptByIds" parameterType="String">
+        delete from qc_score_sche_dept where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectScheChooseDept" parameterType="qcScoreScheVo" resultMap="QcScoreScheDeptResult">
+        select dept.* from QC_SCORE_SCHE_DEPT dept left join QC_SCORE_SCHE qss on dept.SCHE_ID=qss.SCHE_ID
+        where qss.APP_SEG=#{appSeg}
+          <if test="scheId!=null"> and qss.sche_id!=#{scheId}</if>
+    </select>
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.sys.mapper.JobRecordMapper">
+    
+    <resultMap type="JobRecord" id="JobRecordResult">
+        <result property="id"    column="id"    />
+        <result property="jobCode"    column="job_code"    />
+        <result property="jobStatus"    column="job_status"    />
+        <result property="paramsJson"    column="params_json"    />
+        <result property="jobType"    column="job_type"    />
+        <result property="jobBeanName"    column="job_bean_name"    />
+        <result property="jobBeanMethod"    column="job_bean_method"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="altTime"    column="alt_time"    />
+        <result property="exeOrder" column="exe_order"     />
+    </resultMap>
+
+    <sql id="selectJobRecordVo">
+        select id, job_code, job_status, params_json, job_type, job_bean_name, job_bean_method, create_time, alt_time, exe_order from sys_job_record
+    </sql>
+
+    <select id="selectJobRecordList" parameterType="JobRecord" resultMap="JobRecordResult">
+        <include refid="selectJobRecordVo"/>
+        <where>  
+            <if test="jobCode != null  and jobCode != ''"> and job_code = #{jobCode}</if>
+            <if test="jobStatus != null "> and job_status = #{jobStatus}</if>
+            <if test="paramsJson != null  and paramsJson != ''"> and params_json = #{paramsJson}</if>
+            <if test="jobType != null  and jobType != ''"> and job_type = #{jobType}</if>
+            <if test="jobBeanName != null  and jobBeanName != ''"> and job_bean_name like concat(concat('%', #{jobBeanName}), '%')</if>
+            <if test="jobBeanMethod != null  and jobBeanMethod != ''"> and job_bean_method = #{jobBeanMethod}</if>
+            <if test="altTime != null "> and alt_time = #{altTime}</if>
+        </where>
+    </select>
+
+    <select id="selectJobRecordListByVo" parameterType="JobRecordVo" resultMap="JobRecordResult">
+        <include refid="selectJobRecordVo"/>
+        <where>
+            <if test="jobCode != null  and jobCode != ''"> and job_code = #{jobCode}</if>
+            <if test="jobStatusArr != null and jobStatusArr.length > 0">
+            and job_status in
+                <foreach collection="jobStatusArr" item="jobStatus" open="(" separator="," close=")">
+                    #{jobStatus}
+                </foreach>
+            </if>
+            <if test="paramsJson != null  and paramsJson != ''"> and params_json = #{paramsJson}</if>
+            <if test="jobType != null  and jobType != ''"> and job_type = #{jobType}</if>
+            <if test="jobBeanName != null  and jobBeanName != ''"> and job_bean_name like concat(concat('%', #{jobBeanName}), '%')</if>
+            <if test="jobBeanMethod != null  and jobBeanMethod != ''"> and job_bean_method = #{jobBeanMethod}</if>
+            <if test="altTime != null "> and alt_time = #{altTime}</if>
+        </where>
+        order by exe_order
+    </select>
+    
+    <select id="selectJobRecordById" parameterType="Long" resultMap="JobRecordResult">
+        <include refid="selectJobRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJobRecord" parameterType="JobRecord">
+        insert into sys_job_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="jobCode != null and jobCode != ''">job_code,</if>
+            <if test="jobStatus != null">job_status,</if>
+            <if test="paramsJson != null">params_json,</if>
+            <if test="jobType != null and jobType != ''">job_type,</if>
+            <if test="jobBeanName != null and jobBeanName != ''">job_bean_name,</if>
+            <if test="jobBeanMethod != null and jobBeanMethod != ''">job_bean_method,</if>
+            create_time,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="jobCode != null and jobCode != ''">#{jobCode},</if>
+            <if test="jobStatus != null">#{jobStatus},</if>
+            <if test="paramsJson != null and paramsJson != ''">#{paramsJson},</if>
+            <if test="jobType != null and jobType != ''">#{jobType},</if>
+            <if test="jobBeanName != null and jobBeanName != ''">#{jobBeanName},</if>
+            <if test="jobBeanMethod != null and jobBeanMethod != ''">#{jobBeanMethod},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateJobRecord" parameterType="JobRecord">
+        update sys_job_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jobCode != null and jobCode != ''">job_code = #{jobCode},</if>
+            <if test="jobStatus != null">job_status = #{jobStatus},</if>
+            <if test="paramsJson != null and paramsJson != ''">params_json = #{paramsJson},</if>
+            <if test="jobType != null and jobType != ''">job_type = #{jobType},</if>
+            <if test="jobBeanName != null and jobBeanName != ''">job_bean_name = #{jobBeanName},</if>
+            <if test="jobBeanMethod != null and jobBeanMethod != ''">job_bean_method = #{jobBeanMethod},</if>
+            alt_time = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJobRecordById" parameterType="Long">
+        delete from sys_job_record where id = #{id}
+    </delete>
+
+    <delete id="deleteJobRecordByIds" parameterType="String">
+        delete from sys_job_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

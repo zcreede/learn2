@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpl.mapper.SubTmplTextMapper">
+
+    <resultMap type="SubTmplText" id="SubTmplTextResult">
+        <result property="id"    column="id"    />
+        <result property="subTempType"    column="sub_temp_type"    />
+        <result property="subTempObject"    column="sub_temp_object"    />
+        <result property="subTempName"    column="sub_temp_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="subTempText"    column="sub_temp_text"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+    </resultMap>
+
+    <sql id="selectSubTmplTextVo">
+        select id, sub_temp_type, sub_temp_object, sub_temp_name, inputstrphtc, sub_temp_text, cre_per_code, cre_per_name, cre_date from sub_tmpl_text
+    </sql>
+
+    <select id="selectSubTmplTextList" parameterType="SubTmplText" resultMap="SubTmplTextResult">
+        <include refid="selectSubTmplTextVo"/>
+        <where>
+            <if test="subTempType != null  and subTempType != ''"> and sub_temp_type = #{subTempType}</if>
+            <if test="subTempObject != null  and subTempObject != ''"> and sub_temp_object = #{subTempObject}</if>
+            <if test="subTempName != null  and subTempName != ''"> and (sub_temp_name like concat(concat('%', #{subTempName}), '%')
+                                                                    or inputstrphtc like concat(concat('%', #{subTempName}), '%'))</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="subTempText != null  and subTempText != ''"> and sub_temp_text = #{subTempText}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+        </where>
+    </select>
+
+    <select id="selectSubTmplTextById" parameterType="Long" resultMap="SubTmplTextResult">
+        <include refid="selectSubTmplTextVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSubTmplText" parameterType="SubTmplText">
+        insert into sub_tmpl_text
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="subTempType != null">sub_temp_type,</if>
+            <if test="subTempObject != null">sub_temp_object,</if>
+            <if test="subTempName != null">sub_temp_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="subTempText != null">sub_temp_text,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="subTempType != null">#{subTempType},</if>
+            <if test="subTempObject != null">#{subTempObject},</if>
+            <if test="subTempName != null">#{subTempName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="subTempText != null">#{subTempText},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateSubTmplText" parameterType="SubTmplText">
+        update sub_tmpl_text
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="subTempType != null">sub_temp_type = #{subTempType},</if>
+            <if test="subTempObject != null">sub_temp_object = #{subTempObject},</if>
+            <if test="subTempName != null">sub_temp_name = #{subTempName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="subTempText != null">sub_temp_text = #{subTempText},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSubTmplTextById" parameterType="Long">
+        delete from sub_tmpl_text where id = #{id}
+    </delete>
+
+    <delete id="deleteSubTmplTextByIds" parameterType="String">
+        delete from sub_tmpl_text where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

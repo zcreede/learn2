@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.BasEmployeeMapper">
+
+    <resultMap type="BasEmployee" id="BasEmployeeResult">
+        <result property="id"    column="id"    />
+        <result property="emplNumber"    column="empl_number"    />
+        <result property="emplName"    column="empl_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="gender"    column="gender"    />
+        <result property="genderName"    column="gender_name"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="titleCode"    column="title_code"    />
+        <result property="titleName"    column="title_name"    />
+        <result property="nation"    column="nation"    />
+        <result property="nativeplace"    column="nativeplace"    />
+        <result property="familyAdress"    column="family_adress"    />
+        <result property="politiStatus"    column="politi_status"    />
+        <result property="idNumber"    column="id_number"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="mariStatus"    column="mari_status"    />
+        <result property="emplTypeCode"    column="empl_type_code"    />
+        <result property="emplType"    column="empl_type"    />
+        <result property="status"    column="status"    />
+        <result property="quarters"    column="quarters"    />
+        <result property="quartersCode"    column="quarters_code"    />
+        <result property="photo"    column="photo"    />
+        <result property="subFlag"    column="sub_flag"    />
+        <result property="eduCd"    column="edu_cd"    />
+        <result property="eduName"    column="edu_name"    />
+        <result property="sourceOrg"    column="source_org"    />
+        <result property="optBeg"    column="opt_beg"    />
+        <result property="optEnd"    column="opt_end"    />
+        <result property="certId"    column="cert_id"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+    </resultMap>
+    <resultMap id="BasEmployeeVoResult" type="BasEmployeeVo" extends="BasEmployeeResult">
+        <result property="authorLevel"    column="author_level"    />
+        <result property="roleId"    column="role_id"    />
+        <result property="employeeId"    column="employee_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="certSn"    column="cert_sn"    />
+        <result property="healthCode"    column="health_code"    />
+    </resultMap>
+
+    <sql id="selectBasEmployeeVo">
+        select id,empl_number, empl_name, inputstrphtc, gender, gender_name, phone, email, title_code, title_name, nation, nativeplace, family_adress, politi_status, id_number, birthday, mari_status, empl_type_code, empl_type, status, quarters, quarters_code, photo, sub_flag, edu_cd, edu_name, source_org, opt_beg, opt_end, cert_id, del_flag, cre_date, cre_per_code, cre_per_name, alt_date, alt_per_code, alt_per_name from bas_employee
+    </sql>
+
+    <select id="selectBasEmployeeList" parameterType="BasEmployee" resultMap="BasEmployeeVoResult">
+        select e.id, empl_number, empl_name, inputstrphtc, gender, gender_name, phone, email, title_code, title_name, nation, nativeplace, family_adress, politi_status, id_number, birthday, mari_status, empl_type_code, empl_type, status, quarters, quarters_code, photo, sub_flag, edu_cd, edu_name, source_org, opt_beg, opt_end
+        from bas_employee e
+        left join sys_employee_role_dept dept on dept.employee_id = e.id
+        <where>
+            <if test="emplName != null  and emplName != ''">
+                and (e.empl_name like concat(concat('%', #{emplName}), '%')
+                    or e.empl_number like concat(concat('%', #{emplName}), '%')
+                    or e.inputstrphtc like concat(concat('%', #{emplName}), '%')
+                    )
+            </if>
+            <if test="emplTypeCode != null  and emplTypeCode != ''"> and e.empl_type_code = #{emplTypeCode}</if>
+            <if test="emplType != null  and emplType != ''"> and e.empl_type = #{emplType}</if>
+            <if test="status != null  and status != ''"> and e.status = #{status}</if>
+            <if test="titleCode != null  and titleCode != ''"> and e.title_code = #{titleCode}</if>
+            <if test="delFlag != null  and delFlag != ''"> and e.del_flag = #{delFlag}</if>
+            <if test="deptId != null"> and dept.dept_id = #{deptId}</if>
+        </where>
+        order by e.cre_date desc
+    </select>
+
+    <select id="selectBasEmployee" parameterType="BasEmployee" resultMap="BasEmployeeResult">
+        select s.id,s.STAFF_CODE as empl_number,
+        s.STAFF_NAME as empl_name,
+        s.STAFF_NAME_PYM as inputstrphtc,
+        s.STAFF_SEX as gender,
+        s.TEL as phone,
+        s.TITLE as title_code,
+        s.NATION as nation,
+        s.NATIVE_PLACE as nativeplace,
+        s.POLITICAL_STATUS as politi_status,
+        s.IDCARD as id_number,
+        s.BIRDTH_DATE as birthday,
+        s.STAFF_TYPE as empl_type_code,
+        s.PIC as photo,
+        dd.data_tag as title_name,
+        s.del_flag from tm_bs_staff s
+        left join tm_bs_dict_data dd on dd.data_val=s.title and dict_type='s048'
+        <where>
+            <if test="emplNumber != null  and emplNumber != ''"> and s.STAFF_CODE = #{emplNumber}</if>
+            <if test="emplName != null  and emplName != ''"> and s.STAFF_NAME like concat(concat('%', #{emplName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and s.STAFF_NAME_PYM = #{inputstrphtc}</if>
+            <if test="gender != null  and gender != ''"> and s.STAFF_SEX = #{gender}</if>
+            <if test="phone != null  and phone != ''"> and s.TEL = #{phone}</if>
+            <if test="titleCode != null  and titleCode != ''"> and s.TITLE = #{titleCode}</if>
+            <if test="nation != null  and nation != ''"> and s.NATION = #{nation}</if>
+            <if test="nativeplace != null  and nativeplace != ''"> and s.NATIVE_PLACE = #{nativeplace}</if>
+            <if test="politiStatus != null  and politiStatus != ''"> and s.POLITICAL_STATUS = #{politiStatus}</if>
+            <if test="idNumber != null  and idNumber != ''"> and s.IDCARD = #{idNumber}</if>
+            <if test="birthday != null "> and s.BIRDTH_DATE = #{birthday}</if>
+            <if test="emplTypeCode != null  and emplTypeCode != ''"> and s.STAFF_TYPE = #{emplTypeCode}</if>
+            <if test="photo != null  and photo != ''"> and s.PIC = #{photo}</if>
+            <if test="delFlag != null  and delFlag != ''"> and (s.del_flag = #{delFlag} or s.del_flag is null)</if>
+        </where>
+    </select>
+
+    <select id="selectBasEmployeeById" parameterType="Long" resultMap="BasEmployeeVoResult">
+        select tbs.id,tbs.STAFF_CODE as empl_number,
+               tbs.STAFF_NAME as empl_name,
+               tbs.STAFF_NAME_PYM as inputstrphtc,
+               tbs.STAFF_SEX as gender,
+               tbs.TEL as phone,
+               tbs.TITLE as title_code,
+               tbs.NATION as nation,
+               tbs.NATIVE_PLACE as nativeplace,
+               tbs.POLITICAL_STATUS as politi_status,
+               tbs.IDCARD as id_number,
+               tbs.BIRDTH_DATE as birthday,
+               tbs.STAFF_TYPE as empl_type_code,
+               tbs.PIC as photo,
+               sdd.DATA_TAG as title_name,
+               tbs.del_flag ,
+               tbs.health_code
+               from tm_bs_staff tbs
+               left join TM_BS_DICT_DATA sdd on sdd.DATA_VAL=tbs.title and sdd.dict_type='s048'
+        where tbs.id = #{id}
+    </select>
+
+    <insert id="insertBasEmployee" parameterType="BasEmployeeVo">
+        insert into bas_employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="emplNumber != null">empl_number,</if>
+            <if test="emplName != null">empl_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="gender != null">gender,</if>
+            <if test="genderName != null">gender_name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="titleCode != null">title_code,</if>
+            <if test="titleName != null">title_name,</if>
+            <if test="nation != null">nation,</if>
+            <if test="nativeplace != null">nativeplace,</if>
+            <if test="familyAdress != null">family_adress,</if>
+            <if test="politiStatus != null">politi_status,</if>
+            <if test="idNumber != null">id_number,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="mariStatus != null">mari_status,</if>
+            <if test="emplTypeCode != null">empl_type_code,</if>
+            <if test="emplType != null">empl_type,</if>
+            <if test="status != null">status,</if>
+            <if test="quarters != null">quarters,</if>
+            <if test="quartersCode != null">quarters_code,</if>
+            <if test="photo != null">photo,</if>
+            <if test="subFlag != null">sub_flag,</if>
+            <if test="eduCd != null">edu_cd,</if>
+            <if test="eduName != null">edu_name,</if>
+            <if test="sourceOrg != null">source_org,</if>
+            <if test="optBeg != null">opt_beg,</if>
+            <if test="optEnd != null">opt_end,</if>
+            <if test="certId != null">cert_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            cre_date,
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="emplNumber != null">#{emplNumber},</if>
+            <if test="emplName != null">#{emplName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="genderName != null">#{genderName},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="titleCode != null">#{titleCode},</if>
+            <if test="titleName != null">#{titleName},</if>
+            <if test="nation != null">#{nation},</if>
+            <if test="nativeplace != null">#{nativeplace},</if>
+            <if test="familyAdress != null">#{familyAdress},</if>
+            <if test="politiStatus != null">#{politiStatus},</if>
+            <if test="idNumber != null">#{idNumber},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="mariStatus != null">#{mariStatus},</if>
+            <if test="emplTypeCode != null">#{emplTypeCode},</if>
+            <if test="emplType != null">#{emplType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="quarters != null">#{quarters},</if>
+            <if test="quartersCode != null">#{quartersCode},</if>
+            <if test="photo != null">#{photo},</if>
+            <if test="subFlag != null">#{subFlag},</if>
+            <if test="eduCd != null">#{eduCd},</if>
+            <if test="eduName != null">#{eduName},</if>
+            <if test="sourceOrg != null">#{sourceOrg},</if>
+            <if test="optBeg != null">#{optBeg},</if>
+            <if test="optEnd != null">#{optEnd},</if>
+            <if test="certId != null">#{certId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            sysdate,
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasEmployee" parameterType="BasEmployeeVo">
+        update bas_employee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="emplNumber != null">empl_number = #{emplNumber},</if>
+            <if test="emplName != null">empl_name = #{emplName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="genderName != null">gender_name = #{genderName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="titleCode != null">title_code = #{titleCode},</if>
+            <if test="titleName != null">title_name = #{titleName},</if>
+            <if test="nation != null">nation = #{nation},</if>
+            <if test="nativeplace != null">nativeplace = #{nativeplace},</if>
+            <if test="familyAdress != null">family_adress = #{familyAdress},</if>
+            <if test="politiStatus != null">politi_status = #{politiStatus},</if>
+            <if test="idNumber != null">id_number = #{idNumber},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="mariStatus != null">mari_status = #{mariStatus},</if>
+            <if test="emplTypeCode != null">empl_type_code = #{emplTypeCode},</if>
+            <if test="emplType != null">empl_type = #{emplType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="quarters != null">quarters = #{quarters},</if>
+            <if test="quartersCode != null">quarters_code = #{quartersCode},</if>
+            <if test="photo != null">photo = #{photo},</if>
+            <if test="subFlag != null">sub_flag = #{subFlag},</if>
+            <if test="eduCd != null">edu_cd = #{eduCd},</if>
+            <if test="eduName != null">edu_name = #{eduName},</if>
+            <if test="sourceOrg != null">source_org = #{sourceOrg},</if>
+            <if test="optBeg != null">opt_beg = #{optBeg},</if>
+            <if test="optEnd != null">opt_end = #{optEnd},</if>
+            <if test="certId != null">cert_id = #{certId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            alt_date = sysdate,
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateDelFlagByIds" parameterType="Long">
+        update bas_employee set del_flag = '1' where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <delete id="deleteBasEmployeeById" parameterType="String">
+        delete from bas_employee where id = #{id}
+    </delete>
+
+    <delete id="deleteBasEmployeeByIds" parameterType="String">
+        delete from bas_employee where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertMap" parameterType="map">
+        insert into bas_employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">id,</if>
+            <if test="EMPL_NUMBER != null">empl_number,</if>
+            <if test="EMPL_NAME != null">empl_name,</if>
+            <if test="INPUTSTRPHTC != null">inputstrphtc,</if>
+            <if test="GENDER != null">gender,</if>
+            <if test="GENDER_NAME != null">gender_name,</if>
+            <if test="PHONE != null">phone,</if>
+            <if test="EMAIL != null">email,</if>
+            <if test="TITLE_CODE != null">title_code,</if>
+            <if test="TITLE_NAME != null">title_name,</if>
+            <if test="NATION != null">nation,</if>
+            <if test="NATIVEPLACE != null">nativeplace,</if>
+            <if test="FAMILY_ADRESS != null">family_adress,</if>
+            <if test="POLITI_STATUS != null">politi_status,</if>
+            <if test="ID_NUMBER != null">id_number,</if>
+            <if test="BIRTHDAY != null">birthday,</if>
+            <if test="MARI_STATUS != null">mari_status,</if>
+            <if test="EMPL_TYPE_CODE != null">empl_type_code,</if>
+            <if test="EMPL_TYPE != null">empl_type,</if>
+            <if test="STATUS != null">status,</if>
+            <if test="QUARTERS != null">quarters,</if>
+            <if test="QUARTERS_CODE != null">quarters_code,</if>
+            <if test="PHOTO != null">photo,</if>
+            <if test="SUB_FLAG != null">sub_flag,</if>
+            <if test="EDU_CD != null">edu_cd,</if>
+            <if test="EDU_NAME != null">edu_name,</if>
+            <if test="SOURCE_ORG != null">source_org,</if>
+            <if test="OPT_BEG != null">opt_beg,</if>
+            <if test="OPT_END != null">opt_end,</if>
+            <if test="CERT_ID != null">cert_id,</if>
+            <if test="DEL_FLAG != null">del_flag,</if>
+            cre_date,
+            <if test="CRE_PER_CODE != null">cre_per_code,</if>
+            <if test="CRE_PER_NAME != null">cre_per_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="EMPL_NUMBER != null">#{EMPL_NUMBER},</if>
+            <if test="EMPL_NAME != null">#{EMPL_NAME},</if>
+            <if test="INPUTSTRPHTC != null">#{INPUTSTRPHTC},</if>
+            <if test="GENDER != null">#{GENDER},</if>
+            <if test="GENDER_NAME != null">#{GENDER_NAME},</if>
+            <if test="PHONE != null">#{PHONE},</if>
+            <if test="EMAIL != null">#{EMAIL},</if>
+            <if test="TITLE_CODE != null">#{TITLE_CODE},</if>
+            <if test="TITLE_NAME != null">#{TITLE_NAME},</if>
+            <if test="NATION != null">#{NATION},</if>
+            <if test="NATIVEPLACE != null">#{NATIVEPLACE},</if>
+            <if test="FAMILY_ADRESS != null">#{FAMILY_ADRESS},</if>
+            <if test="POLITI_STATUS != null">#{POLITI_STATUS},</if>
+            <if test="ID_NUMBER != null">#{ID_NUMBER},</if>
+            <if test="BIRTHDAY != null">#{BIRTHDAY},</if>
+            <if test="MARI_STATUS != null">#{MARI_STATUS},</if>
+            <if test="EMPL_TYPE_CODE != null">#{EMPL_TYPE_CODE},</if>
+            <if test="EMPL_TYPE != null">#{EMPL_TYPE},</if>
+            <if test="STATUS != null">#{STATUS},</if>
+            <if test="QUARTERS != null">#{QUARTERS},</if>
+            <if test="QUARTERS_CODE != null">#{QUARTERS_CODE},</if>
+            <if test="PHOTO != null">#{PHOTO},</if>
+            <if test="SUB_FLAG != null">#{SUB_FLAG},</if>
+            <if test="EDU_CD != null">#{EDU_CD},</if>
+            <if test="EDU_NAME != null">#{EDU_NAME},</if>
+            <if test="SOURCE_ORG != null">#{SOURCE_ORG},</if>
+            <if test="OPT_BEG != null">#{OPT_BEG},</if>
+            <if test="OPT_END != null">#{OPT_END},</if>
+            <if test="CERT_ID != null">#{CERT_ID},</if>
+            <if test="DEL_FLAG != null">#{DEL_FLAG},</if>
+            sysdate,
+            <if test="CRE_PER_CODE != null">#{CRE_PER_CODE},</if>
+            <if test="CRE_PER_NAME != null">#{CRE_PER_NAME},</if>
+        </trim>
+    </insert>
+
+    <select id="searchList" parameterType="BasEmployeeSearchVo" resultMap="BasEmployeeResult">
+        select e.id, e.STAFF_CODE as empl_number, e.STAFF_NAME as empl_name, e.STAFF_NAME_PYM as inputstrphtc,
+        e.STAFF_SEX as gender, '' as gender_name, e.TEL as phone,
+        e.TITLE as title_code, dd.data_tag as title_name, e.NATION as nation,
+        e.BIRDTH_DATE as birthday,  e.status, e.PIC as photo,
+         null as sub_flag,e.IDCARD as cert_id, e.del_flag
+        from tm_bs_staff e
+        left join bas_doct_group_member gm on e.STAFF_CODE = gm.doc_code
+        left join TM_BS_DICT_DATA dd on e.title = dd.data_val and dd.DICT_TYPE = 's048'
+        <if test="deptId != null  and deptId != ''"> left join tm_bs_staff_dept rd on rd.staff_code=e.staff_code</if>
+        <where>
+            and e.STAFF_TYPE='c'
+            <if test="status != null and status != ''">
+                and e.status = #{status}
+            </if>
+            <if test="groupId != null  and groupId != ''">
+                and gm.GROUP_ID = (
+                    select GROUP_ID from BAS_DOCT_GROUP_MEMBER a left join BAS_DOCT_GROUP b on a.group_id = b.id
+                    where b.DEPT_CD = #{deptCode} and a.doc_code = #{emplNumber}
+                )
+            </if>
+            <if test="deptId != null  and deptId != ''"> and rd.dept_code = #{deptId}</if>
+            <if test="emplName != null  and emplName != ''"> and (
+                e.STAFF_NAME like concat(concat('%', #{emplName}), '%')
+                or e.STAFF_CODE like concat(concat('%', #{emplName}), '%')
+                or e.STAFF_NAME_PYM like concat(concat('%', #{emplName}), '%')
+                )
+            </if>
+            <if test="titleCodeList != null  and titleCodeList.size > 0">
+                and TITLE in
+                <foreach collection="titleCodeList" item="titleCode" separator="," open="(" close=")">
+                    #{titleCode}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="searchListAll" parameterType="BasEmployeeSearchVo" resultMap="BasEmployeeResult">
+        select
+        <if test="deptId != null  and deptId != ''"> distinct rd.number_use,</if>
+        e.id, e.STAFF_CODE as empl_number, e.STAFF_NAME as empl_name, e.STAFF_NAME_PYM as inputstrphtc,
+        e.STAFF_SEX as gender, '' as gender_name, e.TEL as phone,
+        e.TITLE as title_code, dd.data_tag as title_name, e.NATION as nation,
+        e.BIRDTH_DATE as birthday, e.status, to_char(e.PIC) as photo,
+        null as sub_flag,e.IDCARD as cert_id, e.del_flag
+        from tm_bs_staff e
+        left join bas_doct_group_member gm on e.STAFF_CODE = gm.doc_code
+        left join TM_BS_DICT_DATA dd on e.title = dd.data_val and dd.DICT_TYPE = 's048'
+        <if test="deptId != null  and deptId != ''">
+            left join tm_bs_staff_dept rd on rd.staff_code=e.staff_code
+        </if>
+        <where>
+            and (e.STAFF_TYPE='c' or e.STAFF_TYPE='d')
+            <if test="status != null and status != ''">
+                and e.status = #{status}
+            </if>
+            <if test="groupId != null  and groupId != ''">
+                and gm.GROUP_ID = (
+                    select GROUP_ID from BAS_DOCT_GROUP_MEMBER a left join BAS_DOCT_GROUP b on a.group_id = b.id
+                    where b.DEPT_CD = #{deptCode} and a.doc_code = #{emplNumber}
+                )
+            </if>
+            <if test="deptId != null  and deptId != ''"> and rd.dept_code = #{deptId}</if>
+            <if test="emplName != null  and emplName != ''"> and (
+                e.STAFF_NAME like concat(concat('%', #{emplName}), '%')
+                or e.STAFF_CODE like concat(concat('%', #{emplName}), '%')
+                or e.STAFF_NAME_PYM like concat(concat('%', #{emplName}), '%')
+                )
+            </if>
+            <if test="titleCodeList != null  and titleCodeList.size > 0">
+                and TITLE in
+                <foreach collection="titleCodeList" item="titleCode" separator="," open="(" close=")">
+                    #{titleCode}
+                </foreach>
+            </if>
+        </where>
+        <if test="deptId != null  and deptId != ''">
+            order by rd.number_use desc nulls last
+        </if>
+    </select>
+
+    <select id="selectAuthorizeList" parameterType="BasEmployeeVo" resultMap="BasEmployeeVoResult">
+    select distinct be.staff_code as empl_number,be.id, be.staff_name as empl_name, be.STAFF_SEX as gender_name,
+     be.TEL as phone, be.status, aa.author_level,bci.cert_sn
+        from tm_bs_staff be
+        left join bas_emr_acce_author aa on aa.object_id=be.id
+        left join tm_bs_staff_role rd on rd.staff_code = be.staff_code
+        left join bas_cert_info bci on bci.ID = be.id
+        left join tm_bs_role r on r.role_no=rd.role_no
+        LEFT JOIN tm_bs_staff_dept dept ON dept.staff_code = rd.staff_code
+        LEFT JOIN tm_bs_dept sd ON dept.dept_code = sd.dept_code
+        where (be.del_flag = '0' or be.del_flag is null)
+        <if test="emplName != null and emplName != ''">
+            AND (be.staff_name like concat(concat('%',#{emplName}),'%') or be.staff_code like concat(concat('%',#{emplName}),'%'))
+        </if>
+        <if test="status != null and status != ''">
+            AND be.status =#{status}
+        </if>
+        <if test="authorLevel != null and authorLevel != ''">
+            AND aa.AUTHOR_LEVEL=#{authorLevel}
+        </if>
+        <if test="roleId != null and roleId != ''">
+            AND r.id =#{roleId}
+       </if>
+        <if test="deptId != null and deptId != '10000'.toString()">
+            AND sd.dept_code =#{deptId}
+        </if>
+        order by be.staff_code
+    </select>
+    <select id="selectRoleEmployeeList" parameterType="BasEmployee" resultMap="BasEmployeeVoResult">
+        select r.id as role_id,rd.staff_code as employee_id,dept.dept_code as dept_id,be.author_level
+        from tm_bs_staff_role rd
+        left join tm_bs_staff_dept dept on dept.staff_code=rd.staff_code
+        left join tm_bs_role r on rd.role_no=r.role_no
+        left join bas_emr_acce_author be on r.id=be.object_id
+    </select>
+    <select id="selectUserLiseByRoleType" parameterType="BasEmployeeVo" resultMap="BasEmployeeVoResult">
+        select DISTINCT be.id,be.staff_name as empl_name,be.staff_code as empl_number,be.STAFF_NAME_PYM as inputstrphtc,be.title as title_code,be.title as title_name
+        from  tm_bs_staff_dept ud
+        LEFT JOIN tm_bs_staff be ON be.staff_code = ud.staff_code
+        where be.id is not null and be.staff_type =#{roleType}
+        <if test="deptId != null and deptId!=''">
+            and ud.dept_code = #{deptId}
+        </if>
+        <if test="status != null and status != ''">
+            and be.status = #{status}
+        </if>
+        <if test="consType != null and consType=='1'.toString()">
+            and be.TITLE in ('001','002','003')
+        </if>
+        <if test="searchValue != null and searchValue != ''">
+            AND (
+            be.staff_name like concat(concat('%',#{searchValue}),'%')
+            or be.staff_code like concat(concat('%',#{searchValue}),'%')
+            or be.STAFF_NAME_PYM like concat(concat('%',#{searchValue}),'%')
+            )
+        </if>
+<!--        <if test="staffNo != null and staffNo!=''">-->
+<!--            and be.id != #{staffNo}-->
+<!--        </if>-->
+    </select>
+
+    <insert id="batchUserRoleDept" useGeneratedKeys="false">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into sys_employee_role_dept(employee_id, role_id, dept_id) values (#{item.employeeId},#{item.roleId},#{item.deptId})
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <select id="selectDeptBasEmployeeList" parameterType="String"  resultMap="BasEmployeeVoResult">
+        select be.id,be.STAFF_CODE as empl_number,
+        be.STAFF_NAME as empl_name,
+        be.STAFF_NAME_PYM as inputstrphtc,
+        be.STAFF_SEX as gender,
+        be.TEL as phone,
+        be.TITLE as title_code,
+        be.NATION as nation,
+        be.NATIVE_PLACE as nativeplace,
+        be.POLITICAL_STATUS as politi_status,
+        be.IDCARD as id_number,
+        be.BIRDTH_DATE as birthday,
+        be.STAFF_TYPE as empl_type_code,
+        be.PIC as photo,be.del_flag
+		from tm_bs_staff be
+		left join tm_bs_staff_dept ud on be.staff_code = ud.staff_code
+		left join tm_bs_dept d on ud.dept_code = d.dept_code
+	    <if test="deptCode !=null">
+            where d.dept_code=#{deptCode}
+        </if>
+    </select>
+    <select id="selectBasEmployeeAllList" resultMap="BasEmployeeResult">
+        select id,STAFF_CODE as empl_number,
+               STAFF_NAME as empl_name,
+               STAFF_NAME_PYM as inputstrphtc,
+               STAFF_SEX as gender,
+               TEL as phone,
+               TITLE as title_code,
+               NATION as nation,
+               NATIVE_PLACE as nativeplace,
+               POLITICAL_STATUS as politi_status,
+               IDCARD as id_number,
+               BIRDTH_DATE as birthday,
+               STAFF_TYPE as empl_type_code,
+               PIC as photo,
+               del_flag from tm_bs_staff
+    </select>
+</mapper>

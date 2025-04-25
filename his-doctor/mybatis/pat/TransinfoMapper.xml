@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.TransinfoMapper">
+
+    <resultMap type="Transinfo" id="TransinfoResult">
+        <result property="trId"    column="tr_id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="tiDocName"    column="ti_doc_name"    />
+        <result property="tiDocCd"    column="ti_doc_cd"    />
+        <result property="tiBedNo"    column="ti_bed_no"    />
+        <result property="tiTime"    column="ti_time"    />
+        <result property="tiDeptName"    column="ti_dept_name"    />
+        <result property="tiDeptCd"    column="ti_dept_cd"    />
+        <result property="tiAreaCd"    column="ti_area_cd"    />
+        <result property="toAreaName"    column="to_area_name"    />
+        <result property="toDocCd"    column="to_doc_cd"    />
+        <result property="toDocName"    column="to_doc_name"    />
+        <result property="toBedNo"    column="to_bed_no"    />
+        <result property="toTime"    column="to_time"    />
+        <result property="toDeptName"    column="to_dept_name"    />
+        <result property="toDeptCd"    column="to_dept_cd"    />
+        <result property="tiAreaName"    column="ti_area_name"    />
+        <result property="toAreaCd"    column="to_area_cd"    />
+        <result property="tranInState"    column="tran_in_state"    />
+        <result property="tranOutState"    column="tran_out_state"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="serviceTypeCode"    column="service_type_code"    />
+    </resultMap>
+
+    <sql id="selectTransinfoVo">
+        select cd.ID as TR_ID,
+         cd.HOSPITAL_CODE as ORG_CD,
+         cd.ADMISSION_NO as PATIENT_ID,
+         cd.ADMISSION_NO as INP_NO,
+         cd.PATIENT_NAME as PATIENT_NAME,
+         cd.DOCTOR_NAME_IN as TI_DOC_NAME,
+         cd.DOCTOR_NO_IN as TI_DOC_CD,
+         cd.BEDID_IN as TI_BED_NO,
+         cd.OPERATOR_DATE_IN as TI_TIME,
+         inDept.dept_name as TI_DEPT_NAME,
+         inDept.dept_code as TI_DEPT_CD,
+         inWard.WARD_NO as TI_AREA_CD,
+         outWard.WARD_NAME as TO_AREA_NAME,
+         cd.DOCTOR_CODE_OUT as TO_DOC_CD,
+         cd.DOCTOR_NAME_OUT as TO_DOC_NAME,
+         cd.BEDID_OUT as TO_BED_NO,
+         cd.OPERATOR_DATE_OUT as TO_TIME,
+         outDept.dept_name as TO_DEPT_NAME,
+         outDept.dept_code as TO_DEPT_CD,
+         inWard.WARD_NAME as TI_AREA_NAME,
+         outWard.WARD_NO as TO_AREA_CD,
+         cd.flag as TRAN_IN_STATE,
+         cd.flag as TRAN_OUT_STATE
+         from td_na_change_dep  cd
+         left join tm_bs_ward inWard on inWard.WARD_NO=rtrim(cd.WARD_NO_IN)
+         left join tm_bs_ward outWard on outWard.WARD_NO=rtrim(cd.WARD_NO_OUT)
+             left join tm_bs_dept inDept on rtrim(cd.WARD_NO_IN)=inDept.WARD_NO
+        left join tm_bs_dept outDept on rtrim(cd.WARD_NO_OUT)=outDept.WARD_NO
+    </sql>
+
+    <select id="selectTransinfoList" parameterType="Transinfo" resultMap="TransinfoResult">
+        <include refid="selectTransinfoVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and cd.ADMISSION_NO = #{patientId}</if>
+            <if test="inpNo != null  and inpNo != ''"> and cd.ADMISSION_NO = #{inpNo}</if>
+            <if test="patientName != null  and patientName != ''"> and cd.patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="tiDocName != null  and tiDocName != ''"> and cd.DOCTOR_NAME_IN like concat(concat('%', #{tiDocName}), '%')</if>
+            <if test="tiDocCd != null  and tiDocCd != ''"> and cd.DOCTOR_NO_IN = #{tiDocCd}</if>
+            <if test="tiBedNo != null  and tiBedNo != ''"> and cd.BEDID_IN = #{tiBedNo}</if>
+            <if test="tiTime != null "> and cd.OPERATOR_DATE_IN = #{tiTime}</if>
+            <if test="tiDeptName != null  and tiDeptName != ''"> and inDept.dept_name like concat(concat('%', #{tiDeptName}), '%')</if>
+            <if test="tiDeptCd != null  and tiDeptCd != ''"> and inDept.dept_code = #{tiDeptCd}</if>
+            <if test="tiAreaCd != null  and tiAreaCd != ''"> and inWard.WARD_NO = #{tiAreaCd}</if>
+            <if test="toAreaName != null  and toAreaName != ''"> and outWard.WARD_NAME like concat(concat('%', #{toAreaName}), '%')</if>
+            <if test="toDocCd != null  and toDocCd != ''"> and cd.DOCTOR_CODE_OUT = #{toDocCd}</if>
+            <if test="toDocName != null  and toDocName != ''"> and cd.DOCTOR_NAME_OUT like concat(concat('%', #{toDocName}), '%')</if>
+            <if test="toBedNo != null  and toBedNo != ''"> and cd.BEDID_OUT = #{toBedNo}</if>
+            <if test="toTime != null "> and cd.OPERATOR_DATE_OUT = #{toTime}</if>
+            <if test="toDeptName != null  and toDeptName != ''"> and outDept.dept_name like concat(concat('%', #{toDeptName}), '%')</if>
+            <if test="toDeptCd != null  and toDeptCd != ''"> and outDept.dept_code  = #{toDeptCd}</if>
+            <if test="tiAreaName != null  and tiAreaName != ''"> and inWard.WARD_NAME like concat(concat('%', #{tiAreaName}), '%')</if>
+            <if test="toAreaCd != null  and toAreaCd != ''"> and outWard.WARD_NO = #{toAreaCd}</if>
+            <if test="tranInState != null  and tranInState != ''"> and cd.flag = #{tranInState}</if>
+            <if test="tranOutState != null  and tranOutState != ''"> and cd.flag = #{tranOutState}</if>
+<!--            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>-->
+<!--            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>-->
+<!--            <if test="altDate != null "> and alt_date = #{altDate}</if>-->
+<!--            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>-->
+<!--            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>-->
+<!--            <if test="creDate != null "> and cre_date = #{creDate}</if>-->
+        </where>
+    </select>
+
+    <select id="selectTransinfoById" parameterType="Long" resultMap="TransinfoResult">
+        <include refid="selectTransinfoVo"/>
+        where cd.id = #{trId}
+    </select>
+
+    <insert id="insertTransinfo" parameterType="Transinfo">
+        insert into pat_transinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="trId != null">tr_id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="inpNo != null">inp_no,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="tiDocName != null">ti_doc_name,</if>
+            <if test="tiDocCd != null">ti_doc_cd,</if>
+            <if test="tiBedNo != null">ti_bed_no,</if>
+            <if test="tiTime != null">ti_time,</if>
+            <if test="tiDeptName != null">ti_dept_name,</if>
+            <if test="tiDeptCd != null">ti_dept_cd,</if>
+            <if test="tiAreaCd != null">ti_area_cd,</if>
+            <if test="toAreaName != null">to_area_name,</if>
+            <if test="toDocCd != null">to_doc_cd,</if>
+            <if test="toDocName != null">to_doc_name,</if>
+            <if test="toBedNo != null">to_bed_no,</if>
+            <if test="toTime != null">to_time,</if>
+            <if test="toDeptName != null">to_dept_name,</if>
+            <if test="toDeptCd != null">to_dept_cd,</if>
+            <if test="tiAreaName != null">ti_area_name,</if>
+            <if test="toAreaCd != null">to_area_cd,</if>
+            <if test="tranInState != null">tran_in_state,</if>
+            <if test="tranOutState != null">tran_out_state,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="trId != null">#{trId},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="inpNo != null">#{inpNo},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="tiDocName != null">#{tiDocName},</if>
+            <if test="tiDocCd != null">#{tiDocCd},</if>
+            <if test="tiBedNo != null">#{tiBedNo},</if>
+            <if test="tiTime != null">#{tiTime},</if>
+            <if test="tiDeptName != null">#{tiDeptName},</if>
+            <if test="tiDeptCd != null">#{tiDeptCd},</if>
+            <if test="tiAreaCd != null">#{tiAreaCd},</if>
+            <if test="toAreaName != null">#{toAreaName},</if>
+            <if test="toDocCd != null">#{toDocCd},</if>
+            <if test="toDocName != null">#{toDocName},</if>
+            <if test="toBedNo != null">#{toBedNo},</if>
+            <if test="toTime != null">#{toTime},</if>
+            <if test="toDeptName != null">#{toDeptName},</if>
+            <if test="toDeptCd != null">#{toDeptCd},</if>
+            <if test="tiAreaName != null">#{tiAreaName},</if>
+            <if test="toAreaCd != null">#{toAreaCd},</if>
+            <if test="tranInState != null">#{tranInState},</if>
+            <if test="tranOutState != null">#{tranOutState},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTransinfo" parameterType="Transinfo">
+        update pat_transinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="inpNo != null">inp_no = #{inpNo},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="tiDocName != null">ti_doc_name = #{tiDocName},</if>
+            <if test="tiDocCd != null">ti_doc_cd = #{tiDocCd},</if>
+            <if test="tiBedNo != null">ti_bed_no = #{tiBedNo},</if>
+            <if test="tiTime != null">ti_time = #{tiTime},</if>
+            <if test="tiDeptName != null">ti_dept_name = #{tiDeptName},</if>
+            <if test="tiDeptCd != null">ti_dept_cd = #{tiDeptCd},</if>
+            <if test="tiAreaCd != null">ti_area_cd = #{tiAreaCd},</if>
+            <if test="toAreaName != null">to_area_name = #{toAreaName},</if>
+            <if test="toDocCd != null">to_doc_cd = #{toDocCd},</if>
+            <if test="toDocName != null">to_doc_name = #{toDocName},</if>
+            <if test="toBedNo != null">to_bed_no = #{toBedNo},</if>
+            <if test="toTime != null">to_time = #{toTime},</if>
+            <if test="toDeptName != null">to_dept_name = #{toDeptName},</if>
+            <if test="toDeptCd != null">to_dept_cd = #{toDeptCd},</if>
+            <if test="tiAreaName != null">ti_area_name = #{tiAreaName},</if>
+            <if test="toAreaCd != null">to_area_cd = #{toAreaCd},</if>
+            <if test="tranInState != null">tran_in_state = #{tranInState},</if>
+            <if test="tranOutState != null">tran_out_state = #{tranOutState},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+        </trim>
+        where tr_id = #{trId}
+    </update>
+
+    <delete id="deleteTransinfoById" parameterType="Long">
+        delete from pat_transinfo where tr_id = #{trId}
+    </delete>
+
+    <delete id="deleteTransinfoByIds" parameterType="String">
+        delete from pat_transinfo where tr_id in
+        <foreach item="trId" collection="array" open="(" separator="," close=")">
+            #{trId}
+        </foreach>
+    </delete>
+
+    <insert id="insertMap" parameterType="map">
+        insert into TD_NA_CHANGE_DEP
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID!=null">ID,</if>
+            <if test="HOSPITAL_CODE!=null and HOSPITAL_CODE!=''">HOSPITAL_CODE,</if>
+            <if test="CASE_NO!=null and CASE_NO!=''">CASE_NO,</if>
+            <if test="ADMISSION_NO!=null and ADMISSION_NO!=''">ADMISSION_NO,</if>
+            <if test="HOSPITALIZED_COUNT!=null ">HOSPITALIZED_COUNT,</if>
+            <if test="PATIENT_NAME!=null and PATIENT_NAME!=''">PATIENT_NAME,</if>
+            <if test="PATIENT_SEX!=null and PATIENT_SEX!=''">PATIENT_SEX,</if>
+            <if test="PATIENT_AGE!=null and PATIENT_AGE!=''">PATIENT_AGE,</if>
+            <if test="OPERATOR_DATE_OUT!=null ">OPERATOR_DATE_OUT,</if>
+            <if test="OPERATOR_NO_OUT!=null and OPERATOR_NO_OUT!=''">OPERATOR_NO_OUT,</if>
+            <if test="OPERATOR_NAME_OUT!=null and OPERATOR_NAME_OUT!=''">OPERATOR_NAME_OUT,</if>
+            <if test="WARD_NO_OUT!=null and WARD_NO_OUT!=''">WARD_NO_OUT,</if>
+            <if test="BEDROOM_NO_OUT!=null and BEDROOM_NO_OUT!=''">BEDROOM_NO_OUT,</if>
+            <if test="BEDID_OUT!=null and BEDID_OUT!=''">BEDID_OUT,</if>
+            <if test="MEDICALGROUP_NO_OUT!=null and MEDICALGROUP_NO_OUT!=''">MEDICALGROUP_NO_OUT,</if>
+            <if test="DOCTOR_CODE_OUT!=null and DOCTOR_CODE_OUT!=''">DOCTOR_CODE_OUT,</if>
+            <if test="DOCTOR_NO_OUT!=null and DOCTOR_NO_OUT!=''">DOCTOR_NO_OUT,</if>
+            <if test="DOCTOR_NAME_OUT!=null and DOCTOR_NAME_OUT!=''">DOCTOR_NAME_OUT,</if>
+            <if test="NURSINGGROUP_NO_OUT!=null and NURSINGGROUP_NO_OUT!=''">NURSINGGROUP_NO_OUT,</if>
+            <if test="NURSING_CODE_OUT!=null and NURSING_CODE_OUT!=''">NURSING_CODE_OUT,</if>
+            <if test="NURSING_NO_OUT!=null and NURSING_NO_OUT!=''">NURSING_NO_OUT,</if>
+            <if test="NURSING_NAME_OUT!=null and NURSING_NAME_OUT!=''">NURSING_NAME_OUT,</if>
+            <if test="OPERATOR_DATE_IN!=null ">OPERATOR_DATE_IN,</if>
+            <if test="OPERATOR_CODE_IN!=null and OPERATOR_CODE_IN!=''">OPERATOR_CODE_IN,</if>
+            <if test="OPERATOR_NO_IN!=null and OPERATOR_NO_IN!=''">OPERATOR_NO_IN,</if>
+            <if test="OPERATOR_NAME_IN!=null and OPERATOR_NAME_IN!=''">OPERATOR_NAME_IN,</if>
+            <if test="WARD_NO_IN!=null and WARD_NO_IN!=''">WARD_NO_IN,</if>
+            <if test="BEDROOM_NO_IN!=null and BEDROOM_NO_IN!=''">BEDROOM_NO_IN,</if>
+            <if test="BEDID_IN!=null and BEDID_IN!=''">BEDID_IN,</if>
+            <if test="MEDICALGROUP_NO_IN!=null and MEDICALGROUP_NO_IN!=''">MEDICALGROUP_NO_IN,</if>
+            <if test="DOCTOR_NO_IN!=null and DOCTOR_NO_IN!=''">DOCTOR_NO_IN,</if>
+            <if test="DOCTOR_NAME_IN!=null and DOCTOR_NAME_IN!=''">DOCTOR_NAME_IN,</if>
+            <if test="NURSINGGROUP_NO_IN!=null and NURSINGGROUP_NO_IN!=''">NURSINGGROUP_NO_IN,</if>
+            <if test="NURSING_NO_IN!=null and NURSING_NO_IN!=''">NURSING_NO_IN,</if>
+            <if test="NURSING_NAME_IN!=null and NURSING_NAME_IN!=''">NURSING_NAME_IN,</if>
+            <if test="FLAG!=null and FLAG!=''">FLAG,</if>
+            <if test="NURSING_LEVEL_OUT!=null and NURSING_LEVEL_OUT!=''">NURSING_LEVEL_OUT,</if>
+            <if test="NURSING_LEVEL_IN!=null and NURSING_LEVEL_IN!=''">NURSING_LEVEL_IN,</if>
+            <if test="SERVICE_TYPE_CODE!=null and SERVICE_TYPE_CODE!=''">SERVICE_TYPE_CODE,</if>
+            <if test="SERVICE_TYPE_NAME!=null and SERVICE_TYPE_NAME!=''">SERVICE_TYPE_NAME,</if>
+            <if test="BEDNO_OUT!=null and BEDNO_OUT!=''">BEDNO_OUT,</if>
+            <if test="BEDNO_IN!=null and BEDNO_IN!=''">BEDNO_IN,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID!=null">#{ID},</if>
+            <if test="HOSPITAL_CODE!=null and HOSPITAL_CODE!=''">#{HOSPITAL_CODE},</if>
+            <if test="CASE_NO!=null and CASE_NO!=''">#{CASE_NO},</if>
+            <if test="ADMISSION_NO!=null and ADMISSION_NO!=''">#{ADMISSION_NO},</if>
+            <if test="HOSPITALIZED_COUNT!=null ">#{HOSPITALIZED_COUNT},</if>
+            <if test="PATIENT_NAME!=null and PATIENT_NAME!=''">#{PATIENT_NAME},</if>
+            <if test="PATIENT_SEX!=null and PATIENT_SEX!=''">#{PATIENT_SEX},</if>
+            <if test="PATIENT_AGE!=null and PATIENT_AGE!=''">#{PATIENT_AGE},</if>
+            <if test="OPERATOR_DATE_OUT!=null ">#{OPERATOR_DATE_OUT},</if>
+            <if test="OPERATOR_NO_OUT!=null and OPERATOR_NO_OUT!=''">#{OPERATOR_NO_OUT},</if>
+            <if test="OPERATOR_NAME_OUT!=null and OPERATOR_NAME_OUT!=''">#{OPERATOR_NAME_OUT},</if>
+            <if test="WARD_NO_OUT!=null and WARD_NO_OUT!=''">#{WARD_NO_OUT},</if>
+            <if test="BEDROOM_NO_OUT!=null and BEDROOM_NO_OUT!=''">#{BEDROOM_NO_OUT},</if>
+            <if test="BEDID_OUT!=null and BEDID_OUT!=''">#{BEDID_OUT},</if>
+            <if test="MEDICALGROUP_NO_OUT!=null and MEDICALGROUP_NO_OUT!=''">#{MEDICALGROUP_NO_OUT},</if>
+            <if test="DOCTOR_CODE_OUT!=null and DOCTOR_CODE_OUT!=''">#{DOCTOR_CODE_OUT},</if>
+            <if test="DOCTOR_NO_OUT!=null and DOCTOR_NO_OUT!=''">#{DOCTOR_NO_OUT},</if>
+            <if test="DOCTOR_NAME_OUT!=null and DOCTOR_NAME_OUT!=''">#{DOCTOR_NAME_OUT},</if>
+            <if test="NURSINGGROUP_NO_OUT!=null and NURSINGGROUP_NO_OUT!=''">#{NURSINGGROUP_NO_OUT},</if>
+            <if test="NURSING_CODE_OUT!=null and NURSING_CODE_OUT!=''">#{NURSING_CODE_OUT},</if>
+            <if test="NURSING_NO_OUT!=null and NURSING_NO_OUT!=''">#{NURSING_NO_OUT},</if>
+            <if test="NURSING_NAME_OUT!=null and NURSING_NAME_OUT!=''">#{NURSING_NAME_OUT},</if>
+            <if test="OPERATOR_DATE_IN!=null ">#{OPERATOR_DATE_IN},</if>
+            <if test="OPERATOR_CODE_IN!=null and OPERATOR_CODE_IN!=''">#{OPERATOR_CODE_IN},</if>
+            <if test="OPERATOR_NO_IN!=null and OPERATOR_NO_IN!=''">#{OPERATOR_NO_IN},</if>
+            <if test="OPERATOR_NAME_IN!=null and OPERATOR_NAME_IN!=''">#{OPERATOR_NAME_IN},</if>
+            <if test="WARD_NO_IN!=null and WARD_NO_IN!=''">#{WARD_NO_IN},</if>
+            <if test="BEDROOM_NO_IN!=null and BEDROOM_NO_IN!=''">#{BEDROOM_NO_IN},</if>
+            <if test="BEDID_IN!=null and BEDID_IN!=''">#{BEDID_IN},</if>
+            <if test="MEDICALGROUP_NO_IN!=null and MEDICALGROUP_NO_IN!=''">#{MEDICALGROUP_NO_IN},</if>
+            <if test="DOCTOR_NO_IN!=null and DOCTOR_NO_IN!=''">#{DOCTOR_NO_IN},</if>
+            <if test="DOCTOR_NAME_IN!=null and DOCTOR_NAME_IN!=''">#{DOCTOR_NAME_IN},</if>
+            <if test="NURSINGGROUP_NO_IN!=null and NURSINGGROUP_NO_IN!=''">#{NURSINGGROUP_NO_IN},</if>
+            <if test="NURSING_NO_IN!=null and NURSING_NO_IN!=''">#{NURSING_NO_IN},</if>
+            <if test="NURSING_NAME_IN!=null and NURSING_NAME_IN!=''">#{NURSING_NAME_IN},</if>
+            <if test="FLAG!=null and FLAG!=''">#{FLAG},</if>
+            <if test="NURSING_LEVEL_OUT!=null and NURSING_LEVEL_OUT!=''">#{NURSING_LEVEL_OUT},</if>
+            <if test="NURSING_LEVEL_IN!=null and NURSING_LEVEL_IN!=''">#{NURSING_LEVEL_IN},</if>
+            <if test="SERVICE_TYPE_CODE!=null and SERVICE_TYPE_CODE!=''">#{SERVICE_TYPE_CODE},</if>
+            <if test="SERVICE_TYPE_NAME!=null and SERVICE_TYPE_NAME!=''">#{SERVICE_TYPE_NAME},</if>
+            <if test="BEDNO_OUT!=null and BEDNO_OUT!=''">#{BEDNO_OUT},</if>
+            <if test="BEDNO_IN!=null and BEDNO_IN!=''">#{BEDNO_IN},</if>
+        </trim>
+    </insert>
+
+    <select id="selectTransinfoByPatientId" parameterType="TransinfoVo" resultMap="TransinfoResult">
+        select cd.ID as TR_ID,
+         cd.HOSPITAL_CODE as ORG_CD,
+         cd.ADMISSION_NO as PATIENT_ID,
+         cd.ADMISSION_NO as INP_NO,
+         cd.PATIENT_NAME as PATIENT_NAME,
+         cd.DOCTOR_NAME_IN as TI_DOC_NAME,
+         cd.DOCTOR_NO_IN as TI_DOC_CD,
+         cd.BEDID_IN as TI_BED_NO,
+         cd.OPERATOR_DATE_IN as TI_TIME,
+         inDept.dept_name as TI_DEPT_NAME,
+         inDept.dept_code as TI_DEPT_CD,
+         null as TI_AREA_CD,
+         null as TO_AREA_NAME,
+         cd.DOCTOR_CODE_OUT as TO_DOC_CD,
+         cd.DOCTOR_NAME_OUT as TO_DOC_NAME,
+         cd.BEDID_OUT as TO_BED_NO,
+         cd.OPERATOR_DATE_OUT as TO_TIME,
+         outDept.dept_name as TO_DEPT_NAME,
+         outDept.dept_code as TO_DEPT_CD,
+         null as TI_AREA_NAME,
+         null as TO_AREA_CD,
+         cd.flag as TRAN_IN_STATE,
+         cd.flag as TRAN_OUT_STATE,
+         cd.service_type_code
+        from td_na_change_dep  cd
+        left join tm_bs_dept inDept on rtrim(cd.WARD_NO_IN)=inDept.dept_code
+        left join tm_bs_dept outDept on rtrim(cd.WARD_NO_OUT)=outDept.dept_code
+        where ADMISSION_NO=#{patientid}
+        and cd.flag is not null and cd.flag not in ('0','2','3')
+        and cd.SERVICE_TYPE_CODE in ('01')
+        order by OPERATOR_DATE_OUT
+    </select>
+
+    <select id="selectTransinfosByPatientId" parameterType="TransinfoVo" resultMap="TransinfoResult">
+        select cd.ID as TR_ID,
+         cd.HOSPITAL_CODE as ORG_CD,
+         cd.ADMISSION_NO as PATIENT_ID,
+         cd.ADMISSION_NO as INP_NO,
+         cd.PATIENT_NAME as PATIENT_NAME,
+         cd.DOCTOR_NAME_IN as TI_DOC_NAME,
+         cd.DOCTOR_NO_IN as TI_DOC_CD,
+         cd.BEDID_IN as TI_BED_NO,
+         cd.OPERATOR_DATE_IN as TI_TIME,
+         inDept.dept_name as TI_DEPT_NAME,
+         inDept.dept_code as TI_DEPT_CD,
+         null as TI_AREA_CD,
+         null as TO_AREA_NAME,
+         cd.DOCTOR_CODE_OUT as TO_DOC_CD,
+         cd.DOCTOR_NAME_OUT as TO_DOC_NAME,
+         cd.BEDID_OUT as TO_BED_NO,
+         cd.OPERATOR_DATE_OUT as TO_TIME,
+         outDept.dept_name as TO_DEPT_NAME,
+         outDept.dept_code as TO_DEPT_CD,
+         null as TI_AREA_NAME,
+         null as TO_AREA_CD,
+         cd.flag as TRAN_IN_STATE,
+         cd.flag as TRAN_OUT_STATE,
+         cd.service_type_code
+        from td_na_change_dep  cd
+        left join tm_bs_dept inDept on rtrim(cd.WARD_NO_IN)=inDept.dept_code
+        left join tm_bs_dept outDept on rtrim(cd.WARD_NO_OUT)=outDept.dept_code
+        where ADMISSION_NO=#{patientid}
+        and cd.flag is not null and cd.flag != '0'
+        and cd.SERVICE_TYPE_CODE in ('01','02')
+        order by OPERATOR_DATE_OUT
+    </select>
+
+    <select id="selectTodayInhosNum" parameterType="String" resultType="java.lang.Integer">
+        select count(ID) from td_na_change_dep where flag='2' and rtrim(WARD_NO_IN)=#{deptCode} and trunc(OPERATOR_DATE_IN)=trunc(sysdate) and SERVICE_TYPE_CODE='01'
+    </select>
+    <select id="selectTodayTrunInNum" parameterType="String" resultType="java.lang.Integer">
+        select count(ID) from td_na_change_dep where flag='1' and rtrim(WARD_NO_IN)=#{deptCode} and trunc(OPERATOR_DATE_IN)=trunc(sysdate)  and SERVICE_TYPE_CODE='01'
+    </select>
+    <select id="selectTodayTurnOutNum" parameterType="String" resultType="java.lang.Integer">
+        select count(ID) from td_na_change_dep where flag='1' and rtrim(WARD_NO_OUT)=#{deptCode} and trunc(OPERATOR_DATE_OUT)=trunc(sysdate)  and SERVICE_TYPE_CODE='01'
+    </select>
+    <delete id="deleteTransinfo">
+        delete from td_na_change_dep
+    </delete>
+    <select id="selectHisTransInfo" parameterType="SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+    </select>
+    <delete id="deleteTransinfoByInpNoList">
+        delete from td_na_change_dep where ADMISSION_NO in
+        <foreach item="inpNo" collection="inpNoList" open="(" separator="," close=")">
+            #{inpNo}
+        </foreach>
+    </delete>
+</mapper>

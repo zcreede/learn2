@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysUserMapper">
+
+	<resultMap type="SysUser" id="SysUserResult2">
+		<id     property="userId"       column="user_id"      />
+		<result property="deptId"       column="dept_id"      />
+		<result property="userName"     column="user_name"    />
+		<result property="nickName"     column="nick_name"    />
+		<result property="email"        column="email"        />
+		<result property="phonenumber"  column="phonenumber"  />
+		<result property="sex"          column="sex"          />
+		<result property="avatar"       column="avatar"       />
+		<result property="password"     column="password"     />
+		<result property="status"       column="status"       />
+		<result property="delFlag"      column="del_flag"     />
+		<result property="loginIp"      column="login_ip"     />
+		<result property="loginDate"    column="login_date"   />
+		<result property="createBy"     column="create_by"    />
+		<result property="createTime"   column="create_time"  />
+		<result property="updateBy"     column="update_by"    />
+		<result property="updateTime"   column="update_time"  />
+		<result property="remark"       column="remark"       />
+		<result property="employeeId"       column="employee_id"       />
+		<result property="deptName"       column="dept_name"      />
+		<result property="authorLevel"     column="author_level"    />
+		<result property="maxLevel"   column="max_level"  />
+		<result property="authorRoleId"   column="author_role_id"  />
+		<result property="titleName"   column="title_name"  />
+	</resultMap>
+
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"       column="user_id"      />
+		<result property="deptId"       column="dept_id"      />
+		<result property="userName"     column="user_name"    />
+		<result property="nickName"     column="nick_name"    />
+		<result property="email"        column="email"        />
+		<result property="phonenumber"  column="phonenumber"  />
+		<result property="sex"          column="sex"          />
+		<result property="avatar"       column="avatar"       />
+		<result property="password"     column="password"     />
+		<result property="status"       column="status"       />
+		<result property="delFlag"      column="del_flag"     />
+		<result property="loginIp"      column="login_ip"     />
+		<result property="loginDate"    column="login_date"   />
+		<result property="createBy"     column="create_by"    />
+		<result property="createTime"   column="create_time"  />
+		<result property="updateBy"     column="update_by"    />
+		<result property="updateTime"   column="update_time"  />
+		<result property="remark"       column="remark"       />
+		<result property="employeeId"       column="employee_id"       />
+		<result property="staffType"       column="staff_type"       />
+		<result property="loginType"       column="login_type"       />
+		<result property="inputstrphtc"       column="inputstrphtc"       />
+		<result property="certCode" column="CERT_CODE"/>
+		<result property="healthCode" column="HEALTH_CODE"/>
+		<result property="updatePasswordTime" column="update_password_time"/>
+		<result property="titleName" column="title" />
+		<!-- association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" /-->
+		<collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
+		<collection  property="depts"   javaType="java.util.List"        resultMap="deptResult" />
+	</resultMap>
+
+	<resultMap id="deptResult" type="SysDept">
+		<id     property="deptId"   column="dept_id"     />
+		<result property="parentId" column="parent_id"   />
+		<result property="deptName" column="dept_name"   />
+		<result property="orderNum" column="order_num"   />
+		<result property="leader"   column="leader"      />
+		<result property="status"   column="dept_status" />
+		<result property="arrearsFlag"   column="arrears_flag" />
+	</resultMap>
+
+	<resultMap id="RoleResult" type="SysRole">
+		<id     property="roleId"       column="role_id"        />
+		<result property="roleName"     column="role_name"      />
+		<result property="roleKey"      column="role_key"       />
+		<result property="roleSort"     column="role_sort"      />
+		<result property="dataScope"     column="data_scope"    />
+		<result property="status"       column="role_status"    />
+	</resultMap>
+
+	<sql id="selectUserVo">
+		select sta.id as user_id,
+			   sta.staff_code as user_name,
+			   sta.staff_name as nick_name,
+			   sta.PIC as avatar,
+			   sta.TEL as phonenumber,
+			   sta.PASSWORD_HIS as password,
+			   sta.STAFF_SEX as sex,
+			   sta.STATUS,
+			   sta.del_flag,
+			   r.ID as role_id,
+			   r.role_name,
+			   r.role_no as role_key,
+			   r.status as role_status,
+			   d.ID as dept_id,
+			   d.HOSPITAL_NO as parent_id,
+			   d.dept_name,
+			   d.SORT_ORDER as order_num,
+			   d.DIRECTOR_CODE as leader,
+			   d.status as dept_status,
+		       sta.id as employee_id,
+		       sta.STAFF_TYPE as staff_type,
+		       sta.update_password_time,
+		       d.ARREARS_FLAG as arrears_flag,sta.CERT_CODE,sta.HEALTH_CODE, sta.title
+		from tm_bs_staff sta
+				 left join tm_bs_staff_role rd on rd.STAFF_CODE = sta.staff_code
+				 left join tm_bs_role r on  r.role_no=rd.ROLE_NO
+				 left join TM_BS_STAFF_DEPT sd on sd.STAFF_CODE=sta.STAFF_CODE
+				 left join tm_bs_dept d on sd.DEPT_CODE = d.DEPT_CODE
+    </sql>
+
+    <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
+		<include refid="selectUserVo"/>
+		<if test="userName != null and userName != ''">
+			AND (u.user_name like concat(concat('%',#{userName}),'%') or u.nick_name like concat(concat('%',#{userName}),'%') )
+		</if>
+		<if test="status != null and status != ''">
+			AND u.status = #{status}
+		</if>
+		<if test="phonenumber != null and phonenumber != ''">
+			AND u.phonenumber like concat(concat('%',#{phonenumber}),'%')
+		</if>
+		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+			AND u.create_time &gt;= to_date(#{params.beginTime},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+			AND u.create_time &lt;= to_date(#{params.endTime},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="deptId != null and deptId != 0">
+		    AND (d.dept_id = #{deptId} OR d.dept_id IN ( SELECT t.dept_id FROM sys_dept t left join sys_org o on t.parent_id=o.id WHERE o.id=#{deptId}))
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+	</select>
+
+	<select id="selectUserListByDeptId" parameterType="SysUser" resultMap="SysUserResult2">
+		select u.user_id, d.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex,
+		       u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,u.employee_id,u.login_type,d.dept_name,be.title_name
+		from sys_user u
+		left join bas_employee be on be.empl_number = u.user_name
+		left join sys_employee_role_dept ud on be.id = ud.employee_id
+		left join sys_dept d on ud.dept_id = d.dept_id
+		where u.del_flag = '0'
+		<if test="userName != null and userName != ''">
+			AND (u.user_name like concat(concat('%',#{userName}),'%') or u.nick_name like concat(concat('%',#{userName}),'%'))
+		</if>
+		<if test="status != null and status != ''">
+			AND u.status = #{status}
+		</if>
+		<if test="phonenumber != null and phonenumber != ''">
+			AND u.phonenumber like concat(concat('%',#{phonenumber}),'%')
+		</if>
+		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+			AND u.create_time &gt;= to_date(#{params.beginTime},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+			AND u.create_time &lt;= to_date(#{params.endTime},'yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="deptId != null and deptId != 0">
+			AND ud.dept_id = #{deptId}
+		</if>
+		<!-- 数据范围过滤 ${params.dataScope} -->
+	</select>
+
+	<select id="selectUserAuthorList" parameterType="SysUser" resultMap="SysUserResult2">
+		SELECT u.user_id,u.user_name,u.nick_name,u.sex,u.email,u.STATUS,u.phonenumber ,u.del_flag,u.employee_id, r.AUTHOR_LEVEL as AUTHOR_LEVEL,s.role_id as author_role_id,s.AUTHOR_LEVEL as max_level from sys_user u
+		LEFT JOIN (select user_id,user_name, nick_name,sex,email,STATUS,phonenumber,AUTHOR_LEVEL
+		From BAS_EMR_ACCE_AUTHOR  a, SYS_USER  b where b.user_id=a.object_id AND a.object_type=2)r on u.user_id=r.user_id
+		LEFT JOIN  (select aa.user_id,aa.user_name,aa.nick_name,sex,email,STATUS,phonenumber,bb.role_id as role_id,max(AUTHOR_LEVEL) as AUTHOR_LEVEL
+		From SYS_USER  aa inner join SYS_USER_ROLE bb on aa.user_id=bb.user_id
+		inner join BAS_EMR_ACCE_AUTHOR cc on bb.role_id=cc.object_id where cc.object_type=1
+		group by aa.user_id,aa.user_name,aa.nick_name,sex,email,STATUS,phonenumber,bb.role_id)s on u.user_id=s.user_id
+		WHERE u.del_flag='0'
+		<if test="userName != null and userName != ''">
+			AND (u.user_name like concat(concat('%',#{userName}),'%') or u.nick_name like concat(concat('%',#{userName}),'%'))
+
+		</if>
+		<if test="authorLevel != null and authorLevel != ''">
+			AND r.AUTHOR_LEVEL like concat(concat('%',#{authorLevel}),'%')
+		</if>
+		<if test="roleId != null and roleId != ''">
+			AND s.role_id =#{roleId}
+		</if>
+	</select>
+
+	<select id="selectAllocatedList" parameterType="SysUser" resultMap="SysUserResult">
+	    select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time,u.employee_id,u.login_type
+	    from sys_user u
+			 left join bas_employee be on be.id = u.employee_id
+			 left join sys_employee_role_dept rd on be.id = rd.employee_id
+			 left join sys_dept d on rd.dept_id = d.dept_id
+			 left join sys_role r on r.role_id = rd.role_id
+	    where u.del_flag = '0' and r.role_id = #{roleId}
+	    <if test="userName != null and userName != ''">
+			AND u.user_name like concat(concat('%',#{userName}),'%')
+		</if>
+		<if test="phonenumber != null and phonenumber != ''">
+			AND u.phonenumber like concat(concat('%',#{phonenumber}),'%')
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+	</select>
+
+	<select id="selectUnallocatedList" parameterType="SysUser" resultMap="SysUserResult">
+	    select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time,u.employee_id,u.login_type
+	    from sys_user u
+		left join BAS_EMPLOYEE b on u.user_name = b.empl_number
+		left join SYS_EMPLOYEE_ROLE_DEPT erd on erd.employee_id = b.id
+		left join sys_dept d on u.dept_id = d.dept_id
+		-- left join sys_user_role ur on u.user_id = ur.user_id
+		left join sys_role r on r.role_id = erd.role_id
+	    where u.del_flag = '0' and (r.role_id != #{roleId} or r.role_id IS NULL)
+	    and u.user_id not in (select u.user_id from sys_user u left join BAS_EMPLOYEE b on u.user_name = b.empl_number INNER JOIN SYS_EMPLOYEE_ROLE_DEPT erd ON erd.employee_id = b.id AND erd.role_id = #{roleId})
+	    <if test="userName != null and userName != ''">
+			AND u.user_name like concat(concat('%',#{userName}),'%')
+		</if>
+		<if test="phonenumber != null and phonenumber != ''">
+			AND u.phonenumber like concat(concat('%',#{phonenumber}),'%')
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+	</select>
+
+	<select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">
+       <include refid="selectUserVo"/>
+		where sta.staff_code = #{userName}
+	</select>
+
+	<select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
+		<include refid="selectUserVo"/>
+		where sta.id = #{userId}
+	</select>
+
+	<select id="checkUserNameUnique" parameterType="String" resultType="int">
+		select count(1) from sys_user where user_name = #{userName} and rownum <![CDATA[ <= ]]> 1
+	</select>
+
+	<select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
+		select user_id, phonenumber from sys_user where phonenumber = #{phonenumber} and rownum <![CDATA[ <= ]]> 1
+	</select>
+
+	<select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
+		select user_id, email from sys_user where email = #{email} and rownum <![CDATA[ <= ]]> 1
+	</select>
+
+	<insert id="insertUser" parameterType="SysUser">
+ 		insert into tm_bs_staff(
+ 			<if test="userId != null">ID,</if>
+ 			<if test="userName != null and userName != ''">STAFF_CODE,</if>
+ 			<if test="nickName != null and nickName != ''">STAFF_NAME,</if>
+ 			<if test="avatar != null and avatar != ''">PIC,</if>
+ 			<if test="phonenumber != null and phonenumber != ''">TEL,</if>
+ 			<if test="sex != null and sex != ''">STAFF_SEX,</if>
+ 			<if test="password != null and password != ''">PASSWORD,</if>
+ 			<if test="password != null and password != ''">PASSWORD_HIS,</if>
+ 			<if test="status != null and status != ''">STATUS,</if>
+		    BEGIN_DATE
+ 		)values(
+ 			<if test="userId != null">#{userId},</if>
+ 			<if test="userName != null and userName != ''">#{userName},</if>
+ 			<if test="nickName != null and nickName != ''">#{nickName},</if>
+ 			<if test="avatar != null and avatar != ''">#{avatar},</if>
+ 			<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+ 			<if test="sex != null and sex != ''">#{sex},</if>
+ 			<if test="password != null and password != ''">#{password},</if>
+ 			<if test="password != null and password != ''">#{password},</if>
+ 			<if test="status != null and status != ''">#{status},</if>
+ 			sysdate
+ 		)
+	</insert>
+
+	<update id="updateUser" parameterType="SysUser">
+ 		update tm_bs_staff
+ 		<set>
+ 			<!--<if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>-->
+ 			<if test="userName != null and userName != ''">STAFF_CODE = #{userName},</if>
+ 			<if test="nickName != null and nickName != ''">STAFF_NAME = #{nickName},</if>
+			<!--<if test="email != null ">email = #{email},</if>-->
+ 			<if test="phonenumber != null ">TEL = #{phonenumber},</if>
+ 			<if test="sex != null and sex != ''">STAFF_SEX = #{sex},</if>
+ 			<if test="password != null and password != ''">PASSWORD_HIS = #{password},</if>
+ 			<if test="status != null and status != ''">status = #{status},</if>
+<!-- 			<if test="loginIp != null and loginIp != ''">login_ip = #{loginIp},</if>-->
+<!-- 			<if test="loginDate != null">login_date = #{loginDate},</if>-->
+<!-- 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>-->
+<!-- 			<if test="remark != null">remark = #{remark},</if>-->
+<!-- 			<if test="employeeId != null">employee_id = #{employeeId},</if>-->
+<!-- 			<if test="loginType != null">login_type = #{loginType},</if>-->
+<!-- 			update_time = sysdate-->
+ 		</set>
+ 		where ID = #{userId}
+	</update>
+
+	<update id="updateUserStatus" parameterType="SysUser">
+ 		update sys_user set status = #{status} where user_id = #{userId}
+	</update>
+
+	<update id="updateUserAvatar" parameterType="SysUser">
+ 		update sys_user set avatar = #{avatar} where user_name = #{userName}
+	</update>
+
+	<update id="resetUserPwd" parameterType="SysUser">
+ 		update tm_bs_staff set password = #{password},password_his = #{password},UPDATE_PASSWORD_TIME=sysdate where staff_code = #{userName}
+	</update>
+
+	<delete id="deleteUserById" parameterType="Long">
+ 		update sys_user set del_flag = '2' where user_id = #{userId}
+ 	</delete>
+
+ 	<delete id="deleteUserByIds" parameterType="Long">
+ 		update sys_user set del_flag = '2' where user_id in
+ 		<foreach collection="array" item="userId" open="(" separator="," close=")">
+ 			#{userId}
+        </foreach>
+ 	</delete>
+
+	<select id="selectUserLiseByRoleType" resultMap="SysUserResult">
+		select be.id as user_id,be.STAFF_NAME as nick_name,be.STAFF_CODE user_name,be.STAFF_NAME_PYM as inputstrphtc
+		from tm_bs_staff be
+		left join tm_Bs_staff_dept dept on dept.staff_code=be.staff_code
+		where be.id is not null and be.staff_type = #{roleType}
+		<if test="deptId != null">
+			and dept.dept_code = #{deptId}
+		</if>
+		<if test="status != null and status != ''">
+			and be.status = #{status}
+		</if>
+		order by dept.number_use desc nulls last
+	</select>
+
+	<select id="doctorsAndTechnician" resultMap="SysUserResult">
+		select be.id as user_id,be.STAFF_NAME as nick_name,be.STAFF_CODE user_name,be.STAFF_NAME_PYM as inputstrphtc
+		from tm_bs_staff be
+		left join tm_Bs_staff_dept dept on dept.staff_code=be.staff_code
+		where be.id is not null
+		and be.staff_type in
+		<foreach collection="staffTypes" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="deptId != null">
+			and dept.dept_code = #{deptId}
+		</if>
+		<if test="status != null and status != ''">
+			and be.status = #{status}
+		</if>
+		<if test="staffName != null and staffName != '' ">
+			and (be.staff_code like concat(concat('%',#{staffName}),'%')
+			or be.staff_name like concat(concat('%',#{staffName}),'%')
+			or be.staff_name_pym like concat(concat('%',lower(#{staffName})),'%')
+			or be.staff_name_pym like concat(concat('%',upper(#{staffName})),'%')
+			)
+		</if>
+	</select>
+
+	<select id="selectUserLiseByRoleNo" resultMap="SysUserResult">
+		select ud.STAFF_CODE as user_name
+		from tm_bs_staff_role ud
+		<where>
+			<if test="roleNo != null">
+				and ud.role_no = #{roleNo}
+			</if>
+		</where>
+	</select>
+
+	<select id="getStaffTypeBmy" resultMap="SysUserResult">
+		select a.id             as user_id,
+			   a.staff_code     as user_name,
+			   a.staff_name     as nick_name,
+			   a.staff_name_pym as inputstrphtc
+		  from tm_bs_staff a
+		 <where>
+			 a.staff_type = 'bmy'
+			 and a.del_flag = '0'
+			 <if test="status != null and status != ''">
+				 and a.status = #{status}
+			 </if>
+			 <if test="userName != null and userName != '' ">
+				 and (a.staff_code like concat(concat('%',#{userName}),'%')
+				 or a.staff_name like concat(concat('%',#{userName}),'%')
+				 or a.staff_name_pym like concat(concat('%',lower(#{userName})),'%')
+				 or a.staff_name_pym like concat(concat('%',upper(#{userName})),'%')
+				 )
+			 </if>
+		 </where>
+
+	</select>
+
+	<select id="selectUserLiseByRoleTypeAndName" resultMap="SysUserResult">
+		select be.id as user_id,be.STAFF_NAME as nick_name,be.STAFF_CODE user_name,be.STAFF_NAME_PYM as inputstrphtc
+		from tm_bs_staff be
+		left join tm_Bs_staff_dept dept on dept.staff_code=be.staff_code
+		where be.id is not null and be.staff_type = #{roleType}
+		<if test="deptId != null">
+			and dept.dept_code = #{deptId}
+		</if>
+		<if test="status != null">
+			and be.status = #{status}
+		</if>
+		<if test="staffName != null and staffName != '' ">
+			and (be.staff_code like concat(concat('%',#{staffName}),'%')
+			or be.staff_name like concat(concat('%',#{staffName}),'%')
+			or be.staff_name_pym like concat(concat('%',lower(#{staffName})),'%')
+			or be.staff_name_pym like concat(concat('%',upper(#{staffName})),'%')
+			)
+		</if>
+	</select>
+
+	<insert id="insertMap" parameterType="map">
+		insert into TM_BS_STAFF
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="USER_ID != null">ID,</if>
+			<if test="USER_NAME != null and USER_NAME != ''">STAFF_CODE,</if>
+			<if test="USER_NAME != null and USER_NAME != ''">STAFF_NO,</if>
+			<if test="NICK_NAME != null and NICK_NAME != ''">STAFF_NAME,</if>
+			<if test="STATUS != null and STATUS != ''">STATUS,</if>
+			<if test="DEL_FLAG != null and DEL_FLAG != ''">DEL_FLAG,</if>
+			<if test="PASSWORD != null and PASSWORD != ''">PASSWORD,</if>
+			<if test="PASSWORD != null and PASSWORD != ''">PASSWORD_HIS,</if>
+			<if test="ROLT_TYPE != null and ROLT_TYPE != ''">STAFF_TYPE,</if>
+			<if test="ORG_CODE != null and ORG_CODE != ''">HOSPITAL_NO,</if>
+			<if test="TITLE != null and TITLE != ''">TITLE,</if>
+			CREATE_TIME,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="USER_ID != null">#{USER_ID},</if>
+			<if test="USER_NAME != null and USER_NAME != ''">#{USER_NAME},</if>
+			<if test="USER_NAME != null and USER_NAME != ''">#{USER_NAME},</if>
+			<if test="NICK_NAME != null and NICK_NAME != ''">#{NICK_NAME},</if>
+			<if test="STATUS != null and STATUS != ''">#{STATUS},</if>
+			<if test="DEL_FLAG != null and DEL_FLAG != ''">#{DEL_FLAG},</if>
+			<if test="PASSWORD != null and PASSWORD != ''">#{PASSWORD},</if>
+			<if test="PASSWORD != null and PASSWORD != ''">#{PASSWORD},</if>
+			<if test="ROLT_TYPE != null and ROLT_TYPE != ''">#{ROLT_TYPE},</if>
+			<if test="ORG_CODE != null and ORG_CODE != ''">#{ORG_CODE},</if>
+			<if test="TITLE != null and TITLE != ''">#{TITLE},</if>
+		    sysdate,
+		</trim>
+	</insert>
+	<select id="selctStaffList" resultMap="SysUserResult">
+		select sta.id as user_id,
+			   sta.staff_code as user_name,
+			   sta.staff_name as nick_name,
+			   sta.PIC as avatar,
+			   sta.TEL as phonenumber,
+			   sta.PASSWORD_HIS as password,
+			   sta.STAFF_SEX as sex,
+			   sta.STATUS,
+			   sta.del_flag,
+			   sta.id as employee_id, sta.staff_type,sta.title
+		from tm_bs_staff sta
+	</select>
+	<delete id="deleteUserByUserName" parameterType="String" >
+		delete from tm_bs_staff where staff_code=#{userName}
+	</delete>
+
+	<select id="selectUserByCertSn" parameterType="String" resultMap="SysUserResult">
+		<include refid="selectUserVo"/>
+		left join bas_cert_info c on sta.staff_code = c.employeenumber
+		where c.cert_sn = #{certSn}
+	</select>
+</mapper>

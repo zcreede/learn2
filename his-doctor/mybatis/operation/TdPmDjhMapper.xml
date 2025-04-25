@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TdPmDjhMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TdPmDjh">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="RQ" jdbcType="TIMESTAMP" property="rq" />
+    <result column="DJLX" jdbcType="DECIMAL" property="djlx" />
+  </resultMap>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.TdPmDjh">
+    insert into TD_PM_DJH (ID, RQ, DJLX
+      )
+    values (#{id,jdbcType=DECIMAL}, #{rq,jdbcType=TIMESTAMP}, #{djlx,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.TdPmDjh">
+    insert into TD_PM_DJH
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rq != null">
+        RQ,
+      </if>
+      <if test="djlx != null">
+        DJLX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="rq != null">
+        #{rq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="djlx != null">
+        #{djlx,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertDjh" parameterType="com.emr.project.operation.domain.TdPmDjh" useGeneratedKeys="true" keyProperty="ID">
+    <selectKey keyProperty="id" resultType="java.math.BigDecimal" order="BEFORE">
+      SELECT SEQ_TD_PM_DJH.nextval FROM DUAL
+    </selectKey>
+    insert into TD_PM_DJH (ID, RQ, DJLX )
+    values ( #{id}, sysdate, #{djlx,jdbcType=DECIMAL} )
+  </insert>
+
+  <select id="getNewId" parameterType="map" resultType="java.lang.String">
+       <if test="len !=null ">
+           <if test="len == 10" >
+               select to_char(sysdate,'mmdd') ||  lpad(#{id},6,'0') from dual
+          </if>
+
+         <if test="len == 15">
+             select to_char(systimestamp,'ddff7')||  lpad(#{id},6,'0') from dual
+         </if>
+         <!-- 2位日+7位毫秒+8位自增列 -->
+         <!--<if test="len == 17">
+           select to_char(systimestamp,'ddff7')||  lpad(#{id},8,'0') from dual
+         </if>-->
+         <!-- 2位日+7位毫秒+9位自增列 -->
+         <!--<if test="len == 17">
+           select to_char(systimestamp,'ddff7')||  lpad(#{id},9,'0') from dual
+         </if>-->
+         <!-- 8位年月日+4位工号+8位自增列 -->
+         <if test="len == 17">
+           select to_char(sysdate,'yyyy-mm-dd')||lpad(#{czybh},4,'0')  || lpad(#{id},8,'0') from dual
+         </if>
+        </if>
+
+
+  </select>
+</mapper>

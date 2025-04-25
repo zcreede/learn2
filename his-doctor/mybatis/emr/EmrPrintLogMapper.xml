@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrPrintLogMapper">
+    
+    <resultMap type="EmrPrintLog" id="EmrPrintLogResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="fileId"    column="file_id"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="printPer"    column="print_per"    />
+        <result property="printPerName"    column="print_per_name"    />
+        <result property="printDate"    column="print_date"    />
+        <result property="printIp"    column="print_ip"    />
+        <result property="printType"    column="print_type"    />
+        <result property="beginPage"    column="begin_page"    />
+        <result property="beginRow"    column="begin_row"    />
+        <result property="endPage"    column="end_page"    />
+        <result property="endRow"    column="end_row"    />
+    </resultMap>
+
+    <sql id="selectEmrPrintLogVo">
+        select id, patient_id, inp_no, patient_name, file_id, file_type, print_per, print_per_name, print_date, print_ip, print_type, begin_page, begin_row, end_page, end_row from emr_print_log
+    </sql>
+
+    <select id="selectEmrPrintLogList" parameterType="EmrPrintLog" resultMap="EmrPrintLogResult">
+        <include refid="selectEmrPrintLogVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="inpNo != null  and inpNo != ''"> and inp_no = #{inpNo}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="fileType != null  and fileType != ''"> and file_type = #{fileType}</if>
+            <if test="printPer != null  and printPer != ''"> and print_per = #{printPer}</if>
+            <if test="printPerName != null  and printPerName != ''"> and print_per_name like concat(concat('%', #{printPerName}), '%')</if>
+            <if test="printDate != null "> and print_date = #{printDate}</if>
+            <if test="printIp != null  and printIp != ''"> and print_ip = #{printIp}</if>
+            <if test="printType != null  and printType != ''"> and print_type = #{printType}</if>
+            <if test="beginPage != null "> and begin_page = #{beginPage}</if>
+            <if test="beginRow != null "> and begin_row = #{beginRow}</if>
+            <if test="endPage != null "> and end_page = #{endPage}</if>
+            <if test="endRow != null "> and end_row = #{endRow}</if>
+        </where>
+    </select>
+    
+    <select id="selectEmrPrintLogById" parameterType="String" resultMap="EmrPrintLogResult">
+        <include refid="selectEmrPrintLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEmrPrintLog" parameterType="EmrPrintLog">
+        insert into emr_print_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="inpNo != null and inpNo != ''">inp_no,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="fileId != null and fileId != ''">file_id,</if>
+            <if test="fileType != null">file_type,</if>
+            <if test="printPer != null and printPer != ''">print_per,</if>
+            <if test="printPerName != null and printPerName != ''">print_per_name,</if>
+            print_date,
+            <if test="printIp != null and printIp != ''">print_ip,</if>
+            <if test="printType != null and printType != ''">print_type,</if>
+            <if test="beginPage != null">begin_page,</if>
+            <if test="beginRow != null">begin_row,</if>
+            <if test="endPage != null">end_page,</if>
+            <if test="endRow != null">end_row,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="inpNo != null and inpNo != ''">#{inpNo},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="fileId != null and fileId != ''">#{fileId},</if>
+            <if test="fileType != null">#{fileType},</if>
+            <if test="printPer != null and printPer != ''">#{printPer},</if>
+            <if test="printPerName != null and printPerName != ''">#{printPerName},</if>
+            sysdate,
+            <if test="printIp != null and printIp != ''">#{printIp},</if>
+            <if test="printType != null and printType != ''">#{printType},</if>
+            <if test="beginPage != null">#{beginPage},</if>
+            <if test="beginRow != null">#{beginRow},</if>
+            <if test="endPage != null">#{endPage},</if>
+            <if test="endRow != null">#{endRow},</if>
+         </trim>
+    </insert>
+
+    <select id="getBeginRow" parameterType="String" resultType="Integer">
+        select b.end_row from (
+            select rownum a,l.* from emr_print_log l
+            where l.file_id = #{fileId}
+            order by l.print_date desc
+        ) b where b.a = 1
+    </select>
+
+    <update id="updateEmrPrintLog" parameterType="EmrPrintLog">
+        update emr_print_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="inpNo != null and inpNo != ''">inp_no = #{inpNo},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="fileId != null and fileId != ''">file_id = #{fileId},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="printPer != null and printPer != ''">print_per = #{printPer},</if>
+            <if test="printPerName != null and printPerName != ''">print_per_name = #{printPerName},</if>
+            <if test="printDate != null">print_date = #{printDate},</if>
+            <if test="printIp != null and printIp != ''">print_ip = #{printIp},</if>
+            <if test="printType != null and printType != ''">print_type = #{printType},</if>
+            <if test="beginPage != null">begin_page = #{beginPage},</if>
+            <if test="beginRow != null">begin_row = #{beginRow},</if>
+            <if test="endPage != null">end_page = #{endPage},</if>
+            <if test="endRow != null">end_row = #{endRow},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrPrintLogById" parameterType="Long">
+        delete from emr_print_log where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrPrintLogByIds" parameterType="Long">
+        delete from emr_print_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

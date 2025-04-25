@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SyncDatasourceMapper">
+
+    <resultMap type="SyncDatasource" id="SyncDatasourceResult">
+        <result property="id"    column="id"    />
+        <result property="syncName"    column="sync_name"    />
+        <result property="syncCode"    column="sync_code"    />
+        <result property="syncSource"    column="sync_source"    />
+        <result property="databaseType"    column="database_type"    />
+        <result property="databaseUrl"    column="database_url"    />
+        <result property="databaseDcn"    column="database_dcn"    />
+        <result property="databaseUsername"    column="database_username"    />
+        <result property="databasePassword"    column="database_password"    />
+        <result property="querySql"    column="query_sql"    />
+        <result property="classMethod"    column="class_method"    />
+        <result property="vaildFlag"    column="vaild_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <resultMap type="Visitinfo" id="VisitinfoResult1">
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="PATIENT_ID"    />
+        <result property="inpNo"    column="INP_NO"    />
+        <result property="visitId"    column="VISIT_ID"    />
+        <result property="recordNo"    column="RECORD_NO"    />
+        <result property="inhosCard"    column="INHOS_CARD"    />
+        <result property="sdOutNo"    column="SD_OUT_NO"    />
+        <result property="patTypeCd"    column="PAT_TYPE_CD"    />
+        <result property="patTypeName"    column="PAT_TYPE_NAME"    />
+        <result property="insuTypeCd"    column="INSU_TYPE_CD"    />
+        <result property="insuTypeName"    column="INSU_TYPE_NAME"    />
+        <result property="payTypeCd"    column="PAY_TYPE_CD"    />
+        <result property="payTypeName"    column="PAY_TYPE_NAME"    />
+        <result property="inDocCd"    column="IN_DOC_CD"    />
+        <result property="inDocName"    column="IN_DOC_NAME"    />
+        <result property="inDeptCd"    column="IN_DEPT_CD"    />
+        <result property="inDeptName"    column="IN_DEPT_NAME"    />
+        <result property="inAreaCd"    column="IN_AREA_CD"    />
+        <result property="inAreaName"    column="IN_AREA_NAME"    />
+        <result property="inhosTime"    column="INHOS_TIME"    />
+        <result property="inDeptTime"    column="IN_DEPT_TIME"    />
+        <result property="inhosCond"    column="INHOS_COND"    />
+        <result property="inhosCondCd"    column="INHOS_COND_CD"    />
+        <result property="inhosReason"    column="INHOS_REASON"    />
+        <result property="inhosWayCd"    column="INHOS_WAY_CD"    />
+        <result property="inhosWayName"    column="INHOS_WAY_NAME"    />
+        <result property="inhosDiagCd"    column="INHOS_DIAG_CD"    />
+        <result property="inhosDiag"    column="INHOS_DIAG"    />
+        <result property="inhosWmDiaName"    column="INHOS_WM_DIA_NAME"    />
+        <result property="inhosWmDiaCd"    column="INHOS_WM_DIA_CD"    />
+        <result property="inhosCmSymName"    column="INHOS_CM_SYM_NAME"    />
+        <result property="inhosCmSymCd"    column="INHOS_CM_SYM_CD"    />
+        <result property="inhosCmIllName"    column="INHOS_CM_ILL_NAME"    />
+        <result property="inhosCmIllCd"    column="INHOS_CM_ILL_CD"    />
+        <result property="areaCode"    column="AREA_CODE"    />
+        <result property="wardName"    column="WARD_NAME"    />
+        <result property="deptCd"    column="DEPT_CD"    />
+        <result property="deptName"    column="DEPT_NAME"    />
+        <result property="resDocCd"    column="RES_DOC_CD"    />
+        <result property="resDocName"    column="RES_DOC_NAME"    />
+        <result property="attDocCd"    column="ATT_DOC_CD"    />
+        <result property="attDocName"    column="ATT_DOC_NAME"    />
+        <result property="arcDocCd"    column="ARC_DOC_CD"    />
+        <result property="arcDocName"    column="ARC_DOC_NAME"    />
+        <result property="dutyNurName"    column="DUTY_NUR_NAME"    />
+        <result property="dutyNurCd"    column="DUTY_NUR_CD"    />
+        <result property="roomNo"    column="ROOM_NO"    />
+        <result property="bedNo"    column="BED_NO"    />
+        <result property="ngCd"    column="NG_CD"    />
+        <result property="ngName"    column="NG_NAME"    />
+        <result property="pcCd"    column="PC_CD"    />
+        <result property="pcName"    column="PC_NAME"    />
+        <result property="outCon"    column="OUT_CON"    />
+        <result property="outTime"    column="OUT_TIME"    />
+        <result property="outAreaCd"    column="OUT_AREA_CD"    />
+        <result property="outAreaName"    column="OUT_AREA_NAME"    />
+        <result property="outDeptCd"    column="OUT_DEPT_CD"    />
+        <result property="outDeptName"    column="OUT_DEPT_NAME"    />
+        <result property="wmIllStateCd"    column="WM_ILL_STATE_CD"    />
+        <result property="leaveWmIllName"    column="LEAVE_WM_ILL_NAME"    />
+        <result property="leaveWmIllCd"    column="LEAVE_WM_ILL_CD"    />
+        <result property="wmProStateCd"    column="WM_PRO_STATE_CD"    />
+        <result property="leaveWmProName"    column="LEAVE_WM_PRO_NAME"    />
+        <result property="leaveWmProCd"    column="LEAVE_WM_PRO_CD"    />
+        <result property="leaveCmIllCd"    column="LEAVE_CM_ILL_CD"    />
+        <result property="leaveCmIllName"    column="LEAVE_CM_ILL_NAME"    />
+        <result property="leaveCmSymCd"    column="LEAVE_CM_SYM_CD"    />
+        <result property="leaveCmSymName"    column="LEAVE_CM_SYM_NAME"    />
+        <result property="leaveMainIllCd"    column="LEAVE_MAIN_ILL_CD"    />
+        <result property="leaveMainDiaName"    column="LEAVE_MAIN_DIA_NAME"    />
+        <result property="leaveMainDiaCd"    column="LEAVE_MAIN_DIA_CD"    />
+        <result property="leaveOthIllCd"    column="LEAVE_OTH_ILL_CD"    />
+        <result property="leaveOthDiaName"    column="LEAVE_OTH_DIA_NAME"    />
+        <result property="leaveOthDiaCd"    column="LEAVE_OTH_DIA_CD"    />
+        <result property="leaveWmDiaCd"    column="LEAVE_WM_DIA_CD"    />
+        <result property="leaveWmDiaName"    column="LEAVE_WM_DIA_NAME"    />
+        <result property="mainpatflag"    column="MAIN_PAT_FLAG"    />
+        <result property="cpFlag"    column="CP_FLAG"    />
+        <result property="cpId"    column="CP_ID"    />
+        <result property="cpFirstDate"    column="CP_FIRST_DATE"    />
+        <result property="cpName"    column="CP_NAME"    />
+        <result property="cpDayNo"    column="CP_DAY_NO"    />
+        <result property="altPerName"    column="ALT_PER_NAME"    />
+        <result property="altPerCode"    column="ALT_PER_CODE"    />
+        <result property="altDate"    column="ALT_DATE"    />
+        <result property="crePerName"    column="CRE_PER_NAME"    />
+        <result property="crePerCode"    column="CRE_PER_CODE"    />
+        <result property="creDate"    column="CRE_DATE"    />
+        <result property="costSum"    column="COST_SUM"    />
+        <result property="foreSum"    column="FORE_SUM"    />
+        <result property="weight"    column="WEIGHT"    />
+        <result property="gathMhTime"    column="GATH_MH_TIME"    />
+        <result property="markDate"    column="MARK_DATE"    />
+        <result property="totalPatAva"    column="TOTAL_PAT_AVA"    />
+        <result property="modiFlag"    column="MODI_FLAG"    />
+        <result property="birWeight"    column="BIR_WEIGHT"    />
+        <result property="inhosWeight"    column="INHOS_WEIGHT"    />
+        <result property="isQuality"    column="IS_QUALITY"    />
+        <result property="qualityDate"    column="QUALITY_DATE"    />
+        <result property="patientName"    column="PATIENT_NAME"    />
+    </resultMap>
+
+    <resultMap type="Personalinfo" id="PersonalinfoResult1">
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="sex"    column="sex"    />
+        <result property="sexCd"    column="sex_cd"    />
+        <result property="birDate"    column="bir_date"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="citizenship"    column="citizenship"    />
+        <result property="citizenshipCd"    column="citizenship_cd"    />
+        <result property="marStaCd"    column="mar_sta_cd"    />
+        <result property="marSta"    column="mar_sta"    />
+        <result property="cardTypeCd"    column="card_type_cd"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="nationCd"    column="nation_cd"    />
+        <result property="healCardNo"    column="heal_card_no"    />
+        <result property="healFileNo"    column="heal_file_no"    />
+        <result property="exsFlag"    column="exs_flag"    />
+        <result property="eduCd"    column="edu_cd"    />
+        <result property="eduName"    column="edu_name"    />
+        <result property="sdCardId"    column="sd_card_id"    />
+        <result property="proTypeCd"    column="pro_type_cd"    />
+        <result property="proTypeName"    column="pro_type_name"    />
+        <result property="nowAddrHouseNo"    column="now_addr_house_no"    />
+        <result property="nowAddrPost"    column="now_addr_post"    />
+        <result property="nowAddrPro"    column="now_addr_pro"    />
+        <result property="nowAddrVil"    column="now_addr_vil"    />
+        <result property="nowAddrFlagty"    column="now_addr_flagty"    />
+        <result property="nowAddrCou"    column="now_addr_cou"    />
+        <result property="nowAddrTown"    column="now_addr_town"    />
+        <result property="nowAddrTel"    column="now_addr_tel"    />
+        <result property="citAddrHouseNo"    column="cit_addr_house_no"    />
+        <result property="citAddrPro"    column="cit_addr_pro"    />
+        <result property="citAddrVil"    column="cit_addr_vil"    />
+        <result property="citAddrFlagty"    column="cit_addr_flagty"    />
+        <result property="citAddrCou"    column="cit_addr_cou"    />
+        <result property="citAddrTown"    column="cit_addr_town"    />
+        <result property="rprAddrHouseNo"    column="rpr_addr_house_no"    />
+        <result property="rprAddrPro"    column="rpr_addr_pro"    />
+        <result property="rprAddrVil"    column="rpr_addr_vil"    />
+        <result property="rprAddrFlagty"    column="rpr_addr_flagty"    />
+        <result property="rprAddrCou"    column="rpr_addr_cou"    />
+        <result property="rprAddrTown"    column="rpr_addr_town"    />
+        <result property="prpAddrPost"    column="prp_addr_post"    />
+        <result property="patientTel"    column="patient_tel"    />
+        <result property="workName"    column="work_name"    />
+        <result property="workAddr"    column="work_addr"    />
+        <result property="workTel"    column="work_tel"    />
+        <result property="workPost"    column="work_post"    />
+        <result property="birAddrPro"    column="bir_addr_pro"    />
+        <result property="birAddrPlagty"    column="bir_addr_plagty"    />
+        <result property="birAddrCou"    column="bir_addr_cou"    />
+        <result property="contTel"    column="cont_tel"    />
+        <result property="contName"    column="cont_name"    />
+        <result property="contAddrPost"    column="cont_addr_post"    />
+        <result property="contAddrPro"    column="cont_addr_pro"    />
+        <result property="contAddrVil"    column="cont_addr_vil"    />
+        <result property="contAddrFlagty"    column="cont_addr_flagty"    />
+        <result property="contAddrCou"    column="cont_addr_cou"    />
+        <result property="contAddrTown"    column="cont_addr_town"    />
+        <result property="cpRela"    column="cp_rela"    />
+        <result property="secLevel"    column="sec_level"    />
+        <result property="aboName"    column="abo_name"    />
+        <result property="aboCd"    column="abo_cd"    />
+        <result property="rhName"    column="rh_name"    />
+        <result property="rhCd"    column="rh_cd"    />
+        <result property="workDate"    column="work_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="nation"    column="nation"    />
+        <result property="polStatCd"    column="pol_stat_cd"    />
+        <result property="polStatName"    column="pol_stat_name"    />
+        <result property="modiFlag"    column="modi_flag"    />
+        <result property="cpRelaName"    column="cp_rela_name"    />
+    </resultMap>
+    <resultMap type="MrHpFee" id="MrHpFeeResultl">
+        <result property="feeId"    column="fee_id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="feeCd"    column="fee_cd"    />
+        <result property="feeName"    column="fee_name"    />
+        <result property="amount"    column="amount"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+    <sql id="selectSyncDatasourceVo">
+        select id, sync_name, sync_code, sync_source, database_type, database_url, database_dcn, database_username, database_password, query_sql, class_method, vaild_flag, del_flag from sys_sync_datasource
+    </sql>
+
+    <select id="selectSyncDatasource" parameterType="SyncDatasource" resultMap="SyncDatasourceResult">
+        <include refid="selectSyncDatasourceVo"/>
+        <where>
+            <if test="syncName != null  and syncName != ''"> and sync_name like concat(concat('%', #{syncName}), '%')</if>
+            <if test="syncCode != null  and syncCode != ''"> and sync_code = #{syncCode}</if>
+            <if test="syncSource != null  and syncSource != ''"> and sync_source = #{syncSource}</if>
+            <if test="databaseType != null  and databaseType != ''"> and database_type = #{databaseType}</if>
+            <if test="databaseUrl != null  and databaseUrl != ''"> and database_url = #{databaseUrl}</if>
+            <if test="databaseDcn != null  and databaseDcn != ''"> and database_dcn = #{databaseDcn}</if>
+            <if test="databaseUsername != null  and databaseUsername != ''"> and database_username like concat(concat('%', #{databaseUsername}), '%')</if>
+            <if test="databasePassword != null  and databasePassword != ''"> and database_password = #{databasePassword}</if>
+            <if test="querySql != null  and querySql != ''"> and query_sql like concat(concat('%', #{querySql}), '%')</if>
+            <if test="classMethod != null  and classMethod != ''"> and class_method like concat(concat('%', #{classMethod}), '%')</if>
+            <if test="vaildFlag != null "> and vaild_flag = #{vaildFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectSyncDatasourceList" parameterType="SyncDatasource" resultMap="SyncDatasourceResult">
+        <include refid="selectSyncDatasourceVo"/>
+        <where>
+            <if test="syncName != null  and syncName != ''"> and sync_name like concat(concat('%', #{syncName}), '%')</if>
+            <if test="syncCode != null  and syncCode != ''"> and sync_code = #{syncCode}</if>
+            <if test="syncSource != null  and syncSource != ''"> and sync_source = #{syncSource}</if>
+            <if test="databaseType != null  and databaseType != ''"> and database_type = #{databaseType}</if>
+            <if test="databaseUrl != null  and databaseUrl != ''"> and database_url = #{databaseUrl}</if>
+            <if test="databaseDcn != null  and databaseDcn != ''"> and database_dcn = #{databaseDcn}</if>
+            <if test="databaseUsername != null  and databaseUsername != ''"> and database_username like concat(concat('%', #{databaseUsername}), '%')</if>
+            <if test="databasePassword != null  and databasePassword != ''"> and database_password = #{databasePassword}</if>
+            <if test="querySql != null  and querySql != ''"> and query_sql like concat(concat('%', #{querySql}), '%')</if>
+            <if test="classMethod != null  and classMethod != ''"> and class_method like concat(concat('%', #{classMethod}), '%')</if>
+            <if test="vaildFlag != null "> and vaild_flag = #{vaildFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectSyncDatasourceById" parameterType="Long" resultMap="SyncDatasourceResult">
+        <include refid="selectSyncDatasourceVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSyncDatasource" parameterType="SyncDatasource">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_sys_sync_datasource.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into sys_sync_datasource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="syncName != null">sync_name,</if>
+            <if test="syncCode != null">sync_code,</if>
+            <if test="syncSource != null">sync_source,</if>
+            <if test="databaseType != null">database_type,</if>
+            <if test="databaseUrl != null">database_url,</if>
+            <if test="databaseDcn != null">database_dcn,</if>
+            <if test="databaseUsername != null">database_username,</if>
+            <if test="databasePassword != null">database_password,</if>
+            <if test="querySql != null">query_sql,</if>
+            <if test="classMethod != null">class_method,</if>
+            <if test="vaildFlag != null">vaild_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="syncName != null">#{syncName},</if>
+            <if test="syncCode != null">#{syncCode},</if>
+            <if test="syncSource != null">#{syncSource},</if>
+            <if test="databaseType != null">#{databaseType},</if>
+            <if test="databaseUrl != null">#{databaseUrl},</if>
+            <if test="databaseDcn != null">#{databaseDcn},</if>
+            <if test="databaseUsername != null">#{databaseUsername},</if>
+            <if test="databasePassword != null">#{databasePassword},</if>
+            <if test="querySql != null">#{querySql},</if>
+            <if test="classMethod != null">#{classMethod},</if>
+            <if test="vaildFlag != null">#{vaildFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSyncDatasource" parameterType="SyncDatasource">
+        update sys_sync_datasource
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="syncName != null">sync_name = #{syncName},</if>
+            <if test="syncCode != null">sync_code = #{syncCode},</if>
+            <if test="syncSource != null">sync_source = #{syncSource},</if>
+            <if test="databaseType != null">database_type = #{databaseType},</if>
+            <if test="databaseUrl != null">database_url = #{databaseUrl},</if>
+            <if test="databaseDcn != null">database_dcn = #{databaseDcn},</if>
+            <if test="databaseUsername != null">database_username = #{databaseUsername},</if>
+            <if test="databasePassword != null">database_password = #{databasePassword},</if>
+            <if test="querySql != null">query_sql = #{querySql},</if>
+            <if test="classMethod != null">class_method = #{classMethod},</if>
+            <if test="vaildFlag != null">vaild_flag = #{vaildFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSyncDatasourceById" parameterType="Long">
+        delete from sys_sync_datasource where id = #{id}
+    </delete>
+
+    <delete id="deleteSyncDatasourceByIds" parameterType="String">
+        delete from sys_sync_datasource where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectMapList" parameterType="com.emr.project.system.domain.vo.SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+        <where>
+            <if test="deptCode != null and deptCode != ''">
+                and dept_code = #{deptCode}
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and begin_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and begin_time &lt; #{endTime}
+            </if>
+            <if test="inpNo != null and inpNo != ''">
+                and inp_no = #{inpNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMapListNoWhere" parameterType="com.emr.project.system.domain.vo.SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+    </select>
+
+    <select id="selectMap" parameterType="com.emr.project.system.domain.vo.SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+    </select>
+
+    <select id="selectMapsList" parameterType="com.emr.project.system.domain.vo.SqlVo" resultMap="PersonalinfoResult1, VisitinfoResult1">
+        ${sqlStr}
+    </select>
+</mapper>

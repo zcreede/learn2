@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TmPmHsxmMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TmPmHsxm">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="CHAR" property="code" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="three_level_code" jdbcType="CHAR" property="threeLevelCode" />
+    <result column="three_level_name" jdbcType="CHAR" property="threeLevelName" />
+    <result column="Drug_flag" jdbcType="CHAR" property="drugFlag" />
+    <result column="first_code" property="firstCode" />
+  </resultMap>
+
+  <select id="selectByConn" parameterType="com.emr.project.operation.domain.TmPmHsxm" resultMap="BaseResultMap">
+    select code id, code ,name,sort, code three_level_code,name three_level_name, case when FIRST_CODE='1' then 1 when FIRST_CODE='3' then 3 else 0 end Drug_flag,FIRST_CODE
+    from tm_BS_account_third
+    <where>
+      <if test='drugFlag !=null and drugFlag !="" and drugFlag == "1"'>
+        and FIRST_CODE = '1'
+      </if>
+      <if test='drugFlag !=null and drugFlag !="" and drugFlag == "0"'>
+        and FIRST_CODE !='1'
+      </if>
+
+      <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "1"'>
+        and FIRST_CODE = '1'
+      </if>
+      <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "0"'>
+        and FIRST_CODE != '1' and FIRST_CODE != '3'
+      </if>
+      <if test='firstTypeStatis != null and firstTypeStatis != "" and firstTypeStatis == "2"'>
+        and FIRST_CODE = '3'
+      </if>
+    </where>
+  </select>
+  <resultMap id="ThreeLevelCodeResult" type="com.emr.project.operation.domain.resp.ThreeLevelCodeResp">
+      <result column="threeLevelCode" jdbcType="VARCHAR" property="threeLevelCode" />
+      <result column="threeLevelName" jdbcType="VARCHAR" property="threeLevelName" />
+  </resultMap>
+  <select id="getThreeLevelCodeList" resultMap="ThreeLevelCodeResult">
+    select CODE as threeLevelCode,NAME as threeLevelName  from TM_BS_ACCOUNT_THIRD where FIRST_CODE!='1' and DEL_FLAG='0'
+  </select>
+  <select id="selectAll" resultType="com.emr.project.report.domain.YyPDbzwh">
+    select ICD ,MC from YY_P_DBZWH
+  </select>
+
+  <select id="getByIcd" resultType="java.lang.String">
+     select mc from YY_P_DBZWH where ICD = #{icd}
+  </select>
+
+</mapper>

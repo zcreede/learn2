@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderMessageMapper">
+
+    <resultMap type="TdPaOrderMessage" id="TdPaOrderMessageResult">
+        <result property="id"    column="id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="msgContent"    column="msg_content"    />
+        <result property="receiveDeptCode"    column="receive_dept_code"    />
+        <result property="patDeptCode"    column="pat_dept_code"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="msgStatus"    column="msg_status"    />
+        <result property="msgType"    column="msg_type"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderTypeName"    column="order_type_name"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="orderClassCodeName"    column="order_class_code_name"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="orderStatusName"    column="order_status_name"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createOper"    column="create_oper"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="updateOper"    column="update_oper"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderMessageVo">
+        select id, order_no, msg_content, receive_dept_code, pat_dept_code, case_no, hospitalized_count, admission_no, patient_name, msg_status, msg_type, order_type, order_type_name, order_class_code, order_class_code_name, order_status, order_status_name, create_date, create_oper, update_date, update_oper from td_pa_order_message
+    </sql>
+
+    <select id="selectTdPaOrderMessageList" parameterType="TdPaOrderMessage" resultMap="TdPaOrderMessageResult">
+        <include refid="selectTdPaOrderMessageVo"/>
+        <where>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="msgContent != null  and msgContent != ''"> and msg_content = #{msgContent}</if>
+            <if test="receiveDeptCode != null  and receiveDeptCode != ''"> and receive_dept_code = #{receiveDeptCode}</if>
+            <if test="patDeptCode != null  and patDeptCode != ''"> and pat_dept_code = #{patDeptCode}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="hospitalizedCount != null"> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="msgStatus != null  and msgStatus != ''"> and msg_status = #{msgStatus}</if>
+            <if test="msgType != null  and msgType != ''"> and msg_type = #{msgType}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="orderTypeName != null  and orderTypeName != ''"> and order_type_name like concat(concat('%', #{orderTypeName}), '%')</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="orderClassCodeName != null  and orderClassCodeName != ''"> and order_class_code_name like concat(concat('%', #{orderClassCodeName}), '%')</if>
+            <if test="orderStatus != null  and orderStatus != ''"> and order_status = #{orderStatus}</if>
+            <if test="orderStatusName != null  and orderStatusName != ''"> and order_status_name like concat(concat('%', #{orderStatusName}), '%')</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="createOper != null  and createOper != ''"> and create_oper = #{createOper}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            <if test="updateOper != null  and updateOper != ''"> and update_oper = #{updateOper}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderMessageById" parameterType="Long" resultMap="TdPaOrderMessageResult">
+        <include refid="selectTdPaOrderMessageVo"/>
+        where id = #{id}
+    </select>
+    <resultMap id="OrderReturnMessageResult" type="com.emr.project.docOrder.domain.vo.OrderMessageVo">
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="msgContent"    column="msg_content"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="msgType"    column="msg_type"    />
+        <result property="msgStatus"    column="msg_status"    />
+    </resultMap>
+    <select id="selectOrderReturnMessageList" resultMap="OrderReturnMessageResult">
+        select
+            per.patient_main_id,
+            vis.patient_id,
+            vis.inp_no,
+            om.msg_content,
+            om.patient_name,
+            om.create_date,
+            om.case_no,
+            om.admission_no,
+            om.msg_type,
+            om.msg_status,
+            '4' as busType
+        from
+            td_pa_order_message om
+            left join td_pa_order po on om.ORDER_NO = po.ORDER_NO
+            left join pat_visitinfo vis on vis.record_no = om.case_no
+            left join pat_personalinfo per on  per.patient_id = vis.patient_id
+        where
+            om.order_status = '-4'
+            and om.msg_status = #{msgStatus}
+            and vis.dept_cd = #{orgCode}
+            and po.order_doctor_no = #{userName}
+            <if test="startTime!= null">
+                and om.CREATE_DATE &gt;= #{startTime}
+            </if>
+            <if test="endTime!= null">
+                and om.CREATE_DATE &lt;= #{endTime}
+            </if>
+    </select>
+
+    <insert id="insertTdPaOrderMessage" parameterType="TdPaOrderMessage">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_td_pa_order_message.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into td_pa_order_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="msgContent != null and msgContent != ''">msg_content,</if>
+            <if test="receiveDeptCode != null and receiveDeptCode != ''">receive_dept_code,</if>
+            <if test="patDeptCode != null">pat_dept_code,</if>
+            <if test="admissionNo != null">admission_no,</if>
+            <if test="caseNo != null  and caseNo != ''">case_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="msgStatus != null">msg_status,</if>
+            <if test="msgType != null">msg_type,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="orderTypeName != null">order_type_name,</if>
+            <if test="orderClassCode != null">order_class_code,</if>
+            <if test="orderClassCodeName != null">order_class_code_name,</if>
+            <if test="orderStatus != null">order_status,</if>
+            <if test="orderStatusName != null">order_status_name,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="createOper != null">create_oper,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="updateOper != null">update_oper,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="msgContent != null and msgContent != ''">#{msgContent},</if>
+            <if test="receiveDeptCode != null and receiveDeptCode != ''">#{receiveDeptCode},</if>
+            <if test="patDeptCode != null">#{patDeptCode},</if>
+            <if test="admissionNo != null">#{admissionNo},</if>
+            <if test="caseNo != null  and caseNo != ''">#{caseNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="msgStatus != null">#{msgStatus},</if>
+            <if test="msgType != null">#{msgType},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="orderTypeName != null">#{orderTypeName},</if>
+            <if test="orderClassCode != null">#{orderClassCode},</if>
+            <if test="orderClassCodeName != null">#{orderClassCodeName},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            <if test="orderStatusName != null">#{orderStatusName},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="createOper != null">#{createOper},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="updateOper != null">#{updateOper},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderMessage" parameterType="TdPaOrderMessage">
+        update td_pa_order_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="msgContent != null and msgContent != ''">msg_content = #{msgContent},</if>
+            <if test="receiveDeptCode != null and receiveDeptCode != ''">receive_dept_code = #{receiveDeptCode},</if>
+            <if test="patDeptCode != null">pat_dept_code = #{patDeptCode},</if>
+            <if test="admissionNo != null">admission_no = #{admissionNo},</if>
+            <if test="caseNo != null  and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="msgStatus != null">msg_status = #{msgStatus},</if>
+            <if test="msgType != null">msg_type = #{msgType},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="orderTypeName != null">order_type_name = #{orderTypeName},</if>
+            <if test="orderClassCode != null">order_class_code = #{orderClassCode},</if>
+            <if test="orderClassCodeName != null">order_class_code_name = #{orderClassCodeName},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="orderStatusName != null">order_status_name = #{orderStatusName},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="createOper != null">create_oper = #{createOper},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="updateOper != null">update_oper = #{updateOper},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderMessageById" parameterType="Long">
+        delete from td_pa_order_message where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderMessageByIds" parameterType="String">
+        delete from td_pa_order_message where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCancelOrderMessage" parameterType="String">
+        delete from td_pa_order_message where admission_no in
+        <foreach item="item" collection="admissionNos" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insertList" parameterType="TdPaOrderMessage">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_message
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orderNo != null and item.orderNo != ''">order_no,</if>
+                <if test="item.msgContent != null and item.msgContent != ''">msg_content,</if>
+                <if test="item.receiveDeptCode != null and item.receiveDeptCode != ''">receive_dept_code,</if>
+                <if test="item.patDeptCode != null">pat_dept_code,</if>
+                <if test="item.admissionNo != null">admission_no,</if>
+                <if test="item.caseNo != null">case_no,</if>
+                <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+                <if test="item.patientName != null">patient_name,</if>
+                <if test="item.msgStatus != null">msg_status,</if>
+                <if test="item.msgType != null">msg_type,</if>
+                <if test="item.orderType != null">order_type,</if>
+                <if test="item.orderTypeName != null">order_type_name,</if>
+                <if test="item.orderClassCode != null">order_class_code,</if>
+                <if test="item.orderClassCodeName != null">order_class_code_name,</if>
+                <if test="item.orderStatus != null">order_status,</if>
+                <if test="item.orderStatusName != null">order_status_name,</if>
+                create_date,
+                <if test="item.createOper != null">create_oper,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orderNo != null and item.orderNo != ''">#{item.orderNo},</if>
+                <if test="item.msgContent != null and item.msgContent != ''">#{item.msgContent},</if>
+                <if test="item.receiveDeptCode != null and item.receiveDeptCode != ''">#{item.receiveDeptCode},</if>
+                <if test="item.patDeptCode != null">#{item.patDeptCode},</if>
+                <if test="item.admissionNo != null">#{item.admissionNo},</if>
+                <if test="item.caseNo != null">#{item.caseNo},</if>
+                <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+                <if test="item.patientName != null">#{item.patientName},</if>
+                <if test="item.msgStatus != null">#{item.msgStatus},</if>
+                <if test="item.msgType != null">#{item.msgType},</if>
+                <if test="item.orderType != null">#{item.orderType},</if>
+                <if test="item.orderTypeName != null">#{item.orderTypeName},</if>
+                <if test="item.orderClassCode != null">#{item.orderClassCode},</if>
+                <if test="item.orderClassCodeName != null">#{item.orderClassCodeName},</if>
+                <if test="item.orderStatus != null">#{item.orderStatus},</if>
+                <if test="item.orderStatusName != null">#{item.orderStatusName},</if>
+                sysdate,
+                <if test="item.createOper != null">#{item.createOper},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateByOrderNo" parameterType="String">
+        update td_pa_order_message set msg_status = #{msgStatus},update_date = sysdate, update_oper = #{updateOper}
+        where msg_status = '0' and order_no in
+        <if test="orderNoList != null and orderNoList.size > 0">
+            <foreach collection="orderNoList" item="orderNo" open="(" separator="," close=")">
+                #{orderNo}
+            </foreach>
+        </if>
+        <if test="orderStatus != null">
+            and order_status = #{orderStatus}
+        </if>
+    </update>
+</mapper>

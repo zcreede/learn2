@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.report.mapper.DepartmentIncomeMapper">
+
+    <resultMap id="DepartmentStatisticsDataMap" type="com.emr.project.report.domain.dto.DepartmentStatisticsDataDTO">
+        <result column="threeLevelAccounting" jdbcType="VARCHAR" property="threeLevelAccounting" />
+        <result column="threeLevelName" jdbcType="VARCHAR" property="threeLevelName" />
+        <result column="firstCode" jdbcType="VARCHAR" property="firstCode" />
+        <result column="firsName" jdbcType="VARCHAR" property="firsName" />
+        <result column="total" property="total" />
+    </resultMap>
+
+    <resultMap id="FeeWorkloadVoResult" type="com.emr.project.report.domain.resp.FeeWorkloadResp">
+        <result property="total"    column="total"    />
+        <result property="staffCode"    column="staffCode"    />
+        <result property="threeLevelCode"    column="threeLevelCode"    />
+        <result property="threeLevelName"    column="threeLevelName"    />
+        <result property="staffName"    column="staffName"    />
+    </resultMap>
+
+    <resultMap id="DeptWorkloadResult" type="com.emr.project.report.domain.resp.DeptWorkloadResp">
+        <result property="total" column="total"/>
+        <result property="threeLevelAccounting" column="threeLevelCode"/>
+        <result property="threeLevelName" column="threeLevelName"/>
+        <result property="executorDptNo" column="executor_dpt_no"/>
+        <result property="executorDptName" column="executor_dpt_name"/>
+    </resultMap>
+
+    <select id="selectDepartmentStatisticsDataList" resultMap="DepartmentStatisticsDataMap" parameterType="java.lang.String">
+        SELECT
+            aa.THREE_LEVEL_ACCOUNTING AS threeLevelAccounting,
+            aa.THREE_LEVEL_NAME AS threeLevelName,
+            tbaf.FIRST_CODE AS firstCode,
+            tbaf.FIRS_NAME AS firsName,
+            to_char ( SUM( aa.TOTAL ),'fm99999990.00') AS total
+        FROM
+        (
+        <if test="costType!=null and costType!='' and costType=='1'.toString()">
+            SELECT
+                TRIM( b.three_level_accounting ) AS three_level_accounting,
+                TRIM( b.three_level_name ) AS three_level_name,
+                b.total
+            FROM
+                td_na_pat_fee a,
+                t_ih_expensedetail b
+            WHERE
+                b.pay_mark = '-1'
+            AND a.prescription = b.prescription
+            AND charge_no != '00'
+            <choose>
+                <when test="departmentType == '1'.toString()">
+                    AND a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    AND a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR}
+                </otherwise>
+            </choose>
+
+            <if test='dateTimeStart != null and dateTimeStart != ""'>
+                AND b.FILING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test='dateTimeEnd != null and dateTimeEnd != ""'>
+                AND b.FILING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            UNION ALL
+        </if>
+        SELECT
+            TRIM( b.three_level_accounting ) AS three_level_accounting,
+            TRIM( b.three_level_name ) AS three_level_name,
+            b.total
+        FROM
+            v_na_pa_fee_h a,
+            v_ih_expensedetail_h b
+        WHERE
+            b.pay_mark = '-1'
+        AND a.prescription = b.prescription
+        AND charge_no != '00'
+        <choose>
+            <when test="departmentType == '1'.toString()">
+                AND a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                AND a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+        <if test='dateTimeStart != null and dateTimeStart != ""'>
+            AND b.FILING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        <if test='dateTimeEnd != null and dateTimeEnd != ""'>
+            AND b.FILING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        ) aa
+        LEFT JOIN TM_BS_ACCOUNT_THIRD tbat ON tbat.CODE = aa.THREE_LEVEL_ACCOUNTING
+        LEFT JOIN TM_BS_ACCOUNT_FIRST tbaf ON tbaf.FIRST_CODE = tbat.FIRST_CODE
+        WHERE
+            aa.THREE_LEVEL_NAME IS NOT NULL
+        AND aa.three_level_accounting IS NOT NULL
+        GROUP BY
+            aa.THREE_LEVEL_ACCOUNTING,
+            aa.THREE_LEVEL_NAME,
+            tbaf.FIRST_CODE,
+            tbaf.FIRS_NAME
+        HAVING SUM(aa.TOTAL) != 0
+        ORDER BY
+            tbaf.FIRST_CODE
+    </select>
+
+    <select id="selectFeeWorkloadList" parameterType="java.lang.String" resultMap="FeeWorkloadVoResult">
+        select a.total,a.PHYSICIAN_NO as staffCode,trim(a.three_level_accounting) as threeLevelCode,trim(a.three_level_name) as threeLevelName,s.staff_name as staffName from (SELECT
+        to_char(SUM(total),'fm99999990.00') AS total ,PHYSICIAN_NO,three_level_accounting,three_level_name
+        FROM
+        (
+        <if test="costType!=null and costType!='' and costType=='1'.toString()">
+            SELECT
+            TRIM(b.three_level_accounting) as three_level_accounting,TRIM(b.three_level_name)as three_level_name,b.total,a.PHYSICIAN_NO
+            FROM
+            td_na_pat_fee a,
+            t_ih_expensedetail b
+            WHERE
+            b.pay_mark = '-1'
+            AND a.prescription = b.prescription
+            AND charge_no != '00'
+            and a.PHYSICIAN_NO is not null
+
+            <choose>
+                <when test="departmentType == '1'.toString()">
+                    and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR}
+                </otherwise>
+            </choose>
+
+            <if test="dateTimeStart!=null and dateTimeStart!='' and dateTimeEnd!=null and dateTimeEnd!=''">
+                and a.FILING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+                and a.FILING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            UNION ALL
+        </if>
+        SELECT
+        TRIM(b.three_level_accounting) as three_level_accounting,TRIM(b.three_level_name)as three_level_name,b.total,a.PHYSICIAN_NO
+        FROM
+        v_na_pa_fee_h a,
+        v_ih_expensedetail_h b
+        WHERE
+        b.pay_mark = '-1'
+        AND a.prescription = b.prescription
+        AND charge_no != '00'
+        and a.PHYSICIAN_NO is not null
+        <choose>
+            <when test="departmentType == '1'.toString()">
+                and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                and a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+        <if test="dateTimeStart!=null and dateTimeStart!='' and dateTimeEnd!=null and dateTimeEnd!=''">
+            and a.FILING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            and a.FILING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        )
+        GROUP BY
+        PHYSICIAN_NO,three_level_accounting, three_level_name  HAVING SUM(total)!=0) a left join tm_Bs_staff s on a.PHYSICIAN_NO=s.staff_code
+        where a.three_level_accounting is not null and a.three_level_name is not null
+    </select>
+
+    <select id="selectLeaveHospitalDataList" resultMap="DepartmentStatisticsDataMap">
+        SELECT
+        aa.THREE_LEVEL_ACCOUNTING AS threeLevelAccounting,
+        aa.THREE_LEVEL_NAME AS threeLevelName,
+        tbaf.FIRST_CODE AS firstCode,
+        tbaf.FIRS_NAME AS firsName,
+        SUM( aa.TOTAL ) AS total
+        FROM
+        (
+        SELECT
+        TRIM( b.three_level_accounting ) AS three_level_accounting,
+        TRIM( b.three_level_name ) AS three_level_name,
+        b.total
+        FROM
+        TD_NA_PAT_FEE_ALL a,
+        T_IH_EXPENSEDETAIL_ALL b
+        LEFT JOIN T_AR_MEDICALINFORMATION_ALL m ON b.ADMISSION_NO = m.ADMISSION_NO
+        WHERE
+        b.pay_mark = '-1' and m.CLOSING_DATE is not null
+        AND a.prescription = b.prescription
+        AND charge_no != '00'
+        <choose>
+            <when test="departmentType == '1'.toString()">
+                AND a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                AND a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+        <if test='dateTimeStart != null and dateTimeStart != ""'>
+            AND m.CLOSING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        <if test='dateTimeEnd != null and dateTimeEnd != ""'>
+            AND m.CLOSING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        ORDER BY three_level_accounting
+        ) aa
+        LEFT JOIN TM_BS_ACCOUNT_THIRD tbat ON tbat.CODE = aa.THREE_LEVEL_ACCOUNTING
+        LEFT JOIN TM_BS_ACCOUNT_FIRST tbaf ON tbaf.FIRST_CODE = tbat.FIRST_CODE
+        WHERE
+        aa.THREE_LEVEL_NAME IS NOT NULL
+        AND aa.three_level_accounting IS NOT NULL
+        GROUP BY
+        aa.THREE_LEVEL_ACCOUNTING,
+        aa.THREE_LEVEL_NAME,
+        tbaf.FIRST_CODE,
+        tbaf.FIRS_NAME
+        HAVING SUM(aa.TOTAL) != 0
+        ORDER BY
+        tbaf.FIRST_CODE
+
+    </select>
+    <select id="selectInHosPatientDataList" resultMap="DepartmentStatisticsDataMap">
+        SELECT
+        aa.THREE_LEVEL_ACCOUNTING AS threeLevelAccounting,
+        aa.THREE_LEVEL_NAME AS threeLevelName,
+        tbaf.FIRST_CODE AS firstCode,
+        tbaf.FIRS_NAME AS firsName,
+        SUM( aa.TOTAL ) AS total
+        FROM
+        (
+        SELECT
+        TRIM( b.three_level_accounting ) AS three_level_accounting,
+        TRIM( b.three_level_name ) AS three_level_name,
+        b.total
+        FROM
+        TD_NA_PAT_FEE_ALL a,
+        T_IH_EXPENSEDETAIL_ALL b
+        WHERE
+        b.pay_mark = '-1'
+        AND a.prescription = b.prescription
+        AND charge_no != '00'
+        <choose>
+            <when test="departmentType == '1'.toString()">
+                AND a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                AND a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+        <if test='dateTimeStart != null and dateTimeStart != ""'>
+            AND b.FILING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        <if test='dateTimeEnd != null and dateTimeEnd != ""'>
+            AND b.FILING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        ORDER BY three_level_accounting
+        ) aa
+        LEFT JOIN TM_BS_ACCOUNT_THIRD tbat ON tbat.CODE = aa.THREE_LEVEL_ACCOUNTING
+        LEFT JOIN TM_BS_ACCOUNT_FIRST tbaf ON tbaf.FIRST_CODE = tbat.FIRST_CODE
+        WHERE
+        aa.THREE_LEVEL_NAME IS NOT NULL
+        AND aa.three_level_accounting IS NOT NULL
+        GROUP BY
+        aa.THREE_LEVEL_ACCOUNTING,
+        aa.THREE_LEVEL_NAME,
+        tbaf.FIRST_CODE,
+        tbaf.FIRS_NAME
+        HAVING SUM(aa.TOTAL) != 0
+        ORDER BY
+        tbaf.FIRST_CODE
+    </select>
+
+    <select id="selectDeptLeaveHospitalList" resultMap="DeptWorkloadResult">
+        <if test="departmentType != null and departmentType != '' and departmentType=='1'.toString()">
+            select
+            a.total,
+            trim(a.three_level_accounting) as threeLevelCode,
+            trim(a.three_level_name) as threeLevelName,
+            a.executor_dpt_no,
+            a.executor_dpt_name
+            from (
+            SELECT
+            SUM(total) AS total ,
+            EXECUTOR_DPT_NO,
+            EXECUTOR_DPT_NAME,
+            three_level_accounting,
+            three_level_name
+            FROM
+            (
+            SELECT
+            TRIM(b.three_level_accounting) as three_level_accounting,
+            TRIM(b.three_level_name)as three_level_name,
+            b.total,
+            a.EXECUTOR_DPT_NO,
+            a.EXECUTOR_DPT_NAME
+            FROM
+            TD_NA_PAT_FEE_ALL a,
+            T_IH_EXPENSEDETAIL_ALL b
+            LEFT JOIN T_AR_MEDICALINFORMATION_ALL m ON b.ADMISSION_NO = m.ADMISSION_NO
+            WHERE
+            b.pay_mark = '-1' and m.CLOSING_DATE is not null
+            AND a.prescription = b.prescription
+            AND charge_no != '00'
+            and a.EXECUTOR_DPT_NO is not null and a.EXECUTOR_DPT_NAME is not null
+            and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            <if test="beginDate!=null and beginDate!='' and endDate!=null and endDate!=''">
+                and m.CLOSING_DATE <![CDATA[>=]]> to_date(#{beginDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+                and m.CLOSING_DATE <![CDATA[<=]]> to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            )
+            GROUP BY
+            EXECUTOR_DPT_NO,
+            EXECUTOR_DPT_NAME,
+            three_level_accounting,
+            three_level_name,
+            total
+            HAVING SUM(total) != 0
+            ) a
+            where a.three_level_accounting is not null and a.three_level_name is not null
+        </if>
+        <if test="departmentType != null and departmentType != '' and departmentType=='2'.toString()">
+            select
+            a.total,
+            trim(a.three_level_accounting) as threeLevelCode,
+            trim(a.three_level_name) as threeLevelName,
+            a.PHYSICIAN_DPT_NO as executor_dpt_no,
+            a.PHYSICIAN_DPT_NAME as executor_dpt_name
+            from (
+            SELECT
+            SUM(total) AS total ,
+            PHYSICIAN_DPT_NO,
+            PHYSICIAN_DPT_NAME,
+            three_level_accounting,
+            three_level_name
+            FROM
+            (
+            SELECT
+            TRIM(b.three_level_accounting) as three_level_accounting,
+            TRIM(b.three_level_name)as three_level_name,
+            b.total,
+            a.PHYSICIAN_DPT_NO,
+            a.PHYSICIAN_DPT_NAME
+            FROM
+            TD_NA_PAT_FEE_ALL a,
+            T_IH_EXPENSEDETAIL_ALL b
+            LEFT JOIN T_AR_MEDICALINFORMATION_ALL m ON b.ADMISSION_NO = m.ADMISSION_NO
+            WHERE
+            b.pay_mark = '-1' and m.CLOSING_DATE is not null
+            AND a.prescription = b.prescription
+            AND charge_no != '00'
+            and a.PHYSICIAN_DPT_NO is not null and a.PHYSICIAN_DPT_NAME is not null
+            and a.EXECUTOR_DPT_NO = #{depCode,jdbcType=VARCHAR}
+            <if test="beginDate!=null and beginDate!='' and endDate!=null and endDate!=''">
+                and m.CLOSING_DATE <![CDATA[>=]]> to_date(#{beginDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+                and m.CLOSING_DATE <![CDATA[<=]]> to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            )
+            GROUP BY
+            PHYSICIAN_DPT_NO,
+            PHYSICIAN_DPT_NAME,
+            three_level_accounting,
+            three_level_name,
+            total
+            HAVING SUM(total) != 0
+            ) a
+            where a.three_level_accounting is not null and a.three_level_name is not null
+        </if>
+    </select>
+
+    <select id="selectDeptInHosPatientList" resultMap="DeptWorkloadResult">
+        <if test="departmentType != null and departmentType != '' and departmentType=='1'.toString()">
+            select
+            a.total,
+            trim(a.three_level_accounting) as threeLevelCode,
+            trim(a.three_level_name) as threeLevelName,
+            a.executor_dpt_no,
+            a.executor_dpt_name
+            from (
+            SELECT
+            SUM(total) AS total ,
+            EXECUTOR_DPT_NO,
+            EXECUTOR_DPT_NAME,
+            three_level_accounting,
+            three_level_name
+            FROM
+            (
+            SELECT
+            TRIM(b.three_level_accounting) as three_level_accounting,
+            TRIM(b.three_level_name)as three_level_name,
+            b.total,
+            a.EXECUTOR_DPT_NO,
+            a.EXECUTOR_DPT_NAME
+            FROM
+            TD_NA_PAT_FEE_ALL a,
+            T_IH_EXPENSEDETAIL_ALL b
+            WHERE
+            b.pay_mark = '-1'
+            AND a.prescription = b.prescription
+            AND charge_no != '00'
+            and a.EXECUTOR_DPT_NO is not null and a.EXECUTOR_DPT_NAME is not null
+            and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            <if test="beginDate!=null and beginDate!='' and endDate!=null and endDate!=''">
+                and a.FILING_DATE <![CDATA[>=]]> to_date(#{beginDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+                and a.FILING_DATE <![CDATA[<=]]> to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+
+            )
+            GROUP BY
+            three_level_accounting,
+            three_level_name,
+            EXECUTOR_DPT_NO,
+            EXECUTOR_DPT_NAME
+            HAVING SUM(total)!=0
+            ) a
+            where a.three_level_accounting is not null and a.three_level_name is not null
+        </if>
+        <if test="departmentType != null and departmentType != '' and departmentType=='2'.toString()">
+            select
+            a.total,
+            trim(a.three_level_accounting) as threeLevelCode,
+            trim(a.three_level_name) as threeLevelName,
+            a.PHYSICIAN_DPT_NO as executor_dpt_no,
+            a.PHYSICIAN_DPT_NAME as executor_dpt_name
+            from (
+            SELECT
+            SUM(total) AS total ,
+            PHYSICIAN_DPT_NO,
+            PHYSICIAN_DPT_NAME,
+            three_level_accounting,
+            three_level_name
+            FROM
+            (
+            SELECT
+            TRIM(b.three_level_accounting) as three_level_accounting,
+            TRIM(b.three_level_name)as three_level_name,
+            b.total,
+            a.PHYSICIAN_DPT_NO,
+            a.PHYSICIAN_DPT_NAME
+            FROM
+            TD_NA_PAT_FEE_ALL a,
+            T_IH_EXPENSEDETAIL_ALL b
+            WHERE
+            b.pay_mark = '-1'
+            AND a.prescription = b.prescription
+            AND charge_no != '00'
+            and a.PHYSICIAN_DPT_NO is not null and a.PHYSICIAN_DPT_NAME is not null
+            and a.EXECUTOR_DPT_NO = #{depCode,jdbcType=VARCHAR}
+            <if test="beginDate!=null and beginDate!='' and endDate!=null and endDate!=''">
+                and a.FILING_DATE <![CDATA[>=]]> to_date(#{beginDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+                and a.FILING_DATE <![CDATA[<=]]> to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+
+            )
+            GROUP BY
+            three_level_accounting,
+            three_level_name,
+            PHYSICIAN_DPT_NO,
+            PHYSICIAN_DPT_NAME
+            HAVING SUM(total)!=0
+            ) a
+            where a.three_level_accounting is not null and a.three_level_name is not null
+        </if>
+    </select>
+    <select id="selectLeaveHospitalFeeWorkloadList" resultMap="FeeWorkloadVoResult">
+        select
+        a.total,
+        a.PHYSICIAN_NO as staffCode,
+        trim(a.three_level_accounting) as threeLevelCode,
+        trim(a.three_level_name) as threeLevelName,
+        s.staff_name as staffName
+        from (
+        SELECT
+        SUM(total) AS total ,
+        PHYSICIAN_NO,
+        three_level_accounting,
+        three_level_name
+        FROM
+        (
+        SELECT
+        TRIM(b.three_level_accounting) as three_level_accounting,
+        TRIM(b.three_level_name)as three_level_name,
+        b.total,
+        a.PHYSICIAN_NO
+        FROM
+        TD_NA_PAT_FEE_ALL a,
+        T_IH_EXPENSEDETAIL_ALL b
+        LEFT JOIN T_AR_MEDICALINFORMATION_ALL m ON b.ADMISSION_NO = m.ADMISSION_NO
+        WHERE
+        b.pay_mark = '-1' and m.CLOSING_DATE is not null
+        AND a.prescription = b.prescription
+        AND charge_no != '00'
+        and a.PHYSICIAN_NO is not null
+        <choose>
+            <when test="departmentType == '1'.toString()">
+                and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                and a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR} and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+        <if test="dateTimeStart!=null and dateTimeStart!='' and dateTimeEnd!=null and dateTimeEnd!=''">
+            and m.CLOSING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            and m.CLOSING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        )
+        GROUP BY
+        PHYSICIAN_NO,
+        three_level_accounting,
+        three_level_name
+        HAVING SUM(total)!=0
+        ) a
+        left join tm_Bs_staff s on a.PHYSICIAN_NO = s.staff_code
+        where a.three_level_accounting is not null and a.three_level_name is not null
+
+    </select>
+    <select id="selectInHosPatientFeeWorkloadList" resultMap="FeeWorkloadVoResult">
+        select
+        a.total,
+        a.PHYSICIAN_NO as staffCode,
+        trim(a.three_level_accounting) as threeLevelCode,
+        trim(a.three_level_name) as threeLevelName,
+        s.staff_name as staffName
+        from (
+        SELECT
+        SUM(total) AS total ,
+        PHYSICIAN_NO,
+        three_level_accounting,
+        three_level_name
+        FROM
+        (
+        SELECT
+        TRIM(b.three_level_accounting) as three_level_accounting,
+        TRIM(b.three_level_name)as three_level_name,
+        b.total,
+        a.PHYSICIAN_NO
+        FROM
+        TD_NA_PAT_FEE_ALL a,
+        T_IH_EXPENSEDETAIL_ALL b
+        WHERE
+        b.pay_mark = '-1'
+        AND a.prescription = b.prescription
+        AND charge_no != '00'
+        and a.PHYSICIAN_NO is not null
+        <choose>
+            <when test="departmentType == '1'.toString()">
+                and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                and a.EXECUTOR_DPT_NO= #{depCode,jdbcType=VARCHAR} and a.PHYSICIAN_DPT_NO= #{depCode,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+        <if test="dateTimeStart!=null and dateTimeStart!='' and dateTimeEnd!=null and dateTimeEnd!=''">
+            and a.FILING_DATE <![CDATA[>=]]> to_date(#{dateTimeStart,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            and a.FILING_DATE <![CDATA[<=]]> to_date(#{dateTimeEnd,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        </if>
+        )
+        GROUP BY
+        PHYSICIAN_NO,
+        three_level_accounting,
+        three_level_name
+        HAVING SUM(total)!=0
+        ) a
+        left join tm_Bs_staff s on a.PHYSICIAN_NO = s.staff_code
+        where a.three_level_accounting is not null and a.three_level_name is not null
+    </select>
+
+</mapper>

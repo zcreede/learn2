@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.WorkLoadPatientMapper">
+
+    <resultMap type="WorkLoadPatient" id="WorkLoadPatientResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="itemTypeCode"    column="item_type_code"    />
+        <result property="itemTypeName"    column="item_type_name"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="personAge"    column="person_age"    />
+        <result property="ageMonth"    column="age_month"    />
+        <result property="ageDay"    column="age_day"    />
+        <result property="ageHour"    column="age_hour"    />
+        <result property="ageBranch"    column="age_branch"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="bedid"    column="bedid"    />
+        <result property="hospitalizedDate"    column="hospitalized_date"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="inWardNo"    column="in_ward_no"    />
+        <result property="outWardNo"    column="out_ward_no"    />
+        <result property="inDays"    column="in_days"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="itemCode"    column="item_code"    />
+    </resultMap>
+
+    <sql id="selectWorkLoadPatientVo">
+        select id, org_cd, main_id, item_type_code, item_type_name, case_no, admission_no, name, sex, person_age, age_month, age_day, age_hour, age_branch, bed_no, bedid, hospitalized_date, leave_hospital_date, in_ward_no, out_ward_no, in_days, item_name, item_code from tm_bs_work_load_patient
+    </sql>
+
+    <resultMap id="WorkLoadPatientVoResult" type="WorkLoadPatientVo" extends="WorkLoadPatientResult">
+        <result property="outWardName"    column="outWardName"    />
+        <result property="inWardName"    column="inWardName"    />
+    </resultMap>
+    <select id="selectWorkLoadPatientList" parameterType="WorkLoadPatient" resultMap="WorkLoadPatientVoResult">
+        select a.*,ind.DEPT_NAME as inWardName, outd.DEPT_NAME as outWardName from tm_bs_work_load_patient a
+        left join TM_BS_DEPT ind on ind.DEPT_CODE = a.in_ward_no
+        left join TM_BS_DEPT outd on outd.DEPT_CODE = a.out_ward_no
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and a.org_cd = #{orgCd}</if>
+            <if test="mainId != null "> and a.main_id = #{mainId}</if>
+            <if test="itemTypeCode != null  and itemTypeCode != ''"> and a.item_type_code = #{itemTypeCode}</if>
+            <if test="itemTypeName != null  and itemTypeName != ''"> and a.item_type_name like concat(concat('%', #{itemTypeName}), '%')</if>
+            <if test="caseNo != null  and caseNo != ''"> and a.case_no = #{caseNo}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and a.admission_no = #{admissionNo}</if>
+            <if test="name != null  and name != ''"> and a.name like concat(concat('%', #{name}), '%')</if>
+            <if test="sex != null  and sex != ''"> and a.sex = #{sex}</if>
+            <if test="personAge != null "> and a.person_age = #{personAge}</if>
+            <if test="ageMonth != null "> and a.age_month = #{ageMonth}</if>
+            <if test="ageDay != null "> and a.age_day = #{ageDay}</if>
+            <if test="ageHour != null "> and a.age_hour = #{ageHour}</if>
+            <if test="ageBranch != null "> and a.age_branch = #{ageBranch}</if>
+            <if test="bedNo != null  and bedNo != ''"> and a.bed_no = #{bedNo}</if>
+            <if test="bedid != null  and bedid != ''"> and a.bedid = #{bedid}</if>
+            <if test="hospitalizedDate != null "> and a.hospitalized_date = #{hospitalizedDate}</if>
+            <if test="leaveHospitalDate != null "> and a.leave_hospital_date = #{leaveHospitalDate}</if>
+            <if test="inWardNo != null  and inWardNo != ''"> and a.in_ward_no = #{inWardNo}</if>
+            <if test="outWardNo != null  and outWardNo != ''"> and a.out_ward_no = #{outWardNo}</if>
+            <if test="inDays != null "> and a.in_days = #{inDays}</if>
+            <if test="itemName != null  and itemName != ''"> and a.item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="itemCode != null  and itemCode != ''"> and a.item_code = #{itemCode}</if>
+        </where>
+    </select>
+
+    <select id="selectWorkLoadPatientById" parameterType="Long" resultMap="WorkLoadPatientResult">
+        <include refid="selectWorkLoadPatientVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectWorkLoadBySql" resultMap="WorkLoadPatientResult">
+        ${sqlScript}
+    </select>
+    <select id="getPatientInfo" resultMap="WorkLoadPatientVoResult" parameterType="PatientInfoReq">
+        select
+            b.ADMISSION_NO,
+            b.CASE_NO,
+            b.NAME,
+            dict.DATA_TAG as sex,
+            b.PERSON_AGE, b.AGE_MONTH, b.AGE_DAY, b.AGE_HOUR, b.AGE_BRANCH,
+            m.BED_NO, bed.BEDID,
+            m.HOSPITALIZED_DATE,m.LEAVE_HOSPITAL_DATE
+        from T_AR_BASEINFOMATION_ALL b
+        left join T_AR_MEDICALINFORMATION_ALL m on b.ADMISSION_NO = m.ADMISSION_NO
+        left join TM_NA_BEDS bed on m.BED_NO = bed.BED_NO and m.WARD_NO = bed.WARD_NO
+        left join TM_BS_DICT_DATA dict on dict.DICT_TYPE='s028' and b.SEX = dict.DATA_VAL
+        <where>
+            and rownum &lt;= 5
+            <if test="searchValue != null and searchValue != ''">
+                and (b.ADMISSION_NO like concat(concat('%', #{searchValue}), '%')
+                    or b.NAME like concat(concat('%', #{searchValue}), '%')
+                    or b.CASE_NO like concat(concat('%', #{searchValue}), '%'))
+            </if>
+        </where>
+        order by m.HOSPITALIZED_DATE desc
+    </select>
+    <resultMap id="WorkLoadDeptRespResult" type="WorkLoadDeptResp">
+        <result property="deptCode"    column="dept_code"    />
+        <result property="deptName"    column="dept_name"    />
+    </resultMap>
+    <select id="selectDeptList" resultMap="WorkLoadDeptRespResult">
+        select
+        dept.dept_name,
+        dept.dept_code
+        from tm_bs_dept dept
+        LEFT JOIN TM_BS_DEPT_TYPE_CONTRAST dtc ON dtc.DEPT_CODE = dept.DEPT_CODE
+        WHERE  dtc.DEPT_TYPE='11'
+        order by dept.HOSPITAL_NO, dept.SORT_ORDER
+    </select>
+    <resultMap id="WorkLoadReportResult" type="WorkLoadReportResp">
+        <result property="itemTypeCode"    column="item_type_code"    />
+        <result property="itemTypeName"    column="item_type_name"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="deptCode"    column="dept_code"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="num"    column="num"    />
+    </resultMap>
+    <select id="workLoadReport" resultMap="WorkLoadReportResult" parameterType="WorkLoadReportReq">
+        select
+            p.ITEM_TYPE_CODE,
+            p.ITEM_TYPE_NAME,
+            p.ITEM_CODE,
+            p.ITEM_NAME,
+            m.DEPT_CODE,
+            m.DEPT_NAME,
+            count(0) as num
+        from TM_BS_WORK_LOAD_PATIENT p
+        left join TM_BS_WORK_LOAD_MAIN m on p.MAIN_ID = m.ID
+        where m.SUM_DATE BETWEEN TO_DATE(#{startDate},'yyyy-MM-dd') and TO_DATE(#{endDate}, 'yyyy-MM-dd') + 1
+        and m.STATUS in ('1','2')
+        GROUP BY p.ITEM_TYPE_CODE, p.ITEM_TYPE_NAME, p.ITEM_CODE, p.ITEM_NAME, m.DEPT_CODE, m.DEPT_NAME
+        order by p.ITEM_TYPE_CODE,p.ITEM_CODE
+    </select>
+    <select id="selectOriginalNumber" resultMap="WorkLoadReportResult" parameterType="WorkLoadReportReq">
+        select
+            '3' as ITEM_TYPE_CODE,
+            '其他' as ITEM_TYPE_NAME,
+            'NZ00001' as ITEM_CODE,
+            '原有人数' as ITEM_NAME,
+            m.DEPT_CODE,
+            m.DEPT_NAME,
+            m.ORIGINAL_NUM as num
+        from TM_BS_WORK_LOAD_MAIN m
+        where m.SUM_DATE = TO_DATE(#{startDate},'yyyy-MM-dd')
+        and m.STATUS in ('1','2')
+    </select>
+    <select id="selectNumNumber" resultMap="WorkLoadReportResult" parameterType="WorkLoadReportReq">
+        select
+            '3' as ITEM_TYPE_CODE,
+            '其他' as ITEM_TYPE_NAME,
+            'NZ00002' as ITEM_CODE,
+            '现有人数' as ITEM_NAME,
+            m.DEPT_CODE,
+            m.DEPT_NAME,
+            m.NOW_NUM as num
+        from TM_BS_WORK_LOAD_MAIN m
+        where m.SUM_DATE = TO_DATE(#{endDate},'yyyy-MM-dd')
+        and m.STATUS in ('1','2')
+    </select>
+    <select id="selectBedNumber" resultMap="WorkLoadReportResult" parameterType="WorkLoadReportReq">
+        select
+            '3' as ITEM_TYPE_CODE,
+            '其他' as ITEM_TYPE_NAME,
+            'NZ00003' as ITEM_CODE,
+            '实际占用总床日数' as ITEM_NAME,
+            m.DEPT_CODE,
+            m.DEPT_NAME,
+            nvl(Sum(m.NOW_NUM),0) as num
+        from TM_BS_WORK_LOAD_MAIN m
+        where m.SUM_DATE BETWEEN TO_DATE(#{startDate},'yyyy-MM-dd') and TO_DATE(#{endDate}, 'yyyy-MM-dd') + 1
+        and m.STATUS in ('1','2')
+        group by m.DEPT_CODE, m.DEPT_NAME
+    </select>
+    <select id="selectBedOpenList" resultMap="WorkLoadReportResult">
+        select
+            '3' as ITEM_TYPE_CODE,
+            '其他' as ITEM_TYPE_NAME,
+            'NZ00004' as ITEM_CODE,
+            '开放病床张数' as ITEM_NAME,
+            DEPT_CODE,
+            DEPT_NAME,
+            BEDS_OPEN as num
+        from TM_BS_DEPT
+        where DEPT_CODE in
+        <foreach collection="list" separator="," close=")" open="(" item="item">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectWorkLoadByMainId" resultMap="WorkLoadPatientResult">
+        select * from tm_bs_work_load_patient where main_id = #{mainId}
+    </select>
+
+    <insert id="insertWorkLoadPatient" parameterType="WorkLoadPatient">
+        insert into tm_bs_work_load_patient
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="mainId != null">main_id,</if>
+            <if test="itemTypeCode != null and itemTypeCode != ''">item_type_code,</if>
+            <if test="itemTypeName != null and itemTypeName != ''">item_type_name,</if>
+            <if test="caseNo != null and caseNo != ''">case_no,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="sex != null">sex,</if>
+            <if test="personAge != null">person_age,</if>
+            <if test="ageMonth != null">age_month,</if>
+            <if test="ageDay != null">age_day,</if>
+            <if test="ageHour != null">age_hour,</if>
+            <if test="ageBranch != null">age_branch,</if>
+            <if test="bedNo != null">bed_no,</if>
+            <if test="bedid != null">bedid,</if>
+            <if test="hospitalizedDate != null">hospitalized_date,</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date,</if>
+            <if test="inWardNo != null">in_ward_no,</if>
+            <if test="outWardNo != null">out_ward_no,</if>
+            <if test="inDays != null">in_days,</if>
+            <if test="itemName != null and itemName != ''">item_name,</if>
+            <if test="itemCode != null and itemCode != ''">item_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="mainId != null">#{mainId},</if>
+            <if test="itemTypeCode != null and itemTypeCode != ''">#{itemTypeCode},</if>
+            <if test="itemTypeName != null and itemTypeName != ''">#{itemTypeName},</if>
+            <if test="caseNo != null and caseNo != ''">#{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="personAge != null">#{personAge},</if>
+            <if test="ageMonth != null">#{ageMonth},</if>
+            <if test="ageDay != null">#{ageDay},</if>
+            <if test="ageHour != null">#{ageHour},</if>
+            <if test="ageBranch != null">#{ageBranch},</if>
+            <if test="bedNo != null">#{bedNo},</if>
+            <if test="bedid != null">#{bedid},</if>
+            <if test="hospitalizedDate != null">#{hospitalizedDate},</if>
+            <if test="leaveHospitalDate != null">#{leaveHospitalDate},</if>
+            <if test="inWardNo != null">#{inWardNo},</if>
+            <if test="outWardNo != null">#{outWardNo},</if>
+            <if test="inDays != null">#{inDays},</if>
+            <if test="itemName != null and itemName != ''">#{itemName},</if>
+            <if test="itemCode != null and itemCode != ''">#{itemCode},</if>
+         </trim>
+    </insert>
+    <insert id="insertAllList">
+        insert all
+        <foreach collection="list" item="item">
+            into tm_bs_work_load_patient
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orgCd != null and item.orgCd != ''">org_cd,</if>
+                <if test="item.mainId != null">main_id,</if>
+                <if test="item.itemTypeCode != null and item.itemTypeCode != ''">item_type_code,</if>
+                <if test="item.itemTypeName != null and item.itemTypeName != ''">item_type_name,</if>
+                <if test="item.caseNo != null and item.caseNo != ''">case_no,</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no,</if>
+                <if test="item.name != null and item.name != ''">name,</if>
+                <if test="item.sex != null">sex,</if>
+                <if test="item.personAge != null">person_age,</if>
+                <if test="item.ageMonth != null">age_month,</if>
+                <if test="item.ageDay != null">age_day,</if>
+                <if test="item.ageHour != null">age_hour,</if>
+                <if test="item.ageBranch != null">age_branch,</if>
+                <if test="item.bedNo != null">bed_no,</if>
+                <if test="item.bedid != null">bedid,</if>
+                <if test="item.hospitalizedDate != null">hospitalized_date,</if>
+                <if test="item.leaveHospitalDate != null">leave_hospital_date,</if>
+                <if test="item.inWardNo != null">in_ward_no,</if>
+                <if test="item.outWardNo != null">out_ward_no,</if>
+                <if test="item.inDays != null">in_days,</if>
+                <if test="item.itemName != null and item.itemName != ''">item_name,</if>
+                <if test="item.itemCode != null and item.itemCode != ''">item_code,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orgCd != null and item.orgCd != ''">#{item.orgCd},</if>
+                <if test="item.mainId != null">#{item.mainId},</if>
+                <if test="item.itemTypeCode != null and item.itemTypeCode != ''">#{item.itemTypeCode},</if>
+                <if test="item.itemTypeName != null and item.itemTypeName != ''">#{item.itemTypeName},</if>
+                <if test="item.caseNo != null and item.caseNo != ''">#{item.caseNo},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">#{item.admissionNo},</if>
+                <if test="item.name != null and item.name != ''">#{item.name},</if>
+                <if test="item.sex != null">#{item.sex},</if>
+                <if test="item.personAge != null">#{item.personAge},</if>
+                <if test="item.ageMonth != null">#{item.ageMonth},</if>
+                <if test="item.ageDay != null">#{item.ageDay},</if>
+                <if test="item.ageHour != null">#{item.ageHour},</if>
+                <if test="item.ageBranch != null">#{item.ageBranch},</if>
+                <if test="item.bedNo != null">#{item.bedNo},</if>
+                <if test="item.bedid != null">#{item.bedid},</if>
+                <if test="item.hospitalizedDate != null">#{item.hospitalizedDate},</if>
+                <if test="item.leaveHospitalDate != null">#{item.leaveHospitalDate},</if>
+                <if test="item.inWardNo != null">#{item.inWardNo},</if>
+                <if test="item.outWardNo != null">#{item.outWardNo},</if>
+                <if test="item.inDays != null">#{item.inDays},</if>
+                <if test="item.itemName != null and item.itemName != ''">#{item.itemName},</if>
+                <if test="item.itemCode != null and item.itemCode != ''">#{item.itemCode},</if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateWorkLoadPatient" parameterType="WorkLoadPatient">
+        update tm_bs_work_load_patient
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="mainId != null">main_id = #{mainId},</if>
+            <if test="itemTypeCode != null and itemTypeCode != ''">item_type_code = #{itemTypeCode},</if>
+            <if test="itemTypeName != null and itemTypeName != ''">item_type_name = #{itemTypeName},</if>
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="personAge != null">person_age = #{personAge},</if>
+            <if test="ageMonth != null">age_month = #{ageMonth},</if>
+            <if test="ageDay != null">age_day = #{ageDay},</if>
+            <if test="ageHour != null">age_hour = #{ageHour},</if>
+            <if test="ageBranch != null">age_branch = #{ageBranch},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="bedid != null">bedid = #{bedid},</if>
+            <if test="hospitalizedDate != null">hospitalized_date = #{hospitalizedDate},</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date = #{leaveHospitalDate},</if>
+            <if test="inWardNo != null">in_ward_no = #{inWardNo},</if>
+            <if test="outWardNo != null">out_ward_no = #{outWardNo},</if>
+            <if test="inDays != null">in_days = #{inDays},</if>
+            <if test="itemName != null and itemName != ''">item_name = #{itemName},</if>
+            <if test="itemCode != null and itemCode != ''">item_code = #{itemCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="updateAllList">
+        <foreach collection="list" item="item" index="index" open="begin" separator=";" close=";end;">
+            update tm_bs_work_load_patient
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.itemTypeCode != null and item.itemTypeCode != ''">item_type_code = #{item.itemTypeCode},</if>
+                <if test="item.itemTypeName != null and item.itemTypeName != ''">item_type_name = #{item.itemTypeName},</if>
+                <if test="item.caseNo != null and item.caseNo != ''">case_no = #{item.caseNo},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no = #{item.admissionNo},</if>
+                <if test="item.name != null and item.name != ''">name = #{item.name},</if>
+                <if test="item.sex != null">sex = #{item.sex},</if>
+                <if test="item.personAge != null">person_age = #{item.personAge},</if>
+                <if test="item.ageMonth != null">age_month = #{item.ageMonth},</if>
+                <if test="item.ageDay != null">age_day = #{item.ageDay},</if>
+                <if test="item.ageHour != null">age_hour = #{item.ageHour},</if>
+                <if test="item.ageBranch != null">age_branch = #{item.ageBranch},</if>
+                <if test="item.bedNo != null">bed_no = #{item.bedNo},</if>
+                <if test="item.bedid != null">bedid = #{item.bedid},</if>
+                <if test="item.hospitalizedDate != null">hospitalized_date = #{item.hospitalizedDate},</if>
+                <if test="item.leaveHospitalDate != null">leave_hospital_date = #{item.leaveHospitalDate},</if>
+                <if test="item.inWardNo != null">in_ward_no = #{item.inWardNo},</if>
+                <if test="item.outWardNo != null">out_ward_no = #{item.outWardNo},</if>
+                <if test="item.inDays != null">in_days = #{item.inDays},</if>
+                <if test="item.itemName != null and item.itemName != ''">item_name = #{item.itemName},</if>
+                <if test="item.itemCode != null and item.itemCode != ''">item_code = #{item.itemCode},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteWorkLoadPatientById" parameterType="Long">
+        delete from tm_bs_work_load_patient where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkLoadPatientByIds" parameterType="String">
+        delete from tm_bs_work_load_patient where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteWorkByMainId">
+        delete from tm_bs_work_load_patient where MAIN_ID = #{mainId}
+    </delete>
+</mapper>

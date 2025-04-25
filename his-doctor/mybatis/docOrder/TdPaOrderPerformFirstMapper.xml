@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderPerformFirstMapper">
+
+    <resultMap type="TdPaOrderPerformFirst" id="TdPaOrderPerformFirstResult">
+        <result property="id"    column="id"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="performListSortNumber"    column="perform_list_sort_number"    />
+        <result property="wardNo"    column="ward_no"    />
+        <result property="firstFlag"    column="first_flag"    />
+        <result property="jjbz"    column="jjbz"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderPerformFirstVo">
+        select id, admission_no, hospitalized_count, order_no, order_sort_number, perform_list_sort_number, ward_no, first_flag, jjbz from td_pa_order_perform_first
+    </sql>
+
+    <select id="selectTdPaOrderPerformFirstList" parameterType="TdPaOrderPerformFirst" resultMap="TdPaOrderPerformFirstResult">
+        <include refid="selectTdPaOrderPerformFirstVo"/>
+        <where>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="performListSortNumber != null  and performListSortNumber != ''"> and perform_list_sort_number = #{performListSortNumber}</if>
+            <if test="wardNo != null  and wardNo != ''"> and ward_no = #{wardNo}</if>
+            <if test="firstFlag != null  and firstFlag != ''"> and first_flag = #{firstFlag}</if>
+            <if test="jjbz != null  and jjbz != ''"> and jjbz = #{jjbz}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderPerformFirstById" parameterType="Long" resultMap="TdPaOrderPerformFirstResult">
+        <include refid="selectTdPaOrderPerformFirstVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPaOrderPerformFirst" parameterType="TdPaOrderPerformFirst">
+        insert into td_pa_order_perform_first
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="admissionNo != null">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="performListSortNumber != null">perform_list_sort_number,</if>
+            <if test="wardNo != null">ward_no,</if>
+            <if test="firstFlag != null">first_flag,</if>
+            <if test="jjbz != null">jjbz,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="admissionNo != null">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="performListSortNumber != null">#{performListSortNumber},</if>
+            <if test="wardNo != null">#{wardNo},</if>
+            <if test="firstFlag != null">#{firstFlag},</if>
+            <if test="jjbz != null">#{jjbz},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderPerformFirst" parameterType="TdPaOrderPerformFirst">
+        update td_pa_order_perform_first
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="admissionNo != null">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="performListSortNumber != null">perform_list_sort_number = #{performListSortNumber},</if>
+            <if test="wardNo != null">ward_no = #{wardNo},</if>
+            <if test="firstFlag != null">first_flag = #{firstFlag},</if>
+            <if test="jjbz != null">jjbz = #{jjbz},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderPerformFirstById" parameterType="Long">
+        delete from td_pa_order_perform_first where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderPerformFirstByIds" parameterType="String">
+        delete from td_pa_order_perform_first where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

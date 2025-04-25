@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrSignDataMapper">
+
+    <resultMap type="EmrSignData" id="EmrSignDataResult">
+        <result property="id"    column="id"    />
+        <result property="typeCd"    column="type_cd"    />
+        <result property="certType"    column="cert_type"    />
+        <result property="signFileId"    column="sign_file_id"    />
+        <result property="signerCd"    column="signer_cd"    />
+        <result property="signerName"    column="signer_name"    />
+        <result property="oldText"    column="old_text"    />
+        <result property="signText"    column="sign_text"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="timeStamp"    column="time_stamp"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="certInfo"    column="cert_info"    />
+        <result property="certSn"    column="cert_sn"    />
+        <result property="isValid"    column="is_valid"    />
+        <result property="remark"    column="remark"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectEmrSignDataVo">
+        select id, type_cd, cert_type, sign_file_id, signer_cd, signer_name, old_text, sign_text, file_url, time_stamp, sign_time, cert_info, cert_sn, is_valid, remark, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from emr_sign_data
+    </sql>
+
+    <select id="selectEmrSignDataList" parameterType="EmrSignData" resultMap="EmrSignDataResult">
+        <include refid="selectEmrSignDataVo"/>
+        <where>
+            <if test="typeCd != null  and typeCd != ''"> and type_cd = #{typeCd}</if>
+            <if test="certType != null  and certType != ''"> and cert_type = #{certType}</if>
+            <if test="signFileId != null  and signFileId != ''"> and sign_file_id = #{signFileId}</if>
+            <if test="signerCd != null  and signerCd != ''"> and signer_cd = #{signerCd}</if>
+            <if test="signerName != null  and signerName != ''"> and signer_name like concat(concat('%', #{signerName}), '%')</if>
+            <if test="oldText != null  and oldText != ''"> and old_text = #{oldText}</if>
+            <if test="signText != null  and signText != ''"> and sign_text = #{signText}</if>
+            <if test="fileUrl != null  and fileUrl != ''"> and file_url = #{fileUrl}</if>
+            <if test="timeStamp != null  and timeStamp != ''"> and time_stamp = #{timeStamp}</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="certInfo != null  and certInfo != ''"> and cert_info = #{certInfo}</if>
+            <if test="certSn != null  and certSn != ''"> and cert_sn = #{certSn}</if>
+            <if test="isValid != null  and isValid != ''"> and is_valid = #{isValid}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+        order by sign_time desc
+    </select>
+
+    <select id="selectEmrSignDataListByMrFileIds" parameterType="EmrSignDataVo" resultMap="EmrSignDataResult">
+        <include refid="selectEmrSignDataVo"/>
+        <where>
+            is_valid = '1'
+            <if test="idList != null and idList.size() > 0">
+                and (1,sign_file_id) in
+                <foreach collection="idList" item="item" open="(" separator="," close=")">
+                    (1,#{item})
+                </foreach>
+            </if>
+            <if test="resDocCdList != null and resDocCdList.size() > 0">
+                and (1,signer_cd) in
+                <foreach collection="resDocCdList" item="item" open="(" separator="," close=")">
+                    (1,#{item})
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEmrSignDataForFreeMoveList" parameterType="EmrSignData" resultMap="EmrSignDataResult">
+        select id, type_cd, cert_type, sign_file_id, signer_cd, signer_name, old_text, sign_text, file_url, time_stamp, sign_time, cert_info, cert_sn, is_valid, remark, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from emr_sign_data_move
+        <where>
+            <if test="typeCd != null  and typeCd != ''"> and type_cd = #{typeCd}</if>
+            <if test="certType != null  and certType != ''"> and cert_type = #{certType}</if>
+            <if test="signFileId != null  and signFileId != ''"> and sign_file_id = #{signFileId}</if>
+            <if test="signerCd != null  and signerCd != ''"> and signer_cd = #{signerCd}</if>
+            <if test="signerName != null  and signerName != ''"> and signer_name like concat(concat('%', #{signerName}), '%')</if>
+            <if test="oldText != null  and oldText != ''"> and old_text = #{oldText}</if>
+            <if test="signText != null  and signText != ''"> and sign_text = #{signText}</if>
+            <if test="fileUrl != null  and fileUrl != ''"> and file_url = #{fileUrl}</if>
+            <if test="timeStamp != null  and timeStamp != ''"> and time_stamp = #{timeStamp}</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="certInfo != null  and certInfo != ''"> and cert_info = #{certInfo}</if>
+            <if test="certSn != null  and certSn != ''"> and cert_sn = #{certSn}</if>
+            <if test="isValid != null  and isValid != ''"> and is_valid = #{isValid}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="signerCdList != null and signerCdList.size() > 0">
+                and signer_cd in
+                <foreach collection="signerCdList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by sign_time desc
+    </select>
+
+    <select id="selectEmrSignDataById" parameterType="Long" resultMap="EmrSignDataResult">
+        <include refid="selectEmrSignDataVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrSignData" parameterType="EmrSignData">
+        insert into emr_sign_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="typeCd != null and typeCd != ''">type_cd,</if>
+            <if test="certType != null and certType != ''">cert_type,</if>
+            <if test="signFileId != null and signFileId != ''">sign_file_id,</if>
+            <if test="signerCd != null and signerCd != ''">signer_cd,</if>
+            <if test="signerName != null and signerName != ''">signer_name,</if>
+            <if test="oldText != null">old_text,</if>
+            <if test="signText != null">sign_text,</if>
+            <if test="fileUrl != null">file_url,</if>
+            <if test="timeStamp != null">time_stamp,</if>
+            <if test="signTime != null">sign_time,</if>
+            <if test="certInfo != null and certInfo != ''">cert_info,</if>
+            <if test="certSn != null and certSn != ''">cert_sn,</if>
+            <if test="isValid != null and isValid != ''">is_valid,</if>
+            <if test="remark != null">remark,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="typeCd != null and typeCd != ''">#{typeCd},</if>
+            <if test="certType != null and certType != ''">#{certType},</if>
+            <if test="signFileId != null and signFileId != ''">#{signFileId},</if>
+            <if test="signerCd != null and signerCd != ''">#{signerCd},</if>
+            <if test="signerName != null and signerName != ''">#{signerName},</if>
+            <if test="oldText != null">#{oldText},</if>
+            <if test="signText != null">#{signText},</if>
+            <if test="fileUrl != null">#{fileUrl},</if>
+            <if test="timeStamp != null">#{timeStamp},</if>
+            <if test="signTime != null">#{signTime},</if>
+            <if test="certInfo != null and certInfo != ''">#{certInfo},</if>
+            <if test="certSn != null and certSn != ''">#{certSn},</if>
+            <if test="isValid != null and isValid != ''">#{isValid},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateEmrSignData" parameterType="EmrSignData">
+        update emr_sign_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeCd != null and typeCd != ''">type_cd = #{typeCd},</if>
+            <if test="certType != null and certType != ''">cert_type = #{certType},</if>
+            <if test="signFileId != null and signFileId != ''">sign_file_id = #{signFileId},</if>
+            <if test="signerCd != null and signerCd != ''">signer_cd = #{signerCd},</if>
+            <if test="signerName != null and signerName != ''">signer_name = #{signerName},</if>
+            <if test="oldText != null">old_text = #{oldText},</if>
+            <if test="signText != null">sign_text = #{signText},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="timeStamp != null">time_stamp = #{timeStamp},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="certInfo != null and certInfo != ''">cert_info = #{certInfo},</if>
+            <if test="certSn != null and certSn != ''">cert_sn = #{certSn},</if>
+            <if test="isValid != null and isValid != ''">is_valid = #{isValid},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateEmrSignDataForMove" parameterType="EmrSignData">
+        update emr_sign_data_move
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeCd != null and typeCd != ''">type_cd = #{typeCd},</if>
+            <if test="certType != null and certType != ''">cert_type = #{certType},</if>
+            <if test="signFileId != null and signFileId != ''">sign_file_id = #{signFileId},</if>
+            <if test="signerCd != null and signerCd != ''">signer_cd = #{signerCd},</if>
+            <if test="signerName != null and signerName != ''">signer_name = #{signerName},</if>
+            <if test="oldText != null">old_text = #{oldText},</if>
+            <if test="signText != null">sign_text = #{signText},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="timeStamp != null">time_stamp = #{timeStamp},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="certInfo != null and certInfo != ''">cert_info = #{certInfo},</if>
+            <if test="certSn != null and certSn != ''">cert_sn = #{certSn},</if>
+            <if test="isValid != null and isValid != ''">is_valid = #{isValid},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateEmrSignDataByFileId" parameterType="EmrSignData">
+        update emr_sign_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeCd != null and typeCd != ''">type_cd = #{typeCd},</if>
+            <if test="certType != null and certType != ''">cert_type = #{certType},</if>
+            <if test="signFileId != null and signFileId != ''">sign_file_id = #{signFileId},</if>
+            <if test="signerCd != null and signerCd != ''">signer_cd = #{signerCd},</if>
+            <if test="signerName != null and signerName != ''">signer_name = #{signerName},</if>
+            <if test="oldText != null">old_text = #{oldText},</if>
+            <if test="signText != null">sign_text = #{signText},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="timeStamp != null">time_stamp = #{timeStamp},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="certInfo != null and certInfo != ''">cert_info = #{certInfo},</if>
+            <if test="certSn != null and certSn != ''">cert_sn = #{certSn},</if>
+            <if test="isValid != null and isValid != ''">is_valid = #{isValid},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where sign_file_id = #{signFileId}
+    </update>
+
+    <delete id="deleteEmrSignDataById" parameterType="Long">
+        delete from emr_sign_data where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrSignDataByIds" parameterType="String">
+        delete from emr_sign_data where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertList" parameterType="EmrSignData">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_sign_data
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.typeCd != null and item.typeCd != ''">type_cd,</if>
+                <if test="item.certType != null and item.certType != ''">cert_type,</if>
+                <if test="item.signFileId != null and item.signFileId != ''">sign_file_id,</if>
+                <if test="item.signerCd != null and item.signerCd != ''">signer_cd,</if>
+                <if test="item.signerName != null and item.signerName != ''">signer_name,</if>
+                <if test="item.oldText != null">old_text,</if>
+                <if test="item.signText != null">sign_text,</if>
+                <if test="item.fileUrl != null">file_url,</if>
+                <if test="item.timeStamp != null">time_stamp,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.certInfo != null and item.certInfo != ''">cert_info,</if>
+                <if test="item.certSn != null and item.certSn != ''">cert_sn,</if>
+                <if test="item.isValid != null and item.isValid != ''">is_valid,</if>
+                <if test="item.remark != null">remark,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">cre_per_code,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.typeCd != null and item.typeCd != ''">#{item.typeCd},</if>
+                <if test="item.certType != null and item.certType != ''">#{item.certType},</if>
+                <if test="item.signFileId != null and item.signFileId != ''">#{item.signFileId},</if>
+                <if test="item.signerCd != null and item.signerCd != ''">#{item.signerCd},</if>
+                <if test="item.signerName != null and item.signerName != ''">#{item.signerName},</if>
+                <if test="item.oldText != null">#{item.oldText},</if>
+                <if test="item.signText != null">#{item.signText},</if>
+                <if test="item.fileUrl != null">#{item.fileUrl},</if>
+                <if test="item.timeStamp != null">#{item.timeStamp},</if>
+                <if test="item.signTime != null">#{item.signTime},</if>
+                <if test="item.certInfo != null and item.certInfo != ''">#{item.certInfo},</if>
+                <if test="item.certSn != null and item.certSn != ''">#{item.certSn},</if>
+                <if test="item.isValid != null and item.isValid != ''">#{item.isValid},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <insert id="batchAddFreeMoveList" parameterType="EmrSignData">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_sign_data_move
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.typeCd != null and item.typeCd != ''">type_cd,</if>
+                <if test="item.certType != null and item.certType != ''">cert_type,</if>
+                <if test="item.signFileId != null and item.signFileId != ''">sign_file_id,</if>
+                <if test="item.signerCd != null and item.signerCd != ''">signer_cd,</if>
+                <if test="item.signerName != null and item.signerName != ''">signer_name,</if>
+                <if test="item.oldText != null">old_text,</if>
+                <if test="item.signText != null">sign_text,</if>
+                <if test="item.fileUrl != null">file_url,</if>
+                <if test="item.timeStamp != null">time_stamp,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.certInfo != null and item.certInfo != ''">cert_info,</if>
+                <if test="item.certSn != null and item.certSn != ''">cert_sn,</if>
+                <if test="item.isValid != null and item.isValid != ''">is_valid,</if>
+                <if test="item.remark != null">remark,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">cre_per_code,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.typeCd != null and item.typeCd != ''">#{item.typeCd},</if>
+                <if test="item.certType != null and item.certType != ''">#{item.certType},</if>
+                <if test="item.signFileId != null and item.signFileId != ''">#{item.signFileId},</if>
+                <if test="item.signerCd != null and item.signerCd != ''">#{item.signerCd},</if>
+                <if test="item.signerName != null and item.signerName != ''">#{item.signerName},</if>
+                <if test="item.oldText != null">#{item.oldText},</if>
+                <if test="item.signText != null">#{item.signText},</if>
+                <if test="item.fileUrl != null">#{item.fileUrl},</if>
+                <if test="item.timeStamp != null">#{item.timeStamp},</if>
+                <if test="item.signTime != null">#{item.signTime},</if>
+                <if test="item.certInfo != null and item.certInfo != ''">#{item.certInfo},</if>
+                <if test="item.certSn != null and item.certSn != ''">#{item.certSn},</if>
+                <if test="item.isValid != null and item.isValid != ''">#{item.isValid},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <insert id="insertPatList" parameterType="EmrSignData">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_sign_data_pat
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.typeCd != null and item.typeCd != ''">type_cd,</if>
+                <if test="item.certType != null and item.certType != ''">cert_type,</if>
+                <if test="item.signFileId != null and item.signFileId != ''">sign_file_id,</if>
+                <if test="item.signerCd != null and item.signerCd != ''">signer_cd,</if>
+                <if test="item.signerName != null and item.signerName != ''">signer_name,</if>
+                <if test="item.oldText != null">old_text,</if>
+                <if test="item.signText != null">sign_text,</if>
+                <if test="item.fileUrl != null">file_url,</if>
+                <if test="item.timeStamp != null">time_stamp,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.certInfo != null and item.certInfo != ''">cert_info,</if>
+                <if test="item.certSn != null and item.certSn != ''">cert_sn,</if>
+                <if test="item.isValid != null and item.isValid != ''">is_valid,</if>
+                <if test="item.remark != null">remark,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">cre_per_code,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+                <if test="item.signPersonId != null">sign_person_id,</if>
+                <if test="item.signPersonType != null">sign_person_type,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.typeCd != null and item.typeCd != ''">#{item.typeCd},</if>
+                <if test="item.certType != null and item.certType != ''">#{item.certType},</if>
+                <if test="item.signFileId != null and item.signFileId != ''">#{item.signFileId},</if>
+                <if test="item.signerCd != null and item.signerCd != ''">#{item.signerCd},</if>
+                <if test="item.signerName != null and item.signerName != ''">#{item.signerName},</if>
+                <if test="item.oldText != null">#{item.oldText},</if>
+                <if test="item.signText != null">#{item.signText},</if>
+                <if test="item.fileUrl != null">#{item.fileUrl},</if>
+                <if test="item.timeStamp != null">#{item.timeStamp},</if>
+                <if test="item.signTime != null">#{item.signTime},</if>
+                <if test="item.certInfo != null and item.certInfo != ''">#{item.certInfo},</if>
+                <if test="item.certSn != null and item.certSn != ''">#{item.certSn},</if>
+                <if test="item.isValid != null and item.isValid != ''">#{item.isValid},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.signPersonId != null">#{item.signPersonId},</if>
+                <if test="item.signPersonType != null">#{item.signPersonType},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateCancelSign" parameterType="EmrSignDataVo">
+        update emr_sign_data set is_valid='0'
+        where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateCancelSignForFreeMove" parameterType="EmrSignDataVo">
+        update emr_sign_data_move set is_valid='0'
+        where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateCancelSignByFile" parameterType="Long">
+        update emr_sign_data set is_valid='0' where sign_file_id = #{signFileId}
+    </update>
+    <update id="updateCancelSignByFreeMove">
+        update emr_sign_data_move set is_valid='0',alt_date = sysdate
+         where id = (select b.id from (select * from emr_sign_data_move a where a.sign_file_id = #{signFileId} and a.signer_cd=#{docCode} and a.is_valid='1' order by a.sign_time desc) b where rownum &lt; 2)
+    </update>
+</mapper>

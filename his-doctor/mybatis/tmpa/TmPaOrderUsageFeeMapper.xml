@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpa.mapper.TmPaOrderUsageFeeMapper">
+
+    <resultMap type="TmPaOrderUsageFee" id="TmPaOrderUsageFeeResult">
+        <result property="no"    column="no"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="price"    column="price"    />
+        <result property="unit"    column="unit"    />
+        <result property="dose"    column="dose"    />
+        <result property="yongfaBh"    column="yongfa_bh"    />
+        <result property="wardNo"    column="ward_no"    />
+        <result property="standardCode"    column="standard_code"    />
+        <result property="itemNo"    column="item_no"    />
+        <result property="zfbz"    column="zfbz"    />
+        <result property="crbz"    column="crbz"    />
+        <result property="firstFlag"    column="first_flag"    />
+    </resultMap>
+
+    <sql id="selectTmPaOrderUsageFeeVo">
+        select no, item_name, standard, price, unit, dose, yongfa_bh, ward_no, standard_code, item_no, zfbz, crbz, first_flag from tm_pa_order_usage_fee
+    </sql>
+
+    <select id="selectTmPaOrderUsageFeeList" parameterType="TmPaOrderUsageFee" resultMap="TmPaOrderUsageFeeResult">
+        <include refid="selectTmPaOrderUsageFeeVo"/>
+        <where>
+            <if test="no != null "> and no = #{no}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="dose != null "> and dose = #{dose}</if>
+            <if test="yongfaBh != null  and yongfaBh != ''"> and yongfa_bh = #{yongfaBh}</if>
+            <if test="wardNo != null  and wardNo != ''"> and ward_no = #{wardNo}</if>
+            <if test="standardCode != null  and standardCode != ''"> and standard_code = #{standardCode}</if>
+            <if test="itemNo != null  and itemNo != ''"> and item_no = #{itemNo}</if>
+            <if test="zfbz != null  and zfbz != ''"> and zfbz = #{zfbz}</if>
+            <if test="crbz != null  and crbz != ''"> and crbz = #{crbz}</if>
+            <if test="firstFlag != null  and firstFlag != ''"> and first_flag = #{firstFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectTmPaOrderUsageFeeById" parameterType="Long" resultMap="TmPaOrderUsageFeeResult">
+        <include refid="selectTmPaOrderUsageFeeVo"/>
+        where no = #{no}
+    </select>
+
+    <insert id="insertTmPaOrderUsageFee" parameterType="TmPaOrderUsageFee">
+        insert into tm_pa_order_usage_fee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="no != null">no,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="price != null">price,</if>
+            <if test="unit != null">unit,</if>
+            <if test="dose != null">dose,</if>
+            <if test="yongfaBh != null and yongfaBh != ''">yongfa_bh,</if>
+            <if test="wardNo != null">ward_no,</if>
+            <if test="standardCode != null">standard_code,</if>
+            <if test="itemNo != null">item_no,</if>
+            <if test="zfbz != null and zfbz != ''">zfbz,</if>
+            <if test="crbz != null and crbz != ''">crbz,</if>
+            <if test="firstFlag != null">first_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="no != null">#{no},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="price != null">#{price},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="dose != null">#{dose},</if>
+            <if test="yongfaBh != null and yongfaBh != ''">#{yongfaBh},</if>
+            <if test="wardNo != null">#{wardNo},</if>
+            <if test="standardCode != null">#{standardCode},</if>
+            <if test="itemNo != null">#{itemNo},</if>
+            <if test="zfbz != null and zfbz != ''">#{zfbz},</if>
+            <if test="crbz != null and crbz != ''">#{crbz},</if>
+            <if test="firstFlag != null">#{firstFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmPaOrderUsageFee" parameterType="TmPaOrderUsageFee">
+        update tm_pa_order_usage_fee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="dose != null">dose = #{dose},</if>
+            <if test="yongfaBh != null and yongfaBh != ''">yongfa_bh = #{yongfaBh},</if>
+            <if test="wardNo != null">ward_no = #{wardNo},</if>
+            <if test="standardCode != null">standard_code = #{standardCode},</if>
+            <if test="itemNo != null">item_no = #{itemNo},</if>
+            <if test="zfbz != null and zfbz != ''">zfbz = #{zfbz},</if>
+            <if test="crbz != null and crbz != ''">crbz = #{crbz},</if>
+            <if test="firstFlag != null">first_flag = #{firstFlag},</if>
+        </trim>
+        where no = #{no}
+    </update>
+
+    <delete id="deleteTmPaOrderUsageFeeById" parameterType="Long">
+        delete from tm_pa_order_usage_fee where no = #{no}
+    </delete>
+
+    <delete id="deleteTmPaOrderUsageFeeByIds" parameterType="String">
+        delete from tm_pa_order_usage_fee where no in
+        <foreach item="no" collection="array" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+</mapper>

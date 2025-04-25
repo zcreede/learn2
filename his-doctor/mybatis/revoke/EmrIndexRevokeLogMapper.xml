@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.revoke.mapper.EmrIndexRevokeLogMapper">
+
+    <resultMap type="EmrIndexRevokeLog" id="EmrIndexRevokeLogResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="dischargeDepartmentNo"    column="discharge_department_no"    />
+        <result property="dischargeDepartmentName"    column="discharge_department_name"    />
+        <result property="hospitalizedDate"    column="hospitalized_date"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="recallReason"    column="recall_reason"    />
+        <result property="conTime"    column="con_time"    />
+        <result property="conDocCd"    column="con_doc_cd"    />
+        <result property="conDocName"    column="con_doc_name"    />
+        <result property="conRemark"    column="con_remark"    />
+    </resultMap>
+
+    <sql id="selectEmrIndexRevokeLogVo">
+        select id, case_no, admission_no, hospitalized_count, patient_name, discharge_department_no,
+        discharge_department_name, hospitalized_date, leave_hospital_date, app_doc_cd, app_doc_name,
+         app_dept_cd, app_dept_name, app_time, recall_reason, con_time, con_doc_cd, con_doc_name,
+         con_remark from emr_index_revoke_log
+    </sql>
+    <resultMap id="EmrIndexRevokeLogVOResult" type="com.emr.project.revoke.domain.vo.EmrIndexRevokeLogVO"
+               extends="EmrIndexRevokeLogResult">
+        <result property="mrState"    column="mr_state"    />
+        <result property="lastFileDate"    column="file_time"    />
+    </resultMap>
+    <select id="selectEmrIndexRevokeLogList" resultMap="EmrIndexRevokeLogVOResult">
+        select
+            a.*,b.mr_state,b.file_time
+        from emr_index_revoke_log a
+        left join EMR_QC_FLOW b on a.admission_no = b.INP_NO
+        <where>
+            <if test="deptCode!=null and deptCode != ''">
+                and a.discharge_department_no = #{deptCode}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and a.CON_TIME &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="endTime!=null and endTime!= ''">
+                and a.CON_TIME &lt;= to_date(#{endTime,jdbcType=VARCHAR}, 'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="searchStr!=null and searchStr!=''">
+                and (
+                a.admission_no like concat(concat('%',#{searchStr}),'%')
+                or a.patient_name like concat(concat('%',#{searchStr}),'%')
+                )
+            </if>
+            <if test="mrStatus!=null and mrStatus!=''">
+                <if test="mrStatus == '0'.toString()">
+                    and b.mr_state not in ('14','16')
+                </if>
+                <if test="mrStatus == '1'.toString()">
+                    and b.mr_state in ('14','16')
+                </if>
+            </if>
+        </where>
+        order by a.con_time desc
+    </select>
+
+    <select id="selectEmrIndexRevokeLogById" parameterType="Long" resultMap="EmrIndexRevokeLogResult">
+        <include refid="selectEmrIndexRevokeLogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrIndexRevokeLog" parameterType="EmrIndexRevokeLog">
+        insert into emr_index_revoke_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="caseNo != null and caseNo != ''">case_no,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="dischargeDepartmentNo != null">discharge_department_no,</if>
+            <if test="dischargeDepartmentName != null">discharge_department_name,</if>
+            <if test="hospitalizedDate != null">hospitalized_date,</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date,</if>
+            <if test="appDocCd != null">app_doc_cd,</if>
+            <if test="appDocName != null">app_doc_name,</if>
+            <if test="appDeptCd != null">app_dept_cd,</if>
+            <if test="appDeptName != null">app_dept_name,</if>
+            <if test="appTime != null">app_time,</if>
+            <if test="recallReason != null">recall_reason,</if>
+            <if test="conTime != null">con_time,</if>
+            <if test="conDocCd != null">con_doc_cd,</if>
+            <if test="conDocName != null">con_doc_name,</if>
+            <if test="conRemark != null">con_remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="caseNo != null and caseNo != ''">#{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="dischargeDepartmentNo != null">#{dischargeDepartmentNo},</if>
+            <if test="dischargeDepartmentName != null">#{dischargeDepartmentName},</if>
+            <if test="hospitalizedDate != null">#{hospitalizedDate},</if>
+            <if test="leaveHospitalDate != null">#{leaveHospitalDate},</if>
+            <if test="appDocCd != null">#{appDocCd},</if>
+            <if test="appDocName != null">#{appDocName},</if>
+            <if test="appDeptCd != null">#{appDeptCd},</if>
+            <if test="appDeptName != null">#{appDeptName},</if>
+            <if test="appTime != null">#{appTime},</if>
+            <if test="recallReason != null">#{recallReason},</if>
+            <if test="conTime != null">#{conTime},</if>
+            <if test="conDocCd != null">#{conDocCd},</if>
+            <if test="conDocName != null">#{conDocName},</if>
+            <if test="conRemark != null">#{conRemark},</if>
+         </trim>
+    </insert>
+    <insert id="insertList">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_index_revoke_log
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.caseNo != null and item.caseNo != ''">case_no,</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no,</if>
+                <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+                <if test="item.patientName != null">patient_name,</if>
+                <if test="item.dischargeDepartmentNo != null">discharge_department_no,</if>
+                <if test="item.dischargeDepartmentName != null">discharge_department_name,</if>
+                <if test="item.hospitalizedDate != null">hospitalized_date,</if>
+                <if test="item.leaveHospitalDate != null">leave_hospital_date,</if>
+                <if test="item.appDocCd != null">app_doc_cd,</if>
+                <if test="item.appDocName != null">app_doc_name,</if>
+                <if test="item.appDeptCd != null">app_dept_cd,</if>
+                <if test="item.appDeptName != null">app_dept_name,</if>
+                <if test="item.appTime != null">app_time,</if>
+                <if test="item.recallReason != null">recall_reason,</if>
+                <if test="item.conTime != null">con_time,</if>
+                <if test="item.conDocCd != null">con_doc_cd,</if>
+                <if test="item.conDocName != null">con_doc_name,</if>
+                <if test="item.conRemark != null">con_remark,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.caseNo != null and item.caseNo != ''">#{item.caseNo},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">#{item.admissionNo},</if>
+                <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+                <if test="item.patientName != null">#{item.patientName},</if>
+                <if test="item.dischargeDepartmentNo != null">#{item.dischargeDepartmentNo},</if>
+                <if test="item.dischargeDepartmentName != null">#{item.dischargeDepartmentName},</if>
+                <if test="item.hospitalizedDate != null">#{item.hospitalizedDate},</if>
+                <if test="item.leaveHospitalDate != null">#{item.leaveHospitalDate},</if>
+                <if test="item.appDocCd != null">#{item.appDocCd},</if>
+                <if test="item.appDocName != null">#{item.appDocName},</if>
+                <if test="item.appDeptCd != null">#{item.appDeptCd},</if>
+                <if test="item.appDeptName != null">#{item.appDeptName},</if>
+                <if test="item.appTime != null">#{item.appTime},</if>
+                <if test="item.recallReason != null">#{item.recallReason},</if>
+                <if test="item.conTime != null">#{item.conTime},</if>
+                <if test="item.conDocCd != null">#{item.conDocCd},</if>
+                <if test="item.conDocName != null">#{item.conDocName},</if>
+                <if test="item.conRemark != null">#{item.conRemark},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateEmrIndexRevokeLog" parameterType="EmrIndexRevokeLog">
+        update emr_index_revoke_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="dischargeDepartmentNo != null">discharge_department_no = #{dischargeDepartmentNo},</if>
+            <if test="dischargeDepartmentName != null">discharge_department_name = #{dischargeDepartmentName},</if>
+            <if test="hospitalizedDate != null">hospitalized_date = #{hospitalizedDate},</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date = #{leaveHospitalDate},</if>
+            <if test="appDocCd != null">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null">app_doc_name = #{appDocName},</if>
+            <if test="appDeptCd != null">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null">app_dept_name = #{appDeptName},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="recallReason != null">recall_reason = #{recallReason},</if>
+            <if test="conTime != null">con_time = #{conTime},</if>
+            <if test="conDocCd != null">con_doc_cd = #{conDocCd},</if>
+            <if test="conDocName != null">con_doc_name = #{conDocName},</if>
+            <if test="conRemark != null">con_remark = #{conRemark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrIndexRevokeLogById" parameterType="Long">
+        delete from emr_index_revoke_log where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrIndexRevokeLogByIds" parameterType="String">
+        delete from emr_index_revoke_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

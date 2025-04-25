@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcRuleIterEmrMapper">
+    
+    <resultMap type="QcRuleIterEmr" id="QcRuleIterEmrResult">
+        <result property="id"    column="id"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="iterTypeCode"    column="iter_type_code"    />
+        <result property="iterTypeName"    column="iter_type_name"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectQcRuleIterEmrVo">
+        select id, emr_type_code, emr_type_name, iter_type_code, iter_type_name,del_flag, valid_flag, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date from qc_rule_iter_emr
+    </sql>
+
+    <select id="selectQcRuleIterEmrList" parameterType="QcRuleIterEmrVo" resultMap="QcRuleIterEmrResult">
+        <include refid="selectQcRuleIterEmrVo"/>
+        <where>  
+            <if test="emrTypeCode != null  and emrTypeCode != ''"> and emr_type_code = #{emrTypeCode}</if>
+            <if test="emrTypeName != null  and emrTypeName != ''"> and emr_type_name like concat(concat('%', #{emrTypeName}), '%')</if>
+            <if test="iterTypeCode != null  and iterTypeCode != ''"> and iter_type_code = #{iterTypeCode}</if>
+            <if test="iterTypeCodeList != null ">
+                and
+                <foreach item="item" index="index" collection="iterTypeCodeList" open="(" separator="or" close=")">
+                    FIND_IN_SET(#{item}, iter_type_code) <![CDATA[ <> ]]> 0
+                </foreach>
+            </if>
+            <if test="iterTypeName != null  and iterTypeName != ''"> and iter_type_name like concat(concat('%', #{iterTypeName}), '%')</if>
+            <if test="validFlag != null  and validFlag != ''"> and valid_flag = #{validFlag}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            and del_flag = '0' order by cre_date desc
+        </where>
+    </select>
+    
+    <select id="selectQcRuleIterEmrById" parameterType="Long" resultMap="QcRuleIterEmrResult">
+        <include refid="selectQcRuleIterEmrVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQcRuleIterEmr" parameterType="QcRuleIterEmr">
+        insert into qc_rule_iter_emr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="emrTypeCode != null">emr_type_code,</if>
+            <if test="emrTypeName != null">emr_type_name,</if>
+            <if test="iterTypeCode != null">iter_type_code,</if>
+            <if test="iterTypeName != null">iter_type_name,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="delFlag != null">del_flag,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="emrTypeCode != null">#{emrTypeCode},</if>
+            <if test="emrTypeName != null">#{emrTypeName},</if>
+            <if test="iterTypeCode != null">#{iterTypeCode},</if>
+            <if test="iterTypeName != null">#{iterTypeName},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateQcRuleIterEmr" parameterType="QcRuleIterEmr">
+        update qc_rule_iter_emr
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="emrTypeCode != null">emr_type_code = #{emrTypeCode},</if>
+            <if test="emrTypeName != null">emr_type_name = #{emrTypeName},</if>
+            <if test="iterTypeCode != null">iter_type_code = #{iterTypeCode},</if>
+            <if test="iterTypeName != null">iter_type_name = #{iterTypeName},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="deleteQcRuleIterEmrById" parameterType="Long">
+        update qc_rule_iter_emr set where id = #{id}
+    </update>
+
+    <delete id="deleteQcRuleIterEmrByIds" parameterType="String">
+        delete from qc_rule_iter_emr where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectListByEmrTypeList" parameterType="String" resultMap="QcRuleIterEmrResult">
+        <include refid="selectQcRuleIterEmrVo"/>
+        where valid_flag = '1'
+        and del_flag = '0'
+        and emr_type_code in
+        <foreach collection="emrTypeCodeList" item="emrTypeCode" open="(" separator="," close=")">
+            #{emrTypeCode}
+        </foreach>
+    </select>
+</mapper>

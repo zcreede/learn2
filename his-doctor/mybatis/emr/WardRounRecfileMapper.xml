@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.WardRounRecfileMapper">
+    
+    <resultMap type="WardRounRecfile" id="WardRounRecfileResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="recTime"    column="rec_time"    />
+        <result property="fileDesc"    column="file_desc"    />
+        <result property="recCon"    column="rec_con"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="recCd"    column="rec_cd"    />
+        <result property="recName"    column="rec_name"    />
+        <result property="recTerm"    column="rec_term"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectWardRounRecfileVo">
+        select id, patient_id, patient_name, rec_time, file_desc, rec_con, file_name, file_path, rec_cd, rec_name, rec_term, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from ward_roun_recfile
+    </sql>
+
+    <select id="selectWardRounRecfileList" parameterType="WardRounRecfile" resultMap="WardRounRecfileResult">
+        <include refid="selectWardRounRecfileVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="recTime != null "> and rec_time = #{recTime}</if>
+            <if test="fileDesc != null  and fileDesc != ''"> and file_desc = #{fileDesc}</if>
+            <if test="recCon != null  and recCon != ''"> and rec_con = #{recCon}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat(concat('%', #{fileName}), '%')</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="recCd != null  and recCd != ''"> and rec_cd = #{recCd}</if>
+            <if test="recName != null  and recName != ''"> and rec_name like concat(concat('%', #{recName}), '%')</if>
+            <if test="recTerm != null  and recTerm != ''"> and rec_term = #{recTerm}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="beginDate != null "> and cre_date > #{beginDate}</if>
+            <if test="endDate != null "> and cre_date <![CDATA[<]]> #{endDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectWardRounRecfileById" parameterType="Long" resultMap="WardRounRecfileResult">
+        <include refid="selectWardRounRecfileVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWardRounRecfile" parameterType="WardRounRecfile">
+        insert into ward_roun_recfile
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="recTime != null">rec_time,</if>
+            <if test="fileDesc != null">file_desc,</if>
+            <if test="recCon != null">rec_con,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="recCd != null">rec_cd,</if>
+            <if test="recName != null">rec_name,</if>
+            <if test="recTerm != null">rec_term,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="recTime != null">#{recTime},</if>
+            <if test="fileDesc != null">#{fileDesc},</if>
+            <if test="recCon != null">#{recCon},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="recCd != null">#{recCd},</if>
+            <if test="recName != null">#{recName},</if>
+            <if test="recTerm != null">#{recTerm},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateWardRounRecfile" parameterType="WardRounRecfile">
+        update ward_roun_recfile
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="recTime != null">rec_time = #{recTime},</if>
+            <if test="fileDesc != null">file_desc = #{fileDesc},</if>
+            <if test="recCon != null">rec_con = #{recCon},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="recCd != null">rec_cd = #{recCd},</if>
+            <if test="recName != null">rec_name = #{recName},</if>
+            <if test="recTerm != null">rec_term = #{recTerm},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWardRounRecfileById" parameterType="Long">
+        delete from ward_roun_recfile where id = #{id}
+    </delete>
+
+    <delete id="deleteWardRounRecfileByIds" parameterType="String">
+        delete from ward_roun_recfile where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

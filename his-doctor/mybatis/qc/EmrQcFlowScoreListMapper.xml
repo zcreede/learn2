@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcFlowScoreListMapper">
+
+    <resultMap type="EmrQcFlowScoreList" id="EmrQcFlowScoreListResult">
+        <result property="id"    column="id"    />
+        <result property="qcSn"    column="qc_sn"    />
+        <result property="dedCd"    column="ded_cd"    />
+        <result property="dedName"    column="ded_name"    />
+        <result property="qcId"    column="qc_id"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="flawDesc"    column="flaw_desc"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="mainId"    column="main_id"    />
+    </resultMap>
+
+    <resultMap id="EmrQcFlowScoreListVoResult" type="EmrQcFlowScoreListVo" extends="EmrQcFlowScoreListResult">
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="emrEleName"    column="emr_ele_name"    />
+        <result property="qcElemName"    column="qcElemName"    />
+    </resultMap>
+
+
+    <sql id="selectEmrQcFlowScoreListVo">
+        select id, qc_sn, ded_cd, ded_name, qc_id, rule_id, rule_name, flaw_desc, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date,main_id from emr_qc_flow_score_list
+    </sql>
+
+    <select id="selectEmrQcFlowScoreListList" parameterType="EmrQcFlowScoreList" resultMap="EmrQcFlowScoreListResult">
+        <include refid="selectEmrQcFlowScoreListVo"/>
+        <where>
+            <if test="qcSn != null  and qcSn != ''"> and qc_sn = #{qcSn}</if>
+            <if test="dedCd != null  and dedCd != ''"> and ded_cd = #{dedCd}</if>
+            <if test="dedName != null  and dedName != ''"> and ded_name like concat(concat('%', #{dedName}), '%')</if>
+            <if test="qcId != null "> and qc_id = #{qcId}</if>
+            <if test="ruleId != null "> and rule_id = #{ruleId}</if>
+            <if test="ruleName != null  and ruleName != ''"> and rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="flawDesc != null  and flawDesc != ''"> and flaw_desc = #{flawDesc}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="mainId != null "> and main_id = #{mainId}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrQcFlowScoreListById" parameterType="Long" resultMap="EmrQcFlowScoreListResult">
+        <include refid="selectEmrQcFlowScoreListVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrQcFlowScoreList" parameterType="EmrQcFlowScoreList">
+        insert into emr_qc_flow_score_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="qcSn != null and qcSn != ''">qc_sn,</if>
+            <if test="dedCd != null">ded_cd,</if>
+            <if test="dedName != null">ded_name,</if>
+            <if test="qcId != null">qc_id,</if>
+            <if test="ruleId != null">rule_id,</if>
+            <if test="ruleName != null">rule_name,</if>
+            <if test="flawDesc != null">flaw_desc,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="mainId != null">main_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="qcSn != null and qcSn != ''">#{qcSn},</if>
+            <if test="dedCd != null">#{dedCd},</if>
+            <if test="dedName != null">#{dedName},</if>
+            <if test="qcId != null">#{qcId},</if>
+            <if test="ruleId != null">#{ruleId},</if>
+            <if test="ruleName != null">#{ruleName},</if>
+            <if test="flawDesc != null">#{flawDesc},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="mainId != null">#{mainId},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertEmrQcFlowScoreLists" parameterType="java.util.List">
+        insert into emr_qc_flow_score_list(id, qc_sn, ded_cd, ded_name, qc_id, rule_id, rule_name, flaw_desc, cre_per_name, cre_per_code,main_id, cre_date)
+        <foreach collection ="list" item="emrQcFlowScoreListVos" index= "index" separator="union all" >
+            select   #{emrQcFlowScoreListVos.id,jdbcType=NUMERIC},
+            #{emrQcFlowScoreListVos.qcSn,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.dedCd,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.dedName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.qcId,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.ruleId,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.ruleName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.flawDesc,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.crePerName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.crePerCode,jdbcType=VARCHAR},
+            #{emrQcFlowScoreListVos.mainId,jdbcType=NUMERIC},
+            sysdate from dual
+        </foreach>
+    </insert>
+    <update id="updateEmrQcFlowScoreList" parameterType="EmrQcFlowScoreList">
+        update emr_qc_flow_score_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="qcSn != null and qcSn != ''">qc_sn = #{qcSn},</if>
+            <if test="dedCd != null">ded_cd = #{dedCd},</if>
+            <if test="dedName != null">ded_name = #{dedName},</if>
+            <if test="qcId != null">qc_id = #{qcId},</if>
+            <if test="ruleId != null">rule_id = #{ruleId},</if>
+            <if test="ruleName != null">rule_name = #{ruleName},</if>
+            <if test="flawDesc != null">flaw_desc = #{flawDesc},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="mainId != null">main_id = #{mainId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcFlowScoreListById" parameterType="Long">
+        delete from emr_qc_flow_score_list where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcFlowScoreListByIds" parameterType="String">
+        delete from emr_qc_flow_score_list where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteEmrQcFlowScoreByQcId">
+        delete from emr_qc_flow_score_list where QC_SN=#{qcId}
+    </delete>
+    <select id="selectScoreListDescList" parameterType="String" resultMap="EmrQcFlowScoreListVoResult">
+        SELECT
+        score.*,
+        CASE
+        WHEN qr.emr_type_name is null THEN
+        eql.MR_TYPE_NAME ELSE qr.emr_type_name
+        END emr_type_name,
+        CASE
+        WHEN eql.EMR_ELE_NAME='NNNNNN' THEN
+        eql.ELE_CONTEXT ELSE eql.EMR_ELE_NAME
+        END qcElemName
+        FROM
+        EMR_QC_FLOW_SCORE_LIST score
+        LEFT JOIN emr_qc_list eql ON score.QC_ID = eql.id
+        LEFT JOIN QC_RULES qr ON qr.id = score.RULE_ID
+<where>
+    <if test="qcSn!=null and qcSn!=''"> and score.qc_sn=#{qcSn}</if>
+</where>
+    </select>
+</mapper>

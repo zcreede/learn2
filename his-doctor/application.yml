@@ -1,0 +1,242 @@
+# 项目相关配置
+emr:
+  # 名称
+  name: EMR
+  # 版本
+  version: 1.0.0
+  # 版权年份
+  copyrightYear: 2021
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置X:/，Linux配置 /etc/emrFile）
+  profile: D:/HIS/
+  # 获取ip地址开关
+  addressEnabled: false
+  # 验证码类型 math 数组计算 char 字符验证
+  captchaType: math
+  # 雪花算法 工作机器ID(0~31)
+  workerId: 0
+  # 雪花算法 数据中心ID(0~31)
+  datacenterId: 0
+  # 查房录音支持格式
+  wardFileType:
+    - mp3
+    - aac
+    - wav
+    - wma
+    - m4a
+  ssoUrl: http://localhost:8081/sso/server/
+  # 文件服务器nginx访问地址
+  nfsPdfurl: http://127.0.0.1:8081/
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8085
+  servlet:
+    # 应用的访问路径
+    context-path: /indocemr
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+
+# Spring配置
+spring:
+  drools:
+    # 规则文件保存位置 最后不要加 /
+    path: D:/HIS/file/emrRuleFile
+    # 可以指定全局的mode，选择stream或cloud
+    mode: stream
+    # 指定规则文件自动更新的周期，单位秒，默认30秒扫描一次
+    update: 86400
+    # 文件自动更新的开关，on 是开启；off是关闭
+    listener: off
+  grid:
+    # 锐浪pdf文件存放位置
+    path: D:/HIS/file/gridFile
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  profiles:
+    active: druid
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  jackson:
+    time-zone: GMT+8
+  # redis 配置
+  redis:
+    # 地址 默认247 打包 71
+    host: 127.0.0.1
+    # 端口，默认为6379
+    port: 6379
+    # 数据库索引
+    # database: 14
+    # 密码
+    password: EMR12345
+    # 连接超时时间
+    timeout: 10s
+    database:
+      # 医生站基础业务 0 打包 11
+      doctor-db: 11
+      # 医嘱业务
+      order-db: 6
+    jedis:
+      pool:
+        max-active: 50
+        max-wait: 1000
+        # 最大空闲链接数
+        max-idle: 20
+        min-idle: 5
+        test-on-borrow: true
+        test-on-return: false
+  redis2:
+    # 地址
+    host: 127.0.0.1
+    # 端口，默认为6379
+    port: 6379
+    # 数据库索引
+    # database: 14
+    # 密码
+    password: EMR12345
+    # 连接超时时间
+    timeout: 10s
+    database:
+      # 病历业务
+      index-db: 8
+    jedis:
+      pool:
+        max-active: 50
+        max-wait: 1000
+        # 最大空闲链接数
+        max-idle: 20
+        min-idle: 5
+        test-on-borrow: true
+        test-on-return: false
+  #application:
+    # 应用名称
+    #name: lb-docemr
+  #cloud:
+    #compatibility-verifier:
+      #enabled: false
+    #nacos:
+      #discovery:
+        # 服务注册地址
+        #server-addr: 192.168.123.72:8848
+      #config:
+        # 配置中心地址
+        #server-addr: 192.168.123.72:8848
+        # 配置文件格式
+        #file-extension: yml
+        # 共享配置
+        #shared-configs:
+          #- application-dev.${spring.cloud.nacos.config.file-extension}
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认30分钟）
+  expireTime: 120
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.emr.project.**.domain
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mybatis/**/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+# PageHelper分页插件
+pagehelper:
+  # helperDialect: oracle
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  autoRuntimeDialect: true
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀 /stage-api /dev-api
+  pathMapping:
+
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice/*,/system/list/*
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 代码生成
+gen:
+  # 作者
+  author: xuyouyou
+  # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool other
+  packageName: com.emr.project.tmpa
+  # 自动去除表前缀，默认是 true
+  autoRemovePre: false
+  # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
+  tablePrefix: tm_pa
+
+cxf:
+  path: /emrser
+
+# Elasticsearch
+# 9200作为Http协议，主要用于外部通讯，而9300作为Tcp协议，是传输层监听的默认端口，jar之间就是通过tcp协议通讯
+#elasticsearch ip地址和端口号
+elasticsearch:
+  host: 127.0.0.1:9200
+  username:
+  password:
+  connect_timeout_millis: 10000
+
+# cdss配置信息
+cdss:
+  # 接口访问基础路径
+  baseUrl: http://192.168.123.121
+  # 接口访问密钥
+  bhtKey: 36B0-299F-8D8F-6575-E6C9-E5A8-03B2-E8D9
+
+#是否执行定时任务 valid=1 执行定时任务 groups 指定每个服务执行的任务组
+job:
+  valid: 0
+  groups:
+  ##validPdf = null或者1、valid = 1、pdfJobId不为空启用定时任务生成pdf
+  validPdf: 0
+  ## 特殊定时任务jobId，若部署节点validPdf=1，此项不能为空
+  pdfJobId: 1286290256713960448,1286290256723960448
+
+#
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: group-orderDrugStock
+    send-message-timeout: 3000
+    compress-message-body-threshold: 4096 #消息压缩阀值 超过该值消息压缩，默认 4 * 1024b
+    max-message-size: 4194304 #消息体最大允许值 默认为 4 * 1024 * 1024b
+    retry-times-when-send-failed: 2
+    retry-next-server: false #发送消息给Broker时，如果发送失败 是否重试另外一台broker
+
+#消息平台相关
+msgm:
+  url: http://127.0.0.1/stage-api/msgm

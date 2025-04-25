@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.ApplyFormItemMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.docOrder.domain.ApplyFormItem">
+        <id column="apply_form_no" jdbcType="VARCHAR" property="applyFormNo"/>
+        <id column="item_sort_number" jdbcType="VARCHAR" property="itemSortNumber"/>
+        <result column="item_code" jdbcType="VARCHAR" property="itemCode"/>
+        <result column="order_group_no" jdbcType="INTEGER" property="orderGroupNo"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="dose" jdbcType="DECIMAL" property="dose"/>
+        <result column="report_date" jdbcType="TIMESTAMP" property="reportDate"/>
+        <result column="report_doctor" jdbcType="VARCHAR" property="reportDoctor"/>
+        <result column="apply_form_status" jdbcType="VARCHAR" property="applyFormStatus"/>
+        <result column="barcode_no" jdbcType="VARCHAR" property="barcodeNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        apply_form_no
+        , item_sort_number, item_code, order_group_no, item_name, unit, price,
+    dose, report_date, report_doctor, apply_form_status, barcode_no
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="com.emr.project.docOrder.domain.ApplyFormItemKey"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from td_pa_apply_form_item
+        where apply_form_no = #{applyFormNo,jdbcType=VARCHAR}
+        and item_sort_number = #{itemSortNumber,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByApplyFormNo" parameterType="java.lang.String"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from td_pa_apply_form_item
+        where apply_form_no = #{applyFormNo,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.emr.project.docOrder.domain.ApplyFormItemKey">
+        delete
+        from td_pa_apply_form_item
+        where apply_form_no = #{applyFormNo,jdbcType=VARCHAR}
+          and item_sort_number = #{itemSortNumber,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.emr.project.docOrder.domain.ApplyFormItem">
+        insert into td_pa_apply_form_item (apply_form_no, item_sort_number, item_code,
+                                               order_group_no, item_name, unit,
+                                               price, dose, report_date,
+                                               report_doctor, apply_form_status, barcode_no)
+        values (#{applyFormNo,jdbcType=VARCHAR}, #{itemSortNumber,jdbcType=VARCHAR}, #{itemCode,jdbcType=VARCHAR},
+                #{orderGroupNo,jdbcType=INTEGER}, #{itemName,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR},
+                #{price,jdbcType=DECIMAL}, #{dose,jdbcType=DECIMAL}, #{reportDate,jdbcType=TIMESTAMP},
+                #{reportDoctor,jdbcType=VARCHAR}, #{applyFormStatus,jdbcType=VARCHAR}, #{barcodeNo,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.emr.project.docOrder.domain.ApplyFormItem">
+        insert into td_pa_apply_form_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="applyFormNo != null">
+                apply_form_no,
+            </if>
+            <if test="itemSortNumber != null">
+                item_sort_number,
+            </if>
+            <if test="itemCode != null">
+                item_code,
+            </if>
+            <if test="orderGroupNo != null">
+                order_group_no,
+            </if>
+            <if test="itemName != null">
+                item_name,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="dose != null">
+                dose,
+            </if>
+            <if test="reportDate != null">
+                report_date,
+            </if>
+            <if test="reportDoctor != null">
+                report_doctor,
+            </if>
+            <if test="applyFormStatus != null">
+                apply_form_status,
+            </if>
+            <if test="barcodeNo != null">
+                barcode_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="applyFormNo != null">
+                #{applyFormNo,jdbcType=VARCHAR},
+            </if>
+            <if test="itemSortNumber != null">
+                #{itemSortNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="itemCode != null">
+                #{itemCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderGroupNo != null">
+                #{orderGroupNo,jdbcType=INTEGER},
+            </if>
+            <if test="itemName != null">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="dose != null">
+                #{dose,jdbcType=DECIMAL},
+            </if>
+            <if test="reportDate != null">
+                #{reportDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportDoctor != null">
+                #{reportDoctor,jdbcType=VARCHAR},
+            </if>
+            <if test="applyFormStatus != null">
+                #{applyFormStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="barcodeNo != null">
+                #{barcodeNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.docOrder.domain.ApplyFormItem">
+        update td_pa_apply_form_item
+        <set>
+            <if test="itemCode != null">
+                item_code = #{itemCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderGroupNo != null">
+                order_group_no = #{orderGroupNo,jdbcType=INTEGER},
+            </if>
+            <if test="itemName != null">
+                item_name = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="dose != null">
+                dose = #{dose,jdbcType=DECIMAL},
+            </if>
+            <if test="reportDate != null">
+                report_date = #{reportDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reportDoctor != null">
+                report_doctor = #{reportDoctor,jdbcType=VARCHAR},
+            </if>
+            <if test="applyFormStatus != null">
+                apply_form_status = #{applyFormStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="barcodeNo != null">
+                barcode_no = #{barcodeNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where apply_form_no = #{applyFormNo,jdbcType=VARCHAR}
+        and item_sort_number = #{itemSortNumber,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.emr.project.docOrder.domain.ApplyFormItem">
+        update td_pa_apply_form_item
+        set item_code         = #{itemCode,jdbcType=VARCHAR},
+            order_group_no    = #{orderGroupNo,jdbcType=INTEGER},
+            item_name         = #{itemName,jdbcType=VARCHAR},
+            unit              = #{unit,jdbcType=VARCHAR},
+            price             = #{price,jdbcType=DECIMAL},
+            dose              = #{dose,jdbcType=DECIMAL},
+            report_date       = #{reportDate,jdbcType=TIMESTAMP},
+            report_doctor     = #{reportDoctor,jdbcType=VARCHAR},
+            apply_form_status = #{applyFormStatus,jdbcType=VARCHAR},
+            barcode_no        = #{barcodeNo,jdbcType=VARCHAR}
+        where apply_form_no = #{applyFormNo,jdbcType=VARCHAR}
+          and item_sort_number = #{itemSortNumber,jdbcType=VARCHAR}
+    </update>
+    <update id="updateStatusList" parameterType="com.emr.project.docOrder.domain.ApplyFormItem">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update td_pa_apply_form_item
+            set apply_form_status = #{item.applyFormStatus,jdbcType=VARCHAR}
+            where apply_form_no = #{item.applyFormNo,jdbcType=VARCHAR}
+            and item_sort_number = #{item.itemSortNumber,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+    <update id="updateBarCodeNoList" parameterType="com.emr.project.docOrder.domain.ApplyFormItem">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update td_pa_apply_form_item
+            set barcode_no = #{item.barcodeNo,jdbcType=VARCHAR}
+            where apply_form_no = #{item.applyFormNo,jdbcType=VARCHAR}
+            and item_sort_number = #{item.itemSortNumber,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+</mapper>

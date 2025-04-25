@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcFlowRecordMapper">
+
+    <resultMap type="EmrQcFlowRecord" id="EmrQcFlowRecordResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="operTypeCd"    column="oper_type_cd"    />
+        <result property="operTypeName"    column="oper_type_name"    />
+        <result property="qcScore"    column="qc_score"    />
+        <result property="qcGradeNo"    column="qc_grade_no"    />
+        <result property="qcGradeName"    column="qc_grade_name"    />
+        <result property="operTime"    column="oper_time"    />
+        <result property="operDcoCd"    column="oper_dco_cd"    />
+        <result property="operDcoName"    column="oper_dco_name"    />
+        <result property="operReason"    column="oper_reason"    />
+        <result property="operDeptCd"    column="oper_dept_cd"    />
+        <result property="operDeptName"    column="oper_dept_name"    />
+        <result property="operPcIp"    column="oper_pc_ip"    />
+        <result property="qcSn"    column="qc_sn"    />
+        <result property="fileDocCd"    column="file_doc_cd"    />
+        <result property="fileDocName"    column="file_doc_name"    />
+        <result property="fileTime"    column="file_time"    />
+    </resultMap>
+    <resultMap id="EmrQcFlowRecordVoResult" type="EmrQcFlowRecordVo" extends="EmrQcFlowRecordResult">
+        <result property="patName"    column="patName"    />
+        <result property="outTime"    column="out_time"    />
+    </resultMap>
+
+    <sql id="selectEmrQcFlowRecordVo">
+        select id, org_cd, patient_id, oper_type_cd, oper_type_name, qc_score, qc_grade_no, qc_grade_name, oper_time, oper_dco_cd, oper_dco_name, oper_reason, oper_dept_cd, oper_dept_name, oper_pc_ip, qc_sn from emr_qc_flow_record
+    </sql>
+
+    <select id="selectEmrQcFlowRecordList" parameterType="EmrQcFlowRecord" resultMap="EmrQcFlowRecordResult">
+        <include refid="selectEmrQcFlowRecordVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="operTypeCd != null  and operTypeCd != ''"> and oper_type_cd = #{operTypeCd}</if>
+            <if test="operTypeName != null  and operTypeName != ''"> and oper_type_name like concat(concat('%', #{operTypeName}), '%')</if>
+            <if test="qcScore != null "> and qc_score = #{qcScore}</if>
+            <if test="qcGradeNo != null  and qcGradeNo != ''"> and qc_grade_no = #{qcGradeNo}</if>
+            <if test="qcGradeName != null  and qcGradeName != ''"> and qc_grade_name like concat(concat('%', #{qcGradeName}), '%')</if>
+            <if test="operTime != null "> and oper_time = #{operTime}</if>
+            <if test="operDcoCd != null  and operDcoCd != ''"> and oper_dco_cd = #{operDcoCd}</if>
+            <if test="operDcoName != null  and operDcoName != ''"> and oper_dco_name like concat(concat('%', #{operDcoName}), '%')</if>
+            <if test="operReason != null  and operReason != ''"> and oper_reason = #{operReason}</if>
+            <if test="operDeptCd != null  and operDeptCd != ''"> and oper_dept_cd = #{operDeptCd}</if>
+            <if test="operDeptName != null  and operDeptName != ''"> and oper_dept_name like concat(concat('%', #{operDeptName}), '%')</if>
+            <if test="operPcIp != null  and operPcIp != ''"> and oper_pc_ip = #{operPcIp}</if>
+            <if test="qcSn != null  and qcSn != ''"> and qc_sn = #{qcSn}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrQcFlowRecordVoList" parameterType="EmrQcFlowRecordVo" resultMap="EmrQcFlowRecordVoResult">
+        select * from emr_qc_flow_record r
+        left join pat_visitinfo v on f.patient_id = v.patient_id
+        left join pat_personalinfo p on f.patient_id = p.patient_id
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="operTypeCd != null  and operTypeCd != ''"> and oper_type_cd = #{operTypeCd}</if>
+            <if test="operTypeName != null  and operTypeName != ''"> and oper_type_name like concat(concat('%', #{operTypeName}), '%')</if>
+            <if test="qcScore != null "> and qc_score = #{qcScore}</if>
+            <if test="qcGradeNo != null  and qcGradeNo != ''"> and qc_grade_no = #{qcGradeNo}</if>
+            <if test="qcGradeName != null  and qcGradeName != ''"> and qc_grade_name like concat(concat('%', #{qcGradeName}), '%')</if>
+            <if test="operTime != null "> and oper_time = #{operTime}</if>
+            <if test="operDcoCd != null  and operDcoCd != ''"> and oper_dco_cd = #{operDcoCd}</if>
+            <if test="operDcoName != null  and operDcoName != ''"> and oper_dco_name like concat(concat('%', #{operDcoName}), '%')</if>
+            <if test="operReason != null  and operReason != ''"> and oper_reason = #{operReason}</if>
+            <if test="operDeptCd != null  and operDeptCd != ''"> and oper_dept_cd = #{operDeptCd}</if>
+            <if test="operDeptName != null  and operDeptName != ''"> and oper_dept_name like concat(concat('%', #{operDeptName}), '%')</if>
+            <if test="operPcIp != null  and operPcIp != ''"> and oper_pc_ip = #{operPcIp}</if>
+            <if test="qcSn != null  and qcSn != ''"> and qc_sn = #{qcSn}</if>
+        </where>
+        order by r.patient_id, r.oper_time
+    </select>
+
+    <select id="selectEmrQcFlowRecordById" parameterType="Long" resultMap="EmrQcFlowRecordResult">
+        <include refid="selectEmrQcFlowRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectEmrQcFlowRecordByQcSns" parameterType="Long" resultMap="EmrQcFlowRecordResult">
+        <include refid="selectEmrQcFlowRecordVo"/>
+        where qc_sn in
+        <foreach collection="list" item="qcSn" open="(" separator="," close=")">
+            #{qcSn}
+        </foreach>
+        order by oper_time desc
+    </select>
+    <select id="selectEmrQcFlowRecordByPatientId" resultMap="EmrQcFlowRecordResult">
+        select a.*,b.file_doc_cd,b.file_doc_name,b.file_time from
+        (<include refid="selectEmrQcFlowRecordVo"/>) a left join emr_qc_flow b on a.patient_id=b.patient_id
+        where a.patient_id = #{patientId} and a.oper_type_cd = #{operTypeCd}
+        order by a.OPER_TIME desc
+    </select>
+
+    <insert id="insertEmrQcFlowRecord" parameterType="EmrQcFlowRecord">
+        insert into emr_qc_flow_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="operTypeCd != null">oper_type_cd,</if>
+            <if test="operTypeName != null">oper_type_name,</if>
+            <if test="qcScore != null">qc_score,</if>
+            <if test="qcGradeNo != null">qc_grade_no,</if>
+            <if test="qcGradeName != null">qc_grade_name,</if>
+            oper_time,
+            <if test="operDcoCd != null">oper_dco_cd,</if>
+            <if test="operDcoName != null">oper_dco_name,</if>
+            <if test="operReason != null">oper_reason,</if>
+            <if test="operDeptCd != null">oper_dept_cd,</if>
+            <if test="operDeptName != null">oper_dept_name,</if>
+            <if test="operPcIp != null">oper_pc_ip,</if>
+            <if test="qcSn != null">qc_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="operTypeCd != null">#{operTypeCd},</if>
+            <if test="operTypeName != null">#{operTypeName},</if>
+            <if test="qcScore != null">#{qcScore},</if>
+            <if test="qcGradeNo != null">#{qcGradeNo},</if>
+            <if test="qcGradeName != null">#{qcGradeName},</if>
+            sysdate,
+            <if test="operDcoCd != null">#{operDcoCd},</if>
+            <if test="operDcoName != null">#{operDcoName},</if>
+            <if test="operReason != null">#{operReason},</if>
+            <if test="operDeptCd != null">#{operDeptCd},</if>
+            <if test="operDeptName != null">#{operDeptName},</if>
+            <if test="operPcIp != null">#{operPcIp},</if>
+            <if test="qcSn != null">#{qcSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrQcFlowRecord" parameterType="EmrQcFlowRecord">
+        update emr_qc_flow_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="operTypeCd != null">oper_type_cd = #{operTypeCd},</if>
+            <if test="operTypeName != null">oper_type_name = #{operTypeName},</if>
+            <if test="qcScore != null">qc_score = #{qcScore},</if>
+            <if test="qcGradeNo != null">qc_grade_no = #{qcGradeNo},</if>
+            <if test="qcGradeName != null">qc_grade_name = #{qcGradeName},</if>
+            oper_time = sysdate,
+            <if test="operDcoCd != null">oper_dco_cd = #{operDcoCd},</if>
+            <if test="operDcoName != null">oper_dco_name = #{operDcoName},</if>
+            <if test="operReason != null">oper_reason = #{operReason},</if>
+            <if test="operDeptCd != null">oper_dept_cd = #{operDeptCd},</if>
+            <if test="operDeptName != null">oper_dept_name = #{operDeptName},</if>
+            <if test="operPcIp != null">oper_pc_ip = #{operPcIp},</if>
+            <if test="qcSn != null">qc_sn = #{qcSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcFlowRecordById" parameterType="Long">
+        delete from emr_qc_flow_record where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcFlowRecordByIds" parameterType="String">
+        delete from emr_qc_flow_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

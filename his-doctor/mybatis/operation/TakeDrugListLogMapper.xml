@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TakeDrugListLogMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TakeDrugListLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="perform_list_no" jdbcType="VARCHAR" property="performListNo" />
+    <result column="perform_list_sort_number" jdbcType="INTEGER" property="performListSortNumber" />
+    <result column="operate_type" jdbcType="INTEGER" property="operateType" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, perform_list_no, perform_list_sort_number, operate_type, operate_time, operator
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from td_pa_take_drug_list_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from td_pa_take_drug_list_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.TakeDrugListLog">
+    insert into td_pa_take_drug_list_log (id, perform_list_no, perform_list_sort_number,
+      operate_type, operate_time, operator )
+    values (seq_td_pa_take_drug_list_log.nextval, #{performListNo,jdbcType=VARCHAR}, #{performListSortNumber,jdbcType=INTEGER},
+      #{operateType,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR} )
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.TakeDrugListLog">
+    insert into td_pa_take_drug_list_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="performListNo != null">
+        perform_list_no,
+      </if>
+      <if test="performListSortNumber != null">
+        perform_list_sort_number,
+      </if>
+      <if test="operateType != null">
+        operate_type,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      seq_td_pa_take_drug_list_log.nextval,
+      <if test="performListNo != null">
+        #{performListNo,jdbcType=VARCHAR},
+      </if>
+      <if test="performListSortNumber != null">
+        #{performListSortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.operation.domain.TakeDrugListLog">
+    update td_pa_take_drug_list_log
+    <set>
+      <if test="performListNo != null">
+        perform_list_no = #{performListNo,jdbcType=VARCHAR},
+      </if>
+      <if test="performListSortNumber != null">
+        perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="operateType != null">
+        operate_type = #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emr.project.operation.domain.TakeDrugListLog">
+    update td_pa_take_drug_list_log
+    set perform_list_no = #{performListNo,jdbcType=VARCHAR},
+      perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER},
+      operate_type = #{operateType,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertBatch" parameterType="com.emr.project.operation.domain.TakeDrugListLog">
+    insert all
+    <foreach collection="list" item="item" index="index">
+    into td_pa_take_drug_list_log
+        (id,perform_list_no, perform_list_sort_number, operate_type, operate_time, operator)
+    values (
+      #{item.id,jdbcType=LONGVARCHAR} ,
+      #{item.performListNo,jdbcType=VARCHAR} ,
+      #{item.performListSortNumber,jdbcType=INTEGER} ,
+      #{item.operateType,jdbcType=INTEGER} ,
+      #{item.operateTime,jdbcType=TIMESTAMP} ,
+      #{item.operator,jdbcType=VARCHAR}
+    )
+    </foreach>
+    select 1 from dual
+  </insert>
+  <delete id="deleteByIdList" parameterType="Long">
+    delete from td_pa_take_drug_list_log where id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

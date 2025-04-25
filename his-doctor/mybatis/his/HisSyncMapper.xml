@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.his.mapper.HisSyncMapper">
+    <resultMap id="SysDictDataResult" type="SysDictData">
+        <result property="dictValue"    column="dictValue"    />
+        <result property="dictLabel"    column="dictLabel"    />
+    </resultMap>
+    <resultMap id="OpeAuthorityVoResult" type="OpeAuthorityVo">
+        <result property="docCd"    column="doc_cd"    />
+        <result property="operLevel"    column="oper_level"    />
+        <result property="applyAuth"    column="apply"    />
+        <result property="operationAuth"    column="operation"    />
+    </resultMap>
+    <resultMap id="PharmacyResult" type="PharmacyVo">
+        <result property="pharmacyCode"    column="pharmacyCode"    />
+        <result property="pharmacyName"    column="pharmacyName"    />
+        <result property="pharmacyFlag"    column="pharmacyFlag"    />
+    </resultMap>
+    <select id="selectDeptAll" resultType="java.util.Map">
+        select * from dbo.emr_sys_dept_view
+    </select>
+
+    <select id="selectPharmacyListByDept" parameterType="string" resultMap="PharmacyResult">
+        select d.dept_name as pharmacyName, d.dept_code as pharmacyCode, d.PHARMACY_TYPE as pharmacyFlag
+        from tm_bs_dept d
+        left join TM_BS_DEPT_PHARMACY dp on d.dept_code = dp.PHARMACY_CODE
+        left join tm_bs_dept bd on bd.dept_code = dp.DEPT_CODE
+        where dp.dept_code = #{ deptCode }
+        order by to_number(dp.sort_number),d.SORT_ORDER,d.DEPT_CODE
+    </select>
+    <select id="selectDocOpeAuth" resultMap="OpeAuthorityVoResult" parameterType="String">
+        exec  proc_dr_oper_authority #{docCd},#{operLevel}
+    </select>
+    <select id="selectDeptByCode" resultType="java.util.Map">
+        select * from dbo.emr_sys_dept_view where dept_code = #{appDeptCd}
+    </select>
+    <select id="selectDocByCode" resultType="java.util.Map">
+        select * from dbo.yy_p_czy where gh =#{appDocCd}
+    </select>
+
+    <!--  电子病历病案首页同步到his相关sql-->
+
+    <delete id="deleteHisMrHpVo" parameterType="String">
+        delete from epr_ba_sy where zyh=#{inpNo}
+    </delete>
+    <delete id="deleteHisMrHpXYDia" parameterType="String">
+        delete from epr_ba_zdxx where zyh=#{inpNo}
+    </delete>
+    <delete id="deleteHisMrHpZYDia" parameterType="String">
+        delete from epr_ba_zdxx_zy where zyh=#{inpNo}
+    </delete>
+    <delete id="deleteHisMrHpFee" parameterType="String">
+        delete from epr_ba_fyxx where zyh=#{inpNo}
+    </delete>
+    <delete id="deleteHisMrHpOpe" parameterType="String">
+        delete from epr_ba_ssb where zyh=#{inpNo}
+    </delete>
+
+    <insert id="insertHisMrHpVo" parameterType="MrHpVo" >
+        insert into epr_ba_sy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="inpNo != null and inpNo != ''">zyh,</if>
+            <if test="visitId != null">rycs,</if>
+            <if test="recordNo != null and recordNo != ''">bah,</if>
+            <if test="payTypeName != null and payTypeName!=''">fkfs,</if>
+            <if test="hcNo != null and hcNo!=''">ylbxh,</if>
+            <if test="patientName != null and patientName != ''">xm,</if>
+            <if test="cardTypeNo != null and cardTypeNo!=''">sfzh,</if>
+            <if test="sexCd != null and sexCd != ''">xb,</if>
+            <if test="birDateYear != null and birDateYear != ''">csrq_n,</if>
+            <if test="birDateMouth != null and birDateMouth != ''">csrq_y,</if>
+            <if test="birDateDay != null and birDateDay != ''">csrq_r,</if>
+            <if test="birDate != null">csrq,</if>
+            <if test="ageY != null">nl,</if>
+            <if test="marStaCd != null and marStaCd != ''">hunyin,</if>
+            <if test="nationCd != null and nationCd != ''">minzu_bh,</if>
+            <if test="nation != null and nation != ''">minzu_mc,</if>
+            <if test="citizenshipCd != null and citizenshipCd != ''">guoji_bh,</if>
+            <if test="citizenship != null and citizenship != ''">guoji_mc,</if>
+            <if test="proTypeCd != null and proTypeCd != ''">zhiye_bh,</if>
+            <if test="proTypeName != null and proTypeName != ''">zhiye_mc,</if>
+            <if test="birAddrPro != null and birAddrPro != ''">csd_s,</if>
+            <if test="birAddrCou != null and birAddrCou != ''">csd_x,</if>
+            <if test="workNameAddr != null and workNameAddr != ''">dw,</if>
+            <if test="workTel != null">dw_dh,</if>
+            <if test="workPost != null">dw_yb,</if>
+            <if test="prpAddrAll != null and prpAddrAll != ''">hukou,</if>
+            <if test="prpAddrPost != null and prpAddrPost != ''">hukou_yb,</if>
+            <if test="contName != null and contName != ''">lxr_xm,</if>
+            <if test="conRelaCd != null and conRelaCd != ''">lxrgx_bh,</if>
+            <if test="conRelaName != null and conRelaName != ''">lxrgx_mc,</if>
+            <if test="contTel != null">lxr_dh,</if>
+            <if test="contAddrAll != null and contAddrAll != ''">lxr_dz,</if>
+            <if test="inhosTime != null">ryrq,</if>
+            <if test="inHosYear != null and inHosYear!=''">ryrq_n,</if>
+            <if test="inHosMouth != null and inHosMouth!=''">ryrq_y,</if>
+            <if test="inHosDay != null and inHosDay!=''">ryrq_r,</if>
+            <if test="inHosHour != null and inHosHour!=''">ryrq_s,</if>
+            <if test="inDeptCd != null and inDeptCd != ''">rykb_bh,</if>
+            <if test="inDeptName != null and inDeptName != ''">rykb_mc,</if>
+            <if test="inDeptCd != null and inDeptCd != ''">rybq_bh,</if>
+            <if test="inDeptName != null and inDeptName != ''">rybq_mc,</if>
+            <if test="chDeptNo != null and chDeptNo != ''">zkkb_bh,</if>
+            <if test="chDeptName != null and chDeptName != ''">zkkb_mc,</if>
+            <if test="chDeptNo != null and chDeptNo != ''">zrbq_bh,</if>
+            <if test="chDeptName != null and chDeptName != ''">zrbq_mc,</if>
+
+            <if test="outDeptCd != null and outDeptCd != ''">cykb_bh,</if>
+            <if test="outDeptName != null and outDeptName != ''">cykb_mc,</if>
+            <if test="outDeptCd != null and outDeptCd != ''">cybq_bh,</if>
+            <if test="outDeptName != null and outDeptName != ''">cybq_mc,</if>
+            <if test="outTime != null">cyrq,</if>
+            <if test="outTimeYear != null and outTimeYear!=''">cyrq_n,</if>
+            <if test="outTimeMouth != null and outTimeMouth!=''">cyrq_y,</if>
+            <if test="outTimeDay != null and outTimeDay!=''">cyrq_r,</if>
+            <if test="outTimeHour != null and outTimeHour!=''">cyrq_s,</if>
+            <if test="realInhosDays != null">zyts,</if>
+
+            <if test="mrHpAttachVo.inhosCondCd != null">ryqk,</if>
+            <if test="mrHpAttachVo.diaDate != null">qzrq,</if>
+            <if test="mrHpAttachVo.diaDateYear != null">qzrq_n,</if>
+            <if test="mrHpAttachVo.diaDateMouth != null">qzrq_y,</if>
+            <if test="mrHpAttachVo.diaDateDay != null">qzrq_r,</if>
+
+            <if test="osChdCd != null and osChdCd != ''">mzzd_bh,</if>
+            <if test="osChdCd != null and osChdCd != ''">mzzd_bm,</if>
+            <if test="osChdName != null and osChdName != ''">mzzd_mc,</if>
+            <if test="mzDiaCd1 != null and mzDiaCd1 != ''">mzqtzd_bh1,</if>
+            <if test="mzDiaName1 != null and mzDiaName1 != ''">mzqtzd_mc1,</if>
+            <if test="mzDiaCd2 != null and mzDiaCd2 != ''">mzqtzd_bh2,</if>
+            <if test="mzDiaName2 != null and mzDiaName2 != ''">mzqtzd_mc2,</if>
+
+            <if test="alleDrug != null and alleDrug != ''">ywgm,</if>
+
+            <if test="mrHpAttachVo.hbsag != null and mrHpAttachVo.hbsag != ''">hbsag,</if>
+            <if test="mrHpAttachVo.hcvAb != null and mrHpAttachVo.hcvAb != ''">hcv_ab,</if>
+            <if test="mrHpAttachVo.hivAb != null and mrHpAttachVo.hivAb != ''">hiv_ab,</if>
+            <if test="mrHpAttachVo.admDisDia != null and mrHpAttachVo.admDisDia != ''">rycy,</if>
+            <if test="mrHpAttachVo.prePosDia != null and mrHpAttachVo.prePosDia != ''">sqsh,</if>
+
+            <if test="cpType != null and cpType != ''">bllc,</if>
+
+            <if test="mrHpAttachVo.saveTimes != null">qjcs,</if>
+            <if test="mrHpAttachVo.saveSuccessTimes != null">qjcgcs,</if>
+
+            <if test="hdName != null and hdName != ''">ys_kezhuren,</if>
+            <if test="arcDocName != null and arcDocName != ''">ys_zhuren,</if>
+            <if test="attDocName != null and attDocName != ''">ys_zhuzhi,</if>
+            <if test="resDocName != null and resDocName != ''">ys_zhuyuan,</if>
+            <if test="dutyNurName != null and dutyNurName != ''">mz_mzys,</if>
+            <if test="stuDocName != null and stuDocName != ''">ys_jinxiu,</if>
+            <if test="intDocName != null and intDocName != ''">ys_shixi,</if>
+            <if test="coderName != null and coderName != ''">bmy_xm,</if>
+            <if test="qconDocName != null and qconDocName != ''">ys_zhikong,</if>
+            <if test="qconNurName != null and qconNurName != ''">hs_zhikong,</if>
+            <if test="testFlag != null and testFlag != ''">sfsjbl,</if>
+            <if test="aboCd != null and aboCd != ''">xuexing,</if>
+            <if test="rhCd != null and rhCd != ''">RH,</if>
+
+            <if test="mrHpAttachVo.transfusionReaction != null and mrHpAttachVo.transfusionReaction != ''">shuxue_fy,</if>
+            <if test="mrHpAttachVo.isInfuseReac != null and mrHpAttachVo.isInfuseReac != ''">shuye_fy,</if>
+            <if test="mrHpAttachVo.bloodFlag != null and mrHpAttachVo.bloodFlag != ''">sfsx,</if>
+            <if test="mrHpAttachVo.redBloodCell != null">sxpz_hxb,</if>
+            <if test="mrHpAttachVo.platelet != null">sxpz_xxb,</if>
+            <if test="mrHpAttachVo.plasma != null">sxpz_xj,</if>
+            <if test="mrHpAttachVo.wholeBlood != null">sxpz_qx,</if>
+            <if test="mrHpAttachVo.otherBlood != null">sxpz_qt,</if>
+
+            <if test="mrqCd != null and mrqCd != ''">bazl,</if>
+            <if test="qconDate != null ">rq,</if>
+            <if test="crePerCode != null and crePerCode != ''">oper,</if>
+            <if test="crePerName != null and crePerName != ''">opername,</if>
+
+            bltjbz,
+
+            <if test="ageM != null">nl_y,</if>
+            <if test="ageD != null">nl_r,</if>
+            <if test="ageH != null">nl_s,</if>
+            <if test="inRoomNo != null and inRoomNo != ''">ry_bs,</if>
+            <if test="outRoomNo != null and outRoomNo != ''">cy_bs,</if>
+            <if test="coderName != null and coderName != ''">yygrmc,</if>
+            <if test="baby1BirWeight != null">xsetz_cs,</if>
+            <if test="inhosWeight != null">xsetz_ry,</if>
+            <if test="nowAddrAll != null and nowAddrAll != ''">xzz,</if>
+            <if test="nowAddrPost != null and nowAddrPost != ''">xzz_yb,</if>
+            <if test="apAddrAll != null and apAddrAll != ''">jiguan,</if>
+            <if test="inWay != null and inWay != ''">rytj,</if>
+            <if test="patNo != null and patNo!=''">blh,</if>
+            <if test="inOrgName1 != null and inOrgName1 != ''">jsyy,</if>
+            <if test="leaveWayCd != null and leaveWayCd != ''">lyfs,</if>
+            <if test="inOrgName2 != null and inOrgName2 != ''">jsyy_wsy,</if>
+
+            <if test="outInFlag != null">cyzzy_bz,</if>
+            <if test="outInAim != null and outInAim!=''">cyzzy_mc,</if>
+            <if test="ciBefDay != null">nlsshm_q_t,</if>
+            <if test="ciBefHour != null">nlsshm_q_s,</if>
+            <if test="ciBefMin != null">nlsshm_q_f,</if>
+            <if test="ciAftDay != null">nlsshm_h_t,</if>
+            <if test="ciAftHour != null">nlsshm_h_s,</if>
+            <if test="ciAftMin != null">nlsshm_h_f,</if>
+
+            <if test="mrHpAttachVo.isEmeCriRecord != null and mrHpAttachVo.isEmeCriRecord != ''">jwzbl,</if>
+            <if test="mrHpAttachVo.isDiffRecord != null and mrHpAttachVo.isDiffRecord != ''">ynbl,</if>
+
+            <if test="treatType != null and treatType != ''">zllb,</if>
+
+            <if test="zyMzDiaCd != null and zyMzDiaCd != ''">zymzzd_bh,</if>
+            <if test="zyMzDiaName != null and zyMzDiaName != ''">zymzzd_mc,</if>
+
+            <if test="medPrepFlag != null">zyzj,</if>
+            <if test="cmEquiFlag != null">zysb,</if>
+            <if test="cmTechFlag != null">zyzl,</if>
+            <if test="pleadFlag != null">bzsh,</if>
+            <if test="nowAddrPro != null and nowAddrPro!=''">xzz_sheng,</if>
+            <if test="nowAddrFlagty != null and nowAddrFlagty!=''">xzz_shi,</if>
+            <if test="nowAddrCou != null and nowAddrCou!=''">xzz_xian,</if>
+            <if test="nowAddr != null and nowAddr!=''">xzz_xiang,</if>
+            <if test="rprAddrPro != null and rprAddrPro!=''">hukou_sheng,</if>
+            <if test="rprAddrFlagty != null and rprAddrFlagty!=''">hukou_shi,</if>
+            <if test="rprAddrCou != null and rprAddrCou!=''">hukou_xian,</if>
+            <if test="rprAddr != null and rprAddr!=''">hukou_xiang,</if>
+            <if test="birAddrPro != null and birAddrPro!=''">csd_sheng,</if>
+            <if test="birAddrPlagty != null and birAddrPlagty!=''">csd_shi,</if>
+            <if test="birAddrCou != null and birAddrCou!=''">csd_xian,</if>
+
+            <if test="workAddrPro != null and workAddrPro!=''">dw_sheng,</if>
+            <if test="workAddrFlagty != null and workAddrFlagty!=''">dw_shi,</if>
+            <if test="workAddrCou != null and workAddrCou!=''">dw_xian,</if>
+
+            <if test="workNameAddr != null and workNameAddr != ''">dw_xiang,</if>
+
+            <if test="contAddrPro != null and contAddrPro!=''">lxrdz_sheng,</if>
+            <if test="contAddrFlagty != null and contAddrFlagty!=''">lxrdz_shi,</if>
+            <if test="contAddrCou != null and contAddrCou!=''">lxrdz_xian,</if>
+
+            <if test="contAddr != null and contAddr !=''">lxrdz_xiang,</if>
+
+            <if test="ageMi != null">nl_f,</if>
+            <if test="drugAlleFlag != null">ywgmyw,</if>
+
+            <if test="mrHpAttachVo.diaDate != null">qrrq,</if>
+            <if test="mrHpAttachVo.outDisDia != null and mrHpAttachVo.outDisDia != ''">mzyzyzdfh,</if>
+
+            <if test="baby1BirWeight != null">xsetz_cs1,</if>
+            <if test="inhosWeight != null">xsetz_ry1,</if>
+            <if test="baby2BirWeight != null">xsetz_cs2,</if>
+            <if test="baby3BirWeight != null">xsetz_cs3,</if>
+            <if test="cardTypeName != null and cardTypeName!=''">zjlx,</if>
+            <if test="proTypeRem != null and proTypeRem!=''">qtzymc,</if>
+            <if test="conRelaRem != null and conRelaRem!=''">flxr_qtgx,</if>
+
+            <if test="mrHpAttachVo.prePosDia != null and mrHpAttachVo.prePosDia != ''">sqshzdfh,</if>
+            <if test="mrHpAttachVo.clinPathDia != null and mrHpAttachVo.clinPathDia != ''">lcyblzdfh,</if>
+            <if test="mrHpAttachVo.medPathDia != null and mrHpAttachVo.medPathDia != ''">fsyblzdfh,</if>
+            <if test="mrHpAttachVo.preoperHospD != null">sqzyts,</if>
+            <if test="inHosMin != null and inHosMin != ''">ryrq_min,</if>
+            <if test="outTimeMin != null and outTimeMin != ''">cyrq_min,</if>
+
+            <if test="ryzdBh != null and ryzdBh != ''">ryzd_bh,</if>
+            <if test="ryzdBm != null and ryzdBm != ''">ryzd_bm,</if>
+            <if test="ryzdMc != null and ryzdMc != ''">ryzd_mc,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="inpNo != null and inpNo != ''">#{inpNo},</if>
+            <if test="visitId != null">#{visitId},</if>
+            <if test="recordNo != null and recordNo != ''">#{recordNo},</if>
+            <if test="payTypeName != null and payTypeName!=''">#{payTypeName},</if>
+            <if test="hcNo != null and hcNo!=''">#{hcNo},</if>
+            <if test="patientName != null and patientName != ''">#{patientName},</if>
+            <if test="cardTypeNo != null and cardTypeNo!=''">#{cardTypeNo},</if>
+            <if test="sexCd != null and sexCd != ''">#{sexCd},</if>
+            <if test="birDateYear != null and birDateYear != ''">#{birDateYear},</if>
+            <if test="birDateMouth != null and birDateMouth != ''">#{birDateMouth},</if>
+            <if test="birDateDay != null and birDateDay != ''">#{birDateDay},</if>
+            <if test="birDate != null">#{birDate},</if>
+            <if test="ageY != null">#{ageY},</if>
+            <if test="marStaCd != null and marStaCd != ''">#{marStaCd},</if>
+            <if test="nationCd != null and nationCd != ''">#{nationCd},</if>
+            <if test="nation != null and nation != ''">#{nation},</if>
+            <if test="citizenshipCd != null and citizenshipCd != ''">#{citizenshipCd},</if>
+            <if test="citizenship != null and citizenship != ''">#{citizenship},</if>
+            <if test="proTypeCd != null and proTypeCd != ''">#{proTypeCd},</if>
+            <if test="proTypeName != null and proTypeName != ''">#{proTypeName},</if>
+            <if test="birAddrPro != null and birAddrPro != ''">#{birAddrPro},</if>
+            <if test="birAddrCou != null and birAddrCou != ''">#{birAddrCou},</if>
+            <if test="workNameAddr != null and workNameAddr != ''">#{workNameAddr},</if>
+            <if test="workTel != null">#{workTel},</if>
+            <if test="workPost != null">#{workPost},</if>
+            <if test="prpAddrAll != null and prpAddrAll != ''">#{prpAddrAll},</if>
+            <if test="prpAddrPost != null and prpAddrPost != ''">#{prpAddrPost},</if>
+            <if test="contName != null and contName != ''">#{contName},</if>
+            <if test="conRelaCd != null and conRelaCd != ''">#{conRelaCd},</if>
+            <if test="conRelaName != null and conRelaName != ''">#{conRelaName},</if>
+            <if test="contTel != null">#{contTel},</if>
+            <if test="contAddrAll != null and contAddrAll != ''">#{contAddrAll},</if>
+            <if test="inhosTime != null">#{inhosTime},</if>
+            <if test="inHosYear != null and inHosYear!=''">#{inHosYear},</if>
+            <if test="inHosMouth != null and inHosMouth!=''">#{inHosMouth},</if>
+            <if test="inHosDay != null and inHosDay!=''">#{inHosDay},</if>
+            <if test="inHosHour != null and inHosHour!=''">#{inHosHour},</if>
+            <if test="inDeptCd != null and inDeptCd != ''">#{inDeptCd},</if>
+            <if test="inDeptName != null and inDeptName != ''">#{inDeptName},</if>
+            <if test="inDeptCd != null and inDeptCd != ''">#{inDeptCd},</if>
+            <if test="inDeptName != null and inDeptName != ''">#{inDeptName},</if>
+            <if test="chDeptNo != null and chDeptNo != ''">#{chDeptNo},</if>
+            <if test="chDeptName != null and chDeptName != ''">#{chDeptName},</if>
+            <if test="chDeptNo != null and chDeptNo != ''">#{chDeptNo},</if>
+            <if test="chDeptName != null and chDeptName != ''">#{chDeptName},</if>
+
+            <if test="outDeptCd != null and outDeptCd != ''">#{outDeptCd},</if>
+            <if test="outDeptName != null and outDeptName != ''">#{outDeptName},</if>
+            <if test="outDeptCd != null and outDeptCd != ''">#{outDeptCd},</if>
+            <if test="outDeptName != null and outDeptName != ''">#{outDeptName},</if>
+            <if test="outTime != null">#{outTime},</if>
+            <if test="outTimeYear != null and outTimeYear!=''">#{outTimeYear},</if>
+            <if test="outTimeMouth != null and outTimeMouth!=''">#{outTimeMouth},</if>
+            <if test="outTimeDay != null and outTimeDay!=''">#{outTimeDay},</if>
+            <if test="outTimeHour != null and outTimeHour!=''">#{outTimeHour},</if>
+            <if test="realInhosDays != null">#{realInhosDays},</if>
+
+            <if test="mrHpAttachVo.inhosCondCd != null">#{mrHpAttachVo.inhosCondCd},</if>
+            <if test="mrHpAttachVo.diaDate != null">#{mrHpAttachVo.diaDate},</if>
+            <if test="mrHpAttachVo.diaDateYear != null">#{mrHpAttachVo.diaDateYear},</if>
+            <if test="mrHpAttachVo.diaDateMouth != null">#{mrHpAttachVo.diaDateMouth},</if>
+            <if test="mrHpAttachVo.diaDateDay != null">#{mrHpAttachVo.diaDateDay},</if>
+
+            <if test="osChdCd != null and osChdCd != ''">#{osChdCd},</if>
+            <if test="osChdCd != null and osChdCd != ''">#{osChdCd},</if>
+            <if test="osChdName != null and osChdName != ''">#{osChdName},</if>
+            <if test="mzDiaCd1 != null and mzDiaCd1 != ''">#{mzDiaCd1},</if>
+            <if test="mzDiaName1 != null and mzDiaName1 != ''">#{mzDiaName1},</if>
+            <if test="mzDiaCd2 != null and mzDiaCd2 != ''">#{mzDiaCd2},</if>
+            <if test="mzDiaName2 != null and mzDiaName2 != ''">#{mzDiaName2},</if>
+
+            <if test="alleDrug != null and alleDrug != ''">left(#{alleDrug},25),</if>
+
+            <if test="mrHpAttachVo.hbsag != null and mrHpAttachVo.hbsag != ''">#{mrHpAttachVo.hbsag},</if>
+            <if test="mrHpAttachVo.hcvAb != null and mrHpAttachVo.hcvAb != ''">#{mrHpAttachVo.hcvAb},</if>
+            <if test="mrHpAttachVo.hivAb != null and mrHpAttachVo.hivAb != ''">#{mrHpAttachVo.hivAb},</if>
+            <if test="mrHpAttachVo.admDisDia != null and mrHpAttachVo.admDisDia != ''">#{mrHpAttachVo.admDisDia},</if>
+            <if test="mrHpAttachVo.prePosDia != null and mrHpAttachVo.prePosDia != ''">#{mrHpAttachVo.prePosDia},</if>
+
+            <if test="cpType != null and cpType != ''">#{cpType},</if>
+
+            <if test="mrHpAttachVo.saveTimes != null">#{mrHpAttachVo.saveTimes},</if>
+            <if test="mrHpAttachVo.saveSuccessTimes != null">#{mrHpAttachVo.saveSuccessTimes},</if>
+
+            <if test="hdName != null and hdName != ''">#{hdName},</if>
+            <if test="arcDocName != null and arcDocName != ''">#{arcDocName},</if>
+            <if test="attDocName != null and attDocName != ''">#{attDocName},</if>
+            <if test="resDocName != null and resDocName != ''">#{resDocName},</if>
+            <if test="dutyNurName != null and dutyNurName != ''">#{dutyNurName},</if>
+            <if test="stuDocName != null and stuDocName != ''">#{stuDocName},</if>
+            <if test="intDocName != null and intDocName != ''">#{intDocName},</if>
+            <if test="coderName != null and coderName != ''">#{coderName},</if>
+            <if test="qconDocName != null and qconDocName != ''">#{qconDocName},</if>
+            <if test="qconNurName != null and qconNurName != ''">#{qconNurName},</if>
+            <if test="testFlag != null and testFlag != ''">#{testFlag},</if>
+            <if test="aboCd != null and aboCd != ''">#{aboCd},</if>
+            <if test="rhCd != null and rhCd != ''">#{rhCd},</if>
+
+            <if test="mrHpAttachVo.transfusionReaction != null and mrHpAttachVo.transfusionReaction != ''">#{mrHpAttachVo.transfusionReaction},</if>
+            <if test="mrHpAttachVo.isInfuseReac != null and mrHpAttachVo.isInfuseReac != ''">#{mrHpAttachVo.isInfuseReac},</if>
+            <if test="mrHpAttachVo.bloodFlag != null and mrHpAttachVo.bloodFlag != ''">#{mrHpAttachVo.bloodFlag},</if>
+            <if test="mrHpAttachVo.redBloodCell != null">#{mrHpAttachVo.redBloodCell},</if>
+            <if test="mrHpAttachVo.platelet != null">#{mrHpAttachVo.platelet},</if>
+            <if test="mrHpAttachVo.plasma != null">#{mrHpAttachVo.plasma},</if>
+            <if test="mrHpAttachVo.wholeBlood != null">#{mrHpAttachVo.wholeBlood},</if>
+            <if test="mrHpAttachVo.otherBlood != null">#{mrHpAttachVo.otherBlood},</if>
+
+            <if test="mrqCd != null and mrqCd != ''">#{mrqCd},</if>
+            <if test="qconDate != null ">#{qconDate},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+
+            '0',
+
+            <if test="ageM != null">#{ageM},</if>
+            <if test="ageD != null">#{ageD},</if>
+            <if test="ageH != null">#{ageH},</if>
+            <if test="inRoomNo != null and inRoomNo != ''">#{inRoomNo},</if>
+            <if test="outRoomNo != null and outRoomNo != ''">#{outRoomNo},</if>
+            <if test="coderName != null and coderName != ''">#{coderName},</if>
+            <if test="baby1BirWeight != null">#{baby1BirWeight},</if>
+            <if test="inhosWeight != null">#{inhosWeight},</if>
+            <if test="nowAddrAll != null and nowAddrAll != ''">#{nowAddrAll},</if>
+            <if test="nowAddrPost != null and nowAddrPost != ''">#{nowAddrPost},</if>
+            <if test="apAddrAll != null and apAddrAll != ''">#{apAddrAll},</if>
+            <if test="inWay != null and inWay != ''">#{inWay},</if>
+            <if test="patNo != null and patNo!=''">#{patNo},</if>
+            <if test="inOrgName1 != null and inOrgName1 != ''">#{inOrgName1},</if>
+            <if test="leaveWayCd != null and leaveWayCd != ''">#{leaveWayCd},</if>
+            <if test="inOrgName2 != null and inOrgName2 != ''">#{inOrgName2},</if>
+
+            <if test="outInFlag != null">#{outInFlag},</if>
+            <if test="outInAim != null and outInAim!=''">#{outInAim},</if>
+            <if test="ciBefDay != null">#{ciBefDay},</if>
+            <if test="ciBefHour != null">#{ciBefHour},</if>
+            <if test="ciBefMin != null">#{ciBefMin},</if>
+            <if test="ciAftDay != null">#{ciAftDay},</if>
+            <if test="ciAftHour != null">#{ciAftHour},</if>
+            <if test="ciAftMin != null">#{ciAftMin},</if>
+
+            <if test="mrHpAttachVo.isEmeCriRecord != null and mrHpAttachVo.isEmeCriRecord != ''">#{mrHpAttachVo.isEmeCriRecord},</if>
+            <if test="mrHpAttachVo.isDiffRecord != null and mrHpAttachVo.isDiffRecord != ''">#{mrHpAttachVo.isDiffRecord},</if>
+
+            <if test="treatType != null and treatType != ''">#{treatType},</if>
+
+            <if test="zyMzDiaCd != null and zyMzDiaCd != ''">#{zyMzDiaCd},</if>
+            <if test="zyMzDiaName != null and zyMzDiaName != ''">#{zyMzDiaName},</if>
+
+            <if test="medPrepFlag != null">#{medPrepFlag},</if>
+            <if test="cmEquiFlag != null">#{cmEquiFlag},</if>
+            <if test="cmTechFlag != null">#{cmTechFlag},</if>
+            <if test="pleadFlag != null">#{pleadFlag},</if>
+            <if test="nowAddrPro != null and nowAddrPro!=''">#{nowAddrPro},</if>
+            <if test="nowAddrFlagty != null and nowAddrFlagty!=''">#{nowAddrFlagty},</if>
+            <if test="nowAddrCou != null and nowAddrCou!=''">#{nowAddrCou},</if>
+            <if test="nowAddr != null and nowAddr!=''">#{nowAddr},</if>
+            <if test="rprAddrPro != null and rprAddrPro!=''">#{rprAddrPro},</if>
+            <if test="rprAddrFlagty != null and rprAddrFlagty!=''">#{rprAddrFlagty},</if>
+            <if test="rprAddrCou != null and rprAddrCou!=''">#{rprAddrCou},</if>
+            <if test="rprAddr != null and rprAddr!=''">#{rprAddr},</if>
+            <if test="birAddrPro != null and birAddrPro!=''">#{birAddrPro},</if>
+            <if test="birAddrPlagty != null and birAddrPlagty!=''">#{birAddrPlagty},</if>
+            <if test="birAddrCou != null and birAddrCou!=''">#{birAddrCou},</if>
+
+            <if test="workAddrPro != null and workAddrPro!=''">#{workAddrPro},</if>
+            <if test="workAddrFlagty != null and workAddrFlagty!=''">#{workAddrFlagty},</if>
+            <if test="workAddrCou != null and workAddrCou!=''">#{workAddrCou},</if>
+
+            <if test="workNameAddr != null and workNameAddr != ''">#{workNameAddr},</if>
+
+            <if test="contAddrPro != null and contAddrPro!=''">#{contAddrPro},</if>
+            <if test="contAddrFlagty != null and contAddrFlagty!=''">#{contAddrFlagty},</if>
+            <if test="contAddrCou != null and contAddrCou!=''">#{contAddrCou},</if>
+
+            <if test="contAddr != null and contAddr !=''">#{contAddr},</if>
+
+            <if test="ageMi != null">#{ageMi},</if>
+            <if test="drugAlleFlag != null">#{drugAlleFlag},</if>
+
+            <if test="mrHpAttachVo.diaDate != null">#{mrHpAttachVo.diaDate},</if>
+            <if test="mrHpAttachVo.outDisDia != null and mrHpAttachVo.outDisDia != ''">#{mrHpAttachVo.outDisDia},</if>
+
+            <if test="baby1BirWeight != null">#{baby1BirWeight},</if>
+            <if test="inhosWeight != null">#{inhosWeight},</if>
+            <if test="baby2BirWeight != null">#{baby2BirWeight},</if>
+            <if test="baby3BirWeight != null">#{baby3BirWeight},</if>
+            <if test="cardTypeName != null and cardTypeName!=''">#{cardTypeName},</if>
+            <if test="proTypeRem != null and proTypeRem!=''">#{proTypeRem},</if>
+            <if test="conRelaRem != null and conRelaRem!=''">#{conRelaRem},</if>
+
+            <if test="mrHpAttachVo.prePosDia != null and mrHpAttachVo.prePosDia != ''">#{mrHpAttachVo.prePosDia},</if>
+            <if test="mrHpAttachVo.clinPathDia != null and mrHpAttachVo.clinPathDia != ''">#{mrHpAttachVo.clinPathDia},</if>
+            <if test="mrHpAttachVo.medPathDia != null and mrHpAttachVo.medPathDia != ''">#{mrHpAttachVo.medPathDia},</if>
+            <if test="mrHpAttachVo.preoperHospD != null">#{mrHpAttachVo.preoperHospD},</if>
+            <if test="inHosMin != null and inHosMin != ''">#{inHosMin},</if>
+            <if test="outTimeMin != null and outTimeMin != ''">#{outTimeMin},</if>
+
+            <if test="ryzdBh != null and ryzdBh != ''">#{ryzdBh},</if>
+            <if test="ryzdBm != null and ryzdBm != ''">#{ryzdBm},</if>
+            <if test="ryzdMc != null and ryzdMc != ''">#{ryzdMc},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertHisMrHpZYDia" parameterType="MrHpDia" >
+        <foreach item="item" index="index" collection="list">
+            insert into epr_ba_zdxx_zy
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">zyh,</if>
+                <if test="item.visitId != null">rycs,</if>
+                <if test="item.recordNo != null and item.recordNo != ''">bah,</if>
+                <if test="item.patientName != null and item.patientName != ''">xm,</if>
+                <if test="item.diaItem != null and item.diaItem != ''">zdlx,</if>
+                <if test="item.diaNo != null and item.diaNo != ''">xh,</if>
+                <if test="item.diaCd != null and item.diaCd != ''">icd10_bh,</if>
+                <if test="item.diaName != null and item.diaName != ''">icd10_mc,</if>
+                <if test="item.inhosCondCd != null and item.inhosCondCd != ''">cyzt,</if>
+                <if test="item.creDate != null">rq,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">oper,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">opername,</if>
+                <if test="item.outcomeCd != null and item.outcomeCd != ''">zlqk,</if>
+                <if test="item.diaCd != null and item.diaCd != ''">bm,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">#{item.inpNo},</if>
+                <if test="item.visitId != null">#{item.visitId},</if>
+                <if test="item.recordNo != null and item.recordNo != ''">#{item.recordNo},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.diaItem != null and item.diaItem != ''">#{item.diaItem},</if>
+                <if test="item.diaNo != null and item.diaNo != ''">#{item.diaNo},</if>
+                <if test="item.diaCd != null and item.diaCd != ''">#{item.diaCd},</if>
+                <if test="item.diaName != null and item.diaName != ''">#{item.diaName},</if>
+                <if test="item.inhosCondCd != null and item.inhosCondCd != ''">#{item.inhosCondCd},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                <if test="item.outcomeCd != null and item.outcomeCd != ''">#{item.outcomeCd},</if>
+                <if test="item.diaCd != null and item.diaCd != ''">#{item.diaCd},</if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <insert id="insertHisMrHpXYDia" parameterType="MrHpDia" >
+        <foreach item="item" index="index" collection="list">
+            insert into epr_ba_zdxx
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">zyh,</if>
+                <if test="item.visitId != null">rycs,</if>
+                <if test="item.recordNo != null and item.recordNo != ''">bah,</if>
+                <if test="item.patientName != null and item.patientName != ''">xm,</if>
+                <if test="item.diaItem != null and item.diaItem != ''">zdlx,</if>
+                <if test="item.diaNo != null and item.diaNo != ''">xh,</if>
+                <if test="item.diaCd != null and item.diaCd != ''">icd10_bh,</if>
+                <if test="item.diaCd != null and item.diaCd != ''">bm,</if>
+                <if test="item.diaName != null and item.diaName != ''">icd10_mc,</if>
+
+                <if test="item.inhosCondCd != null and item.inhosCondCd != ''">cyzt,</if>
+                <if test="item.creDate != null">rq,</if>
+
+                <if test="item.crePerCode != null and item.crePerCode != ''">oper,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">opername,</if>
+                <if test="item.outcomeCd != null and item.outcomeCd != ''">zlqk,</if>
+                <if test="item.diaExCd != null and item.diaExCd != ''">zdfjm,</if>
+
+                <if test="item.diaRem != null and item.diaRem != ''">zdsm,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">#{item.inpNo},</if>
+                <if test="item.visitId != null">#{item.visitId},</if>
+                <if test="item.recordNo != null and item.recordNo != ''">#{item.recordNo},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.diaItem != null and item.diaItem != ''">#{item.diaItem},</if>
+                <if test="item.diaNo != null and item.diaNo != ''">#{item.diaNo},</if>
+                <if test="item.diaCd != null and item.diaCd != ''">#{item.diaCd},</if>
+                <if test="item.diaCd != null and item.diaCd != ''">#{item.diaCd},</if>
+                <if test="item.diaName != null and item.diaName != ''">#{item.diaName},</if>
+                <if test="item.inhosCondCd != null and item.inhosCondCd != ''">#{item.inhosCondCd},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                <if test="item.outcomeCd != null and item.outcomeCd != ''">#{item.outcomeCd},</if>
+                <if test="item.diaExCd != null and item.diaExCd != ''">#{item.diaExCd},</if>
+                <if test="item.diaRem != null and item.diaRem != ''">#{item.diaRem},</if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <insert id="insertHisMrHpOpe" parameterType="MrHpOpe" >
+        <foreach item="item" index="index" collection="list">
+            insert into epr_ba_ssb
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">zyh,</if>
+                <if test="item.visitId != null">rycs,</if>
+                <if test="item.recordNo != null and item.recordNo != ''">bah,</if>
+                <if test="item.patientName != null and item.patientName != ''">xm,</if>
+                <if test="item.oprBeginDatetime != null">ssrq,</if>
+                <if test="item.opeNo != null">xh,</if>
+                <if test="item.oprIcd != null and item.oprIcd != ''">ss_icd,</if>
+                <if test="item.oprName != null and item.oprName != ''">ss_mc,</if>
+                <if test="item.opeCode != null and item.opeCode != ''">ssysgh,</if>
+                <if test="item.opeName != null and item.opeName != ''">ssys,</if>
+                <if test="item.aid1Code != null and item.aid1Code != ''">sszs_gh1,</if>
+                <if test="item.aid1Name != null and item.aid1Name != ''">sszs_mc1,</if>
+                <if test="item.aid2Code != null and item.aid2Code != ''">sszs_gh2,</if>
+                <if test="item.aid2Name != null and item.aid2Name != ''">sszs_mc2,</if>
+                <if test="item.anestMethCode != null and item.anestMethCode != ''">mzfs_bh,</if>
+                <if test="item.anestMethName != null and item.anestMethName != ''">mzfs_mc,</if>
+                <if test="item.oprInciCode != null and item.oprInciCode != ''">yhdj,</if>
+                <if test="item.oprHealCode != null and item.oprHealCode != ''">qk,</if>
+                <if test="item.anestCode != null and item.anestCode != ''">mzys_bh,</if>
+                <if test="item.anestName != null and item.anestName != ''">mzys_mc,</if>
+                <if test="item.creDate != null">rq,</if>
+                <if test="item.crePerCode != null and item.crePerCode!=''">oper,</if>
+                <if test="item.crePerName != null and item.crePerName!=''">opername,</if>
+                <if test="item.oprLevelCode != null and item.oprLevelCode!=''">ssjb,</if>
+                <if test="item.oprEndDatetime != null">ssjssj,</if>
+                <if test="item.anestAsa != null and item.anestAsa!=''">mzjb,</if>
+                <if test="item.oprNnis != null and item.oprNnis!=''">ssfxfj,</if>
+                <if test="item.opeType != null and item.opeType!=''">ssczbz,</if>
+                <if test="item.anestBeginTime != null">mzjssj,</if>
+                <if test="item.anestEndTime != null">mzkssj,</if>
+                <if test="item.duration != null">cxsj,</if>
+                <if test="item.durationUnit != null and item.durationUnit!=''">cxsj_dw,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">#{item.inpNo},</if>
+                <if test="item.visitId != null">#{item.visitId},</if>
+                <if test="item.recordNo != null and item.recordNo != ''">#{item.recordNo},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.oprBeginDatetime != null">#{item.oprBeginDatetime},</if>
+                <if test="item.opeNo != null">#{item.opeNo},</if>
+                <if test="item.oprIcd != null and item.oprIcd != ''">#{item.oprIcd},</if>
+                <if test="item.oprName != null and item.oprName != ''">#{item.oprName},</if>
+                <if test="item.opeCode != null and item.opeCode != ''">#{item.opeCode},</if>
+                <if test="item.opeName != null and item.opeName != ''">#{item.opeName},</if>
+                <if test="item.aid1Code != null and item.aid1Code != ''">#{item.aid1Code},</if>
+                <if test="item.aid1Name != null and item.aid1Name != ''">#{item.aid1Name},</if>
+                <if test="item.aid2Code != null and item.aid2Code != ''">#{item.aid2Code},</if>
+                <if test="item.aid2Name != null and item.aid2Name != ''">#{item.aid2Name},</if>
+                <if test="item.anestMethCode != null and item.anestMethCode != ''">#{item.anestMethCode},</if>
+                <if test="item.anestMethName != null and item.anestMethName != ''">#{item.anestMethName},</if>
+                <if test="item.oprInciCode != null and item.oprInciCode != ''">#{item.oprInciCode},</if>
+                <if test="item.oprHealCode != null and item.oprHealCode != ''">#{item.oprHealCode},</if>
+                <if test="item.anestCode != null and item.anestCode != ''">#{item.anestCode},</if>
+                <if test="item.anestName != null and item.anestName != ''">#{item.anestName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.crePerCode != null and item.crePerCode!=''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName!=''">#{item.crePerName},</if>
+                <if test="item.oprLevelCode != null and item.oprLevelCode!=''">#{item.oprLevelCode},</if>
+                <if test="item.oprEndDatetime != null">#{item.oprEndDatetime},</if>
+                <if test="item.anestAsa != null and item.anestAsa!=''">#{item.anestAsa},</if>
+                <if test="item.oprNnis != null and item.oprNnis!=''">#{item.oprNnis},</if>
+                <if test="item.opeType != null and item.opeType!=''">#{item.opeType},</if>
+                <if test="item.anestBeginTime != null">#{item.anestBeginTime},</if>
+                <if test="item.anestEndTime != null">#{item.anestEndTime},</if>
+                <if test="item.duration != null">#{item.duration},</if>
+                <if test="item.durationUnit != null and item.durationUnit!=''">#{item.durationUnit},</if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <insert id="insertHisMrHpFee" parameterType="MrHpFee" >
+        <foreach item="item" index="index" collection="list">
+            insert into epr_ba_fyxx
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">zyh,</if>
+                <if test="item.visitId != null">rycs,</if>
+                <if test="item.recordNo != null and item.recordNo != ''">bah,</if>
+                <if test="item.patientName != null and item.patientName != ''">xm,</if>
+                <if test="item.feeCd != null and item.feeCd != ''">xmbh,</if>
+                <if test="item.feeName != null and item.feeName != ''">xmmc,</if>
+                <if test="item.amount != null">je,</if>
+                <if test="item.creDate != null">rq,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">oper,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">opername,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.inpNo != null and item.inpNo!=''">#{item.inpNo},</if>
+                <if test="item.visitId != null">#{item.visitId},</if>
+                <if test="item.recordNo != null and item.recordNo != ''">#{item.recordNo},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.feeCd != null and item.feeCd != ''">#{item.feeCd},</if>
+                <if test="item.feeName != null and item.feeName != ''">#{item.feeName},</if>
+                <if test="item.amount != null">#{item.amount},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+            </trim>
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrHpCheckSetMapper">
+
+    <resultMap type="MrHpCheckSet" id="MrHpCheckSetResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="checkNo"    column="check_no"    />
+        <result property="checkName"    column="check_name"    />
+        <result property="checkMrhpClassNo"    column="check_mrhp_class_no"    />
+        <result property="checkMrhpClassName"    column="check_mrhp_class_name"    />
+        <result property="checkClassNo"    column="check_class_no"    />
+        <result property="checkClassName"    column="check_class_name"    />
+        <result property="checkTypeNo"    column="check_type_no"    />
+        <result property="checkTypeName"    column="check_type_name"    />
+        <result property="checkActMrType"    column="check_act_mr_type"    />
+        <result property="checkEventNo"    column="check_event_no"    />
+        <result property="checkLevel"    column="check_level"    />
+        <result property="checkEnable"    column="check_enable"    />
+        <result property="checkTips"    column="check_tips"    />
+        <result property="checkComm"    column="check_comm"    />
+        <result property="checkTable1"    column="check_table1"    />
+        <result property="checkColumn1"    column="check_column1"    />
+        <result property="checkExpression1"    column="check_expression1"    />
+        <result property="checkRelopeRator"    column="check_relope_rator"    />
+        <result property="checkTable2"    column="check_table2"    />
+        <result property="checkColumn2"    column="check_column2"    />
+        <result property="checkExpression2"    column="check_expression2"    />
+        <result property="checkNull"    column="check_null"    />
+        <result property="protectFlag"    column="protect_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="checkResult"    column="check_result"    />
+        <result property="checkFileName"    column="check_file_name"    />
+        <result property="checkEventName"    column="check_event_name"    />
+        <result property="checkHasConditions"    column="check_has_conditions"    />
+    </resultMap>
+    <resultMap id="MrHpCheckSetVoResult" type="MrHpCheckSetVo" extends="MrHpCheckSetResult">
+        <result property="checkActMrTypeName"    column="check_act_mr_type_name"    />
+        <result property="checkEventNoName"    column="check_event_no_name"    />
+    </resultMap>
+    <sql id="selectMrHpCheckSetVo">
+        select id, org_cd, check_no, check_name, check_mrhp_class_no, check_mrhp_class_name, check_class_no, check_class_name, check_type_no, check_type_name, check_act_mr_type, check_event_no, check_level, check_enable, check_tips, check_comm, check_table1, check_column1, check_expression1, check_relope_rator, check_table2, check_column2, check_expression2, check_null, protect_flag, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, check_result, check_file_name,check_event_name,check_has_conditions from mr_hp_check_set
+    </sql>
+
+    <select id="selectMrHpCheckSetVoList" parameterType="MrHpCheckSetVo" resultMap="MrHpCheckSetVoResult">
+        select cs.id, cs.org_cd, cs.check_no, cs.check_name, cs.check_mrhp_class_no, cs.check_mrhp_class_name, cs.check_class_no, cs.check_class_name,
+        cs.check_type_no, cs.check_type_name, cs.check_act_mr_type, cs.check_event_no, cs.check_level, cs.check_enable, cs.check_tips, cs.check_comm,
+        cs.check_table1, cs.check_column1, cs.check_expression1, cs.check_relope_rator, cs.check_table2, cs.check_column2, cs.check_expression2,
+        cs.check_null, cs.protect_flag, cs.cre_per_code, cs.cre_per_name, cs.cre_date, cs.alt_per_code, cs.alt_per_name, cs.alt_date, cs.check_result,
+        cs.check_event_name,sdd.data_tag as check_act_mr_type_name,sdd1.data_tag as check_event_no_name
+        from mr_hp_check_set cs
+        left join TM_BS_DICT_DATA sdd on sdd.data_val=cs.check_act_mr_type and sdd.dict_type='R043'
+        left join TM_BS_DICT_DATA sdd1 on sdd1.data_val=cs.check_event_no and sdd1.dict_type='R044'
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and cs.org_cd = #{orgCd}</if>
+            <if test="checkNo != null  and checkNo != ''"> and cs.check_no = #{checkNo}</if>
+            <if test="checkName != null  and checkName != ''">
+                and (cs.check_name like concat(concat('%', #{checkName}), '%') or (cs.check_no like concat(concat('%', #{checkName}), '%')))
+            </if>
+            <if test="checkMrhpClassNo != null  and checkMrhpClassNo != ''"> and cs.check_mrhp_class_no = #{checkMrhpClassNo}</if>
+            <if test="checkMrhpClassName != null  and checkMrhpClassName != ''"> and cs.check_mrhp_class_name like concat(concat('%', #{checkMrhpClassName}), '%')</if>
+            <if test="checkClassNo != null  and checkClassNo != ''"> and cs.check_class_no = #{checkClassNo}</if>
+            <if test="checkClassName != null  and checkClassName != ''">
+                and cs.check_class_name like concat(concat('%', #{checkClassName}), '%')
+             </if>
+            <if test="checkTypeNo != null  and checkTypeNo != ''"> and cs.check_type_no = #{checkTypeNo}</if>
+            <if test="checkTypeName != null  and checkTypeName != ''"> and cs.check_type_name like concat(concat('%', #{checkTypeName}), '%')</if>
+            <if test="checkActMrType != null  and checkActMrType != ''"> and cs.check_act_mr_type = #{checkActMrType}</if>
+            <if test="checkEventNoList != null ">
+                and
+                <foreach item="item" index="index" collection="checkEventNoList" open="(" separator="or" close=")">
+                    FIND_IN_SET(#{item}, cs.check_event_no) <![CDATA[ <> ]]> 0
+                </foreach>
+            </if>
+            <if test="checkLevel != null  and checkLevel != ''"> and cs.check_level = #{checkLevel}</if>
+            <if test="checkEnable != null  and checkEnable != ''"> and cs.check_enable = #{checkEnable}</if>
+            <if test="checkTips != null  and checkTips != ''"> and cs.check_tips = #{checkTips}</if>
+            <if test="checkComm != null  and checkComm != ''"> and cs.check_comm = #{checkComm}</if>
+            <if test="checkTable1 != null  and checkTable1 != ''"> and cs.check_table1 = #{checkTable1}</if>
+            <if test="checkColumn1 != null  and checkColumn1 != ''"> and cs.check_column1 = #{checkColumn1}</if>
+            <if test="checkExpression1 != null  and checkExpression1 != ''"> and cs.check_expression1 = #{checkExpression1}</if>
+            <if test="checkRelopeRator != null  and checkRelopeRator != ''"> and cs.check_relope_rator = #{checkRelopeRator}</if>
+            <if test="checkTable2 != null  and checkTable2 != ''"> and cs.check_table2 = #{checkTable2}</if>
+            <if test="checkColumn2 != null  and checkColumn2 != ''"> and cs.check_column2 = #{checkColumn2}</if>
+            <if test="checkExpression2 != null  and checkExpression2 != ''"> and cs.check_expression2 = #{checkExpression2}</if>
+            <if test="checkNull != null  and checkNull != ''"> and cs.check_null = #{checkNull}</if>
+            <if test="protectFlag != null  and protectFlag != ''"> and cs.protect_flag = #{protectFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cs.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cs.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cs.cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and cs.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and cs.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and cs.alt_date = #{altDate}</if>
+            <if test="checkResult != null  and checkResult != ''"> and cs.check_result = #{checkResult}</if>
+        </where>
+        order by cs.cre_date desc
+    </select>
+
+    <select id="selectMrHpCheckSetList" parameterType="MrHpCheckSetVo" resultMap="MrHpCheckSetResult">
+        <include refid="selectMrHpCheckSetVo"/>
+        <where>
+            and check_enable='1'
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="checkNo != null  and checkNo != ''"> and check_no = #{checkNo}</if>
+            <if test="checkName != null  and checkName != ''">
+                and (check_name like concat(concat('%', #{checkName}), '%') or (check_no like concat(concat('%', #{checkName}), '%'))
+            </if>
+            <if test="checkMrhpClassNo != null  and checkMrhpClassNo != ''"> and check_mrhp_class_no = #{checkMrhpClassNo}</if>
+            <if test="checkMrhpClassName != null  and checkMrhpClassName != ''"> and check_mrhp_class_name like concat(concat('%', #{checkMrhpClassName}), '%')</if>
+            <if test="checkClassNo != null  and checkClassNo != ''"> and check_class_no = #{checkClassNo}</if>
+            <if test="checkClassName != null  and checkClassName != ''">
+                and check_class_name like concat(concat('%', #{checkClassName}), '%')
+            </if>
+            <if test="checkTypeNo != null  and checkTypeNo != ''"> and check_type_no = #{checkTypeNo}</if>
+
+            <if test="checkTypeName != null  and checkTypeName != ''"> and check_type_name like concat(concat('%', #{checkTypeName}), '%')</if>
+            <if test="checkActMrType != null  and checkActMrType != ''"> and check_act_mr_type = #{checkActMrType}</if>
+            <if test="checkEventNoList != null ">
+                and
+                <foreach item="item" index="index" collection="checkEventNoList" open="(" separator="or" close=")">
+                    FIND_IN_SET(#{item}, check_event_no) <![CDATA[ <> ]]> 0
+                </foreach>
+            </if>
+            <if test="checkLevel != null  and checkLevel != ''"> and check_level = #{checkLevel}</if>
+            <if test="checkTips != null  and checkTips != ''"> and check_tips = #{checkTips}</if>
+            <if test="checkComm != null  and checkComm != ''"> and check_comm = #{checkComm}</if>
+            <if test="checkTable1 != null  and checkTable1 != ''"> and check_table1 = #{checkTable1}</if>
+            <if test="checkColumn1 != null  and checkColumn1 != ''"> and check_column1 = #{checkColumn1}</if>
+            <if test="checkExpression1 != null  and checkExpression1 != ''"> and check_expression1 = #{checkExpression1}</if>
+            <if test="checkRelopeRator != null  and checkRelopeRator != ''"> and check_relope_rator = #{checkRelopeRator}</if>
+            <if test="checkTable2 != null  and checkTable2 != ''"> and check_table2 = #{checkTable2}</if>
+            <if test="checkColumn2 != null  and checkColumn2 != ''"> and check_column2 = #{checkColumn2}</if>
+            <if test="checkExpression2 != null  and checkExpression2 != ''"> and check_expression2 = #{checkExpression2}</if>
+            <if test="checkNull != null  and checkNull != ''"> and check_null = #{checkNull}</if>
+            <if test="protectFlag != null  and protectFlag != ''"> and protect_flag = #{protectFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="checkResult != null  and checkResult != ''"> and check_result = #{checkResult}</if>
+        </where>
+
+    </select>
+    <select id="selectMrHpCheckSetById" parameterType="String" resultMap="MrHpCheckSetVoResult">
+        <include refid="selectMrHpCheckSetVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectMrHpCheckSetByCheckName" resultMap="MrHpCheckSetVoResult">
+        <include refid="selectMrHpCheckSetVo"/>
+        where check_name = #{checkName}
+        <if test="id!=null and id!=''">and id!=#{id}</if>
+    </select>
+
+    <insert id="insertMrHpCheckSet" parameterType="mrHpCheckSetVo">
+        insert into mr_hp_check_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="checkNo != null">check_no,</if>
+            <if test="checkName != null">check_name,</if>
+            <if test="checkMrhpClassNo != null">check_mrhp_class_no,</if>
+            <if test="checkMrhpClassName != null">check_mrhp_class_name,</if>
+            <if test="checkClassNo != null">check_class_no,</if>
+            <if test="checkClassName != null">check_class_name,</if>
+            <if test="checkTypeNo != null">check_type_no,</if>
+            <if test="checkTypeName != null">check_type_name,</if>
+            <if test="checkActMrType != null">check_act_mr_type,</if>
+            <if test="checkEventNo != null">check_event_no,</if>
+            <if test="checkLevel != null">check_level,</if>
+            <if test="checkEnable != null">check_enable,</if>
+            <if test="checkTips != null">check_tips,</if>
+            <if test="checkComm != null">check_comm,</if>
+            <if test="checkTable1 != null">check_table1,</if>
+            <if test="checkColumn1 != null">check_column1,</if>
+            <if test="checkExpression1 != null">check_expression1,</if>
+            <if test="checkRelopeRator != null">check_relope_rator,</if>
+            <if test="checkTable2 != null">check_table2,</if>
+            <if test="checkColumn2 != null">check_column2,</if>
+            <if test="checkExpression2 != null">check_expression2,</if>
+            <if test="checkNull != null">check_null,</if>
+            <if test="protectFlag != null">protect_flag,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="checkResult != null">check_result,</if>
+            <if test="checkFileName != null">check_file_name,</if>
+            <if test="checkEventName != null and checkEventName != '' ">check_event_name,</if>
+            <if test="checkHasConditions != null and checkHasConditions != '' ">check_has_conditions,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="checkNo != null">#{checkNo},</if>
+            <if test="checkName != null">#{checkName},</if>
+            <if test="checkMrhpClassNo != null">#{checkMrhpClassNo},</if>
+            <if test="checkMrhpClassName != null">#{checkMrhpClassName},</if>
+            <if test="checkClassNo != null">#{checkClassNo},</if>
+            <if test="checkClassName != null">#{checkClassName},</if>
+            <if test="checkTypeNo != null">#{checkTypeNo},</if>
+            <if test="checkTypeName != null">#{checkTypeName},</if>
+            <if test="checkActMrType != null">#{checkActMrType},</if>
+            <if test="checkEventNo != null">#{checkEventNo},</if>
+            <if test="checkLevel != null">#{checkLevel},</if>
+            <if test="checkEnable != null">#{checkEnable},</if>
+            <if test="checkTips != null">#{checkTips},</if>
+            <if test="checkComm != null">#{checkComm},</if>
+            <if test="checkTable1 != null">#{checkTable1},</if>
+            <if test="checkColumn1 != null">#{checkColumn1},</if>
+            <if test="checkExpression1 != null">#{checkExpression1},</if>
+            <if test="checkRelopeRator != null">#{checkRelopeRator},</if>
+            <if test="checkTable2 != null">#{checkTable2},</if>
+            <if test="checkColumn2 != null">#{checkColumn2},</if>
+            <if test="checkExpression2 != null">#{checkExpression2},</if>
+            <if test="checkNull != null">#{checkNull},</if>
+            <if test="protectFlag != null">#{protectFlag},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="checkResult != null">#{checkResult},</if>
+            <if test="checkFileName != null">#{checkFileName},</if>
+            <if test="checkEventName != null and checkEventName !=''">#{checkEventName},</if>
+            <if test="checkHasConditions != null and checkHasConditions != '' ">#{checkHasConditions},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateMrHpCheckSet" parameterType="MrHpCheckSet">
+        update mr_hp_check_set
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="checkNo != null">check_no = #{checkNo},</if>
+            <if test="checkName != null">check_name = #{checkName},</if>
+            <if test="checkMrhpClassNo != null">check_mrhp_class_no = #{checkMrhpClassNo},</if>
+            <if test="checkMrhpClassName != null">check_mrhp_class_name = #{checkMrhpClassName},</if>
+            <if test="checkClassNo != null">check_class_no = #{checkClassNo},</if>
+            <if test="checkClassName != null">check_class_name = #{checkClassName},</if>
+            <if test="checkTypeNo != null">check_type_no = #{checkTypeNo},</if>
+            <if test="checkTypeName != null">check_type_name = #{checkTypeName},</if>
+            <if test="checkActMrType != null">check_act_mr_type = #{checkActMrType},</if>
+            <if test="checkEventNo != null">check_event_no = #{checkEventNo},</if>
+            <if test="checkLevel != null">check_level = #{checkLevel},</if>
+            <if test="checkEnable != null">check_enable = #{checkEnable},</if>
+            <if test="checkTips != null">check_tips = #{checkTips},</if>
+            <if test="checkComm != null">check_comm = #{checkComm},</if>
+            check_table1 = #{checkTable1,jdbcType=VARCHAR},
+            check_column1 = #{checkColumn1,jdbcType=VARCHAR},
+            check_expression1 = #{checkExpression1,jdbcType=VARCHAR},
+            <if test="checkRelopeRator != null">check_relope_rator = #{checkRelopeRator},</if>
+            check_table2 = #{checkTable2,jdbcType=VARCHAR},
+            check_column2 = #{checkColumn2,jdbcType=VARCHAR},
+            check_expression2 = #{checkExpression2,jdbcType=VARCHAR},
+            <if test="checkNull != null">check_null = #{checkNull},</if>
+            <if test="protectFlag != null">protect_flag = #{protectFlag},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="checkResult != null">check_result = #{checkResult},</if>
+            <if test="checkFileName != null">check_file_name = #{checkFileName},</if>
+            <if test="checkEventName != null">check_event_name = #{checkEventName},</if>
+            <if test="checkHasConditions != null and checkHasConditions != '' ">check_has_conditions=#{checkHasConditions},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMrHpCheckSetById" parameterType="String">
+        delete from mr_hp_check_set where id = #{id}
+    </delete>
+    <update id="updateEditFlag" parameterType="MrHpCheckSet">
+         update mr_hp_check_set set check_enable = #{checkEnable},alt_per_code = #{altPerCode},alt_per_name = #{altPerName}  where id = #{id}
+    </update>
+
+    <delete id="deleteMrHpCheckSetByIds" parameterType="String">
+        delete from mr_hp_check_set where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcFlowScoreMapper">
+
+    <resultMap type="EmrQcFlowScore" id="EmrQcFlowScoreResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="scheId"    column="sche_id"    />
+        <result property="scheName"    column="sche_name"    />
+        <result property="scheScore"    column="sche_score"    />
+        <result property="appSeg"    column="app_seg"    />
+        <result property="dedCd"    column="ded_cd"    />
+        <result property="dedName"    column="ded_name"    />
+        <result property="dedType"    column="ded_type"    />
+        <result property="dedScoreSingle"    column="ded_score_single"    />
+        <result property="dedScoreMax"    column="ded_score_max"    />
+        <result property="dedScoreDesc"    column="ded_score_desc"    />
+        <result property="depNum"    column="dep_num"    />
+        <result property="dedScore"    column="ded_score"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="qcSn"    column="qc_sn"    />
+        <result property="itemClassCd"    column="item_class_cd"    />
+        <result property="itemClassName"    column="item_class_name"    />
+        <result property="itemDesc"    column="item_desc"    />
+    </resultMap>
+    <resultMap id="EmrQcFlowScoreVoResult" type="EmrQcFlowScoreVo" extends="EmrQcFlowScoreResult">
+        <result property="itemTotalScore"    column="item_total_score"    />
+        <result property="dedDesc"    column="ded_desc"    />
+        <result property="scheScore"    column="scheScore"    />
+        <result property="itemScore"    column="itemScore"    />
+        <result property="itemSort"    column="itemSort"    />
+        <result property="itemClassSort"    column="itemClassSort"    />
+        <result property="dedSort"    column="dedSort"    />
+    </resultMap>
+    <sql id="selectEmrQcFlowScoreVo">
+        select id, org_cd, patient_id, dept_cd, dept_name, sche_id, sche_name, sche_score, app_seg, ded_cd, ded_name, ded_type, ded_score_single,item_class_cd, item_class_name,item_desc,
+               ded_score_max, ded_score_desc, dep_num, ded_score, item_cd, item_name, cre_per_code, cre_per_name, cre_date, qc_sn from emr_qc_flow_score
+    </sql>
+
+    <select id="selectEmrQcFlowScoreList" parameterType="EmrQcFlowScore" resultMap="EmrQcFlowScoreResult">
+        <include refid="selectEmrQcFlowScoreVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="scheId != null  and scheId != ''"> and sche_id = #{scheId}</if>
+            <if test="scheName != null  and scheName != ''"> and sche_name like concat(concat('%', #{scheName}), '%')</if>
+            <if test="scheScore != null "> and sche_score = #{scheScore}</if>
+            <if test="appSeg != null  and appSeg != ''"> and app_seg = #{appSeg}</if>
+            <if test="dedCd != null  and dedCd != ''"> and ded_cd = #{dedCd}</if>
+            <if test="dedName != null  and dedName != ''"> and ded_name like concat(concat('%', #{dedName}), '%')</if>
+            <if test="dedType != null  and dedType != ''"> and ded_type = #{dedType}</if>
+            <if test="dedScoreSingle != null "> and ded_score_single = #{dedScoreSingle}</if>
+            <if test="dedScoreMax != null "> and ded_score_max = #{dedScoreMax}</if>
+            <if test="dedScoreDesc != null  and dedScoreDesc != ''"> and ded_score_desc = #{dedScoreDesc}</if>
+            <if test="depNum != null "> and dep_num = #{depNum}</if>
+            <if test="dedScore != null  and dedScore != ''"> and ded_score = #{dedScore}</if>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="qcSn != null  and qcSn != ''"> and qc_sn = #{qcSn}</if>
+            <if test="itemClassCd != null  and itemClassCd != ''"> and item_class_cd = #{itemClassCd}</if>
+            <if test="itemClassName != null  and itemClassName != ''"> and item_class_name = #{itemClassName}</if>
+            <if test="itemDesc != null  and itemDesc != ''"> and item_desc = #{itemDesc}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrQcFlowScoreById" parameterType="Long" resultMap="EmrQcFlowScoreResult">
+        <include refid="selectEmrQcFlowScoreVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrQcFlowScore" parameterType="EmrQcFlowScore">
+        insert into emr_qc_flow_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="scheId != null">sche_id,</if>
+            <if test="scheName != null">sche_name,</if>
+            <if test="scheScore != null">sche_score,</if>
+            <if test="appSeg != null">app_seg,</if>
+            <if test="dedCd != null">ded_cd,</if>
+            <if test="dedName != null">ded_name,</if>
+            <if test="dedType != null">ded_type,</if>
+            <if test="dedScoreSingle != null">ded_score_single,</if>
+            <if test="dedScoreMax != null">ded_score_max,</if>
+            <if test="dedScoreDesc != null">ded_score_desc,</if>
+            <if test="depNum != null">dep_num,</if>
+            <if test="dedScore != null">ded_score,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="qcSn != null">qc_sn,</if>
+            <if test="itemClassCd != null and itemClassCd != ''">item_class_cd,</if>
+            <if test="itemClassName != null and itemClassName != ''">item_class_name,</if>
+            <if test="itemDesc != null and itemDesc != ''">item_desc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="scheId != null">#{scheId},</if>
+            <if test="scheName != null">#{scheName},</if>
+            <if test="scheScore != null">#{scheScore},</if>
+            <if test="appSeg != null">#{appSeg},</if>
+            <if test="dedCd != null">#{dedCd},</if>
+            <if test="dedName != null">#{dedName},</if>
+            <if test="dedType != null">#{dedType},</if>
+            <if test="dedScoreSingle != null">#{dedScoreSingle},</if>
+            <if test="dedScoreMax != null">#{dedScoreMax},</if>
+            <if test="dedScoreDesc != null">#{dedScoreDesc},</if>
+            <if test="depNum != null">#{depNum},</if>
+            <if test="dedScore != null">#{dedScore},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="qcSn != null">#{qcSn},</if>
+            <if test="itemClassCd != null  and itemClassCd != ''">#{itemClassCd},</if>
+            <if test="itemClassName != null  and itemClassName != ''">#{itemClassName},</if>
+            <if test="itemDesc != null  and itemDesc != ''">#{itemDesc},</if>
+         </trim>
+    </insert>
+    <insert id="insertEmrQcFlowScoreList" parameterType="java.util.List">
+        insert into emr_qc_flow_score(id, org_cd, patient_id, dept_cd, dept_name, sche_id, sche_name, sche_score, app_seg, ded_cd, ded_name,
+        ded_type, ded_score_single, ded_score_max, ded_score_desc, dep_num, ded_score, item_cd, item_name, cre_per_code, cre_per_name, qc_sn,item_class_Cd,item_class_name,item_desc, cre_date)
+        <foreach collection ="list" item="emrQcFlowScoreList" index= "index" separator="union all" >
+            select   #{emrQcFlowScoreList.id,jdbcType=NUMERIC},
+            #{emrQcFlowScoreList.orgCd,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.patientId,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.deptCd,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.deptName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.scheId,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.scheName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.scheScore,jdbcType=NUMERIC},
+            #{emrQcFlowScoreList.appSeg,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.dedCd,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.dedName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.dedType,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.dedScoreSingle,jdbcType=NUMERIC},
+            #{emrQcFlowScoreList.dedScoreMax,jdbcType=NUMERIC},
+            #{emrQcFlowScoreList.dedScoreDesc,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.depNum,jdbcType=NUMERIC},
+            #{emrQcFlowScoreList.dedScore,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.itemCd,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.itemName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.crePerCode,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.crePerName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.qcSn,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.itemClassCd,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.itemClassName,jdbcType=VARCHAR},
+            #{emrQcFlowScoreList.itemDesc,jdbcType=VARCHAR},
+            sysdate from dual
+        </foreach>
+    </insert>
+    <update id="updateEmrQcFlowScore" parameterType="EmrQcFlowScore">
+        update emr_qc_flow_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="scheId != null">sche_id = #{scheId},</if>
+            <if test="scheName != null">sche_name = #{scheName},</if>
+            <if test="scheScore != null">sche_score = #{scheScore},</if>
+            <if test="appSeg != null">app_seg = #{appSeg},</if>
+            <if test="dedCd != null">ded_cd = #{dedCd},</if>
+            <if test="dedName != null">ded_name = #{dedName},</if>
+            <if test="dedType != null">ded_type = #{dedType},</if>
+            <if test="dedScoreSingle != null">ded_score_single = #{dedScoreSingle},</if>
+            <if test="dedScoreMax != null">ded_score_max = #{dedScoreMax},</if>
+            <if test="dedScoreDesc != null">ded_score_desc = #{dedScoreDesc},</if>
+            <if test="depNum != null">dep_num = #{depNum},</if>
+            <if test="dedScore != null">ded_score = #{dedScore},</if>
+            <if test="itemCd != null">item_cd = #{itemCd},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="qcSn != null">qc_sn = #{qcSn},</if>
+            <if test="itemClassCd != null and itemClassCd!=''">item_class_cd = #{itemClassCd},</if>
+            <if test="itemClassName != null and itemClassName!=''">item_class_name = #{itemClassName},</if>
+            <if test="itemDesc != null and itemDesc!=''">item_desc = #{itemDesc},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcFlowScoreById" parameterType="Long">
+        delete from emr_qc_flow_score where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcFlowScoreByIds" parameterType="String">
+        delete from emr_qc_flow_score where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+<select id="selectEmrScoreList" parameterType="EmrQcFlowScore" resultMap="EmrQcFlowScoreVoResult">
+    select eqf.*,qsi.SORT as itemSort,qsi.SCORE as itemScore,sdd.data_sort as itemClassSort,qsdd.sort as dedSort from emr_qc_flow_score eqf
+        left join qc_score_item qsi on eqf.ITEM_CD = qsi.ID
+        left join qc_score_ded_detail qsdd on qsdd.DED_CD = eqf.DED_CD
+        left join TM_BS_DICT_DATA sdd on sdd.data_val = qsi.ITEM_CLASS_CD and sdd.dict_type='s058'
+    <where>
+        <if test="patientId !=null and patientId!=''"> and eqf.patient_id=#{patientId}</if>
+        <if test="qcSn !=null and qcSn!=''"> and eqf.qc_sn=#{qcSn}</if>
+    </where>
+</select>
+    <delete id="deleteEmrQcFlowScoreByQcId">
+        delete from emr_qc_flow_score where PATIENT_ID = #{patientId} and QC_SN=#{qcId}
+    </delete>
+</mapper>

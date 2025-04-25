@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.AppItemMapper">
+    
+    <resultMap type="AppItem" id="AppItemResult">
+        <result property="appCd"    column="app_cd"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="itemTypeCd"    column="item_type_cd"    />
+        <result property="patTypeCd"    column="pat_type_cd"    />
+        <result property="patTypeName"    column="pat_type_name"    />
+        <result property="maCd"    column="ma_cd"    />
+        <result property="maTypeCd"    column="ma_type_cd"    />
+        <result property="maTypeName"    column="ma_type_name"    />
+        <result property="maClasCd"    column="ma_clas_cd"    />
+        <result property="maClasName"    column="ma_clas_name"    />
+        <result property="maTypeId"    column="ma_type_id"    />
+        <result property="maItemCd"    column="ma_item_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="sampTime"    column="samp_time"    />
+        <result property="sampNurCd"    column="samp_nur_cd"    />
+        <result property="sampNurName"    column="samp_nur_name"    />
+        <result property="inhosDiag"    column="inhos_diag"    />
+        <result property="otherDiag"    column="other_diag"    />
+        <result property="itemState"    column="item_state"    />
+        <result property="asptAim"    column="aspt_aim"    />
+        <result property="examPos"    column="exam_pos"    />
+        <result property="remark"    column="remark"    />
+        <result property="urgFlag"    column="urg_flag"    />
+        <result property="warnFlag"    column="warn_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="maItemName"    column="ma_item_name"    />
+        <result property="itemTypeName"    column="item_type_name"    />
+    </resultMap>
+
+    <sql id="selectAppItemVo">
+        select app_cd, org_cd, item_type_cd, pat_type_cd, pat_type_name, ma_cd, ma_type_cd, ma_type_name, ma_clas_cd, ma_clas_name, ma_type_id, ma_item_cd, patient_id, app_time, app_dept_cd, app_dept_name, app_doc_cd, app_doc_name, spec_cd, spec_name, samp_time, samp_nur_cd, samp_nur_name, inhos_diag, other_diag, item_state, aspt_aim, exam_pos, remark, urg_flag, warn_flag, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, ma_item_name, item_type_name from app_item
+    </sql>
+
+    <select id="selectAppItemList" parameterType="AppItem" resultMap="AppItemResult">
+        <include refid="selectAppItemVo"/>
+        <where>  
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="itemTypeCd != null  and itemTypeCd != ''"> and item_type_cd = #{itemTypeCd}</if>
+            <if test="patTypeCd != null  and patTypeCd != ''"> and pat_type_cd = #{patTypeCd}</if>
+            <if test="patTypeName != null  and patTypeName != ''"> and pat_type_name like concat(concat('%', #{patTypeName}), '%')</if>
+            <if test="maCd != null  and maCd != ''"> and ma_cd = #{maCd}</if>
+            <if test="maTypeCd != null  and maTypeCd != ''"> and ma_type_cd = #{maTypeCd}</if>
+            <if test="maTypeName != null  and maTypeName != ''"> and ma_type_name like concat(concat('%', #{maTypeName}), '%')</if>
+            <if test="maClasCd != null  and maClasCd != ''"> and ma_clas_cd = #{maClasCd}</if>
+            <if test="maClasName != null  and maClasName != ''"> and ma_clas_name like concat(concat('%', #{maClasName}), '%')</if>
+            <if test="maTypeId != null  and maTypeId != ''"> and ma_type_id = #{maTypeId}</if>
+            <if test="maItemCd != null  and maItemCd != ''"> and ma_item_cd = #{maItemCd}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="appTime != null "> and app_time = #{appTime}</if>
+            <if test="appDeptCd != null  and appDeptCd != ''"> and app_dept_cd = #{appDeptCd}</if>
+            <if test="appDeptName != null  and appDeptName != ''"> and app_dept_name like concat(concat('%', #{appDeptName}), '%')</if>
+            <if test="appDocCd != null  and appDocCd != ''"> and app_doc_cd = #{appDocCd}</if>
+            <if test="appDocName != null  and appDocName != ''"> and app_doc_name like concat(concat('%', #{appDocName}), '%')</if>
+            <if test="specCd != null  and specCd != ''"> and spec_cd = #{specCd}</if>
+            <if test="specName != null  and specName != ''"> and spec_name like concat(concat('%', #{specName}), '%')</if>
+            <if test="sampTime != null "> and samp_time = #{sampTime}</if>
+            <if test="sampNurCd != null  and sampNurCd != ''"> and samp_nur_cd = #{sampNurCd}</if>
+            <if test="sampNurName != null  and sampNurName != ''"> and samp_nur_name like concat(concat('%', #{sampNurName}), '%')</if>
+            <if test="inhosDiag != null  and inhosDiag != ''"> and inhos_diag = #{inhosDiag}</if>
+            <if test="otherDiag != null  and otherDiag != ''"> and other_diag = #{otherDiag}</if>
+            <if test="itemState != null  and itemState != ''"> and item_state = #{itemState}</if>
+            <if test="asptAim != null  and asptAim != ''"> and aspt_aim = #{asptAim}</if>
+            <if test="examPos != null  and examPos != ''"> and exam_pos = #{examPos}</if>
+            <if test="urgFlag != null  and urgFlag != ''"> and urg_flag = #{urgFlag}</if>
+            <if test="warnFlag != null  and warnFlag != ''"> and warn_flag = #{warnFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="maItemName != null  and maItemName != ''"> and ma_item_name like concat(concat('%', #{maItemName}), '%')</if>
+            <if test="itemTypeName != null  and itemTypeName != ''"> and item_type_name like concat(concat('%', #{itemTypeName}), '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAppItemById" parameterType="String" resultMap="AppItemResult">
+        <include refid="selectAppItemVo"/>
+        where app_cd = #{appCd}
+    </select>
+        
+    <insert id="insertAppItem" parameterType="AppItem">
+        <selectKey keyProperty="appCd" resultType="long" order="BEFORE">
+            SELECT seq_app_item.NEXTVAL as appCd FROM DUAL
+        </selectKey>
+        insert into app_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appCd != null">app_cd,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="itemTypeCd != null">item_type_cd,</if>
+            <if test="patTypeCd != null">pat_type_cd,</if>
+            <if test="patTypeName != null">pat_type_name,</if>
+            <if test="maCd != null">ma_cd,</if>
+            <if test="maTypeCd != null">ma_type_cd,</if>
+            <if test="maTypeName != null">ma_type_name,</if>
+            <if test="maClasCd != null">ma_clas_cd,</if>
+            <if test="maClasName != null">ma_clas_name,</if>
+            <if test="maTypeId != null">ma_type_id,</if>
+            <if test="maItemCd != null">ma_item_cd,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="appTime != null">app_time,</if>
+            <if test="appDeptCd != null">app_dept_cd,</if>
+            <if test="appDeptName != null">app_dept_name,</if>
+            <if test="appDocCd != null">app_doc_cd,</if>
+            <if test="appDocName != null">app_doc_name,</if>
+            <if test="specCd != null">spec_cd,</if>
+            <if test="specName != null">spec_name,</if>
+            <if test="sampTime != null">samp_time,</if>
+            <if test="sampNurCd != null">samp_nur_cd,</if>
+            <if test="sampNurName != null">samp_nur_name,</if>
+            <if test="inhosDiag != null">inhos_diag,</if>
+            <if test="otherDiag != null">other_diag,</if>
+            <if test="itemState != null">item_state,</if>
+            <if test="asptAim != null">aspt_aim,</if>
+            <if test="examPos != null">exam_pos,</if>
+            <if test="remark != null">remark,</if>
+            <if test="urgFlag != null">urg_flag,</if>
+            <if test="warnFlag != null">warn_flag,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="maItemName != null">ma_item_name,</if>
+            <if test="itemTypeName != null">item_type_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appCd != null">#{appCd},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="itemTypeCd != null">#{itemTypeCd},</if>
+            <if test="patTypeCd != null">#{patTypeCd},</if>
+            <if test="patTypeName != null">#{patTypeName},</if>
+            <if test="maCd != null">#{maCd},</if>
+            <if test="maTypeCd != null">#{maTypeCd},</if>
+            <if test="maTypeName != null">#{maTypeName},</if>
+            <if test="maClasCd != null">#{maClasCd},</if>
+            <if test="maClasName != null">#{maClasName},</if>
+            <if test="maTypeId != null">#{maTypeId},</if>
+            <if test="maItemCd != null">#{maItemCd},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="appTime != null">#{appTime},</if>
+            <if test="appDeptCd != null">#{appDeptCd},</if>
+            <if test="appDeptName != null">#{appDeptName},</if>
+            <if test="appDocCd != null">#{appDocCd},</if>
+            <if test="appDocName != null">#{appDocName},</if>
+            <if test="specCd != null">#{specCd},</if>
+            <if test="specName != null">#{specName},</if>
+            <if test="sampTime != null">#{sampTime},</if>
+            <if test="sampNurCd != null">#{sampNurCd},</if>
+            <if test="sampNurName != null">#{sampNurName},</if>
+            <if test="inhosDiag != null">#{inhosDiag},</if>
+            <if test="otherDiag != null">#{otherDiag},</if>
+            <if test="itemState != null">#{itemState},</if>
+            <if test="asptAim != null">#{asptAim},</if>
+            <if test="examPos != null">#{examPos},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="urgFlag != null">#{urgFlag},</if>
+            <if test="warnFlag != null">#{warnFlag},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="maItemName != null">#{maItemName},</if>
+            <if test="itemTypeName != null">#{itemTypeName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppItem" parameterType="AppItem">
+        update app_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="itemTypeCd != null">item_type_cd = #{itemTypeCd},</if>
+            <if test="patTypeCd != null">pat_type_cd = #{patTypeCd},</if>
+            <if test="patTypeName != null">pat_type_name = #{patTypeName},</if>
+            <if test="maCd != null">ma_cd = #{maCd},</if>
+            <if test="maTypeCd != null">ma_type_cd = #{maTypeCd},</if>
+            <if test="maTypeName != null">ma_type_name = #{maTypeName},</if>
+            <if test="maClasCd != null">ma_clas_cd = #{maClasCd},</if>
+            <if test="maClasName != null">ma_clas_name = #{maClasName},</if>
+            <if test="maTypeId != null">ma_type_id = #{maTypeId},</if>
+            <if test="maItemCd != null">ma_item_cd = #{maItemCd},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="appDeptCd != null">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null">app_dept_name = #{appDeptName},</if>
+            <if test="appDocCd != null">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null">app_doc_name = #{appDocName},</if>
+            <if test="specCd != null">spec_cd = #{specCd},</if>
+            <if test="specName != null">spec_name = #{specName},</if>
+            <if test="sampTime != null">samp_time = #{sampTime},</if>
+            <if test="sampNurCd != null">samp_nur_cd = #{sampNurCd},</if>
+            <if test="sampNurName != null">samp_nur_name = #{sampNurName},</if>
+            <if test="inhosDiag != null">inhos_diag = #{inhosDiag},</if>
+            <if test="otherDiag != null">other_diag = #{otherDiag},</if>
+            <if test="itemState != null">item_state = #{itemState},</if>
+            <if test="asptAim != null">aspt_aim = #{asptAim},</if>
+            <if test="examPos != null">exam_pos = #{examPos},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="urgFlag != null">urg_flag = #{urgFlag},</if>
+            <if test="warnFlag != null">warn_flag = #{warnFlag},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="maItemName != null">ma_item_name = #{maItemName},</if>
+            <if test="itemTypeName != null">item_type_name = #{itemTypeName},</if>
+        </trim>
+        where app_cd = #{appCd}
+    </update>
+
+    <delete id="deleteAppItemById" parameterType="String">
+        delete from app_item where app_cd = #{appCd}
+    </delete>
+
+    <delete id="deleteAppItemByIds" parameterType="String">
+        delete from app_item where app_cd in 
+        <foreach item="appCd" collection="array" open="(" separator="," close=")">
+            #{appCd}
+        </foreach>
+    </delete>
+
+    <insert id="insertMap" parameterType="map">
+        insert into app_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="org_cd!=null and org_cd!=''">org_cd,</if>
+            <if test="patient_id!=null and patient_id!=''">patient_id,</if>
+            <if test="pat_type_name!=null and pat_type_name!=''">pat_type_name,</if>
+            <if test="app_cd!=null and app_cd!=''">app_cd,</if>
+            <if test="item_type_cd!=null and item_type_cd!=''">item_type_cd,</if>
+            <if test="ma_cd!=null and ma_cd!=''">ma_cd,</if>
+            <if test="ma_type_cd!=null and ma_type_cd!=''">ma_type_cd,</if>
+            <if test="ma_type_name!=null and ma_type_name!=''">ma_type_name,</if>
+            <if test="ma_clas_cd!=null and ma_clas_cd!=''">ma_clas_cd,</if>
+            <if test="ma_clas_name!=null and ma_clas_name!=''">ma_clas_name,</if>
+            <if test="ma_type_id!=null and ma_type_id!=''">ma_type_id,</if>
+            <if test="ma_item_cd!=null and ma_item_cd!=''">ma_item_cd,</if>
+            <if test="app_time!=null">app_time,</if>
+            <if test="app_dept_cd!=null and app_dept_cd!=''">app_dept_cd,</if>
+            <if test="app_dept_name!=null and app_dept_name!=''">app_dept_name,</if>
+            <if test="app_doc_cd!=null and app_doc_cd!=''">app_doc_cd,</if>
+            <if test="app_doc_name!=null and app_doc_name!=''">app_doc_name,</if>
+            <if test="spec_cd!=null and spec_cd!=''">spec_cd,</if>
+            <if test="spec_name!=null and spec_name!=''">spec_name,</if>
+            <if test="samp_time!=null">samp_time,</if>
+            <if test="samp_nur_cd!=null and samp_nur_cd!=''">samp_nur_cd,</if>
+            <if test="samp_nur_name!=null and samp_nur_name!=''">samp_nur_name,</if>
+            <if test="inhos_diag!=null and inhos_diag!=''">inhos_diag,</if>
+            <if test="other_diag!=null and other_diag!=''">other_diag,</if>
+            <if test="item_state!=null and item_state!=''">item_state,</if>
+            <if test="aspt_aim!=null and aspt_aim!=''">aspt_aim,</if>
+            <if test="exam_pos!=null and exam_pos!=''">exam_pos,</if>
+            <if test="remark!=null and remark!=''">remark,</if>
+            <if test="urg_flag!=null and urg_flag!=''">urg_flag,</if>
+            <if test="warn_flag!=null and warn_flag!=''">warn_flag,</if>
+            <if test="ma_item_name!=null and ma_item_name!=''">ma_item_name,</if>
+            <if test="item_type_name!=null and item_type_name!=''">item_type_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="org_cd!=null and org_cd!=''">#{org_cd},</if>
+            <if test="patient_id!=null and patient_id!=''">#{patient_id},</if>
+            <if test="pat_type_name!=null and pat_type_name!=''">#{pat_type_name},</if>
+            <if test="app_cd!=null and app_cd!=''">#{app_cd},</if>
+            <if test="item_type_cd!=null and item_type_cd!=''">#{item_type_cd},</if>
+            <if test="ma_cd!=null and ma_cd!=''">#{ma_cd},</if>
+            <if test="ma_type_cd!=null and ma_type_cd!=''">#{ma_type_cd},</if>
+            <if test="ma_type_name!=null and ma_type_name!=''">#{ma_type_name},</if>
+            <if test="ma_clas_cd!=null and ma_clas_cd!=''">#{ma_clas_cd},</if>
+            <if test="ma_clas_name!=null and ma_clas_name!=''">#{ma_clas_name},</if>
+            <if test="ma_type_id!=null and ma_type_id!=''">#{ma_type_id},</if>
+            <if test="ma_item_cd!=null and ma_item_cd!=''">#{ma_item_cd},</if>
+            <if test="app_time!=null">#{app_time},</if>
+            <if test="app_dept_cd!=null and app_dept_cd!=''">#{app_dept_cd},</if>
+            <if test="app_dept_name!=null and app_dept_name!=''">#{app_dept_name},</if>
+            <if test="app_doc_cd!=null and app_doc_cd!=''">#{app_doc_cd},</if>
+            <if test="app_doc_name!=null and app_doc_name!=''">#{app_doc_name},</if>
+            <if test="spec_cd!=null and spec_cd!=''">#{spec_cd},</if>
+            <if test="spec_name!=null and spec_name!=''">#{spec_name},</if>
+            <if test="samp_time!=null">#{samp_time},</if>
+            <if test="samp_nur_cd!=null and samp_nur_cd!=''">#{samp_nur_cd},</if>
+            <if test="samp_nur_name!=null and samp_nur_name!=''">#{samp_nur_name},</if>
+            <if test="inhos_diag!=null and inhos_diag!=''">#{inhos_diag},</if>
+            <if test="other_diag!=null and other_diag!=''">#{other_diag},</if>
+            <if test="item_state!=null and item_state!=''">#{item_state},</if>
+            <if test="aspt_aim!=null and aspt_aim!=''">#{aspt_aim},</if>
+            <if test="exam_pos!=null and exam_pos!=''">#{exam_pos},</if>
+            <if test="remark!=null and remark!=''">#{remark},</if>
+            <if test="urg_flag!=null and urg_flag!=''">#{urg_flag},</if>
+            <if test="warn_flag!=null and warn_flag!=''">#{warn_flag},</if>
+            <if test="ma_item_name!=null and ma_item_name!=''">#{ma_item_name},</if>
+            <if test="item_type_name!=null and item_type_name!=''">#{item_type_name},</if>
+        </trim>
+    </insert>
+</mapper>

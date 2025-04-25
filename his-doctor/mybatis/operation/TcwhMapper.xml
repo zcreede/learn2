@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TcwhMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.Tcwh">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+    <result column="ward_no" jdbcType="VARCHAR" property="wardNo" />
+    <result column="package_no" jdbcType="VARCHAR" property="packageNo" />
+    <result column="package_name" jdbcType="VARCHAR" property="packageName" />
+    <result column="package_pym" jdbcType="VARCHAR" property="packagePym" />
+    <result column="share_class" jdbcType="VARCHAR" property="shareClass" />
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
+    <result column="operator_no" jdbcType="VARCHAR" property="operatorNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, hospital_code, ward_no, package_no, package_name, package_pym, share_class, flag, operator_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_na_tcwh
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tm_na_tcwh
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.emr.project.operation.domain.Tcwh">
+    insert into tm_na_tcwh (id, hospital_code, ward_no,
+      package_no, package_name, package_pym,
+      share_class, flag, operator_no)
+    values (seq_tm_na_tcwh.nextval, #{hospitalCode,jdbcType=VARCHAR}, #{wardNo,jdbcType=VARCHAR},
+      #{packageNo,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, #{packagePym,jdbcType=VARCHAR},
+      #{shareClass,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{operatorNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.operation.domain.Tcwh">
+    insert into tm_na_tcwh
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="hospitalCode != null">
+        hospital_code,
+      </if>
+      <if test="wardNo != null">
+        ward_no,
+      </if>
+      <if test="packageNo != null">
+        package_no,
+      </if>
+      <if test="packageName != null">
+        package_name,
+      </if>
+      <if test="packagePym != null">
+        package_pym,
+      </if>
+      <if test="shareClass != null">
+        share_class,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="operatorNo != null">
+        operator_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      seq_tm_na_tcwh.nextval,
+      <if test="hospitalCode != null">
+        #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wardNo != null">
+        #{wardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageNo != null">
+        #{packageNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null">
+        #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="packagePym != null">
+        #{packagePym,jdbcType=VARCHAR},
+      </if>
+      <if test="shareClass != null">
+        #{shareClass,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNo != null">
+        #{operatorNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.operation.domain.Tcwh">
+    update tm_na_tcwh
+    <set>
+      <if test="hospitalCode != null">
+        hospital_code = #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wardNo != null">
+        ward_no = #{wardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageNo != null">
+        package_no = #{packageNo,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null">
+        package_name = #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="packagePym != null">
+        package_pym = #{packagePym,jdbcType=VARCHAR},
+      </if>
+      <if test="shareClass != null">
+        share_class = #{shareClass,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNo != null">
+        operator_no = #{operatorNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emr.project.operation.domain.Tcwh">
+    update tm_na_tcwh
+    set hospital_code = #{hospitalCode,jdbcType=VARCHAR},
+      ward_no = #{wardNo,jdbcType=VARCHAR},
+      package_no = #{packageNo,jdbcType=VARCHAR},
+      package_name = #{packageName,jdbcType=VARCHAR},
+      package_pym = #{packagePym,jdbcType=VARCHAR},
+      share_class = #{shareClass,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR},
+      operator_no = #{operatorNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="listPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from (
+      select * from tm_na_tcwh where share_class = '1' and hospital_code=#{hospitalCode,jdbcType=VARCHAR}
+      union all
+      select * from tm_na_tcwh where share_class = '2' and hospital_code=#{hospitalCode,jdbcType=VARCHAR} and ward_no=#{wardNo,jdbcType=VARCHAR}
+      union all
+      select * from  tm_na_tcwh where share_class = '3' and operator_no=#{operatorNo,jdbcType=VARCHAR}
+    ) a
+    <where>
+      <if test="packagePym!=null and packagePym!=''">
+        and a.package_pym like CONCAT(CONCAT('%', #{packagePym}), '%')
+      </if>
+      <if test="shareClass!=null and shareClass!=''">
+        and a.share_class = #{shareClass,jdbcType=VARCHAR}
+      </if>
+      <if test="flag!=null and flag!=''">
+        and a.flag = #{flag,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by a.id desc
+  </select>
+  <select id="listPageCount" parameterType="java.util.Map" resultType="int">
+    select count(1)
+    from (
+    select * from tm_na_tcwh where share_class = '1' and hospital_code=#{hospitalCode,jdbcType=VARCHAR}
+    union all
+    select * from tm_na_tcwh where share_class = '2' and hospital_code=#{hospitalCode,jdbcType=VARCHAR} and ward_no=#{wardNo,jdbcType=VARCHAR}
+    union all
+    select * from  tm_na_tcwh where share_class = '3' and operator_no=#{operatorNo,jdbcType=VARCHAR}
+    ) a
+    <where>
+      <if test="packagePym!=null and packagePym!=''">
+        and a.package_pym like CONCAT(CONCAT('%', #{packagePym}), '%')
+      </if>
+      <if test="shareClass!=null and shareClass!=''">
+        and a.share_class = #{shareClass,jdbcType=VARCHAR}
+      </if>
+      <if test="flag!=null and flag!=''">
+        and a.flag = #{flag,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="selectByShareClass" parameterType="com.emr.project.operation.domain.Tcwh" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from (
+    select * from tm_na_tcwh where share_class = '1' and hospital_code=#{hospitalCode,jdbcType=VARCHAR}
+    union all
+    select * from tm_na_tcwh where share_class = '2' and hospital_code=#{hospitalCode,jdbcType=VARCHAR} and ward_no=#{wardNo,jdbcType=VARCHAR}
+    union all
+    select * from tm_na_tcwh where share_class = '3' and operator_no=#{operatorNo,jdbcType=VARCHAR}
+    ) a where a.flag='0'
+    <if test="packagePym!=null and packagePym!=''">
+      and a.package_pym like CONCAT(CONCAT('%', #{packagePym}), '%')
+    </if>
+    <if test="shareClass!=null and shareClass!=''">
+      and a.share_class = #{shareClass,jdbcType=VARCHAR}
+    </if>
+    and rownum &lt;= 50
+  </select>
+
+  <select id="selectListByConn" parameterType="com.emr.project.operation.domain.Tcwh" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_na_tcwh
+    <where>
+      <if test="hospitalCode != null">
+        and hospital_code = #{hospitalCode,jdbcType=VARCHAR}
+      </if>
+      <if test="wardNo != null">
+        and ward_no = #{wardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="packageNo != null">
+        and package_no = #{packageNo,jdbcType=VARCHAR}
+      </if>
+      <if test="packageName != null">
+        and package_name = #{packageName,jdbcType=VARCHAR}
+      </if>
+      <if test="packagePym != null and packagePym.trim() != ''">
+        and package_pym like concat( concat('%', #{packagePym}), '%') or package_name like concat( concat('%', #{packagePym}), '%')
+      </if>
+      <if test="shareClass != null">
+        and share_class = #{shareClass,jdbcType=VARCHAR}
+      </if>
+      <if test="flag != null and flag != '' ">
+        and flag = #{flag,jdbcType=VARCHAR}
+      </if>
+      <if test="operatorNo != null">
+        and operator_no = #{operatorNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <insert id="insertList" parameterType="java.util.List">
+    insert all
+    <foreach collection="list" item="item" index="index">
+      into tm_na_tcwh (ID,hospital_code, ward_no,
+      package_no, package_name, package_pym,
+      share_class, flag, operator_no)
+      values (
+      seq_tm_na_tcwh.nextval,
+      #{item.hospitalCode,jdbcType=VARCHAR},
+      #{item.wardNo,jdbcType=VARCHAR},
+      #{item.packageNo,jdbcType=VARCHAR},
+      #{item.packageName,jdbcType=VARCHAR},
+      #{item.packagePym,jdbcType=VARCHAR},
+      #{item.shareClass,jdbcType=VARCHAR},
+      #{item.flag,jdbcType=VARCHAR},
+      #{item.operatorNo,jdbcType=VARCHAR}
+      )
+    </foreach>
+    select 1 from dual
+  </insert>
+  <update id="updateList" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" separator=";"  open="begin" close=";end;" >
+      update tm_na_tcwh
+      set hospital_code = #{item.hospitalCode,jdbcType=VARCHAR},
+      ward_no = #{item.wardNo,jdbcType=VARCHAR},
+      package_no = #{item.packageNo,jdbcType=VARCHAR},
+      package_name = #{item.packageName,jdbcType=VARCHAR},
+      package_pym = #{item.packagePym,jdbcType=VARCHAR},
+      share_class = #{item.shareClass,jdbcType=VARCHAR},
+      flag = #{item.flag,jdbcType=VARCHAR},
+      operator_no = #{item.operatorNo,jdbcType=VARCHAR}
+      where id = #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <delete id="delByIdList" parameterType="java.util.List">
+    delete from tm_na_tcwh
+    where id in
+    <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+  <select id="selectListFromMx" resultMap="BaseResultMap">
+    select t.id, t.hospital_code, t.ward_no, t.package_no, t.package_name, t.package_pym, t.share_class, t.flag, t.operator_no
+    from tm_na_tcwh t
+    inner join tm_na_tcwh_mx m on t.package_no = m.package_no
+  </select>
+</mapper>

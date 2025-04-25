@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrHpDrawFieldMapper">
+
+    <resultMap type="MrHpDrawField" id="MrHpDrawFieldResult">
+        <result property="id"    column="id"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="field"    column="field"    />
+        <result property="hisDbField"    column="his_db_field"    />
+        <result property="hisDbFieldName"    column="his_db_field_name"    />
+        <result property="defineId"    column="define_id"    />
+        <result property="dictTypeCode"    column="dict_type_code"    />
+    </resultMap>
+
+    <sql id="selectMrHpDrawFieldVo">
+        select id, main_id, field, his_db_field, his_db_field_name, define_id, dict_type_code from mr_hp_draw_field
+    </sql>
+
+    <select id="selectMrHpDrawFieldList" parameterType="MrHpDrawField" resultMap="MrHpDrawFieldResult">
+        <include refid="selectMrHpDrawFieldVo"/>
+        <where>
+            <if test="mainId != null "> and main_id = #{mainId}</if>
+            <if test="field != null  and field != ''"> and field = #{field}</if>
+            <if test="hisDbField != null  and hisDbField != ''"> and his_db_field = #{hisDbField}</if>
+            <if test="hisDbFieldName != null  and hisDbFieldName != ''"> and his_db_field_name like concat(concat('%', #{hisDbFieldName}), '%')</if>
+            <if test="defineId != null "> and define_id = #{defineId}</if>
+            <if test="dictTypeCode != null  and dictTypeCode != ''"> and dict_type_code = #{dictTypeCode}</if>
+        </where>
+    </select>
+
+    <select id="selectMrHpDrawFieldById" parameterType="Long" resultMap="MrHpDrawFieldResult">
+        <include refid="selectMrHpDrawFieldVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectFieldByMainIdList" resultMap="MrHpDrawFieldResult">
+        <include refid="selectMrHpDrawFieldVo"/>
+        <where>
+            <if test="list != null and list.size()>0">
+                and main_id in
+                <foreach collection="list" item="item" open="(" close=")" separator="，">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertMrHpDrawField" parameterType="MrHpDrawField">
+        insert into mr_hp_draw_field
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="mainId != null">main_id,</if>
+            <if test="field != null and field != ''">field,</if>
+            <if test="hisDbField != null">his_db_field,</if>
+            <if test="hisDbFieldName != null">his_db_field_name,</if>
+            <if test="defineId != null">define_id,</if>
+            <if test="dictTypeCode != null">dict_type_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="mainId != null">#{mainId},</if>
+            <if test="field != null and field != ''">#{field},</if>
+            <if test="hisDbField != null">#{hisDbField},</if>
+            <if test="hisDbFieldName != null">#{hisDbFieldName},</if>
+            <if test="defineId != null">#{defineId},</if>
+            <if test="dictTypeCode != null">#{dictTypeCode},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT ALL
+        <foreach item="item" collection="list">
+            into mr_hp_draw_field
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,
+                </if>
+                <if test="item.mainId != null">main_id,
+                </if>
+                <if test="item.field != null and item.field != ''">field,
+                </if>
+                <if test="item.hisDbField != null">his_db_field,
+                </if>
+                <if test="item.hisDbFieldName != null">his_db_field_name,
+                </if>
+                <if test="item.defineId != null">define_id,
+                </if>
+                <if test="item.dictTypeCode != null">dict_type_code,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},
+                </if>
+                <if test="item.mainId != null">#{item.mainId},
+                </if>
+                <if test="item.field != null and item.field != ''">#{item.field},
+                </if>
+                <if test="item.hisDbField != null">#{item.hisDbField},
+                </if>
+                <if test="item.hisDbFieldName != null">#{item.hisDbFieldName},
+                </if>
+                <if test="item.defineId != null">#{item.defineId},
+                </if>
+                <if test="item.dictTypeCode != null">#{item.dictTypeCode},
+                </if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateMrHpDrawField" parameterType="MrHpDrawField">
+        update mr_hp_draw_field
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainId != null">main_id = #{mainId},</if>
+            <if test="field != null and field != ''">field = #{field},</if>
+            <if test="hisDbField != null">his_db_field = #{hisDbField},</if>
+            <if test="hisDbFieldName != null">his_db_field_name = #{hisDbFieldName},</if>
+            <if test="defineId != null">define_id = #{defineId},</if>
+            <if test="dictTypeCode != null">dict_type_code = #{dictTypeCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMrHpDrawFieldById" parameterType="Long">
+        delete from mr_hp_draw_field where id = #{id}
+    </delete>
+
+    <delete id="deleteMrHpDrawFieldByMainId" parameterType="Long">
+        delete from mr_hp_draw_field where main_id = #{mainId}
+    </delete>
+
+    <delete id="deleteMrHpDrawFieldByIds" parameterType="String">
+        delete from mr_hp_draw_field where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

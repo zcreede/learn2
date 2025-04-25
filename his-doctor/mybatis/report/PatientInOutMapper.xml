@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.report.mapper.PatientInOutMapper">
+
+    <resultMap id="BeHospitalizedTableListResult" type="com.emr.project.report.domain.dto.BeHospitalizedDTO">
+        <result column="caseNo" property="caseNo" />
+        <result column="hospitalizedCount" property="hospitalizedCount" />
+        <result column="bedNo" property="bedNo" />
+        <result column="name" property="name" />
+        <result column="sexName" property="sexName" />
+        <result column="personAge" property="personAge" />
+        <result column="expenseCategory" property="expenseCategory" />
+        <result column="wardIn" property="wardIn" />
+        <result column="wardOut" property="wardOut" />
+        <result column="visitingStaffName" property="visitingStaffName" />
+        <result column="hospitalizedDate" property="hospitalizedDate" />
+        <result column="entryDate" property="entryDate" />
+        <result column="leaveHospitalDate" property="leaveHospitalDate" />
+        <result column="closingDate" property="closingDate" />
+    </resultMap>
+    <select id="selectBeHospitalizedTableList" resultMap="BeHospitalizedTableListResult">
+        SELECT
+        aa.case_no AS caseNo,
+        aa.hospitalized_count AS hospitalizedCount,
+        aa.bedid AS bedNo,
+        aa.NAME AS NAME,
+        tpds.sex_name AS sexName,
+        aa.person_age AS personAge,
+        aa.expense_category AS expenseCategory,
+        tpwi.ward_name AS wardIn,
+        tpwo.ward_name AS wardOut,
+        aa.visiting_staff_name AS visitingStaffName,
+        aa.hospitalized_date AS hospitalizedDate,
+        aa.entry_date AS entryDate,
+        aa.leave_hospital_date AS leaveHospitalDate,
+        aa.closing_date AS closingDate,
+        aa.ward_no
+        FROM
+        (
+        SELECT
+        abc.hospital_code,
+        abc.case_no,
+        abc.hospitalized_count,
+        abc.bedid,
+        abc.NAME,
+        abc.sex,
+        abc.person_age,
+        abc.expense_category,
+        abc.ward_no,
+        abc.discharge_ward_no,
+        abc.visiting_staff_name,
+        abc.hospitalized_date,
+        abc.entry_date,
+        abc.leave_hospital_date,
+        abc.closing_date
+        FROM
+        td_na_change_dep cd
+        INNER JOIN (
+        SELECT
+        a.hospital_code,
+        a.case_no,
+        a.hospitalized_count,
+        b.bedid,
+        a.NAME,
+        a.sex,
+        a.person_age,
+        a.expense_category,
+        b.ward_no,
+        b.discharge_ward_no,
+        (select STAFF_NAME from TM_BS_STAFF where STAFF_NO = b.RESIDENT_NO ) as visiting_staff_name,
+        b.hospitalized_date,
+        b.entry_date,
+        b.leave_hospital_date,
+        b.closing_date
+        FROM
+        t_ar_baseinfomation a
+        INNER JOIN t_ar_medicalinformation b ON a.case_no = b.case_no
+        AND a.hospitalized_count = b.hospitalized_count
+        AND a.hospital_code = b.hospital_code UNION ALL
+        SELECT
+        a.hospital_code,
+        a.case_no,
+        a.hospitalized_count,
+        b.bedid,
+        a.NAME,
+        a.sex,
+        a.person_age,
+        a.expense_category,
+        b.ward_no,
+        b.discharge_ward_no,
+        (select STAFF_NAME from TM_BS_STAFF where STAFF_NO = b.RESIDENT_NO ) as visiting_staff_name,
+        b.hospitalized_date,
+        b.entry_date,
+        b.leave_hospital_date,
+        b.closing_date
+        FROM
+        t_ar_baseinfomation_day a
+        INNER JOIN t_ar_medicalinformation_day b ON a.case_no = b.case_no
+        AND a.hospitalized_count = b.hospitalized_count
+        AND a.hospital_code = b.hospital_code UNION ALL
+        SELECT
+        a.hospital_code,
+        a.case_no,
+        a.hospitalized_count,
+        b.bedid,
+        a.NAME,
+        a.sex,
+        a.person_age,
+        a.expense_category,
+        b.ward_no,
+        b.discharge_ward_no,
+        (select STAFF_NAME from TM_BS_STAFF where STAFF_NO = b.RESIDENT_NO ) as visiting_staff_name,
+        b.hospitalized_date,
+        b.entry_date,
+        b.leave_hospital_date,
+        b.closing_date
+        FROM
+        t_ar_baseinfomation_h a
+        INNER JOIN t_ar_medicalinformation_h b ON a.case_no = b.case_no
+        AND a.hospitalized_count = b.hospitalized_count
+        AND a.hospital_code = b.hospital_code
+        ) abc ON abc.case_no = cd.case_no
+        AND abc.hospitalized_count = cd.hospitalized_count
+        AND cd.flag = '2'
+        ) aa
+        LEFT JOIN TM_BS_WARD tpwi ON aa.ward_no = tpwi.ward_no
+        LEFT JOIN TM_BS_WARD tpwo ON aa.ward_no = tpwo.ward_no
+        LEFT JOIN tm_pm_dict_sex tpds ON tpds.sex_code = aa.sex
+        <where>
+            aa.ward_no=#{deptCode}
+            <if test="beginDate != null and beginDate != ''">
+                and to_char(aa.entry_date,'yyyy-MM-dd') &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and to_char(aa.entry_date,'yyyy-MM-dd') &lt;= #{endDate}
+            </if>
+            <if test="caseNo != null and caseNo!=''">
+                and aa.case_no=#{caseNo}
+            </if>
+            <if test="name != null and name != ''">
+                and aa.NAME like concat(concat('%', #{name}), '%')
+            </if>
+        </where>
+        order by aa.hospitalized_date
+
+    </select>
+    <resultMap id="LeaveHospitalizedTableListResult" type="com.emr.project.report.domain.dto.LeaveHospitalizedTableDTO">
+        <result column="visiting_staff_no" property="visitingStaffNo" />
+        <result column="ward_no" property="wardNo" />
+        <result column="visiting_staff_name" property="visitingStaffName" />
+        <result column="sex" property="sex" />
+        <result column="bedid" property="bedid" />
+        <result column="person_age" property="personAge" />
+        <result column="hospitalized_count" property="hospitalizedCount" />
+        <result column="entry_date" property="entryDate" />
+        <result column="leave_hospital_diagnosis" property="leaveHospitalDiagnosis" />
+        <result column="totalFee" property="totalFee" />
+        <result column="expense_category" property="expenseCategory" />
+        <result column="name" property="name" />
+        <result column="hospital_code" property="hospitalCode" />
+        <result column="leave_hospital_date" property="leaveHospitalDate" />
+        <result column="days" property="days" />
+        <result column="admitting_diagnosis" property="admittingDiagnosis" />
+        <result column="admission_no" property="admissionNo" />
+        <result column="drugFee" property="drugFee" />
+        <result column="status" property="status" />
+        <result column="OUTPATIENT_DOCTOR_name" property="outpatientDoctorName" />
+        <result column="OUTPATIENT_DOCTOR" property="outpatientDoctor" />
+        <result column="case_no" property="caseNo" />
+    </resultMap>
+    <select id="selectLeaveHospitalizedTableList" resultMap="LeaveHospitalizedTableListResult">
+        SELECT
+        aa.*,
+
+        t3.staff_name AS visiting_staff_name,
+        t4.staff_name as OUTPATIENT_DOCTOR_name,
+        ( SELECT sum( total ) FROM v_ih_expensedetail_h WHERE admission_no = aa.admission_no AND hospitalized_count = aa.hospitalized_count and PAY_MARK='-1' ) AS totalFee,
+        (
+        SELECT
+        sum( total )
+        FROM
+        v_ih_expensedetail_h
+        WHERE
+        admission_no = aa.admission_no
+        AND hospitalized_count = aa.hospitalized_count
+        AND project_no IN
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        ) AS drugFee
+        FROM
+        (
+        SELECT
+        a.admission_no,
+        a.case_no,
+        a.hospitalized_count,
+        a.ward_no,
+        a.hospital_code,
+        a.NAME,
+        dict.DATA_TAG as sex,
+        b.person_age,
+        a.bedid,
+        a.resident_no as visiting_staff_no,
+        b.expense_category,
+        a.entry_date,
+        a.leave_hospital_date,
+        CASE
+        WHEN to_char(a.entry_date, 'yyyy-mm-dd') = to_char(a.leave_hospital_date, 'yyyy-mm-dd') THEN
+        1 ELSE     to_date(to_char(a.leave_hospital_date,'yyyy-mm-dd'),'yyyy-mm-dd') - to_date(to_char(a.entry_date,'yyyy-mm-dd'),'yyyy-mm-dd')
+        END AS days,
+        india.DIAG_NAME admitting_diagnosis,
+        outdia.DIAG_NAME leave_hospital_diagnosis,
+        '出院未结' AS STATUS,a.closing_date,a.OUTPATIENT_DOCTOR
+        FROM
+        t_ar_medicalinformation a
+        LEFT JOIN t_ar_baseinfomation b ON a.admission_no = b.admission_no
+        AND a.hospitalized_count = b.hospitalized_count
+        left join TM_BS_DICT_DATA dict on dict.DICT_TYPE='00013' and dict.DATA_VAL = b.sex
+        left join DIAG_INFO india on india.PATIENT_ID = a.admission_no
+        and india.DIAG_TYPE_CD = '02' and india.DIAG_CLASS_CD = '01'
+        left join DIAG_INFO outdia on outdia.PATIENT_ID = a.admission_no
+        and outdia.DIAG_TYPE_CD = '03' and outdia.DIAG_CLASS_CD = '01'
+        WHERE
+        hospital_mark ='3'
+        <if test="residentNo != null and residentNo!=''">
+            and a.resident_no = #{residentNo}
+        </if>
+        UNION ALL
+        SELECT
+        a.admission_no,
+        a.case_no,
+        a.hospitalized_count,
+        a.ward_no,
+        a.hospital_code,
+        a.NAME,
+        dict.DATA_TAG as sex,
+        b.person_age,
+        a.bedid,
+        a.resident_no as visiting_staff_no,
+        b.expense_category,
+        a.entry_date,
+        a.leave_hospital_date,
+        CASE
+
+        WHEN to_char(a.entry_date, 'yyyy-mm-dd') = to_char(a.leave_hospital_date, 'yyyy-mm-dd') THEN
+        1 ELSE     to_date(to_char(a.leave_hospital_date,'yyyy-mm-dd'),'yyyy-mm-dd') - to_date(to_char(a.entry_date,'yyyy-mm-dd'),'yyyy-mm-dd')
+        END AS days,
+        india.DIAG_NAME admitting_diagnosis,
+        outdia.DIAG_NAME leave_hospital_diagnosis,
+        '出院已结' AS STATUS,a.closing_date,a.OUTPATIENT_DOCTOR
+        FROM
+        t_ar_medicalinformation_day a
+        LEFT JOIN t_ar_baseinfomation_day b ON a.admission_no = b.admission_no
+        AND a.hospitalized_count = b.hospitalized_count
+        left join TM_BS_DICT_DATA dict on dict.DICT_TYPE='00013' and dict.DATA_VAL = b.sex
+        left join DIAG_INFO india on india.PATIENT_ID = a.admission_no
+        and india.DIAG_TYPE_CD = '02' and india.DIAG_CLASS_CD = '01'
+        left join DIAG_INFO outdia on outdia.PATIENT_ID = a.admission_no
+        and outdia.DIAG_TYPE_CD = '03' and outdia.DIAG_CLASS_CD = '01'
+        WHERE
+        leave_hospital_date IS NOT NULL
+        <if test="residentNo != null and residentNo!=''">
+            and a.resident_no = #{residentNo}
+        </if>
+        UNION ALL
+        SELECT
+        a.admission_no,
+        a.case_no,
+        a.hospitalized_count,
+        a.ward_no,
+        a.hospital_code,
+        a.NAME,
+        dict.DATA_TAG as sex,
+        b.person_age,
+        a.bedid,
+        a.resident_no as visiting_staff_no,
+        b.expense_category,
+        a.entry_date,
+        a.leave_hospital_date,
+        CASE
+        WHEN to_char(a.entry_date, 'yyyy-mm-dd') = to_char(a.leave_hospital_date, 'yyyy-mm-dd') THEN
+        1 ELSE    to_date(to_char(a.leave_hospital_date,'yyyy-mm-dd'),'yyyy-mm-dd') - to_date(to_char(a.entry_date,'yyyy-mm-dd'),'yyyy-mm-dd')
+        END AS days,
+        india.DIAG_NAME admitting_diagnosis,
+        outdia.DIAG_NAME leave_hospital_diagnosis,
+        '出院已结' AS STATUS,a.closing_date,a.OUTPATIENT_DOCTOR
+        FROM
+        t_ar_medicalinformation_h a
+        LEFT JOIN t_ar_baseinfomation_h b ON a.admission_no = b.admission_no
+        AND a.hospitalized_count = b.hospitalized_count
+        left join TM_BS_DICT_DATA dict on dict.DICT_TYPE='00013' and dict.DATA_VAL = b.sex
+        left join DIAG_INFO india on india.PATIENT_ID = a.admission_no
+        and india.DIAG_TYPE_CD = '02' and india.DIAG_CLASS_CD = '01'
+        left join DIAG_INFO outdia on outdia.PATIENT_ID = a.admission_no
+        and outdia.DIAG_TYPE_CD = '03' and outdia.DIAG_CLASS_CD = '01'
+        WHERE
+        leave_hospital_date IS NOT NULL
+        <if test="residentNo != null and residentNo!=''">
+            and a.resident_no = #{residentNo}
+        </if>
+        ) aa
+
+        LEFT JOIN TM_BS_STAFF t3 ON t3.staff_no = aa.visiting_staff_no
+        LEFT JOIN TM_BS_STAFF t4 ON t4.staff_no = aa.OUTPATIENT_DOCTOR
+        <where>
+            <if test="status != null and status != '' and status == '2'.toString() ">
+                <if test="beginDate != null and beginDate != ''">
+                    and to_char(aa.leave_hospital_date,'yyyy-mm-dd') &gt;= #{beginDate}
+                </if>
+                <if test="endDate != null and endDate != ''">
+                    and to_char(aa.leave_hospital_date,'yyyy-mm-dd') &lt;= #{endDate}
+                </if>
+            </if>
+
+            <if test="status != null and status != ''">
+                <if test='status == "1"'>
+                    and aa.STATUS='出院未结'
+                </if>
+                <if test='status == "2"'>
+                    and aa.STATUS='出院已结'
+                </if>
+            </if>
+            <if test="deptCode != null and deptCode!=''">
+                and aa.ward_no = #{deptCode}
+            </if>
+        </where>
+        order by aa.leave_hospital_date desc
+    </select>
+    <resultMap id="ChangeDeptTableListDResult" type="com.emr.project.report.domain.dto.ChangeDeptTableListDTO">
+        <result column="bedid_out" property="bedidOut" />
+        <result column="bedid_in" property="bedidIn" />
+        <result column="admission_no" property="admissionNo" />
+        <result column="hospitalized_count" property="hospitalizedCount" />
+        <result column="patient_name" property="patientName" />
+        <result column="patient_sex" property="patientSex" />
+        <result column="doctor_name_in" property="doctorNameIn" />
+        <result column="ward_no_in" property="wardNoIn" />
+        <result column="ward_no_out" property="wardNoOut" />
+        <result column="operator_date_out" property="operatorDateOut" />
+        <result column="in_dep_name" property="inDepName" />
+        <result column="out_dep_name" property="outDepName" />
+        <result column="case_no" property="caseNo" />
+    </resultMap>
+    <select id="selectChangeDeptTableList" resultMap="ChangeDeptTableListDResult">
+        SELECT
+            a.bedid_out,
+            a.bedid_in,
+            a.case_no,
+            a.admission_no,
+            a.hospitalized_count,
+            a.patient_name,
+            dict.DATA_TAG as patient_sex,
+            a.doctor_name_in,
+            a.ward_no_in,
+            a.ward_no_out,
+            a.operator_date_out,
+            t1.dept_name as in_dep_name,
+            t2.dept_name as out_dep_name
+        FROM
+        td_na_change_dep a
+        left join TM_BS_DEPT t1 on t1.ward_no=a.ward_no_in
+        left join TM_BS_DEPT t2 on t2.ward_no=a.ward_no_out
+        left join TM_BS_DICT_DATA dict on dict.DICT_TYPE='00013' and dict.DATA_VAL = a.patient_sex
+        WHERE
+        a.flag ='1' and a.SERVICE_TYPE_CODE='01'
+        <if test="beginDate != null and beginDate != ''">
+            and to_char(a.operator_date_out,'yyyy-mm-dd') &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and to_char(a.operator_date_out,'yyyy-mm-dd') &lt;= #{endDate}
+        </if>
+        <if test="caseNo != null and caseNo != ''">
+            and (a.admission_no like concat( concat('%', #{caseNo}), '%')
+                or a.case_no like concat( concat('%', #{caseNo}), '%'))
+        </if>
+        <if test="name != null and name != ''">
+            and a.patient_name like concat( concat('%', #{name}), '%')
+        </if>
+        <if test="deptCode != null and deptCode != '' ">
+            <if test='isChangeIn != null and isChangeIn=="0"'>
+                and (a.ward_no_in = #{deptCode} or a.ward_no_out = #{deptCode})
+            </if>
+            <if test='isChangeIn != null and isChangeIn=="1"'>
+                and a.ward_no_in =  #{deptCode}
+            </if>
+        </if>
+        order by a.operator_date_out desc
+    </select>
+
+    <resultMap id="InHosPatientListResult" type="com.emr.project.report.domain.resp.PatientWorkloadResp">
+        <result column="name" property="name"/>
+        <result column="caseNo" property="caseNo"/>
+        <result column="hospitalizedCount" property="hospitalizedCount"/>
+        <result column="expenseCategory" property="expenseCategory"/>
+        <result column="deptName" property="deptName"/>
+        <result column="hospitalizedDate" property="hospitalizedDate"/>
+        <result column="leaveHospitalDate" property="leaveHospitalDate"/>
+        <result column="days" property="days"/>
+        <result column="admissionNo" property="admissionNo"/>
+        <result column="three_level_accounting" property="threeLevelAccounting"/>
+        <result column="three_level_name" property="threeLevelName"/>
+        <result column="amount" property="amount"/>
+        <result column="resident_name" property="residentName"/>
+        <result column="inhos_diag" property="inhosDiag"/>
+    </resultMap>
+    <select id="selectInHosPatientList" resultMap="InHosPatientListResult">
+        SELECT
+        a.ADMISSION_NO AS admissionNo,
+        a.CASE_NO AS caseNo,
+        a.HOSPITALIZED_DATE AS hospitalizedDate,
+        a.LEAVE_HOSPITAL_DATE AS leaveHospitalDate,
+        a.HOSPITALIZED_COUNT AS hospitalizedCount,
+        a.NAME AS NAME,
+        b.EXPENSE_CATEGORY AS expenseCategory,
+        ( SELECT DEPT_NAME FROM TM_BS_DEPT WHERE DEPT_CODE = a.DEPARTMENT_NO ) AS deptName,
+        CASE
+        WHEN to_char ( a.HOSPITALIZED_DATE, 'yyyy-mm-dd' ) = to_char ( sysdate, 'yyyy-mm-dd' ) THEN
+        1 ELSE to_date ( to_char ( sysdate, 'yyyy-mm-dd' ), 'yyyy-mm-dd' ) - to_date ( to_char ( a.HOSPITALIZED_DATE, 'yyyy-mm-dd' ), 'yyyy-mm-dd' )
+        END AS days,
+        exa.three_level_accounting,
+        exa.three_level_name,
+        sum( exa.TOTAL ) AS amount,
+        a.RESIDENT_NAME,a.inhos_diag
+        FROM
+        TD_NA_PAT_FEE_ALL fee,
+        T_IH_EXPENSEDETAIL_ALL exa
+        LEFT JOIN T_AR_MEDICALINFORMATION_ALL a ON exa.ADMISSION_NO = a.ADMISSION_NO
+        LEFT JOIN T_AR_BASEINFOMATION_ALL b ON exa.ADMISSION_NO = b.ADMISSION_NO
+        where
+        fee.PRESCRIPTION = exa.PRESCRIPTION
+        and fee.PHYSICIAN_DPT_NO = #{depCode} and exa.PAY_MARK = '-1'
+        and a.ADMISSION_NO is not null
+        <if test="beginDate!= null and beginDate!= ''">
+            and to_char(exa.FILING_DATE,'yyyy-MM-dd') &gt;= #{beginDate}
+        </if>
+        <if test="endDate!= null and endDate!= ''">
+            and to_char(exa.FILING_DATE,'yyyy-MM-dd') &lt;= #{endDate}
+        </if>
+        <if test="residentNo !=null and residentNo !=''">
+            and a.RESIDENT_NO = #{residentNo}
+        </if>
+        and exa.three_level_accounting is not null and exa.three_level_name is not null
+        GROUP BY
+        a.ADMISSION_NO,
+        a.CASE_NO,
+        a.HOSPITALIZED_DATE,
+        a.LEAVE_HOSPITAL_DATE,
+        a.HOSPITALIZED_COUNT,
+        a.NAME,b.EXPENSE_CATEGORY,
+        a.DEPARTMENT_NO,exa.three_level_accounting,exa.three_level_name,a.RESIDENT_NAME,a.inhos_diag
+    </select>
+    <select id="selectLeaveHospitalList" resultMap="InHosPatientListResult">
+        SELECT
+        a.ADMISSION_NO AS admissionNo,
+        a.CASE_NO AS caseNo,
+        a.HOSPITALIZED_DATE AS hospitalizedDate,
+        a.LEAVE_HOSPITAL_DATE AS leaveHospitalDate,
+        a.HOSPITALIZED_COUNT AS hospitalizedCount,
+        a.NAME AS NAME,
+        b.EXPENSE_CATEGORY AS expenseCategory,
+        ( SELECT DEPT_NAME FROM TM_BS_DEPT WHERE DEPT_CODE = a.DEPARTMENT_NO ) AS deptName,
+        CASE
+        WHEN to_char ( a.HOSPITALIZED_DATE, 'yyyy-mm-dd' ) = to_char ( a.LEAVE_HOSPITAL_DATE, 'yyyy-mm-dd' ) THEN
+        1 ELSE to_date ( to_char ( a.LEAVE_HOSPITAL_DATE, 'yyyy-mm-dd' ), 'yyyy-mm-dd' ) - to_date ( to_char ( a.HOSPITALIZED_DATE, 'yyyy-mm-dd' ), 'yyyy-mm-dd' )
+        END AS days,
+        exa.three_level_accounting,
+        exa.three_level_name,
+        sum( exa.TOTAL ) AS amount,
+        a.RESIDENT_NAME,a.inhos_diag
+        FROM
+        TD_NA_PAT_FEE_ALL fee,
+        T_IH_EXPENSEDETAIL_ALL exa
+        LEFT JOIN T_AR_MEDICALINFORMATION_ALL a ON exa.ADMISSION_NO = a.ADMISSION_NO
+        LEFT JOIN T_AR_BASEINFOMATION_ALL b ON exa.ADMISSION_NO = b.ADMISSION_NO
+        where
+        fee.PRESCRIPTION = exa.PRESCRIPTION
+        and fee.PHYSICIAN_DPT_NO = #{depCode} and exa.PAY_MARK = '-1'
+        and a.ADMISSION_NO is not null
+
+        <if test="beginDate!= null and beginDate!= ''">
+            and to_char(a.CLOSING_DATE,'yyyy-MM-dd') &gt;= #{beginDate}
+        </if>
+        <if test="endDate!= null and endDate!= ''">
+            and to_char(a.CLOSING_DATE,'yyyy-MM-dd') &lt;= #{endDate}
+        </if>
+        <if test="residentNo !=null and residentNo !=''">
+            and a.RESIDENT_NO = #{residentNo}
+        </if>
+        AND a.LEAVE_HOSPITAL_DATE IS NOT NULL
+        and exa.three_level_accounting is not null and exa.three_level_name is not null
+        GROUP BY
+        a.ADMISSION_NO,
+        a.CASE_NO,
+        a.HOSPITALIZED_DATE,
+        a.LEAVE_HOSPITAL_DATE,
+        a.HOSPITALIZED_COUNT,
+        a.NAME,b.EXPENSE_CATEGORY,
+        a.DEPARTMENT_NO,exa.three_level_accounting,exa.three_level_name,a.RESIDENT_NAME,a.inhos_diag
+    </select>
+</mapper>

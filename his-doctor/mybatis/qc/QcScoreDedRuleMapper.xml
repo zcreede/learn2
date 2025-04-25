@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcScoreDedRuleMapper">
+
+    <resultMap type="QcScoreDedRule" id="QcScoreDedRuleResult">
+        <result property="id"    column="id"    />
+        <result property="dedId"    column="ded_id"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <resultMap id="QcRulesVoResult" type="QcRulesVo">
+        <result property="id"    column="id"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="ruleType"    column="rule_type"    />
+        <result property="ruleTypeName"    column="rule_type_name"    />
+        <result property="ruleDesc"    column="rule_desc"    />
+        <result property="emrTypeCd"    column="emr_type_cd"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="elemFlag" column="elem_flag_name"/>
+        <result property="ruleClass" column="rule_class"/>
+    </resultMap>
+    <resultMap id="QcScoreDedRuleVoResult" type="QcScoreDedRuleVo" extends="QcScoreDedRuleResult">
+        <result property="ruleName"    column="rule_name"    />
+        <result property="ruleType"    column="rule_type"    />
+        <result property="emrTypeCd"    column="emr_type_cd"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+    </resultMap>
+    <sql id="selectQcScoreDedRuleVo">
+        select id, ded_id, rule_id, valid_flag, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from qc_score_ded_rule
+    </sql>
+
+    <select id="selectQcScoreDedRuleList" parameterType="QcScoreDedRule" resultMap="QcScoreDedRuleResult">
+        <include refid="selectQcScoreDedRuleVo"/>
+        <where>
+            <if test="dedId != null "> and ded_id = #{dedId}</if>
+            <if test="ruleId != null "> and rule_id = #{ruleId}</if>
+            <if test="validFlag != null  and validFlag != ''"> and valid_flag = #{validFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectQcScoreDedByRuleAndPffaList" parameterType="QcScoreDedRule" resultMap="QcScoreDedRuleResult">
+        select a.*
+        from qc_score_ded_rule a
+        left join qc_score_sche_ded b
+        on a.ded_id = b.ded_id
+        left join qc_score_sche c
+        on b.sche_id = c.sche_id
+        <where>
+            c.app_seg = #{appSeg}
+            <if test="dedId != null "> and a.ded_id = #{dedId}</if>
+            <if test="ruleId != null "> and a.rule_id = #{ruleId}</if>
+            <if test="validFlag != null  and validFlag != ''"> and a.valid_flag = #{validFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and a.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and a.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and a.cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and a.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and a.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and a.alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectQcScoreDedRuleById" parameterType="Long" resultMap="QcScoreDedRuleResult">
+        <include refid="selectQcScoreDedRuleVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertQcScoreDedRule" parameterType="QcScoreDedRule">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_qc_score_ded_rule.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into qc_score_ded_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="dedId != null">ded_id,</if>
+            <if test="ruleId != null">rule_id,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="dedId != null">#{dedId},</if>
+            <if test="ruleId != null">#{ruleId},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQcScoreDedRule" parameterType="QcScoreDedRule">
+        update qc_score_ded_rule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dedId != null">ded_id = #{dedId},</if>
+            <if test="ruleId != null">rule_id = #{ruleId},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcScoreDedRuleById" parameterType="Long">
+        delete from qc_score_ded_rule where id = #{id}
+    </delete>
+
+    <delete id="deleteQcScoreDedRuleByIds" parameterType="String">
+        delete from qc_score_ded_rule where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByDedId" parameterType="Long">
+        delete from qc_score_ded_rule where ded_id = #{id}
+    </delete>
+
+    <insert id="insertList" parameterType="QcScoreDedRule">
+        insert all
+        <foreach item="item" index="index" collection="list">
+        into qc_score_ded_rule
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.dedId != null">ded_id,</if>
+                <if test="item.ruleId != null">rule_id,</if>
+                <if test="item.validFlag != null and item.validFlag != ''">valid_flag,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">cre_per_code,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">cre_per_name,</if>
+                cre_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.dedId != null">#{item.dedId},</if>
+                <if test="item.ruleId != null">#{item.ruleId},</if>
+                <if test="item.validFlag != null and item.validFlag != ''">#{item.validFlag},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                sysdate,
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <select id="selectQcRules" parameterType="QcRulesVo" resultMap="QcRulesVoResult">
+        select * from (
+        select distinct r.id,r.rule_name,r.rule_type,r.rule_type_name,r.rule_desc,r.emr_type_code, r.emr_type_name,r.cre_date,r.elem_flag_name
+        from qc_rules r left join qc_score_ded_rule dr on dr.rule_id = r.id
+--         left join qc_check_elem e on r.id = e.check_id
+        <where>
+            and dr.id is null
+            <if test="ruleName != null and ruleName != ''">and r.rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="ruleType != null">and r.rule_type = #{ruleType} </if>
+            <if test="checkItems != null and checkItems != ''">and r.elem_id = #{checkItems} </if>
+            <if test="emrTypeCode != null and emrTypeCode != ''">and r.emr_type_code = #{emrTypeCode} </if>
+        </where>
+        ) a
+        order by cre_date desc
+    </select>
+
+    <select id="selectDetailQcRules" parameterType="Long" resultMap="QcRulesVoResult">
+        select r.id,r.rule_name,r.rule_type,r.rule_type_name,r.rule_desc,r.emr_type_code, r.emr_type_name,r.elem_flag_name
+        from qc_score_ded_rule dr left join qc_rules r on dr.rule_id = r.id
+        where dr.ded_id = #{dedId} and r.id is not null
+        order by dr.cre_date desc
+    </select>
+
+    <select id="selectByDedIds" parameterType="Long" resultMap="QcScoreDedRuleResult">
+        select dr.*
+        from qc_score_ded_rule dr left join qc_rules r on dr.rule_id = r.id
+        where r.id is not null and dr.ded_id in
+        <foreach collection="dedIdList" item="dedId" open="(" separator="," close=")">
+            #{dedId}
+        </foreach>
+    </select>
+
+    <select id="selectQcRuleDedList"  resultMap="QcScoreDedRuleVoResult">
+        select dr.*,r.rule_name,r.rule_type,r.emr_type_code, r.emr_type_name
+        from qc_score_ded_rule dr left join qc_rules r on dr.rule_id = r.id
+        where rule_type='8'
+    </select>
+</mapper>

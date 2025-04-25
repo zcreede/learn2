@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.DiagSetDetailMapper">
+
+    <resultMap type="DiagSetDetail" id="DiagSetDetailResult">
+        <result property="id"    column="id"    />
+        <result property="setCd"    column="set_cd"    />
+        <result property="diagCd"    column="diag_cd"    />
+        <result property="diagName"    column="diag_name"    />
+        <result property="diagRem"    column="diag_rem"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="sortNumber"    column="sort_number"    />
+        <result property="diagExCd"    column="diag_ex_cd"    />
+        <result property="diagClassCd"    column="diag_class_cd"    />
+        <result property="diagClassName"    column="diag_class_name"    />
+        <result property="firstDiagFlag"    column="first_diag_flag"    />
+        <result property="deathDiagFlag"    column="death_diag_flag"    />
+    </resultMap>
+
+    <sql id="selectDiagSetDetailVo">
+        select id, set_cd, diag_cd, diag_name, diag_rem, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, sort_number,
+               diag_ex_cd,diag_class_cd,diag_class_name from tm_pm_diag_set_detail
+    </sql>
+
+    <select id="selectDiagSetDetailList" parameterType="DiagSetDetail" resultMap="DiagSetDetailResult">
+        <include refid="selectDiagSetDetailVo"/>
+        <where>
+            <if test="setCd != null  and setCd != ''"> and set_cd = #{setCd}</if>
+            <if test="diagCd != null  and diagCd != ''"> and diag_cd = #{diagCd}</if>
+            <if test="diagName != null  and diagName != ''"> and diag_name like concat(concat('%', #{diagName}), '%')</if>
+            <if test="diagRem != null  and diagRem != ''"> and diag_rem = #{diagRem}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="sortNumber != null "> and sort_number = #{sortNumber}</if>
+            <if test="diagClassCd != null "> and diag_class_cd = #{diagClassCd}</if>
+            <if test="diagClassName != null "> and diag_class_name = #{diagClassName}</if>
+        </where>
+    </select>
+
+    <select id="selectDiagSetDetailById" parameterType="Long" resultMap="DiagSetDetailResult">
+        <include refid="selectDiagSetDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDiagSetDetail" parameterType="DiagSetDetail">
+        insert into tm_pm_diag_set_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="setCd != null">set_cd,</if>
+            <if test="diagCd != null">diag_cd,</if>
+            <if test="diagName != null">diag_name,</if>
+            <if test="diagRem != null">diag_rem,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="sortNumber != null">sort_number,</if>
+            <if test="diagExCd != null">diag_ex_cd,</if>
+            <if test="diagClassCd != null">diag_class_cd,</if>
+            <if test="diagClassName != null">diag_class_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="setCd != null">#{setCd},</if>
+            <if test="diagCd != null">#{diagCd},</if>
+            <if test="diagName != null">#{diagName},</if>
+            <if test="diagRem != null">#{diagRem},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="sortNumber != null">#{sortNumber},</if>
+            <if test="diagExCd != null">#{diagExCd},</if>
+            <if test="diagClassCd != null">#{diagClassCd},</if>
+            <if test="diagClassName != null">#{diagClassName},</if>
+         </trim>
+    </insert>
+    <insert id="insertDiagSetDetailList" parameterType="DiagSetDetail">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into tm_pm_diag_set_detail
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.setCd != null">set_cd,</if>
+                <if test="item.diagCd != null">diag_cd,</if>
+                <if test="item.diagName != null">diag_name,</if>
+                <if test="item.diagRem != null">diag_rem,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.creDate != null">cre_date,</if>
+                <if test="item.altPerCode != null">alt_per_code,</if>
+                <if test="item.altPerName != null">alt_per_name,</if>
+                <if test="item.altDate != null">alt_date,</if>
+                <if test="item.sortNumber != null">sort_number,</if>
+                <if test="item.diagExCd != null">diag_ex_cd,</if>
+                <if test="item.diagClassCd != null">diag_class_cd,</if>
+                <if test="item.diagClassName != null">diag_class_name,</if>
+             </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.setCd != null">#{item.setCd},</if>
+                <if test="item.diagCd != null">#{item.diagCd},</if>
+                <if test="item.diagName != null">#{item.diagName},</if>
+                <if test="item.diagRem != null">#{item.diagRem},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.altPerCode != null">#{item.altPerCode},</if>
+                <if test="item.altPerName != null">#{item.altPerName},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+                <if test="item.sortNumber != null">#{item.sortNumber},</if>
+                <if test="item.diagExCd != null">#{item.diagExCd},</if>
+                <if test="item.diagClassCd != null">#{item.diagClassCd},</if>
+                <if test="item.diagClassName != null">#{item.diagClassName},</if>
+             </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateDiagSetDetail" parameterType="DiagSetDetail">
+        update tm_pm_diag_set_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="setCd != null">set_cd = #{setCd},</if>
+            <if test="diagCd != null">diag_cd = #{diagCd},</if>
+            <if test="diagName != null">diag_name = #{diagName},</if>
+            <if test="diagRem != null">diag_rem = #{diagRem},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="sortNumber != null">sort_number = #{sortNumber},</if>
+            <if test="diagExCd != null">diag_Ex_Cd = #{diagExCd},</if>
+            <if test="diagClassCd != null">diag_class_cd = #{diagClassCd},</if>
+            <if test="diagClassName != null">diag_class_name = #{diagClassName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDiagSetDetailById" parameterType="Long">
+        delete from tm_pm_diag_set_detail where id = #{id}
+    </delete>
+    <delete id="deleteDiagSetDetailBySetCd" parameterType="String">
+        delete from tm_pm_diag_set_detail where set_cd = #{setCd}
+    </delete>
+
+    <delete id="deleteDiagSetDetailByIds" parameterType="String">
+        delete from tm_pm_diag_set_detail where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectDetailListBySetCd" parameterType="String" resultMap="DiagSetDetailResult">
+        select detail.id, detail.set_cd, detail.diag_cd, detail.diag_name, detail.diag_rem, detail.cre_per_code, detail.cre_per_name, detail.cre_date,
+               detail.alt_per_code, detail.alt_per_name, detail.alt_date, detail.sort_number,
+               detail.diag_ex_cd,detail.diag_class_cd,detail.diag_class_name,icd.first_diag_flag,icd.death_diag_flag from tm_pm_diag_set_detail detail
+        left join sys_dia_icd icd on detail.diag_cd=icd.icd_cd
+        where detail.set_cd=#{setCd}
+    </select>
+</mapper>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.sys.mapper.QuoteElemMapper">
+
+    <resultMap type="QuoteElem" id="QuoteElemResult">
+        <result property="id"    column="id"    />
+        <result property="tempType"    column="temp_type"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="fromMrTypeCd"    column="from_mr_type_cd"    />
+        <result property="fromElemCd"    column="from_elem_cd"    />
+        <result property="fromElemId"    column="from_elem_id"    />
+        <result property="fromElemName"    column="from_elem_name"    />
+        <result property="elemOrder"    column="elem_order"    />
+        <result property="isValid"    column="is_valid"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="creatorid"    column="creatorid"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="base64Flag"    column="base64_flag"    />
+    </resultMap>
+
+    <resultMap id="QuoteElemVoResult" type="QuoteElemVo" extends="QuoteElemResult">
+        <result property="tempTypeName"    column="temp_type_name"    />
+        <result property="fromMrTypeName"    column="from_mr_type_name"    />
+        <result property="contElemName"    column="cont_elem_name"    />
+    </resultMap>
+
+    <resultMap type="QuoteElemTypeNumVo" id="QuoteElemTypeNumResult">
+        <result property="tempType"    column="temp_type"    />
+        <result property="tempTypeName"    column="temp_type_name"    />
+        <result property="tempTypeNum"    column="temp_type_num"    />
+        <result property="fromTypeNum"    column="from_type_num"    />
+    </resultMap>
+
+    <sql id="selectQuoteElemVo">
+        select dd2.data_tag from_mr_type_name,id, temp_type, elem_id, elem_name, elem_cd, from_mr_type_cd, from_elem_cd, from_elem_id,
+        from_elem_name, elem_order, is_valid, createtime, creatorid, alt_per_code, alt_date, base64_flag
+        from sys_quote_elem qe
+                 left join TM_BS_DICT_DATA dd2 on qe.from_mr_type_cd = dd2.data_val and dd2.dict_type = 's004'
+    </sql>
+
+    <sql id="selectQuoteElemStandardVo">
+        select dd2.data_tag from_mr_type_name,id, temp_type, elem_id, elem_name, elem_cd, from_mr_type_cd, from_elem_cd, from_elem_id,
+        from_elem_name, elem_order, is_valid, createtime, creatorid, alt_per_code, alt_date, base64_flag
+        from sys_quote_elem qe
+                 left join TM_BS_DICT_DATA dd2 on qe.from_mr_type_cd = dd2.data_val and dd2.dict_type = 's004'
+    </sql>
+
+    <select id="selectQuoteElemList" parameterType="QuoteElemVo" resultMap="QuoteElemVoResult">
+        <include refid="selectQuoteElemVo"/>
+        <where>
+            <if test="tempType != null  and tempType != ''"> and qe.temp_type = #{tempType}</if>
+            <if test="elemId != null  and elemId != ''"> and qe.elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and qe.elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and qe.elem_cd = #{elemCd}</if>
+            <if test="fromMrTypeCd != null  and fromMrTypeCd != ''"> and qe.from_mr_type_cd = #{fromMrTypeCd}</if>
+            <if test="fromElemCd != null  and fromElemCd != ''"> and qe.from_elem_cd = #{fromElemCd}</if>
+            <if test="fromElemId != null "> and qe.from_elem_id = #{fromElemId}</if>
+            <if test="fromElemName != null  and fromElemName != ''"> and qe.from_elem_name like concat(concat('%', #{fromElemName}), '%')</if>
+            <if test="elemOrder != null "> and qe.elem_order = #{elemOrder}</if>
+            and qe.is_valid = '1'
+            <if test="createtime != null "> and qe.createtime = #{createtime}</if>
+            <if test="creatorid != null  and creatorid != ''"> and qe.creatorid = #{creatorid}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and qe.alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and qe.alt_date = #{altDate}</if>
+            <if test="base64Flag != null "> and qe.base64_flag = #{base64Flag}</if>
+        </where>
+        order by qe.elem_id, qe.elem_order
+    </select>
+
+    <select id="selectQuoteElemStandardList" parameterType="QuoteElemVo" resultMap="QuoteElemVoResult">
+        <include refid="selectQuoteElemStandardVo"/>
+        <where>
+            <if test="tempType != null  and tempType != ''"> and qe.temp_type = #{tempType}</if>
+            <if test="elemId != null  and elemId != ''"> and qe.elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and qe.elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and qe.elem_cd = #{elemCd}</if>
+            <if test="fromMrTypeCd != null  and fromMrTypeCd != ''"> and qe.from_mr_type_cd = #{fromMrTypeCd}</if>
+            <if test="fromElemCd != null  and fromElemCd != ''"> and qe.from_elem_cd = #{fromElemCd}</if>
+            <if test="fromElemId != null "> and qe.from_elem_id = #{fromElemId}</if>
+            <if test="fromElemName != null  and fromElemName != ''"> and qe.from_elem_name like concat(concat('%', #{fromElemName}), '%')</if>
+            <if test="elemOrder != null "> and qe.elem_order = #{elemOrder}</if>
+            and qe.is_valid = '1'
+            <if test="createtime != null "> and qe.createtime = #{createtime}</if>
+            <if test="creatorid != null  and creatorid != ''"> and qe.creatorid = #{creatorid}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and qe.alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and qe.alt_date = #{altDate}</if>
+        </where>
+        order by qe.elem_id, qe.elem_order
+    </select>
+
+    <select id="selectQuoteElemById" parameterType="Long" resultMap="QuoteElemResult">
+        <include refid="selectQuoteElemVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertQuoteElem" parameterType="QuoteElem">
+        insert into sys_quote_elem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tempType != null">temp_type,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="fromMrTypeCd != null">from_mr_type_cd,</if>
+            <if test="fromElemCd != null">from_elem_cd,</if>
+            <if test="fromElemId != null">from_elem_id,</if>
+            <if test="fromElemName != null">from_elem_name,</if>
+            <if test="elemOrder != null">elem_order,</if>
+            <if test="isValid != null">is_valid,</if>
+            createtime,
+            <if test="creatorid != null">creatorid,</if>
+            <if test="base64Flag != null">base64_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tempType != null">#{tempType},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="fromMrTypeCd != null">#{fromMrTypeCd},</if>
+            <if test="fromElemCd != null">#{fromElemCd},</if>
+            <if test="fromElemId != null">#{fromElemId},</if>
+            <if test="fromElemName != null">#{fromElemName},</if>
+            <if test="elemOrder != null">#{elemOrder},</if>
+            <if test="isValid != null">#{isValid},</if>
+            sysdate,
+            <if test="creatorid != null">#{creatorid},</if>
+            <if test="base64Flag != null">#{base64Flag},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertQuoteElemList">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into sys_quote_elem(id, temp_type, elem_id, elem_name, elem_cd, from_mr_type_cd, from_elem_cd,
+            from_elem_id, from_elem_name,elem_order, is_valid, createtime, creatorid, base64_flag)
+            values
+            (#{item.id},#{item.tempType},#{item.elemId},#{item.elemName},#{item.elemCd},#{item.fromMrTypeCd},#{item.fromElemCd},
+            #{item.fromElemId},#{item.fromElemName},#{item.elemOrder},#{item.isValid},sysdate,#{item.creatorid}, #{item.base64Flag})
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateQuoteElem" parameterType="QuoteElem">
+        update sys_quote_elem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tempType != null">temp_type = #{tempType},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="fromMrTypeCd != null">from_mr_type_cd = #{fromMrTypeCd},</if>
+            <if test="fromElemCd != null">from_elem_cd = #{fromElemCd},</if>
+            <if test="fromElemId != null">from_elem_id = #{fromElemId},</if>
+            <if test="fromElemName != null">from_elem_name = #{fromElemName},</if>
+            <if test="elemOrder != null">elem_order = #{elemOrder},</if>
+            <if test="isValid != null">is_valid = #{isValid},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+            <if test="base64Flag != null">base64_flag = #{base64Flag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateQuoteElemList" parameterType="QuoteElem">
+        <foreach item="item" index="index" collection="list">
+            update sys_quote_elem
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.tempType != null">temp_type = #{item.tempType},</if>
+                <if test="item.elemId != null">elem_id = #{item.elemId},</if>
+                <if test="item.elemName != null">elem_name = #{item.elemName},</if>
+                <if test="item.elemCd != null">elem_cd = #{item.elemCd},</if>
+                <if test="item.fromMrTypeCd != null">from_mr_type_cd = #{item.fromMrTypeCd},</if>
+                <if test="item.fromElemCd != null">from_elem_cd = #{item.fromElemCd},</if>
+                <if test="item.fromElemId != null">from_elem_id = #{item.fromElemId},</if>
+                <if test="item.fromElemName != null">from_elem_name = #{item.fromElemName},</if>
+                <if test="item.elemOrder != null">elem_order = #{item.elemOrder},</if>
+                <if test="item.isValid != null">is_valid = #{item.isValid},</if>
+                <if test="item.altPerCode != null">alt_per_code = #{item.altPerCode},</if>
+                alt_date = sysdate,
+                <if test="item.base64Flag != null">base64_flag = #{item.base64Flag},</if>
+            </trim>
+            where id = #{id}
+        </foreach>
+    </update>
+
+    <delete id="deleteQuoteElemById" parameterType="Long">
+        delete from sys_quote_elem where id = #{id}
+    </delete>
+
+    <update id="deleteQuoteElemByIds" parameterType="String">
+        delete from sys_quote_elem where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="deleteQuoteElemByElemId">
+        update sys_quote_elem set is_valid = '0' where temp_type = #{tempType} and elem_cd = #{elemCd}
+    </update>
+
+    <select id="selectNumGroupByType" parameterType="QuoteElemTypeNumVo" resultMap="QuoteElemTypeNumResult">
+        select a.temp_type_name, a.temp_type, a.temp_type_num,tnn.from_type_num, a.data_sort from (
+            select dd.data_tag temp_type_name, dd.data_val temp_type, tn.type_num temp_type_num, dd.data_sort
+            from TM_BS_DICT_DATA dd
+            left join (select temp_type,count(ELEM_ID) type_num from ( select temp_type, ELEM_ID from sys_quote_elem where is_valid = '1' group by temp_type,ELEM_ID ) a group by temp_type) tn on dd.data_val = tn.temp_type
+            where dd.dict_type = 's004' and dd.status = 0
+        ) a
+        left join (select temp_type, count(from_elem_id) from_type_num from sys_quote_elem where is_valid = '1' group by temp_type) tnn on a.temp_type = tnn.temp_type
+        where 1=1
+        <if test="tempTypeName != null and tempTypeName != ''">
+            and a.temp_type_name like concat(concat('%', #{tempTypeName}), '%')
+        </if>
+        order by a.data_sort
+    </select>
+
+    <select id="selectQuoteElemVoByTemp"  resultMap="QuoteElemVoResult">
+        select sqe.* from  sys_quote_elem sqe  where sqe.is_valid=1 and sqe.temp_type=#{tempType} and sqe.elem_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectFromQuoteElemForBase64" resultMap="QuoteElemVoResult">
+        select * from sys_quote_elem where is_valid=1 and base64_flag = '1' and temp_type=#{tempType}
+    </select>
+</mapper>

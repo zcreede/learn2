@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.TmPmCipherMainMapper">
+
+    <resultMap type="TmPmCipherMain" id="TmPmCipherMainResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="cipherCd"    column="cipher_cd"    />
+        <result property="cipherName"    column="cipher_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="shareType"    column="share_type"    />
+        <result property="shareObject"    column="share_object"    />
+        <result property="usageWayCd"    column="usage_way_cd"    />
+        <result property="usageWayName"    column="usage_way_name"    />
+        <result property="freqCd"    column="freq_cd"    />
+        <result property="freqName"    column="freq_name"    />
+        <result property="herbalIntr"    column="herbal_intr"    />
+        <result property="decoctMethod"    column="decoct_method"    />
+        <result property="oederDesc"    column="oeder_desc"    />
+        <result property="plasterFlag"    column="plaster_flag"    />
+        <result property="herbalDose"    column="herbal_dose"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+<resultMap id="TmPmCipherMainVoResult" type="TmPmCipherMainVo" extends="TmPmCipherMainResult">
+
+</resultMap>
+    <sql id="selectTmPmCipherMainVo">
+        select hospital_code, cipher_cd, cipher_name, inputstrphtc, share_type, share_object, usage_way_cd, usage_way_name, freq_cd, freq_name, herbal_intr, decoct_method, oeder_desc, plaster_flag, herbal_dose, enabled, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from tm_pm_cipher_main
+    </sql>
+
+    <select id="selectTmPmCipherMainList" parameterType="TmPmCipherMain" resultMap="TmPmCipherMainVoResult">
+        <include refid="selectTmPmCipherMainVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="cipherName != null  and cipherName != ''"> and
+             (cipher_name like concat(concat('%', #{cipherName}), '%') or
+                inputstrphtc like concat(concat('%', #{cipherName}), '%') )
+            </if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="shareType != null  and shareType != ''"> and share_type = #{shareType}</if>
+            <if test="shareObject != null  and shareObject != ''"> and  share_Object=#{shareObject}</if>
+            <if test="usageWayCd != null  and usageWayCd != ''"> and usage_way_cd = #{usageWayCd}</if>
+            <if test="usageWayName != null  and usageWayName != ''"> and usage_way_name like concat(concat('%', #{usageWayName}), '%')</if>
+            <if test="freqCd != null  and freqCd != ''"> and freq_cd = #{freqCd}</if>
+            <if test="freqName != null  and freqName != ''"> and freq_name like concat(concat('%', #{freqName}), '%')</if>
+            <if test="herbalIntr != null  and herbalIntr != ''"> and herbal_intr = #{herbalIntr}</if>
+            <if test="decoctMethod != null  and decoctMethod != ''"> and decoct_method = #{decoctMethod}</if>
+            <if test="oederDesc != null  and oederDesc != ''"> and oeder_desc = #{oederDesc}</if>
+            <if test="plasterFlag != null  and plasterFlag != ''"> and plaster_flag = #{plasterFlag}</if>
+            <if test="herbalDose != null "> and herbal_dose = #{herbalDose}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+             <if test="deptCode!=null and deptCode!='' and docCode!=null and docCode!=''">
+                 and (share_Object=#{deptCode} or share_Object=#{docCode} or share_Object='000000')
+             </if>
+        </where>
+        order by cre_date
+    </select>
+
+    <select id="selectTmPmCipherMainById" parameterType="String" resultMap="TmPmCipherMainVoResult">
+        <include refid="selectTmPmCipherMainVo"/>
+        where cipher_cd = #{cipherCd}
+    </select>
+
+    <insert id="insertTmPmCipherMain" parameterType="TmPmCipherMain">
+        insert into tm_pm_cipher_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="cipherCd != null">cipher_cd,</if>
+            <if test="cipherName != null">cipher_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="shareType != null">share_type,</if>
+            <if test="shareObject != null">share_object,</if>
+            <if test="usageWayCd != null">usage_way_cd,</if>
+            <if test="usageWayName != null">usage_way_name,</if>
+            <if test="freqCd != null">freq_cd,</if>
+            <if test="freqName != null">freq_name,</if>
+            <if test="herbalIntr != null">herbal_intr,</if>
+            <if test="decoctMethod != null">decoct_method,</if>
+            <if test="oederDesc != null">oeder_desc,</if>
+            <if test="plasterFlag != null">plaster_flag,</if>
+            <if test="herbalDose != null">herbal_dose,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="cipherCd != null">#{cipherCd},</if>
+            <if test="cipherName != null">#{cipherName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="shareType != null">#{shareType},</if>
+            <if test="shareObject != null">#{shareObject},</if>
+            <if test="usageWayCd != null">#{usageWayCd},</if>
+            <if test="usageWayName != null">#{usageWayName},</if>
+            <if test="freqCd != null">#{freqCd},</if>
+            <if test="freqName != null">#{freqName},</if>
+            <if test="herbalIntr != null">#{herbalIntr},</if>
+            <if test="decoctMethod != null">#{decoctMethod},</if>
+            <if test="oederDesc != null">#{oederDesc},</if>
+            <if test="plasterFlag != null">#{plasterFlag},</if>
+            <if test="herbalDose != null">#{herbalDose},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmPmCipherMain" parameterType="TmPmCipherMain">
+        update tm_pm_cipher_main
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="cipherName != null">cipher_name = #{cipherName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="shareType != null">share_type = #{shareType},</if>
+            <if test="shareObject != null">share_object = #{shareObject},</if>
+            <if test="usageWayCd != null">usage_way_cd = #{usageWayCd},</if>
+            <if test="usageWayName != null">usage_way_name = #{usageWayName},</if>
+            <if test="freqCd != null">freq_cd = #{freqCd},</if>
+            <if test="freqName != null">freq_name = #{freqName},</if>
+            <if test="herbalIntr != null">herbal_intr = #{herbalIntr},</if>
+            <if test="decoctMethod != null">decoct_method = #{decoctMethod},</if>
+            <if test="oederDesc != null">oeder_desc = #{oederDesc},</if>
+            <if test="plasterFlag != null">plaster_flag = #{plasterFlag},</if>
+            <if test="herbalDose != null">herbal_dose = #{herbalDose},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where cipher_cd = #{cipherCd}
+    </update>
+
+    <delete id="deleteTmPmCipherMainById" parameterType="String">
+        delete from tm_pm_cipher_main where cipher_cd = #{cipherCd}
+    </delete>
+
+    <delete id="deleteTmPmCipherMainByIds" parameterType="String">
+        delete from tm_pm_cipher_main where cipher_cd in
+        <foreach item="cipherCd" collection="array" open="(" separator="," close=")">
+            #{cipherCd}
+        </foreach>
+    </delete>
+</mapper>

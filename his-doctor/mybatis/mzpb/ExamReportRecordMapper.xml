@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mzpb.mapper.ExamReportRecordMapper">
+
+    <resultMap type="com.emr.project.mzpb.domain.ExamReportRecord" id="ExamReportRecordResult">
+            <result column="appoint_no" property="appointNo"   />
+            <result column="exam_id" property="examId"   />
+            <result column="zy_mz_flag" property="zyMzFlag"   />
+    </resultMap>
+
+    <select id="selectExamReportRecordInfo" resultMap="ExamReportRecordResult">
+        select * from EXAM_REPORT_RECORD where APPOINT_no = #{applyNo}
+    </select>
+
+    <select id="selectSqdByDjh" resultMap="ExamReportRecordResult">
+        select * from yydb..yy_yz_sqd where djh = #{applyNo}
+    </select>
+
+    <insert id="updateByDjh" parameterType="com.emr.project.webservice.domain.req.EcgReq">
+        update exam_report_record set wjzbz = '1' where  b.djh =#{applyNo}
+    </insert>
+
+    <insert id="insert" parameterType="com.emr.project.webservice.domain.req.EcgReq">
+    insert into exam_report_record(  APPOINT_no, exam_id, hosp_Patient_ID, hosptimes, hosp_Patient_no, Patient_Name, date_of_birth, sex,
+	            Zy_mz_flag,  state_flag, Sickbed_No, modality,Refer_Dept, Refer_Doctor, Clinical_Diagnosis, Exam_Item, Patient_state,
+				body_part, body_organ, finding, diagnosis, Operator,czmk, study_uid,report_uid,yztcbh,Report_im,
+				wjzbz,result_wjz,shys,shsj, Report_Date,study_date)
+		select  ${applyNo}, '', a.hzid, 1, a.mzh, a.xm, c.csrq, c.Xb,
+		        'mz', '6', null, b.djlxbh,  b.ksbh, b.ysbh, b.blzy, b.sjmd, null,
+				 b.jcbw, null, null, null, '${sendDoctor}' , '云心电', null,null,null,null,
+				 '1','${criticalContent}' ,'${sendDoctor}' ,'${sendDate}','${sendDate}',getdate()
+		from mzdb.dbo.yy_mz_brjzxx a, yydb..yy_yz_sqd b, mzdb.dbo.yy_mz_brjbxx c
+		where
+		    a.mzh = b.zyh
+		    and a.Hzid=c.hzid
+		    and b.bz1 = 'mz'
+		    and a.mzh = #{outpatientNo}
+		    and b.djh =#{applyNo}
+    </insert>
+
+</mapper>

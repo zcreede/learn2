@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.PatAttMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.system.domain.PatAtt">
+    <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+    <result column="case_no" jdbcType="VARCHAR" property="caseNo" />
+    <result column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+    <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount" />
+    <result column="ulcer_flag" jdbcType="VARCHAR" property="ulcerFlag" />
+    <result column="scald_flag" jdbcType="VARCHAR" property="scaldFlag" />
+    <result column="falling_flag" jdbcType="VARCHAR" property="fallingFlag" />
+    <result column="tumble_flag" jdbcType="VARCHAR" property="tumbleFlag" />
+    <result column="rid_flag" jdbcType="VARCHAR" property="ridFlag" />
+    <result column="infect_flag" jdbcType="VARCHAR" property="infectFlag" />
+    <result column="heat_flag" jdbcType="VARCHAR" property="heatFlag" />
+    <result column="key_flag" jdbcType="VARCHAR" property="keyFlag" />
+    <result column="research_flag" jdbcType="VARCHAR" property="researchFlag" />
+    <result column="height" jdbcType="DECIMAL" property="height" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="allergy_name" jdbcType="VARCHAR" property="allergyName" />
+    <result column="operation_flag" jdbcType="VARCHAR" property="operationFlag" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.emr.project.system.domain.PatAtt">
+    insert into td_na_pat_att (id, hospital_code, case_no, admission_no,
+      hospitalized_count, ulcer_flag, scald_flag,
+      falling_flag, tumble_flag, rid_flag,
+      infect_flag, heat_flag, key_flag,
+      research_flag, height, weight,
+      allergy_name, operation_flag)
+    values (seq_td_na_pat_att.nextval, #{hospitalCode,jdbcType=VARCHAR}, #{caseNo,jdbcType=VARCHAR}, #{admissionNo,jdbcType=VARCHAR},
+      #{hospitalizedCount,jdbcType=INTEGER}, #{ulcerFlag,jdbcType=VARCHAR}, #{scaldFlag,jdbcType=VARCHAR},
+      #{fallingFlag,jdbcType=VARCHAR}, #{tumbleFlag,jdbcType=VARCHAR}, #{ridFlag,jdbcType=VARCHAR},
+      #{infectFlag,jdbcType=VARCHAR}, #{heatFlag,jdbcType=VARCHAR}, #{keyFlag,jdbcType=VARCHAR},
+      #{researchFlag,jdbcType=VARCHAR}, #{height,jdbcType=DECIMAL}, #{weight,jdbcType=DECIMAL},
+      #{allergyName,jdbcType=VARCHAR}, #{operationFlag,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.emr.project.system.domain.PatAtt">
+    insert into td_na_pat_att
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="hospitalCode != null">
+        hospital_code,
+      </if>
+      <if test="caseNo != null">
+        case_no,
+      </if>
+      <if test="admissionNo != null">
+        admission_no,
+      </if>
+      <if test="hospitalizedCount != null">
+        hospitalized_count,
+      </if>
+      <if test="ulcerFlag != null">
+        ulcer_flag,
+      </if>
+      <if test="scaldFlag != null">
+        scald_flag,
+      </if>
+      <if test="fallingFlag != null">
+        falling_flag,
+      </if>
+      <if test="tumbleFlag != null">
+        tumble_flag,
+      </if>
+      <if test="ridFlag != null">
+        rid_flag,
+      </if>
+      <if test="infectFlag != null">
+        infect_flag,
+      </if>
+      <if test="heatFlag != null">
+        heat_flag,
+      </if>
+      <if test="keyFlag != null">
+        key_flag,
+      </if>
+      <if test="researchFlag != null">
+        research_flag,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="allergyName != null">
+        allergy_name,
+      </if>
+      <if test="operationFlag != null">
+        operation_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      seq_td_na_pat_att.nextval,
+      <if test="hospitalCode != null">
+        #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null">
+        #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionNo != null">
+        #{admissionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalizedCount != null">
+        #{hospitalizedCount,jdbcType=INTEGER},
+      </if>
+      <if test="ulcerFlag != null">
+        #{ulcerFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="scaldFlag != null">
+        #{scaldFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="fallingFlag != null">
+        #{fallingFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="tumbleFlag != null">
+        #{tumbleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="ridFlag != null">
+        #{ridFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="infectFlag != null">
+        #{infectFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="heatFlag != null">
+        #{heatFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="keyFlag != null">
+        #{keyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="researchFlag != null">
+        #{researchFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="allergyName != null">
+        #{allergyName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationFlag != null">
+        #{operationFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updatePatAtt" parameterType="com.emr.project.system.domain.PatAtt">
+    update td_na_pat_att
+    <set>
+      <if test="hospitalCode != null">
+        hospital_code = #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null">
+        case_no = #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionNo != null">
+        admission_no = #{admissionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalizedCount != null">
+        hospitalized_count = #{hospitalizedCount,jdbcType=INTEGER},
+      </if>
+      <if test="ulcerFlag != null">
+        ulcer_flag = #{ulcerFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="scaldFlag != null">
+        scald_flag = #{scaldFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="fallingFlag != null">
+        falling_flag = #{fallingFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="tumbleFlag != null">
+        tumble_flag = #{tumbleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="ridFlag != null">
+        rid_flag = #{ridFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="infectFlag != null">
+        infect_flag = #{infectFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="heatFlag != null">
+        heat_flag = #{heatFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="keyFlag != null">
+        key_flag = #{keyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="researchFlag != null">
+        research_flag = #{researchFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="allergyName != null">
+        allergy_name = #{allergyName,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyName == null">
+        allergy_name = null,
+      </if>
+      <if test="operationFlag != null">
+        operation_flag = #{operationFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    	where admission_no = #{admissionNo,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findByAdmissionNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from td_na_pat_att where admission_no=#{admissionNo,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

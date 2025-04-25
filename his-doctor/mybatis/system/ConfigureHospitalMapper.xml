@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.ConfigureHospitalMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.system.domain.ConfigureHospital">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospital_code" jdbcType="VARCHAR" property="hospitalCode" />
+    <result column="configure_name" jdbcType="VARCHAR" property="configureName" />
+    <result column="configure_code" jdbcType="FLOAT" property="configureCode" />
+    <result column="configure_value" jdbcType="VARCHAR" property="configureValue" />
+    <result column="configure_desc" jdbcType="VARCHAR" property="configureDesc" />
+    <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, hospital_code, configure_name, configure_code, configure_value, configure_desc, 
+    sort_number
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tm_pm_configure_hospital
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tm_pm_configure_hospital
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.emr.project.system.domain.ConfigureHospital">
+    insert into tm_pm_configure_hospital (id, hospital_code, configure_name,
+      configure_code, configure_value, configure_desc, 
+      sort_number)
+    values (seq_tm_pm_configure_hospital.nextval, #{hospitalCode,jdbcType=VARCHAR}, #{configureName,jdbcType=VARCHAR},
+      #{configureCode,jdbcType=VARCHAR}, #{configureValue,jdbcType=VARCHAR}, #{configureDesc,jdbcType=VARCHAR}, 
+      #{sortNumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.system.domain.ConfigureHospital">
+    insert into tm_pm_configure_hospital
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="hospitalCode != null">
+        hospital_code,
+      </if>
+      <if test="configureName != null">
+        configure_name,
+      </if>
+      <if test="configureCode != null">
+        configure_code,
+      </if>
+      <if test="configureValue != null">
+        configure_value,
+      </if>
+      <if test="configureDesc != null">
+        configure_desc,
+      </if>
+      <if test="sortNumber != null">
+        sort_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      seq_tm_pm_configure_hospital.nextval
+      <if test="hospitalCode != null">
+        #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="configureName != null">
+        #{configureName,jdbcType=VARCHAR},
+      </if>
+      <if test="configureCode != null">
+        #{configureCode,jdbcType=VARCHAR},
+      </if>
+      <if test="configureValue != null">
+        #{configureValue,jdbcType=VARCHAR},
+      </if>
+      <if test="configureDesc != null">
+        #{configureDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNumber != null">
+        #{sortNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.system.domain.ConfigureHospital">
+    update tm_pm_configure_hospital
+    <set>
+      <if test="hospitalCode != null">
+        hospital_code = #{hospitalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="configureName != null">
+        configure_name = #{configureName,jdbcType=VARCHAR},
+      </if>
+      <if test="configureCode != null">
+        configure_code = #{configureCode,jdbcType=VARCHAR},
+      </if>
+      <if test="configureValue != null">
+        configure_value = #{configureValue,jdbcType=VARCHAR},
+      </if>
+      <if test="configureDesc != null">
+        configure_desc = #{configureDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNumber != null">
+        sort_number = #{sortNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emr.project.system.domain.ConfigureHospital">
+    update tm_pm_configure_hospital
+    set hospital_code = #{hospitalCode,jdbcType=VARCHAR},
+      configure_name = #{configureName,jdbcType=VARCHAR},
+      configure_code = #{configureCode,jdbcType=VARCHAR},
+      configure_value = #{configureValue,jdbcType=VARCHAR},
+      configure_desc = #{configureDesc,jdbcType=VARCHAR},
+      sort_number = #{sortNumber,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByConn" parameterType="com.emr.project.system.domain.ConfigureHospital" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_pm_configure_hospital
+    <where>
+      <if test="hospitalCode != null">
+        and (hospital_code = #{hospitalCode,jdbcType=VARCHAR} or flag = 0)
+      </if>
+      <if test="configureName != null">
+        and configure_name = #{configureName,jdbcType=VARCHAR}
+      </if>
+      <if test="configureCode != null">
+        and configure_code = #{configureCode,jdbcType=VARCHAR}
+      </if>
+      <if test="configureValue != null">
+        and configure_value = #{configureValue,jdbcType=VARCHAR}
+      </if>
+      <if test="configureDesc != null">
+        and configure_desc = #{configureDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="sortNumber != null">
+        and sort_number = #{sortNumber,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  <select id="selectListByConn" parameterType="com.emr.project.system.domain.ConfigureHospital" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_pm_configure_hospital
+    <where>
+      <if test="hospitalCode != null">
+        and hospital_code = #{hospitalCode,jdbcType=VARCHAR}
+      </if>
+      <if test="configureName != null">
+        and configure_name = #{configureName,jdbcType=VARCHAR}
+      </if>
+      <if test="configureCode != null">
+        and configure_code = #{configureCode,jdbcType=VARCHAR}
+      </if>
+      <if test="configureValue != null">
+        and configure_value = #{configureValue,jdbcType=VARCHAR}
+      </if>
+      <if test="configureDesc != null">
+        and configure_desc = #{configureDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="sortNumber != null">
+        and sort_number = #{sortNumber,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+</mapper>

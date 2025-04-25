@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysEmployeeRoleDeptMapper">
+
+	<resultMap type="SysEmployeeRoleDept" id="SysEmployeeRoleDeptResult">
+		<result property="employeeId"     column="employee_id"      />
+		<result property="roleId"     column="role_id"      />
+		<result property="deptId"     column="dept_id"      />
+	</resultMap>
+	<resultMap type="SysEmployeeRoleDeptVo" id="SysEmployeeRoleDeptVoResult" extends="SysEmployeeRoleDeptResult">
+		<result property="deptName"     column="deptName"      />
+	</resultMap>
+	<delete id="deleteByUserId" parameterType="Long">
+		delete from SYS_EMPLOYEE_ROLE_DEPT where employee_id=#{userId}
+	</delete>
+	<insert id="insertSysUserRoleDept" parameterType="SysEmployeeRoleDept">
+		insert into SYS_EMPLOYEE_ROLE_DEPT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="employeeId != null">employee_id,</if>
+			<if test="roleId != null">role_id,</if>
+			<if test="deptId != null">dept_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="employeeId != null">#{employeeId},</if>
+			<if test="roleId != null">#{role_id},</if>
+			<if test="deptId != null">#{deptId},</if>
+		</trim>
+	</insert>
+
+	<select id="selectCountRoleDeptByUserId" resultMap="SysEmployeeRoleDeptResult">
+	    select r.STAFF_CODE as employee_id,r.ROLE_NO, role.id as role_id from tm_bs_staff_role r
+	    left join tm_bs_staff s on r.STAFF_CODE=s.STAFF_CODE
+	    left join tm_bs_role role on r.role_no=role.role_no
+	    where s.id=#{employeeId}
+	</select>
+	<select id="selectDeptsByUserId" resultMap="SysEmployeeRoleDeptResult">
+	    select s.STAFF_CODE as employee_id,dept.dept_code as dept_id  from tm_bs_staff s
+	    left join TM_BS_STAFF_DEPT dept on dept.STAFF_CODE=s.STAFF_CODE
+	    where s.id=#{employeeId}
+	</select>
+	<select id="selectDeptNameGroupByUser" resultMap="SysEmployeeRoleDeptVoResult">
+	    select wm_concat(sd.dept_name) as deptName,rd.staff_code as employee_id
+	    from tm_bs_staff_role rd
+	    left join tm_bs_staff_dept dept on dept.staff_code=rd.staff_code
+	    left join tm_bs_dept sd on dept.dept_code=sd.dept_code
+	    group by rd.staff_code
+	</select>
+
+	<select id="selectDeptNameGroupByUserVO" resultMap="SysEmployeeRoleDeptVoResult" parameterType="com.emr.project.system.domain.vo.BasEmployeeVo">
+	    select wm_concat(sd.dept_name) as deptName,rd.staff_code as employee_id
+	    from tm_bs_staff_role rd
+	    left join tm_bs_staff_dept dept on dept.staff_code=rd.staff_code
+	    left join tm_bs_dept sd on dept.dept_code=sd.dept_code
+	    <where>
+			<if test="deptId != null and deptId != '10000'.toString()">
+				sd.dept_code =#{deptId}
+			</if>
+		</where>
+	    group by rd.staff_code
+	</select>
+
+	<select id="selectRoleDeptList" parameterType="SysEmployeeRoleDept" resultMap="SysEmployeeRoleDeptVoResult">
+	    select sr.STAFF_CODE as employee_id,sr.ROLE_NO as role_id, sd.DEPT_CODE as dept_id from tm_bs_staff_role sr left join tm_bs_staff_dept sd on sr.staff_code=sd.staff_code
+	    <where>
+		     <if test="employeeId != null">sr.STAFF_CODE = #{employeeId}</if>
+		</where>
+	</select>
+</mapper>

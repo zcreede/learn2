@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.PersonalinfoMapper">
+
+    <resultMap type="Personalinfo" id="PersonalinfoResult">
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="sex"    column="sex"    />
+        <result property="sexCd"    column="sex_cd"    />
+        <result property="birDate"    column="bir_date"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="citizenship"    column="citizenship"    />
+        <result property="citizenshipCd"    column="citizenship_cd"    />
+        <result property="marStaCd"    column="mar_sta_cd"    />
+        <result property="marSta"    column="mar_sta"    />
+        <result property="cardTypeCd"    column="card_type_cd"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="nationCd"    column="nation_cd"    />
+        <result property="healCardNo"    column="heal_card_no"    />
+        <result property="healFileNo"    column="heal_file_no"    />
+        <result property="exsFlag"    column="exs_flag"    />
+        <result property="eduCd"    column="edu_cd"    />
+        <result property="eduName"    column="edu_name"    />
+        <result property="sdCardId"    column="sd_card_id"    />
+        <result property="proTypeCd"    column="pro_type_cd"    />
+        <result property="proTypeName"    column="pro_type_name"    />
+        <result property="nowAddrHouseNo"    column="now_addr_house_no"    />
+        <result property="nowAddrPost"    column="now_addr_post"    />
+        <result property="nowAddrPro"    column="now_addr_pro"    />
+        <result property="nowAddrVil"    column="now_addr_vil"    />
+        <result property="nowAddrFlagty"    column="now_addr_flagty"    />
+        <result property="nowAddrCou"    column="now_addr_cou"    />
+        <result property="nowAddrTown"    column="now_addr_town"    />
+        <result property="nowAddrTel"    column="now_addr_tel"    />
+        <result property="citAddrHouseNo"    column="cit_addr_house_no"    />
+        <result property="citAddrPro"    column="cit_addr_pro"    />
+        <result property="citAddrVil"    column="cit_addr_vil"    />
+        <result property="citAddrFlagty"    column="cit_addr_flagty"    />
+        <result property="citAddrCou"    column="cit_addr_cou"    />
+        <result property="citAddrTown"    column="cit_addr_town"    />
+        <result property="rprAddrHouseNo"    column="rpr_addr_house_no"    />
+        <result property="rprAddrPro"    column="rpr_addr_pro"    />
+        <result property="rprAddrVil"    column="rpr_addr_vil"    />
+        <result property="rprAddrFlagty"    column="rpr_addr_flagty"    />
+        <result property="rprAddrCou"    column="rpr_addr_cou"    />
+        <result property="rprAddrTown"    column="rpr_addr_town"    />
+        <result property="prpAddrPost"    column="prp_addr_post"    />
+        <result property="patientTel"    column="patient_tel"    />
+        <result property="workName"    column="work_name"    />
+        <result property="workAddr"    column="work_addr"    />
+        <result property="workTel"    column="work_tel"    />
+        <result property="workPost"    column="work_post"    />
+        <result property="birAddrPro"    column="bir_addr_pro"    />
+        <result property="birAddrPlagty"    column="bir_addr_plagty"    />
+        <result property="birAddrCou"    column="bir_addr_cou"    />
+        <result property="contTel"    column="cont_tel"    />
+        <result property="contName"    column="cont_name"    />
+        <result property="contAddrPost"    column="cont_addr_post"    />
+        <result property="contAddrPro"    column="cont_addr_pro"    />
+        <result property="contAddrVil"    column="cont_addr_vil"    />
+        <result property="contAddrFlagty"    column="cont_addr_flagty"    />
+        <result property="contAddrCou"    column="cont_addr_cou"    />
+        <result property="contAddrTown"    column="cont_addr_town"    />
+        <result property="cpRela"    column="cp_rela"    />
+        <result property="secLevel"    column="sec_level"    />
+        <result property="aboName"    column="abo_name"    />
+        <result property="aboCd"    column="abo_cd"    />
+        <result property="rhName"    column="rh_name"    />
+        <result property="rhCd"    column="rh_cd"    />
+        <result property="workDate"    column="work_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="nation"    column="nation"    />
+        <result property="polStatCd"    column="pol_stat_cd"    />
+        <result property="polStatName"    column="pol_stat_name"    />
+        <result property="modiFlag"    column="modi_flag"    />
+        <result property="cpRelaName"    column="cp_rela_name"    />
+        <result property="proTypeDesc"    column="pro_type_desc"    />
+        <result property="workAddrPro"    column="work_addr_pro"    />
+        <result property="workAddrFlagty"    column="work_addr_flagty"    />
+        <result property="workAddrCou"    column="work_addr_cou"    />
+        <result property="workAddrTown"    column="work_addr_town"    />
+        <result property="workAddrVil"    column="work_addr_vil"    />
+        <result property="workAddrHouseNo"    column="work_addr_house_no"    />
+        <result property="cpRelaRem"    column="cp_rela_rem"    />
+        <result property="contAddrHouseNo"    column="cont_addr_house_no"    />
+        <result property="inpNo"    column="inp_no"    />
+    </resultMap>
+<resultMap id="PersonalinfoVoResult" type="PersonalinfoVo" extends="PersonalinfoResult">
+
+</resultMap>
+    <sql id="selectPersonalinfoVo">
+        select patient_main_id, patient_id, patient_name, inputstrphtc, sex, sex_cd, bir_date, age_y, age_m, age_d, age_h, age_mi, citizenship, citizenship_cd,
+               mar_sta_cd, mar_sta, card_type_cd, card_type, id_card, nation_cd, heal_card_no, heal_file_no, exs_flag, edu_cd, edu_name, sd_card_id, pro_type_cd,
+               pro_type_name, now_addr_house_no, now_addr_post, now_addr_pro, now_addr_vil, now_addr_flagty, now_addr_cou, now_addr_town, now_addr_tel,
+               cit_addr_house_no, cit_addr_pro, cit_addr_vil, cit_addr_flagty, cit_addr_cou, cit_addr_town, rpr_addr_house_no, rpr_addr_pro, rpr_addr_vil,
+               rpr_addr_flagty, rpr_addr_cou, rpr_addr_town, prp_addr_post, patient_tel, work_name, work_addr, work_tel, work_post, bir_addr_pro, bir_addr_plagty,
+               bir_addr_cou, cont_tel, cont_name, cont_addr_post, cont_addr_pro, cont_addr_vil, cont_addr_flagty, cont_addr_cou, cont_addr_town, cp_rela, sec_level,
+               abo_name, abo_cd, rh_name, rh_cd, work_date, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, nation, pol_stat_cd,
+               pol_stat_name, modi_flag, cp_rela_name,pro_type_desc,work_addr_pro,work_addr_flagty,work_addr_cou,work_addr_town,work_addr_vil,work_addr_house_no,cp_rela_rem,cont_addr_house_no from pat_personalinfo
+    </sql>
+
+    <select id="selectPersonalinfoList" parameterType="Personalinfo" resultMap="PersonalinfoResult">
+        <include refid="selectPersonalinfoVo"/>
+        <where>
+            <if test="patientMainId != null  and patientMainId != ''"> and patient_main_id = #{patientMainId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="sexCd != null  and sexCd != ''"> and sex_cd = #{sexCd}</if>
+            <if test="birDate != null "> and bir_date = #{birDate}</if>
+            <if test="ageY != null "> and age_y = #{ageY}</if>
+            <if test="ageM != null "> and age_m = #{ageM}</if>
+            <if test="ageD != null "> and age_d = #{ageD}</if>
+            <if test="ageH != null "> and age_h = #{ageH}</if>
+            <if test="ageMi != null "> and age_mi = #{ageMi}</if>
+            <if test="citizenship != null  and citizenship != ''"> and citizenship = #{citizenship}</if>
+            <if test="citizenshipCd != null  and citizenshipCd != ''"> and citizenship_cd = #{citizenshipCd}</if>
+            <if test="marStaCd != null  and marStaCd != ''"> and mar_sta_cd = #{marStaCd}</if>
+            <if test="marSta != null  and marSta != ''"> and mar_sta = #{marSta}</if>
+            <if test="cardTypeCd != null  and cardTypeCd != ''"> and card_type_cd = #{cardTypeCd}</if>
+            <if test="cardType != null  and cardType != ''"> and card_type = #{cardType}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="nationCd != null  and nationCd != ''"> and nation_cd = #{nationCd}</if>
+            <if test="healCardNo != null  and healCardNo != ''"> and heal_card_no = #{healCardNo}</if>
+            <if test="healFileNo != null  and healFileNo != ''"> and heal_file_no = #{healFileNo}</if>
+            <if test="exsFlag != null  and exsFlag != ''"> and exs_flag = #{exsFlag}</if>
+            <if test="eduCd != null  and eduCd != ''"> and edu_cd = #{eduCd}</if>
+            <if test="eduName != null  and eduName != ''"> and edu_name like concat(concat('%', #{eduName}), '%')</if>
+            <if test="sdCardId != null  and sdCardId != ''"> and sd_card_id = #{sdCardId}</if>
+            <if test="proTypeCd != null  and proTypeCd != ''"> and pro_type_cd = #{proTypeCd}</if>
+            <if test="proTypeName != null  and proTypeName != ''"> and pro_type_name like concat(concat('%', #{proTypeName}), '%')</if>
+            <if test="nowAddrHouseNo != null  and nowAddrHouseNo != ''"> and now_addr_house_no = #{nowAddrHouseNo}</if>
+            <if test="nowAddrPost != null  and nowAddrPost != ''"> and now_addr_post = #{nowAddrPost}</if>
+            <if test="nowAddrPro != null  and nowAddrPro != ''"> and now_addr_pro = #{nowAddrPro}</if>
+            <if test="nowAddrVil != null  and nowAddrVil != ''"> and now_addr_vil = #{nowAddrVil}</if>
+            <if test="nowAddrFlagty != null  and nowAddrFlagty != ''"> and now_addr_flagty = #{nowAddrFlagty}</if>
+            <if test="nowAddrCou != null  and nowAddrCou != ''"> and now_addr_cou = #{nowAddrCou}</if>
+            <if test="nowAddrTown != null  and nowAddrTown != ''"> and now_addr_town = #{nowAddrTown}</if>
+            <if test="nowAddrTel != null  and nowAddrTel != ''"> and now_addr_tel = #{nowAddrTel}</if>
+            <if test="citAddrHouseNo != null  and citAddrHouseNo != ''"> and cit_addr_house_no = #{citAddrHouseNo}</if>
+            <if test="citAddrPro != null  and citAddrPro != ''"> and cit_addr_pro = #{citAddrPro}</if>
+            <if test="citAddrVil != null  and citAddrVil != ''"> and cit_addr_vil = #{citAddrVil}</if>
+            <if test="citAddrFlagty != null  and citAddrFlagty != ''"> and cit_addr_flagty = #{citAddrFlagty}</if>
+            <if test="citAddrCou != null  and citAddrCou != ''"> and cit_addr_cou = #{citAddrCou}</if>
+            <if test="citAddrTown != null  and citAddrTown != ''"> and cit_addr_town = #{citAddrTown}</if>
+            <if test="rprAddrHouseNo != null  and rprAddrHouseNo != ''"> and rpr_addr_house_no = #{rprAddrHouseNo}</if>
+            <if test="rprAddrPro != null  and rprAddrPro != ''"> and rpr_addr_pro = #{rprAddrPro}</if>
+            <if test="rprAddrVil != null  and rprAddrVil != ''"> and rpr_addr_vil = #{rprAddrVil}</if>
+            <if test="rprAddrFlagty != null  and rprAddrFlagty != ''"> and rpr_addr_flagty = #{rprAddrFlagty}</if>
+            <if test="rprAddrCou != null  and rprAddrCou != ''"> and rpr_addr_cou = #{rprAddrCou}</if>
+            <if test="rprAddrTown != null  and rprAddrTown != ''"> and rpr_addr_town = #{rprAddrTown}</if>
+            <if test="prpAddrPost != null  and prpAddrPost != ''"> and prp_addr_post = #{prpAddrPost}</if>
+            <if test="patientTel != null  and patientTel != ''"> and patient_tel = #{patientTel}</if>
+            <if test="workName != null  and workName != ''"> and work_name like concat(concat('%', #{workName}), '%')</if>
+            <if test="workAddr != null  and workAddr != ''"> and work_addr = #{workAddr}</if>
+            <if test="workTel != null  and workTel != ''"> and work_tel = #{workTel}</if>
+            <if test="workPost != null  and workPost != ''"> and work_post = #{workPost}</if>
+            <if test="birAddrPro != null  and birAddrPro != ''"> and bir_addr_pro = #{birAddrPro}</if>
+            <if test="birAddrPlagty != null  and birAddrPlagty != ''"> and bir_addr_plagty = #{birAddrPlagty}</if>
+            <if test="birAddrCou != null  and birAddrCou != ''"> and bir_addr_cou = #{birAddrCou}</if>
+            <if test="contTel != null  and contTel != ''"> and cont_tel = #{contTel}</if>
+            <if test="contName != null  and contName != ''"> and cont_name like concat(concat('%', #{contName}), '%')</if>
+            <if test="contAddrPost != null  and contAddrPost != ''"> and cont_addr_post = #{contAddrPost}</if>
+            <if test="contAddrPro != null  and contAddrPro != ''"> and cont_addr_pro = #{contAddrPro}</if>
+            <if test="contAddrVil != null  and contAddrVil != ''"> and cont_addr_vil = #{contAddrVil}</if>
+            <if test="contAddrFlagty != null  and contAddrFlagty != ''"> and cont_addr_flagty = #{contAddrFlagty}</if>
+            <if test="contAddrCou != null  and contAddrCou != ''"> and cont_addr_cou = #{contAddrCou}</if>
+            <if test="contAddrTown != null  and contAddrTown != ''"> and cont_addr_town = #{contAddrTown}</if>
+            <if test="cpRela != null  and cpRela != ''"> and cp_rela = #{cpRela}</if>
+            <if test="secLevel != null  and secLevel != ''"> and sec_level = #{secLevel}</if>
+            <if test="aboName != null  and aboName != ''"> and abo_name like concat(concat('%', #{aboName}), '%')</if>
+            <if test="aboCd != null  and aboCd != ''"> and abo_cd = #{aboCd}</if>
+            <if test="rhName != null  and rhName != ''"> and rh_name like concat(concat('%', #{rhName}), '%')</if>
+            <if test="rhCd != null  and rhCd != ''"> and rh_cd = #{rhCd}</if>
+            <if test="workDate != null "> and work_date = #{workDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="nation != null  and nation != ''"> and nation = #{nation}</if>
+            <if test="polStatCd != null  and polStatCd != ''"> and pol_stat_cd = #{polStatCd}</if>
+            <if test="polStatName != null  and polStatName != ''"> and pol_stat_name like concat(concat('%', #{polStatName}), '%')</if>
+            <if test="modiFlag != null  and modiFlag != ''"> and modi_flag = #{modiFlag}</if>
+            <if test="cpRelaName != null  and cpRelaName != ''"> and cp_rela_name like concat(concat('%', #{cpRelaName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectPersonalinfoById" parameterType="String" resultMap="PersonalinfoResult">
+        <include refid="selectPersonalinfoVo"/>
+        where patient_id = #{patientId}
+    </select>
+    <select id="selectPersonalinfoVoById" parameterType="String" resultMap="PersonalinfoVoResult">
+        <include refid="selectPersonalinfoVo"/>
+        where patient_id = #{patientId}
+    </select>
+
+    <insert id="insertPersonalinfo" parameterType="Personalinfo">
+        insert into pat_personalinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientMainId != null">patient_main_id,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="sex != null">sex,</if>
+            <if test="sexCd != null">sex_cd,</if>
+            <if test="birDate != null">bir_date,</if>
+            <if test="ageY != null">age_y,</if>
+            <if test="ageM != null">age_m,</if>
+            <if test="ageD != null">age_d,</if>
+            <if test="ageH != null">age_h,</if>
+            <if test="ageMi != null">age_mi,</if>
+            <if test="citizenship != null">citizenship,</if>
+            <if test="citizenshipCd != null">citizenship_cd,</if>
+            <if test="marStaCd != null">mar_sta_cd,</if>
+            <if test="marSta != null">mar_sta,</if>
+            <if test="cardTypeCd != null">card_type_cd,</if>
+            <if test="cardType != null">card_type,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="nationCd != null">nation_cd,</if>
+            <if test="healCardNo != null">heal_card_no,</if>
+            <if test="healFileNo != null">heal_file_no,</if>
+            <if test="exsFlag != null">exs_flag,</if>
+            <if test="eduCd != null">edu_cd,</if>
+            <if test="eduName != null">edu_name,</if>
+            <if test="sdCardId != null">sd_card_id,</if>
+            <if test="proTypeCd != null">pro_type_cd,</if>
+            <if test="proTypeName != null">pro_type_name,</if>
+            <if test="nowAddrHouseNo != null">now_addr_house_no,</if>
+            <if test="nowAddrPost != null">now_addr_post,</if>
+            <if test="nowAddrPro != null">now_addr_pro,</if>
+            <if test="nowAddrVil != null">now_addr_vil,</if>
+            <if test="nowAddrFlagty != null">now_addr_flagty,</if>
+            <if test="nowAddrCou != null">now_addr_cou,</if>
+            <if test="nowAddrTown != null">now_addr_town,</if>
+            <if test="nowAddrTel != null">now_addr_tel,</if>
+            <if test="citAddrHouseNo != null">cit_addr_house_no,</if>
+            <if test="citAddrPro != null">cit_addr_pro,</if>
+            <if test="citAddrVil != null">cit_addr_vil,</if>
+            <if test="citAddrFlagty != null">cit_addr_flagty,</if>
+            <if test="citAddrCou != null">cit_addr_cou,</if>
+            <if test="citAddrTown != null">cit_addr_town,</if>
+            <if test="rprAddrHouseNo != null">rpr_addr_house_no,</if>
+            <if test="rprAddrPro != null">rpr_addr_pro,</if>
+            <if test="rprAddrVil != null">rpr_addr_vil,</if>
+            <if test="rprAddrFlagty != null">rpr_addr_flagty,</if>
+            <if test="rprAddrCou != null">rpr_addr_cou,</if>
+            <if test="rprAddrTown != null">rpr_addr_town,</if>
+            <if test="prpAddrPost != null">prp_addr_post,</if>
+            <if test="patientTel != null">patient_tel,</if>
+            <if test="workName != null">work_name,</if>
+            <if test="workAddr != null">work_addr,</if>
+            <if test="workTel != null">work_tel,</if>
+            <if test="workPost != null">work_post,</if>
+            <if test="birAddrPro != null">bir_addr_pro,</if>
+            <if test="birAddrPlagty != null">bir_addr_plagty,</if>
+            <if test="birAddrCou != null">bir_addr_cou,</if>
+            <if test="contTel != null">cont_tel,</if>
+            <if test="contName != null">cont_name,</if>
+            <if test="contAddrPost != null">cont_addr_post,</if>
+            <if test="contAddrPro != null">cont_addr_pro,</if>
+            <if test="contAddrVil != null">cont_addr_vil,</if>
+            <if test="contAddrFlagty != null">cont_addr_flagty,</if>
+            <if test="contAddrCou != null">cont_addr_cou,</if>
+            <if test="contAddrTown != null">cont_addr_town,</if>
+            <if test="cpRela != null">cp_rela,</if>
+            <if test="secLevel != null">sec_level,</if>
+            <if test="aboName != null">abo_name,</if>
+            <if test="aboCd != null">abo_cd,</if>
+            <if test="rhName != null">rh_name,</if>
+            <if test="rhCd != null">rh_cd,</if>
+            <if test="workDate != null">work_date,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="nation != null">nation,</if>
+            <if test="polStatCd != null">pol_stat_cd,</if>
+            <if test="polStatName != null">pol_stat_name,</if>
+            <if test="modiFlag != null">modi_flag,</if>
+            <if test="cpRelaName != null">cp_rela_name,</if>
+            <if test="pro_type_desc != null">pro_type_desc,</if>
+            <if test="work_addr_pro != null">work_addr_pro,</if>
+            <if test="work_addr_flagty != null">work_addr_flagty,</if>
+            <if test="work_addr_cou != null">work_addr_cou,</if>
+            <if test="work_addr_town != null">work_addr_town,</if>
+            <if test="work_addr_vil != null">work_addr_vil,</if>
+            <if test="work_addr_house_no != null">work_addr_house_no,</if>
+            <if test="cp_rela_rem != null">cp_rela_rem,</if>
+            <if test="cont_addr_house_no != null">cont_addr_house_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientMainId != null">#{patientMainId},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="sexCd != null">#{sexCd},</if>
+            <if test="birDate != null">#{birDate},</if>
+            <if test="ageY != null">#{ageY},</if>
+            <if test="ageM != null">#{ageM},</if>
+            <if test="ageD != null">#{ageD},</if>
+            <if test="ageH != null">#{ageH},</if>
+            <if test="ageMi != null">#{ageMi},</if>
+            <if test="citizenship != null">#{citizenship},</if>
+            <if test="citizenshipCd != null">#{citizenshipCd},</if>
+            <if test="marStaCd != null">#{marStaCd},</if>
+            <if test="marSta != null">#{marSta},</if>
+            <if test="cardTypeCd != null">#{cardTypeCd},</if>
+            <if test="cardType != null">#{cardType},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="nationCd != null">#{nationCd},</if>
+            <if test="healCardNo != null">#{healCardNo},</if>
+            <if test="healFileNo != null">#{healFileNo},</if>
+            <if test="exsFlag != null">#{exsFlag},</if>
+            <if test="eduCd != null">#{eduCd},</if>
+            <if test="eduName != null">#{eduName},</if>
+            <if test="sdCardId != null">#{sdCardId},</if>
+            <if test="proTypeCd != null">#{proTypeCd},</if>
+            <if test="proTypeName != null">#{proTypeName},</if>
+            <if test="nowAddrHouseNo != null">#{nowAddrHouseNo},</if>
+            <if test="nowAddrPost != null">#{nowAddrPost},</if>
+            <if test="nowAddrPro != null">#{nowAddrPro},</if>
+            <if test="nowAddrVil != null">#{nowAddrVil},</if>
+            <if test="nowAddrFlagty != null">#{nowAddrFlagty},</if>
+            <if test="nowAddrCou != null">#{nowAddrCou},</if>
+            <if test="nowAddrTown != null">#{nowAddrTown},</if>
+            <if test="nowAddrTel != null">#{nowAddrTel},</if>
+            <if test="citAddrHouseNo != null">#{citAddrHouseNo},</if>
+            <if test="citAddrPro != null">#{citAddrPro},</if>
+            <if test="citAddrVil != null">#{citAddrVil},</if>
+            <if test="citAddrFlagty != null">#{citAddrFlagty},</if>
+            <if test="citAddrCou != null">#{citAddrCou},</if>
+            <if test="citAddrTown != null">#{citAddrTown},</if>
+            <if test="rprAddrHouseNo != null">#{rprAddrHouseNo},</if>
+            <if test="rprAddrPro != null">#{rprAddrPro},</if>
+            <if test="rprAddrVil != null">#{rprAddrVil},</if>
+            <if test="rprAddrFlagty != null">#{rprAddrFlagty},</if>
+            <if test="rprAddrCou != null">#{rprAddrCou},</if>
+            <if test="rprAddrTown != null">#{rprAddrTown},</if>
+            <if test="prpAddrPost != null">#{prpAddrPost},</if>
+            <if test="patientTel != null">#{patientTel},</if>
+            <if test="workName != null">#{workName},</if>
+            <if test="workAddr != null">#{workAddr},</if>
+            <if test="workTel != null">#{workTel},</if>
+            <if test="workPost != null">#{workPost},</if>
+            <if test="birAddrPro != null">#{birAddrPro},</if>
+            <if test="birAddrPlagty != null">#{birAddrPlagty},</if>
+            <if test="birAddrCou != null">#{birAddrCou},</if>
+            <if test="contTel != null">#{contTel},</if>
+            <if test="contName != null">#{contName},</if>
+            <if test="contAddrPost != null">#{contAddrPost},</if>
+            <if test="contAddrPro != null">#{contAddrPro},</if>
+            <if test="contAddrVil != null">#{contAddrVil},</if>
+            <if test="contAddrFlagty != null">#{contAddrFlagty},</if>
+            <if test="contAddrCou != null">#{contAddrCou},</if>
+            <if test="contAddrTown != null">#{contAddrTown},</if>
+            <if test="cpRela != null">#{cpRela},</if>
+            <if test="secLevel != null">#{secLevel},</if>
+            <if test="aboName != null">#{aboName},</if>
+            <if test="aboCd != null">#{aboCd},</if>
+            <if test="rhName != null">#{rhName},</if>
+            <if test="rhCd != null">#{rhCd},</if>
+            <if test="workDate != null">#{workDate},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="nation != null">#{nation},</if>
+            <if test="polStatCd != null">#{polStatCd},</if>
+            <if test="polStatName != null">#{polStatName},</if>
+            <if test="modiFlag != null">#{modiFlag},</if>
+            <if test="cpRelaName != null">#{cpRelaName},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePersonalinfo" parameterType="Personalinfo">
+        update T_AR_BASEINFOMATION
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientMainId != null">CASE_NO = #{patientMainId},</if>
+            <if test="patientName != null">NAME = #{patientName,jdbcType = NVARCHAR},</if>
+            <if test="inputstrphtc != null">PINYIN_CODE = #{inputstrphtc},</if>
+<!--            <if test="sex != null">sex = #{sex},</if>-->
+            <if test="sexCd != null">SEX = #{sexCd},</if>
+            <if test="birDate != null">BIRDTH_DATE = #{birDate},</if>
+            <if test="ageY != null">PERSON_AGE = #{ageY},</if>
+            <if test="ageM != null">AGE_MONTH = #{ageM},</if>
+            <if test="ageD != null">AGE_DAY = #{ageD},</if>
+            <if test="ageH != null">AGE_HOUR = #{ageH},</if>
+            <if test="ageMi != null">AGE_BRANCH = #{ageMi},</if>
+            <if test="citizenship != null">citizenship = #{citizenship},</if>
+            <if test="citizenshipCd != null">citizenship_cd = #{citizenshipCd},</if>
+            <if test="marStaCd != null">marital_st = #{marStaCd},</if>
+<!--            <if test="marSta != null">marital_st = #{marSta},</if>-->
+            <if test="cardTypeCd != null">card_type_cd = #{cardTypeCd},</if>
+            <if test="cardType != null">card_type = #{cardType},</if>
+            <if test="idCard != null">IDCARD = #{idCard},</if>
+            <if test="nationCd != null">NATION = #{nationCd},</if>
+            <if test="healCardNo != null">HR_ID = #{healCardNo},</if>
+            <if test="healFileNo != null">heal_file_no = #{healFileNo},</if>
+            <if test="exsFlag != null">exs_flag = #{exsFlag},</if>
+            <if test="eduCd != null">CARD_ED_BG_CD = #{eduCd},</if>
+<!--            <if test="eduName != null">edu_name = #{eduName},</if>-->
+<!--            <if test="sdCardId != null">sd_card_id = #{sdCardId},</if>-->
+            <if test="proTypeCd != null">OCCU_TYPE = #{proTypeCd},</if>
+<!--            <if test="proTypeName != null">pro_type_name = #{proTypeName},</if>-->
+            <if test="nowAddrHouseNo != null">now_addr_house_no = #{nowAddrHouseNo},</if>
+            <if test="nowAddrPost != null">now_addr_post = #{nowAddrPost},</if>
+            <if test="nowAddrPro != null">PRESENT_ADDRESS_SHENG = #{nowAddrPro},</if>
+            <if test="nowAddrVil != null">PRESENT_ADDRESS_CUN = #{nowAddrVil},</if>
+            <if test="nowAddrFlagty != null">PRESENT_ADDRESS_SHI = #{nowAddrFlagty},</if>
+            <if test="nowAddrCou != null">PRESENT_ADDRESS_XIAN = #{nowAddrCou},</if>
+            <if test="nowAddrTown != null">PRESENT_ADDRESS_XIANG = #{nowAddrTown},</if>
+            <if test="nowAddrTel != null">now_addr_tel = #{nowAddrTel},</if>
+            <if test="citAddrHouseNo != null">cit_addr_house_no = #{citAddrHouseNo},</if>
+            <if test="citAddrPro != null">NATIVE_PLACE_SHENG = #{citAddrPro},</if>
+            <if test="citAddrVil != null">cit_addr_vil = #{citAddrVil},</if>
+            <if test="citAddrFlagty != null">NATIVE_PLACE_SHI = #{citAddrFlagty},</if>
+            <if test="citAddrCou != null">NATIVE_PLACE_XIAN = #{citAddrCou},</if>
+            <if test="citAddrCou == null ">NATIVE_PLACE_XIAN = '',</if>
+            <if test="citAddrTown != null">cit_addr_town = #{citAddrTown},</if>
+            <if test="rprAddrHouseNo != null">rpr_addr_house_no = #{rprAddrHouseNo},</if>
+            <if test="rprAddrPro != null">rpr_addr_pro = #{rprAddrPro},</if>
+            <if test="rprAddrVil != null">rpr_addr_vil = #{rprAddrVil},</if>
+            <if test="rprAddrFlagty != null">rpr_addr_flagty = #{rprAddrFlagty},</if>
+            <if test="rprAddrCou != null">rpr_addr_cou = #{rprAddrCou},</if>
+            <if test="rprAddrTown != null">rpr_addr_town = #{rprAddrTown},</if>
+            <if test="prpAddrPost != null">prp_addr_post = #{prpAddrPost},</if>
+            <if test="patientTel != null">patient_tel = #{patientTel},</if>
+            <if test="workName != null">WOKING_UNIT_NAME = #{workName},</if>
+            <if test="workAddr != null">work_addr = #{workAddr},</if>
+            <if test="workTel != null">work_tel = #{workTel},</if>
+            <if test="workPost != null">work_post = #{workPost},</if>
+            <if test="birAddrPro != null">BIRTH_PLACE_SHENG = #{birAddrPro},</if>
+            <if test="birAddrPlagty != null">BIRTH_PLACE_SHI = #{birAddrPlagty},</if>
+            <if test="birAddrCou != null">BIRTH_PLACE_XIAN = #{birAddrCou},</if>
+            <if test="contTel != null">cont_tel = #{contTel},</if>
+            <if test="contName != null">CONTACTS = #{contName},</if>
+            <if test="contAddrPost != null">cont_addr_post = #{contAddrPost},</if>
+            <if test="contAddrPro != null">cont_addr_pro = #{contAddrPro},</if>
+            <if test="contAddrVil != null">cont_addr_vil = #{contAddrVil},</if>
+            <if test="contAddrFlagty != null">cont_addr_flagty = #{contAddrFlagty},</if>
+            <if test="contAddrCou != null">cont_addr_cou = #{contAddrCou},</if>
+            <if test="contAddrTown != null">cont_addr_town = #{contAddrTown},</if>
+            <if test="cpRela != null">cp_rela = #{cpRela},</if>
+            <if test="secLevel != null">sec_level = #{secLevel},</if>
+            <if test="aboName != null">abo_name = #{aboName},</if>
+            <if test="aboCd != null">BLOOD_TYPE = #{aboCd},</if>
+            <if test="rhName != null">rh_name = #{rhName},</if>
+            <if test="rhCd != null">rh_cd = #{rhCd},</if>
+            <if test="workDate != null">work_date = #{workDate},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+<!--            <if test="nation != null">nation = #{nation},</if>-->
+            <if test="polStatCd != null">pol_stat_cd = #{polStatCd},</if>
+            <if test="polStatName != null">pol_stat_name = #{polStatName},</if>
+            <if test="modiFlag != null">modi_flag = #{modiFlag},</if>
+            <if test="cpRelaName != null">cp_rela_name = #{cpRelaName},</if>
+            <if test="proTypeDesc != null">pro_Type_Desc = #{proTypeDesc},</if>
+
+            <if test="workAddrPro != null">work_Addr_Pro = #{workAddrPro},</if>
+            <if test="workAddrFlagty != null">work_Addr_Flagty = #{workAddrFlagty},</if>
+            <if test="workAddrCou != null">work_Addr_Cou = #{workAddrCou},</if>
+            <if test="workAddrTown != null">work_Addr_Town = #{workAddrTown},</if>
+            <if test="workAddrVil != null">work_Addr_Vil = #{workAddrVil},</if>
+            <if test="workAddrHouseNo != null">work_Addr_House_No = #{workAddrHouseNo},</if>
+
+            <if test="cpRelaRem != null">cp_Rela_Rem = #{cpRelaRem},</if>
+            <if test="contAddrHouseNo != null">cont_Addr_House_No = #{contAddrHouseNo},</if>
+<!--            <if test="payTypeCd!=null and payTypeCd!=''">EXPENSE_CATEGORY_NO=#{payTypeCd},</if>-->
+<!--            <if test="payTypeName!=null and payTypeName!=''">EXPENSE_CATEGORY=#{payTypeName},</if>-->
+        </trim>
+        where ADMISSION_NO = #{patientId}
+    </update>
+
+    <update id="updatePersonSave" parameterType="Personalinfo">
+        update pat_personalinfo set sec_Level = #{secLevel} where patient_id =#{patientId}
+    </update>
+
+
+    <delete id="deletePersonalinfoById" parameterType="Long">
+        delete from pat_personalinfo where patient_id = #{patientId}
+    </delete>
+    <delete id="deletePersonalinfo" parameterType="String">
+        delete from ${tableName}
+        <if test="inpNo!=null and inpNo!=''">
+            where admission_no=#{inpNo}
+        </if>
+    </delete>
+
+    <delete id="deletePersonalinfoByInpNo" >
+        delete from ${tableName}
+        <if test="inpNoList!=null and inpNoList.size()>0">
+            where admission_no in
+            <foreach item="inpNo" collection="inpNoList" open="(" separator="," close=")">
+                #{inpNo}
+            </foreach>
+        </if>
+    </delete>
+
+    <delete id="deletePersonalinfoByIds" parameterType="String">
+        delete from pat_personalinfo where patient_id in
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </delete>
+
+    <insert id="insertMap" parameterType="java.util.Map">
+        insert into pat_personalinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="PATIENT_MAIN_ID != null and PATIENT_MAIN_ID !=''">PATIENT_MAIN_ID,</if>
+            <if test="PATIENT_ID != null">PATIENT_ID,</if>
+            <if test="PATIENT_NAME != null and PATIENT_NAME !=''">PATIENT_NAME,</if>
+            <if test="INPUTSTRPHTC != null and INPUTSTRPHTC !=''">INPUTSTRPHTC,</if>
+            <if test="SEX != null and SEX !=''">SEX,</if>
+            <if test="SEX_CD != null and SEX_CD !=''">SEX_CD,</if>
+            <if test="BIR_DATE != null">BIR_DATE,</if>
+            <if test="AGE_Y != null">AGE_Y,</if>
+            <if test="AGE_M != null">AGE_M,</if>
+            <if test="AGE_D != null">AGE_D,</if>
+            <if test="AGE_H != null">AGE_H,</if>
+            <if test="AGE_MI != null">AGE_MI,</if>
+            <if test="CITIZENSHIP != null and CITIZENSHIP !=''">CITIZENSHIP,</if>
+            <if test="CITIZENSHIP_CD != null and CITIZENSHIP_CD !=''">CITIZENSHIP_CD,</if>
+            <if test="MAR_STA_CD != null and MAR_STA_CD !=''">MAR_STA_CD,</if>
+            <if test="MAR_STA != null and MAR_STA !=''">MAR_STA,</if>
+            <if test="CARD_TYPE_CD != null and CARD_TYPE_CD !=''">CARD_TYPE_CD,</if>
+            <if test="CARD_TYPE != null and CARD_TYPE !=''">CARD_TYPE,</if>
+            <if test="ID_CARD != null and ID_CARD !=''">ID_CARD,</if>
+            <if test="NATION_CD != null and NATION_CD !=''">NATION_CD,</if>
+            <if test="HEAL_CARD_NO != null and HEAL_CARD_NO !=''">HEAL_CARD_NO,</if>
+            <if test="HEAL_FILE_NO != null and HEAL_FILE_NO !=''">HEAL_FILE_NO,</if>
+            <if test="EXS_FLAG != null and EXS_FLAG !=''">EXS_FLAG,</if>
+            <if test="EDU_CD != null and EDU_CD !=''">EDU_CD,</if>
+            <if test="EDU_NAME != null and EDU_NAME !=''">EDU_NAME,</if>
+            <if test="SD_CARD_ID != null and SD_CARD_ID !=''">SD_CARD_ID,</if>
+            <if test="PRO_TYPE_CD != null and PRO_TYPE_CD !=''">PRO_TYPE_CD,</if>
+            <if test="PRO_TYPE_NAME != null and PRO_TYPE_NAME !=''">PRO_TYPE_NAME,</if>
+            <if test="NOW_ADDR_HOUSE_NO != null and NOW_ADDR_HOUSE_NO !=''">NOW_ADDR_HOUSE_NO,</if>
+            <if test="NOW_ADDR_POST != null and NOW_ADDR_POST !=''">NOW_ADDR_POST,</if>
+            <if test="NOW_ADDR_PRO != null and NOW_ADDR_PRO !=''">NOW_ADDR_PRO,</if>
+            <if test="NOW_ADDR_VIL != null and  NOW_ADDR_VIL!=''">NOW_ADDR_VIL,</if>
+            <if test="NOW_ADDR_FLAGTY != null and NOW_ADDR_FLAGTY !=''">NOW_ADDR_FLAGTY,</if>
+            <if test="NOW_ADDR_COU != null and NOW_ADDR_COU !=''">NOW_ADDR_COU,</if>
+            <if test="NOW_ADDR_TOWN != null and NOW_ADDR_TOWN !=''">NOW_ADDR_TOWN,</if>
+            <if test="NOW_ADDR_TEL != null and NOW_ADDR_TEL !=''">NOW_ADDR_TEL,</if>
+            <if test="CIT_ADDR_HOUSE_NO != null and CIT_ADDR_HOUSE_NO !=''">CIT_ADDR_HOUSE_NO,</if>
+            <if test="CIT_ADDR_PRO != null and CIT_ADDR_PRO !=''">CIT_ADDR_PRO,</if>
+            <if test="CIT_ADDR_VIL != null and CIT_ADDR_VIL !=''">CIT_ADDR_VIL,</if>
+            <if test="CIT_ADDR_FLAGTY != null and CIT_ADDR_FLAGTY !=''">CIT_ADDR_FLAGTY,</if>
+            <if test="CIT_ADDR_COU != null and CIT_ADDR_COU !=''">CIT_ADDR_COU,</if>
+            <if test="CIT_ADDR_TOWN != null and CIT_ADDR_TOWN !=''">CIT_ADDR_TOWN,</if>
+            <if test="RPR_ADDR_HOUSE_NO != null and RPR_ADDR_HOUSE_NO !=''">RPR_ADDR_HOUSE_NO,</if>
+            <if test="RPR_ADDR_PRO != null and RPR_ADDR_PRO !=''">RPR_ADDR_PRO,</if>
+            <if test="RPR_ADDR_VIL != null and RPR_ADDR_VIL !=''">RPR_ADDR_VIL,</if>
+            <if test="RPR_ADDR_FLAGTY != null and RPR_ADDR_FLAGTY !=''">RPR_ADDR_FLAGTY,</if>
+            <if test="RPR_ADDR_COU != null and RPR_ADDR_COU !=''">RPR_ADDR_COU,</if>
+            <if test="RPR_ADDR_TOWN != null and RPR_ADDR_TOWN !=''">RPR_ADDR_TOWN,</if>
+            <if test="PRP_ADDR_POST != null and PRP_ADDR_POST !=''">PRP_ADDR_POST,</if>
+            <if test="PATIENT_TEL != null and PATIENT_TEL !=''">PATIENT_TEL,</if>
+            <if test="WORK_NAME != null and WORK_NAME !=''">WORK_NAME,</if>
+            <if test="WORK_ADDR != null and WORK_ADDR !=''">WORK_ADDR,</if>
+            <if test="WORK_TEL != null and WORK_TEL !=''">WORK_TEL,</if>
+            <if test="WORK_POST != null and WORK_POST !=''">WORK_POST,</if>
+            <if test="BIR_ADDR_PRO != null and BIR_ADDR_PRO !=''">BIR_ADDR_PRO,</if>
+            <if test="BIR_ADDR_PLAGTY != null and BIR_ADDR_PLAGTY !=''">BIR_ADDR_PLAGTY,</if>
+            <if test="BIR_ADDR_COU != null and BIR_ADDR_COU !=''">BIR_ADDR_COU,</if>
+            <if test="CONT_TEL != null and CONT_TEL !=''">CONT_TEL,</if>
+            <if test="CONT_NAME != null and CONT_NAME !=''">CONT_NAME,</if>
+            <if test="CONT_ADDR_POST != null and CONT_ADDR_POST !=''">CONT_ADDR_POST,</if>
+            <if test="CONT_ADDR_PRO != null and CONT_ADDR_PRO !=''">CONT_ADDR_PRO,</if>
+            <if test="CONT_ADDR_VIL != null and CONT_ADDR_VIL !=''">CONT_ADDR_VIL,</if>
+            <if test="CONT_ADDR_FLAGTY != null and CONT_ADDR_FLAGTY !=''">CONT_ADDR_FLAGTY,</if>
+            <if test="CONT_ADDR_COU != null and CONT_ADDR_COU !=''">CONT_ADDR_COU,</if>
+            <if test="CONT_ADDR_TOWN != null and CONT_ADDR_TOWN !=''">CONT_ADDR_TOWN,</if>
+            <if test="CP_RELA != null and CP_RELA !=''">CP_RELA,</if>
+            <if test="ABO_NAME != null and ABO_NAME !=''">ABO_NAME,</if>
+            <if test="ABO_CD != null and ABO_CD !=''">ABO_CD,</if>
+            <if test="RH_NAME != null and RH_NAME !=''">RH_NAME,</if>
+            <if test="RH_CD != null and RH_CD !=''">RH_CD,</if>
+            <if test="WORK_DATE != null">WORK_DATE,</if>
+            CRE_DATE,
+            <if test="NATION != null and NATION !=''">NATION,</if>
+            <if test="POL_STAT_CD != null and POL_STAT_CD !=''">POL_STAT_CD,</if>
+            <if test="POL_STAT_NAME != null and POL_STAT_NAME !=''">POL_STAT_NAME,</if>
+            <if test="CP_RELA_NAME != null and CP_RELA_NAME !=''">CP_RELA_NAME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="PATIENT_MAIN_ID != null and PATIENT_MAIN_ID !=''">#{PATIENT_MAIN_ID,jdbcType=VARCHAR},</if>
+            <if test="PATIENT_ID != null">#{PATIENT_ID,jdbcType=BIGINT},</if>
+            <if test="PATIENT_NAME != null and PATIENT_NAME !=''">#{PATIENT_NAME,jdbcType=VARCHAR},</if>
+            <if test="INPUTSTRPHTC != null and INPUTSTRPHTC !=''">#{INPUTSTRPHTC,jdbcType=VARCHAR},</if>
+            <if test="SEX != null and SEX !=''">#{SEX,jdbcType=VARCHAR},</if>
+            <if test="SEX_CD != null and SEX_CD !=''">#{SEX_CD,jdbcType=VARCHAR},</if>
+            <if test="BIR_DATE != null">#{BIR_DATE,jdbcType=DATE},</if>
+            <if test="AGE_Y != null">#{AGE_Y,jdbcType=INTEGER},</if>
+            <if test="AGE_M != null">#{AGE_M,jdbcType=INTEGER},</if>
+            <if test="AGE_D != null">#{AGE_D,jdbcType=INTEGER},</if>
+            <if test="AGE_H != null">#{AGE_H,jdbcType=INTEGER},</if>
+            <if test="AGE_MI != null">#{AGE_MI,jdbcType=INTEGER},</if>
+            <if test="CITIZENSHIP != null and CITIZENSHIP !=''">#{CITIZENSHIP,jdbcType=VARCHAR},</if>
+            <if test="CITIZENSHIP_CD != null and CITIZENSHIP_CD !=''">#{CITIZENSHIP_CD,jdbcType=VARCHAR},</if>
+            <if test="MAR_STA_CD != null and MAR_STA_CD !=''">#{MAR_STA_CD,jdbcType=VARCHAR},</if>
+            <if test="MAR_STA != null and MAR_STA !=''">#{MAR_STA,jdbcType=VARCHAR},</if>
+            <if test="CARD_TYPE_CD != null and CARD_TYPE_CD !=''">#{CARD_TYPE_CD,jdbcType=VARCHAR},</if>
+            <if test="CARD_TYPE != null and CARD_TYPE !=''">#{CARD_TYPE,jdbcType=VARCHAR},</if>
+            <if test="ID_CARD != null and ID_CARD !=''">#{ID_CARD,jdbcType=VARCHAR},</if>
+            <if test="NATION_CD != null and NATION_CD !=''">#{NATION_CD,jdbcType=VARCHAR},</if>
+            <if test="HEAL_CARD_NO != null and HEAL_CARD_NO !=''">#{HEAL_CARD_NO,jdbcType=VARCHAR},</if>
+            <if test="HEAL_FILE_NO != null and HEAL_FILE_NO !=''">#{HEAL_FILE_NO,jdbcType=VARCHAR},</if>
+            <if test="EXS_FLAG != null and EXS_FLAG !=''">#{EXS_FLAG,jdbcType=VARCHAR},</if>
+            <if test="EDU_CD != null and EDU_CD !=''">#{EDU_CD,jdbcType=VARCHAR},</if>
+            <if test="EDU_NAME != null and EDU_NAME !=''">#{EDU_NAME,jdbcType=VARCHAR},</if>
+            <if test="SD_CARD_ID != null and SD_CARD_ID !=''">#{SD_CARD_ID,jdbcType=VARCHAR},</if>
+            <if test="PRO_TYPE_CD != null and PRO_TYPE_CD !=''">#{PRO_TYPE_CD,jdbcType=VARCHAR},</if>
+            <if test="PRO_TYPE_NAME != null and PRO_TYPE_NAME !=''">#{PRO_TYPE_NAME,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_HOUSE_NO != null and NOW_ADDR_HOUSE_NO !=''">#{NOW_ADDR_HOUSE_NO,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_POST != null and NOW_ADDR_POST !=''">#{NOW_ADDR_POST,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_PRO != null and NOW_ADDR_PRO !=''">#{NOW_ADDR_PRO,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_VIL != null and  NOW_ADDR_VIL!=''">#{NOW_ADDR_VIL,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_FLAGTY != null and NOW_ADDR_FLAGTY !=''">#{NOW_ADDR_FLAGTY,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_COU != null and NOW_ADDR_COU !=''">#{NOW_ADDR_COU,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_TOWN != null and NOW_ADDR_TOWN !=''">#{NOW_ADDR_TOWN,jdbcType=VARCHAR},</if>
+            <if test="NOW_ADDR_TEL != null and NOW_ADDR_TEL !=''">#{NOW_ADDR_TEL,jdbcType=VARCHAR},</if>
+            <if test="CIT_ADDR_HOUSE_NO != null and CIT_ADDR_HOUSE_NO !=''">#{CIT_ADDR_HOUSE_NO,jdbcType=VARCHAR},</if>
+            <if test="CIT_ADDR_PRO != null and CIT_ADDR_PRO !=''">#{CIT_ADDR_PRO,jdbcType=VARCHAR},</if>
+            <if test="CIT_ADDR_VIL != null and CIT_ADDR_VIL !=''">#{CIT_ADDR_VIL,jdbcType=VARCHAR},</if>
+            <if test="CIT_ADDR_FLAGTY != null and CIT_ADDR_FLAGTY !=''">#{CIT_ADDR_FLAGTY,jdbcType=VARCHAR},</if>
+            <if test="CIT_ADDR_COU != null and CIT_ADDR_COU !=''">#{CIT_ADDR_COU,jdbcType=VARCHAR},</if>
+            <if test="CIT_ADDR_TOWN != null and CIT_ADDR_TOWN !=''">#{CIT_ADDR_TOWN,jdbcType=VARCHAR},</if>
+            <if test="RPR_ADDR_HOUSE_NO != null and RPR_ADDR_HOUSE_NO !=''">#{RPR_ADDR_HOUSE_NO,jdbcType=VARCHAR},</if>
+            <if test="RPR_ADDR_PRO != null and RPR_ADDR_PRO !=''">#{RPR_ADDR_PRO,jdbcType=VARCHAR},</if>
+            <if test="RPR_ADDR_VIL != null and RPR_ADDR_VIL !=''">#{RPR_ADDR_VIL,jdbcType=VARCHAR},</if>
+            <if test="RPR_ADDR_FLAGTY != null and RPR_ADDR_FLAGTY !=''">#{RPR_ADDR_FLAGTY,jdbcType=VARCHAR},</if>
+            <if test="RPR_ADDR_COU != null and RPR_ADDR_COU !=''">#{RPR_ADDR_COU,jdbcType=VARCHAR},</if>
+            <if test="RPR_ADDR_TOWN != null and RPR_ADDR_TOWN !=''">#{RPR_ADDR_TOWN,jdbcType=VARCHAR},</if>
+            <if test="PRP_ADDR_POST != null and PRP_ADDR_POST !=''">#{PRP_ADDR_POST,jdbcType=VARCHAR},</if>
+            <if test="PATIENT_TEL != null and PATIENT_TEL !=''">#{PATIENT_TEL,jdbcType=VARCHAR},</if>
+            <if test="WORK_NAME != null and WORK_NAME !=''">#{WORK_NAME,jdbcType=VARCHAR},</if>
+            <if test="WORK_ADDR != null and WORK_ADDR !=''">#{WORK_ADDR,jdbcType=VARCHAR},</if>
+            <if test="WORK_TEL != null and WORK_TEL !=''">#{WORK_TEL,jdbcType=VARCHAR},</if>
+            <if test="WORK_POST != null and WORK_POST !=''">#{WORK_POST,jdbcType=VARCHAR},</if>
+            <if test="BIR_ADDR_PRO != null and BIR_ADDR_PRO !=''">#{BIR_ADDR_PRO,jdbcType=VARCHAR},</if>
+            <if test="BIR_ADDR_PLAGTY != null and BIR_ADDR_PLAGTY !=''">#{BIR_ADDR_PLAGTY,jdbcType=VARCHAR},</if>
+            <if test="BIR_ADDR_COU != null and BIR_ADDR_COU !=''">#{BIR_ADDR_COU,jdbcType=VARCHAR},</if>
+            <if test="CONT_TEL != null and CONT_TEL !=''">#{CONT_TEL,jdbcType=VARCHAR},</if>
+            <if test="CONT_NAME != null and CONT_NAME !=''">#{CONT_NAME,jdbcType=VARCHAR},</if>
+            <if test="CONT_ADDR_POST != null and CONT_ADDR_POST !=''">#{CONT_ADDR_POST,jdbcType=VARCHAR},</if>
+            <if test="CONT_ADDR_PRO != null and CONT_ADDR_PRO !=''">#{CONT_ADDR_PRO,jdbcType=VARCHAR},</if>
+            <if test="CONT_ADDR_VIL != null and CONT_ADDR_VIL !=''">#{CONT_ADDR_VIL,jdbcType=VARCHAR},</if>
+            <if test="CONT_ADDR_FLAGTY != null and CONT_ADDR_FLAGTY !=''">#{CONT_ADDR_FLAGTY,jdbcType=VARCHAR},</if>
+            <if test="CONT_ADDR_COU != null and CONT_ADDR_COU !=''">#{CONT_ADDR_COU,jdbcType=VARCHAR},</if>
+            <if test="CONT_ADDR_TOWN != null and CONT_ADDR_TOWN !=''">#{CONT_ADDR_TOWN,jdbcType=VARCHAR},</if>
+            <if test="CP_RELA != null and CP_RELA !=''">#{CP_RELA,jdbcType=VARCHAR},</if>
+            <if test="ABO_NAME != null and ABO_NAME !=''">#{ABO_NAME,jdbcType=VARCHAR},</if>
+            <if test="ABO_CD != null and ABO_CD !=''">#{ABO_CD,jdbcType=VARCHAR},</if>
+            <if test="RH_NAME != null and RH_NAME !=''">#{RH_NAME,jdbcType=VARCHAR},</if>
+            <if test="RH_CD != null and RH_CD !=''">#{RH_CD,jdbcType=VARCHAR},</if>
+            <if test="WORK_DATE != null">#{WORK_DATE,jdbcType=DATE},</if>
+            sysdate,
+            <if test="NATION != null and NATION !=''">#{NATION,jdbcType=VARCHAR},</if>
+            <if test="POL_STAT_CD != null and POL_STAT_CD !=''">#{POL_STAT_CD,jdbcType=VARCHAR},</if>
+            <if test="POL_STAT_NAME != null and POL_STAT_NAME !=''">#{POL_STAT_NAME,jdbcType=VARCHAR},</if>
+            <if test="CP_RELA_NAME != null and CP_RELA_NAME !=''">#{CP_RELA_NAME,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMap" parameterType="map">
+        update pat_personalinfo set
+        PATIENT_NAME = 	#{PATIENT_NAME},
+        INPUTSTRPHTC = 	#{INPUTSTRPHTC},
+        SEX = 	#{SEX},
+        SEX_CD = 	#{SEX_CD},
+        BIR_DATE = 	#{BIR_DATE},
+        AGE_Y = 	#{AGE_Y},
+        AGE_M = 	#{AGE_M},
+        AGE_D = 	#{AGE_D},
+        AGE_H = 	#{AGE_H},
+        AGE_MI = 	#{AGE_MI},
+        CITIZENSHIP = 	#{CITIZENSHIP},
+        CITIZENSHIP_CD = 	#{CITIZENSHIP_CD},
+        MAR_STA_CD = 	#{MAR_STA_CD},
+        MAR_STA = 	#{MAR_STA},
+        CARD_TYPE_CD = 	#{CARD_TYPE_CD},
+        CARD_TYPE = 	#{CARD_TYPE},
+        ID_CARD = 	#{ID_CARD},
+        NATION_CD = 	#{NATION_CD},
+        HEAL_CARD_NO = 	#{HEAL_CARD_NO},
+        HEAL_FILE_NO = 	#{HEAL_FILE_NO},
+        EXS_FLAG = 	#{EXS_FLAG},
+        EDU_CD = 	#{EDU_CD},
+        EDU_NAME = 	#{EDU_NAME},
+        SD_CARD_ID = 	#{SD_CARD_ID},
+        PRO_TYPE_CD = 	#{PRO_TYPE_CD},
+        PRO_TYPE_NAME = 	#{PRO_TYPE_NAME},
+        NOW_ADDR_HOUSE_NO = 	#{NOW_ADDR_HOUSE_NO},
+        NOW_ADDR_POST = 	#{NOW_ADDR_POST},
+        NOW_ADDR_PRO = 	#{NOW_ADDR_PRO},
+        NOW_ADDR_VIL = 	#{NOW_ADDR_VIL},
+        NOW_ADDR_FLAGTY = 	#{NOW_ADDR_FLAGTY},
+        NOW_ADDR_COU = 	#{NOW_ADDR_COU},
+        NOW_ADDR_TOWN = 	#{NOW_ADDR_TOWN},
+        NOW_ADDR_TEL = 	#{NOW_ADDR_TEL},
+        CIT_ADDR_HOUSE_NO = 	#{CIT_ADDR_HOUSE_NO},
+        CIT_ADDR_PRO = 	#{CIT_ADDR_PRO},
+        CIT_ADDR_VIL = 	#{CIT_ADDR_VIL},
+        CIT_ADDR_FLAGTY = 	#{CIT_ADDR_FLAGTY},
+        CIT_ADDR_COU = 	#{CIT_ADDR_COU},
+        CIT_ADDR_TOWN = 	#{CIT_ADDR_TOWN},
+        RPR_ADDR_HOUSE_NO = 	#{RPR_ADDR_HOUSE_NO},
+        RPR_ADDR_PRO = 	#{RPR_ADDR_PRO},
+        RPR_ADDR_VIL = 	#{RPR_ADDR_VIL},
+        RPR_ADDR_FLAGTY = 	#{RPR_ADDR_FLAGTY},
+        RPR_ADDR_COU = 	#{RPR_ADDR_COU},
+        RPR_ADDR_TOWN = 	#{RPR_ADDR_TOWN},
+        PRP_ADDR_POST = 	#{PRP_ADDR_POST},
+        PATIENT_TEL = 	#{PATIENT_TEL},
+        WORK_NAME = 	#{WORK_NAME},
+        WORK_ADDR = 	#{WORK_ADDR},
+        WORK_TEL = 	#{WORK_TEL},
+        WORK_POST = 	#{WORK_POST},
+        BIR_ADDR_PRO = 	#{BIR_ADDR_PRO},
+        BIR_ADDR_PLAGTY = 	#{BIR_ADDR_PLAGTY},
+        BIR_ADDR_COU = 	#{BIR_ADDR_COU},
+        CONT_TEL = 	#{CONT_TEL},
+        CONT_NAME = 	#{CONT_NAME},
+        CONT_ADDR_POST = 	#{CONT_ADDR_POST},
+        CONT_ADDR_PRO = 	#{CONT_ADDR_PRO},
+        CONT_ADDR_VIL = 	#{CONT_ADDR_VIL},
+        CONT_ADDR_FLAGTY = 	#{CONT_ADDR_FLAGTY},
+        CONT_ADDR_COU = 	#{CONT_ADDR_COU},
+        CONT_ADDR_TOWN = 	#{CONT_ADDR_TOWN},
+        CP_RELA = 	#{CP_RELA},
+        ABO_NAME = 	#{ABO_NAME},
+        ABO_CD = 	#{ABO_CD},
+        RH_NAME = 	#{RH_NAME},
+        RH_CD = 	#{RH_CD},
+        WORK_DATE = 	#{WORK_DATE},
+        NATION = 	#{NATION},
+        POL_STAT_CD = 	#{POL_STAT_CD},
+        POL_STAT_NAME = 	#{POL_STAT_NAME},
+        CP_RELA_NAME = 	#{CP_RELA_NAME},
+        where patient_id = #{PATIENT_ID}
+    </update>
+
+    <update id="updateModiFlag" parameterType="String">
+        update pat_personalinfo set modi_flag = '1'
+        where patient_id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="selectPersonListByPatientId" parameterType="String" resultMap="PersonalinfoResult">
+       select inp_no as patient_id from pat_visitinfo where RECORD_NO=(select RECORD_NO from pat_visitinfo where inp_no=#{patientId}) and inp_no!=#{patientId}
+    </select>
+    <select id="selectPersonalinfoByInpNo" parameterType="String" resultMap="PersonalinfoResult">
+       select pp.patient_id,pp.patient_main_id from pat_personalinfo pp left join pat_visitinfo pv on pp.patient_id=pv.patient_id where pv.inp_no=#{inpNo}
+    </select>
+
+
+    <insert id="insertMapList" parameterType="java.util.Map">
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospital_code  != null and  hospital_code !=''">hospital_code,</if>
+            <if test=" case_no != null and case_no!=''">case_no,</if>
+            <if test=" patient_id != null and  patient_id !=''">patient_id,</if>
+            <if test=" admission_no != null and  admission_no !=''">admission_no,</if>
+            <if test=" hospitalized_count != null">hospitalized_count,</if>
+            <if test=" name != null and  name !=''">name,</if>
+            <if test=" sex != null and sex !=''">sex,</if>
+            <if test=" birdth_date != null">birdth_date,</if>
+            <if test=" nation != null and nation!=''">nation,</if>
+            <if test=" occu_type != null and occu_type!=''">occu_type,</if>
+            <if test=" card_ed_bg_cd != null and card_ed_bg_cd!=''">card_ed_bg_cd,</if>
+            <if test=" blood_type != null and blood_type!=''">blood_type,</if>
+            <if test=" marital_st != null and  marital_st !=''">marital_st,</if>
+            <if test=" idcard != null and  idcard !=''">idcard,</if>
+            <if test=" postcode != null and  postcode !=''">postcode,</if>
+            <if test=" operator != null and  operator !=''">operator,</if>
+            <if test=" operator_name != null and  operator_name !=''">operator_name,</if>
+            <if test=" woking_unit_name != null and  woking_unit_name !=''">woking_unit_name,</if>
+            <if test=" tuberculosis_marker != null and  tuberculosis_marker !=''">tuberculosis_marker,</if>
+            <if test=" hr_id != null and  hr_id !=''">hr_id,</if>
+            <if test=" birth_place_sheng != null and  birth_place_sheng !=''">birth_place_sheng,</if>
+            <if test=" birth_place_shi != null and  birth_place_shi !=''">birth_place_shi,</if>
+            <if test=" birth_place_xian != null and  birth_place_xian !=''">birth_place_xian,</if>
+            <if test=" birth_place_xiang != null and  birth_place_xiang !=''">birth_place_xiang,</if>
+            <if test=" birth_place_cun != null and  birth_place_cun !=''">birth_place_cun,</if>
+            <if test=" pinyin_code != null and  pinyin_code !=''">pinyin_code,</if>
+            <if test=" native_place_sheng != null and  native_place_sheng !=''">native_place_sheng,</if>
+            <if test=" native_place_shi != null and  native_place_shi !=''">native_place_shi,</if>
+            <if test=" native_place_xian != null and  native_place_xian !=''">native_place_xian,</if>
+            <if test=" filing_date != null">filing_date,</if>
+            <if test=" expense_category_no != null and  expense_category_no !=''">expense_category_no,</if>
+            <if test=" expense_category != null and   expense_category!=''">expense_category,</if>
+            <if test=" contacts != null and  contacts !=''">contacts,</if>
+            <if test=" introducer != null and  introducer !=''">introducer,</if>
+            <if test=" personnel_type != null and  personnel_type !=''">personnel_type,</if>
+            <if test=" person_age != null">person_age,</if>
+            <if test=" age_month != null ">age_month,</if>
+            <if test=" age_day != null ">age_day,</if>
+            <if test=" age_hour != null ">age_hour,</if>
+            <if test=" age_branch != null ">age_branch,</if>
+            <if test=" present_address_sheng != null and  present_address_sheng !=''">present_address_sheng,</if>
+            <if test=" present_address_shi != null and  present_address_shi !=''">present_address_shi,</if>
+            <if test=" present_address_xian != null and  present_address_xian !=''">present_address_xian,</if>
+            <if test=" present_address_xiang != null and  present_address_xiang !=''">present_address_xiang,</if>
+            <if test=" present_address_cun != null and  present_address_cun !=''">present_address_cun,</if>
+            <if test=" cp_rela != null and  cp_rela !=''">cp_rela,</if>
+            <if test=" cp_rela_name != null and  cp_rela_name !=''">cp_rela_name,</if>
+            <if test=" cont_tel != null">cont_tel,</if>
+            <if test=" cont_addr_pro != null">cont_addr_pro,</if>
+            <if test=" cont_addr_flagty != null">cont_addr_flagty,</if>
+            <if test=" cont_addr_cou != null">cont_addr_cou,</if>
+            <if test=" cont_addr_town != null">cont_addr_town,</if>
+            <if test=" mar_sta != null and mar_sta!=''">mar_sta,</if>
+            <if test=" prp_addr_post != null and prp_addr_post != ''">prp_addr_post,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test=" hospital_code != null and  hospital_code !=''">#{ hospital_code,jdbcType=VARCHAR},</if>
+            <if test=" case_no != null">#{ case_no,jdbcType=VARCHAR},</if>
+            <if test=" patient_id != null and  patient_id !=''">#{ patient_id,jdbcType=VARCHAR},</if>
+            <if test=" admission_no != null and  admission_no !=''">#{ admission_no,jdbcType=VARCHAR},</if>
+            <if test=" hospitalized_count != null">#{ hospitalized_count,jdbcType=INTEGER},</if>
+            <if test=" name != null and  name !=''">#{ name,jdbcType=VARCHAR},</if>
+            <if test=" sex != null and  sex !=''">#{ sex,jdbcType=VARCHAR},</if>
+            <if test=" birdth_date != null">#{ birdth_date,jdbcType=DATE},</if>
+            <if test=" nation != null and  nation!=''">#{ nation,jdbcType=VARCHAR},</if>
+            <if test=" occu_type != null and  occu_type!=''">#{ occu_type,jdbcType=VARCHAR},</if>
+            <if test=" card_ed_bg_cd != null and  card_ed_bg_cd!=''">#{ card_ed_bg_cd,jdbcType=VARCHAR},</if>
+            <if test=" blood_type != null and  blood_type!=''">#{ blood_type,jdbcType=VARCHAR},</if>
+            <if test=" marital_st != null and  marital_st !=''">#{ marital_st,jdbcType=VARCHAR},</if>
+            <if test=" idcard != null and  idcard !=''">#{ idcard,jdbcType=VARCHAR},</if>
+            <if test=" postcode != null and  postcode !=''">#{ postcode,jdbcType=VARCHAR},</if>
+            <if test=" operator != null and  operator !=''">#{ operator,jdbcType=VARCHAR},</if>
+            <if test=" operator_name != null and  operator_name !=''">#{ operator_name,jdbcType=VARCHAR},</if>
+            <if test=" woking_unit_name != null and  woking_unit_name !=''">#{ woking_unit_name,jdbcType=VARCHAR},</if>
+            <if test=" tuberculosis_marker != null and  tuberculosis_marker !=''">#{ tuberculosis_marker,jdbcType=VARCHAR},</if>
+            <if test=" hr_id != null and  hr_id !=''">#{ hr_id,jdbcType=VARCHAR},</if>
+            <if test=" birth_place_sheng != null and  birth_place_sheng !=''">#{ birth_place_sheng,jdbcType=VARCHAR},</if>
+            <if test=" birth_place_shi != null and  birth_place_shi !=''">#{ birth_place_shi,jdbcType=VARCHAR},</if>
+            <if test=" birth_place_xian != null and  birth_place_xian !=''">#{ birth_place_xian,jdbcType=VARCHAR},</if>
+            <if test=" birth_place_xiang != null and  birth_place_xiang !=''">#{ birth_place_xiang,jdbcType=VARCHAR},</if>
+            <if test=" birth_place_cun != null and  birth_place_cun !=''">#{ birth_place_cun,jdbcType=VARCHAR},</if>
+            <if test=" pinyin_code != null and  pinyin_code !=''">#{ pinyin_code,jdbcType=VARCHAR},</if>
+            <if test=" native_place_sheng != null and  native_place_sheng !=''">#{ native_place_sheng,jdbcType=VARCHAR},</if>
+            <if test=" native_place_shi != null and  native_place_shi !=''">#{ native_place_shi,jdbcType=VARCHAR},</if>
+            <if test=" native_place_xian != null and  native_place_xian !=''">#{ native_place_xian,jdbcType=VARCHAR},</if>
+            <if test=" filing_date != null">#{ filing_date,jdbcType=DATE},</if>
+            <if test=" expense_category_no != null and  expense_category_no !=''">#{ expense_category_no,jdbcType=VARCHAR},</if>
+            <if test=" expense_category != null and   expense_category!=''">#{ expense_category,jdbcType=VARCHAR},</if>
+            <if test=" contacts != null and  contacts !=''">#{ contacts,jdbcType=VARCHAR},</if>
+            <if test=" introducer != null and  introducer !=''">#{ introducer,jdbcType=VARCHAR},</if>
+            <if test=" personnel_type != null and  personnel_type !=''">#{ personnel_type,jdbcType=VARCHAR},</if>
+            <if test=" person_age != null">#{ person_age,jdbcType=INTEGER},</if>
+            <if test=" age_month != null ">#{ age_month,jdbcType=INTEGER},</if>
+            <if test=" age_day != null ">#{ age_day,jdbcType=INTEGER},</if>
+            <if test=" age_hour != null ">#{ age_hour,jdbcType=INTEGER},</if>
+            <if test=" age_branch != null ">#{ age_branch,jdbcType=INTEGER},</if>
+            <if test=" present_address_sheng != null and  present_address_sheng !=''">#{ present_address_sheng,jdbcType=VARCHAR},</if>
+            <if test=" present_address_shi != null and  present_address_shi !=''">#{ present_address_shi,jdbcType=VARCHAR},</if>
+            <if test=" present_address_xian != null and  present_address_xian !=''">#{ present_address_xian,jdbcType=VARCHAR},</if>
+            <if test=" present_address_xiang != null and  present_address_xiang !=''">#{ present_address_xiang,jdbcType=VARCHAR},</if>
+            <if test=" present_address_cun != null and  present_address_cun !=''">#{ present_address_cun,jdbcType=VARCHAR},</if>
+            <if test=" cp_rela != null and  cp_rela !=''">#{cp_rela,jdbcType=VARCHAR},</if>
+            <if test=" cp_rela_name != null and  cp_rela_name !=''">#{cp_rela_name,jdbcType=VARCHAR},</if>
+            <if test=" cont_tel != null">#{cont_tel,jdbcType=VARCHAR},</if>
+            <if test=" cont_addr_pro != null">#{cont_addr_pro,jdbcType=VARCHAR},</if>
+            <if test=" cont_addr_flagty != null">#{cont_addr_flagty,jdbcType=VARCHAR},</if>
+            <if test=" cont_addr_cou != null">#{cont_addr_cou,jdbcType=VARCHAR},</if>
+            <if test=" cont_addr_town != null">#{cont_addr_town,jdbcType=VARCHAR},</if>
+            <if test=" mar_sta != null and mar_sta!=''">#{mar_sta,jdbcType=VARCHAR},</if>
+            <if test=" prp_addr_post != null and prp_addr_post != ''">#{prp_addr_post,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <select id="selectSyncPersonalInfoList" parameterType="SqlVo" resultMap="PersonalinfoResult">
+        select b.admission_no as inp_no from ${tableName} b left join PAT_VISITINFO v on b.ADMISSION_NO=v.INP_NO
+        <where>
+            <if test="deptCode!=null and deptCode!=''">
+                and v.dept_code=#{deptCode}
+            </if>
+        </where>
+    </select>
+    <select id="selectHisPersonalInfoList" parameterType="SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+        <if test="deptCode!=null and deptCode!=''">
+            and m.ward_no=#{deptCode}
+        </if>
+        <if test="resDocCd!=null and resDocCd!=''">
+            and m.visiting_staff_no=#{resDocCd}
+        </if>
+        <if test="inpNo!=null and inpNo!=''">
+            or m.admission_no=#{inpNo}
+        </if>
+    </select>
+
+    <select id="getPatientInfoForSx" parameterType="com.emr.project.pat.domain.vo.PersonalinfoForSxVo" resultType="java.util.Map">
+        select * from v_patient_cy a
+        <where>
+            <if test="patientId != null and patientId !=''">
+                and a.zyh = #{patientId}
+            </if>
+        </where>
+    </select>
+    <select id="checkIdCardRepeat" resultType="java.lang.Integer">
+        SELECT
+            count(0)
+        FROM
+            T_AR_BASEINFOMATION per
+        WHERE per.ADMISSION_NO != #{patientId}
+            AND per.IDCARD = #{idCard}
+    </select>
+</mapper>

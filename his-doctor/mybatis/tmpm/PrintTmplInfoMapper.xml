@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.PrintTmplInfoMapper">
+
+    <resultMap type="PrintTmplInfo" id="TmPmPrintTmplInfoResult">
+        <result property="id"    column="id"    />
+        <result property="typeCode"    column="type_code"    />
+        <result property="typeName"    column="type_name"    />
+        <result property="tmplCode"    column="tmpl_code"    />
+        <result property="tmplName"    column="tmpl_name"    />
+        <result property="tmplFileName"    column="tmpl_file_name"    />
+        <result property="tmplFilePath"    column="tmpl_file_path"    />
+        <result property="silenceFlag"    column="silence_flag"    />
+        <result property="defaultFlag"    column="default_flag"    />
+        <result property="printerName"    column="printer_name"    />
+        <result property="remark"    column="remark"    />
+        <result property="valid"    column="valid"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="tmplNamePym"    column="tmpl_name_pym"    />
+    </resultMap>
+
+    <sql id="selectTmPmPrintTmplInfoVo">
+        select id, type_code, type_name, tmpl_code, tmpl_name, tmpl_file_name, tmpl_file_path, silence_flag, default_flag,
+        printer_name, remark, valid, del_flag, cre_per_code, cre_per_name, cre_date, alt_per_code,
+        alt_per_name, alt_date,tmpl_name_pym from tm_pm_print_tmpl_info
+    </sql>
+
+    <select id="selectTmPmPrintTmplInfoByCode" parameterType="String" resultMap="TmPmPrintTmplInfoResult">
+        <include refid="selectTmPmPrintTmplInfoVo"/>
+        where valid = 1 and del_flag = '0' and type_code = #{typeCode}
+    </select>
+
+    <select id="selectTmPmPrintTmplInfoByCodes" parameterType="String" resultMap="TmPmPrintTmplInfoResult">
+        <include refid="selectTmPmPrintTmplInfoVo"/>
+        where valid = 1 and del_flag = '0'
+        and type_code in
+        <foreach collection="typeCodeList" item="typeCode" open="(" separator="," close=")">
+            #{typeCode}
+        </foreach>
+    </select>
+    <select id="selectListByParentTypeCode" parameterType="String" resultMap="TmPmPrintTmplInfoResult">
+        select t3.* from tm_pm_print_tmpl_type t1
+        left join tm_pm_print_tmpl_type t2 on t1.parent_id= t2.id
+        left join tm_pm_print_tmpl_info t3 on t1.type_code = t3.type_code
+        where t2.type_code = #{parentTypeCode}
+        and t1.del_flag = '0'
+        and t3.del_flag = '0'
+        and t3.valid = '1'
+    </select>
+</mapper>

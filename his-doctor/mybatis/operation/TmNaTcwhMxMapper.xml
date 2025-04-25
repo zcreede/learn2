@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TmNaTcwhMxMapper">
+
+    <resultMap type="TmNaTcwhMx" id="TmNaTcwhMxResult">
+        <result property="id"    column="id"    />
+        <result property="wardNo"    column="ward_no"    />
+        <result property="packageNo"    column="package_no"    />
+        <result property="packageOrder"    column="package_order"    />
+        <result property="chargeCode"    column="charge_code"    />
+        <result property="chargeNo"    column="charge_no"    />
+        <result property="chargeName"    column="charge_name"    />
+        <result property="hosUpper"    column="hos_upper"    />
+        <result property="standard"    column="standard"    />
+        <result property="unit"    column="unit"    />
+        <result property="price"    column="price"    />
+        <result property="dose"    column="dose"    />
+        <result property="total"    column="total"    />
+        <result property="depExecNo"    column="dep_exec_no"    />
+        <result property="chargeNamePym"    column="charge_name_pym"    />
+    </resultMap>
+
+    <sql id="selectTmNaTcwhMxVo">
+        select id, ward_no, package_no, package_order, charge_code, charge_no, charge_name, hos_upper, standard, unit, price, dose, total, dep_exec_no, charge_name_pym from tm_na_tcwh_mx
+    </sql>
+
+    <select id="selectTmNaTcwhMxList" parameterType="TmNaTcwhMx" resultMap="TmNaTcwhMxResult">
+        <include refid="selectTmNaTcwhMxVo"/>
+        <where>
+            <if test="wardNo != null  and wardNo != ''"> and ward_no = #{wardNo}</if>
+            <if test="packageNo != null  and packageNo != ''"> and package_no = #{packageNo}</if>
+            <if test="packageOrder != null "> and package_order = #{packageOrder}</if>
+            <if test="chargeCode != null  and chargeCode != ''"> and charge_code = #{chargeCode}</if>
+            <if test="chargeNo != null  and chargeNo != ''"> and charge_no = #{chargeNo}</if>
+            <if test="chargeName != null  and chargeName != ''"> and charge_name like concat(concat('%', #{chargeName}), '%')</if>
+            <if test="hosUpper != null  and hosUpper != ''"> and hos_upper = #{hosUpper}</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="dose != null "> and dose = #{dose}</if>
+            <if test="total != null "> and total = #{total}</if>
+            <if test="depExecNo != null  and depExecNo != ''"> and dep_exec_no = #{depExecNo}</if>
+            <if test="chargeNamePym != null  and chargeNamePym != ''"> and charge_name_pym = #{chargeNamePym}</if>
+        </where>
+        order by package_order
+    </select>
+
+    <select id="selectTmNaTcwhMxInfoList" parameterType="TcwhMxReq" resultMap="TmNaTcwhMxResult">
+        <include refid="selectTmNaTcwhMxVo"/>
+        <where>
+            <if test="wardNo != null  and wardNo != ''"> and ward_no = #{wardNo}</if>
+            <if test="packageNo != null  and packageNo != ''"> and package_no = #{packageNo}</if>
+            <if test="packageOrder != null "> and package_order = #{packageOrder}</if>
+            <if test="chargeCode != null  and chargeCode != ''"> and charge_code = #{chargeCode}</if>
+            <if test="chargeNo != null  and chargeNo != ''"> and charge_no = #{chargeNo}</if>
+            <if test="chargeName != null  and chargeName != ''"> and charge_name like concat(concat('%', #{chargeName}), '%')</if>
+            <if test="hosUpper != null  and hosUpper != ''"> and hos_upper = #{hosUpper}</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="dose != null "> and dose = #{dose}</if>
+            <if test="total != null "> and total = #{total}</if>
+            <if test="depExecNo != null  and depExecNo != ''"> and dep_exec_no = #{depExecNo}</if>
+            <if test="chargeNamePym != null  and chargeNamePym != ''"> and charge_name_pym = #{chargeNamePym}</if>
+        </where>
+    </select>
+
+    <select id="selectMaxId" resultType="long">
+        select SEQ_TM_NA_TCWH_MX.nextval from dual
+    </select>
+
+    <select id="selectTmNaTcwhMxById" parameterType="Long" resultMap="TmNaTcwhMxResult">
+        <include refid="selectTmNaTcwhMxVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmNaTcwhMx" parameterType="TmNaTcwhMx">
+        insert into tm_na_tcwh_mx
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="wardNo != null">ward_no,</if>
+            <if test="packageNo != null">package_no,</if>
+            <if test="packageOrder != null">package_order,</if>
+            <if test="chargeCode != null">charge_code,</if>
+            <if test="chargeNo != null">charge_no,</if>
+            <if test="chargeName != null">charge_name,</if>
+            <if test="hosUpper != null">hos_upper,</if>
+            <if test="standard != null">standard,</if>
+            <if test="unit != null">unit,</if>
+            <if test="price != null">price,</if>
+            <if test="dose != null">dose,</if>
+            <if test="total != null">total,</if>
+            <if test="depExecNo != null">dep_exec_no,</if>
+            <if test="chargeNamePym != null">charge_name_pym,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="wardNo != null">#{wardNo},</if>
+            <if test="packageNo != null">#{packageNo},</if>
+            <if test="packageOrder != null">#{packageOrder},</if>
+            <if test="chargeCode != null">#{chargeCode},</if>
+            <if test="chargeNo != null">#{chargeNo},</if>
+            <if test="chargeName != null">#{chargeName},</if>
+            <if test="hosUpper != null">#{hosUpper},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="price != null">#{price},</if>
+            <if test="dose != null">#{dose},</if>
+            <if test="total != null">#{total},</if>
+            <if test="depExecNo != null">#{depExecNo},</if>
+            <if test="chargeNamePym != null">#{chargeNamePym},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT ALL
+        <foreach item="item" collection="list">
+            into tm_na_tcwh_mx
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">id,
+                    </if>
+                    <if test="item.wardNo != null">ward_no,
+                    </if>
+                    <if test="item.packageNo != null">package_no,
+                    </if>
+                    <if test="item.packageOrder != null">package_order,
+                    </if>
+                    <if test="item.chargeCode != null">charge_code,
+                    </if>
+                    <if test="item.chargeNo != null">charge_no,
+                    </if>
+                    <if test="item.chargeName != null">charge_name,
+                    </if>
+                    <if test="item.hosUpper != null">hos_upper,
+                    </if>
+                    <if test="item.standard != null">standard,
+                    </if>
+                    <if test="item.unit != null">unit,
+                    </if>
+                    <if test="item.price != null">price,
+                    </if>
+                    <if test="item.dose != null">dose,
+                    </if>
+                    <if test="item.total != null">total,
+                    </if>
+                    <if test="item.depExecNo != null">dep_exec_no,
+                    </if>
+                    <if test="item.chargeNamePym != null">charge_name_pym,
+                    </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">#{item.id},
+                    </if>
+                    <if test="item.wardNo != null">#{item.wardNo},
+                    </if>
+                    <if test="item.packageNo != null">#{item.packageNo},
+                    </if>
+                    <if test="item.packageOrder != null">#{item.packageOrder},
+                    </if>
+                    <if test="item.chargeCode != null">#{item.chargeCode},
+                    </if>
+                    <if test="item.chargeNo != null">#{item.chargeNo},
+                    </if>
+                    <if test="item.chargeName != null">#{item.chargeName},
+                    </if>
+                    <if test="item.hosUpper != null">#{item.hosUpper},
+                    </if>
+                    <if test="item.standard != null">#{item.standard},
+                    </if>
+                    <if test="item.unit != null">#{item.unit},
+                    </if>
+                    <if test="item.price != null">#{item.price},
+                    </if>
+                    <if test="item.dose != null">#{item.dose},
+                    </if>
+                    <if test="item.total != null">#{item.total},
+                    </if>
+                    <if test="item.depExecNo != null">#{item.depExecNo},
+                    </if>
+                    <if test="item.chargeNamePym != null">#{item.chargeNamePym},
+                    </if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateTmNaTcwhMx" parameterType="TmNaTcwhMx">
+        update tm_na_tcwh_mx
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="wardNo != null">ward_no = #{wardNo},</if>
+            <if test="packageNo != null">package_no = #{packageNo},</if>
+            <if test="packageOrder != null">package_order = #{packageOrder},</if>
+            <if test="chargeCode != null">charge_code = #{chargeCode},</if>
+            <if test="chargeNo != null">charge_no = #{chargeNo},</if>
+            <if test="chargeName != null">charge_name = #{chargeName},</if>
+            <if test="hosUpper != null">hos_upper = #{hosUpper},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="dose != null">dose = #{dose},</if>
+            <if test="total != null">total = #{total},</if>
+            <if test="depExecNo != null">dep_exec_no = #{depExecNo},</if>
+            <if test="chargeNamePym != null">charge_name_pym = #{chargeNamePym},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update tm_na_tcwh_mx
+            <trim prefix="SET" suffixOverrides=",">
+                        <if test="item.wardNo != null">ward_no = #{item.wardNo},</if>
+                        <if test="item.packageNo != null">package_no = #{item.packageNo},</if>
+                        <if test="item.packageOrder != null">package_order = #{item.packageOrder},</if>
+                        <if test="item.chargeCode != null">charge_code = #{item.chargeCode},</if>
+                        <if test="item.chargeNo != null">charge_no = #{item.chargeNo},</if>
+                        <if test="item.chargeName != null">charge_name = #{item.chargeName},</if>
+                        <if test="item.hosUpper != null">hos_upper = #{item.hosUpper},</if>
+                        <if test="item.standard != null">standard = #{item.standard},</if>
+                        <if test="item.unit != null">unit = #{item.unit},</if>
+                        <if test="item.price != null">price = #{item.price},</if>
+                        <if test="item.dose != null">dose = #{item.dose},</if>
+                        <if test="item.total != null">total = #{item.total},</if>
+                        <if test="item.depExecNo != null">dep_exec_no = #{item.depExecNo},</if>
+                        <if test="item.chargeNamePym != null">charge_name_pym = #{item.chargeNamePym},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteTmNaTcwhMxById" parameterType="Long">
+        delete from tm_na_tcwh_mx where id = #{id}
+    </delete>
+
+    <delete id="deleteTmNaTcwhMxByIds" parameterType="String">
+        delete from tm_na_tcwh_mx where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

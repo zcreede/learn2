@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcBillRecordMapper">
+    
+    <resultMap type="QcBillRecord" id="QcBillRecordResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="qcdoctCd"    column="qcdoct_cd"    />
+        <result property="qcdoctName"    column="qcdoct_name"    />
+        <result property="qcDepartCode"    column="qc_depart_code"    />
+        <result property="qcDepartName"    column="qc_depart_name"    />
+        <result property="qcDate"    column="qc_date"    />
+        <result property="checkWay"    column="check_way"    />
+        <result property="checkWayName"    column="check_way_name"    />
+        <result property="checkCount"    column="check_count"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+    </resultMap>
+
+    <sql id="selectQcBillRecordVo">
+        select id, org_cd, qcdoct_cd, qcdoct_name, qc_depart_code, qc_depart_name, qc_date, check_way, check_way_name, check_count,alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date from qc_bill_record
+    </sql>
+
+    <select id="selectQcBillRecordList" parameterType="QcBillRecordVo" resultMap="QcBillRecordResult">
+        <include refid="selectQcBillRecordVo"/>
+        <where>  
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="qcdoctCd != null  and qcdoctCd != ''"> and qcdoct_cd = #{qcdoctCd}</if>
+            <if test="qcdoctName != null  and qcdoctName != ''"> and qcdoct_name like concat(concat('%', #{qcdoctName}), '%')</if>
+            <if test="qcDepartCode != null  and qcDepartCode != ''"> and qc_depart_code = #{qcDepartCode}</if>
+            <if test="qcDepartName != null  and qcDepartName != ''"> and qc_depart_name like concat(concat('%', #{qcDepartName}), '%')</if>
+            <if test="qcDate != null "> and qc_date = #{qcDate}</if>
+            <if test="qcDateBegin != null "> and qc_date &gt;= #{qcDateBegin}</if>
+            <if test="qcDateEnd != null "> and qc_date &lt; #{qcDateEnd}</if>
+            <if test="checkWay != null  and checkWay != ''"> and check_way = #{checkWay}</if>
+            <if test="checkWayName != null  and checkWayName != ''"> and check_way_name like concat(concat('%', #{checkWayName}), '%')</if>
+            <if test="checkCount != null "> and check_count = #{checkCount}</if>
+        </where>
+        order by qc_date desc
+    </select>
+    
+    <select id="selectQcBillRecordById" parameterType="Long" resultMap="QcBillRecordResult">
+        <include refid="selectQcBillRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQcBillRecord" parameterType="QcBillRecord">
+        insert into qc_bill_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">qcdoct_cd,</if>
+            <if test="qcdoctName != null and qcdoctName != ''">qcdoct_name,</if>
+            <if test="qcDepartCode != null">qc_depart_code,</if>
+            <if test="qcDepartName != null">qc_depart_name,</if>
+            <if test="qcDate != null">qc_date,</if>
+            <if test="checkWay != null">check_way,</if>
+            <if test="checkWayName != null">check_way_name,</if>
+            <if test="checkCount != null">check_count,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">#{qcdoctCd},</if>
+            <if test="qcdoctName != null and qcdoctName != ''">#{qcdoctName},</if>
+            <if test="qcDepartCode != null">#{qcDepartCode},</if>
+            <if test="qcDepartName != null">#{qcDepartName},</if>
+            <if test="qcDate != null">#{qcDate},</if>
+            <if test="checkWay != null">#{checkWay},</if>
+            <if test="checkWayName != null">#{checkWayName},</if>
+            <if test="checkCount != null">#{checkCount},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateQcBillRecord" parameterType="QcBillRecord">
+        update qc_bill_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">qcdoct_cd = #{qcdoctCd},</if>
+            <if test="qcdoctName != null and qcdoctName != ''">qcdoct_name = #{qcdoctName},</if>
+            <if test="qcDepartCode != null">qc_depart_code = #{qcDepartCode},</if>
+            <if test="qcDepartName != null">qc_depart_name = #{qcDepartName},</if>
+            <if test="qcDate != null">qc_date = #{qcDate},</if>
+            <if test="checkWay != null">check_way = #{checkWay},</if>
+            <if test="checkWayName != null">check_way_name = #{checkWayName},</if>
+            <if test="checkCount != null">check_count = #{checkCount},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcBillRecordById" parameterType="Long">
+        delete from qc_bill_record where id = #{id}
+    </delete>
+
+    <delete id="deleteQcBillRecordByIds" parameterType="String">
+        delete from qc_bill_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

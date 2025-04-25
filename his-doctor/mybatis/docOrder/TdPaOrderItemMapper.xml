@@ -1,0 +1,1211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderItemMapper">
+
+    <resultMap type="TdPaOrderItem" id="TdPaOrderItemResult">
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="orderStartTime"    column="order_start_time"    />
+        <result property="orderStartDoc"    column="order_start_doc"    />
+        <result property="orderStartDocName"    column="order_start_doc_name"    />
+        <result property="orderDoctorSignFlag"    column="order_doctor_sign_flag"    />
+        <result property="priceFlag"    column="price_flag"    />
+        <result property="documentTypeNo"    column="document_type_no"    />
+        <result property="takeDrugTime"    column="take_drug_time"    />
+        <result property="printTimes"    column="print_times"    />
+        <result property="outHavaDrugFlag"    column="out_hava_drug_flag"    />
+        <result property="takeDrugMode"    column="take_drug_mode"    />
+        <result property="additionalFlag"    column="additional_flag"    />
+        <result property="transferOutFlag"    column="transfer_out_flag"    />
+        <result property="precontractFlag"    column="precontract_flag"    />
+        <result property="orderDuration"    column="order_duration"    />
+        <result property="orderDurationUnit"    column="order_duration_unit"    />
+        <result property="orderItemType"    column="order_item_type"    />
+        <result property="performStaffFlag"    column="perform_staff_flag"    />
+        <result property="submitDoctorCode"    column="submit_doctor_code"    />
+        <result property="submitDoctorNo"    column="submit_doctor_no"    />
+        <result property="submitDoctorName"    column="submit_doctor_name"    />
+        <result property="submitTime"    column="submit_time"    />
+        <result property="orderDoseItem"    column="order_dose_item"    />
+        <result property="unitItem"    column="unit_item"    />
+        <result property="priceItem"    column="price_item"    />
+        <result property="orderTotalItem"    column="order_total_item"    />
+        <result property="itemOrderUsageWay"    column="item_order_usage_way"    />
+        <result property="itemOrderUsageWayName"    column="item_order_usage_way_name"    />
+        <result property="itemOrderFreq"    column="item_order_freq"    />
+        <result property="itemOrderFreqName"    column="item_order_freq_name"    />
+        <result property="executorDptNo"    column="executor_dpt_no"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="orderAuditTime"    column="order_audit_time"    />
+        <result property="orderAuditDoc"    column="order_audit_doc"    />
+        <result property="orderAuditDocName"    column="order_audit_doc_name"    />
+        <result property="orderDealTime"    column="order_deal_time"    />
+        <result property="orderDealDoc"    column="order_deal_doc"    />
+        <result property="orderDealDocName"    column="order_deal_doc_name"    />
+        <result property="orderExecuteTime"    column="order_execute_time"    />
+        <result property="orderExecuteDoc"    column="order_execute_doc"    />
+        <result property="orderExecuteDocName"    column="order_execute_doc_name"    />
+        <result property="orderStopTime"    column="order_stop_time"    />
+        <result property="orderStopDoc"    column="order_stop_doc"    />
+        <result property="orderStopDocName"    column="order_stop_doc_name"    />
+        <result property="orderCancelTime"    column="order_cancel_time"    />
+        <result property="orderCancelDoc"    column="order_cancel_doc"    />
+        <result property="orderCancelDocName"    column="order_cancel_doc_name"    />
+        <result property="orderFlagCd"    column="order_flag_cd"    />
+        <result property="orderFlagName"    column="order_flag_name"    />
+        <result property="urgentFlag"    column="urgent_flag"    />
+        <result property="prescribeNo"    column="prescribe_no"    />
+        <result property="prescribeName"    column="prescribe_name"    />
+        <result property="herbalFlag"    column="herbal_flag"    />
+        <result property="herbalDose"    column="herbal_dose"    />
+        <result property="herbalIntr"    column="herbal_intr"    />
+        <result property="decoctMethod"    column="decoct_method"    />
+        <result property="oederDesc"    column="oeder_desc"    />
+        <result property="plasterFlag"    column="plaster_flag"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="reOrganizationNo"    column="re_organization_no"    />
+        <result property="sourceOrderNo"    column="source_order_no"    />
+
+        <result property="orderStopAuditTime"    column="order_stop_audit_time"    />
+        <result property="orderStopAuditDoc"    column="order_stop_audit_doc"    />
+        <result property="orderStopAuditDocName"    column="order_stop_audit_doc_name"    />
+
+        <result property="orderCancelAuditTime"    column="order_cancel_audit_time"    />
+        <result property="orderCancelAuditDoc"    column="order_cancel_audit_doc"    />
+        <result property="orderCancelAuditDocName"    column="order_cancel_audit_doc_name"    />
+    </resultMap>
+
+    <resultMap type="TdPaOrderItemVo" id="TdPaOrderItemHosCdResult" extends="TdPaOrderItemResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="performDepCode"    column="perform_dep_code"    />
+        <result property="performDepName"    column="perform_dep_name"    />
+        <result property="babyAdmissionNo"    column="baby_admission_no"    />
+        <result property="operationTypeName"    column="operation_type_name"    />
+        <result property="operationType"    column="operation_type"    />
+    </resultMap>
+
+    <resultMap type="TdPaOrderItemVo" id="TdPaOrderItemVoResult" extends="TdPaOrderItemResult">
+        <result property="tableName"    column="table_name"    />
+        <result property="chargeNo" column="charge_no"/>
+    </resultMap>
+    <sql id="selectTdPaOrderItemVo">
+        select order_no, order_type, order_class_code, order_sort_number, order_group_no, cp_no, cp_name, order_start_time,
+               order_start_doc, order_start_doc_name, order_doctor_sign_flag, price_flag, document_type_no, take_drug_time,
+               print_times, out_hava_drug_flag, take_drug_mode, additional_flag, transfer_out_flag, precontract_flag,
+               order_duration, order_duration_unit, order_item_type, perform_staff_flag, submit_doctor_code, submit_doctor_no,
+               submit_doctor_name, submit_time, order_dose_item, unit_item, price_item, order_total_item, item_order_usage_way,
+               item_order_usage_way_name, item_order_freq, item_order_freq_name, executor_dpt_no, order_status, order_audit_time,
+               order_audit_doc, order_audit_doc_name, order_deal_time, order_deal_doc, order_deal_doc_name, order_execute_time,
+               order_execute_doc, order_execute_doc_name, order_stop_time, order_stop_doc, order_stop_doc_name, order_cancel_time,
+               order_cancel_doc, order_cancel_doc_name, order_flag_cd, order_flag_name, urgent_flag, prescribe_no, prescribe_name,
+               herbal_flag, herbal_dose, herbal_intr, decoct_method, oeder_desc, plaster_flag, alt_date, alt_per_code, alt_per_name,
+               patient_id, re_organization_no, source_order_no,order_stop_audit_time,order_stop_audit_doc,order_stop_audit_doc_name,
+               order_cancel_audit_time,order_cancel_audit_doc,order_cancel_audit_doc_name
+               from td_pa_order_item
+    </sql>
+
+    <select id="selectTdPaOrderItemList" parameterType="TdPaOrderItemVo" resultMap="TdPaOrderItemHosCdResult">
+        <include refid="selectTdPaOrderItemVo"/>
+        <where>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="orderGroupNo != null "> and order_group_no = #{orderGroupNo}</if>
+            <if test="cpNo != null  and cpNo != ''"> and cp_no = #{cpNo}</if>
+            <if test="cpName != null  and cpName != ''"> and cp_name like concat(concat('%', #{cpName}), '%')</if>
+            <if test="orderStartTime != null "> and order_start_time = #{orderStartTime}</if>
+            <if test="orderStartDoc != null  and orderStartDoc != ''"> and order_start_doc = #{orderStartDoc}</if>
+            <if test="orderStartDocName != null  and orderStartDocName != ''"> and order_start_doc_name like concat(concat('%', #{orderStartDocName}), '%')</if>
+            <if test="orderDoctorSignFlag != null  and orderDoctorSignFlag != ''"> and order_doctor_sign_flag = #{orderDoctorSignFlag}</if>
+            <if test="priceFlag != null  and priceFlag != ''"> and price_flag = #{priceFlag}</if>
+            <if test="documentTypeNo != null  and documentTypeNo != ''"> and document_type_no = #{documentTypeNo}</if>
+            <if test="takeDrugTime != null  and takeDrugTime != ''"> and take_drug_time = #{takeDrugTime}</if>
+            <if test="printTimes != null "> and print_times = #{printTimes}</if>
+            <if test="outHavaDrugFlag != null  and outHavaDrugFlag != ''"> and out_hava_drug_flag = #{outHavaDrugFlag}</if>
+            <if test="takeDrugMode != null  and takeDrugMode != ''"> and take_drug_mode = #{takeDrugMode}</if>
+            <if test="additionalFlag != null  and additionalFlag != ''"> and additional_flag = #{additionalFlag}</if>
+            <if test="transferOutFlag != null  and transferOutFlag != ''"> and transfer_out_flag = #{transferOutFlag}</if>
+            <if test="precontractFlag != null "> and precontract_flag = #{precontractFlag}</if>
+            <if test="orderDuration != null "> and order_duration = #{orderDuration}</if>
+            <if test="orderDurationUnit != null  and orderDurationUnit != ''"> and order_duration_unit = #{orderDurationUnit}</if>
+            <if test="orderItemType != null  and orderItemType != ''"> and order_item_type = #{orderItemType}</if>
+            <if test="performStaffFlag != null  and performStaffFlag != ''"> and perform_staff_flag = #{performStaffFlag}</if>
+            <if test="submitDoctorCode != null  and submitDoctorCode != ''"> and submit_doctor_code = #{submitDoctorCode}</if>
+            <if test="submitDoctorNo != null  and submitDoctorNo != ''"> and submit_doctor_no = #{submitDoctorNo}</if>
+            <if test="submitDoctorName != null  and submitDoctorName != ''"> and submit_doctor_name like concat(concat('%', #{submitDoctorName}), '%')</if>
+            <if test="submitTime != null "> and submit_time = #{submitTime}</if>
+            <if test="orderDoseItem != null "> and order_dose_item = #{orderDoseItem}</if>
+            <if test="unitItem != null  and unitItem != ''"> and unit_item = #{unitItem}</if>
+            <if test="priceItem != null "> and price_item = #{priceItem}</if>
+            <if test="orderTotalItem != null "> and order_total_item = #{orderTotalItem}</if>
+            <if test="itemOrderUsageWay != null  and itemOrderUsageWay != ''"> and item_order_usage_way = #{itemOrderUsageWay}</if>
+            <if test="itemOrderUsageWayName != null  and itemOrderUsageWayName != ''"> and item_order_usage_way_name like concat(concat('%', #{itemOrderUsageWayName}), '%')</if>
+            <if test="itemOrderFreq != null  and itemOrderFreq != ''"> and item_order_freq = #{itemOrderFreq}</if>
+            <if test="itemOrderFreqName != null  and itemOrderFreqName != ''"> and item_order_freq_name like concat(concat('%', #{itemOrderFreqName}), '%')</if>
+            <if test="executorDptNo != null  and executorDptNo != ''"> and executor_dpt_no = #{executorDptNo}</if>
+            <if test="orderStatus != null  and orderStatus != ''"> and order_status = #{orderStatus}</if>
+            <if test="orderAuditTime != null "> and order_audit_time = #{orderAuditTime}</if>
+            <if test="orderAuditDoc != null  and orderAuditDoc != ''"> and order_audit_doc = #{orderAuditDoc}</if>
+            <if test="orderAuditDocName != null  and orderAuditDocName != ''"> and order_audit_doc_name like concat(concat('%', #{orderAuditDocName}), '%')</if>
+            <if test="orderDealTime != null "> and order_deal_time = #{orderDealTime}</if>
+            <if test="orderDealDoc != null  and orderDealDoc != ''"> and order_deal_doc = #{orderDealDoc}</if>
+            <if test="orderDealDocName != null  and orderDealDocName != ''"> and order_deal_doc_name like concat(concat('%', #{orderDealDocName}), '%')</if>
+            <if test="orderExecuteTime != null "> and order_execute_time = #{orderExecuteTime}</if>
+            <if test="orderExecuteDoc != null  and orderExecuteDoc != ''"> and order_execute_doc = #{orderExecuteDoc}</if>
+            <if test="orderExecuteDocName != null  and orderExecuteDocName != ''"> and order_execute_doc_name like concat(concat('%', #{orderExecuteDocName}), '%')</if>
+            <if test="orderStopTime != null "> and order_stop_time = #{orderStopTime}</if>
+            <if test="orderStopDoc != null  and orderStopDoc != ''"> and order_stop_doc = #{orderStopDoc}</if>
+            <if test="orderStopDocName != null  and orderStopDocName != ''"> and order_stop_doc_name like concat(concat('%', #{orderStopDocName}), '%')</if>
+            <if test="orderCancelTime != null "> and order_cancel_time = #{orderCancelTime}</if>
+            <if test="orderCancelDoc != null  and orderCancelDoc != ''"> and order_cancel_doc = #{orderCancelDoc}</if>
+            <if test="orderCancelDocName != null  and orderCancelDocName != ''"> and order_cancel_doc_name like concat(concat('%', #{orderCancelDocName}), '%')</if>
+            <if test="orderFlagCd != null  and orderFlagCd != ''"> and order_flag_cd = #{orderFlagCd}</if>
+            <if test="orderFlagName != null  and orderFlagName != ''"> and order_flag_name like concat(concat('%', #{orderFlagName}), '%')</if>
+            <if test="urgentFlag != null  and urgentFlag != ''"> and urgent_flag = #{urgentFlag}</if>
+            <if test="prescribeNo != null  and prescribeNo != ''"> and prescribe_no = #{prescribeNo}</if>
+            <if test="prescribeName != null  and prescribeName != ''"> and prescribe_name like concat(concat('%', #{prescribeName}), '%')</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and herbal_flag = #{herbalFlag}</if>
+            <if test="herbalDose != null "> and herbal_dose = #{herbalDose}</if>
+            <if test="herbalIntr != null  and herbalIntr != ''"> and herbal_intr = #{herbalIntr}</if>
+            <if test="decoctMethod != null  and decoctMethod != ''"> and decoct_method = #{decoctMethod}</if>
+            <if test="oederDesc != null  and oederDesc != ''"> and oeder_desc = #{oederDesc}</if>
+            <if test="plasterFlag != null  and plasterFlag != ''"> and plaster_flag = #{plasterFlag}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="reOrganizationNo != null "> and re_organization_no = #{reOrganizationNo}</if>
+            <if test="sourceOrderNo != null  and sourceOrderNo != ''"> and source_order_no = #{sourceOrderNo}</if>
+        </where>
+    </select>
+    <select id="selectOrderHerbList" parameterType="TdPaOrderItemVo" resultMap="TdPaOrderItemHosCdResult">
+        select a.* from(select oi.*,o.baby_admission_no,o.perform_dep_code,o.perform_dep_name
+        from td_pa_order_item oi
+        left join td_pa_order o on oi.order_no=o.order_no
+        union
+        select oi.*,o.baby_admission_no,o.perform_dep_code,o.perform_dep_name
+        from td_pa_order_item_h oi
+        left join td_pa_order_h o on oi.order_no=o.order_no
+        ) a
+        <where>
+            <if test="orderType != null  and orderType != ''"> and a.order_type = #{orderType}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and a.order_class_code = #{orderClassCode}</if>
+            <if test="priceFlag != null  and priceFlag != ''"> and a.price_flag = #{priceFlag}</if>
+            <if test="orderStatus != null  and orderStatus != ''"> and a.order_status = #{orderStatus}</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and a.herbal_flag = #{herbalFlag}</if>
+            <if test="patientId != null  and patientId != ''"> and a.patient_id = #{patientId}</if>
+            <if test="stateList != null and stateList.size()>0 ">
+               and a.order_status in
+                <foreach item="orderStatus" collection="stateList" open="(" separator="," close=")">
+                    #{orderStatus}
+                </foreach>
+            </if>
+        </where>
+        order by a.order_start_time desc
+    </select>
+
+    <select id="selectTdPaOrderItemById" parameterType="String" resultMap="TdPaOrderItemHosCdResult">
+        select a.* from (select oi.*,o.baby_admission_no,o.perform_dep_code,o.perform_dep_name
+            from td_pa_order_item oi
+            left join td_pa_order o on oi.order_no=o.order_no
+            union all select oih.*,oh.baby_admission_no,oh.perform_dep_code,oh.perform_dep_name
+            from td_pa_order_item_h oih
+            left join td_pa_order_h oh on oih.order_no=oh.order_no
+        ) a
+        WHERE a.order_no = #{orderNo}
+    </select>
+
+    <insert id="insertTdPaOrderItem" parameterType="TdPaOrderItem">
+        insert into td_pa_order_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">order_no,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="orderClassCode != null">order_class_code,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="orderGroupNo != null">order_group_no,</if>
+            <if test="cpNo != null">cp_no,</if>
+            <if test="cpName != null">cp_name,</if>
+            <if test="orderStartTime != null">order_start_time,</if>
+            <if test="orderStartDoc != null">order_start_doc,</if>
+            <if test="orderStartDocName != null">order_start_doc_name,</if>
+            <if test="orderDoctorSignFlag != null">order_doctor_sign_flag,</if>
+            <if test="priceFlag != null">price_flag,</if>
+            <if test="documentTypeNo != null">document_type_no,</if>
+            <if test="takeDrugTime != null">take_drug_time,</if>
+            <if test="printTimes != null">print_times,</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag,</if>
+            <if test="takeDrugMode != null">take_drug_mode,</if>
+            <if test="additionalFlag != null">additional_flag,</if>
+            <if test="transferOutFlag != null">transfer_out_flag,</if>
+            <if test="precontractFlag != null">precontract_flag,</if>
+            <if test="orderDuration != null">order_duration,</if>
+            <if test="orderDurationUnit != null">order_duration_unit,</if>
+            <if test="orderItemType != null">order_item_type,</if>
+            <if test="performStaffFlag != null">perform_staff_flag,</if>
+            <if test="submitDoctorCode != null">submit_doctor_code,</if>
+            <if test="submitDoctorNo != null">submit_doctor_no,</if>
+            <if test="submitDoctorName != null">submit_doctor_name,</if>
+            <if test="submitTime != null">submit_time,</if>
+            <if test="orderDoseItem != null">order_dose_item,</if>
+            <if test="unitItem != null">unit_item,</if>
+            <if test="priceItem != null">price_item,</if>
+            <if test="orderTotalItem != null">order_total_item,</if>
+            <if test="itemOrderUsageWay != null">item_order_usage_way,</if>
+            <if test="itemOrderUsageWayName != null">item_order_usage_way_name,</if>
+            <if test="itemOrderFreq != null">item_order_freq,</if>
+            <if test="itemOrderFreqName != null">item_order_freq_name,</if>
+            <if test="executorDptNo != null">executor_dpt_no,</if>
+            <if test="orderStatus != null">order_status,</if>
+            <if test="orderAuditTime != null">order_audit_time,</if>
+            <if test="orderAuditDoc != null">order_audit_doc,</if>
+            <if test="orderAuditDocName != null">order_audit_doc_name,</if>
+            <if test="orderDealTime != null">order_deal_time,</if>
+            <if test="orderDealDoc != null">order_deal_doc,</if>
+            <if test="orderDealDocName != null">order_deal_doc_name,</if>
+            <if test="orderExecuteTime != null">order_execute_time,</if>
+            <if test="orderExecuteDoc != null">order_execute_doc,</if>
+            <if test="orderExecuteDocName != null">order_execute_doc_name,</if>
+            <if test="orderStopTime != null">order_stop_time,</if>
+            <if test="orderStopDoc != null">order_stop_doc,</if>
+            <if test="orderStopDocName != null">order_stop_doc_name,</if>
+            <if test="orderCancelTime != null">order_cancel_time,</if>
+            <if test="orderCancelDoc != null">order_cancel_doc,</if>
+            <if test="orderCancelDocName != null">order_cancel_doc_name,</if>
+            <if test="orderFlagCd != null">order_flag_cd,</if>
+            <if test="orderFlagName != null">order_flag_name,</if>
+            <if test="urgentFlag != null">urgent_flag,</if>
+            <if test="prescribeNo != null">prescribe_no,</if>
+            <if test="prescribeName != null">prescribe_name,</if>
+            <if test="herbalFlag != null">herbal_flag,</if>
+            <if test="herbalDose != null">herbal_dose,</if>
+            <if test="herbalIntr != null">herbal_intr,</if>
+            <if test="decoctMethod != null">decoct_method,</if>
+            <if test="oederDesc != null">oeder_desc,</if>
+            <if test="plasterFlag != null">plaster_flag,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="patientId != null and patientId != ''"> patient_id,</if>
+            <if test="reOrganizationNo != null">re_organization_no,</if>
+            <if test="sourceOrderNo != null">source_order_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="orderClassCode != null">#{orderClassCode},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="orderGroupNo != null">#{orderGroupNo},</if>
+            <if test="cpNo != null">#{cpNo},</if>
+            <if test="cpName != null">#{cpName},</if>
+            <if test="orderStartTime != null">#{orderStartTime},</if>
+            <if test="orderStartDoc != null">#{orderStartDoc},</if>
+            <if test="orderStartDocName != null">#{orderStartDocName},</if>
+            <if test="orderDoctorSignFlag != null">#{orderDoctorSignFlag},</if>
+            <if test="priceFlag != null">#{priceFlag},</if>
+            <if test="documentTypeNo != null">#{documentTypeNo},</if>
+            <if test="takeDrugTime != null">#{takeDrugTime},</if>
+            <if test="printTimes != null">#{printTimes},</if>
+            <if test="outHavaDrugFlag != null">#{outHavaDrugFlag},</if>
+            <if test="takeDrugMode != null">#{takeDrugMode},</if>
+            <if test="additionalFlag != null">#{additionalFlag},</if>
+            <if test="transferOutFlag != null">#{transferOutFlag},</if>
+            <if test="precontractFlag != null">#{precontractFlag},</if>
+            <if test="orderDuration != null">#{orderDuration},</if>
+            <if test="orderDurationUnit != null">#{orderDurationUnit},</if>
+            <if test="orderItemType != null">#{orderItemType},</if>
+            <if test="performStaffFlag != null">#{performStaffFlag},</if>
+            <if test="submitDoctorCode != null">#{submitDoctorCode},</if>
+            <if test="submitDoctorNo != null">#{submitDoctorNo},</if>
+            <if test="submitDoctorName != null">#{submitDoctorName},</if>
+            <if test="submitTime != null">#{submitTime},</if>
+            <if test="orderDoseItem != null">#{orderDoseItem},</if>
+            <if test="unitItem != null">#{unitItem},</if>
+            <if test="priceItem != null">#{priceItem},</if>
+            <if test="orderTotalItem != null">#{orderTotalItem},</if>
+            <if test="itemOrderUsageWay != null">#{itemOrderUsageWay},</if>
+            <if test="itemOrderUsageWayName != null">#{itemOrderUsageWayName},</if>
+            <if test="itemOrderFreq != null">#{itemOrderFreq},</if>
+            <if test="itemOrderFreqName != null">#{itemOrderFreqName},</if>
+            <if test="executorDptNo != null">#{executorDptNo},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            <if test="orderAuditTime != null">#{orderAuditTime},</if>
+            <if test="orderAuditDoc != null">#{orderAuditDoc},</if>
+            <if test="orderAuditDocName != null">#{orderAuditDocName},</if>
+            <if test="orderDealTime != null">#{orderDealTime},</if>
+            <if test="orderDealDoc != null">#{orderDealDoc},</if>
+            <if test="orderDealDocName != null">#{orderDealDocName},</if>
+            <if test="orderExecuteTime != null">#{orderExecuteTime},</if>
+            <if test="orderExecuteDoc != null">#{orderExecuteDoc},</if>
+            <if test="orderExecuteDocName != null">#{orderExecuteDocName},</if>
+            <if test="orderStopTime != null">#{orderStopTime},</if>
+            <if test="orderStopDoc != null">#{orderStopDoc},</if>
+            <if test="orderStopDocName != null">#{orderStopDocName},</if>
+            <if test="orderCancelTime != null">#{orderCancelTime},</if>
+            <if test="orderCancelDoc != null">#{orderCancelDoc},</if>
+            <if test="orderCancelDocName != null">#{orderCancelDocName},</if>
+            <if test="orderFlagCd != null">#{orderFlagCd},</if>
+            <if test="orderFlagName != null">#{orderFlagName},</if>
+            <if test="urgentFlag != null">#{urgentFlag},</if>
+            <if test="prescribeNo != null">#{prescribeNo},</if>
+            <if test="prescribeName != null">#{prescribeName},</if>
+            <if test="herbalFlag != null">#{herbalFlag},</if>
+            <if test="herbalDose != null">#{herbalDose},</if>
+            <if test="herbalIntr != null">#{herbalIntr},</if>
+            <if test="decoctMethod != null">#{decoctMethod},</if>
+            <if test="oederDesc != null">#{oederDesc},</if>
+            <if test="plasterFlag != null">#{plasterFlag},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="patientId != null  and patientId != ''">#{patientId},</if>
+            <if test="reOrganizationNo != null">#{reOrganizationNo},</if>
+            <if test="sourceOrderNo != null">#{sourceOrderNo},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertList" parameterType="TdPaOrderItem">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_item
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.orderNo != null">order_no,</if>
+                <if test="item.orderType != null">order_type,</if>
+                <if test="item.orderClassCode != null">order_class_code,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.orderGroupNo != null">order_group_no,</if>
+                <if test="item.cpNo != null">cp_no,</if>
+                <if test="item.cpName != null">cp_name,</if>
+                <if test="item.orderStartTime != null">order_start_time,</if>
+                <if test="item.orderStartDoc != null">order_start_doc,</if>
+                <if test="item.orderStartDocName != null">order_start_doc_name,</if>
+                <if test="item.orderDoctorSignFlag != null">order_doctor_sign_flag,</if>
+                <if test="item.priceFlag != null">price_flag,</if>
+                <if test="item.documentTypeNo != null">document_type_no,</if>
+                <if test="item.takeDrugTime != null">take_drug_time,</if>
+                <if test="item.printTimes != null">print_times,</if>
+                <if test="item.outHavaDrugFlag != null">out_hava_drug_flag,</if>
+                <if test="item.takeDrugMode != null">take_drug_mode,</if>
+                <if test="item.additionalFlag != null">additional_flag,</if>
+                <if test="item.transferOutFlag != null">transfer_out_flag,</if>
+                <if test="item.precontractFlag != null">precontract_flag,</if>
+                <if test="item.orderDuration != null">order_duration,</if>
+                <if test="item.orderDurationUnit != null">order_duration_unit,</if>
+                <if test="item.orderItemType != null">order_item_type,</if>
+                <if test="item.performStaffFlag != null">perform_staff_flag,</if>
+                <if test="item.submitDoctorCode != null">submit_doctor_code,</if>
+                <if test="item.submitDoctorNo != null">submit_doctor_no,</if>
+                <if test="item.submitDoctorName != null">submit_doctor_name,</if>
+                <if test="item.submitTime != null">submit_time,</if>
+                <if test="item.orderDoseItem != null">order_dose_item,</if>
+                <if test="item.unitItem != null">unit_item,</if>
+                <if test="item.priceItem != null">price_item,</if>
+                <if test="item.orderTotalItem != null">order_total_item,</if>
+                <if test="item.itemOrderUsageWay != null">item_order_usage_way,</if>
+                <if test="item.itemOrderUsageWayName != null">item_order_usage_way_name,</if>
+                <if test="item.itemOrderFreq != null">item_order_freq,</if>
+                <if test="item.itemOrderFreqName != null">item_order_freq_name,</if>
+                <if test="item.executorDptNo != null">executor_dpt_no,</if>
+                <if test="item.orderStatus != null">order_status,</if>
+                <if test="item.orderAuditTime != null">order_audit_time,</if>
+                <if test="item.orderAuditDoc != null">order_audit_doc,</if>
+                <if test="item.orderAuditDocName != null">order_audit_doc_name,</if>
+                <if test="item.orderDealTime != null">order_deal_time,</if>
+                <if test="item.orderDealDoc != null">order_deal_doc,</if>
+                <if test="item.orderDealDocName != null">order_deal_doc_name,</if>
+                <if test="item.orderExecuteTime != null">order_execute_time,</if>
+                <if test="item.orderExecuteDoc != null">order_execute_doc,</if>
+                <if test="item.orderExecuteDocName != null">order_execute_doc_name,</if>
+                <if test="item.orderStopTime != null">order_stop_time,</if>
+                <if test="item.orderStopDoc != null">order_stop_doc,</if>
+                <if test="item.orderStopDocName != null">order_stop_doc_name,</if>
+                <if test="item.orderCancelTime != null">order_cancel_time,</if>
+                <if test="item.orderCancelDoc != null">order_cancel_doc,</if>
+                <if test="item.orderCancelDocName != null">order_cancel_doc_name,</if>
+                <if test="item.orderFlagCd != null">order_flag_cd,</if>
+                <if test="item.orderFlagName != null">order_flag_name,</if>
+                <if test="item.urgentFlag != null">urgent_flag,</if>
+                <if test="item.prescribeNo != null">prescribe_no,</if>
+                <if test="item.prescribeName != null">prescribe_name,</if>
+                <if test="item.herbalFlag != null">herbal_flag,</if>
+                <if test="item.herbalDose != null">herbal_dose,</if>
+                <if test="item.herbalIntr != null">herbal_intr,</if>
+                <if test="item.decoctMethod != null">decoct_method,</if>
+                <if test="item.oederDesc != null">oeder_desc,</if>
+                <if test="item.plasterFlag != null">plaster_flag,</if>
+                <if test="item.altDate != null">alt_date,</if>
+                <if test="item.altPerCode != null">alt_per_code,</if>
+                <if test="item.altPerName != null">alt_per_name,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.reOrganizationNo != null">re_organization_no,</if>
+                <if test="item.sourceOrderNo != null">source_order_no,</if>
+                <if test="item.orderStopAuditTime != null">order_stop_audit_time,</if>
+                <if test="item.orderStopAuditDoc != null">order_stop_audit_doc,</if>
+                <if test="item.orderStopAuditDocName != null">order_stop_audit_doc_name,</if>
+                <if test="item.lcljCpNo != null">lclj_cp_no,</if>
+                <if test="item.lcljCpName != null">lclj_cp_name,</if>
+                <if test="item.cpStageCode != null">cp_stage_code,</if>
+                <if test="item.cpItemCode != null">cp_item_code,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderType != null">#{item.orderType},</if>
+                <if test="item.orderClassCode != null">#{item.orderClassCode},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+                <if test="item.cpNo != null">#{item.cpNo},</if>
+                <if test="item.cpName != null">#{item.cpName},</if>
+                <if test="item.orderStartTime != null">#{item.orderStartTime},</if>
+                <if test="item.orderStartDoc != null">#{item.orderStartDoc},</if>
+                <if test="item.orderStartDocName != null">#{item.orderStartDocName},</if>
+                <if test="item.orderDoctorSignFlag != null">#{item.orderDoctorSignFlag},</if>
+                <if test="item.priceFlag != null">#{item.priceFlag},</if>
+                <if test="item.documentTypeNo != null">#{item.documentTypeNo},</if>
+                <if test="item.takeDrugTime != null">#{item.takeDrugTime},</if>
+                <if test="item.printTimes != null">#{item.printTimes},</if>
+                <if test="item.outHavaDrugFlag != null">#{item.outHavaDrugFlag},</if>
+                <if test="item.takeDrugMode != null">#{item.takeDrugMode},</if>
+                <if test="item.additionalFlag != null">#{item.additionalFlag},</if>
+                <if test="item.transferOutFlag != null">#{item.transferOutFlag},</if>
+                <if test="item.precontractFlag != null">#{item.precontractFlag},</if>
+                <if test="item.orderDuration != null">#{item.orderDuration},</if>
+                <if test="item.orderDurationUnit != null">#{item.orderDurationUnit},</if>
+                <if test="item.orderItemType != null">#{item.orderItemType},</if>
+                <if test="item.performStaffFlag != null">#{item.performStaffFlag},</if>
+                <if test="item.submitDoctorCode != null">#{item.submitDoctorCode},</if>
+                <if test="item.submitDoctorNo != null">#{item.submitDoctorNo},</if>
+                <if test="item.submitDoctorName != null">#{item.submitDoctorName},</if>
+                <if test="item.submitTime != null">#{item.submitTime},</if>
+                <if test="item.orderDoseItem != null">#{item.orderDoseItem},</if>
+                <if test="item.unitItem != null">#{item.unitItem},</if>
+                <if test="item.priceItem != null">#{item.priceItem},</if>
+                <if test="item.orderTotalItem != null">#{item.orderTotalItem},</if>
+                <if test="item.itemOrderUsageWay != null">#{item.itemOrderUsageWay},</if>
+                <if test="item.itemOrderUsageWayName != null">#{item.itemOrderUsageWayName},</if>
+                <if test="item.itemOrderFreq != null">#{item.itemOrderFreq},</if>
+                <if test="item.itemOrderFreqName != null">#{item.itemOrderFreqName},</if>
+                <if test="item.executorDptNo != null">#{item.executorDptNo},</if>
+                <if test="item.orderStatus != null">#{item.orderStatus},</if>
+                <if test="item.orderAuditTime != null">#{item.orderAuditTime},</if>
+                <if test="item.orderAuditDoc != null">#{item.orderAuditDoc},</if>
+                <if test="item.orderAuditDocName != null">#{item.orderAuditDocName},</if>
+                <if test="item.orderDealTime != null">#{item.orderDealTime},</if>
+                <if test="item.orderDealDoc != null">#{item.orderDealDoc},</if>
+                <if test="item.orderDealDocName != null">#{item.orderDealDocName},</if>
+                <if test="item.orderExecuteTime != null">#{item.orderExecuteTime},</if>
+                <if test="item.orderExecuteDoc != null">#{item.orderExecuteDoc},</if>
+                <if test="item.orderExecuteDocName != null">#{item.orderExecuteDocName},</if>
+                <if test="item.orderStopTime != null">#{item.orderStopTime},</if>
+                <if test="item.orderStopDoc != null">#{item.orderStopDoc},</if>
+                <if test="item.orderStopDocName != null">#{item.orderStopDocName},</if>
+                <if test="item.orderCancelTime != null">#{item.orderCancelTime},</if>
+                <if test="item.orderCancelDoc != null">#{item.orderCancelDoc},</if>
+                <if test="item.orderCancelDocName != null">#{item.orderCancelDocName},</if>
+                <if test="item.orderFlagCd != null">#{item.orderFlagCd},</if>
+                <if test="item.orderFlagName != null">#{item.orderFlagName},</if>
+                <if test="item.urgentFlag != null">#{item.urgentFlag},</if>
+                <if test="item.prescribeNo != null">#{item.prescribeNo},</if>
+                <if test="item.prescribeName != null">#{item.prescribeName},</if>
+                <if test="item.herbalFlag != null">#{item.herbalFlag},</if>
+                <if test="item.herbalDose != null">#{item.herbalDose},</if>
+                <if test="item.herbalIntr != null">#{item.herbalIntr},</if>
+                <if test="item.decoctMethod != null">#{item.decoctMethod},</if>
+                <if test="item.oederDesc != null">#{item.oederDesc},</if>
+                <if test="item.plasterFlag != null">#{item.plasterFlag},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+                <if test="item.altPerCode != null">#{item.altPerCode},</if>
+                <if test="item.altPerName != null">#{item.altPerName},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.reOrganizationNo != null">#{item.reOrganizationNo},</if>
+                <if test="item.sourceOrderNo != null">#{item.sourceOrderNo},</if>
+                <if test="item.orderStopAuditTime != null">#{item.orderStopAuditTime},</if>
+                <if test="item.orderStopAuditDoc != null">#{item.orderStopAuditDoc},</if>
+                <if test="item.orderStopAuditDocName != null">#{item.orderStopAuditDocName},</if>
+                <if test="item.lcljCpNo != null">#{item.lcljCpNo},</if>
+                <if test="item.lcljCpName != null">#{item.lcljCpName},</if>
+                <if test="item.cpStageCode != null">#{item.cpStageCode},</if>
+                <if test="item.cpItemCode != null">#{item.cpItemCode},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTdPaOrderItem" parameterType="TdPaOrderItem">
+        update td_pa_order_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="orderClassCode != null">order_class_code = #{orderClassCode},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="orderGroupNo != null">order_group_no = #{orderGroupNo},</if>
+            <if test="cpNo != null">cp_no = #{cpNo},</if>
+            <if test="cpName != null">cp_name = #{cpName},</if>
+            <if test="orderStartTime != null">order_start_time = #{orderStartTime},</if>
+            <if test="orderStartDoc != null">order_start_doc = #{orderStartDoc},</if>
+            <if test="orderStartDocName != null">order_start_doc_name = #{orderStartDocName},</if>
+            <if test="orderDoctorSignFlag != null">order_doctor_sign_flag = #{orderDoctorSignFlag},</if>
+            <if test="priceFlag != null">price_flag = #{priceFlag},</if>
+            <if test="documentTypeNo != null">document_type_no = #{documentTypeNo},</if>
+            <if test="takeDrugTime != null">take_drug_time = #{takeDrugTime},</if>
+            <if test="printTimes != null">print_times = #{printTimes},</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag = #{outHavaDrugFlag},</if>
+            <if test="takeDrugMode != null">take_drug_mode = #{takeDrugMode},</if>
+            <if test="additionalFlag != null">additional_flag = #{additionalFlag},</if>
+            <if test="transferOutFlag != null">transfer_out_flag = #{transferOutFlag},</if>
+            <if test="precontractFlag != null">precontract_flag = #{precontractFlag},</if>
+            <if test="orderDuration != null">order_duration = #{orderDuration},</if>
+            <if test="orderDurationUnit != null">order_duration_unit = #{orderDurationUnit},</if>
+            <if test="orderItemType != null">order_item_type = #{orderItemType},</if>
+            <if test="performStaffFlag != null">perform_staff_flag = #{performStaffFlag},</if>
+            <if test="submitDoctorCode != null">submit_doctor_code = #{submitDoctorCode},</if>
+            <if test="submitDoctorNo != null">submit_doctor_no = #{submitDoctorNo},</if>
+            <if test="submitDoctorName != null">submit_doctor_name = #{submitDoctorName},</if>
+            <if test="submitTime != null">submit_time = #{submitTime},</if>
+            <if test="orderDoseItem != null">order_dose_item = #{orderDoseItem},</if>
+            <if test="unitItem != null">unit_item = #{unitItem},</if>
+            <if test="priceItem != null">price_item = #{priceItem},</if>
+            <if test="orderTotalItem != null">order_total_item = #{orderTotalItem},</if>
+            <if test="itemOrderUsageWay != null">item_order_usage_way = #{itemOrderUsageWay},</if>
+            <if test="itemOrderUsageWayName != null">item_order_usage_way_name = #{itemOrderUsageWayName},</if>
+            <if test="itemOrderFreq != null">item_order_freq = #{itemOrderFreq},</if>
+            <if test="itemOrderFreqName != null">item_order_freq_name = #{itemOrderFreqName},</if>
+            <if test="executorDptNo != null">executor_dpt_no = #{executorDptNo},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="orderAuditTime != null">order_audit_time = #{orderAuditTime},</if>
+            <if test="orderAuditDoc != null">order_audit_doc = #{orderAuditDoc},</if>
+            <if test="orderAuditDocName != null">order_audit_doc_name = #{orderAuditDocName},</if>
+            <if test="orderDealTime != null">order_deal_time = #{orderDealTime},</if>
+            <if test="orderDealDoc != null">order_deal_doc = #{orderDealDoc},</if>
+            <if test="orderDealDocName != null">order_deal_doc_name = #{orderDealDocName},</if>
+            <if test="orderExecuteTime != null">order_execute_time = #{orderExecuteTime},</if>
+            <if test="orderExecuteDoc != null">order_execute_doc = #{orderExecuteDoc},</if>
+            <if test="orderExecuteDocName != null">order_execute_doc_name = #{orderExecuteDocName},</if>
+            <if test="orderStopTime != null">order_stop_time = #{orderStopTime},</if>
+            <if test="orderStopDoc != null">order_stop_doc = #{orderStopDoc},</if>
+            <if test="orderStopDocName != null">order_stop_doc_name = #{orderStopDocName},</if>
+            <if test="orderCancelTime != null">order_cancel_time = #{orderCancelTime},</if>
+            <if test="orderCancelDoc != null">order_cancel_doc = #{orderCancelDoc},</if>
+            <if test="orderCancelDocName != null">order_cancel_doc_name = #{orderCancelDocName},</if>
+            <if test="orderFlagCd != null">order_flag_cd = #{orderFlagCd},</if>
+            <if test="orderFlagName != null">order_flag_name = #{orderFlagName},</if>
+            <if test="urgentFlag != null">urgent_flag = #{urgentFlag},</if>
+            <if test="prescribeNo != null">prescribe_no = #{prescribeNo},</if>
+            <if test="prescribeName != null">prescribe_name = #{prescribeName},</if>
+            <if test="herbalFlag != null">herbal_flag = #{herbalFlag},</if>
+            <if test="herbalDose != null">herbal_dose = #{herbalDose},</if>
+            <if test="herbalIntr != null">herbal_intr = #{herbalIntr},</if>
+            <if test="decoctMethod != null">decoct_method = #{decoctMethod},</if>
+            <if test="oederDesc != null">oeder_desc = #{oederDesc},</if>
+            <if test="plasterFlag != null">plaster_flag = #{plasterFlag},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="reOrganizationNo != null">re_organization_no = #{reOrganizationNo},</if>
+            <if test="sourceOrderNo != null">source_order_no = #{sourceOrderNo},</if>
+        </trim>
+        where order_no = #{orderNo}
+    </update>
+
+    <delete id="deleteTdPaOrderItemById" parameterType="String">
+        delete from td_pa_order_item where order_no = #{orderNo}
+    </delete>
+
+    <delete id="deleteTdPaOrderItemByIds" parameterType="String">
+        delete from td_pa_order_item where order_no in
+        <foreach item="orderNo" collection="array" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </delete>
+
+    <select id="selectByOrderNoList" parameterType="String" resultMap="TdPaOrderItemResult">
+        select *
+        from td_pa_order_item
+        where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+        union all
+        select *
+        from td_pa_order_item_h
+        where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+
+    <select id="selectFromStatusByOrderNoList" parameterType="String" resultMap="TdPaOrderItemResult">
+        select oi.order_no, oi.order_type, oi.order_class_code, oi.order_sort_number, oi.order_group_no, oi.cp_no, oi.cp_name, oi.order_start_time,
+        order_start_doc, oi.order_start_doc_name, oi.order_doctor_sign_flag, oi.price_flag, oi.document_type_no, oi.take_drug_time,
+        print_times, oi.out_hava_drug_flag, oi.take_drug_mode, oi.additional_flag, oi.transfer_out_flag, oi.precontract_flag,
+        order_duration, oi.order_duration_unit, oi.order_item_type, oi.perform_staff_flag, oi.submit_doctor_code, oi.submit_doctor_no,
+        submit_doctor_name, oi.submit_time, oi.order_dose_item, oi.unit_item, oi.price_item, oi.order_total_item, oi.item_order_usage_way,
+        item_order_usage_way_name, oi.item_order_freq, oi.item_order_freq_name, oi.executor_dpt_no, oi.order_status, oi.order_audit_time,
+        order_audit_doc, oi.order_audit_doc_name, oi.order_deal_time, oi.order_deal_doc, oi.order_deal_doc_name, oi.order_execute_time,
+        order_execute_doc, oi.order_execute_doc_name, oi.order_stop_time, oi.order_stop_doc, oi.order_stop_doc_name, oi.order_cancel_time,
+        order_cancel_doc, oi.order_cancel_doc_name, oi.order_flag_cd, oi.order_flag_name, oi.urgent_flag, oi.prescribe_no, oi.prescribe_name,
+        herbal_flag, oi.herbal_dose, oi.herbal_intr, oi.decoct_method, oi.oeder_desc, oi.plaster_flag, oi.alt_date, oi.alt_per_code, oi.alt_per_name,
+        oi.patient_id
+        from td_pa_order_item oi
+        where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+
+    <update id="updateOrderStatus" parameterType="TdPaOrderItemVo">
+        update td_pa_order_item
+        <trim prefix="SET" suffixOverrides=",">
+        <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        <if test="submitDoctorCode != null">submit_doctor_code = #{submitDoctorCode},</if>
+        <if test="submitDoctorNo != null">submit_doctor_no = #{submitDoctorNo},</if>
+        <if test="submitDoctorName != null">submit_doctor_name = #{submitDoctorName},</if>
+        <if test="submitTime != null">submit_time = #{submitTime},</if>
+        <if test="orderAuditTime != null">order_audit_time = #{orderAuditTime},</if>
+        <if test="orderAuditDoc != null">order_audit_doc = #{orderAuditDoc},</if>
+        <if test="orderAuditDocName != null">order_audit_doc_name = #{orderAuditDocName},</if>
+        <if test="orderDealTime != null">order_deal_time = #{orderDealTime},</if>
+        <if test="orderDealDoc != null">order_deal_doc = #{orderDealDoc},</if>
+        <if test="orderDealDocName != null">order_deal_doc_name = #{orderDealDocName},</if>
+        <if test="orderExecuteTime != null">order_execute_time = #{orderExecuteTime},</if>
+        <if test="orderExecuteDoc != null">order_execute_doc = #{orderExecuteDoc},</if>
+        <if test="orderExecuteDocName != null">order_execute_doc_name = #{orderExecuteDocName},</if>
+        <if test="orderStopTime != null">order_stop_time = #{orderStopTime},</if>
+        <if test="orderStopDoc != null">order_stop_doc = #{orderStopDoc},</if>
+        <if test="orderStopDocName != null">order_stop_doc_name = #{orderStopDocName},</if>
+        <if test="orderStopAuditTime != null">order_stop_audit_time = #{orderStopAuditTime},</if>
+        <if test="orderStopAuditDoc != null">order_stop_audit_doc = #{orderStopAuditDoc},</if>
+        <if test="orderStopAuditDocName != null">order_stop_audit_doc_name = #{orderStopAuditDocName},</if>
+        <if test="orderCancelTime != null">order_cancel_time = #{orderCancelTime},</if>
+        <if test="orderCancelDoc != null">order_cancel_doc = #{orderCancelDoc},</if>
+        <if test="orderCancelDocName != null">order_cancel_doc_name = #{orderCancelDocName},</if>
+        </trim>
+        where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </update>
+    <update id="updateCancelCommit" parameterType="TdPaOrderItemVo">
+        update td_pa_order_item
+        <trim prefix="SET" suffixOverrides=",">
+            submit_doctor_code = null,
+            submit_doctor_no = null,
+            submit_doctor_name = null,
+            submit_time = null,
+            order_status = '-1',
+        </trim>
+        where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </update>
+    <update id="updateOrderStatusList" parameterType="TdPaOrderItemVo">
+        <foreach item="item" index="index" collection="orderItemVoList" open="begin" separator=";" close=";end;">
+            update td_pa_order_item
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.orderStatus != null">order_status = #{item.orderStatus},</if>
+                <if test="item.submitDoctorCode != null">submit_doctor_code = #{item.submitDoctorCode},</if>
+                <if test="item.submitDoctorNo != null">submit_doctor_no = #{item.submitDoctorNo},</if>
+                <if test="item.submitDoctorName != null">submit_doctor_name = #{item.submitDoctorName},</if>
+                <if test="item.submitTime != null">submit_time = #{item.submitTime},</if>
+                <if test="item.orderAuditTime != null">order_audit_time = #{item.orderAuditTime},</if>
+                <if test="item.orderAuditDoc != null">order_audit_doc = #{item.orderAuditDoc},</if>
+                <if test="item.orderAuditDocName != null">order_audit_doc_name = #{item.orderAuditDocName},</if>
+                <if test="item.orderDealTime != null">order_deal_time = #{item.orderDealTime},</if>
+                <if test="item.orderDealDoc != null">order_deal_doc = #{item.orderDealDoc},</if>
+                <if test="item.orderDealDocName != null">order_deal_doc_name = #{item.orderDealDocName},</if>
+                <if test="item.orderExecuteTime != null">order_execute_time = #{item.orderExecuteTime},</if>
+                <if test="item.orderExecuteDoc != null">order_execute_doc = #{item.orderExecuteDoc},</if>
+                <if test="item.orderExecuteDocName != null">order_execute_doc_name = #{item.orderExecuteDocName},</if>
+                <if test="item.orderStopTime != null">order_stop_time = #{item.orderStopTime},</if>
+                <if test="item.orderStopDoc != null">order_stop_doc = #{item.orderStopDoc},</if>
+                <if test="item.orderStopDocName != null">order_stop_doc_name = #{item.orderStopDocName},</if>
+                <if test="item.orderCancelTime != null">order_cancel_time = #{item.orderCancelTime},</if>
+                <if test="item.orderCancelDoc != null">order_cancel_doc = #{item.orderCancelDoc},</if>
+                <if test="item.orderCancelDocName != null">order_cancel_doc_name = #{item.orderCancelDocName},</if>
+            </trim>
+            where order_no = #{item.orderNo}
+        </foreach>
+    </update>
+
+    <select id="selectPatientMaxGroupNo" parameterType="String" resultType="Integer">
+        select max(order_group_no) from td_pa_order_item where patient_id = #{patientId}
+    </select>
+    <insert id="toDelTable" parameterType="TdPaOrderItem">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_item_del
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.orderNo != null">order_no,</if>
+                <if test="item.orderType != null">order_type,</if>
+                <if test="item.orderClassCode != null">order_class_code,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.orderGroupNo != null">order_group_no,</if>
+                <if test="item.cpNo != null">cp_no,</if>
+                <if test="item.cpName != null">cp_name,</if>
+                <if test="item.orderStartTime != null">order_start_time,</if>
+                <if test="item.orderStartDoc != null">order_start_doc,</if>
+                <if test="item.orderStartDocName != null">order_start_doc_name,</if>
+                <if test="item.orderDoctorSignFlag != null">order_doctor_sign_flag,</if>
+                <if test="item.priceFlag != null">price_flag,</if>
+                <if test="item.documentTypeNo != null">document_type_no,</if>
+                <if test="item.takeDrugTime != null">take_drug_time,</if>
+                <if test="item.printTimes != null">print_times,</if>
+                <if test="item.outHavaDrugFlag != null">out_hava_drug_flag,</if>
+                <if test="item.takeDrugMode != null">take_drug_mode,</if>
+                <if test="item.additionalFlag != null">additional_flag,</if>
+                <if test="item.transferOutFlag != null">transfer_out_flag,</if>
+                <if test="item.precontractFlag != null">precontract_flag,</if>
+                <if test="item.orderDuration != null">order_duration,</if>
+                <if test="item.orderDurationUnit != null">order_duration_unit,</if>
+                <if test="item.orderItemType != null">order_item_type,</if>
+                <if test="item.performStaffFlag != null">perform_staff_flag,</if>
+                <if test="item.submitDoctorCode != null">submit_doctor_code,</if>
+                <if test="item.submitDoctorNo != null">submit_doctor_no,</if>
+                <if test="item.submitDoctorName != null">submit_doctor_name,</if>
+                <if test="item.submitTime != null">submit_time,</if>
+                <if test="item.orderDoseItem != null">order_dose_item,</if>
+                <if test="item.unitItem != null">unit_item,</if>
+                <if test="item.priceItem != null">price_item,</if>
+                <if test="item.orderTotalItem != null">order_total_item,</if>
+                <if test="item.itemOrderUsageWay != null">item_order_usage_way,</if>
+                <if test="item.itemOrderUsageWayName != null">item_order_usage_way_name,</if>
+                <if test="item.itemOrderFreq != null">item_order_freq,</if>
+                <if test="item.itemOrderFreqName != null">item_order_freq_name,</if>
+                <if test="item.executorDptNo != null">executor_dpt_no,</if>
+                <if test="item.orderStatus != null">order_status,</if>
+                <if test="item.orderAuditTime != null">order_audit_time,</if>
+                <if test="item.orderAuditDoc != null">order_audit_doc,</if>
+                <if test="item.orderAuditDocName != null">order_audit_doc_name,</if>
+                <if test="item.orderDealTime != null">order_deal_time,</if>
+                <if test="item.orderDealDoc != null">order_deal_doc,</if>
+                <if test="item.orderDealDocName != null">order_deal_doc_name,</if>
+                <if test="item.orderExecuteTime != null">order_execute_time,</if>
+                <if test="item.orderExecuteDoc != null">order_execute_doc,</if>
+                <if test="item.orderExecuteDocName != null">order_execute_doc_name,</if>
+                <if test="item.orderStopTime != null">order_stop_time,</if>
+                <if test="item.orderStopDoc != null">order_stop_doc,</if>
+                <if test="item.orderStopDocName != null">order_stop_doc_name,</if>
+                <if test="item.orderCancelTime != null">order_cancel_time,</if>
+                <if test="item.orderCancelDoc != null">order_cancel_doc,</if>
+                <if test="item.orderCancelDocName != null">order_cancel_doc_name,</if>
+                <if test="item.orderFlagCd != null">order_flag_cd,</if>
+                <if test="item.orderFlagName != null">order_flag_name,</if>
+                <if test="item.urgentFlag != null">urgent_flag,</if>
+                <if test="item.prescribeNo != null">prescribe_no,</if>
+                <if test="item.prescribeName != null">prescribe_name,</if>
+                <if test="item.herbalFlag != null">herbal_flag,</if>
+                <if test="item.herbalDose != null">herbal_dose,</if>
+                <if test="item.herbalIntr != null">herbal_intr,</if>
+                <if test="item.decoctMethod != null">decoct_method,</if>
+                <if test="item.oederDesc != null">oeder_desc,</if>
+                <if test="item.plasterFlag != null">plaster_flag,</if>
+                <if test="item.altDate != null">alt_date,</if>
+                <if test="item.altPerCode != null">alt_per_code,</if>
+                <if test="item.altPerName != null">alt_per_name,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.reOrganizationNo != null">re_organization_no,</if>
+                <if test="item.sourceOrderNo != null">source_order_no,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderType != null">#{item.orderType},</if>
+                <if test="item.orderClassCode != null">#{item.orderClassCode},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+                <if test="item.cpNo != null">#{item.cpNo},</if>
+                <if test="item.cpName != null">#{item.cpName},</if>
+                <if test="item.orderStartTime != null">#{item.orderStartTime},</if>
+                <if test="item.orderStartDoc != null">#{item.orderStartDoc},</if>
+                <if test="item.orderStartDocName != null">#{item.orderStartDocName},</if>
+                <if test="item.orderDoctorSignFlag != null">#{item.orderDoctorSignFlag},</if>
+                <if test="item.priceFlag != null">#{item.priceFlag},</if>
+                <if test="item.documentTypeNo != null">#{item.documentTypeNo},</if>
+                <if test="item.takeDrugTime != null">#{item.takeDrugTime},</if>
+                <if test="item.printTimes != null">#{item.printTimes},</if>
+                <if test="item.outHavaDrugFlag != null">#{item.outHavaDrugFlag},</if>
+                <if test="item.takeDrugMode != null">#{item.takeDrugMode},</if>
+                <if test="item.additionalFlag != null">#{item.additionalFlag},</if>
+                <if test="item.transferOutFlag != null">#{item.transferOutFlag},</if>
+                <if test="item.precontractFlag != null">#{item.precontractFlag},</if>
+                <if test="item.orderDuration != null">#{item.orderDuration},</if>
+                <if test="item.orderDurationUnit != null">#{item.orderDurationUnit},</if>
+                <if test="item.orderItemType != null">#{item.orderItemType},</if>
+                <if test="item.performStaffFlag != null">#{item.performStaffFlag},</if>
+                <if test="item.submitDoctorCode != null">#{item.submitDoctorCode},</if>
+                <if test="item.submitDoctorNo != null">#{item.submitDoctorNo},</if>
+                <if test="item.submitDoctorName != null">#{item.submitDoctorName},</if>
+                <if test="item.submitTime != null">#{item.submitTime},</if>
+                <if test="item.orderDoseItem != null">#{item.orderDoseItem},</if>
+                <if test="item.unitItem != null">#{item.unitItem},</if>
+                <if test="item.priceItem != null">#{item.priceItem},</if>
+                <if test="item.orderTotalItem != null">#{item.orderTotalItem},</if>
+                <if test="item.itemOrderUsageWay != null">#{item.itemOrderUsageWay},</if>
+                <if test="item.itemOrderUsageWayName != null">#{item.itemOrderUsageWayName},</if>
+                <if test="item.itemOrderFreq != null">#{item.itemOrderFreq},</if>
+                <if test="item.itemOrderFreqName != null">#{item.itemOrderFreqName},</if>
+                <if test="item.executorDptNo != null">#{item.executorDptNo},</if>
+                <if test="item.orderStatus != null">#{item.orderStatus},</if>
+                <if test="item.orderAuditTime != null">#{item.orderAuditTime},</if>
+                <if test="item.orderAuditDoc != null">#{item.orderAuditDoc},</if>
+                <if test="item.orderAuditDocName != null">#{item.orderAuditDocName},</if>
+                <if test="item.orderDealTime != null">#{item.orderDealTime},</if>
+                <if test="item.orderDealDoc != null">#{item.orderDealDoc},</if>
+                <if test="item.orderDealDocName != null">#{item.orderDealDocName},</if>
+                <if test="item.orderExecuteTime != null">#{item.orderExecuteTime},</if>
+                <if test="item.orderExecuteDoc != null">#{item.orderExecuteDoc},</if>
+                <if test="item.orderExecuteDocName != null">#{item.orderExecuteDocName},</if>
+                <if test="item.orderStopTime != null">#{item.orderStopTime},</if>
+                <if test="item.orderStopDoc != null">#{item.orderStopDoc},</if>
+                <if test="item.orderStopDocName != null">#{item.orderStopDocName},</if>
+                <if test="item.orderCancelTime != null">#{item.orderCancelTime},</if>
+                <if test="item.orderCancelDoc != null">#{item.orderCancelDoc},</if>
+                <if test="item.orderCancelDocName != null">#{item.orderCancelDocName},</if>
+                <if test="item.orderFlagCd != null">#{item.orderFlagCd},</if>
+                <if test="item.orderFlagName != null">#{item.orderFlagName},</if>
+                <if test="item.urgentFlag != null">#{item.urgentFlag},</if>
+                <if test="item.prescribeNo != null">#{item.prescribeNo},</if>
+                <if test="item.prescribeName != null">#{item.prescribeName},</if>
+                <if test="item.herbalFlag != null">#{item.herbalFlag},</if>
+                <if test="item.herbalDose != null">#{item.herbalDose},</if>
+                <if test="item.herbalIntr != null">#{item.herbalIntr},</if>
+                <if test="item.decoctMethod != null">#{item.decoctMethod},</if>
+                <if test="item.oederDesc != null">#{item.oederDesc},</if>
+                <if test="item.plasterFlag != null">#{item.plasterFlag},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+                <if test="item.altPerCode != null">#{item.altPerCode},</if>
+                <if test="item.altPerName != null">#{item.altPerName},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.reOrganizationNo != null">#{item.reOrganizationNo},</if>
+                <if test="item.sourceOrderNo != null">#{item.sourceOrderNo},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <delete id="deleteTdPaOrderItemByOrderNos" parameterType="String">
+        delete from td_pa_order_item where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </delete>
+
+    <select id="selectByOrderFlagCdAndStatus" parameterType="String" resultMap="TdPaOrderItemResult">
+        select a.*
+        from td_pa_order_item a
+        where  a.order_status=#{orderStatus}
+        and a.patient_id = #{patientId}
+        and a.ORDER_FLAG_CD in
+        <foreach item="orderFlagCd" collection="orderFlagCdList" open="(" separator="," close=")">
+            #{orderFlagCd}
+        </foreach>
+        order by a.order_start_time desc
+    </select>
+    <select id="selectByStatusList" parameterType="String" resultMap="TdPaOrderItemResult">
+        <include refid="selectTdPaOrderItemVo"/>
+        <where>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="priceFlag != null  and priceFlag != ''"> and price_flag = #{priceFlag}</if>
+            <if test="orderStatus != null  and orderStatus != ''"> and order_status = #{orderStatus}</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and herbal_flag = #{herbalFlag}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="stateList != null and stateList.size()>0 ">
+                and order_status in
+                <foreach item="orderStatus" collection="stateList" open="(" separator="," close=")">
+                    #{orderStatus}
+                </foreach>
+            </if>
+        </where>
+        order by order_start_time desc
+    </select>
+    <select id="selectPastOrderListByPatList" resultMap="TdPaOrderItemResult">
+        select * from (
+           select * from td_pa_order_item where ORDER_CLASS_CODE='01' and HERBAL_FLAG='1'
+           union all
+           select * from td_pa_order_item_h where ORDER_CLASS_CODE='01' and HERBAL_FLAG='1'
+        ) a where
+        a.patient_id in
+        <foreach item="patientId" collection="patientIdList" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </select>
+
+    <select id="selectByOrderTypeAndStatus" parameterType="TdPaOrderItemVo" resultMap="TdPaOrderItemResult">
+        select a.* from (
+        select  oi.order_no, oi.order_type, oi.order_class_code, oi.order_sort_number, oi.order_group_no, oi.cp_no, oi.cp_name,
+        oi.order_start_time, oi.order_start_doc, oi.order_start_doc_name, oi.order_doctor_sign_flag, oi.price_flag,
+        oi.document_type_no, oi.take_drug_time, oi.print_times, oi.out_hava_drug_flag, oi.take_drug_mode, oi.additional_flag,
+        oi.transfer_out_flag, oi.precontract_flag, oi.order_duration, oi.order_duration_unit, oi.order_item_type,
+        oi.perform_staff_flag, oi.submit_doctor_code, oi.submit_doctor_no, oi.submit_doctor_name, oi.submit_time,
+        oi.order_dose_item, oi.unit_item, oi.price_item, oi.order_total_item, oi.item_order_usage_way, oi.item_order_usage_way_name,
+        oi.item_order_freq, oi.item_order_freq_name, oi.executor_dpt_no, oi.order_status, oi.order_audit_time, oi.order_audit_doc,
+        oi.order_audit_doc_name, oi.order_deal_time, oi.order_deal_doc, oi.order_deal_doc_name, oi.order_execute_time,
+        oi.order_execute_doc, oi.order_execute_doc_name, oi.order_stop_time, oi.order_stop_doc, oi.order_stop_doc_name,
+        oi.order_cancel_time, oi.order_cancel_doc, oi.order_cancel_doc_name, oi.order_flag_cd, oi.order_flag_name, oi.urgent_flag,
+        oi.prescribe_no, oi.prescribe_name, oi.herbal_flag, oi.herbal_dose, oi.herbal_intr, oi.decoct_method, oi.oeder_desc,
+        oi.plaster_flag, oi.alt_date, oi.alt_per_code, oi.alt_per_name, oi.patient_id
+        from td_pa_order_item oi
+        ) a
+        where a.patient_id = #{patientId}
+        and a.order_status in
+        <foreach item="state" collection="stateList" open="(" separator="," close=")">
+            #{state}
+        </foreach>
+        and a.order_type = #{orderType}
+    </select>
+    <select id="selectPatientOutOrder" parameterType="TdPaOrderItem" resultMap="TdPaOrderItemResult">
+        select oi.*  from td_pa_order_item oi
+        where oi.patient_id = #{param.patientId}
+        and oi.order_flag_cd = #{param.orderFlagCd}
+        <if test="statusList != null and statusList.size > 0">
+            and oi.order_status in
+            <foreach collection="statusList" item="status" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        <if test="statusList == null">
+            and oi.order_status in ('4', '5', '2', '3')
+        </if>
+    </select>
+
+
+    <insert id="stopUnclaimedDrugList">
+      insert into TD_PA_TAKE_DRUG_LIST_DELETE(ID,PERFORM_LIST_NO,PERFORM_LIST_SORT_NUMBER,ADMISSION_NO,HOSPITALIZED_COUNT,
+        TAKE_DRUG_WARD_NO,PATIENT_NAME,BEDID,ORDER_NO,ORDER_SORT_NUMBER,
+        ORDER_GROUP_SORT_NUMBER,ORDER_GROUP_NO,ORDER_TYPE,DRUG_NAME,DRUG_NAME_PYM,ORDER_STANDARD,
+        DRUG_ACTUAL_USAGE,USAGE_UNIT,ORDER_PRICE,ORDER_DOSE,ORDER_UNIT,DRUG_FORM,
+        DRUG_CLASS_CODE,DRUG_STOCK_NO,PHARMACOPOEIA_NO,TAKE_DRUG_TIME,TAKE_DRUG_OPERATOR,DRUG_USAGE_WAY_CODE,
+        DRUG_USAGE_WAY,DRUG_FREQ_CODE,DRUG_FREQ,ORDER_DOCTOR_CODE,DRUG_EAT_TIME,HYGIENIC_MATERIAL_FLAG,
+        HERBAL_DOSE,HERBAL_FLAG,OUT_DRUG_FLAG,PATIENT_DEP_CODE,PATIENT_DEP_NAME,PHARMACY_NO,
+        TODAY_ACCOUNT_TIMES,PERFORMED_TIMES,PURPOSE_ANTIMICROBIAL_USE,PRESCRIBE_NO,PRESCRIBE_NAME,
+        CP_NO,DOCTOR_INSTRUCTIONS,BABY_ADMISSION_NO,SURGICAL_FORM_NO,REMARK,TAKE_DRUG_STATUS,RETURN_DRUG_STATUS,VALID)
+      select ID,PERFORM_LIST_NO,PERFORM_LIST_SORT_NUMBER,ADMISSION_NO,HOSPITALIZED_COUNT,
+        TAKE_DRUG_WARD_NO,PATIENT_NAME,BEDID,ORDER_NO,ORDER_SORT_NUMBER,
+        ORDER_GROUP_SORT_NUMBER,ORDER_GROUP_NO,ORDER_TYPE,DRUG_NAME,DRUG_NAME_PYM,ORDER_STANDARD,
+        DRUG_ACTUAL_USAGE,USAGE_UNIT,ORDER_PRICE,ORDER_DOSE,ORDER_UNIT,DRUG_FORM,
+        DRUG_CLASS_CODE,DRUG_STOCK_NO,PHARMACOPOEIA_NO,TAKE_DRUG_TIME,TAKE_DRUG_OPERATOR,DRUG_USAGE_WAY_CODE,
+        DRUG_USAGE_WAY,DRUG_FREQ_CODE,DRUG_FREQ,ORDER_DOCTOR_CODE,DRUG_EAT_TIME,HYGIENIC_MATERIAL_FLAG,
+        HERBAL_DOSE,HERBAL_FLAG,OUT_DRUG_FLAG,PATIENT_DEP_CODE,PATIENT_DEP_NAME,PHARMACY_NO,
+        TODAY_ACCOUNT_TIMES,PERFORMED_TIMES,PURPOSE_ANTIMICROBIAL_USE,PRESCRIBE_NO,PRESCRIBE_NAME,
+        CP_NO,DOCTOR_INSTRUCTIONS,BABY_ADMISSION_NO,SURGICAL_FORM_NO,REMARK,TAKE_DRUG_STATUS,RETURN_DRUG_STATUS,VALID
+         from TD_PA_TAKE_DRUG_LIST where PERFORM_LIST_NO in
+        <foreach item="orderNo" collection="takeDrugList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </insert>
+
+    <delete id="deleteUnclaimedDrugByPerFormNos">
+        delete from TD_PA_TAKE_DRUG_LIST where PERFORM_LIST_NO in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </delete>
+
+    <update id="stopUnExecPerformList">
+        update TD_PA_ORDER_PERFORM set PERFORM_LIST_STATUS = '2' where
+        <foreach item="orderPerform" collection="orderPerformList" open="(" separator=") or (" close=")">
+            PERFORM_LIST_NO = #{orderPerform.performListNo} and PERFORM_LIST_SORT_NUMBER = #{orderPerform.performListSortNumber}
+        </foreach>
+    </update>
+    <select id="selectByPatientIdAndDrugCode72hExe" parameterType="String" resultMap="TdPaOrderItemResult">
+        select * from td_pa_order_item oi
+        left join td_pa_order_detail od on oi.order_no = od.order_no
+        where oi.patient_id = #{patientId}
+        and od.charge_no = #{drugCode}
+        and oi.ORDER_EXECUTE_TIME is not null
+        and oi.ORDER_EXECUTE_TIME >= (sysdate-72/24)
+    </select>
+
+    <select id="selectStopAllOrderList" resultMap="TdPaOrderItemResult" parameterType="String">
+        select * from td_pa_order_item where patient_id = #{patientId}
+         and ((order_type = '1' and ORDER_STATUS in ('1','2','3')) or (order_type = '2' and ORDER_STATUS = '1') )
+    </select>
+
+    <select id="selectCpNoDayOrderList" resultMap="TdPaOrderItemResult" parameterType="TdPaOrderItemVo">
+        <include refid="selectTdPaOrderItemVo"/>
+        where ((order_type = '1' and ORDER_STATUS in ('-1','0','1','2','3')) or (order_type = '2' and trunc(order_start_time)=trunc(sysdate) and ORDER_STATUS in ('-1','0','1','2','8')) )
+        <if test="cpNoList != null and cpNoList.size()>0 ">
+            and cp_no in
+            <foreach item="cpNo" collection="cpNoList" open="(" separator="," close=")">
+                #{cpNo}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectByParam" resultMap="TdPaOrderItemResult">
+    select order_no, order_type, order_sort_number,
+           order_class_code, cp_no, cp_name,
+           order_start_time, order_doctor_sign_flag,
+           price_flag, order_group_no, document_type_no,
+           take_drug_time, print_times, out_hava_drug_flag,
+           take_drug_mode, additional_flag, transfer_out_flag,
+           precontract_flag, order_duration, order_duration_unit,
+           prescribe_no, prescribe_name, order_item_type,
+           perform_staff_flag, submit_doctor_code, submit_doctor_no,
+           submit_time,order_status,order_start_doc,order_audit_time,order_audit_doc,order_deal_time,order_deal_doc,order_execute_time,
+           order_execute_doc,order_stop_time,order_stop_doc,order_cancel_time,order_cancel_doc from td_pa_order_item
+    where order_no=#{orderNo,jdbcType=VARCHAR}
+      and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+      and order_group_no=#{orderGroupNo,jdbcType=VARCHAR}
+  </select>
+    <select id="selectTdPaOrderItemListAll" parameterType="TdPaOrderItem" resultMap="TdPaOrderItemVoResult">
+        select 'td_pa_order_item' as table_name,t.* from td_pa_order_item t where ORDER_NO=#{orderNo,jdbcType=VARCHAR}
+        union
+        select 'td_pa_order_item_h' as table_name,t.* from td_pa_order_item_h t where ORDER_NO=#{orderNo,jdbcType=VARCHAR}
+    </select>
+    <update id="updateTdPaOrderItemByTableName" parameterType="TdPaOrderItemVo">
+        update ${tableName}
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderExecuteTime != null">order_execute_time = #{orderExecuteTime},</if>
+            <if test="orderStopTime != null">order_stop_time = #{orderStopTime},</if>
+        </trim>
+        where order_no = #{orderNo}
+    </update>
+    <update id="stopPerformList">
+        update TD_PA_ORDER_PERFORM set
+        PERFORM_LIST_STATUS = '2',
+        PERFORM_CANCEL_TIME = sysdate,
+        PERFORM_CANCEL_AUDIT_DOC = #{userName},
+        PERFORM_CANCEL_AUDIT_DOC_NAME =#{nickName}
+        where
+        <foreach item="orderPerform" collection="orderPerformList" open="(" separator=") or (" close=")">
+            PERFORM_LIST_NO = #{orderPerform.performListNo} and PERFORM_LIST_SORT_NUMBER = #{orderPerform.performListSortNumber}
+        </foreach>
+    </update>
+    <update id="updateExecTimeByOrderNoList">
+        update TD_PA_ORDER_ITEM set ORDER_EXECUTE_TIME = #{executionTime} where order_no in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </update>
+    <select id="selectPatientDoingNursingLevel" resultMap="TdPaOrderItemVoResult">
+        select oi.*,od.charge_no from td_pa_order_item oi left join td_pa_order_detail od on oi.order_no = od.order_no
+        where oi.order_status = '3' and oi.order_class_code = '05' and oi.patient_id = #{patientId}
+        and (oi.order_flag_cd = #{orderFlagCd}
+        <if test="nlChargeNoList != null and nlChargeNoList.size > 0">
+            or od.charge_no in
+            <foreach collection="nlChargeNoList" item="nlChargeNo" open="(" separator="," close=")">
+                #{nlChargeNo}
+            </foreach>
+        </if>
+        )
+    </select>
+    <select id="selectNursingLevelChargeNoList" resultType="String">
+        select distinct charge_no from tm_na_nursing_level where charge_no != '1'
+    </select>
+    <select id="selectPatOrderForDrugCodes" resultMap="TdPaOrderItemResult">
+        select distinct oi.order_no, oi.* from td_pa_order_item oi left join td_pa_order_detail od on oi.order_no=od.order_no
+        where oi.patient_id=#{patientId}
+        and oi.order_status in ('-1','0','1','2','3','4','5')
+        and oi.order_start_time &gt;= to_date(#{beginTime},'yyyy-MM-dd HH24:mi')
+        and oi.order_start_time &lt; to_date(#{endTime},'yyyy-MM-dd HH24:mi')
+        and od.charge_no = #{drugCode}
+    </select>
+    <select id="selectOrderItemAll" parameterType="TdPaOrderItemVo" resultMap="TdPaOrderItemResult">
+        select * from td_pa_order_item_all
+        <where>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="orderGroupNo != null "> and order_group_no = #{orderGroupNo}</if>
+            <if test="cpNo != null  and cpNo != ''"> and cp_no = #{cpNo}</if>
+            <if test="cpName != null  and cpName != ''"> and cp_name like concat(concat('%', #{cpName}), '%')</if>
+            <if test="orderStartTime != null "> and order_start_time = #{orderStartTime}</if>
+            <if test="orderStartDoc != null  and orderStartDoc != ''"> and order_start_doc = #{orderStartDoc}</if>
+            <if test="orderStartDocName != null  and orderStartDocName != ''"> and order_start_doc_name like concat(concat('%', #{orderStartDocName}), '%')</if>
+            <if test="orderDoctorSignFlag != null  and orderDoctorSignFlag != ''"> and order_doctor_sign_flag = #{orderDoctorSignFlag}</if>
+            <if test="priceFlag != null  and priceFlag != ''"> and price_flag = #{priceFlag}</if>
+            <if test="documentTypeNo != null  and documentTypeNo != ''"> and document_type_no = #{documentTypeNo}</if>
+            <if test="takeDrugTime != null  and takeDrugTime != ''"> and take_drug_time = #{takeDrugTime}</if>
+            <if test="printTimes != null "> and print_times = #{printTimes}</if>
+            <if test="outHavaDrugFlag != null  and outHavaDrugFlag != ''"> and out_hava_drug_flag = #{outHavaDrugFlag}</if>
+            <if test="takeDrugMode != null  and takeDrugMode != ''"> and take_drug_mode = #{takeDrugMode}</if>
+            <if test="additionalFlag != null  and additionalFlag != ''"> and additional_flag = #{additionalFlag}</if>
+            <if test="transferOutFlag != null  and transferOutFlag != ''"> and transfer_out_flag = #{transferOutFlag}</if>
+            <if test="precontractFlag != null "> and precontract_flag = #{precontractFlag}</if>
+            <if test="orderDuration != null "> and order_duration = #{orderDuration}</if>
+            <if test="orderDurationUnit != null  and orderDurationUnit != ''"> and order_duration_unit = #{orderDurationUnit}</if>
+            <if test="orderItemType != null  and orderItemType != ''"> and order_item_type = #{orderItemType}</if>
+            <if test="performStaffFlag != null  and performStaffFlag != ''"> and perform_staff_flag = #{performStaffFlag}</if>
+            <if test="submitDoctorCode != null  and submitDoctorCode != ''"> and submit_doctor_code = #{submitDoctorCode}</if>
+            <if test="submitDoctorNo != null  and submitDoctorNo != ''"> and submit_doctor_no = #{submitDoctorNo}</if>
+            <if test="submitDoctorName != null  and submitDoctorName != ''"> and submit_doctor_name like concat(concat('%', #{submitDoctorName}), '%')</if>
+            <if test="submitTime != null "> and submit_time = #{submitTime}</if>
+            <if test="orderDoseItem != null "> and order_dose_item = #{orderDoseItem}</if>
+            <if test="unitItem != null  and unitItem != ''"> and unit_item = #{unitItem}</if>
+            <if test="priceItem != null "> and price_item = #{priceItem}</if>
+            <if test="orderTotalItem != null "> and order_total_item = #{orderTotalItem}</if>
+            <if test="itemOrderUsageWay != null  and itemOrderUsageWay != ''"> and item_order_usage_way = #{itemOrderUsageWay}</if>
+            <if test="itemOrderUsageWayName != null  and itemOrderUsageWayName != ''"> and item_order_usage_way_name like concat(concat('%', #{itemOrderUsageWayName}), '%')</if>
+            <if test="itemOrderFreq != null  and itemOrderFreq != ''"> and item_order_freq = #{itemOrderFreq}</if>
+            <if test="itemOrderFreqName != null  and itemOrderFreqName != ''"> and item_order_freq_name like concat(concat('%', #{itemOrderFreqName}), '%')</if>
+            <if test="executorDptNo != null  and executorDptNo != ''"> and executor_dpt_no = #{executorDptNo}</if>
+            <if test="orderStatus != null  and orderStatus != ''"> and order_status = #{orderStatus}</if>
+            <if test="orderAuditTime != null "> and order_audit_time = #{orderAuditTime}</if>
+            <if test="orderAuditDoc != null  and orderAuditDoc != ''"> and order_audit_doc = #{orderAuditDoc}</if>
+            <if test="orderAuditDocName != null  and orderAuditDocName != ''"> and order_audit_doc_name like concat(concat('%', #{orderAuditDocName}), '%')</if>
+            <if test="orderDealTime != null "> and order_deal_time = #{orderDealTime}</if>
+            <if test="orderDealDoc != null  and orderDealDoc != ''"> and order_deal_doc = #{orderDealDoc}</if>
+            <if test="orderDealDocName != null  and orderDealDocName != ''"> and order_deal_doc_name like concat(concat('%', #{orderDealDocName}), '%')</if>
+            <if test="orderExecuteTime != null "> and order_execute_time = #{orderExecuteTime}</if>
+            <if test="orderExecuteDoc != null  and orderExecuteDoc != ''"> and order_execute_doc = #{orderExecuteDoc}</if>
+            <if test="orderExecuteDocName != null  and orderExecuteDocName != ''"> and order_execute_doc_name like concat(concat('%', #{orderExecuteDocName}), '%')</if>
+            <if test="orderStopTime != null "> and order_stop_time = #{orderStopTime}</if>
+            <if test="orderStopDoc != null  and orderStopDoc != ''"> and order_stop_doc = #{orderStopDoc}</if>
+            <if test="orderStopDocName != null  and orderStopDocName != ''"> and order_stop_doc_name like concat(concat('%', #{orderStopDocName}), '%')</if>
+            <if test="orderCancelTime != null "> and order_cancel_time = #{orderCancelTime}</if>
+            <if test="orderCancelDoc != null  and orderCancelDoc != ''"> and order_cancel_doc = #{orderCancelDoc}</if>
+            <if test="orderCancelDocName != null  and orderCancelDocName != ''"> and order_cancel_doc_name like concat(concat('%', #{orderCancelDocName}), '%')</if>
+            <if test="orderFlagCd != null  and orderFlagCd != ''"> and order_flag_cd = #{orderFlagCd}</if>
+            <if test="orderFlagName != null  and orderFlagName != ''"> and order_flag_name like concat(concat('%', #{orderFlagName}), '%')</if>
+            <if test="urgentFlag != null  and urgentFlag != ''"> and urgent_flag = #{urgentFlag}</if>
+            <if test="prescribeNo != null  and prescribeNo != ''"> and prescribe_no = #{prescribeNo}</if>
+            <if test="prescribeName != null  and prescribeName != ''"> and prescribe_name like concat(concat('%', #{prescribeName}), '%')</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and herbal_flag = #{herbalFlag}</if>
+            <if test="herbalDose != null "> and herbal_dose = #{herbalDose}</if>
+            <if test="herbalIntr != null  and herbalIntr != ''"> and herbal_intr = #{herbalIntr}</if>
+            <if test="decoctMethod != null  and decoctMethod != ''"> and decoct_method = #{decoctMethod}</if>
+            <if test="oederDesc != null  and oederDesc != ''"> and oeder_desc = #{oederDesc}</if>
+            <if test="plasterFlag != null  and plasterFlag != ''"> and plaster_flag = #{plasterFlag}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="reOrganizationNo != null "> and re_organization_no = #{reOrganizationNo}</if>
+            <if test="sourceOrderNo != null  and sourceOrderNo != ''"> and source_order_no = #{sourceOrderNo}</if>
+        </where>
+    </select>
+    <select id="selectOrderItemByOrderNoList" resultMap="TdPaOrderItemResult">
+        <include refid="selectTdPaOrderItemVo"/>
+        <where>
+            <if test="list !=null and list.size()>0">
+                and order_no in
+                <foreach collection="list" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectCultureCount" resultType="java.lang.Integer">
+        select count(0) from td_pa_order_item a
+        left join td_pa_order b on a.order_no = b.order_no
+        where b.PATIENT_ID = #{patientId} and a.ORDER_FLAG_CD = '10'
+        and a.ORDER_TYPE='2' and a.ORDER_CLASS_CODE='03' and a.ORDER_STATUS= '8'
+    </select>
+    <select id="selectCultureCountBySubmitDate" resultType="java.lang.Integer">
+        select count(0) from td_pa_order_item a
+        left join td_pa_order b on a.order_no = b.order_no
+        where b.PATIENT_ID = #{patientId} and a.ORDER_FLAG_CD = '10'
+        and a.ORDER_TYPE='2' and a.ORDER_CLASS_CODE='03' and a.ORDER_STATUS= '8'
+        and a.ORDER_START_TIME &lt; #{orderStartTime}
+    </select>
+</mapper>

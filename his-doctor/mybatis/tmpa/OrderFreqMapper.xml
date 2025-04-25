@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpa.mapper.OrderFreqMapper">
+
+    <resultMap type="OrderFreq" id="OrderFreqResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="freqCd"    column="freq_cd"    />
+        <result property="freqName"    column="freq_name"    />
+        <result property="freqShowName"    column="freq_show_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="freqValue"    column="freq_value"    />
+        <result property="freqType"    column="freq_type"    />
+        <result property="freqInterDays"    column="freq_inter_days"    />
+        <result property="weekDay"    column="week_day"    />
+        <result property="medicTime"    column="medic_time"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="sort"    column="sort"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="drugType"    column="drug_type"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectOrderFreqVo">
+        select hospital_code, freq_cd, freq_name, freq_show_name, inputstrphtc, freq_value, freq_type, freq_inter_days, week_day, medic_time, enabled, sort, order_type, drug_type, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from TM_BS_ORDER_FREQ
+    </sql>
+
+    <select id="selectUseTimeOrderFreqList"  resultMap="OrderFreqResult">
+        select * from (
+        select case when l.USAGE_TIMES is not null then l.USAGE_TIMES else 0 end as USAGE_TIMES,
+        f.hospital_code, f.freq_cd, f.freq_name, f.freq_show_name, f.inputstrphtc, f.freq_value, f.freq_type, f.freq_inter_days, f.week_day,
+               f.medic_time, f.enabled, f.sort, f.order_type, f.drug_type, f.cre_per_code, f.cre_per_name, f.cre_date, f.alt_per_code, f.alt_per_name,
+               f.alt_date
+        from TM_BS_ORDER_FREQ f
+        left join TM_PM_CLINITEM_USE_LOG l on f.freq_cd = l.ITEM_CD and l.doc_cd = #{docCd} and l.item_class_cd = '30'
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and f.hospital_code = #{hospitalCode}</if>
+            <if test="freqCd != null  and freqCd != ''"> and f.freq_cd = #{freqCd}</if>
+            <if test="freqName != null  and freqName != ''"> and f.freq_name like concat(concat('%', #{freqName}), '%')</if>
+            <if test="freqShowName != null  and freqShowName != ''"> and f.freq_show_name like concat(concat('%', #{freqShowName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and f.inputstrphtc = #{inputstrphtc}</if>
+            <if test="freqValue != null "> and f.freq_value = #{freqValue}</if>
+            <if test="freqType != null  and freqType != ''"> and f.freq_type = #{freqType}</if>
+            <if test="freqInterDays != null "> and f.freq_inter_days = #{freqInterDays}</if>
+            <if test="weekDay != null  and weekDay != ''"> and f.week_day = #{weekDay}</if>
+            <if test="medicTime != null  and medicTime != ''"> and f.medic_time = #{medicTime}</if>
+            <if test="enabled != null  and enabled != ''"> and f.enabled = #{enabled}</if>
+            <if test="sort != null "> and f.sort = #{sort}</if>
+            <if test="orderType != null  and orderType != ''"> and f.order_type = #{orderType}</if>
+            <if test="drugType != null  and drugType != ''"> and f.drug_type = #{drugType}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and f.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and f.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and f.cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and f.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and f.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and f.alt_date = #{altDate}</if>
+        </where>
+        ) a
+        <!-- order by f.SORT-->
+        order by a.USAGE_TIMES desc
+    </select>
+
+     <select id="selectOrderFreqList" parameterType="OrderFreq" resultMap="OrderFreqResult">
+        <include refid="selectOrderFreqVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="freqCd != null  and freqCd != ''"> and freq_cd = #{freqCd}</if>
+            <if test="freqName != null  and freqName != ''"> and freq_name like concat(concat('%', #{freqName}), '%')</if>
+            <if test="freqShowName != null  and freqShowName != ''"> and freq_show_name like concat(concat('%', #{freqShowName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="freqValue != null "> and freq_value = #{freqValue}</if>
+            <if test="freqType != null  and freqType != ''"> and freq_type = #{freqType}</if>
+            <if test="freqInterDays != null "> and freq_inter_days = #{freqInterDays}</if>
+            <if test="weekDay != null  and weekDay != ''"> and week_day = #{weekDay}</if>
+            <if test="medicTime != null  and medicTime != ''"> and medic_time = #{medicTime}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="drugType != null  and drugType != ''"> and drug_type = #{drugType}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectOrderFreqById" parameterType="String" resultMap="OrderFreqResult">
+        <include refid="selectOrderFreqVo"/>
+        where freq_cd = #{freqCd}
+    </select>
+
+    <insert id="insertOrderFreq" parameterType="OrderFreq">
+        insert into TM_BS_ORDER_FREQ
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="freqCd != null">freq_cd,</if>
+            <if test="freqName != null">freq_name,</if>
+            <if test="freqShowName != null">freq_show_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="freqValue != null">freq_value,</if>
+            <if test="freqType != null">freq_type,</if>
+            <if test="freqInterDays != null">freq_inter_days,</if>
+            <if test="weekDay != null">week_day,</if>
+            <if test="medicTime != null">medic_time,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="sort != null">sort,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="drugType != null">drug_type,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="freqCd != null">#{freqCd},</if>
+            <if test="freqName != null">#{freqName},</if>
+            <if test="freqShowName != null">#{freqShowName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="freqValue != null">#{freqValue},</if>
+            <if test="freqType != null">#{freqType},</if>
+            <if test="freqInterDays != null">#{freqInterDays},</if>
+            <if test="weekDay != null">#{weekDay},</if>
+            <if test="medicTime != null">#{medicTime},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="drugType != null">#{drugType},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderFreq" parameterType="OrderFreq">
+        update TM_BS_ORDER_FREQ
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="freqCd != null">freq_cd = #{freqCd},</if>
+            <if test="freqName != null">freq_name = #{freqName},</if>
+            <if test="freqShowName != null">freq_show_name = #{freqShowName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="freqValue != null">freq_value = #{freqValue},</if>
+            <if test="freqType != null">freq_type = #{freqType},</if>
+            <if test="freqInterDays != null">freq_inter_days = #{freqInterDays},</if>
+            <if test="weekDay != null">week_day = #{weekDay},</if>
+            <if test="medicTime != null">medic_time = #{medicTime},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="drugType != null">drug_type = #{drugType},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where hospital_code = #{hospitalCode}
+    </update>
+
+    <delete id="deleteOrderFreqById" parameterType="String">
+        delete from TM_BS_ORDER_FREQ where hospital_code = #{hospitalCode}
+    </delete>
+
+    <delete id="deleteOrderFreqByIds" parameterType="String">
+        delete from TM_BS_ORDER_FREQ where hospital_code in
+        <foreach item="hospitalCode" collection="array" open="(" separator="," close=")">
+            #{hospitalCode}
+        </foreach>
+    </delete>
+
+    <select id="selectByFreqCdList" parameterType="String" resultMap="OrderFreqResult">
+        <include refid="selectOrderFreqVo"/>
+        where freq_cd in
+        <foreach item="freqCd" collection="freqCdList" open="(" separator="," close=")">
+            #{freqCd}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpl.mapper.TmplSubtemplMapper">
+
+    <resultMap type="TmplSubtempl" id="TmplSubtemplResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="major"    column="major"    />
+        <result property="disease"    column="disease"    />
+        <result property="tempType"    column="temp_type"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="tempName"    column="temp_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="tempFile"    column="temp_file"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="docCd"    column="doc_cd"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="tmepFlag"    column="tmep_flag"    />
+        <result property="serialNo"    column="serial_no"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="tempText"    column="temp_text"    />
+    </resultMap>
+
+    <resultMap id="TmplSubtemplVoResult" type="TmplSubtemplVo" extends="TmplSubtemplResult">
+        <result property="majorName"    column="majorName"    />
+        <result property="diseaseName"    column="diseaseName"    />
+        <result property="mrTypeName"    column="mrTypeName"    />
+    </resultMap>
+    <sql id="selectTmplSubtemplVo">
+        select id, org_cd, major, disease, temp_type, elem_id, elem_name, temp_name, inputstrphtc, temp_file, dept_cd,
+               dept_name, doc_cd, doc_name, tmep_flag, serial_no, valid_flag, cre_per_code, cre_per_name, cre_date,
+               alt_per_code, alt_per_name, alt_date,temp_text from tmpl_subtempl
+    </sql>
+
+    <select id="selectTmplSubtemplList" parameterType="TmplSubtempl" resultMap="TmplSubtemplResult">
+        <include refid="selectTmplSubtemplVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+            <if test="disease != null  and disease != ''"> and disease = #{disease}</if>
+            <if test="tempType != null  and tempType != ''"> and temp_type = #{tempType}</if>
+            <if test="elemId != null  and elemId != ''"> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="tempName != null  and tempName != ''"> and (temp_name like concat(concat('%', #{tempName}), '%') or inputstrphtc like concat(concat('%', #{tempName}), '%') )</if>
+            <if test="tempFile != null  and tempFile != ''"> and temp_file = #{tempFile}</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="docCd != null  and docCd != ''"> and doc_cd = #{docCd}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="tmepFlag != null "> and tmep_flag = #{tmepFlag}</if>
+            <if test="serialNo != null "> and serial_no = #{serialNo}</if>
+            <if test="validFlag != null  and validFlag != ''"> and valid_flag = #{validFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="tempText != null "> and temp_text = #{tempText}</if>
+        </where>
+    </select>
+
+    <select id="selectTmplSubtemplVoList" parameterType="TmplSubtemplVo" resultMap="TmplSubtemplVoResult">
+        select ts.*,bdm.name as majorName,btd.name as diseaseName,sdd.data_tag as mrTypeName from tmpl_subtempl ts
+        left join bas_dict_medicine bdm on ts.major=bdm.code
+        left join bas_tmpl_disease btd on ts.disease=btd.code
+        left join TM_BS_DICT_DATA sdd on ts.temp_type=sdd.data_val and dict_type='s004'
+        <where>
+            <if test="tempName != null  and tempName != ''"> and (ts.temp_name like concat(concat('%', #{tempName}), '%') or ts.inputstrphtc like concat(concat('%', #{tempName}), '%') )</if>
+            <if test="tmepFlag != null "> and ts.tmep_flag = #{tmepFlag}</if>
+            <if test="tempType != null and tempType!=''"> and ts.temp_type = #{tempType}</if>
+        </where>
+    </select>
+
+    <select id="selectTmplSubtemplById" parameterType="Long" resultMap="TmplSubtemplVoResult">
+        select ts.*,bdm.name as majorName,btd.name as diseaseName,sdd.data_tag as mrTypeName from tmpl_subtempl ts
+        left join bas_dict_medicine bdm on ts.major=bdm.code
+        left join bas_tmpl_disease btd on ts.disease=btd.code
+        left join TM_BS_DICT_DATA sdd on ts.temp_type=sdd.data_val and dict_type='s004'
+        where ts.id = #{id}
+    </select>
+
+    <insert id="insertTmplSubtempl" parameterType="TmplSubtempl">
+        insert into tmpl_subtempl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="major != null">major,</if>
+            <if test="disease != null">disease,</if>
+            <if test="tempType != null and tempType != ''">temp_type,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="tempName != null and tempName != ''">temp_name,</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">inputstrphtc,</if>
+            <if test="tempFile != null">temp_file,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="docCd != null">doc_cd,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="tmepFlag != null">tmep_flag,</if>
+            <if test="serialNo != null">serial_no,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="tempText != null and tempText != ''">temp_text,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="major != null">#{major},</if>
+            <if test="disease != null">#{disease},</if>
+            <if test="tempType != null and tempType != ''">#{tempType},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="tempName != null and tempName != ''">#{tempName},</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">#{inputstrphtc},</if>
+            <if test="tempFile != null">#{tempFile},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="docCd != null">#{docCd},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="tmepFlag != null">#{tmepFlag},</if>
+            <if test="serialNo != null">#{serialNo},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="tempText != null and tempText != ''">#{tempText},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateTmplSubtempl" parameterType="TmplSubtempl">
+        update tmpl_subtempl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="disease != null">disease = #{disease},</if>
+            <if test="tempType != null and tempType != ''">temp_type = #{tempType},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="tempName != null and tempName != ''">temp_name = #{tempName},</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">inputstrphtc = #{inputstrphtc},</if>
+            <if test="tempFile != null">temp_file = #{tempFile},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="tmepFlag != null">tmep_flag = #{tmepFlag},</if>
+            <if test="serialNo != null">serial_no = #{serialNo},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="tempText != null and tempText != ''">temp_text = #{tempText},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmplSubtemplById" parameterType="Long">
+        delete from tmpl_subtempl where id = #{id}
+    </delete>
+
+    <delete id="deleteTmplSubtemplByIds" parameterType="String">
+        delete from tmpl_subtempl where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

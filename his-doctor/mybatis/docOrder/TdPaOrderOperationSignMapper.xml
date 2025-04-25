@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderOperationSignMapper">
+
+    <resultMap type="TdPaOrderOperationSign" id="TdPaOrderOperationSignResult">
+        <result property="id"    column="id"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="patinetId"    column="patinet_id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="operationType"    column="operation_type"    />
+        <result property="operationName"    column="operation_name"    />
+        <result property="operatorCode"    column="operator_code"    />
+        <result property="operatorName"    column="operator_name"    />
+        <result property="encryptionType"    column="encryption_type"    />
+        <result property="encryptedInfo"    column="encrypted_info"    />
+        <result property="signCertificate"    column="sign_certificate"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="signedText"    column="signed_text"    />
+        <result property="sjc"    column="sjc"    />
+        <result property="yzzhNr"    column="yzzh_nr"    />
+        <result property="yzzhFs"    column="yzzh_fs"    />
+        <result property="column16"    column="column_16"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderOperationSignVo">
+        select id, admission_no, patinet_id, order_no, order_group_no, order_sort_number, operation_type, operation_name, operator_code, operator_name, encryption_type, encrypted_info, sign_certificate, sign_time, signed_text, sjc, yzzh_nr, yzzh_fs, column_16 from td_pa_order_operation_sign
+    </sql>
+
+    <select id="selectTdPaOrderOperationSignList" parameterType="TdPaOrderOperationSign" resultMap="TdPaOrderOperationSignResult">
+        <include refid="selectTdPaOrderOperationSignVo"/>
+        <where>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="patinetId != null  and patinetId != ''"> and patinet_id = #{patinetId}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderGroupNo != null  and orderGroupNo != ''"> and order_group_no = #{orderGroupNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="operationType != null "> and operation_type = #{operationType}</if>
+            <if test="operationName != null  and operationName != ''"> and operation_name like concat(concat('%', #{operationName}), '%')</if>
+            <if test="operatorCode != null  and operatorCode != ''"> and operator_code = #{operatorCode}</if>
+            <if test="operatorName != null  and operatorName != ''"> and operator_name like concat(concat('%', #{operatorName}), '%')</if>
+            <if test="encryptionType != null  and encryptionType != ''"> and encryption_type = #{encryptionType}</if>
+            <if test="encryptedInfo != null  and encryptedInfo != ''"> and encrypted_info = #{encryptedInfo}</if>
+            <if test="signCertificate != null  and signCertificate != ''"> and sign_certificate = #{signCertificate}</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="signedText != null  and signedText != ''"> and signed_text = #{signedText}</if>
+            <if test="sjc != null  and sjc != ''"> and sjc = #{sjc}</if>
+            <if test="yzzhNr != null  and yzzhNr != ''"> and yzzh_nr = #{yzzhNr}</if>
+            <if test="yzzhFs != null  and yzzhFs != ''"> and yzzh_fs = #{yzzhFs}</if>
+            <if test="column16 != null  and column16 != ''"> and column_16 = #{column16}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderOperationSignById" parameterType="Long" resultMap="TdPaOrderOperationSignResult">
+        <include refid="selectTdPaOrderOperationSignVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPaOrderOperationSign" parameterType="TdPaOrderOperationSign">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_td_pa_order_operation_sign.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into td_pa_order_operation_sign
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="admissionNo != null">admission_no,</if>
+            <if test="patinetId != null">patinet_id,</if>
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="orderGroupNo != null and orderGroupNo != ''">order_group_no,</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number,</if>
+            <if test="operationType != null">operation_type,</if>
+            <if test="operationName != null">operation_name,</if>
+            <if test="operatorCode != null">operator_code,</if>
+            <if test="operatorName != null">operator_name,</if>
+            <if test="encryptionType != null">encryption_type,</if>
+            <if test="encryptedInfo != null">encrypted_info,</if>
+            <if test="signCertificate != null">sign_certificate,</if>
+            <if test="signTime != null">sign_time,</if>
+            <if test="signedText != null">signed_text,</if>
+            <if test="sjc != null">sjc,</if>
+            <if test="yzzhNr != null">yzzh_nr,</if>
+            <if test="yzzhFs != null">yzzh_fs,</if>
+            <if test="column16 != null">column_16,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="admissionNo != null">#{admissionNo},</if>
+            <if test="patinetId != null">#{patinetId},</if>
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="orderGroupNo != null and orderGroupNo != ''">#{orderGroupNo},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">#{orderSortNumber},</if>
+            <if test="operationType != null">#{operationType},</if>
+            <if test="operationName != null">#{operationName},</if>
+            <if test="operatorCode != null">#{operatorCode},</if>
+            <if test="operatorName != null">#{operatorName},</if>
+            <if test="encryptionType != null">#{encryptionType},</if>
+            <if test="encryptedInfo != null">#{encryptedInfo},</if>
+            <if test="signCertificate != null">#{signCertificate},</if>
+            <if test="signTime != null">#{signTime},</if>
+            <if test="signedText != null">#{signedText},</if>
+            <if test="sjc != null">#{sjc},</if>
+            <if test="yzzhNr != null">#{yzzhNr},</if>
+            <if test="yzzhFs != null">#{yzzhFs},</if>
+            <if test="column16 != null">#{column16},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderOperationSign" parameterType="TdPaOrderOperationSign">
+        update td_pa_order_operation_sign
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="admissionNo != null">admission_no = #{admissionNo},</if>
+            <if test="patinetId != null">patinet_id = #{patinetId},</if>
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="orderGroupNo != null and orderGroupNo != ''">order_group_no = #{orderGroupNo},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number = #{orderSortNumber},</if>
+            <if test="operationType != null">operation_type = #{operationType},</if>
+            <if test="operationName != null">operation_name = #{operationName},</if>
+            <if test="operatorCode != null">operator_code = #{operatorCode},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+            <if test="encryptionType != null">encryption_type = #{encryptionType},</if>
+            <if test="encryptedInfo != null">encrypted_info = #{encryptedInfo},</if>
+            <if test="signCertificate != null">sign_certificate = #{signCertificate},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="signedText != null">signed_text = #{signedText},</if>
+            <if test="sjc != null">sjc = #{sjc},</if>
+            <if test="yzzhNr != null">yzzh_nr = #{yzzhNr},</if>
+            <if test="yzzhFs != null">yzzh_fs = #{yzzhFs},</if>
+            <if test="column16 != null">column_16 = #{column16},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderOperationSignById" parameterType="Long">
+        delete from td_pa_order_operation_sign where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderOperationSignByIds" parameterType="String">
+        delete from td_pa_order_operation_sign where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertList" parameterType="TdPaOrderOperationSign">
+        insert all
+        <foreach collection="list" item="item">
+            into td_pa_order_operation_sign
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.admissionNo != null">admission_no,</if>
+                <if test="item.patinetId != null">patinet_id,</if>
+                <if test="item.orderNo != null and item.orderNo != ''">order_no,</if>
+                <if test="item.orderGroupNo != null and item.orderGroupNo != ''">order_group_no,</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">order_sort_number,</if>
+                <if test="item.operationType != null">operation_type,</if>
+                <if test="item.operationName != null">operation_name,</if>
+                <if test="item.operatorCode != null">operator_code,</if>
+                <if test="item.operatorName != null">operator_name,</if>
+                <if test="item.encryptionType != null">encryption_type,</if>
+                <if test="item.encryptedInfo != null">encrypted_info,</if>
+                <if test="item.signCertificate != null">sign_certificate,</if>
+                sign_time,
+                <if test="item.signedText != null">signed_text,</if>
+                <if test="item.sjc != null">sjc,</if>
+                <if test="item.yzzhNr != null">yzzh_nr,</if>
+                <if test="item.yzzhFs != null">yzzh_fs,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.admissionNo != null">#{item.admissionNo},</if>
+                <if test="item.patinetId != null">#{item.patinetId},</if>
+                <if test="item.orderNo != null and item.orderNo != ''">#{item.orderNo},</if>
+                <if test="item.orderGroupNo != null and item.orderGroupNo != ''">#{item.orderGroupNo},</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">#{item.orderSortNumber},</if>
+                <if test="item.operationType != null">#{item.operationType},</if>
+                <if test="item.operationName != null">#{item.operationName},</if>
+                <if test="item.operatorCode != null">#{item.operatorCode},</if>
+                <if test="item.operatorName != null">#{item.operatorName},</if>
+                <if test="item.encryptionType != null">#{item.encryptionType},</if>
+                <if test="item.encryptedInfo != null">#{item.encryptedInfo},</if>
+                <if test="item.signCertificate != null">#{item.signCertificate},</if>
+                sysDate,
+                <if test="item.signedText != null">#{item.signedText},</if>
+                <if test="item.sjc != null">#{item.sjc},</if>
+                <if test="item.yzzhNr != null">#{item.yzzhNr},</if>
+                <if test="item.yzzhFs != null">#{item.yzzhFs},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+</mapper>

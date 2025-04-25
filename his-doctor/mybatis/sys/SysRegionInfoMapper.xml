@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.sys.mapper.SysRegionInfoMapper">
+
+    <resultMap type="SysRegionInfo" id="SysRegionInfoResult">
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="shortName"    column="short_name"    />
+        <result property="superCode"    column="super_code"    />
+        <result property="zipcode"    column="zipcode"    />
+        <result property="citycode"    column="citycode"    />
+        <result property="regLevel"    column="reg_level"    />
+        <result property="sort"    column="sort"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="defaultFlag"    column="default_flag"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+    </resultMap>
+
+    <sql id="selectSysRegionInfoVo">
+        select code, name, short_name, super_code, zipcode, citycode, reg_level, sort, valid_flag, alt_per_code, alt_per_name, alt_date, cre_per_code, cre_per_name, cre_date, default_flag, inputstrphtc from sys_region_info
+    </sql>
+
+    <select id="selectSysRegionInfoList" parameterType="SysRegionInfo" resultMap="SysRegionInfoResult">
+        <include refid="selectSysRegionInfoVo"/>
+        where valid_flag = '1' and super_code=#{superCode}
+    </select>
+
+    <select id="selectSysRegionInfoById" parameterType="String" resultMap="SysRegionInfoResult">
+        <include refid="selectSysRegionInfoVo"/>
+        where valid_flag = '1' and code = #{code}
+    </select>
+
+    <select id="selectSysRegionDefault" parameterType="String" resultMap="SysRegionInfoResult">
+        <include refid="selectSysRegionInfoVo"/>
+        where default_flag is not null
+    </select>
+    <select id="selectSysRegionInfoByName" resultMap="SysRegionInfoResult">
+        <include refid="selectSysRegionInfoVo"/>
+        where SUPER_CODE in(
+        select code from SYS_REGION_INFO where SUPER_CODE in (
+        select  code from SYS_REGION_INFO where valid_flag = '1' and name=#{province} ) and valid_flag = '1' and name=#{city} ) and valid_flag = '1' and name =#{county} and rownum=1
+    </select>
+
+    <insert id="insertSysRegionInfo" parameterType="SysRegionInfo">
+        <selectKey keyProperty="code" resultType="long" order="BEFORE">
+            SELECT seq_sys_region_info.NEXTVAL as code FROM DUAL
+        </selectKey>
+        insert into sys_region_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="shortName != null">short_name,</if>
+            <if test="superCode != null">super_code,</if>
+            <if test="zipcode != null">zipcode,</if>
+            <if test="citycode != null">citycode,</if>
+            <if test="regLevel != null">reg_level,</if>
+            <if test="sort != null">sort,</if>
+            <if test="validFlag != null">valid_flag,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="defaultFlag != null">default_flag,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="shortName != null">#{shortName},</if>
+            <if test="superCode != null">#{superCode},</if>
+            <if test="zipcode != null">#{zipcode},</if>
+            <if test="citycode != null">#{citycode},</if>
+            <if test="regLevel != null">#{regLevel},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="validFlag != null">#{validFlag},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="defaultFlag != null">#{defaultFlag},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysRegionInfo" parameterType="SysRegionInfo">
+        update sys_region_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="shortName != null">short_name = #{shortName},</if>
+            <if test="superCode != null">super_code = #{superCode},</if>
+            <if test="zipcode != null">zipcode = #{zipcode},</if>
+            <if test="citycode != null">citycode = #{citycode},</if>
+            <if test="regLevel != null">reg_level = #{regLevel},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="validFlag != null">valid_flag = #{validFlag},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="defaultFlag != null">default_flag = #{defaultFlag},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+        </trim>
+        where code = #{code}
+    </update>
+
+    <delete id="deleteSysRegionInfoById" parameterType="String">
+        delete from sys_region_info where code = #{code}
+    </delete>
+
+    <delete id="deleteSysRegionInfoByIds" parameterType="String">
+        delete from sys_region_info where code in
+        <foreach item="code" collection="array" open="(" separator="," close=")">
+            #{code}
+        </foreach>
+    </delete>
+</mapper>

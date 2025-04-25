@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcRecordMapper">
+
+    <resultMap type="EmrQcRecord" id="EmrQcRecordResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="inDeptCd"    column="in_dept_cd"    />
+        <result property="inDeptName"    column="in_dept_name"    />
+        <result property="qcSection"    column="qc_section"    />
+        <result property="qcdoctCd"    column="qcdoct_cd"    />
+        <result property="qcdoctName"    column="qcdoct_name"    />
+        <result property="qcDate"    column="qc_date"    />
+        <result property="finishDate"    column="finish_date"    />
+        <result property="limitHours"    column="limit_hours"    />
+        <result property="state"    column="state"    />
+        <result property="stateName"    column="state_name"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="qcBillNo"    column="qc_bill_no"    />
+        <result property="operReason"    column="oper_reason"    />
+        <result property="operTime"    column="oper_time"    />
+        <result property="total"    column="total"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="recordNo" column="record_no" />
+    </resultMap>
+
+    <resultMap id="RunTimeQcCheckedVoResult" type="RunTimeQcCheckedVo" extends="EmrQcRecordResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName" column="patient_name"/>
+        <result property="inpNo" column="inp_no"/>
+        <result property="recordNo" column="record_no"/>
+        <result property="bedNo" column="bed_no"/>
+        <result property="payTypeName" column="pay_type_name"/>
+        <result property="sex"    column="sex"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="inhosWmDiaName"    column="inhos_wm_dia_name"    />
+        <result property="inhosTime"    column="inhos_time"    />
+        <result property="outTime"    column="out_time"    />
+        <result property="pcName"    column="pc_name"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="operFlag"    column="oper_flag"    />
+        <result property="consFlag"    column="cons_flag"    />
+        <result property="dieFlag"    column="die_flag"    />
+        <result property="bloodTrans"    column="blood_trans"    />
+        <result property="changeFlag"    column="change_flag"    />
+        <result property="infectFlag"    column="infect_flag"    />
+        <result property="rescueFlag"    column="rescue_flag"    />
+        <result property="dayNumFlag"    column="day_num_flag"    />
+        <result property="costSumFlag"    column="cost_sum_flag"    />
+        <result property="ngName"    column="ng_name"    />
+        <result property="ngCd"    column="ng_cd"    />
+        <result property="totalPatAva" column="total_pat_ava"/>
+    </resultMap>
+<resultMap id="EmrQcRecordVoResult" type="EmrQcRecordVo" extends="EmrQcRecordResult">
+
+</resultMap>
+
+    <sql id="selectEmrQcRecordVo">
+        select id, patient_id, patient_name, sex, inp_no, in_dept_cd, in_dept_name, qc_section, qcdoct_cd, qcdoct_name, qc_date, finish_date, limit_hours, state, state_name, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, qc_bill_no,backout_file_bz,backout_file_per_code,backout_file_per_name,backout_file_date from emr_qc_record
+    </sql>
+
+    <select id="selectEmrQcRecordList" parameterType="EmrQcRecord" resultMap="EmrQcRecordResult">
+        <include refid="selectEmrQcRecordVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="inpNo != null  and inpNo != ''"> and inp_no = #{inpNo}</if>
+            <if test="inDeptCd != null  and inDeptCd != ''"> and in_dept_cd = #{inDeptCd}</if>
+            <if test="inDeptName != null  and inDeptName != ''"> and in_dept_name like concat(concat('%', #{inDeptName}), '%')</if>
+            <if test="qcSection != null  and qcSection != ''"> and qc_section = #{qcSection}</if>
+            <if test="qcdoctCd != null  and qcdoctCd != ''"> and qcdoct_cd = #{qcdoctCd}</if>
+            <if test="qcdoctName != null  and qcdoctName != ''"> and qcdoct_name like concat(concat('%', #{qcdoctName}), '%')</if>
+            <if test="qcDate != null "> and qc_date = #{qcDate}</if>
+            <if test="finishDate != null "> and finish_date = #{finishDate}</if>
+            <if test="limitHours != null "> and limit_hours = #{limitHours}</if>
+            <if test="state != null and state != ''"> and state = #{state}</if>
+            <if test="stateName != null and stateName != ''"> and state_name = #{stateName}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+             <if test="qcBillNo != null"> and qc_bill_no = #{qcBillNo}</if>
+             <if test="backoutFileBz != null"> and backout_file_bz = #{backoutFileBz}</if>
+             <if test="backoutFilePerCode != null"> and backout_file_per_code = #{backoutFilePerCode}</if>
+             <if test="backoutFilePerName != null"> and backout_file_per_name = #{backoutFilePerName}</if>
+             <if test="backoutFileDate != null"> and backout_file_date = #{backoutFileDate}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrQcRecordById" parameterType="Long" resultMap="EmrQcRecordResult">
+        <include refid="selectEmrQcRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectEmrQcRecordByPatientSection" resultMap="EmrQcRecordResult">
+        <include refid="selectEmrQcRecordVo"/>
+        where patient_id = #{patientId}
+        and qc_section = #{qcSection}
+        <if test="qcBillNo != null"> and qc_bill_no = #{qcBillNo}</if>
+    </select>
+    <select id="selectEmrQcRecordByPatientId" resultMap="EmrQcRecordResult">
+        <include refid="selectEmrQcRecordVo"/>
+        where patient_id = #{patientId}
+    </select>
+
+    <insert id="insertEmrQcRecord" parameterType="EmrQcRecord">
+        insert into emr_qc_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="sex != null">sex,</if>
+            <if test="inpNo != null">inp_no,</if>
+            <if test="inDeptCd != null">in_dept_cd,</if>
+            <if test="inDeptName != null">in_dept_name,</if>
+            <if test="qcSection != null and qcSection != ''">qc_section,</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">qcdoct_cd,</if>
+            <if test="qcdoctName != null and qcdoctName != ''">qcdoct_name,</if>
+            qc_date,
+            <if test="finishDate != null ">finish_date,</if>
+            <if test="limitHours != null ">limit_hours,</if>
+            <if test="state != null and state != ''">state,</if>
+            <if test="stateName != null and stateName != ''">state_name,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            cre_date,
+            <if test="qcBillNo != null"> qc_bill_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="inpNo != null">#{inpNo},</if>
+            <if test="inDeptCd != null">#{inDeptCd},</if>
+            <if test="inDeptName != null">#{inDeptName},</if>
+            <if test="qcSection != null and qcSection != ''">#{qcSection},</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">#{qcdoctCd},</if>
+            <if test="qcdoctName != null and qcdoctName != ''">#{qcdoctName},</if>
+            sysdate,
+            <if test="finishDate != null ">#{finishDate},</if>
+            <if test="limitHours != null ">#{limitHours},</if>
+            <if test="state != null and state != ''">#{state},</if>
+            <if test="stateName != null and stateName != ''">#{stateName},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            sysdate,
+            <if test="qcBillNo != null"> #{qcBillNo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrQcRecord" parameterType="EmrQcRecord">
+        update emr_qc_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="inpNo != null">inp_no = #{inpNo},</if>
+            <if test="inDeptCd != null">in_dept_cd = #{inDeptCd},</if>
+            <if test="inDeptName != null">in_dept_name = #{inDeptName},</if>
+            <if test="qcSection != null and qcSection != ''">qc_section = #{qcSection},</if>
+            <if test="qcdoctCd != null and qcdoctCd != ''">qcdoct_cd = #{qcdoctCd},</if>
+            <if test="qcdoctName != null and qcdoctName != ''">qcdoct_name = #{qcdoctName},</if>
+            <if test="qcDate != null">qc_date = #{qcDate},</if>
+            <if test="finishDate != null "> finish_date = #{finishDate},</if>
+            <if test="limitHours != null "> limit_hours = #{limitHours},</if>
+            <if test="state != null and state != ''"> state = #{state},</if>
+            <if test="stateName != null and stateName != ''"> state_name = #{stateName},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+            <if test="qcBillNo != null"> qc_bill_no = #{qcBillNo},</if>
+            <if test="backoutFilePerCode != null"> backout_file_per_code = #{backoutFilePerCode},</if>
+            <if test="backoutFilePerName != null"> backout_file_per_name = #{backoutFilePerName},</if>
+            <if test="backoutFileDate != null"> backout_file_date = #{backoutFileDate},</if>
+            <if test="backoutFileBz != null"> backout_file_bz = #{backoutFileBz},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcRecordById" parameterType="Long">
+        delete from emr_qc_record where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcRecordByIds" parameterType="String">
+        delete from emr_qc_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectRunTimeQcChecked" parameterType="RunTimeQcCheckedVo" resultMap="RunTimeQcCheckedVoResult">
+        select qcr.*,p.age_y,p.age_m,p.age_d,p.age_h,p.age_mi,v.DEPT_NAME,v.DEPT_CD,diag.DIAG_NAME as INHOS_WM_DIA_NAME,v.RES_DOC_NAME,
+               o.OPER_FLAG, o.CONS_FLAG, o.DIE_FLAG,o.blood_trans,
+               o.BLOOD_FLAG,o.CHANGE_FLAG,o.INFECT_FLAG,o.RESCUE_FLAG,v.bed_no,v.PAT_TYPE_NAME PAY_TYPE_NAME,v.INHOS_TIME,v.OUT_TIME,
+               case when v.OUT_TIME is not null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;= #{dayNum} then 1
+                when v.OUT_TIME is null and TO_NUMBER(sysdate- v.INHOS_TIME) >= #{dayNum} then 1
+                else 0 end day_num_flag,
+               case when v.cost_sum &gt;= #{costSum} then 1 else 0 end cost_sum_flag,v.record_no,v.ng_cd, v.ng_name,(ic.DEPOS_IT-ic.CUMULATIVE_COST) as total_pat_ava
+        from EMR_QC_RECORD qcr
+        left join PAT_VISITINFO v on qcr.PATIENT_ID = v.PATIENT_ID
+        left join PAT_PERSONALINFO p on qcr.PATIENT_ID = p.PATIENT_ID
+        left join PAT_OTHERINFO o on v.PATIENT_ID = o.PATIENT_ID
+        left join t_ih_cumulativecost ic on ic.ADMISSION_NO = v.inp_no
+        LEFT JOIN DIAG_INFO diag on diag.PATIENT_ID = v.patient_id and diag.DIAG_TYPE_CD='02' and diag.DIAG_CLASS_CD='01'
+        where qcr.QC_SECTION = '03' and v.IN_DEPT_TIME is not null
+        <if test="patientName != null and patientName != ''">
+        and qcr.patient_name like concat(concat('%', #{patientName}), '%')
+        </if>
+        <if test="inpNo != null and inpNo != ''">and v.record_no like concat(concat('%', #{inpNo}), '%')</if>
+        <if test="qcDateBegin != null">and qcr.qc_date &gt;= #{qcDateBegin}</if>
+        <if test="qcDateEnd != null">and qcr.qc_date &lt; #{qcDateEnd}</if>
+        <if test="qcdoctCd != null and qcdoctCd != ''">and qcr.QCDOCT_CD = #{qcdoctCd}</if>
+        <if test="inDeptCd != null and inDeptCd != ''">and qcr.IN_DEPT_CD = #{inDeptCd}</if>
+        <if test="state != null and state != ''">and qcr.STATE = #{state}</if>
+        <if test="qcBillNo != null">and qcr.qc_bill_no = #{qcBillNo}</if>
+    </select>
+    <select id="selectByPatientRunTimeQcNum" resultMap="EmrQcRecordResult">
+        <include refid="selectEmrQcRecordVo"/>
+        where qc_section = #{qcSection}
+        <if test="patientIdList!=null and patientIdList.size > 0">
+            and patient_id in
+            <foreach collection="patientIdList" item="patientId" open="(" separator="," close=")">
+                #{patientId}
+            </foreach>
+        </if>
+
+    </select>
+    <select id="selectRunTimeQcCheckedOne" parameterType="RunTimeQcCheckedVo" resultMap="RunTimeQcCheckedVoResult">
+        select qcr.*, p.age_y,p.age_m,p.age_d,p.age_h,p.age_mi,v.DEPT_NAME,v.INHOS_WM_DIA_NAME,v.RES_DOC_NAME,
+        o.OPER_FLAG, o.CONS_FLAG, o.DIE_FLAG,
+        o.BLOOD_FLAG,o.CHANGE_FLAG,o.INFECT_FLAG,o.RESCUE_FLAG,v.bed_no,v.PAY_TYPE_NAME,v.INHOS_TIME,v.OUT_TIME,
+        case when v.OUT_TIME is not null and TO_NUMBER(v.OUT_TIME- v.INHOS_TIME) &gt;=#{dayNum}  then 1 else 0 end day_num_flag,
+        case when v.cost_sum &gt;= #{costSum} then 1 else 0 end cost_sum_flag
+        from EMR_QC_RECORD qcr
+        left join PAT_VISITINFO v on qcr.PATIENT_ID = v.PATIENT_ID
+        left join PAT_PERSONALINFO p on qcr.PATIENT_ID = p.PATIENT_ID
+        left join PAT_OTHERINFO o on v.PATIENT_ID = o.PATIENT_ID
+        where qcr.QC_SECTION = '03'
+        <if test="patientId != null and patientId != ''">and v.patient_id = #{patientId}</if>
+        <if test="qcBillNo != null">and qcr.qc_bill_no = #{qcBillNo}</if>
+    </select>
+    <select id="selectListByQcBillNos" parameterType="Long" resultMap="EmrQcRecordResult">
+        select a.id, a.patient_id, a.patient_name, a.sex, a.inp_no, a.in_dept_cd, a.in_dept_name, a.qc_section, a.qcdoct_cd, a.qcdoct_name, a.qc_date,
+        a.finish_date, a.limit_hours, a.state, a.state_name, a.alt_per_name, a.alt_per_code, a.alt_date, a.cre_per_name, a.cre_per_code, a.cre_date,
+        a.qc_bill_no,a.backout_file_bz,a.backout_file_per_code,a.backout_file_per_name,a.backout_file_date
+        from emr_qc_record a left join t_ar_medicalinformation_all b on a.PATIENT_ID=b.ADMISSION_NO
+        where b.entry_date is not null and b.ADMISSION_NO is not null and qc_bill_no in
+        <foreach collection="qcBillNoList" item="qcBillNo" open="(" separator="," close=")">
+            #{qcBillNo}
+        </foreach>
+    </select>
+    <insert id="insertList" parameterType="EmrQcRecord">
+        insert all
+        <foreach collection="list" item="item">
+            into emr_qc_record
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.patientName != null">patient_name,</if>
+                <if test="item.sex != null">sex,</if>
+                <if test="item.inpNo != null">inp_no,</if>
+                <if test="item.inDeptCd != null">in_dept_cd,</if>
+                <if test="item.inDeptName != null">in_dept_name,</if>
+                <if test="item.qcSection != null and item.qcSection != ''">qc_section,</if>
+                <if test="item.qcdoctCd != null and item.qcdoctCd != ''">qcdoct_cd,</if>
+                <if test="item.qcdoctName != null and item.qcdoctName != ''">qcdoct_name,</if>
+                qc_date,
+                <if test="item.finishDate != null ">finish_date,</if>
+                <if test="item.limitHours != null ">limit_hours,</if>
+                <if test="item.state != null and item.state != ''">state,</if>
+                <if test="item.stateName != null and item.stateName != ''">state_name,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                cre_date,
+                <if test="item.qcBillNo != null"> qc_bill_no,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.patientName != null">#{item.patientName},</if>
+                <if test="item.sex != null">#{item.sex},</if>
+                <if test="item.inpNo != null">#{item.inpNo},</if>
+                <if test="item.inDeptCd != null">#{item.inDeptCd},</if>
+                <if test="item.inDeptName != null">#{item.inDeptName},</if>
+                <if test="item.qcSection != null and item.qcSection != ''">#{item.qcSection},</if>
+                <if test="item.qcdoctCd != null and item.qcdoctCd != ''">#{item.qcdoctCd},</if>
+                <if test="item.qcdoctName != null and item.qcdoctName != ''">#{item.qcdoctName},</if>
+                sysdate,
+                <if test="item.finishDate != null ">#{item.finishDate},</if>
+                <if test="item.limitHours != null ">#{item.limitHours},</if>
+                <if test="item.state != null and item.state != ''">#{item.state},</if>
+                <if test="item.stateName != null and item.stateName != ''">#{item.stateName},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                sysdate,
+                <if test="item.qcBillNo != null"> #{item.qcBillNo},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <select id="selectQcReturnList" parameterType="String" resultMap="EmrQcRecordResult">
+        SELECT eqr.*,flw.oper_reason,flw.oper_time,pp.patient_main_id,vis.bed_no,vis.record_no FROM EMR_QC_RECORD eqr
+              LEFT JOIN EMR_QC_flow_RECORD flw ON flw.PATIENT_ID = eqr.PATIENT_ID
+              LEFT JOIN pat_visitinfo vis ON vis.PATIENT_ID = eqr.PATIENT_ID
+              LEFT JOIN PAT_PERSONALINFO pp ON vis.PATIENT_ID = pp.PATIENT_ID
+        WHERE vis.OUT_TIME > SYSDATE - 10 AND vis.RES_DOC_CD =#{docCode} AND eqr.QC_SECTION IN ( '02','05') and eqr.STATE='3'
+        AND flw.OPER_TYPE_CD IN('11','13')
+        <if test="patientId!=null and patientId!=''">
+            and vis.patient_id=#{patientId}
+        </if>
+    </select>
+    <select id="selectEmrQcRecordByQcSection" resultMap="EmrQcRecordResult">
+        select * from EMR_QC_RECORD where patient_id=#{patientId} and QC_SECTION =#{qcSection} rownum = 1
+     </select>
+
+
+</mapper>

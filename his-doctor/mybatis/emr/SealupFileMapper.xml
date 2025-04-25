@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.SealupFileMapper">
+    
+    <resultMap type="SealupFile" id="SealupFileResult">
+        <result property="id"    column="id"    />
+        <result property="mainRecId"    column="main_rec_id"    />
+        <result property="fileId"    column="file_id"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+    </resultMap>
+
+    <sql id="selectSealupFileVo">
+        select id, main_rec_id, file_id, alt_date, alt_per_code, alt_per_name, cre_date, cre_per_code, cre_per_name from emr_sealup_file
+    </sql>
+
+    <select id="selectSealupFileList" parameterType="SealupFile" resultMap="SealupFileResult">
+        <include refid="selectSealupFileVo"/>
+        <where>  
+            <if test="mainRecId != null "> and main_rec_id = #{mainRecId}</if>
+            <if test="fileId != null "> and file_id = #{fileId}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSealupFileById" parameterType="Long" resultMap="SealupFileResult">
+        <include refid="selectSealupFileVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSealupFile" parameterType="SealupFile">
+        insert into emr_sealup_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="mainRecId != null">main_rec_id,</if>
+            <if test="fileId != null">file_id,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="mainRecId != null">#{mainRecId},</if>
+            <if test="fileId != null">#{fileId},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <insert id="insertSealupFileList" parameterType="java.util.List">
+        insert into emr_sealup_file
+        (id,main_rec_id,file_id, cre_per_code, cre_per_name,cre_date)
+        <foreach collection ="list" item="sealupFileList" index= "index" separator="union all" >
+            select  #{sealupFileList.id,jdbcType=NUMERIC},
+            #{sealupFileList.mainRecId,jdbcType=NUMERIC},
+            #{sealupFileList.fileId,jdbcType=NUMERIC},
+            #{sealupFileList.crePerCode,jdbcType=VARCHAR},
+            #{sealupFileList.crePerName,jdbcType=VARCHAR},
+            sysdate from dual
+        </foreach >
+    </insert>
+
+    <update id="updateSealupFile" parameterType="SealupFile">
+        update emr_sealup_file
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainRecId != null">main_rec_id = #{mainRecId},</if>
+            <if test="fileId != null">file_id = #{fileId},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSealupFileById" parameterType="Long">
+        delete from emr_sealup_file where id = #{id}
+    </delete>
+
+    <delete id="deleteSealupFileByIds" parameterType="String">
+        delete from emr_sealup_file where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSealupFileByMainRecId" parameterType="Long">
+        delete from emr_sealup_file where main_rec_id = #{mainRecId}
+    </delete>
+</mapper>

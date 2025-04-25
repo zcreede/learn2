@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.TmPmCipherDetailMapper">
+
+    <resultMap type="TmPmCipherDetail" id="TmPmCipherDetailResult">
+        <result property="id"    column="id"    />
+        <result property="cipherCd"    column="cipher_cd"    />
+        <result property="cipherSort"    column="cipher_sort"    />
+        <result property="drugCd"    column="drug_cd"    />
+        <result property="drugName"    column="drug_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="unit"    column="unit"    />
+        <result property="actualUsage"    column="actual_usage"    />
+        <result property="totalDose"    column="total_dose"    />
+        <result property="docNote"    column="doc_note"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="execDeptCd"    column="exec_dept_cd"    />
+        <result property="execDeptName"    column="exec_dept_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="doseCoef"    column="dose_coef"    />
+        <result property="orderTotal"    column="order_total"    />
+        <result property="price"    column="price"    />
+    </resultMap>
+<resultMap id="TmPmCipherDetailVoResult" type="TmPmCipherDetailVo" extends="TmPmCipherDetailResult">
+
+</resultMap>
+    <sql id="selectTmPmCipherDetailVo">
+        select id, cipher_cd, cipher_sort, drug_cd, drug_name, standard, unit, actual_usage, total_dose, doc_note, usage_unit, exec_dept_cd,
+               exec_dept_name, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,dose_coef,order_total,price from tm_pm_cipher_detail
+    </sql>
+
+    <select id="selectTmPmCipherDetailList" parameterType="TmPmCipherDetail" resultMap="TmPmCipherDetailResult">
+        <include refid="selectTmPmCipherDetailVo"/>
+        <where>
+            <if test="cipherCd != null  and cipherCd != ''"> and cipher_cd = #{cipherCd}</if>
+            <if test="cipherSort != null  and cipherSort != ''"> and cipher_sort = #{cipherSort}</if>
+            <if test="drugCd != null  and drugCd != ''"> and drug_cd = #{drugCd}</if>
+            <if test="drugName != null  and drugName != ''"> and drug_name like concat(concat('%', #{drugName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="actualUsage != null "> and actual_usage = #{actualUsage}</if>
+            <if test="totalDose != null "> and total_dose = #{totalDose}</if>
+            <if test="docNote != null  and docNote != ''"> and doc_note = #{docNote}</if>
+            <if test="usageUnit != null  and usageUnit != ''"> and usage_unit = #{usageUnit}</if>
+            <if test="execDeptCd != null  and execDeptCd != ''"> and exec_dept_cd = #{execDeptCd}</if>
+            <if test="execDeptName != null  and execDeptName != ''"> and exec_dept_name like concat(concat('%', #{execDeptName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectTmPmCipherDetailById" parameterType="Long" resultMap="TmPmCipherDetailResult">
+        <include refid="selectTmPmCipherDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmPmCipherDetail" parameterType="TmPmCipherDetail">
+        insert into tm_pm_cipher_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="cipherCd != null and cipherCd != ''">cipher_cd,</if>
+            <if test="cipherSort != null">cipher_sort,</if>
+            <if test="drugCd != null">drug_cd,</if>
+            <if test="drugName != null">drug_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="unit != null">unit,</if>
+            <if test="actualUsage != null">actual_usage,</if>
+            <if test="totalDose != null">total_dose,</if>
+            <if test="docNote != null">doc_note,</if>
+            <if test="usageUnit != null">usage_unit,</if>
+            <if test="execDeptCd != null">exec_dept_cd,</if>
+            <if test="execDeptName != null">exec_dept_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="doseCoef != null">dose_coef,</if>
+            <if test="orderTotal != null">order_total,</if>
+            <if test="price != null">price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="cipherCd != null and cipherCd != ''">#{cipherCd},</if>
+            <if test="cipherSort != null">#{cipherSort},</if>
+            <if test="drugCd != null">#{drugCd},</if>
+            <if test="drugName != null">#{drugName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="actualUsage != null">#{actualUsage},</if>
+            <if test="totalDose != null">#{totalDose},</if>
+            <if test="docNote != null">#{docNote},</if>
+            <if test="usageUnit != null">#{usageUnit},</if>
+            <if test="execDeptCd != null">#{execDeptCd},</if>
+            <if test="execDeptName != null">#{execDeptName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="doseCoef != null">#{doseCoef},</if>
+            <if test="orderTotal != null">#{orderTotal},</if>
+            <if test="price != null">#{price},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertTmPmCipherDetailList" parameterType="TmPmCipherDetail">
+        insert all
+        <foreach item="item" index="index" collection="list">
+        into tm_pm_cipher_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">id,</if>
+            <if test="item.cipherCd != null and item.cipherCd != ''">cipher_cd,</if>
+            <if test="item.cipherSort != null">cipher_sort,</if>
+            <if test="item.drugCd != null">drug_cd,</if>
+            <if test="item.drugName != null">drug_name,</if>
+            <if test="item.standard != null">standard,</if>
+            <if test="item.unit != null">unit,</if>
+            <if test="item.actualUsage != null">actual_usage,</if>
+            <if test="item.totalDose != null">total_dose,</if>
+            <if test="item.docNote != null">doc_note,</if>
+            <if test="item.usageUnit != null">usage_unit,</if>
+            <if test="item.execDeptCd != null">exec_dept_cd,</if>
+            <if test="item.execDeptName != null">exec_dept_name,</if>
+            <if test="item.crePerCode != null">cre_per_code,</if>
+            <if test="item.crePerName != null">cre_per_name,</if>
+            <if test="item.creDate != null">cre_date,</if>
+            <if test="item.altPerCode != null">alt_per_code,</if>
+            <if test="item.altPerName != null">alt_per_name,</if>
+            <if test="item.altDate != null">alt_date,</if>
+            <if test="item.doseCoef != null">dose_coef,</if>
+            <if test="item.orderTotal != null">order_total,</if>
+            <if test="item.price != null">price,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">#{item.id},</if>
+            <if test="item.cipherCd != null and item.cipherCd != ''">#{item.cipherCd},</if>
+            <if test="item.cipherSort != null">#{item.cipherSort},</if>
+            <if test="item.drugCd != null">#{item.drugCd},</if>
+            <if test="item.drugName != null">#{item.drugName},</if>
+            <if test="item.standard != null">#{item.standard},</if>
+            <if test="item.unit != null">#{item.unit},</if>
+            <if test="item.actualUsage != null">#{item.actualUsage},</if>
+            <if test="item.totalDose != null">#{item.totalDose},</if>
+            <if test="item.docNote != null">#{item.docNote},</if>
+            <if test="item.usageUnit != null">#{item.usageUnit},</if>
+            <if test="item.execDeptCd != null">#{item.execDeptCd},</if>
+            <if test="item.execDeptName != null">#{item.execDeptName},</if>
+            <if test="item.crePerCode != null">#{item.crePerCode},</if>
+            <if test="item.crePerName != null">#{item.crePerName},</if>
+            <if test="item.creDate != null">#{item.creDate},</if>
+            <if test="item.altPerCode != null">#{item.altPerCode},</if>
+            <if test="item.altPerName != null">#{item.altPerName},</if>
+            <if test="item.altDate != null">#{item.altDate},</if>
+            <if test="item.doseCoef != null">#{item.doseCoef},</if>
+            <if test="item.orderTotal != null">#{item.orderTotal},</if>
+            <if test="item.price != null">#{item.price},</if>
+        </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTmPmCipherDetail" parameterType="TmPmCipherDetail">
+        update tm_pm_cipher_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cipherCd != null and cipherCd != ''">cipher_cd = #{cipherCd},</if>
+            <if test="cipherSort != null">cipher_sort = #{cipherSort},</if>
+            <if test="drugCd != null">drug_cd = #{drugCd},</if>
+            <if test="drugName != null">drug_name = #{drugName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="actualUsage != null">actual_usage = #{actualUsage},</if>
+            <if test="totalDose != null">total_dose = #{totalDose},</if>
+            <if test="docNote != null">doc_note = #{docNote},</if>
+            <if test="usageUnit != null">usage_unit = #{usageUnit},</if>
+            <if test="execDeptCd != null">exec_dept_cd = #{execDeptCd},</if>
+            <if test="execDeptName != null">exec_dept_name = #{execDeptName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="doseCoef != null">dose_coef,</if>
+            <if test="orderTotal != null">order_total,</if>
+            <if test="price != null">price,</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmPmCipherDetailById" parameterType="Long">
+        delete from tm_pm_cipher_detail where id = #{id}
+    </delete>
+    <delete id="deleteTmPmCipherDetailByCipherCd" parameterType="String">
+        delete from tm_pm_cipher_detail where cipher_cd = #{cipherCd}
+    </delete>
+
+    <delete id="deleteTmPmCipherDetailByIds" parameterType="String">
+        delete from tm_pm_cipher_detail where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectTmPmCipherDetailByCipherCd" parameterType="String" resultMap="TmPmCipherDetailVoResult">
+        select * from tm_pm_cipher_detail where cipher_cd=#{cipherCd} order by cipher_sort
+    </select>
+    <select id="selectDetailDrugListByIds" parameterType="Long" resultMap="TmPmCipherDetailVoResult">
+        select * from tm_pm_cipher_detail where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpl.mapper.TmplElemLinkMapper">
+
+    <resultMap type="TmplElemLink" id="TmplElemLinkResult">
+        <result property="id"    column="id"    />
+        <result property="tempId"    column="temp_id"    />
+        <result property="tempName"    column="temp_name"    />
+        <result property="contElemName"    column="cont_elem_name"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="conditionsContent2"    column="conditions_content2"    />
+        <result property="conditionsContent"    column="conditions_content"    />
+        <result property="typeFlag"    column="type_flag"    />
+        <result property="contType"    column="cont_type"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+    </resultMap>
+
+    <resultMap type="TmplElemLinkVo" id="TmplElemLinkVoResult" extends="TmplElemLinkResult">
+        <result property="contType"    column="cont_type"    />
+    </resultMap>
+
+    <sql id="selectTmplElemLinkVo">
+        select id, temp_id, temp_name, cont_elem_name, elem_id, elem_name, elem_cd, conditions_content2, conditions_content, type_flag, cont_type, cre_date, cre_per_code, cre_per_name, alt_date, alt_per_code, alt_per_name
+        from tmpl_elem_link
+    </sql>
+
+    <select id="selectTmplElemLinkList" parameterType="TmplElemLink" resultMap="TmplElemLinkResult">
+        <include refid="selectTmplElemLinkVo"/>
+        <where>
+            <if test="tempId != null "> and temp_id = #{tempId}</if>
+            <if test="tempName != null  and tempName != ''"> and temp_name like concat(concat('%', #{tempName}), '%')</if>
+            <if test="contElemName != null  and contElemName != ''"> and cont_elem_name like concat(concat('%', #{contElemName}), '%')</if>
+            <if test="elemId != null "> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectTmplElemLinkVoList" parameterType="TmplElemLink" resultMap="TmplElemLinkVoResult">
+        select el.id, el.temp_id, el.temp_name, el.cont_elem_name, el.elem_id, el.elem_name, el.elem_cd, el.conditions_content2,
+        el.conditions_content, el.cre_date, el.cre_per_code, el.cre_per_name, el.alt_date, el.alt_per_code, el.alt_per_name,el.cont_type,el.type_flag
+        from tmpl_elem_link el
+        <where>
+            <if test="tempId != null "> and el.temp_id = #{tempId}</if>
+             <if test="tempIdList != null and tempIdList.size() > 0">
+                and el.temp_id in
+                <foreach collection="tempIdList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+             </if>
+            <if test="tempName != null  and tempName != ''"> and el.temp_name like concat(concat('%', #{tempName}), '%')</if>
+            <if test="contElemName != null  and contElemName != ''"> and el.cont_elem_name like concat(concat('%', #{contElemName}), '%')</if>
+            <if test="elemId != null "> and el.elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and el.elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and el.elem_cd = #{elemCd}</if>
+            <if test="creDate != null "> and el.cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and el.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and el.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altDate != null "> and el.alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and el.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and el.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectTmplElemLinkById" parameterType="Long" resultMap="TmplElemLinkResult">
+        <include refid="selectTmplElemLinkVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmplElemLink" parameterType="TmplElemLink">
+        insert into tmpl_elem_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tempId != null">temp_id,</if>
+            <if test="tempName != null">temp_name,</if>
+            <if test="contElemName != null">cont_elem_name,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="conditionsContent2 != null">conditions_content2,</if>
+            <if test="conditionsContent != null">conditions_content,</if>
+            <if test="typeFlag != null and typeFlag != ''">type_flag,</if>
+            <if test="contType != null and contType != ''">cont_type,</if>
+            cre_date,
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tempId != null">#{tempId},</if>
+            <if test="tempName != null">#{tempName},</if>
+            <if test="contElemName != null">#{contElemName},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="conditionsContent2 != null">#{conditionsContent2},</if>
+            <if test="conditionsContent != null">#{conditionsContent},</if>
+            <if test="typeFlag != null and typeFlag != ''">#{typeFlag},</if>
+            <if test="contType != null and contType != ''">#{contType},</if>
+            sysdate,
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertList" parameterType="TmplElemLink">
+        insert all
+        <foreach collection="list" item="item">
+            into tmpl_elem_link
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.tempId != null">temp_id,</if>
+                <if test="item.tempName != null">temp_name,</if>
+                <if test="item.contElemName != null">cont_elem_name,</if>
+                <if test="item.elemId != null">elem_id,</if>
+                <if test="item.elemName != null">elem_name,</if>
+                <if test="item.elemCd != null">elem_cd,</if>
+                <if test="item.conditionsContent2 != null">conditions_content2,</if>
+                <if test="item.conditionsContent != null">conditions_content,</if>
+                <if test="item.typeFlag != null and item.typeFlag != ''">type_flag,</if>
+                <if test="item.contType != null and item.contType != ''">cont_type,</if>
+                cre_date,
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.tempId != null">#{item.tempId},</if>
+                <if test="item.tempName != null">#{item.tempName},</if>
+                <if test="item.contElemName != null">#{item.contElemName},</if>
+                <if test="item.elemId != null">#{item.elemId},</if>
+                <if test="item.elemName != null">#{item.elemName},</if>
+                <if test="item.elemCd != null">#{item.elemCd},</if>
+                <if test="item.conditionsContent2 != null">#{item.conditionsContent2},</if>
+                <if test="item.conditionsContent != null">#{item.conditionsContent},</if>
+                <if test="item.typeFlag != null and item.typeFlag != ''">#{item.typeFlag},</if>
+                <if test="item.contType != null and item.contType != ''">#{item.contType},</if>
+                sysdate,
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTmplElemLink" parameterType="TmplElemLink">
+        update tmpl_elem_link
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tempId != null">temp_id = #{tempId},</if>
+            <if test="tempName != null">temp_name = #{tempName},</if>
+            <if test="contElemName != null">cont_elem_name = #{contElemName},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="conditionsContent2 != null">conditions_content2 = #{conditionsContent2},</if>
+            <if test="conditionsContent != null">conditions_content = #{conditionsContent},</if>
+            <if test="typeFlag != null and typeFlag != ''">type_flag = #{typeFlag},</if>
+            <if test="contType != null and contType != ''">cont_type = #{contType},</if>
+            alt_date = sysdate,
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmplElemLinkById" parameterType="Long">
+        delete from tmpl_elem_link where id = #{id}
+    </delete>
+
+    <delete id="deleteTmplElemLinkByIds" parameterType="String">
+        delete from tmpl_elem_link where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

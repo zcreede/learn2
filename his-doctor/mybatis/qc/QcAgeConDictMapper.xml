@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcAgeConDictMapper">
+    
+    <resultMap type="QcAgeConDict" id="QcAgeConDictResult">
+        <result property="id"    column="id"    />
+        <result property="ageCode"    column="age_code"    />
+        <result property="dictType"    column="dict_type"    />
+        <result property="itemCon"    column="item_con"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+    </resultMap>
+
+    <sql id="selectQcAgeConDictVo">
+        select id, age_code, dict_type, item_con, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date from qc_age_con_dict
+    </sql>
+
+    <select id="selectQcAgeConDictList" parameterType="QcAgeConDict" resultMap="QcAgeConDictResult">
+        <include refid="selectQcAgeConDictVo"/>
+        <where>  
+            <if test="ageCode != null  and ageCode != ''"> and age_code = #{ageCode}</if>
+            <if test="dictType != null  and dictType != ''"> and dict_type = #{dictType}</if>
+            <if test="dictTypeList != null ">
+                and dict_type in
+                <foreach item="item" index="index" collection="dictTypeList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="itemCon != null  and itemCon != ''"> and item_con = #{itemCon}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectQcAgeConDictById" parameterType="Long" resultMap="QcAgeConDictResult">
+        <include refid="selectQcAgeConDictVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertQcAgeConDict" parameterType="java.util.List">
+        insert into qc_age_con_dict
+        (id,age_code,dict_type, item_con, cre_per_name,cre_per_code,cre_date)
+        <foreach collection ="list" item="qcAgeConDictList" index= "index" separator="union all" >
+            select  #{qcAgeConDictList.id,jdbcType=NUMERIC},
+            #{qcAgeConDictList.ageCode,jdbcType=VARCHAR},
+            #{qcAgeConDictList.dictType,jdbcType=VARCHAR},
+            #{qcAgeConDictList.itemCon,jdbcType=VARCHAR},
+            #{qcAgeConDictList.crePerName,jdbcType=VARCHAR},
+            #{qcAgeConDictList.crePerCode,jdbcType=VARCHAR},
+            sysdate from dual
+        </foreach >
+    </insert>
+
+    <update id="updateQcAgeConDict" parameterType="QcAgeConDict">
+        update qc_age_con_dict
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ageCode != null">age_code = #{ageCode},</if>
+            <if test="dictType != null">dict_type = #{dictType},</if>
+            <if test="itemCon != null">item_con = #{itemCon},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcAgeConDictById" parameterType="Long">
+        delete from qc_age_con_dict where id = #{id}
+    </delete>
+    <delete id="deleteQcAgeConDict" >
+        delete from qc_age_con_dict
+    </delete>
+
+    <delete id="deleteQcAgeConDictByIds" parameterType="String">
+        delete from qc_age_con_dict where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.InpatientOrderMapper">
+
+    <select id="getNoMedicineAmount" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+        SELECT
+          sum( order_price * order_dose )
+        FROM
+          td_pa_take_drug_list
+        WHERE
+          take_drug_status = '1'
+          and admission_no=#{admissionNo,jdbcType=VARCHAR}
+    </select>
+    <select id="getNotRecordedApply" parameterType="java.lang.String"  resultType="java.math.BigDecimal">
+        SELECT
+          sum( b.price * b.dose )
+        FROM
+          td_pa_apply_form a,
+          td_pa_apply_form_item b
+        WHERE
+          a.apply_form_no = b.apply_form_no
+          AND b.apply_form_status = '30'
+          AND admission_no=#{admissionNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getNotSureApply" parameterType="java.lang.String"  resultType="java.math.BigDecimal">
+        select sum(total) from td_na_kssqjz where
+           admission_no=#{admissionNo,jdbcType=VARCHAR}  and mark=0
+    </select>
+</mapper>

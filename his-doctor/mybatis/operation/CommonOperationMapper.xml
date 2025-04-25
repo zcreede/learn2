@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.CommonOperationMapper">
+    <!-- 查询费别级别 -->
+    <select id="getFbInfo" parameterType="java.util.Map" resultType="java.util.Map">
+  		select * from tm_pm_pay where trim(pay_no) = #{payNo,jdbcType=VARCHAR}
+  </select>
+	<!-- 判断患者是否在科 -->
+	<select id="checkPatientIsIn" parameterType="java.lang.String" resultType="int">
+		select count(*) from t_ar_medicalinformation where admission_no = #{admission_no,jdbcType=VARCHAR}
+		and hospitalized_count = #{hospitalized_count,jdbcType=VARCHAR}
+		and (hospital_mark='2' or hospital_mark='1')
+	</select>
+	<select id="checkUserPassWord" resultType="java.lang.Integer">
+		SELECT
+			count( 1 )
+		FROM
+			TM_BS_STAFF a
+				LEFT JOIN tm_pm_role_staff b ON a.staff_code = b.staff_code
+		WHERE
+			a.staff_code = #{userCode,jdbcType=VARCHAR} and a.password=#{passWord,jdbcType=VARCHAR}
+
+		  AND b.dep_code = #{wardNo,jdbcType=VARCHAR}
+	</select>
+	<select id="getDbTime"   resultType="java.util.Date" >
+		SELECT sysdate FROM dual
+    </select>
+    <select id="selectGuarantee" resultType="com.emr.project.operation.domain.dto.GuaranteeDTO">
+		SELECT
+			t3.order_no as orderNo,
+			t3.operation_date as operationDate,
+			t3.operator as operator,
+			t3.approval_start_time as approvalStartTime,
+			t3.stop_time as stopTime,
+			t3.valid_mark as validMark,
+			t3.approval_end_time as approvalEndTime,
+			t3.approver as approver,
+			t3.effective_date as effectiveDate,
+			t3.stop_people as stopPeople,
+			t3.stop_operator as stopOperator,
+			t3.remark_code as remarkCode,
+			t3.Remark1 as Remark1,
+			t3.Remark2 as Remark2,
+			t3.amount_guaranteed as amountGuaranteed
+		FROM
+			t_ih_guarantee t3
+		WHERE
+			t3.admission_no = #{zyh,jdbcType=VARCHAR} and t3.hospitalized_count=#{zycs,jdbcType=VARCHAR} and t3.valid_mark=0
+		ORDER BY
+			t3.operation_date DESC
+	</select>
+</mapper>

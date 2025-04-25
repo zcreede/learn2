@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.ExamPartMapper">
+
+    <resultMap type="ExamPart" id="ExamPartResult">
+        <result property="id"    column="id"    />
+        <result property="examPartCd"    column="exam_part_cd"    />
+        <result property="examPartName"    column="exam_part_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="partClassCd"    column="part_class_cd"    />
+        <result property="partClassName"    column="part_class_name"    />
+        <result property="sort"    column="sort"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="examSex"    column="EXAM_SEX"    />
+    </resultMap>
+
+    <sql id="selectExamPartVo">
+        select id, exam_part_cd, exam_part_name, inputstrphtc, part_class_cd, part_class_name, sort, enabled, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,EXAM_SEX from TM_BS_EXAM_PART
+    </sql>
+
+    <select id="selectExamPartList" parameterType="ExamPart" resultMap="ExamPartResult">
+        select part.* from TM_BS_EXAM_PART part left join TM_BS_DOCUMENT_TYPE_BODY body on part.EXAM_PART_CD=body.EXAM_PART_CD
+        <where>
+            and part.enabled='1'
+            <if test="examPartCd != null  and examPartCd != ''"> and part.exam_part_cd = #{examPartCd}</if>
+            <if test="examPartName != null  and examPartName != ''">
+             and (part.exam_part_name like concat(concat('%', #{examPartName}), '%') or part.inputstrphtc like concat(concat('%', #{examPartName}), '%'))
+             </if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and part.inputstrphtc = #{inputstrphtc}</if>
+            <if test="partClassCd != null  and partClassCd != ''"> and part.part_class_cd = #{partClassCd}</if>
+            <if test="partClassName != null  and partClassName != ''"> and part.part_class_name like concat(concat('%', #{partClassName}), '%')</if>
+            <if test="sort != null "> and part.sort = #{sort}</if>
+            <if test="enabled != null  and enabled != ''"> and part.enabled = #{enabled}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and part.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and part.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and part.cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and part.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and part.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and part.alt_date = #{altDate}</if>
+            <if test="documentTypeNo != null "> and (body.DOCUMENT_TYPE_CD = #{documentTypeNo} or body.DOCUMENT_TYPE_CD='000000')</if>
+        </where>
+    </select>
+
+    <select id="selectExamPartById" parameterType="Long" resultMap="ExamPartResult">
+        <include refid="selectExamPartVo"/>
+        where id = #{id}
+    </select>
+
+    <resultMap id="ExamPartMainMap" type="com.emr.project.tmpm.domain.ExamPartMain">
+        <result column="id" property="id" />
+        <result column="PART_CLASS_CD" property="partClassCd" />
+        <result column="PART_CLASS_NAME" property="partClassName" />
+        <result column="SORT" property="sort" />
+    </resultMap>
+    <select id="selectExamPartMainList" resultMap="ExamPartMainMap">
+        select *
+        from tm_bs_exam_part_main order by sort
+    </select>
+    <select id="selectExamPartListBySexList" resultMap="ExamPartResult" parameterType="com.emr.project.tmpm.domain.vo.ExamPartVo">
+        select part.* from TM_BS_EXAM_PART part left join TM_BS_DOCUMENT_TYPE_BODY body on part.EXAM_PART_CD=body.EXAM_PART_CD
+        <where>
+            and part.enabled='1'
+            <if test="examPartCd != null  and examPartCd != ''"> and part.exam_part_cd = #{examPartCd}</if>
+            <if test="examPartName != null  and examPartName != ''">
+                and (part.exam_part_name like concat(concat('%', #{examPartName}), '%') or part.inputstrphtc like concat(concat('%', #{examPartName}), '%'))
+            </if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and part.inputstrphtc = #{inputstrphtc}</if>
+            <if test="partClassCd != null  and partClassCd != ''"> and part.part_class_cd = #{partClassCd}</if>
+            <if test="partClassName != null  and partClassName != ''"> and part.part_class_name like concat(concat('%', #{partClassName}), '%')</if>
+            <if test="sort != null "> and part.sort = #{sort}</if>
+            <if test="enabled != null  and enabled != ''"> and part.enabled = #{enabled}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and part.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and part.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and part.cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and part.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and part.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and part.alt_date = #{altDate}</if>
+            <if test="documentTypeNo != null "> and (body.DOCUMENT_TYPE_CD = #{documentTypeNo} or body.DOCUMENT_TYPE_CD='000000')</if>
+            <if test="list != null and list.size()>0">
+                and part.EXAM_SEX in
+                <foreach collection="list" separator="," open="(" close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by part.SORT
+    </select>
+
+    <insert id="insertExamPart" parameterType="ExamPart">
+        insert into TM_BS_EXAM_PART
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="examPartCd != null">exam_part_cd,</if>
+            <if test="examPartName != null">exam_part_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="partClassCd != null">part_class_cd,</if>
+            <if test="partClassName != null">part_class_name,</if>
+            <if test="sort != null">sort,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="examPartCd != null">#{examPartCd},</if>
+            <if test="examPartName != null">#{examPartName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="partClassCd != null">#{partClassCd},</if>
+            <if test="partClassName != null">#{partClassName},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamPart" parameterType="ExamPart">
+        update TM_BS_EXAM_PART
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="examPartCd != null">exam_part_cd = #{examPartCd},</if>
+            <if test="examPartName != null">exam_part_name = #{examPartName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="partClassCd != null">part_class_cd = #{partClassCd},</if>
+            <if test="partClassName != null">part_class_name = #{partClassName},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExamPartById" parameterType="Long">
+        delete from TM_BS_EXAM_PART where id = #{id}
+    </delete>
+
+    <delete id="deleteExamPartByIds" parameterType="String">
+        delete from TM_BS_EXAM_PART where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByExamPartCdList" parameterType="String" resultMap="ExamPartResult">
+        select * from TM_BS_EXAM_PART where exam_part_cd in
+        <foreach collection="examPartCdList" item="examPartCd" open="(" separator="," close=")">
+            #{examPartCd}
+        </foreach>
+    </select>
+</mapper>

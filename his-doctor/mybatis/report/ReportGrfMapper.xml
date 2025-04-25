@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.report.mapper.ReportGrfMapper">
+    <resultMap id="ReportMap" type="java.util.Map"></resultMap>
+  	<!-- 住院费用汇总报表查询-->
+	<select id="feeSummaryDayData" statementType="CALLABLE" parameterType="java.util.Map">
+		<![CDATA[
+			call PROC_ZYB_FYMX_HZ_QD(
+				#{var_zyh,mode=IN,jdbcType=VARCHAR},
+				#{var_bz,mode=IN,jdbcType=VARCHAR},
+				#{var_jzrq,mode=IN,jdbcType=VARCHAR},
+				#{cv_results,jdbcType=CURSOR,mode=OUT,resultMap=ReportMap}
+			)
+		]]>
+	</select>
+
+	<select id="feeSummaryDayDataList" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            (
+        SELECT
+            ex.ADMISSION_NO,
+            pv.DEPT_NAME AS bqbh,
+            pv.CASE_NO AS bah,
+            pv.NAME AS xm,
+            bal.EXPENSE_CATEGORY AS fb,
+            pv.HOSPITALIZED_DATE AS ryrq,
+            ex.PROJECT_NAME AS xmmc,
+            ex.STANDARD_CODE AS bh,
+            ex.CHARGE_NAME AS mc,
+            ex.STANDARD AS gg,
+            ex.UNIT AS dw,
+            sum( ex.DOSE ) AS jl,
+            ex.PRICE AS jg,
+            sum( ex.TOTAL ) AS je,
+            pv.LEAVE_HOSPITAL_DATE as cyrq
+        FROM
+            T_AR_MEDICALINFORMATION_ALL pv
+            LEFT JOIN ${tableName} ex ON pv.ADMISSION_NO = ex.ADMISSION_NO
+            LEFT JOIN T_AR_BASEINFOMATION_ALL bal ON bal.ADMISSION_NO = pv.ADMISSION_NO
+        WHERE
+            ex.ADMISSION_NO = #{admissionNo}
+            AND ex.PROJECT_NO != '00'
+        GROUP BY
+            ex.ADMISSION_NO,
+            pv.DEPT_NAME,
+            pv.CASE_NO,
+            pv.NAME,
+            bal.EXPENSE_CATEGORY,
+            pv.HOSPITALIZED_DATE,
+            ex.PROJECT_NAME,
+            ex.STANDARD_CODE,
+            ex.CHARGE_NAME,
+            ex.STANDARD,
+            ex.UNIT,
+            ex.PRICE,
+            ex.PROJECT_NO,
+            pv.LEAVE_HOSPITAL_DATE
+        ORDER BY
+            ex.PROJECT_NO
+            ) a
+        WHERE
+            a.je != 0
+    </select>
+	<select id="selectHospitalMarkByAdmissionNo" resultType="java.lang.String">
+        select HOSPITAL_MARK from T_AR_MEDICALINFORMATION_ALL where ADMISSION_NO=#{admissionNo}
+    </select>
+
+    <select id="feeSummaryDayDataListForPdf" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        pv.BEDID,
+        bal.PERSON_AGE,
+        (case bal.SEX when '1' then '男' when '2' then '女' end) as sex,
+        ex.ADMISSION_NO,
+        pv.DEPT_NAME AS bqbh,
+        pv.CASE_NO AS bah,
+        pv.NAME AS xm,
+        bal.EXPENSE_CATEGORY AS fb,
+        pv.HOSPITALIZED_DATE AS ryrq,
+        ex.THREE_LEVEL_NAME AS xmmc,
+        ex.CHARGE_NO,
+        ex.standard_code AS bh,
+        ex.CHARGE_NAME AS mc,
+        ex.STANDARD AS gg,
+        ex.UNIT AS dw,
+        sum( ex.DOSE ) AS jl,
+        ex.PRICE AS jg,
+        sum( ex.TOTAL ) AS je,
+        pv.LEAVE_HOSPITAL_DATE as cyrq,
+        clin.bzbm,clin.bzmc,
+        ex.charge_code,
+        beds.bed_order,
+        ex.charge_name,ex.THREE_LEVEL_ACCOUNTING,
+        TO_NUMBER(ex.three_level_accounting) as three_level_accounting_sort,
+        u.ZFBL,
+        u.XMDJ,
+        (case u.XMDJ when '01' then '甲类' when '02' then '乙类' when '03' then '自费' end) as XMLB,
+        nvl(ic.DEPOS_IT,0) as DEPOS_IT
+        FROM
+        T_AR_MEDICALINFORMATION_ALL pv
+        LEFT JOIN T_IH_EXPENSEDETAIL_ALL ex ON pv.ADMISSION_NO = ex.ADMISSION_NO
+        LEFT JOIN T_AR_BASEINFOMATION_ALL bal ON bal.ADMISSION_NO = pv.ADMISSION_NO
+        LEFT JOIN V_YY_BZBM_DRUG_CLIN clin on clin.xmbh = ex.STANDARD_CODE
+        left join TM_NA_BEDS beds on beds.BEDID = pv.BEDID and beds.WARD_NO = pv.WARD_NO
+        left join T_MI_UPLOADDETAIL_ALL u on u.BILLS_NO = ex.BILLS_NO and u.UPLOADING_MARK = '1'
+        left join T_IH_CUMULATIVECOST ic on ic.ADMISSION_NO = pv.ADMISSION_NO
+        WHERE
+        ex.PROJECT_NO != '00' and ex.CHARGE_NO is not null
+        <if test="admissionNo != null and admissionNo != '' ">
+            and ex.ADMISSION_NO = #{admissionNo}
+        </if>
+        GROUP BY
+        pv.BEDID,
+        ex.ADMISSION_NO,
+        bal.PERSON_AGE,
+        bal.SEX,
+        pv.DEPT_NAME,
+        pv.CASE_NO,
+        pv.NAME,
+        bal.EXPENSE_CATEGORY,
+        pv.HOSPITALIZED_DATE,
+        ex.THREE_LEVEL_NAME,
+        ex.CHARGE_NAME,
+        ex.STANDARD,
+        ex.UNIT,
+        ex.PRICE,
+        ex.THREE_LEVEL_ACCOUNTING,
+        pv.LEAVE_HOSPITAL_DATE,clin.bzbm,clin.bzmc,
+        ex.charge_code,
+        ex.charge_no,beds.bed_order,ex.standard_code,
+        ex.charge_name,ex.THREE_LEVEL_ACCOUNTING,u.XMDJ,u.ZFBL,ic.DEPOS_IT
+        ORDER BY
+        beds.bed_order,three_level_accounting_sort,ex.standard_code
+        ) a
+        WHERE
+        a.je != 0
+    </select>
+
+    <resultMap id="BillingDetailsResult" type="com.emr.project.report.domain.vo.BillingDetailsVo">
+        <result property="admissionNo"    column="ADMISSION_NO"    />
+        <result property="totalAmount"    column="TOTAL_AMOUNT"    />
+        <result property="zfje"    column="ZFJE"    />
+    </resultMap>
+    <select id="selectBillingDetailByAdmissionNoList" resultMap="BillingDetailsResult">
+        select ADMISSION_NO,DEPOS_IT,TOTAL_AMOUNT,ZFJE,GRZF from T_MI_BILLINGDETAILS_all
+        where ADMISSION_NO = #{admissionNo}
+    </select>
+
+    <resultMap id="FeeSummaryDayResult" type="com.emr.project.report.domain.vo.FeeDayDataVo">
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="hospitalizedDate"    column="hospitalized_date"    />
+        <result property="patientName"    column="name"    />
+        <result property="expenseCategory"    column="expense_category"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="standardCode"    column="standard_code"    />
+        <result property="standardName"    column="standard_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="unit"    column="unit"    />
+        <result property="price"    column="price"    />
+        <result property="dose"    column="dose"    />
+        <result property="total"    column="total"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date" />
+        <result property="medicalInsuranceCode"    column="bzbm"    />
+        <result property="medicalInsuranceName"    column="bzmc"    />
+
+        <result property="chargeCode"    column="charge_code"    />
+        <result property="chargeNo"    column="charge_no"    />
+        <result property="chargeName"    column="charge_name"    />
+        <result property="threeLevelAccounting"    column="three_level_accounting"    />
+    </resultMap>
+    <select id="selectFeeSummaryDay" resultMap="FeeSummaryDayResult">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        pv.BEDID,
+        ex.admission_no,
+        pv.dept_name,
+        pv.case_no,
+        pv.name,
+        bal.expense_category,
+        pv.hospitalized_date,
+        ex.three_level_name as project_name,
+        ex.charge_no,
+        ex.standard_code,
+        ex.charge_name as standard_name,
+        ex.standard,
+        ex.unit,
+        sum(ex.dose) as dose,
+        ex.price,
+        sum(ex.total) as total,
+        pv.leave_hospital_date ,
+        clin.bzbm,
+        clin.bzmc,
+        ex.charge_code,
+        beds.bed_order,
+        ex.charge_name,ex.three_level_accounting,
+        TO_NUMBER(ex.three_level_accounting) as three_level_accounting_sort
+        FROM
+        T_AR_MEDICALINFORMATION_ALL pv
+        LEFT JOIN T_IH_EXPENSEDETAIL_ALL ex ON pv.ADMISSION_NO = ex.ADMISSION_NO
+        LEFT JOIN T_AR_BASEINFOMATION_ALL bal ON bal.ADMISSION_NO = pv.ADMISSION_NO
+        LEFT JOIN V_YY_BZBM_DRUG_CLIN clin on clin.xmbh = ex.STANDARD_CODE
+        left join TM_NA_BEDS beds on beds.BEDID = pv.BEDID and beds.WARD_NO = pv.WARD_NO
+        WHERE
+        ex.PROJECT_NO != '00' and ex.CHARGE_NO is not null
+        <if test="admissionNo != null and admissionNo != ''">
+            and ex.ADMISSION_NO = #{admissionNo}
+        </if>
+        GROUP BY
+        pv.BEDID,
+        ex.ADMISSION_NO,
+        pv.DEPT_NAME,
+        pv.CASE_NO,
+        pv.NAME,
+        bal.EXPENSE_CATEGORY,
+        pv.HOSPITALIZED_DATE,
+        ex.three_level_name,
+        ex.charge_name,
+        ex.STANDARD,
+        ex.UNIT,
+        ex.PRICE,
+        ex.THREE_LEVEL_ACCOUNTING,
+        pv.LEAVE_HOSPITAL_DATE,clin.bzbm,clin.bzmc,
+        ex.charge_code,ex.standard_code,
+        ex.charge_no,beds.bed_order,
+        ex.charge_name,ex.THREE_LEVEL_ACCOUNTING
+        ORDER BY
+        beds.bed_order,three_level_accounting_sort,ex.standard_code
+        ) a
+        WHERE
+        a.total != 0
+    </select>
+
+    <select id="selectThirdList" resultType="java.lang.String">
+        select CODE from TM_BS_ACCOUNT_THIRD where FIRST_CODE = '1'
+    </select>
+</mapper>

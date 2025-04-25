@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.webservice.mapper.YbconfigureMapper">
+
+    <resultMap type="Ybconfigure" id="YbconfigureResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="bz"    column="bz"    />
+        <result property="bz1"    column="bz1"    />
+        <result property="bz2"    column="bz2"    />
+    </resultMap>
+
+    <sql id="selectYbconfigureVo">
+        select id, name, bz, bz1, bz2 from ybconfigure
+    </sql>
+
+    <select id="selectYbconfigureList" parameterType="Ybconfigure" resultMap="YbconfigureResult">
+        <include refid="selectYbconfigureVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat(concat('%', #{name}), '%')</if>
+            <if test="bz != null  and bz != ''"> and bz = #{bz}</if>
+            <if test="bz1 != null  and bz1 != ''"> and bz1 = #{bz1}</if>
+            <if test="bz2 != null  and bz2 != ''"> and bz2 = #{bz2}</if>
+        </where>
+    </select>
+
+    <select id="selectYbconfigureById" parameterType="Long" resultMap="YbconfigureResult">
+        <include refid="selectYbconfigureVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertYbconfigure" parameterType="Ybconfigure">
+        insert into ybconfigure
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="bz != null">bz,</if>
+            <if test="bz1 != null">bz1,</if>
+            <if test="bz2 != null">bz2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="bz != null">#{bz},</if>
+            <if test="bz1 != null">#{bz1},</if>
+            <if test="bz2 != null">#{bz2},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT ALL
+        <foreach item="item" collection="list">
+            into ybconfigure
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">id,
+                    </if>
+                    <if test="item.name != null">name,
+                    </if>
+                    <if test="item.bz != null">bz,
+                    </if>
+                    <if test="item.bz1 != null">bz1,
+                    </if>
+                    <if test="item.bz2 != null">bz2,
+                    </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">#{item.id},
+                    </if>
+                    <if test="item.name != null">#{item.name},
+                    </if>
+                    <if test="item.bz != null">#{item.bz},
+                    </if>
+                    <if test="item.bz1 != null">#{item.bz1},
+                    </if>
+                    <if test="item.bz2 != null">#{item.bz2},
+                    </if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateYbconfigure" parameterType="Ybconfigure">
+        update ybconfigure
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="bz != null">bz = #{bz},</if>
+            <if test="bz1 != null">bz1 = #{bz1},</if>
+            <if test="bz2 != null">bz2 = #{bz2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update ybconfigure
+            <trim prefix="SET" suffixOverrides=",">
+                        <if test="item.name != null">name = #{item.name},</if>
+                        <if test="item.bz != null">bz = #{item.bz},</if>
+                        <if test="item.bz1 != null">bz1 = #{item.bz1},</if>
+                        <if test="item.bz2 != null">bz2 = #{item.bz2},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteYbconfigureById" parameterType="Long">
+        delete from ybconfigure where id = #{id}
+    </delete>
+
+    <delete id="deleteYbconfigureByIds" parameterType="String">
+        delete from ybconfigure where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

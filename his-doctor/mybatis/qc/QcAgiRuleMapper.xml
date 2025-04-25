@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcAgiRuleMapper">
+
+    <resultMap type="QcAgiRule" id="QcAgiRuleResult">
+        <result property="id"    column="id"    />
+        <result property="ruleCode"    column="rule_code"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="ruleComType"    column="rule_com_type"    />
+        <result property="agiEvnt"    column="agi_evnt"    />
+        <result property="addMeth"    column="add_meth"    />
+        <result property="trigLogicDesc"    column="trig_logic_desc"    />
+        <result property="trigTime"    column="trig_time"    />
+        <result property="trigTimeUnit"    column="trig_time_unit"    />
+        <result property="trigTimeDesc"    column="trig_time_desc"    />
+        <result property="finishLimitTime"    column="finish_limit_time"    />
+        <result property="limitTimeUnit"    column="limit_time_unit"    />
+        <result property="proValidFlag"    column="pro_valid_flag"    />
+        <result property="posValidFlag"    column="pos_valid_flag"    />
+        <result property="taskType"    column="task_type"    />
+        <result property="taksDoct"    column="taks_doct"    />
+        <result property="defeLevel"    column="defe_level"    />
+        <result property="interVeriValid"    column="inter_veri_valid"    />
+        <result property="limitTimeVeriValid"    column="limit_time_veri_valid"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="taskFinishFlag"    column="task_finish_flag"    />
+        <result property="ruleTip"    column="rule_tip"    />
+    </resultMap>
+<resultMap id="QcAgiRuleVoResult" type="QcAgiRuleVo" extends="QcAgiRuleResult">
+    <result property="evenName"    column="even_name"    />
+    <result property="defeLevelName"    column="defeLevelName"    />
+    <result property="eventId" column="event_id"/>
+    <result property="beginTime" column="begin_time"/>
+    <result property="endTime" column="end_time"/>
+    <result property="emrClassCode" column="emr_class_code"/>
+</resultMap>
+    <sql id="selectQcAgiRuleVo">
+        select id, rule_code, rule_name, emr_type_code, emr_type_name, rule_com_type, agi_evnt, add_meth, trig_logic_desc, trig_time, trig_time_unit, trig_time_desc, finish_limit_time, limit_time_unit, pro_valid_flag, pos_valid_flag, task_type, taks_doct, defe_level, inter_veri_valid, limit_time_veri_valid, valid_flag, del_flag, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date,task_finish_flag,rule_tip from qc_agi_rule
+    </sql>
+
+    <select id="selectList" parameterType="QcAgiRule" resultMap="QcAgiRuleResult">
+        <include refid="selectQcAgiRuleVo"/>
+        <where>
+            <if test="ruleCode != null  and ruleCode != ''"> and rule_code = #{ruleCode}</if>
+            <if test="ruleName != null  and ruleName != ''"> and rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="emrTypeCode != null  and emrTypeCode != ''"> and emr_type_code = #{emrTypeCode}</if>
+            <if test="emrTypeName != null  and emrTypeName != ''"> and emr_type_name like concat(concat('%', #{emrTypeName}), '%')</if>
+            <if test="ruleComType != null  and ruleComType != ''"> and rule_com_type = #{ruleComType}</if>
+            <if test="agiEvnt != null  and agiEvnt != ''"> and agi_evnt = #{agiEvnt}</if>
+            <if test="addMeth != null  and addMeth != ''"> and add_meth = #{addMeth}</if>
+            <if test="trigLogicDesc != null  and trigLogicDesc != ''"> and trig_logic_desc = #{trigLogicDesc}</if>
+            <if test="trigTime != null"> and trig_time = #{trigTime}</if>
+            <if test="trigTimeUnit != null  and trigTimeUnit != ''"> and trig_time_unit = #{trigTimeUnit}</if>
+            <if test="trigTimeDesc != null  and trigTimeDesc != ''"> and trig_time_desc = #{trigTimeDesc}</if>
+            <if test="finishLimitTime != null "> and finish_limit_time = #{finishLimitTime}</if>
+            <if test="limitTimeUnit != null "> and limit_time_unit = #{limitTimeUnit}</if>
+            <if test="proValidFlag != null  and proValidFlag != ''"> and pro_valid_flag = #{proValidFlag}</if>
+            <if test="posValidFlag != null  and posValidFlag != ''"> and pos_valid_flag = #{posValidFlag}</if>
+            <if test="taskType != null  and taskType != ''"> and task_type = #{taskType}</if>
+            <if test="taksDoct != null  and taksDoct != ''"> and taks_doct = #{taksDoct}</if>
+            <if test="defeLevel != null  and defeLevel != ''"> and defe_level = #{defeLevel}</if>
+            <if test="interVeriValid != null  and interVeriValid != ''"> and inter_veri_valid = #{interVeriValid}</if>
+            <if test="limitTimeVeriValid != null  and limitTimeVeriValid != ''"> and limit_time_veri_valid = #{limitTimeVeriValid}</if>
+            <if test="validFlag != null  and validFlag != ''"> and valid_flag = #{validFlag}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="taskFinishFlag != null and taskFinishFlag !=''"> and task_finish_flag = #{taskFinishFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectQcAgiRuleList" parameterType="QcAgiRuleVo" resultMap="QcAgiRuleVoResult">
+        select qar.id, qar.rule_code, qar.rule_name, qar.emr_type_code, qar.emr_type_name, qar.rule_com_type, qar.agi_evnt, qar.add_meth,
+        qar.trig_logic_desc, qar.trig_time, qar.finish_limit_time, qar.limit_time_unit, qar.pro_valid_flag, qar.pos_valid_flag,
+        qar.task_type, qar.taks_doct, qar.defe_level, qar.inter_veri_valid, qar.limit_time_veri_valid, qar.valid_flag, qar.del_flag, qar.alt_per_name,
+        qar.alt_per_code, qar.alt_date, qar.cre_per_name, qar.cre_per_code, qar.cre_date,qar.task_finish_flag,qar.rule_tip,qae.even_name,sdd.data_tag as defeLevelName from qc_agi_rule qar
+         left join qc_agi_even qae on qar.agi_evnt=qae.even_code
+         left join TM_BS_DICT_DATA sdd on sdd.data_val=qar.defe_level and sdd.dict_type='s052'
+        <where>
+            <if test="ruleCode != null  and ruleCode != ''"> and qar.rule_code = #{ruleCode}</if>
+            <if test="ruleName != null  and ruleName != ''"> and qar.rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="emrTypeCode != null  and emrTypeCode != ''"> and qar.emr_type_code = #{emrTypeCode}</if>
+            <if test="emrTypeName != null  and emrTypeName != ''"> and qar.emr_type_name like concat(concat('%', #{emrTypeName}), '%')</if>
+            <if test="ruleComType != null  and ruleComType != ''"> and qar.rule_com_type = #{ruleComType}</if>
+            <if test="agiEvnt != null  and agiEvnt != ''"> and qar.agi_evnt = #{agiEvnt}</if>
+            <if test="addMeth != null  and addMeth != ''"> and qar.add_meth = #{addMeth}</if>
+            <if test="trigLogicDesc != null  and trigLogicDesc != ''"> and qar.trig_logic_desc = #{trigLogicDesc}</if>
+            <if test="trigTime != null"> and qar.trig_time = #{trigTime}</if>
+            <if test="trigTimeUnit != null  and trigTimeUnit != ''"> and qar.trig_time_unit = #{trigTimeUnit}</if>
+            <if test="trigTimeDesc != null  and trigTimeDesc != ''"> and qar.trig_time_desc = #{trigTimeDesc}</if>
+            <if test="finishLimitTime != null "> and qar.finish_limit_time = #{finishLimitTime}</if>
+            <if test="limitTimeUnit != null "> and qar.limit_time_unit = #{limitTimeUnit}</if>
+            <if test="proValidFlag != null  and proValidFlag != ''"> and qar.pro_valid_flag = #{proValidFlag}</if>
+            <if test="posValidFlag != null  and posValidFlag != ''"> and qar.pos_valid_flag = #{posValidFlag}</if>
+            <if test="taskType != null  and taskType != ''"> and qar.task_type = #{taskType}</if>
+            <if test="taksDoct != null  and taksDoct != ''"> and qar.taks_doct = #{taksDoct}</if>
+            <if test="defeLevel != null  and defeLevel != ''"> and qar.defe_level = #{defeLevel}</if>
+            <if test="interVeriValid != null  and interVeriValid != ''"> and qar.inter_veri_valid = #{interVeriValid}</if>
+            <if test="limitTimeVeriValid != null  and limitTimeVeriValid != ''"> and qar.limit_time_veri_valid = #{limitTimeVeriValid}</if>
+            <if test="validFlag != null  and validFlag != ''"> and qar.valid_flag = #{validFlag}</if>
+            <if test="altPerName != null  and altPerName != ''"> and qar.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and qar.alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and qar.alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and qar.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and qar.cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and qar.cre_date = #{creDate}</if>
+            <if test="taskFinishFlag != null and taskFinishFlag !=''"> and qar.task_finish_flag = #{taskFinishFlag}</if>
+            <if test="emrTypeCodeList != null and emrTypeCodeList.size()>0">
+                and qar.emr_type_code in
+                <foreach item="item" index="index" collection="emrTypeCodeList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectQcAgiRuleById" parameterType="Long" resultMap="QcAgiRuleResult">
+        <include refid="selectQcAgiRuleVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectQcAgiRuleByCode" parameterType="String" resultMap="QcAgiRuleResult">
+        <include refid="selectQcAgiRuleVo"/>
+        where rule_code = #{ruleCode}
+        and del_flag = 0
+        and valid_flag = 1
+    </select>
+
+    <select id="selectYxQcAgiRuleByCode" parameterType="String" resultMap="QcAgiRuleResult">
+        <include refid="selectQcAgiRuleVo"/>
+        where rule_code = #{ruleCode}
+        and del_flag = 0
+    </select>
+
+    <select id="selectQcAgiRuleListByCode" resultType="String" resultMap="QcAgiRuleVoResult">
+        <include refid="selectQcAgiRuleVo"/>
+        where del_flag = 0
+        and valid_flag = 1
+        <if test="ruleCodeList != null and ruleCodeList.size > 0">
+            and rule_code in
+            <foreach collection="ruleCodeList" open="(" separator="," close=")" item="ruleCode">
+                #{ruleCode}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectQcAgiRuleListByIds" parameterType="Long" resultMap="QcAgiRuleResult">
+        <include refid="selectQcAgiRuleVo"/>
+        where del_flag = 0
+        and valid_flag = 1
+        <if test="list != null and list.size > 0">
+            and id in
+            <foreach collection="list" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <insert id="insertQcAgiRule" parameterType="QcAgiRule">
+        insert into qc_agi_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="ruleCode != null">rule_code,</if>
+            <if test="ruleName != null">rule_name,</if>
+            <if test="emrTypeCode != null">emr_type_code,</if>
+            <if test="emrTypeName != null">emr_type_name,</if>
+            <if test="ruleComType != null">rule_com_type,</if>
+            <if test="agiEvnt != null">agi_evnt,</if>
+            <if test="addMeth != null">add_meth,</if>
+            <if test="trigLogicDesc != null">trig_logic_desc,</if>
+            <if test="trigTime != null">trig_time,</if>
+            <if test="trigTimeUnit != null  and trigTimeUnit != ''">trig_time_unit</if>
+            <if test="trigTimeDesc != null  and trigTimeDesc != ''">trig_time_desc</if>
+            <if test="finishLimitTime != null">finish_limit_time,</if>
+            <if test="limitTimeUnit != null">limit_time_unit,</if>
+            <if test="proValidFlag != null">pro_valid_flag,</if>
+            <if test="posValidFlag != null">pos_valid_flag,</if>
+            <if test="taskType != null">task_type,</if>
+            <if test="taksDoct != null">taks_doct,</if>
+            <if test="defeLevel != null">defe_level,</if>
+            <if test="interVeriValid != null">inter_veri_valid,</if>
+            <if test="limitTimeVeriValid != null">limit_time_veri_valid,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="taskFinishFlag != null and taskFinishFlag !=''">task_finish_flag,</if>
+            <if test="ruleTip != null and ruleTip !=''">rule_tip,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="ruleCode != null">#{ruleCode},</if>
+            <if test="ruleName != null">#{ruleName},</if>
+            <if test="emrTypeCode != null">#{emrTypeCode},</if>
+            <if test="emrTypeName != null">#{emrTypeName},</if>
+            <if test="ruleComType != null">#{ruleComType},</if>
+            <if test="agiEvnt != null">#{agiEvnt},</if>
+            <if test="addMeth != null">#{addMeth},</if>
+            <if test="trigLogicDesc != null">#{trigLogicDesc},</if>
+            <if test="trigTime != null">#{trigTime},</if>
+            <if test="trigTimeUnit != null  and trigTimeUnit != ''">#{trigTimeUnit}</if>
+            <if test="trigTimeDesc != null  and trigTimeDesc != ''">#{trigTimeDesc}</if>
+            <if test="finishLimitTime != null">#{finishLimitTime},</if>
+            <if test="limitTimeUnit != null">#{limitTimeUnit},</if>
+            <if test="proValidFlag != null">#{proValidFlag},</if>
+            <if test="posValidFlag != null">#{posValidFlag},</if>
+            <if test="taskType != null">#{taskType},</if>
+            <if test="taksDoct != null">#{taksDoct},</if>
+            <if test="defeLevel != null">#{defeLevel},</if>
+            <if test="interVeriValid != null">#{interVeriValid},</if>
+            <if test="limitTimeVeriValid != null">#{limitTimeVeriValid},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="taskFinishFlag != null and taskFinishFlag !=''">#{taskFinishFlag},</if>
+            <if test="ruleTip != null and ruleTip !=''">#{ruleTip},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQcAgiRule" parameterType="QcAgiRule">
+        update qc_agi_rule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ruleCode != null">rule_code = #{ruleCode},</if>
+            <if test="ruleName != null">rule_name = #{ruleName},</if>
+            <if test="emrTypeCode != null">emr_type_code = #{emrTypeCode},</if>
+            <if test="emrTypeName != null">emr_type_name = #{emrTypeName},</if>
+            <if test="ruleComType != null">rule_com_type = #{ruleComType},</if>
+            <if test="agiEvnt != null">agi_evnt = #{agiEvnt},</if>
+            <if test="addMeth != null">add_meth = #{addMeth},</if>
+            <if test="trigLogicDesc != null">trig_logic_desc = #{trigLogicDesc},</if>
+            <if test="trigTime != null">trig_time = #{trigTime},</if>
+            <if test="trigTimeUnit != null  and trigTimeUnit != ''">trig_time_unit = #{trigTimeUnit},</if>
+            <if test="trigTimeDesc != null  and trigTimeDesc != ''">trig_time_desc = #{trigTimeDesc},</if>
+            <if test="finishLimitTime != null">finish_limit_time = #{finishLimitTime},</if>
+            <if test="limitTimeUnit != null">limit_time_unit = #{limitTimeUnit},</if>
+            <if test="proValidFlag != null">pro_valid_flag = #{proValidFlag},</if>
+            <if test="posValidFlag != null">pos_valid_flag = #{posValidFlag},</if>
+            <if test="taskType != null">task_type = #{taskType},</if>
+            <if test="taksDoct != null">taks_doct = #{taksDoct},</if>
+            <if test="defeLevel != null">defe_level = #{defeLevel},</if>
+            <if test="interVeriValid != null">inter_veri_valid = #{interVeriValid},</if>
+            <if test="limitTimeVeriValid != null">limit_time_veri_valid = #{limitTimeVeriValid},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="taskFinishFlag != null and taskFinishFlag !=''">task_finish_flag = #{taskFinishFlag},</if>
+            <if test="ruleTip != null and ruleTip !=''">rule_tip = #{ruleTip},</if>
+            cre_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcAgiRuleById" parameterType="Long">
+        delete from qc_agi_rule where id = #{id}
+    </delete>
+
+    <delete id="deleteQcAgiRuleByIds" parameterType="String">
+        delete from qc_agi_rule where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectQcAgiRuleEventVoList" parameterType="String" resultMap="QcAgiRuleVoResult">
+        select r.*,e.id event_id,e.begin_time,e.end_time from pat_event e left join QC_AGI_RULE r on e.EVENT_CODE = r.AGI_EVNT
+        where e.patient_id = #{patientId}
+          and r.emr_type_code = #{emrTypeCode}
+          and r.VALID_FLAG = '1'
+          and r.limit_time_veri_valid = '1'
+    </select>
+    <select id="selectOperBeforeList" parameterType="String" resultMap="QcAgiRuleVoResult">
+        select r.id,
+           r.rule_code, replace(r.rule_name, '时效质控','') as emr_type_name ,r.rule_name, r.emr_type_code,r.rule_com_type, r.agi_evnt, e.even_name, r.add_meth,
+           r.trig_logic_desc, r.trig_time, r.finish_limit_time, r.pro_valid_flag, r.pos_valid_flag, r.task_type, r.taks_doct, r.defe_level,
+           r.inter_veri_valid, r.limit_time_veri_valid, r.valid_flag, r.del_flag, r.alt_per_name, r.alt_per_code, r.alt_date, r.cre_per_name,
+           r.cre_per_code, r.cre_date, r.task_finish_flag, r.rule_tip, r.limit_time_unit, r.trig_time_unit, r.trig_time_desc,config.emr_class_code
+        from qc_agi_rule r left join qc_agi_even e on r.agi_evnt = e.even_code
+        left join SYS_EMR_TYPE_CONFIG config on config.emr_type_code=r.emr_type_code
+        where r.agi_evnt =#{eventCd}
+    </select>
+</mapper>

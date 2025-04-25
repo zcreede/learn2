@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mzInfo.mapper.OutpatientInfoMapper">
+    <resultMap id="OutpatientInfoVOMap" type="com.emr.project.mzInfo.domain.OutpatientInfoVO">
+        <result column="sfzh" property="idCard" />
+        <result column="xm" property="name" />
+        <result column="djlxbh" property="documentTypeCd" />
+        <result column="xb" property="sex" />
+        <result column="csrq" property="birdthDate" />
+        <result column="nl" property="age" />
+        <result column="jzrq" property="hospitalizedDate" />
+        <result column="jzksbh" property="deptCode" />
+        <result column="jzksmc" property="deptName" />
+        <result column="jzysbh" property="residentNo" />
+        <result column="jzysxm" property="residentName" />
+        <result column="zdmc" property="inhosDiagName" />
+        <result column="hzid" property="admissionNo" />
+        <result column="mzh" property="caseNo" />
+    </resultMap>
+
+    <select id="selectOutPatientInfoByVisitNo" resultMap="OutpatientInfoVOMap">
+        select *
+          from (select a.patient_id      as hzid
+                  from TD_DR_VISIT_INFO a
+                 where a.visit_no = #{visitNo}
+                union all
+                select a.patient_id      as hzid
+                  from TD_DR_VISIT_INFO_h a
+                 where a.visit_no = #{visitNo}
+                ) m
+    </select>
+
+    <select id="selectOutPatientInfoByIdCard" resultMap="OutpatientInfoVOMap">
+        select *
+          from (select b.identity_no     as sfzh,
+                       a.pat_name        as xm,
+                       a.sex_cd          as xb,
+                       b.birthday        as csrq,
+                       a.age_str         as nl,
+                       a.visit_date      as jzrq,
+                       a.visit_dept_cd   as jzksbh,
+                       a.visit_dept_name as jzksmc,
+                       a.visit_doc_cd    as jzysbh,
+                       a.visit_doc_name  as jzysxm,
+                       c.diag_name       as zdmc,
+                       a.patient_id      as hzid,
+                       a.visit_no        as mzh
+                  from TD_DR_VISIT_INFO a
+                  left join TD_PM_PATIENT b
+                    on a.patient_id = b.patient_id
+                  left join TD_DR_DIAG_INFO c
+                    on a.patient_id = c.patient_id
+                   and a.visit_no = c.visit_no
+                   and c.diag_class = 'XY'
+                   and c.main_diag_flag = '1'
+                 <where>
+                     <if test="patientId != null and patientId != ''">
+                         and a.patient_id = #{patientId}
+                     </if>
+                     <if test="idCard != null and idCard != ''">
+                         and b.identity_no = #{idCard}
+                     </if>
+                 </where>
+                union all
+                select b.identity_no     as sfzh,
+                       a.pat_name        as xm,
+                       a.sex_cd          as xb,
+                       b.birthday        as csrq,
+                       a.age_str         as nl,
+                       a.visit_date      as jzrq,
+                       a.visit_dept_cd   as jzksbh,
+                       a.visit_dept_name as jzksmc,
+                       a.visit_doc_cd    as jzysbh,
+                       a.visit_doc_name  as jzysxm,
+                       c.diag_name       as zdmc,
+                       a.patient_id      as hzid,
+                       a.visit_no        as mzh
+                  from TD_DR_VISIT_INFO_h a
+                  left join TD_PM_PATIENT b
+                    on a.patient_id = b.patient_id
+                  left join TD_DR_DIAG_INFO c
+                    on a.patient_id = c.patient_id
+                   and a.visit_no = c.visit_no
+                   and c.diag_class = 'XY'
+                   and c.main_diag_flag = '1'
+                 <where>
+                     <if test="patientId != null and patientId != ''">
+                         and a.patient_id = #{patientId}
+                     </if>
+                     <if test="idCard != null and idCard != ''">
+                         and b.identity_no = #{idCard}
+                     </if>
+                 </where>
+                ) m
+         order by m.jzrq desc
+    </select>
+
+    <resultMap id="TestReportResult" type="com.emr.project.pat.domain.vo.TestReportVo">
+        <result column="djh" property="appCd" />
+        <result column="djh" property="id" />
+        <result column="djh" property="clinItemCd" />
+        <result column="djh" property="testRepNo" />
+        <result column="kssj" property="appTime" />
+        <result column="djzt" property="itemState" />
+        <result column="sjmd" property="clinItemName" />
+        <result column="bbmc" property="specName" />
+        <result column="xm" property="patientName" />
+        <result column="zyh" property="inpNo" />
+        <result column="zyh" property="caseNo" />
+        <result column="ksbh" property="appDeptCd" />
+        <result column="ysbh" property="appDocCd" />
+        <result column="testman" property="testDocCd" />
+        <result column="testman" property="testDocName" />
+        <result column="testman" property="testTecCd" />
+        <result column="testman" property="testTecName" />
+        <result column="shys" property="repDocCd" />
+        <result column="shys" property="repDocName" />
+        <result column="result_date_time" property="repDate" />
+        <result column="result_date_time" property="clinRepDate" />
+        <result column="lczd" property="testAim" />
+        <result column="djlxbh" property="docType" />
+    </resultMap>
+    <select id="selectTestReportList" resultMap="TestReportResult">
+        select
+            a.djlxbh,
+            a.djh,
+            a.kssj,
+            case a.djzt
+            when '0' then '已提交'
+            when '3' then '已计费'
+            when '4' then '退费申请'
+            when '5' then '作废'
+            when '7' then '已退费'
+            when '9' then '报告完成'
+            end as djzt,
+            a.sjmd,
+            a.bbmc,
+            a.zyh
+        from v_yy_yz_sqd a
+        where a.bz1='mz' and a.djlb='2' and a.Zyh=#{patientId}
+        GROUP BY a.djlxbh,a.djh,a.kssj,a.djzt,a.sjmd,a.bbmc,a.Zyh
+        order by a.kssj desc
+    </select>
+    <resultMap id="TestReportHResult" type="com.emr.project.pat.domain.vo.TestReportVo">
+        <result column="test_no" property="appCd" />
+        <result column="report_item_name" property="clinItemName" />
+        <result column="abnormal_indicator" property="normalSign2" />
+    </resultMap>
+    <select id="selectTestReportResultList" resultMap="TestReportHResult">
+        select test_no,report_item_name,abnormal_indicator  from lab_result_rm_mz
+        where abnormal_indicator in ('H','L')
+        <if test="list !=null and list.size()>0">
+            and test_no in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <resultMap id="TestResultMap" type="com.emr.project.pat.domain.TestResult">
+        <result column="report_item_name" property="testItemName" />
+        <result column="report_item_code" property="testItemCd" />
+        <result column="report_item_code" property="testItemId" />
+        <result column="result" property="testResExp" />
+        <result column="units" property="valueUnit2" />
+        <result column="abnormal_indicator" property="normalSign2" />
+        <result column="print_context" property="valueRange2" />
+        <result column="print_order" property="printOrder" />
+        <result column="result_date_time" property="resultDateTime" />
+    </resultMap>
+    <select id="selectReportItemListByAppCd" resultMap="TestResultMap">
+        select
+            report_item_name,
+            report_item_code,
+            result,
+            units,
+            abnormal_indicator,
+            print_context,
+            print_order,
+            result_date_time
+        from lab_result_rm_mz where test_no = #{appCd}
+        order by Cast(item_no as numeric), Cast(print_order as numeric)
+    </select>
+
+    <select id="selectTestReportDetailByAppCd" resultMap="TestReportResult">
+        select top 1
+            a.djh,
+            a.djlxbh,
+            a.kssj,
+            case a.djzt
+            when '0' then '已提交'
+            when '3' then '已计费'
+            when '4' then '退费申请'
+            when '5' then '作废'
+            when '7' then '已退费'
+            when '9' then '报告完成'
+            end as djzt,
+            a.sjmd,
+            a.bbmc,
+            a.xm,
+            a.zyh,
+            a.ksbh,
+            a.ysbh,
+            b.testman,
+            b.shys,
+            b.lis_jsrq,
+            a.lczd,
+            CONVERT(varchar(100), b.result_date_time, 20)  as result_date_time
+        from v_yy_yz_sqd a
+        left join lab_result_rm_mz b on b.test_no = a.djh
+        where a.bz1='mz' and a.djlb='2' and a.djh=#{appCd}
+        order by b.result_date_time desc
+    </select>
+    <resultMap id="ExamItemVoResult" type="com.emr.project.pat.domain.vo.ExamItemVo">
+        <result column="djh" property="appCd" />
+        <result column="djlxbh" property="docType" />
+        <result column="sjmd" property="asptAim" />
+        <result column="sjmd" property="examItemName" />
+        <result column="djzt" property="itemState" />
+        <result column="kssj" property="appTime" />
+
+        <result column="zyh" property="inpNo" />
+        <result column="zyh" property="caseNo" />
+        <result column="djh" property="applyFormNo" />
+        <result column="djh" property="id" />
+        <result column="djh" property="examRepNo" />
+        <result column="xm" property="patientName" />
+        <result column="ksbh" property="appDeptCd" />
+        <result column="ysbh" property="appDocCd" />
+        <result column="kssj" property="appTime" />
+        <result column="lczd" property="diagClicName" />
+        <result column="jcbw" property="examPos" />
+        <result column="EXAM_CLASS" property="examWayName" />
+        <result column="finding" property="examResObj" />
+        <result column="diagnosis" property="examResSub" />
+        <result column="Report_Date" property="examRepDate" />
+        <result column="shys" property="conDocName" />
+        <result column="Operator" property="examDocName" />
+    </resultMap>
+    <select id="selectItemListByPatientId" resultMap="ExamItemVoResult">
+        select
+            a.djh,
+            a.djlxbh,
+            a.kssj,
+            case
+            when a.djzt='0' then '已提交'
+            when a.djzt='9' or b.Report_Date is not null then '报告完成'
+            when a.djzt='3' then '已计费'
+            when a.djzt='4' then '退费申请'
+            when a.djzt='5' then '作废'
+            when a.djzt='7' then '已退费'
+            end as djzt,
+            a.sjmd,
+            b.Report_Date,
+            a.zyh
+        from v_yy_yz_sqd a
+        left join EXAM_REPORT_RECORD b on b.APPOINT_no = a.djh
+        where a.bz1='mz' and a.djlb='1'  and a.Zyh=#{patientId}
+        order by a.kssj desc
+    </select>
+    <select id="selectExamItemResultList" resultMap="ExamItemVoResult">
+        select
+            a.djh,
+            a.djlxbh,
+            a.kssj,
+            case a.djzt
+            when '0' then '已提交'
+            when '3' then '已计费'
+            when '4' then '退费申请'
+            when '5' then '作废'
+            when '7' then '已退费'
+            when '9' then '报告完成'
+            end as djzt,
+            a.sjmd,
+            b.shsj,
+            a.zyh,
+            a.xm,
+            a.ksbh,
+            a.ysbh,
+            a.kssj,
+            a.lczd,
+            a.jcbw,
+            isnull(b.EXAM_CLASS, b.body_part) as EXAM_CLASS,
+            b.finding,
+            b.diagnosis,
+            b.Report_Date,
+            b.shys,
+            b.Operator
+        from v_yy_yz_sqd a
+        left join EXAM_REPORT_RECORD b on b.APPOINT_no = a.djh
+        where a.bz1='mz' and a.djlb='1'  and a.djh=#{id}
+    </select>
+
+</mapper>

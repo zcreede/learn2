@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.WorkLoadMainMapper">
+
+    <resultMap type="WorkLoadMain" id="WorkLoadMainResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="deptCode"    column="dept_code"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="sumDate"    column="sum_date"    />
+        <result property="uploadDate"    column="upload_date"    />
+        <result property="uploadPerCode"    column="upload_per_code"    />
+        <result property="uploadPerName"    column="upload_per_name"    />
+        <result property="status"    column="status"    />
+        <result property="nowNum"    column="now_num"    />
+        <result property="originalNum"    column="original_num"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectWorkLoadMainVo">
+        select id, org_cd, dept_code, dept_name, sum_date, upload_date, upload_per_code, upload_per_name, status, now_num, original_num, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from tm_bs_work_load_main
+    </sql>
+
+    <select id="selectWorkLoadMainList" parameterType="WorkLoadMain" resultMap="WorkLoadMainResult">
+        <include refid="selectWorkLoadMainVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="deptCode != null  and deptCode != ''"> and dept_code = #{deptCode}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="sumDate != null "> and sum_date = #{sumDate}</if>
+            <if test="uploadDate != null "> and upload_date = #{uploadDate}</if>
+            <if test="uploadPerCode != null  and uploadPerCode != ''"> and upload_per_code = #{uploadPerCode}</if>
+            <if test="uploadPerName != null  and uploadPerName != ''"> and upload_per_name like concat(concat('%', #{uploadPerName}), '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="nowNum != null "> and now_num = #{nowNum}</if>
+            <if test="originalNum != null "> and original_num = #{originalNum}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+        order by sum_date desc
+    </select>
+
+    <select id="selectWorkLoadMainById" parameterType="Long" resultMap="WorkLoadMainResult">
+        <include refid="selectWorkLoadMainVo"/>
+        where id = #{id}
+    </select>
+    <select id="queryMain" resultMap="WorkLoadMainResult">
+        <include refid="selectWorkLoadMainVo"/>
+        where dept_code = #{deptCode} and sum_date = to_date(#{dateTime},'yyyy-MM-dd')
+    </select>
+    <select id="selectCountByDeptCode" resultType="java.lang.Integer">
+        select count(0) from tm_bs_work_load_main where dept_code = #{deptCode}
+        <if test="status != null and status != ''">
+            and status in ('0','-1')
+        </if>
+    </select>
+    <select id="selectLastNowNum" resultType="java.lang.Integer">
+        select a.now_num from (select * from tm_bs_work_load_main
+        where dept_code = #{deptCode} and sum_date &lt; to_date(#{dateTime},'yyyy-MM-dd')
+        order by sum_date desc) a
+        where rownum = 1
+    </select>
+    <select id="selectCountBySubminDate" resultType="java.lang.Integer">
+        select count(0) from tm_bs_work_load_main where dept_code = #{deptCode}
+        and sum_date &gt; #{sumDate}
+    </select>
+    <select id="selectCancelCountBySubminDate" resultType="java.lang.Integer">
+        select count(0) from tm_bs_work_load_main where dept_code = #{deptCode}
+        and sum_date &gt; #{sumDate} and status = '1'
+    </select>
+
+    <insert id="insertWorkLoadMain" parameterType="WorkLoadMain">
+        insert into tm_bs_work_load_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="deptCode != null and deptCode != ''">dept_code,</if>
+            <if test="deptName != null and deptName != ''">dept_name,</if>
+            <if test="sumDate != null">sum_date,</if>
+            <if test="uploadDate != null">upload_date,</if>
+            <if test="uploadPerCode != null">upload_per_code,</if>
+            <if test="uploadPerName != null">upload_per_name,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="nowNum != null">now_num,</if>
+            <if test="originalNum != null">original_num,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="deptCode != null and deptCode != ''">#{deptCode},</if>
+            <if test="deptName != null and deptName != ''">#{deptName},</if>
+            <if test="sumDate != null">#{sumDate},</if>
+            <if test="uploadDate != null">#{uploadDate},</if>
+            <if test="uploadPerCode != null">#{uploadPerCode},</if>
+            <if test="uploadPerName != null">#{uploadPerName},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="nowNum != null">#{nowNum},</if>
+            <if test="originalNum != null">#{originalNum},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateWorkLoadMain" parameterType="WorkLoadMain">
+        update tm_bs_work_load_main
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="deptCode != null and deptCode != ''">dept_code = #{deptCode},</if>
+            <if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+            <if test="sumDate != null">sum_date = #{sumDate},</if>
+            <if test="uploadDate != null">upload_date = #{uploadDate},</if>
+            <if test="uploadPerCode != null">upload_per_code = #{uploadPerCode},</if>
+            <if test="uploadPerName != null">upload_per_name = #{uploadPerName},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="nowNum != null">now_num = #{nowNum},</if>
+            <if test="originalNum != null">original_num = #{originalNum},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="updateStatusByTask">
+        update tm_bs_work_load_main set status ='2', ALT_DATE = sysdate, ALT_PER_CODE='sys', ALT_PER_NAME ='系统自动更新'
+        where SUM_DATE &lt; sysdate - 30 and status = '1'
+    </update>
+    <update id="updateCount">
+        update tm_bs_work_load_main set status ='0', NOW_NUM = NOW_NUM + #{num} where id = #{id}
+    </update>
+    <update id="updateOtherMain">
+        update tm_bs_work_load_main set NOW_NUM = NOW_NUM + #{num},ORIGINAL_NUM = ORIGINAL_NUM + #{num}
+        where SUM_DATE &gt; #{sumDate} and dept_code = #{deptCode}
+    </update>
+
+    <delete id="deleteWorkLoadMainById" parameterType="Long">
+        delete from tm_bs_work_load_main where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkLoadMainByIds" parameterType="String">
+        delete from tm_bs_work_load_main where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

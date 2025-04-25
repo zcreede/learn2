@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.TmDsPreserveOutMapper">
+
+    <resultMap type="TmDsPreserveOut" id="TmDsPreserveOutResult">
+        <result property="id"    column="id"    />
+        <result property="dataSourceTag"    column="data_source_tag"    />
+        <result property="databaseDesc"    column="database_desc"    />
+        <result property="databaseType"    column="database_type"    />
+        <result property="serverAddress"    column="server_address"    />
+        <result property="databaseName"    column="database_name"    />
+        <result property="userName"    column="user_name"    />
+        <result property="passward"    column="passward"    />
+        <result property="driverClass"    column="driver_class"    />
+        <result property="databaseUrl"    column="database_url"    />
+        <result property="state"    column="state"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="orgCd"    column="org_cd"    />
+    </resultMap>
+
+    <sql id="selectTmDsPreserveOutVo">
+        select id, data_source_tag, database_desc, database_type, server_address, database_name, user_name, passward, driver_class, database_url, state, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,org_cd from tm_ds_preserve_out
+    </sql>
+
+    <select id="selectTmDsPreserveOutList" parameterType="TmDsPreserveOut" resultMap="TmDsPreserveOutResult">
+        <include refid="selectTmDsPreserveOutVo"/>
+        <where>
+            <if test="dataSourceTag != null  and dataSourceTag != ''"> and data_source_tag = #{dataSourceTag}</if>
+            <if test="databaseDesc != null  and databaseDesc != ''"> and (database_desc like concat(concat('%', #{databaseDesc}), '%')
+             or data_source_tag like concat(concat('%', #{databaseDesc}), '%') )</if>
+            <if test="databaseType != null  and databaseType != ''"> and database_type = #{databaseType}</if>
+            <if test="serverAddress != null  and serverAddress != ''"> and server_address = #{serverAddress}</if>
+            <if test="databaseName != null  and databaseName != ''"> and database_name like concat(concat('%', #{databaseName}), '%')</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat(concat('%', #{userName}), '%')</if>
+            <if test="passward != null  and passward != ''"> and passward = #{passward}</if>
+            <if test="driverClass != null  and driverClass != ''"> and driver_class = #{driverClass}</if>
+            <if test="databaseUrl != null  and databaseUrl != ''"> and database_url = #{databaseUrl}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+        </where>
+    </select>
+
+    <select id="selectTmDsPreserveOutById" parameterType="Long" resultMap="TmDsPreserveOutResult">
+        <include refid="selectTmDsPreserveOutVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmDsPreserveOut" parameterType="TmDsPreserveOut">
+        insert into tm_ds_preserve_out
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="dataSourceTag != null and dataSourceTag != ''">data_source_tag,</if>
+            <if test="databaseDesc != null">database_desc,</if>
+            <if test="databaseType != null and databaseType != ''">database_type,</if>
+            <if test="serverAddress != null and serverAddress != ''">server_address,</if>
+            <if test="databaseName != null and databaseName != ''">database_name,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="passward != null and passward != ''">passward,</if>
+            <if test="driverClass != null and driverClass != ''">driver_class,</if>
+            <if test="databaseUrl != null and databaseUrl != ''">database_url,</if>
+            <if test="state != null">state,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            cre_date,
+            <if test="orgCd != null and orgCd != ''"> org_cd,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="dataSourceTag != null and dataSourceTag != ''">#{dataSourceTag},</if>
+            <if test="databaseDesc != null">#{databaseDesc},</if>
+            <if test="databaseType != null and databaseType != ''">#{databaseType},</if>
+            <if test="serverAddress != null and serverAddress != ''">#{serverAddress},</if>
+            <if test="databaseName != null and databaseName != ''">#{databaseName},</if>
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="passward != null and passward != ''">#{passward},</if>
+            <if test="driverClass != null and driverClass != ''">#{driverClass},</if>
+            <if test="databaseUrl != null and databaseUrl != ''">#{databaseUrl},</if>
+            <if test="state != null">#{state},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            sysdate,
+            <if test="orgCd != null and orgCd != ''"> #{orgCd},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmDsPreserveOut" parameterType="TmDsPreserveOut">
+        update tm_ds_preserve_out
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dataSourceTag != null and dataSourceTag != ''">data_source_tag = #{dataSourceTag},</if>
+            <if test="databaseDesc != null">database_desc = #{databaseDesc},</if>
+            <if test="databaseType != null and databaseType != ''">database_type = #{databaseType},</if>
+            <if test="serverAddress != null and serverAddress != ''">server_address = #{serverAddress},</if>
+            <if test="databaseName != null and databaseName != ''">database_name = #{databaseName},</if>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="passward != null and passward != ''">passward = #{passward},</if>
+            <if test="driverClass != null and driverClass != ''">driver_class = #{driverClass},</if>
+            <if test="databaseUrl != null and databaseUrl != ''">database_url = #{databaseUrl},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            <if test="orgCd != null  and orgCd != ''"> org_cd = #{orgCd}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmDsPreserveOutById" parameterType="Long">
+        delete from tm_ds_preserve_out where id = #{id}
+    </delete>
+
+    <delete id="deleteTmDsPreserveOutByIds" parameterType="String">
+        delete from tm_ds_preserve_out where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="testConnSql" parameterType="string" resultType="Map">
+        ${sqlStr}
+    </select>
+    <select id="selectSql" resultType="java.util.Map">
+        ${sql}
+    </select>
+</mapper>

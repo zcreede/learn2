@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrTaskInfoHistoryMapper">
+
+    <resultMap type="EmrTaskInfo" id="EmrTaskInfoResult">
+        <result property="id"    column="id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="taskType"    column="task_type"    />
+        <result property="taskTypeName"    column="task_type_name"    />
+        <result property="taskAppDoc"    column="task_app_doc"    />
+        <result property="taskAppDocName"    column="task_app_doc_name"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="limitTime"    column="limit_time"    />
+        <result property="limitTimeUnit"    column="limit_time_unit"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="busId"    column="bus_id"    />
+        <result property="busName"    column="bus_name"    />
+        <result property="mark"    column="mark"    />
+        <result property="docCd"    column="doc_cd"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="finishTime"    column="finish_time"    />
+        <result property="useTime"    column="use_time"    />
+        <result property="overtimeFlag"    column="overtime_flag"    />
+        <result property="treatFlag"    column="treat_flag"    />
+        <result property="busSection"    column="bus_section"    />
+        <result property="busSectionName"    column="bus_section_name"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="eventNo"    column="event_no"    />
+        <result property="dutyDeptCd"    column="duty_dept_cd"    />
+        <result property="dutyDeptName"    column="duty_dept_name"    />
+    </resultMap>
+    <resultMap id="EmrTaskInfoVoResult" type="EmrTaskInfoVo" extends="EmrTaskInfoResult">
+        <result property="remainHours"    column="remainHours"    />
+        <result property="resDocName"    column="res_doc_name"    />
+        <result property="evenName"    column="even_name"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="mark"    column="mark"    />
+        <result property="taskTypeName"    column="task_type_name"    />
+        <result property="remainingTime"    column="remaining_time"    />
+        <result property="dataType"    column="data_type"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="mrFileShowName"    column="mr_file_show_name"    />
+        <result property="mrFileIdStr"    column="mr_file_id_str"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="bedNo"    column="BED_NO"    />
+        <result property="sex"    column="SEX"    />
+        <result property="iterTypeCode" column="iter_type_code" />
+        <result property="iterTypeName" column="iter_type_name" />
+    </resultMap>
+    <resultMap id="EmrTaskInfoModifyApplResult" type="com.emr.project.emr.domain.vo.EmrTaskInfoVo" extends="EmrTaskInfoResult">
+        <result property="applId"    column="appl_id"    />
+        <result property="conState"    column="con_state"    />
+        <result property="endDatetime" column="end_datetime"/>
+        <result property="emrTypeCode" column="emr_type_code"/>
+    </resultMap>
+    <sql id="selectEmrTaskInfoVo">
+        select id, inp_no, patient_id, patient_name, dept_cd, dept_name, task_type, task_type_name, task_app_doc, task_app_doc_name,
+               begin_time, limit_time, limit_time_unit, end_time, bus_id, bus_name, mark, doc_cd, doc_name, finish_time, use_time,
+               overtime_flag, treat_flag, bus_section, bus_section_name,mr_file_id,event_no,duty_dept_cd,duty_dept_name from emr_task_history
+    </sql>
+
+    <select id="selectEmrTaskInfoList" parameterType="EmrTaskInfo" resultMap="EmrTaskInfoResult">
+        <include refid="selectEmrTaskInfoVo"/>
+        <where>
+            <if test="inpNo != null  and inpNo != ''"> and inp_no = #{inpNo}</if>
+            <if test="id != null  and id != ''"> and id = #{id}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="taskType != null  and taskType != ''"> and task_type = #{taskType}</if>
+            <if test="taskTypeName != null  and taskTypeName != ''"> and task_type_name like concat(concat('%', #{taskTypeName}), '%')</if>
+            <if test="taskAppDoc != null  and taskAppDoc != ''"> and task_app_doc = #{taskAppDoc}</if>
+            <if test="taskAppDocName != null  and taskAppDocName != ''"> and task_app_doc_name like concat(concat('%', #{taskAppDocName}), '%')</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="limitTime != null "> and limit_time = #{limitTime}</if>
+            <if test="limitTimeUnit != null  and limitTimeUnit != ''"> and limit_time_unit = #{limitTimeUnit}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="busId != null  and busId != ''"> and bus_id = #{busId}</if>
+            <if test="busName != null  and busName != ''"> and bus_name like concat(concat('%', #{busName}), '%')</if>
+            <if test="mark != null  and mark != ''"> and mark = #{mark}</if>
+            <if test="docCd != null  and docCd != ''"> and doc_cd = #{docCd}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="finishTime != null "> and finish_time = #{finishTime}</if>
+            <if test="useTime != null  and useTime != ''"> and use_time = #{useTime}</if>
+            <if test="overtimeFlag != null "> and overtime_flag = #{overtimeFlag}</if>
+            <if test="treatFlag != null  and treatFlag != ''"> and treat_flag = #{treatFlag}</if>
+            <if test="busSection != null  and busSection != ''"> and bus_section = #{busSection}</if>
+            <if test="busSectionName != null  and busSectionName != ''"> and bus_section_name like concat(concat('%', #{busSectionName}), '%')</if>
+            <if test="mrFileId != null">and mr_file_id = #{mrFileId}</if>
+            <if test="eventNo != null">and event_no = #{eventNo}</if>
+        </where>
+        order by begin_time desc
+    </select>
+
+    <select id="selectEmrTaskInfoById" parameterType="Long" resultMap="EmrTaskInfoResult">
+        <include refid="selectEmrTaskInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectEmrTaskInfoByIds" parameterType="Long" resultMap="EmrTaskInfoResult">
+        <include refid="selectEmrTaskInfoVo"/>
+        where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="insertEmrTaskInfo" parameterType="EmrTaskInfo">
+        insert into emr_task_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="inpNo != null and inpNo != ''">inp_no,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="taskType != null">task_type,</if>
+            <if test="taskTypeName != null">task_type_name,</if>
+            <if test="taskAppDoc != null">task_app_doc,</if>
+            <if test="taskAppDocName != null">task_app_doc_name,</if>
+            <if test="beginTime != null">begin_time,</if>
+            <if test="limitTime != null">limit_time,</if>
+            <if test="limitTimeUnit != null">limit_time_unit,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="busId != null">bus_id,</if>
+            <if test="busName != null">bus_name,</if>
+            <if test="mark != null">mark,</if>
+            <if test="docCd != null">doc_cd,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="useTime != null">use_time,</if>
+            <if test="overtimeFlag != null">overtime_flag,</if>
+            <if test="treatFlag != null">treat_flag,</if>
+            <if test="busSection != null">bus_section,</if>
+            <if test="busSectionName != null">bus_section_name,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="eventNo != null">event_No,</if>
+            <if test="dutyDeptCd != null">DUTY_DEPT_CD,</if>
+            <if test="dutyDeptName != null">DUTY_DEPT_NAME,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="inpNo != null and inpNo != ''">#{inpNo},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="taskType != null">#{taskType},</if>
+            <if test="taskTypeName != null">#{taskTypeName},</if>
+            <if test="taskAppDoc != null">#{taskAppDoc},</if>
+            <if test="taskAppDocName != null">#{taskAppDocName},</if>
+            <if test="beginTime != null">#{beginTime},</if>
+            <if test="limitTime != null">#{limitTime},</if>
+            <if test="limitTimeUnit != null">#{limitTimeUnit},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="busId != null">#{busId},</if>
+            <if test="busName != null">#{busName},</if>
+            <if test="mark != null">#{mark},</if>
+            <if test="docCd != null">#{docCd},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="useTime != null">#{useTime},</if>
+            <if test="overtimeFlag != null">#{overtimeFlag},</if>
+            <if test="treatFlag != null">#{treatFlag},</if>
+            <if test="busSection != null">#{busSection},</if>
+            <if test="busSectionName != null">#{busSectionName},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="eventNo != null">#{eventNo},</if>
+            <if test="dutyDeptCd != null">#{dutyDeptCd},</if>
+            <if test="dutyDeptName != null">#{dutyDeptName},</if>
+         </trim>
+    </insert>
+    <insert id="batchInsert">
+        insert into emr_task_history
+            select * from emr_task_info
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </insert>
+
+    <update id="updateEmrTaskInfo" parameterType="EmrTaskInfo">
+        update emr_task_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inpNo != null and inpNo != ''">inp_no = #{inpNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="taskType != null">task_type = #{taskType},</if>
+            <if test="taskTypeName != null">task_type_name = #{taskTypeName},</if>
+            <if test="taskAppDoc != null">task_app_doc = #{taskAppDoc},</if>
+            <if test="taskAppDocName != null">task_app_doc_name = #{taskAppDocName},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="limitTime != null">limit_time = #{limitTime},</if>
+            <if test="limitTimeUnit != null">limit_time_unit = #{limitTimeUnit},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="busId != null">bus_id = #{busId},</if>
+            <if test="busName != null">bus_name = #{busName},</if>
+            <if test="mark != null">mark = #{mark},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="useTime != null">use_time = #{useTime},</if>
+            <if test="overtimeFlag != null">overtime_flag = #{overtimeFlag},</if>
+            <if test="treatFlag != null">treat_flag = #{treatFlag},</if>
+            <if test="busSection != null">bus_section = #{busSection},</if>
+            <if test="busSectionName != null">bus_section_name = #{busSectionName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="eventNo != null">event_no = #{eventNo},</if>
+        </trim>
+        where id = #{id}
+        <if test="ids != null and ids.size() > 0">
+            and id in
+            <foreach collection="ids" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+    <update id="updateEmrTaskInfoForRecover" parameterType="EmrTaskInfo">
+        update emr_task_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inpNo != null and inpNo != ''">inp_no = #{inpNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="taskType != null">task_type = #{taskType},</if>
+            <if test="taskTypeName != null">task_type_name = #{taskTypeName},</if>
+            <if test="taskAppDoc != null">task_app_doc = #{taskAppDoc},</if>
+            <if test="taskAppDocName != null">task_app_doc_name = #{taskAppDocName},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="limitTime != null">limit_time = #{limitTime},</if>
+            <if test="limitTimeUnit != null">limit_time_unit = #{limitTimeUnit},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="busId != null">bus_id = #{busId},</if>
+            <if test="busName != null">bus_name = #{busName},</if>
+            <if test="mark != null">mark = #{mark},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="useTime != null">use_time = #{useTime},</if>
+            <if test="overtimeFlag != null">overtime_flag = #{overtimeFlag},</if>
+            <if test="treatFlag != null">treat_flag = #{treatFlag},</if>
+            <if test="busSection != null">bus_section = #{busSection},</if>
+            <if test="busSectionName != null">bus_section_name = #{busSectionName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="eventNo != null">event_no = #{eventNo},</if>
+        </trim>
+        where id in
+            <foreach collection="ids" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </update>
+
+    <delete id="deleteEmrTaskInfoById" parameterType="Long">
+        delete from emr_task_history where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrTaskInfoByIds" parameterType="String">
+        delete from emr_task_history where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEmrTaskInfoByMrFileId" >
+        delete from emr_task_info where task_type='3' and treat_flag='0' and mr_file_id=#{mrFileId}
+    </delete>
+
+</mapper>

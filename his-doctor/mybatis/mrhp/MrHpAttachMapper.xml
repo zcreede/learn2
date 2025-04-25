@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrHpAttachMapper">
+
+    <resultMap type="MrHpAttach" id="MrHpAttachResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="isCriRecord"    column="is_cri_record"    />
+        <result property="inhosCondCd"    column="inhos_cond_cd"    />
+        <result property="inhosCond"    column="inhos_cond"    />
+        <result property="diaDate"    column="dia_date"    />
+        <result property="outDisDia"    column="out_dis_dia"    />
+        <result property="admDisDia"    column="adm_dis_dia"    />
+        <result property="prePosDia"    column="pre_pos_dia"    />
+        <result property="clinPathDia"    column="clin_path_dia"    />
+        <result property="medPathDia"    column="med_path_dia"    />
+        <result property="prePathDia"    column="pre_path_dia"    />
+        <result property="diaEff"    column="dia_eff"    />
+        <result property="diaBasName"    column="dia_bas_name"    />
+        <result property="readmFlag"    column="readm_flag"    />
+        <result property="ventilatorD"    column="ventilator_d"    />
+        <result property="ventilatorH"    column="ventilator_h"    />
+        <result property="ventilatorMi"    column="ventilator_mi"    />
+        <result property="invasiveVentilatorD"    column="invasive_ventilator_d"    />
+        <result property="invasiveVentilatorH"    column="invasive_ventilator_h"    />
+        <result property="invasiveVentilatorMi"    column="invasive_ventilator_mi"    />
+        <result property="adlInhos"    column="adl_inhos"    />
+        <result property="adlOuthos"    column="adl_outhos"    />
+        <result property="saveTimes"    column="save_times"    />
+        <result property="saveSuccessTimes"    column="save_success_times"    />
+        <result property="iscp"    column="iscp"    />
+        <result property="stagingT"    column="staging_t"    />
+        <result property="stagingN"    column="staging_n"    />
+        <result property="stagingM"    column="staging_m"    />
+        <result property="staging"    column="staging"    />
+        <result property="preoperHospD"    column="preoper_hosp_d"    />
+        <result property="isPostoperComp"    column="is_postoper_comp"    />
+        <result property="isPressure"    column="is_pressure"    />
+        <result property="pressureGrade"    column="pressure_grade"    />
+        <result property="pressureCaus"    column="pressure_caus"    />
+        <result property="pressureSite"    column="pressure_site"    />
+        <result property="isFall"    column="is_fall"    />
+        <result property="fallGrade"    column="fall_grade"    />
+        <result property="fallCaus"    column="fall_caus"    />
+        <result property="isInfuse"    column="is_infuse"    />
+        <result property="isInfuseReac"    column="is_infuse_reac"    />
+        <result property="isFollowUp"    column="is_follow_up"    />
+        <result property="followIntervalY"    column="follow_interval_y"    />
+        <result property="isUseAnti"    column="is_use_anti"    />
+        <result property="useAntiPurp"    column="use_anti_purp"    />
+        <result property="useAntiSche"    column="use_anti_sche"    />
+        <result property="useAntiDays"    column="use_anti_days"    />
+        <result property="sprCareD"    column="spr_care_d"    />
+        <result property="priCareD"    column="pri_care_d"    />
+        <result property="secCareD"    column="sec_care_d"    />
+        <result property="terCareD"    column="ter_care_d"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="isDiffRecord"    column="is_diff_record"    />
+        <result property="isEmeRecord"    column="is_eme_record"    />
+        <result property="isResRecord"    column="is_res_record"    />
+        <result property="diaBasCode"    column="dia_bas_code"    />
+        <result property="diffProCode"    column="diff_pro_code"    />
+        <result property="diffProName"    column="diff_pro_name"    />
+        <result property="opeType"    column="ope_type"    />
+        <result property="firstRecord"    column="first_record"    />
+        <result property="hbsag"    column="hbsag"    />
+        <result property="hcvAb"    column="hcv_ab"    />
+        <result property="hivAb"    column="hiv_ab"    />
+        <result property="transfusionReaction"    column="transfusion_reaction"    />
+        <result property="redBloodCell"    column="red_blood_cell"    />
+        <result property="platelet"    column="platelet"    />
+        <result property="plasma"    column="plasma"    />
+        <result property="wholeBlood"    column="whole_blood"    />
+        <result property="selfBolld"    column="self_bolld"    />
+        <result property="otherBlood"    column="other_blood"    />
+        <result property="followIntervalM"    column="follow_interval_m"    />
+        <result property="followIntervalD"    column="follow_interval_d"    />
+    </resultMap>
+<resultMap id="MrHpAttachVoResult" type="MrHpAttachVo" extends="MrHpAttachResult">
+
+</resultMap>
+    <sql id="selectMrHpAttachVo">
+        select record_id, patient_id, is_cri_record, inhos_cond_cd, inhos_cond, dia_date, out_dis_dia, adm_dis_dia, pre_pos_dia, clin_path_dia, med_path_dia, pre_path_dia, dia_eff, dia_bas_name, readm_flag, ventilator_d, ventilator_h, ventilator_mi, invasive_ventilator_d, invasive_ventilator_h, invasive_ventilator_mi, adl_inhos, adl_outhos, save_times, save_success_times, iscp, staging_t, staging_n, staging_m, staging, preoper_hosp_d, is_postoper_comp, is_pressure, pressure_grade, pressure_caus, pressure_site, is_fall, fall_grade, fall_caus, is_infuse, is_infuse_reac, is_follow_up, follow_interval_y, is_use_anti, use_anti_purp, use_anti_sche, use_anti_days, spr_care_d, pri_care_d, sec_care_d, ter_care_d, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, is_diff_record, is_eme_record, is_res_record, dia_bas_code, diff_pro_code, diff_pro_name, ope_type, first_record, hbsag, hcv_ab, hiv_ab, transfusion_reaction, red_blood_cell, platelet, plasma, whole_blood, self_bolld, other_blood, follow_interval_m, follow_interval_d from mr_hp_attach
+    </sql>
+
+    <select id="selectMrHpAttachList" parameterType="MrHpAttach" resultMap="MrHpAttachResult">
+        <include refid="selectMrHpAttachVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="isCriRecord != null  and isCriRecord != ''"> and is_cri_record = #{isCriRecord}</if>
+            <if test="inhosCondCd != null  and inhosCondCd != ''"> and inhos_cond_cd = #{inhosCondCd}</if>
+            <if test="inhosCond != null  and inhosCond != ''"> and inhos_cond = #{inhosCond}</if>
+            <if test="diaDate != null "> and dia_date = #{diaDate}</if>
+            <if test="outDisDia != null  and outDisDia != ''"> and out_dis_dia = #{outDisDia}</if>
+            <if test="admDisDia != null  and admDisDia != ''"> and adm_dis_dia = #{admDisDia}</if>
+            <if test="prePosDia != null  and prePosDia != ''"> and pre_pos_dia = #{prePosDia}</if>
+            <if test="clinPathDia != null  and clinPathDia != ''"> and clin_path_dia = #{clinPathDia}</if>
+            <if test="medPathDia != null  and medPathDia != ''"> and med_path_dia = #{medPathDia}</if>
+            <if test="prePathDia != null  and prePathDia != ''"> and pre_path_dia = #{prePathDia}</if>
+            <if test="diaEff != null  and diaEff != ''"> and dia_eff = #{diaEff}</if>
+            <if test="diaBasName != null  and diaBasName != ''"> and dia_bas_name like concat(concat('%', #{diaBasName}), '%')</if>
+            <if test="readmFlag != null  and readmFlag != ''"> and readm_flag = #{readmFlag}</if>
+            <if test="ventilatorD != null "> and ventilator_d = #{ventilatorD}</if>
+            <if test="ventilatorH != null "> and ventilator_h = #{ventilatorH}</if>
+            <if test="ventilatorMi != null "> and ventilator_mi = #{ventilatorMi}</if>
+            <if test="invasiveVentilatorD != null "> and invasive_ventilator_d = #{invasiveVentilatorD}</if>
+            <if test="invasiveVentilatorH != null "> and invasive_ventilator_h = #{invasiveVentilatorH}</if>
+            <if test="invasiveVentilatorMi != null "> and invasive_ventilator_mi = #{invasiveVentilatorMi}</if>
+            <if test="adlInhos != null "> and adl_inhos = #{adlInhos}</if>
+            <if test="adlOuthos != null "> and adl_outhos = #{adlOuthos}</if>
+            <if test="saveTimes != null "> and save_times = #{saveTimes}</if>
+            <if test="saveSuccessTimes != null "> and save_success_times = #{saveSuccessTimes}</if>
+            <if test="iscp != null  and iscp != ''"> and iscp = #{iscp}</if>
+            <if test="stagingT != null  and stagingT != ''"> and staging_t = #{stagingT}</if>
+            <if test="stagingN != null  and stagingN != ''"> and staging_n = #{stagingN}</if>
+            <if test="stagingM != null  and stagingM != ''"> and staging_m = #{stagingM}</if>
+            <if test="staging != null  and staging != ''"> and staging = #{staging}</if>
+            <if test="preoperHospD != null "> and preoper_hosp_d = #{preoperHospD}</if>
+            <if test="isPostoperComp != null  and isPostoperComp != ''"> and is_postoper_comp = #{isPostoperComp}</if>
+            <if test="isPressure != null  and isPressure != ''"> and is_pressure = #{isPressure}</if>
+            <if test="pressureGrade != null  and pressureGrade != ''"> and pressure_grade = #{pressureGrade}</if>
+            <if test="pressureCaus != null  and pressureCaus != ''"> and pressure_caus = #{pressureCaus}</if>
+            <if test="pressureSite != null  and pressureSite != ''"> and pressure_site = #{pressureSite}</if>
+            <if test="isFall != null  and isFall != ''"> and is_fall = #{isFall}</if>
+            <if test="fallGrade != null  and fallGrade != ''"> and fall_grade = #{fallGrade}</if>
+            <if test="fallCaus != null  and fallCaus != ''"> and fall_caus = #{fallCaus}</if>
+            <if test="isInfuse != null  and isInfuse != ''"> and is_infuse = #{isInfuse}</if>
+            <if test="isInfuseReac != null  and isInfuseReac != ''"> and is_infuse_reac = #{isInfuseReac}</if>
+            <if test="isFollowUp != null  and isFollowUp != ''"> and is_follow_up = #{isFollowUp}</if>
+            <if test="followIntervalY != null  and followIntervalY != ''"> and follow_interval_y = #{followIntervalY}</if>
+            <if test="isUseAnti != null  and isUseAnti != ''"> and is_use_anti = #{isUseAnti}</if>
+            <if test="useAntiPurp != null  and useAntiPurp != ''"> and use_anti_purp = #{useAntiPurp}</if>
+            <if test="useAntiSche != null  and useAntiSche != ''"> and use_anti_sche = #{useAntiSche}</if>
+            <if test="useAntiDays != null "> and use_anti_days = #{useAntiDays}</if>
+            <if test="sprCareD != null "> and spr_care_d = #{sprCareD}</if>
+            <if test="priCareD != null "> and pri_care_d = #{priCareD}</if>
+            <if test="secCareD != null "> and sec_care_d = #{secCareD}</if>
+            <if test="terCareD != null "> and ter_care_d = #{terCareD}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="isDiffRecord != null  and isDiffRecord != ''"> and is_diff_record = #{isDiffRecord}</if>
+            <if test="isEmeRecord != null  and isEmeRecord != ''"> and is_eme_record = #{isEmeRecord}</if>
+            <if test="isResRecord != null  and isResRecord != ''"> and is_res_record = #{isResRecord}</if>
+            <if test="diaBasCode != null  and diaBasCode != ''"> and dia_bas_code = #{diaBasCode}</if>
+            <if test="diffProCode != null  and diffProCode != ''"> and diff_pro_code = #{diffProCode}</if>
+            <if test="diffProName != null  and diffProName != ''"> and diff_pro_name like concat(concat('%', #{diffProName}), '%')</if>
+            <if test="opeType != null  and opeType != ''"> and ope_type = #{opeType}</if>
+            <if test="firstRecord != null  and firstRecord != ''"> and first_record = #{firstRecord}</if>
+            <if test="hbsag != null  and hbsag != ''"> and hbsag = #{hbsag}</if>
+            <if test="hcvAb != null  and hcvAb != ''"> and hcv_ab = #{hcvAb}</if>
+            <if test="hivAb != null  and hivAb != ''"> and hiv_ab = #{hivAb}</if>
+            <if test="transfusionReaction != null  and transfusionReaction != ''"> and transfusion_reaction = #{transfusionReaction}</if>
+            <if test="redBloodCell != null "> and red_blood_cell = #{redBloodCell}</if>
+            <if test="platelet != null "> and platelet = #{platelet}</if>
+            <if test="plasma != null "> and plasma = #{plasma}</if>
+            <if test="wholeBlood != null "> and whole_blood = #{wholeBlood}</if>
+            <if test="selfBolld != null "> and self_bolld = #{selfBolld}</if>
+            <if test="otherBlood != null "> and other_blood = #{otherBlood}</if>
+            <if test="followIntervalM != null  and followIntervalM != ''"> and follow_interval_m = #{followIntervalM}</if>
+            <if test="followIntervalD != null  and followIntervalD != ''"> and follow_interval_d = #{followIntervalD}</if>
+        </where>
+    </select>
+
+    <select id="selectMrHpAttachById" parameterType="String" resultMap="MrHpAttachResult">
+        <include refid="selectMrHpAttachVo"/>
+        where record_id = #{recordId}
+    </select>
+    <select id="selectMrHpAttachByPatientId" parameterType="String" resultMap="MrHpAttachVoResult">
+        <include refid="selectMrHpAttachVo"/>
+        where patient_id = #{patientId}
+    </select>
+    <select id="selectMrisHpAttachByPatientId" resultType="com.emr.project.mrhp.domain.mris.TdCmAttachSave">
+        select record_id, patient_id, is_cri_record, inhos_cond_cd, inhos_cond, dia_date, out_dis_dia, adm_dis_dia,
+        pre_pos_dia, clin_path_dia, med_path_dia, pre_path_dia, dia_eff, dia_bas_name, readm_flag, ventilator_d,
+        ventilator_h, ventilator_mi, invasive_ventilator_d, invasive_ventilator_h, invasive_ventilator_mi, adl_inhos,
+        adl_outhos, save_times, save_success_times, iscp, staging_t, staging_n, staging_m, staging, preoper_hosp_d,
+        is_postoper_comp, is_pressure, pressure_grade, pressure_caus, pressure_site, is_fall, fall_grade, fall_caus,
+        is_infuse, is_infuse_reac, is_follow_up, follow_interval_y, is_use_anti, use_anti_purp, use_anti_sche,
+        use_anti_days, spr_care_d, pri_care_d, sec_care_d, ter_care_d, cre_per_code, cre_per_name, cre_date,
+        alt_per_code, alt_per_name, alt_date, is_diff_record, is_eme_record, is_res_record, dia_bas_code,
+        diff_pro_code, diff_pro_name, ope_type, first_record, hbsag, hcv_ab, hiv_ab, transfusion_reaction,
+        red_blood_cell, platelet, plasma, whole_blood, self_bolld, other_blood, follow_interval_m, follow_interval_d
+        from mr_hp_attach
+        where patient_id = #{patientId}
+    </select>
+
+    <insert id="insertMrHpAttach" parameterType="MrHpAttach">
+        insert into mr_hp_attach
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">record_id,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="isCriRecord != null">is_cri_record,</if>
+            <if test="inhosCondCd != null">inhos_cond_cd,</if>
+            <if test="inhosCond != null">inhos_cond,</if>
+            <if test="diaDate != null">dia_date,</if>
+            <if test="outDisDia != null">out_dis_dia,</if>
+            <if test="admDisDia != null">adm_dis_dia,</if>
+            <if test="prePosDia != null">pre_pos_dia,</if>
+            <if test="clinPathDia != null">clin_path_dia,</if>
+            <if test="medPathDia != null">med_path_dia,</if>
+            <if test="prePathDia != null">pre_path_dia,</if>
+            <if test="diaEff != null">dia_eff,</if>
+            <if test="diaBasName != null">dia_bas_name,</if>
+            <if test="readmFlag != null">readm_flag,</if>
+            <if test="ventilatorD != null">ventilator_d,</if>
+            <if test="ventilatorH != null">ventilator_h,</if>
+            <if test="ventilatorMi != null">ventilator_mi,</if>
+            <if test="invasiveVentilatorD != null">invasive_ventilator_d,</if>
+            <if test="invasiveVentilatorH != null">invasive_ventilator_h,</if>
+            <if test="invasiveVentilatorMi != null">invasive_ventilator_mi,</if>
+            <if test="adlInhos != null">adl_inhos,</if>
+            <if test="adlOuthos != null">adl_outhos,</if>
+            <if test="saveTimes != null">save_times,</if>
+            <if test="saveSuccessTimes != null">save_success_times,</if>
+            <if test="iscp != null">iscp,</if>
+            <if test="stagingT != null">staging_t,</if>
+            <if test="stagingN != null">staging_n,</if>
+            <if test="stagingM != null">staging_m,</if>
+            <if test="staging != null">staging,</if>
+            <if test="preoperHospD != null">preoper_hosp_d,</if>
+            <if test="isPostoperComp != null">is_postoper_comp,</if>
+            <if test="isPressure != null">is_pressure,</if>
+            <if test="pressureGrade != null">pressure_grade,</if>
+            <if test="pressureCaus != null">pressure_caus,</if>
+            <if test="pressureSite != null">pressure_site,</if>
+            <if test="isFall != null">is_fall,</if>
+            <if test="fallGrade != null">fall_grade,</if>
+            <if test="fallCaus != null">fall_caus,</if>
+            <if test="isInfuse != null">is_infuse,</if>
+            <if test="isInfuseReac != null">is_infuse_reac,</if>
+            <if test="isFollowUp != null">is_follow_up,</if>
+            <if test="followIntervalY != null">follow_interval_y,</if>
+            <if test="isUseAnti != null">is_use_anti,</if>
+            <if test="useAntiPurp != null">use_anti_purp,</if>
+            <if test="useAntiSche != null">use_anti_sche,</if>
+            <if test="useAntiDays != null">use_anti_days,</if>
+            <if test="sprCareD != null">spr_care_d,</if>
+            <if test="priCareD != null">pri_care_d,</if>
+            <if test="secCareD != null">sec_care_d,</if>
+            <if test="terCareD != null">ter_care_d,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="isDiffRecord != null">is_diff_record,</if>
+            <if test="isEmeRecord != null">is_eme_record,</if>
+            <if test="isResRecord != null">is_res_record,</if>
+            <if test="diaBasCode != null">dia_bas_code,</if>
+            <if test="diffProCode != null">diff_pro_code,</if>
+            <if test="diffProName != null">diff_pro_name,</if>
+            <if test="opeType != null">ope_type,</if>
+            <if test="firstRecord != null">first_record,</if>
+            <if test="hbsag != null">hbsag,</if>
+            <if test="hcvAb != null">hcv_ab,</if>
+            <if test="hivAb != null">hiv_ab,</if>
+            <if test="transfusionReaction != null">transfusion_reaction,</if>
+            <if test="redBloodCell != null">red_blood_cell,</if>
+            <if test="platelet != null">platelet,</if>
+            <if test="plasma != null">plasma,</if>
+            <if test="wholeBlood != null">whole_blood,</if>
+            <if test="selfBolld != null">self_bolld,</if>
+            <if test="otherBlood != null">other_blood,</if>
+            <if test="followIntervalM != null">follow_interval_m,</if>
+            <if test="followIntervalD != null">follow_interval_d,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">#{recordId},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="isCriRecord != null">#{isCriRecord},</if>
+            <if test="inhosCondCd != null">#{inhosCondCd},</if>
+            <if test="inhosCond != null">#{inhosCond},</if>
+            <if test="diaDate != null">#{diaDate},</if>
+            <if test="outDisDia != null">#{outDisDia},</if>
+            <if test="admDisDia != null">#{admDisDia},</if>
+            <if test="prePosDia != null">#{prePosDia},</if>
+            <if test="clinPathDia != null">#{clinPathDia},</if>
+            <if test="medPathDia != null">#{medPathDia},</if>
+            <if test="prePathDia != null">#{prePathDia},</if>
+            <if test="diaEff != null">#{diaEff},</if>
+            <if test="diaBasName != null">#{diaBasName},</if>
+            <if test="readmFlag != null">#{readmFlag},</if>
+            <if test="ventilatorD != null">#{ventilatorD},</if>
+            <if test="ventilatorH != null">#{ventilatorH},</if>
+            <if test="ventilatorMi != null">#{ventilatorMi},</if>
+            <if test="invasiveVentilatorD != null">#{invasiveVentilatorD},</if>
+            <if test="invasiveVentilatorH != null">#{invasiveVentilatorH},</if>
+            <if test="invasiveVentilatorMi != null">#{invasiveVentilatorMi},</if>
+            <if test="adlInhos != null">#{adlInhos},</if>
+            <if test="adlOuthos != null">#{adlOuthos},</if>
+            <if test="saveTimes != null">#{saveTimes},</if>
+            <if test="saveSuccessTimes != null">#{saveSuccessTimes},</if>
+            <if test="iscp != null">#{iscp},</if>
+            <if test="stagingT != null">#{stagingT},</if>
+            <if test="stagingN != null">#{stagingN},</if>
+            <if test="stagingM != null">#{stagingM},</if>
+            <if test="staging != null">#{staging},</if>
+            <if test="preoperHospD != null">#{preoperHospD},</if>
+            <if test="isPostoperComp != null">#{isPostoperComp},</if>
+            <if test="isPressure != null">#{isPressure},</if>
+            <if test="pressureGrade != null">#{pressureGrade},</if>
+            <if test="pressureCaus != null">#{pressureCaus},</if>
+            <if test="pressureSite != null">#{pressureSite},</if>
+            <if test="isFall != null">#{isFall},</if>
+            <if test="fallGrade != null">#{fallGrade},</if>
+            <if test="fallCaus != null">#{fallCaus},</if>
+            <if test="isInfuse != null">#{isInfuse},</if>
+            <if test="isInfuseReac != null">#{isInfuseReac},</if>
+            <if test="isFollowUp != null">#{isFollowUp},</if>
+            <if test="followIntervalY != null">#{followIntervalY},</if>
+            <if test="isUseAnti != null">#{isUseAnti},</if>
+            <if test="useAntiPurp != null">#{useAntiPurp},</if>
+            <if test="useAntiSche != null">#{useAntiSche},</if>
+            <if test="useAntiDays != null">#{useAntiDays},</if>
+            <if test="sprCareD != null">#{sprCareD},</if>
+            <if test="priCareD != null">#{priCareD},</if>
+            <if test="secCareD != null">#{secCareD},</if>
+            <if test="terCareD != null">#{terCareD},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="isDiffRecord != null">#{isDiffRecord},</if>
+            <if test="isEmeRecord != null">#{isEmeRecord},</if>
+            <if test="isResRecord != null">#{isResRecord},</if>
+            <if test="diaBasCode != null">#{diaBasCode},</if>
+            <if test="diffProCode != null">#{diffProCode},</if>
+            <if test="diffProName != null">#{diffProName},</if>
+            <if test="opeType != null">#{opeType},</if>
+            <if test="firstRecord != null">#{firstRecord},</if>
+            <if test="hbsag != null">#{hbsag},</if>
+            <if test="hcvAb != null">#{hcvAb},</if>
+            <if test="hivAb != null">#{hivAb},</if>
+            <if test="transfusionReaction != null">#{transfusionReaction},</if>
+            <if test="redBloodCell != null">#{redBloodCell},</if>
+            <if test="platelet != null">#{platelet},</if>
+            <if test="plasma != null">#{plasma},</if>
+            <if test="wholeBlood != null">#{wholeBlood},</if>
+            <if test="selfBolld != null">#{selfBolld},</if>
+            <if test="otherBlood != null">#{otherBlood},</if>
+            <if test="followIntervalM != null">#{followIntervalM},</if>
+            <if test="followIntervalD != null">#{followIntervalD},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateMrHpAttach" parameterType="MrHpAttach">
+        update mr_hp_attach
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="isCriRecord != null">is_cri_record = #{isCriRecord},</if>
+            <if test="inhosCondCd != null">inhos_cond_cd = #{inhosCondCd},</if>
+            <if test="inhosCond != null">inhos_cond = #{inhosCond},</if>
+            <if test="diaDate != null">dia_date = #{diaDate},</if>
+            <if test="outDisDia != null">out_dis_dia = #{outDisDia},</if>
+            <if test="admDisDia != null">adm_dis_dia = #{admDisDia},</if>
+            <if test="prePosDia != null">pre_pos_dia = #{prePosDia},</if>
+            <if test="clinPathDia != null">clin_path_dia = #{clinPathDia},</if>
+            <if test="medPathDia != null">med_path_dia = #{medPathDia},</if>
+            <if test="prePathDia != null">pre_path_dia = #{prePathDia},</if>
+            <if test="diaEff != null">dia_eff = #{diaEff},</if>
+            <if test="diaBasName != null">dia_bas_name = #{diaBasName},</if>
+            <if test="readmFlag != null">readm_flag = #{readmFlag},</if>
+            <if test="ventilatorD != null">ventilator_d = #{ventilatorD},</if>
+            <if test="ventilatorH != null">ventilator_h = #{ventilatorH},</if>
+            <if test="ventilatorMi != null">ventilator_mi = #{ventilatorMi},</if>
+            <if test="invasiveVentilatorD != null">invasive_ventilator_d = #{invasiveVentilatorD},</if>
+            <if test="invasiveVentilatorH != null">invasive_ventilator_h = #{invasiveVentilatorH},</if>
+            <if test="invasiveVentilatorMi != null">invasive_ventilator_mi = #{invasiveVentilatorMi},</if>
+            <if test="adlInhos != null">adl_inhos = #{adlInhos},</if>
+            <if test="adlOuthos != null">adl_outhos = #{adlOuthos},</if>
+            <if test="saveTimes != null">save_times = #{saveTimes},</if>
+            <if test="saveSuccessTimes != null">save_success_times = #{saveSuccessTimes},</if>
+            <if test="iscp != null">iscp = #{iscp},</if>
+            <if test="stagingT != null">staging_t = #{stagingT},</if>
+            <if test="stagingN != null">staging_n = #{stagingN},</if>
+            <if test="stagingM != null">staging_m = #{stagingM},</if>
+            <if test="staging != null">staging = #{staging},</if>
+            <if test="preoperHospD != null">preoper_hosp_d = #{preoperHospD},</if>
+            <if test="isPostoperComp != null">is_postoper_comp = #{isPostoperComp},</if>
+            <if test="isPressure != null">is_pressure = #{isPressure},</if>
+            <if test="pressureGrade != null">pressure_grade = #{pressureGrade},</if>
+            <if test="pressureCaus != null">pressure_caus = #{pressureCaus},</if>
+            <if test="pressureSite != null">pressure_site = #{pressureSite},</if>
+            <if test="isFall != null">is_fall = #{isFall},</if>
+            <if test="fallGrade != null">fall_grade = #{fallGrade},</if>
+            <if test="fallCaus != null">fall_caus = #{fallCaus},</if>
+            <if test="isInfuse != null">is_infuse = #{isInfuse},</if>
+            <if test="isInfuseReac != null">is_infuse_reac = #{isInfuseReac},</if>
+            <if test="isFollowUp != null">is_follow_up = #{isFollowUp},</if>
+            <if test="followIntervalY != null">follow_interval_y = #{followIntervalY},</if>
+            <if test="isUseAnti != null">is_use_anti = #{isUseAnti},</if>
+            <if test="useAntiPurp != null">use_anti_purp = #{useAntiPurp},</if>
+            <if test="useAntiSche != null">use_anti_sche = #{useAntiSche},</if>
+            <if test="useAntiDays != null">use_anti_days = #{useAntiDays},</if>
+            <if test="sprCareD != null">spr_care_d = #{sprCareD},</if>
+            <if test="priCareD != null">pri_care_d = #{priCareD},</if>
+            <if test="secCareD != null">sec_care_d = #{secCareD},</if>
+            <if test="terCareD != null">ter_care_d = #{terCareD},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            <if test="isDiffRecord != null">is_diff_record = #{isDiffRecord},</if>
+            <if test="isEmeRecord != null">is_eme_record = #{isEmeRecord},</if>
+            <if test="isResRecord != null">is_res_record = #{isResRecord},</if>
+            <if test="diaBasCode != null">dia_bas_code = #{diaBasCode},</if>
+            <if test="diffProCode != null">diff_pro_code = #{diffProCode},</if>
+            <if test="diffProName != null">diff_pro_name = #{diffProName},</if>
+            <if test="opeType != null">ope_type = #{opeType},</if>
+            <if test="firstRecord != null">first_record = #{firstRecord},</if>
+            <if test="hbsag != null">hbsag = #{hbsag},</if>
+            <if test="hcvAb != null">hcv_ab = #{hcvAb},</if>
+            <if test="hivAb != null">hiv_ab = #{hivAb},</if>
+            <if test="transfusionReaction != null">transfusion_reaction = #{transfusionReaction},</if>
+            <if test="redBloodCell != null">red_blood_cell = #{redBloodCell},</if>
+            <if test="platelet != null">platelet = #{platelet},</if>
+            <if test="plasma != null">plasma = #{plasma},</if>
+            <if test="wholeBlood != null">whole_blood = #{wholeBlood},</if>
+            <if test="selfBolld != null">self_bolld = #{selfBolld},</if>
+            <if test="otherBlood != null">other_blood = #{otherBlood},</if>
+            <if test="followIntervalM != null">follow_interval_m = #{followIntervalM},</if>
+            <if test="followIntervalD != null">follow_interval_d = #{followIntervalD},</if>
+
+            <if test="isCriRecord == null">is_cri_record = null,</if>
+            <if test="inhosCondCd == null">inhos_cond_cd = null,</if>
+            <if test="inhosCond == null">inhos_cond = null,</if>
+            <if test="diaDate == null">dia_date = null,</if>
+            <if test="outDisDia == null">out_dis_dia = null,</if>
+            <if test="admDisDia == null">adm_dis_dia = null,</if>
+            <if test="prePosDia == null">pre_pos_dia = null,</if>
+            <if test="clinPathDia == null">clin_path_dia = null,</if>
+            <if test="medPathDia == null">med_path_dia = null,</if>
+            <if test="prePathDia == null">pre_path_dia = null,</if>
+            <if test="diaEff == null">dia_eff = null,</if>
+            <if test="diaBasName == null">dia_bas_name = null,</if>
+            <if test="readmFlag == null">readm_flag = null,</if>
+            <if test="ventilatorD == null">ventilator_d = null,</if>
+            <if test="ventilatorH == null">ventilator_h = null,</if>
+            <if test="ventilatorMi == null">ventilator_mi = null,</if>
+            <if test="invasiveVentilatorD == null">invasive_ventilator_d = null,</if>
+            <if test="invasiveVentilatorH == null">invasive_ventilator_h = null,</if>
+            <if test="invasiveVentilatorMi == null">invasive_ventilator_mi = null,</if>
+            <if test="adlInhos == null">adl_inhos = null,</if>
+            <if test="adlOuthos == null">adl_outhos = null,</if>
+            <if test="saveTimes == null">save_times = null,</if>
+            <if test="saveSuccessTimes == null">save_success_times = null,</if>
+            <if test="iscp == null">iscp = null,</if>
+            <if test="stagingT == null">staging_t = null,</if>
+            <if test="stagingN == null">staging_n = null,</if>
+            <if test="stagingM == null">staging_m = null,</if>
+            <if test="staging == null">staging = null,</if>
+            <if test="preoperHospD == null">preoper_hosp_d = null,</if>
+            <if test="isPostoperComp == null">is_postoper_comp = null,</if>
+            <if test="isPressure == null">is_pressure = null,</if>
+            <if test="pressureGrade == null">pressure_grade = null,</if>
+            <if test="pressureCaus == null">pressure_caus = null,</if>
+            <if test="pressureSite == null">pressure_site = null,</if>
+            <if test="isFall == null">is_fall = null,</if>
+            <if test="fallGrade == null">fall_grade = null,</if>
+            <if test="fallCaus == null">fall_caus = null,</if>
+            <if test="isInfuse == null">is_infuse = null,</if>
+            <if test="isInfuseReac == null">is_infuse_reac = null,</if>
+            <if test="isFollowUp == null">is_follow_up = null,</if>
+            <if test="followIntervalY == null">follow_interval_y = null,</if>
+            <if test="isUseAnti == null">is_use_anti = null,</if>
+            <if test="useAntiPurp == null">use_anti_purp = null,</if>
+            <if test="useAntiSche == null">use_anti_sche = null,</if>
+            <if test="useAntiDays == null">use_anti_days = null,</if>
+            <if test="sprCareD == null">spr_care_d = null,</if>
+            <if test="priCareD == null">pri_care_d = null,</if>
+            <if test="secCareD == null">sec_care_d = null,</if>
+            <if test="terCareD == null">ter_care_d = null,</if>
+            <if test="altPerCode == null">alt_per_code = null,</if>
+            <if test="altPerName == null">alt_per_name = null,</if>
+            <if test="isDiffRecord == null">is_diff_record = null,</if>
+            <if test="isEmeRecord == null">is_eme_record = null,</if>
+            <if test="isResRecord == null">is_res_record = null,</if>
+            <if test="diaBasCode == null">dia_bas_code = null,</if>
+            <if test="diffProCode == null">diff_pro_code = null,</if>
+            <if test="diffProName == null">diff_pro_name = null,</if>
+            <if test="opeType == null">ope_type = null,</if>
+            <if test="firstRecord == null">first_record = null,</if>
+            <if test="hbsag == null">hbsag = null,</if>
+            <if test="hcvAb == null">hcv_ab = null,</if>
+            <if test="hivAb == null">hiv_ab = null,</if>
+            <if test="transfusionReaction == null">transfusion_reaction = null,</if>
+            <if test="redBloodCell == null">red_blood_cell = null,</if>
+            <if test="platelet == null">platelet = null,</if>
+            <if test="plasma == null">plasma = null,</if>
+            <if test="wholeBlood == null">whole_blood = null,</if>
+            <if test="selfBolld == null">self_bolld = null,</if>
+            <if test="otherBlood == null">other_blood = null,</if>
+            <if test="followIntervalM == null">follow_interval_m = null,</if>
+            <if test="followIntervalD == null">follow_interval_d = null,</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <update id="updateMrHpAttachNotNull" parameterType="MrHpAttach">
+        update mr_hp_attach
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="isCriRecord != null">is_cri_record = #{isCriRecord},</if>
+            <if test="inhosCondCd != null">inhos_cond_cd = #{inhosCondCd},</if>
+            <if test="inhosCond != null">inhos_cond = #{inhosCond},</if>
+            <if test="diaDate != null">dia_date = #{diaDate},</if>
+            <if test="outDisDia != null">out_dis_dia = #{outDisDia},</if>
+            <if test="admDisDia != null">adm_dis_dia = #{admDisDia},</if>
+            <if test="prePosDia != null">pre_pos_dia = #{prePosDia},</if>
+            <if test="clinPathDia != null">clin_path_dia = #{clinPathDia},</if>
+            <if test="medPathDia != null">med_path_dia = #{medPathDia},</if>
+            <if test="prePathDia != null">pre_path_dia = #{prePathDia},</if>
+            <if test="diaEff != null">dia_eff = #{diaEff},</if>
+            <if test="diaBasName != null">dia_bas_name = #{diaBasName},</if>
+            <if test="readmFlag != null">readm_flag = #{readmFlag},</if>
+            <if test="ventilatorD != null">ventilator_d = #{ventilatorD},</if>
+            <if test="ventilatorH != null">ventilator_h = #{ventilatorH},</if>
+            <if test="ventilatorMi != null">ventilator_mi = #{ventilatorMi},</if>
+            <if test="invasiveVentilatorD != null">invasive_ventilator_d = #{invasiveVentilatorD},</if>
+            <if test="invasiveVentilatorH != null">invasive_ventilator_h = #{invasiveVentilatorH},</if>
+            <if test="invasiveVentilatorMi != null">invasive_ventilator_mi = #{invasiveVentilatorMi},</if>
+            <if test="adlInhos != null">adl_inhos = #{adlInhos},</if>
+            <if test="adlOuthos != null">adl_outhos = #{adlOuthos},</if>
+            <if test="saveTimes != null">save_times = #{saveTimes},</if>
+            <if test="saveSuccessTimes != null">save_success_times = #{saveSuccessTimes},</if>
+            <if test="iscp != null">iscp = #{iscp},</if>
+            <if test="stagingT != null">staging_t = #{stagingT},</if>
+            <if test="stagingN != null">staging_n = #{stagingN},</if>
+            <if test="stagingM != null">staging_m = #{stagingM},</if>
+            <if test="staging != null">staging = #{staging},</if>
+            <if test="preoperHospD != null">preoper_hosp_d = #{preoperHospD},</if>
+            <if test="isPostoperComp != null">is_postoper_comp = #{isPostoperComp},</if>
+            <if test="isPressure != null">is_pressure = #{isPressure},</if>
+            <if test="pressureGrade != null">pressure_grade = #{pressureGrade},</if>
+            <if test="pressureCaus != null">pressure_caus = #{pressureCaus},</if>
+            <if test="pressureSite != null">pressure_site = #{pressureSite},</if>
+            <if test="isFall != null">is_fall = #{isFall},</if>
+            <if test="fallGrade != null">fall_grade = #{fallGrade},</if>
+            <if test="fallCaus != null">fall_caus = #{fallCaus},</if>
+            <if test="isInfuse != null">is_infuse = #{isInfuse},</if>
+            <if test="isInfuseReac != null">is_infuse_reac = #{isInfuseReac},</if>
+            <if test="isFollowUp != null">is_follow_up = #{isFollowUp},</if>
+            <if test="followIntervalY != null">follow_interval_y = #{followIntervalY},</if>
+            <if test="isUseAnti != null">is_use_anti = #{isUseAnti},</if>
+            <if test="useAntiPurp != null">use_anti_purp = #{useAntiPurp},</if>
+            <if test="useAntiSche != null">use_anti_sche = #{useAntiSche},</if>
+            <if test="useAntiDays != null">use_anti_days = #{useAntiDays},</if>
+            <if test="sprCareD != null">spr_care_d = #{sprCareD},</if>
+            <if test="priCareD != null">pri_care_d = #{priCareD},</if>
+            <if test="secCareD != null">sec_care_d = #{secCareD},</if>
+            <if test="terCareD != null">ter_care_d = #{terCareD},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+            <if test="isDiffRecord != null">is_diff_record = #{isDiffRecord},</if>
+            <if test="isEmeRecord != null">is_eme_record = #{isEmeRecord},</if>
+            <if test="isResRecord != null">is_res_record = #{isResRecord},</if>
+            <if test="diaBasCode != null">dia_bas_code = #{diaBasCode},</if>
+            <if test="diffProCode != null">diff_pro_code = #{diffProCode},</if>
+            <if test="diffProName != null">diff_pro_name = #{diffProName},</if>
+            <if test="opeType != null">ope_type = #{opeType},</if>
+            <if test="firstRecord != null">first_record = #{firstRecord},</if>
+            <if test="hbsag != null">hbsag = #{hbsag},</if>
+            <if test="hcvAb != null">hcv_ab = #{hcvAb},</if>
+            <if test="hivAb != null">hiv_ab = #{hivAb},</if>
+            <if test="transfusionReaction != null">transfusion_reaction = #{transfusionReaction},</if>
+            <if test="redBloodCell != null">red_blood_cell = #{redBloodCell},</if>
+            <if test="platelet != null">platelet = #{platelet},</if>
+            <if test="plasma != null">plasma = #{plasma},</if>
+            <if test="wholeBlood != null">whole_blood = #{wholeBlood},</if>
+            <if test="selfBolld != null">self_bolld = #{selfBolld},</if>
+            <if test="otherBlood != null">other_blood = #{otherBlood},</if>
+            <if test="followIntervalM != null">follow_interval_m = #{followIntervalM},</if>
+            <if test="followIntervalD != null">follow_interval_d = #{followIntervalD},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteMrHpAttachById" parameterType="String">
+        delete from mr_hp_attach where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteMrHpAttachByIds" parameterType="String">
+        delete from mr_hp_attach where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

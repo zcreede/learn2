@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.ApplyFormMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.ApplyForm">
+        <id column="apply_form_no" jdbcType="VARCHAR" property="applyFormNo"/>
+        <result column="apply_form_class_code" jdbcType="VARCHAR" property="applyFormClassCode"/>
+        <result column="apply_form_type_code" jdbcType="VARCHAR" property="applyFormTypeCode"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="order_sort_number" jdbcType="VARCHAR" property="orderSortNumber"/>
+        <result column="case_no" jdbcType="VARCHAR" property="caseNo"/>
+        <result column="admission_no" jdbcType="VARCHAR" property="admissionNo"/>
+        <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount"/>
+        <result column="patient_name" jdbcType="VARCHAR" property="patientName"/>
+        <result column="patient_dep_code" jdbcType="VARCHAR" property="patientDepCode"/>
+        <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime"/>
+        <result column="order_doctor_code" jdbcType="VARCHAR" property="orderDoctorCode"/>
+        <result column="perform_dep_code" jdbcType="VARCHAR" property="performDepCode"/>
+        <result column="purpose_examination" jdbcType="VARCHAR" property="purposeExamination"/>
+        <result column="exam_category" jdbcType="VARCHAR" property="examCategory"/>
+        <result column="exam_part" jdbcType="VARCHAR" property="examPart"/>
+        <result column="diagnosis_code" jdbcType="VARCHAR" property="diagnosisCode"/>
+        <result column="diagnosis_name" jdbcType="VARCHAR" property="diagnosisName"/>
+        <result column="sample_no" jdbcType="VARCHAR" property="sampleNo"/>
+        <result column="sample_name" jdbcType="VARCHAR" property="sampleName"/>
+        <result column="medical_record_digest" jdbcType="VARCHAR" property="medicalRecordDigest"/>
+        <result column="apply_form_status" jdbcType="VARCHAR" property="applyFormStatus"/>
+        <result column="operator_code" jdbcType="VARCHAR" property="operatorCode"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="urgent_flag" jdbcType="VARCHAR" property="urgentFlag"/>
+        <result column="settle_account_date" jdbcType="TIMESTAMP" property="settleAccountDate"/>
+        <result column="settle_account_code" jdbcType="VARCHAR" property="settleAccountCode"/>
+        <result column="settle_account_no" jdbcType="VARCHAR" property="settleAccountNo"/>
+        <result column="settle_account_name" jdbcType="VARCHAR" property="settleAccountName"/>
+    </resultMap>
+    <select id="searchApplyForm" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select a.* from td_pa_apply_form a,td_pa_apply_form_item b
+        where a.apply_form_no = b.apply_form_no and a.order_no  = #{OrderNo,jdbcType=VARCHAR}
+        and b.item_sort_number = #{orderSortNumber,jdbcType=VARCHAR}
+        <!--        select-->
+        <!--        <include refid="Base_Column_List"/>-->
+        <!--        from td_pa_apply_form-->
+        <!--        where order_no = #{OrderNo,jdbcType=VARCHAR} and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}-->
+    </select>
+    <update id="updateStatusByOrderNoAndOrderSortNumber">
+        update td_pa_apply_form set apply_form_status  =#{applyFormStatus,jdbcType=VARCHAR}
+        where order_no=#{OrderNo,jdbcType=VARCHAR}  and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+    </update>
+    <update id="updateItemStatusByOrderNoAndOrderSortNumber">
+        update td_pa_apply_form_item set apply_form_status  =#{applyFormStatus,jdbcType=VARCHAR}
+        where order_group_no=#{orderGroupNo,jdbcType=VARCHAR}  and item_sort_number=#{cope_sort_number,jdbcType=VARCHAR}
+            and apply_form_no=#{applyFormNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.operation.domain.ApplyForm">
+        update td_pa_apply_form
+        <set>
+            <if test="applyFormClassCode != null and applyFormClassCode != ''">
+                apply_form_class_code = #{applyFormClassCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applyFormTypeCode != null and applyFormTypeCode != ''">
+                apply_form_type_code = #{applyFormTypeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">
+                order_sort_number = #{orderSortNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="caseNo != null and caseNo != ''">
+                case_no = #{caseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="admissionNo != null and admissionNo != ''">
+                admission_no = #{admissionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="hospitalizedCount != null">
+                hospitalized_count = #{hospitalizedCount,jdbcType=INTEGER},
+            </if>
+            <if test="patientName != null and patientName != ''">
+                patient_name = #{patientName,jdbcType=VARCHAR},
+            </if>
+            <if test="patientDepCode != null and patientDepCode != ''">
+                patient_dep_code = #{patientDepCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applyTime != null">
+                apply_time = #{applyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderDoctorCode != null and orderDoctorCode != ''">
+                order_doctor_code = #{orderDoctorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="performDepCode != null and performDepCode != ''">
+                perform_dep_code = #{performDepCode,jdbcType=VARCHAR},
+            </if>
+            <if test="purposeExamination != null and purposeExamination != ''">
+                purpose_examination = #{purposeExamination,jdbcType=VARCHAR},
+            </if>
+            <if test="examCategory != null and examCategory != ''">
+                exam_category = #{examCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="examPart != null and examPart != ''">
+                exam_part = #{examPart,jdbcType=VARCHAR},
+            </if>
+            <if test="diagnosisCode != null and diagnosisCode != ''">
+                diagnosis_code = #{diagnosisCode,jdbcType=VARCHAR},
+            </if>
+            <if test="diagnosisName != null and diagnosisName != ''">
+                diagnosis_name = #{diagnosisName,jdbcType=VARCHAR},
+            </if>
+            <if test="sampleNo != null and sampleNo != ''">
+                sample_no = #{sampleNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sampleName != null and sampleName != ''">
+                sample_name = #{sampleName,jdbcType=VARCHAR},
+            </if>
+            <if test="medicalRecordDigest != null and medicalRecordDigest != ''">
+                medical_record_digest = #{medicalRecordDigest,jdbcType=VARCHAR},
+            </if>
+            <if test="applyFormStatus != null and applyFormStatus != ''">
+                apply_form_status = #{applyFormStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorCode != null and operatorCode != ''">
+                operator_code = #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="urgentFlag != null and urgentFlag != ''">
+                urgent_flag = #{urgentFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="settleAccountDate != null">
+                settle_account_date = #{settleAccountDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="settleAccountCode != null and settleAccountCode != ''">
+                settle_account_code = #{settleAccountCode,jdbcType=VARCHAR},
+            </if>
+            <if test="settleAccountNo != null and settleAccountNo != ''">
+                settle_account_no = #{settleAccountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="settleAccountName != null and settleAccountName != ''">
+                settle_account_name = #{settleAccountName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where apply_form_no = #{applyFormNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updatesqd">
+        update yy_yz_sqd set djzt = #{applyFormStatus,jdbcType=VARCHAR}  where  zyh = #{admission_no,jdbcType=VARCHAR}
+        and djh = #{applyFormNo,jdbcType=VARCHAR}
+    </update>
+</mapper>

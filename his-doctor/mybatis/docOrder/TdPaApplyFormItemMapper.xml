@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaApplyFormItemMapper">
+
+    <resultMap type="TdPaApplyFormItem" id="TdPaApplyFormItemResult">
+        <result property="id"    column="id"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="itemSortNumber"    column="item_sort_number"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="price"    column="price"    />
+        <result property="dose"    column="dose"    />
+        <result property="unit"    column="unit"    />
+        <result property="examPartCd"    column="exam_part_cd"    />
+        <result property="examPartName"    column="exam_part_name"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="applyFormStatus"    column="apply_form_status"    />
+        <result property="barcodeNo"    column="barcode_no"    />
+        <result property="reportDate"    column="report_date"    />
+        <result property="reportDoctor"    column="report_doctor"    />
+    </resultMap>
+    <resultMap id="TdPaApplyFormItemVoResult" type="TdPaApplyFormItemVo" extends="TdPaApplyFormItemResult">
+        <result property="applyTime"    column="apply_time"    />
+        <result property="orderDoctorCode"    column="order_doctor_code"    />
+        <result property="orderDoctorName"    column="order_doctor_name"    />
+        <result property="physicianDptNo"    column="physician_dpt_no"    />
+        <result property="physicianDptName"    column="physician_dpt_name"    />
+        <result property="applyFormClassCode" column="apply_form_class_code"/>
+        <result property="performDepSite" column="performDepSite"/>
+        <result property="performDepName" column="dept_name"/>
+        <result property="money" column="money" />
+        <result property="patientId" column="patient_id" />
+        <result property="notice" column="notice" />
+        <result property="examPart" column="exam_part" />
+    </resultMap>
+
+<!--    <resultMap type="TdPaApplyFormItem" id="TdPaApplyFormItemResult">-->
+<!--        <result property="id"    column="id"    />-->
+<!--        <result property="applyFormNo"    column="apply_form_no"    />-->
+<!--        <result property="orderGroupNo"    column="order_group_no"    />-->
+<!--        <result property="itemSortNumber"    column="item_sort_number"    />-->
+<!--        <result property="itemCode"    column="item_code"    />-->
+<!--        <result property="itemName"    column="item_name"    />-->
+<!--        <result property="price"    column="price"    />-->
+<!--        <result property="dose"    column="dose"    />-->
+<!--        <result property="unit"    column="unit"    />-->
+<!--        <result property="examPartCd"    column="exam_part_cd"    />-->
+<!--        <result property="examPartName"    column="exam_part_name"    />-->
+<!--        <result property="specCd"    column="spec_cd"    />-->
+<!--        <result property="specName"    column="spec_name"    />-->
+<!--        <result property="applyFormStatus"    column="apply_form_status"    />-->
+<!--        <result property="barcodeNo"    column="barcode_no"    />-->
+<!--        <result property="reportDate"    column="report_date"    />-->
+<!--        <result property="reportDoctor"    column="report_doctor"    />-->
+<!--    </resultMap>-->
+
+    <sql id="selectTdPaApplyFormItemVo">
+        select id, apply_form_no, order_group_no, item_sort_number, item_code, item_name, price, dose, unit, exam_part_cd, exam_part_name, spec_cd, spec_name, apply_form_status, barcode_no, report_date, report_doctor from td_pa_apply_form_item
+    </sql>
+
+    <select id="selectTdPaApplyFormItemList" parameterType="TdPaApplyFormItem" resultMap="TdPaApplyFormItemResult">
+        <include refid="selectTdPaApplyFormItemVo"/>
+        <where>
+            <if test="orderGroupNo != null "> and order_group_no = #{orderGroupNo}</if>
+            <if test="itemCode != null  and itemCode != ''"> and item_code = #{itemCode}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="dose != null "> and dose = #{dose}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="examPartCd != null  and examPartCd != ''"> and exam_part_cd = #{examPartCd}</if>
+            <if test="examPartName != null  and examPartName != ''"> and exam_part_name like concat(concat('%', #{examPartName}), '%')</if>
+            <if test="specCd != null  and specCd != ''"> and spec_cd = #{specCd}</if>
+            <if test="specName != null  and specName != ''"> and spec_name like concat(concat('%', #{specName}), '%')</if>
+            <if test="applyFormStatus != null  and applyFormStatus != ''"> and apply_form_status = #{applyFormStatus}</if>
+            <if test="barcodeNo != null  and barcodeNo != ''"> and barcode_no = #{barcodeNo}</if>
+            <if test="reportDate != null "> and report_date = #{reportDate}</if>
+            <if test="reportDoctor != null  and reportDoctor != ''"> and report_doctor = #{reportDoctor}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaApplyFormItemByFormNo" parameterType="String" resultMap="TdPaApplyFormItemResult">
+        <include refid="selectTdPaApplyFormItemVo"/>
+        where apply_form_no = #{applyFormNo}
+    </select>
+
+    <insert id="insertTdPaApplyFormItem" parameterType="TdPaApplyFormItem">
+        insert into td_pa_apply_form_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="applyFormNo != null">apply_form_no,</if>
+            <if test="orderGroupNo != null">order_group_no,</if>
+            <if test="itemSortNumber != null">item_sort_number,</if>
+            <if test="itemCode != null">item_code,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="price != null">price,</if>
+            <if test="dose != null">dose,</if>
+            <if test="unit != null">unit,</if>
+            <if test="examPartCd != null">exam_part_cd,</if>
+            <if test="examPartName != null">exam_part_name,</if>
+            <if test="specCd != null">spec_cd,</if>
+            <if test="specName != null">spec_name,</if>
+            <if test="applyFormStatus != null">apply_form_status,</if>
+            <if test="barcodeNo != null">barcode_no,</if>
+            <if test="reportDate != null">report_date,</if>
+            <if test="reportDoctor != null">report_doctor,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="applyFormNo != null">#{applyFormNo},</if>
+            <if test="orderGroupNo != null">#{orderGroupNo},</if>
+            <if test="itemSortNumber != null">#{itemSortNumber},</if>
+            <if test="itemCode != null">#{itemCode},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="price != null">#{price},</if>
+            <if test="dose != null">#{dose},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="examPartCd != null">#{examPartCd},</if>
+            <if test="examPartName != null">#{examPartName},</if>
+            <if test="specCd != null">#{specCd},</if>
+            <if test="specName != null">#{specName},</if>
+            <if test="applyFormStatus != null">#{applyFormStatus},</if>
+            <if test="barcodeNo != null">#{barcodeNo},</if>
+            <if test="reportDate != null">#{reportDate},</if>
+            <if test="reportDoctor != null">#{reportDoctor},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertTdPaApplyFormItemList" parameterType="TdPaApplyFormItem">
+        insert all
+        <foreach item="item" index="index" collection="list">
+        into td_pa_apply_form_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">id,</if>
+            <if test="item.applyFormNo != null">apply_form_no,</if>
+            <if test="item.orderGroupNo != null">order_group_no,</if>
+            <if test="item.itemSortNumber != null">item_sort_number,</if>
+            <if test="item.itemCode != null">item_code,</if>
+            <if test="item.itemName != null">item_name,</if>
+            <if test="item.price != null">price,</if>
+            <if test="item.dose != null">dose,</if>
+            <if test="item.unit != null">unit,</if>
+            <if test="item.examPartCd != null">exam_part_cd,</if>
+            <if test="item.examPartName != null">exam_part_name,</if>
+            <if test="item.specCd != null">spec_cd,</if>
+            <if test="item.specName != null">spec_name,</if>
+            <if test="item.applyFormStatus != null">apply_form_status,</if>
+            <if test="item.barcodeNo != null">barcode_no,</if>
+            <if test="item.reportDate != null">report_date,</if>
+            <if test="item.reportDoctor != null">report_doctor,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">#{item.id},</if>
+            <if test="item.applyFormNo != null">#{item.applyFormNo},</if>
+            <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+            <if test="item.itemSortNumber != null">#{item.itemSortNumber},</if>
+            <if test="item.itemCode != null">#{item.itemCode},</if>
+            <if test="item.itemName != null">#{item.itemName},</if>
+            <if test="item.price != null">#{item.price},</if>
+            <if test="item.dose != null">#{item.dose},</if>
+            <if test="item.unit != null">#{item.unit},</if>
+            <if test="item.examPartCd != null">#{item.examPartCd},</if>
+            <if test="item.examPartName != null">#{item.examPartName},</if>
+            <if test="item.specCd != null">#{item.specCd},</if>
+            <if test="item.specName != null">#{item.specName},</if>
+            <if test="item.applyFormStatus != null">#{item.applyFormStatus},</if>
+            <if test="item.barcodeNo != null">#{item.barcodeNo},</if>
+            <if test="item.reportDate != null">#{item.reportDate},</if>
+            <if test="item.reportDoctor != null">#{item.reportDoctor},</if>
+         </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTdPaApplyFormItem" parameterType="TdPaApplyFormItem">
+        update td_pa_apply_form_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null">id = #{id},</if>
+            <if test="orderGroupNo != null">order_group_no = #{orderGroupNo},</if>
+            <if test="itemSortNumber != null">item_sort_number = #{itemSortNumber},</if>
+            <if test="itemCode != null">item_code = #{itemCode},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="dose != null">dose = #{dose},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="examPartCd != null">exam_part_cd = #{examPartCd},</if>
+            <if test="examPartName != null">exam_part_name = #{examPartName},</if>
+            <if test="specCd != null">spec_cd = #{specCd},</if>
+            <if test="specName != null">spec_name = #{specName},</if>
+            <if test="applyFormStatus != null">apply_form_status = #{applyFormStatus},</if>
+            <if test="barcodeNo != null">barcode_no = #{barcodeNo},</if>
+            <if test="reportDate != null">report_date = #{reportDate},</if>
+            <if test="reportDoctor != null">report_doctor = #{reportDoctor},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+
+    <delete id="deleteTdPaApplyFormItemByFormNo" parameterType="String">
+        delete from td_pa_apply_form_item where apply_form_no = #{applyFormNo}
+    </delete>
+
+    <delete id="deleteTdPaApplyFormItemByIds" parameterType="String">
+        delete from td_pa_apply_form_item where apply_form_no in
+        <foreach item="applyFormNo" collection="array" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </delete>
+
+    <select id="selectTdPaApplyFormItemVoList" parameterType="TdPaApplyFormVo" resultMap="TdPaApplyFormItemVoResult">
+        select i.id, i.apply_form_no, i.order_group_no, i.item_sort_number, i.item_code, i.item_name, i.price, i.dose, i.unit, i.exam_part_cd,
+               i.exam_part_name, i.spec_cd, i.spec_name, i.apply_form_status, i.barcode_no, i.report_date, i.report_doctor,
+               f.apply_time,f.order_doctor_code,f.order_doctor_name,f.physician_dpt_no,f.physician_dpt_name,f.apply_form_class_code
+        from td_pa_apply_form_item i
+        left join td_pa_apply_form f on i.apply_form_no = f.apply_form_no
+        <where>
+            <if test="patientId != null  and patientId != ''"> and f.patient_id = #{patientId}</if>
+            <if test="applyFormStatusList != null  and applyFormStatusList.size > 0">
+                and f.apply_form_status in
+                <foreach item="applyFormStatus" collection="applyFormStatusList" open="(" separator="," close=")">
+                    #{applyFormStatus}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectItemByApplyNoList" parameterType="String" resultMap="TdPaApplyFormItemResult">
+        select id, apply_form_no, order_group_no, item_sort_number, item_code, item_name, price, dose, unit, exam_part_cd, exam_part_name, spec_cd, spec_name, apply_form_status, barcode_no, report_date, report_doctor
+        from td_pa_apply_form_item where apply_form_no in
+        <foreach item="applyFormNo" collection="applyNo" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+        union all
+        select id, apply_form_no, order_group_no, item_sort_number, item_code, item_name, price, dose, unit, exam_part_cd, exam_part_name, spec_cd, spec_name, apply_form_status, barcode_no, report_date, report_doctor
+        from td_pa_apply_form_item_h where apply_form_no in
+        <foreach item="applyFormNo" collection="applyNo" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </select>
+    <select id="selectTdPaApplyFormItemByApplyFormNo" resultMap="TdPaApplyFormItemVoResult">
+        select i.*, dept.SITE as performDepSite,f.APPLY_FORM_CLASS_CODE, dept.dept_name,round(i.DOSE*i.PRICE, 2) money,f.admission_no patient_id,
+            case when a.devicetype_code is not null then a.notice when a.devicetype_code is null then b.notice end as notice,i.exam_part_name as exam_part
+        from  td_pa_apply_form_item_all i
+        left join td_pa_apply_form_all f on i.apply_form_no = f.apply_form_no
+        left join TM_BS_DEPT dept on dept.DEPT_CODE = f.PERFORM_DEP_CODE
+        left join tm_bs_clin_item_main tbc on i.item_code = tbc.item_cd
+        left join tm_bs_document_type tbd on f.APPLY_FORM_TYPE_CODE = tbd.document_type_cd
+        left join tm_bs_device a on tbc.exam_machine_cd = a.devicetype_code
+        left join tm_bs_device b on tbd.exam_machine_cd = b.devicetype_code
+        where i.apply_form_no = #{applyFormNo}
+    </select>
+
+    <update id="updateStatusByApplyFormNos" parameterType="String">
+        update td_pa_apply_form_item set apply_form_status = #{applyFormStatus}
+        where apply_form_no in
+        <foreach item="applyFormNo" collection="applyFormNoList" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </update>
+</mapper>

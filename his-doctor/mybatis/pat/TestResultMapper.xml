@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.TestResultMapper">
+
+    <resultMap type="TestResult" id="TestResultResult">
+        <result property="id"    column="id"    />
+        <result property="reportId"    column="report_id"    />
+        <result property="testItemId"    column="test_item_id"    />
+        <result property="testItemCd"    column="test_item_cd"    />
+        <result property="testItemName"    column="test_item_name"    />
+        <result property="bactFlag"    column="bact_flag"    />
+        <result property="testResExp"    column="test_res_exp"    />
+        <result property="tesTxt"    column="tes_txt"    />
+        <result property="normalSign2"    column="normal_sign2"    />
+        <result property="valueUnit2"    column="value_unit2"    />
+        <result property="valueRange2"    column="value_range2"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="alterResFlag"    column="alter_res_flag"    />
+        <result property="ucl"    column="ucl"    />
+        <result property="lcl"    column="lcl"    />
+        <result property="printOrder"    column="print_order"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="resultDateTime"    column="result_date_time"    />
+    </resultMap>
+    <resultMap id="TestResultVoResult" type="TestResultVo" extends="TestResultResult">
+        <result property="resultDate"    column="resultDate"    />
+        <result property="testAim"    column="testAim"    />
+        <result property="hisItemCd"    column="his_item_cd"    />
+    </resultMap>
+    <sql id="selectTestResultVo">
+        select id, report_id, test_item_id, test_item_cd, test_item_name, bact_flag, test_res_exp, tes_txt, normal_sign2, value_unit2, value_range2, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, alter_res_flag, ucl, lcl, print_order, del_flag, result_date_time from test_result
+    </sql>
+
+    <select id="selectTestResultList" parameterType="TestResult" resultMap="TestResultResult">
+        <include refid="selectTestResultVo"/>
+        where report_id=#{reportId}
+        order by to_number(print_order)
+    </select>
+
+    <select id="selectTestResultById" parameterType="String" resultMap="TestResultResult">
+        <include refid="selectTestResultVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="analysisResultList" parameterType="String" resultMap="TestResultVoResult">
+        select r.id, r.report_id, r.test_item_id, r.test_item_cd, r.test_item_name, r.bact_flag, r.test_res_exp,
+        r.tes_txt, r.normal_sign2, r.value_unit2, r.value_range2, r.cre_per_code, r.cre_per_name, to_char(r.cre_date,'MM-DD HH24') as resultDate, r.alt_per_code,
+        r.alt_per_name, r.alt_date, r.alter_res_flag, r.ucl, r.lcl, r.print_order, r.del_flag, r.result_date_time
+        from test_result r
+        left join test_report p on r.report_id = p.id
+        where p.patient_id in
+        <foreach item="id" collection="patientIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and trim(p.clin_item_cd)=#{clinItemCd}
+    </select>
+    <insert id="insertTestResult" parameterType="TestResult">
+        insert into test_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="reportId != null and reportId != ''">report_id,</if>
+            <if test="testItemId != null and testItemId != ''">test_item_id,</if>
+            <if test="testItemCd != null and testItemCd != ''">test_item_cd,</if>
+            <if test="testItemName != null and testItemName != ''">test_item_name,</if>
+            <if test="bactFlag != null and bactFlag != ''">bact_flag,</if>
+            <if test="testResExp != null">test_res_exp,</if>
+            <if test="tesTxt != null">tes_txt,</if>
+            <if test="normalSign2 != null">normal_sign2,</if>
+            <if test="valueUnit2 != null">value_unit2,</if>
+            <if test="valueRange2 != null">value_range2,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="alterResFlag != null">alter_res_flag,</if>
+            <if test="ucl != null">ucl,</if>
+            <if test="lcl != null">lcl,</if>
+            <if test="printOrder != null">print_order,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="resultDateTime != null">result_date_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="reportId != null and reportId != ''">#{reportId},</if>
+            <if test="testItemId != null and testItemId != ''">#{testItemId},</if>
+            <if test="testItemCd != null and testItemCd != ''">#{testItemCd},</if>
+            <if test="testItemName != null and testItemName != ''">#{testItemName},</if>
+            <if test="bactFlag != null and bactFlag != ''">#{bactFlag},</if>
+            <if test="testResExp != null">#{testResExp},</if>
+            <if test="tesTxt != null">#{tesTxt},</if>
+            <if test="normalSign2 != null">#{normalSign2},</if>
+            <if test="valueUnit2 != null">#{valueUnit2},</if>
+            <if test="valueRange2 != null">#{valueRange2},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="alterResFlag != null">#{alterResFlag},</if>
+            <if test="ucl != null">#{ucl},</if>
+            <if test="lcl != null">#{lcl},</if>
+            <if test="printOrder != null">#{printOrder},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="resultDateTime != null">#{resultDateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestResult" parameterType="TestResult">
+        update test_result
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportId != null and reportId != ''">report_id = #{reportId},</if>
+            <if test="testItemId != null and testItemId != ''">test_item_id = #{testItemId},</if>
+            <if test="testItemCd != null and testItemCd != ''">test_item_cd = #{testItemCd},</if>
+            <if test="testItemName != null and testItemName != ''">test_item_name = #{testItemName},</if>
+            <if test="bactFlag != null and bactFlag != ''">bact_flag = #{bactFlag},</if>
+            <if test="testResExp != null">test_res_exp = #{testResExp},</if>
+            <if test="tesTxt != null">tes_txt = #{tesTxt},</if>
+            <if test="normalSign2 != null">normal_sign2 = #{normalSign2},</if>
+            <if test="valueUnit2 != null">value_unit2 = #{valueUnit2},</if>
+            <if test="valueRange2 != null">value_range2 = #{valueRange2},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="alterResFlag != null">alter_res_flag = #{alterResFlag},</if>
+            <if test="ucl != null">ucl = #{ucl},</if>
+            <if test="lcl != null">lcl = #{lcl},</if>
+            <if test="printOrder != null">print_order = #{printOrder},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="resultDateTime != null">result_date_time = #{resultDateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTestResultById" parameterType="String">
+        delete from test_result where id = #{id}
+    </delete>
+
+    <delete id="deleteTestResultByIds" parameterType="String">
+        delete from test_result where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertMap" parameterType="map">
+        insert into test_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">id,</if>
+            <if test="report_id!=null and report_id!=''">report_id,</if>
+            <if test="test_item_id!=null and test_item_id!=''">test_item_id,</if>
+            <if test="test_item_cd!=null and test_item_cd!=''">test_item_cd,</if>
+            <if test="test_item_name!=null and test_item_name!=''">test_item_name,</if>
+            <if test="bact_flag!=null and bact_flag!=''">bact_flag,</if>
+            <if test="test_res_exp!=null and test_res_exp!=''">test_res_exp,</if>
+            <if test="tes_txt!=null and tes_txt!=''">tes_txt,</if>
+            <if test="normal_sign2!=null and normal_sign2!=''">normal_sign2,</if>
+            <if test="value_unit2!=null and value_unit2!=''">value_unit2,</if>
+            <if test="value_range2!=null and value_range2!=''">value_range2,</if>
+            <if test="cre_per_code!=null and cre_per_code!=''">cre_per_code,</if>
+            <if test="cre_per_name!=null and cre_per_name!=''">cre_per_name,</if>
+            <if test="cre_date!=null">cre_date,</if>
+            <if test="alter_res_flag!=null and alter_res_flag!=''">alter_res_flag,</if>
+            <if test="ucl!=null and ucl!=''">ucl,</if>
+            <if test="lcl!=null and lcl!=''">lcl,</if>
+            <if test="print_order!=null and print_order!=''">print_order,</if>
+            <if test="del_flag!=null and del_flag!=''">del_flag,</if>
+            <if test="result_date_time!=null">result_date_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">#{id},</if>
+            <if test="report_id!=null and report_id!=''">#{report_id},</if>
+            <if test="test_item_id!=null and test_item_id!=''">#{test_item_id},</if>
+            <if test="test_item_cd!=null and test_item_cd!=''">#{test_item_cd},</if>
+            <if test="test_item_name!=null and test_item_name!=''">#{test_item_name},</if>
+            <if test="bact_flag!=null and bact_flag!=''">#{bact_flag},</if>
+            <if test="test_res_exp!=null and test_res_exp!=''">#{test_res_exp},</if>
+            <if test="tes_txt!=null and tes_txt!=''">#{tes_txt},</if>
+            <if test="normal_sign2!=null and normal_sign2!=''">#{normal_sign2},</if>
+            <if test="value_unit2!=null and value_unit2!=''">#{value_unit2},</if>
+            <if test="value_range2!=null and value_range2!=''">#{value_range2},</if>
+            <if test="cre_per_code!=null and cre_per_code!=''">#{cre_per_code},</if>
+            <if test="cre_per_name!=null and cre_per_name!=''">#{cre_per_name},</if>
+            <if test="cre_date!=null">#{cre_date},</if>
+            <if test="alter_res_flag!=null and alter_res_flag!=''">#{alter_res_flag},</if>
+            <if test="ucl!=null and ucl!=''">#{ucl},</if>
+            <if test="lcl!=null and lcl!=''">#{lcl},</if>
+            <if test="print_order!=null and print_order!=''">#{print_order},</if>
+            <if test="del_flag!=null and del_flag!=''">#{del_flag},</if>
+            <if test="result_date_time!=null">#{result_date_time},</if>
+        </trim>
+    </insert>
+    <select id="selectHisCheckResult" parameterType="String" resultMap="TestResultVoResult">
+        select  tr.*,his.his_item_cd from  TEST_RESULT tr left join TEST_REPORT re on tr.REPORT_ID=re.id
+        left join TM_PM_LIS_LAB_ITEM_HIS his on his.LIS_ITEM_CD=tr.TEST_ITEM_CD
+        where re.patient_id=#{patientId} and his.HIS_ITEM_CD in(select HIS_ITEM_CD from TM_PM_LIS_LAB_ITEM_HIS)
+    </select>
+    <select id="selectOrderCheckResult" parameterType="TestResultVo" resultMap="TestResultVoResult">
+        select re.* from test_result re left join TEST_REPORT tr on re.REPORT_ID=tr.id where APP_CD=#{appCd}
+    </select>
+
+    <select id="selectHisResultList" parameterType="SqlVo" resultMap="TestResultResult">
+        ${sqlStr}
+    </select>
+    <resultMap id="TestAertListResult" type="com.emr.project.pat.domain.vo.TestAlertResultVo">
+        <result property="rptItemcode"    column="itemcode_en"    />
+        <result property="rptItemname"    column="rpt_itemname"    />
+        <result property="result"    column="result"    />
+        <result property="resultUnit"    column="result_unit"    />
+        <result property="resultRef"    column="result_ref"    />
+        <result property="alertdt"    column="alertdt"    />
+
+        <result property="handleDocName"    column="hischeckman"    />
+        <result property="handleDocTime"    column="hischeckdt"    />
+        <result property="handleDocContent"    column="hischeckinfo"    />
+
+    </resultMap>
+    <select id="selectTestAertList" resultMap="TestAertListResult">
+        select * from (
+        SELECT
+        a.itemcode_en,
+        a.rpt_itemname,
+        a.result_str as result,
+        a.result_unit,
+        a.result_ref,
+        a.alertdt,
+        a.hischeckman,
+        a.hischeckdt,
+        a.hischeckinfo
+        FROM
+        inter_lab_resultalert a
+        left join yy_p_brqk b on a.pat_no = b.bah
+        where
+        b.zyh = #{patientId}
+        <if test="startDate != null">
+            and a.alertdt &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and a.alertdt &lt; #{endDate}
+        </if>
+        union all
+        SELECT
+        a.itemcode_en,
+        a.rpt_itemname,
+        a.result_str as result,
+        a.result_unit,
+        a.result_ref,
+        a.alertdt,
+        a.hischeckman,
+        a.hischeckdt,
+        a.hischeckinfo
+        FROM
+        inter_lab_resultalert a
+        left join yy_cry_brqk_h b on a.pat_no = b.bah
+        where
+        b.zyh = #{patientId}
+        <if test="startDate != null">
+            and a.alertdt &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and a.alertdt &lt; #{endDate}
+        </if>
+        union all
+        SELECT
+        a.itemcode_en,
+        a.rpt_itemname,
+        a.result_str as result,
+        a.result_unit,
+        a.result_ref,
+        a.alertdt,
+        a.hischeckman,
+        a.hischeckdt,
+        a.hischeckinfo
+        FROM
+        inter_lab_resultalert a
+        left join yy_cry_brqk_drcy b on a.pat_no = b.bah
+        where
+        b.zyh = #{patientId}
+        <if test="startDate != null">
+            and a.alertdt &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and a.alertdt &lt; #{endDate}
+        </if>
+        )c
+        ORDER BY c.alertdt DESC
+    </select>
+</mapper>

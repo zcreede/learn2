@@ -1,0 +1,326 @@
+package com.ai.prd
+
+import com.emr.project.mrhp.domain.vo.MrHpVo;
+import com.emr.common.utils.DroolsUtil;
+import com.emr.common.utils.StringUtils;
+
+rule "1.病案号为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(recordNo))
+    then
+        $mrHpVo.getErrorMsg().add("病案号不能为空");
+end
+
+rule "2.入院次数为空"
+    when
+        $mrHpVo : MrHpVo( visitId == null)
+    then
+        $mrHpVo.getErrorMsg().add("入院次数不能为空");
+end
+
+rule "3.医疗付费方式为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(payTypeCd))
+    then
+        $mrHpVo.getErrorMsg().add("医疗付费方式不能为空");
+end
+
+rule "4.患者姓名为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(patientName))
+    then
+        $mrHpVo.getErrorMsg().add("患者姓名不能为空");
+end
+
+rule "5.身份证号规则校验"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isNoneEmpty(cardTypeNo) && !DroolsUtil.validateCard(cardTypeNo))
+    then
+        $mrHpVo.getErrorMsg().add("身份证号输入有误");
+end
+
+rule "6.出生日期<=入院日期"
+    when
+        $mrHpVo : MrHpVo(birDate != null && inhosTime != null && DroolsUtil.after(birDate,inhosTime))
+    then
+        $mrHpVo.getErrorMsg().add("请核对年龄");
+end
+
+rule "7.年龄为空"
+    when
+        $mrHpVo : MrHpVo((ageY == null || ageY == 0) &&( ageM == null  || ageM == 0) &&( ageD  == null  || ageD == 0) && (ageH  == null  || ageH == 0) && (ageMi  == null  || ageMi == 0) )
+    then
+        $mrHpVo.getErrorMsg().add("年龄为空");
+end
+
+rule "8.新生儿体重"
+    when
+        $mrHpVo : MrHpVo(DroolsUtil.mrHpVoInhosWeight(inhosWeight, ageY, ageM, ageD))
+    then
+        $mrHpVo.getErrorMsg().add("新生儿入院当日的体重；小于等于28天的新生儿必填，填写了新生儿入出院体重的，必须填写年龄不足1周岁的年龄（天），且必须小于等于28天。");
+end
+rule "9.性别"
+    when
+        $mrHpVo : MrHpVo(DroolsUtil.checkSex(sex,cardTypeNo))
+    then
+        $mrHpVo.getErrorMsg().add("性别填写有误");
+end
+rule "10.婚姻"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(marStaCd))
+    then
+        $mrHpVo.getErrorMsg().add("婚姻为空");
+end
+rule "11.婚姻不正确"
+    when
+        $mrHpVo : MrHpVo(marStaCd in (2,3,4) && (ageY == null || ageY < 18))
+    then
+        $mrHpVo.getErrorMsg().add("请核对患者婚姻");
+end
+rule "12.民族"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(nationCd))
+    then
+        $mrHpVo.getErrorMsg().add("民族不能为空");
+end
+rule "13.联系电话"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(contTel) || DroolsUtil.matchesContTel(contTel))
+    then
+        $mrHpVo.getErrorMsg().add("联系电话有误");
+end
+
+rule "14.职业不能为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(proTypeCd))
+    then
+        $mrHpVo.getErrorMsg().add("职业不能为空");
+end
+rule "15.籍贯省市不能为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(apAddrPro) || StringUtils.isEmpty(apAddrPlagty))
+    then
+        $mrHpVo.getErrorMsg().add("籍贯省市不能为空");
+end
+rule "16.出生地省市区不能为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(birAddrPro) || StringUtils.isEmpty(birAddrPlagty) || StringUtils.isEmpty(birAddrCou))
+    then
+        $mrHpVo.getErrorMsg().add("出生地省市区不能为空");
+end
+rule "17.现住址省市区不能为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(nowAddrPro) || StringUtils.isEmpty(nowAddrFlagty) || StringUtils.isEmpty(nowAddrCou) || StringUtils.isEmpty(nowAddr) )
+    then
+        $mrHpVo.getErrorMsg().add("现住址省市区不能为空");
+end
+
+rule "18.户口地址省市区不能为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(rprAddrPro) || StringUtils.isEmpty(rprAddrFlagty) || StringUtils.isEmpty(rprAddrCou) || StringUtils.isEmpty(rprAddr))
+    then
+        $mrHpVo.getErrorMsg().add("现住址省市区不能为空");
+end
+
+rule "19.工作单位户口地址省市区不能为空"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(workAddrPro) || StringUtils.isEmpty(workAddrFlagty) || StringUtils.isEmpty(workAddrCou) || StringUtils.isEmpty(workNameAddr))
+    then
+        $mrHpVo.getErrorMsg().add("现住址省市区不能为空");
+end
+
+rule "20.邮编填写有误"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isNotEmpty(workPost) && workPost not matches "^[1-9]\\d{5}$" )
+    then
+        $mrHpVo.getErrorMsg().add("邮编填写有误");
+end
+
+rule "21.联系人姓名必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(contName) )
+    then
+        $mrHpVo.getErrorMsg().add("联系人姓名必填");
+end
+rule "22.联系人电话必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(contName) )
+    then
+        $mrHpVo.getErrorMsg().add("联系人姓名必填");
+end
+rule "23.联系人地址必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(contAddrPro) || StringUtils.isEmpty(contAddrFlagty) || StringUtils.isEmpty(contAddrCou) )
+    then
+        $mrHpVo.getErrorMsg().add("联系人地址必填");
+end
+rule "24.入院途径必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(inWay) || inWay not in ("1","2","3","9") )
+    then
+        $mrHpVo.getErrorMsg().add("入院途径填写有误");
+end
+rule "25.入院日期必填"
+    when
+        $mrHpVo : MrHpVo(inhosTime == null)
+    then
+        $mrHpVo.getErrorMsg().add("入院日期必填");
+end
+rule "26.入院科别必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(inDeptCd))
+    then
+        $mrHpVo.getErrorMsg().add("入院科别必填");
+end
+rule "27.病房号必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(inRoomNo))
+    then
+        $mrHpVo.getErrorMsg().add("病房号必填");
+end
+rule "28.出院日期必填"
+    when
+        $mrHpVo : MrHpVo(outTime == null)
+    then
+        $mrHpVo.getErrorMsg().add("出院日期必填");
+end
+rule "29.实际住院天数"
+    when
+        $mrHpVo : MrHpVo(DroolsUtil.chexkRealInhosDays(realInhosDays,outTime,inhosTime))
+    then
+        $mrHpVo.getErrorMsg().add("实际住院天数有误");
+end
+rule "30.门（急）诊诊断"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(osChdCd))
+    then
+        $mrHpVo.getErrorMsg().add("实门（急）诊诊断为空");
+end
+rule "31.药物过敏标志"
+    when
+        $mrHpVo : MrHpVo(drugAlleFlag == null || drugAlleFlag ==0)
+    then
+        $mrHpVo.getErrorMsg().add("药物过敏标志必填");
+end
+rule "32.药物过敏标志为2  过敏药物必填"
+    when
+        $mrHpVo : MrHpVo(drugAlleFlag == 2 && StringUtils.isEmpty(alleDrug))
+    then
+        $mrHpVo.getErrorMsg().add("过敏药物不能为空");
+end
+rule "33.死亡患者尸检"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isNotEmpty(leaveWayCd) && leaveWayCd == "5" && testFlag == null)
+    then
+        $mrHpVo.getErrorMsg().add("死亡尸检不能为空");
+end
+rule "34.血型必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(aboCd))
+    then
+        $mrHpVo.getErrorMsg().add("血型必填");
+end
+rule "35.RH血型必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(rhCd))
+    then
+        $mrHpVo.getErrorMsg().add("RH血型必填");
+end
+
+rule "36.科主任必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(hdCd))
+    then
+        $mrHpVo.getErrorMsg().add("科主任必填");
+end
+rule "37.主任医师必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(arcDocCd))
+    then
+        $mrHpVo.getErrorMsg().add("主任医师必填");
+end
+rule "38.主治医师必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(attDocCd))
+    then
+        $mrHpVo.getErrorMsg().add("主治医师必填");
+end
+rule "39.住院医师必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(resDocCd))
+    then
+        $mrHpVo.getErrorMsg().add("住院医师必填");
+end
+rule "40.责任护士必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(dutyNurName))
+    then
+        $mrHpVo.getErrorMsg().add("责任护士必填");
+end
+rule "41.质控医师必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(qconDocCd))
+    then
+        $mrHpVo.getErrorMsg().add("质控医师必填");
+end
+rule "42.质控护士必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(qconNurCd))
+    then
+        $mrHpVo.getErrorMsg().add("质控护士必填");
+end
+
+rule "43.病案质量必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(mrqCd))
+    then
+        $mrHpVo.getErrorMsg().add("病案质量必填");
+end
+
+rule "44.质控日期必填"
+    when
+        $mrHpVo : MrHpVo(qconDate == null)
+    then
+        $mrHpVo.getErrorMsg().add("质控日期必填");
+end
+
+rule "45.质控日期必须大于入院日期"
+    when
+        $mrHpVo : MrHpVo(qconDate != null && inhosTime!=null && DroolsUtil.after(inhosTime,qconDate))
+    then
+        $mrHpVo.getErrorMsg().add("质控日期必须大于入院日期");
+end
+
+rule "46.离院方式必填"
+    when
+        $mrHpVo : MrHpVo(StringUtils.isEmpty(leaveWayCd))
+    then
+        $mrHpVo.getErrorMsg().add("离院方式必填");
+end
+
+rule "47.离院方式=2（医嘱转院） 或者 离院方式=3（医嘱转社区）时，拟接收医疗机构名称不能为空，必须输入汉字"
+    when
+        $mrHpVo : MrHpVo(leaveWayCd == "2" || leaveWayCd == "3"  && StringUtils.isEmpty(inOrgName))
+    then
+        $mrHpVo.getErrorMsg().add("拟接收医疗机构名称不能为空");
+end
+
+rule "48.是否有31天再住院计划：必填项，做非空限制，仅能选择。（1.无；2.有）"
+    when
+        $mrHpVo : MrHpVo(outInFlag == null)
+    then
+        $mrHpVo.getErrorMsg().add("拟接收医疗机构名称不能为空");
+end
+
+rule "49.是否有31天再住院计划=2（有）时，再住院目的不能为空，必须填写汉字"
+    when
+        $mrHpVo : MrHpVo(outInFlag == 2 && StringUtils.isEmpty(outInAim))
+    then
+        $mrHpVo.getErrorMsg().add("再住院目的不能为空");
+end
+
+
+
+
+
+

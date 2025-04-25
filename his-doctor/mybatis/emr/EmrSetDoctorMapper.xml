@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrSetDoctorMapper">
+
+    <resultMap type="EmrSetDoctor" id="EmrSetDoctorwResult">
+        <result property="id"    column="id"    />
+        <result property="setDetailId"    column="set_detail_id"    />
+        <result property="docCode"    column="doc_code"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="setCd"    column="set_cd"    />
+        <result property="admissionNo"    column="admission_No"    />
+    </resultMap>
+
+    <sql id="selectEmrSetDoctorVo">
+        select id, set_detail_id, doc_code, doc_name, cre_date, cre_per_code, cre_per_name,set_cd,admission_No from emr_set_doctor
+    </sql>
+
+    <select id="selectEmrSetDoctorList" parameterType="EmrSetDoctor" resultMap="EmrSetDoctorwResult">
+        <include refid="selectEmrSetDoctorVo"/>
+        <where>
+            <if test="setDetailId != null "> and set_detail_id = #{setDetailId}</if>
+            <if test="docCode != null  and docCode != ''"> and doc_code = #{docCode}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="setCd != null  and setCd != ''"> and set_cd = #{setCd}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrSetDoctorById" parameterType="Long" resultMap="EmrSetDoctorwResult">
+        <include refid="selectEmrSetDoctorVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrSetDoctor" parameterType="EmrSetDoctor">
+        insert into emr_set_doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="setDetailId != null">set_detail_id,</if>
+            <if test="docCode != null">doc_code,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="setCd != null">set_cd,</if>
+            <if test="admissionNo != null">admission_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="setDetailId != null">#{setDetailId},</if>
+            <if test="docCode != null">#{docCode},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="setCd != null">#{setCd},</if>
+            <if test="admissionNo != null">#{admissionNo},</if>
+         </trim>
+    </insert>
+    <insert id="insertEmrSetDoctorList" parameterType="java.util.List">
+        insert all
+        <foreach collection="emrSetDoctorList" item="setDoctor" index= "index" >
+         into emr_set_doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="setDoctor.id != null">id,</if>
+            <if test="setDoctor.setDetailId != null">set_detail_id,</if>
+            <if test="setDoctor.docCode != null">doc_code,</if>
+            <if test="setDoctor.docName != null">doc_name,</if>
+            <if test="setDoctor.creDate != null">cre_date,</if>
+            <if test="setDoctor.creDate == null">cre_date,</if>
+            <if test="setDoctor.crePerCode != null">cre_per_code,</if>
+            <if test="setDoctor.crePerName != null">cre_per_name,</if>
+            <if test="setDoctor.setCd != null">set_cd,</if>
+            <if test="setDoctor.admissionNo != null">admission_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="setDoctor.id != null">#{setDoctor.id},</if>
+            <if test="setDoctor.setDetailId != null">#{setDoctor.setDetailId},</if>
+            <if test="setDoctor.docCode != null">#{setDoctor.docCode},</if>
+            <if test="setDoctor.docName != null">#{setDoctor.docName},</if>
+            <if test="setDoctor.creDate != null">#{setDoctor.creDate},</if>
+            <if test="setDoctor.creDate == null">sysdate,</if>
+            <if test="setDoctor.crePerCode != null">#{setDoctor.crePerCode},</if>
+            <if test="setDoctor.crePerName != null">#{setDoctor.crePerName},</if>
+            <if test="setDoctor.setCd != null">#{setDoctor.setCd},</if>
+            <if test="setDoctor.admissionNo != null">#{setDoctor.admissionNo},</if>
+         </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateEmrSetDoctor" parameterType="EmrSetDoctor">
+        update emr_set_doctor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="setDetailId != null">set_detail_id = #{setDetailId},</if>
+            <if test="docCode != null">doc_code = #{docCode},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="setCd != null">set_cd = #{setCd},</if>
+            <if test="admissionNo != null">admission_no = #{admissionNo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrSetDoctorById" parameterType="Long">
+        delete from emr_set_doctor where id = #{id}
+    </delete>
+    <delete id="deleteEmrSetDoctorBySetCd" parameterType="String">
+        delete from emr_set_doctor where set_cd=#{setCd} and doc_code=#{docCd}
+    </delete>
+
+    <delete id="deleteEmrSetDoctorBySetCdAndPatientId" parameterType="String">
+        delete from emr_set_doctor where set_cd=#{setCd} and doc_code=#{docCd} and admission_no =#{patientId}
+    </delete>
+
+    <delete id="deleteEmrSetDoctorBySetCdForSel" parameterType="String">
+        delete from emr_set_doctor where set_cd=#{setCd}
+    </delete>
+
+    <delete id="deleteEmrSetDoctorByIds" parameterType="String">
+        delete from emr_set_doctor where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

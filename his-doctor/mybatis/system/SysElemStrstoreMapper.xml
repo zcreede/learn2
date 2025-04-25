@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysElemStrstoreMapper">
+
+    <resultMap type="SysElemStrstore" id="SysElemStrstoreResult">
+        <result property="id"    column="id"    />
+        <result property="tempType"    column="temp_type"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="isValid"    column="is_valid"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="requFlag"    column="requ_flag"    />
+    </resultMap>
+
+    <sql id="selectSysElemStrstoreVo">
+        select id, temp_type, elem_id, elem_name, elem_cd, is_valid, alt_date, alt_per_code, alt_per_name, cre_date, cre_per_code, cre_per_name,requ_flag from sys_elem_strstore
+    </sql>
+
+    <select id="selectSysElemStrstoreList" parameterType="SysElemStrstore" resultMap="SysElemStrstoreResult">
+        select es.* from sys_elem_strstore es inner join SYS_STA_ELEM e on es.elem_id = e.id
+        <where>
+            <if test="tempType != null  and tempType != ''"> and es.temp_type = #{tempType}</if>
+            <if test="elemId != null  and elemId != ''"> and es.elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and (es.elem_name like concat(concat('%', #{elemName}), '%') or es.elem_cd like concat(concat('%', #{elemName}), '%') or e.inputstrphtc like concat(concat('%', #{elemName}), '%'))</if>
+            <if test="elemCd != null  and elemCd != ''"> and es.elem_cd = #{elemCd}</if>
+            <if test="isValid != null  and isValid != ''"> and es.is_valid = #{isValid}</if>
+            <if test="requFlag != null  and requFlag != ''"> and es.requ_flag=#{requFlag}</if>
+        </where>
+        order by es.requ_flag desc, es.cre_date desc
+    </select>
+
+    <select id="selectSysElemStrstoreById" parameterType="Long" resultMap="SysElemStrstoreResult">
+        <include refid="selectSysElemStrstoreVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSysElemStrstore" parameterType="SysElemStrstore">
+        insert into sys_elem_strstore
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tempType != null">temp_type,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="isValid != null">is_valid,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null ">alt_date,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="requFlag != null">requ_flag,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tempType != null">#{tempType},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="isValid != null">#{isValid},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null ">#{altDate},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="requFlag != null">#{requFlag},</if>
+            sysDate,
+         </trim>
+    </insert>
+
+    <update id="updateSysElemStrstore" parameterType="SysElemStrstore">
+        update sys_elem_strstore
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tempType != null">temp_type = #{tempType},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="isValid != null">is_valid = #{isValid},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="requFlag != null">requ_flag = #{requFlag},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysElemStrstoreById" parameterType="Long">
+        delete from sys_elem_strstore where id = #{id}
+    </delete>
+
+    <delete id="deleteSysElemStrstoreByIds" parameterType="String">
+        delete from sys_elem_strstore where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

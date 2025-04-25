@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TakeDrugBatchMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.docOrder.domain.TakeDrugBatch">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="dep_code" jdbcType="VARCHAR" property="depCode" />
+    <result column="take_drug_date" jdbcType="TIMESTAMP" property="takeDrugDate" />
+    <result column="take_drug_batch_num" jdbcType="INTEGER" property="takeDrugBatchNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, dep_code, take_drug_date, take_drug_batch_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from td_pa_take_drug_batch
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from td_pa_take_drug_batch
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.emr.project.docOrder.domain.TakeDrugBatch">
+    insert into td_pa_take_drug_batch (id, dep_code, take_drug_date,
+      take_drug_batch_num)
+    values (#{id}, #{depCode,jdbcType=VARCHAR}, #{takeDrugDate,jdbcType=TIMESTAMP},
+      #{takeDrugBatchNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.docOrder.domain.TakeDrugBatch">
+    insert into td_pa_take_drug_batch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="depCode != null">
+        dep_code,
+      </if>
+      <if test="takeDrugDate != null">
+        take_drug_date,
+      </if>
+      <if test="takeDrugBatchNum != null">
+        take_drug_batch_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      seq_td_pa_take_drug_batch.nextval,
+      <if test="depCode != null">
+        #{depCode,jdbcType=VARCHAR},
+      </if>
+      <if test="takeDrugDate != null">
+        #{takeDrugDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="takeDrugBatchNum != null">
+        #{takeDrugBatchNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.docOrder.domain.TakeDrugBatch">
+    update td_pa_take_drug_batch
+    <set>
+      <if test="depCode != null">
+        dep_code = #{depCode,jdbcType=VARCHAR},
+      </if>
+      <if test="takeDrugDate != null">
+        take_drug_date = #{takeDrugDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="takeDrugBatchNum != null">
+        take_drug_batch_num = #{takeDrugBatchNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emr.project.docOrder.domain.TakeDrugBatch">
+    update td_pa_take_drug_batch
+    set dep_code = #{depCode,jdbcType=VARCHAR},
+      take_drug_date = #{takeDrugDate,jdbcType=TIMESTAMP},
+      take_drug_batch_num = #{takeDrugBatchNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectLastBatch" parameterType="com.emr.project.docOrder.domain.TakeDrugBatch" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from td_pa_take_drug_batch
+    where dep_code = #{depCode,jdbcType=VARCHAR}
+    and to_char(take_drug_date, 'yyyy-mm-dd') = #{takeDrugDateStr}
+    and rownum = 1
+  </select>
+</mapper>

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderPerformHMapper">
+
+    <resultMap type="com.emr.project.docOrder.domain.InpatientOrderPerform" id="TdPaOrderPerformHResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="performWardNo"    column="perform_ward_no"    />
+        <result property="performDepCode"    column="perform_dep_code"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="performListNo"    column="perform_list_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="orderDoctorCode"    column="order_doctor_code"    />
+        <result property="orderDoctorNo"    column="order_doctor_no"    />
+        <result property="orderDoctorWardNo"    column="order_doctor_ward_no"    />
+        <result property="orderDoctorDepCode"    column="order_doctor_dep_code"    />
+        <result property="orderStartTime"    column="order_start_time"    />
+        <result property="documentTypeNo"    column="document_type_no"    />
+        <result property="performListStatus"    column="perform_list_status"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="handleTime"    column="handle_time"    />
+        <result property="handleNurseCode"    column="handle_nurse_code"    />
+        <result property="handleNurseNo"    column="handle_nurse_no"    />
+        <result property="performTime"    column="perform_time"    />
+        <result property="performNurseCode"    column="perform_nurse_code"    />
+        <result property="performNurseNo"    column="perform_nurse_no"    />
+        <result property="outHavaDrugFlag"    column="out_hava_drug_flag"    />
+        <result property="orderItemType"    column="order_item_type"    />
+        <result property="firstDoubleFlag"    column="first_double_flag"    />
+        <result property="takeDrugMode"    column="take_drug_mode"    />
+        <result property="depCode"    column="dep_code"    />
+        <result property="planUsageTime"    column="plan_usage_time"    />
+        <result property="babyAdmissionNo"    column="baby_admission_no"    />
+        <result property="firstBottleFlag"    column="first_bottle_flag"    />
+        <result property="performComputerNo"    column="perform_computer_no"    />
+        <result property="performComputerIp"    column="perform_computer_ip"    />
+        <result property="performListSortNumber"    column="perform_list_sort_number"    />
+        <result property="detailPerformDepCode"    column="detail_perform_dep_code"    />
+        <result property="detailPerformWardNo"    column="detail_perform_ward_no"    />
+        <result property="pcPdaFlag"    column="pc_pda_flag"    />
+        <result property="orderDoseItem"    column="order_dose_item"    />
+        <result property="unitItem"    column="unit_item"    />
+        <result property="priceItem"    column="price_item"    />
+        <result property="orderTotalItem"    column="order_total_item"    />
+        <result property="reasonMessage"    column="reason_message"    />
+        <result property="infusionCardPrint"    column="infusion_card_print"    />
+        <result property="bottleLabelPrint"    column="bottle_label_print"    />
+        <result property="performCancelTime"    column="perform_cancel_time"    />
+        <result property="performCancelAuditDoc"    column="perform_cancel_audit_doc"    />
+        <result property="performCancelAuditDocName"    column="perform_cancel_audit_doc_name"    />
+        <result property="performOrderStatus"    column="perform_order_status"    />
+        <result property="performOrderChangeTime"    column="perform_order_change_time"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderPerformHVo">
+        select hospital_code, perform_ward_no, perform_dep_code, case_no, perform_list_no, order_no, order_type, order_sort_number, order_class_code, admission_no, hospitalized_count, order_doctor_code, order_doctor_no, order_doctor_ward_no, order_doctor_dep_code, order_start_time, document_type_no, perform_list_status, cp_no, cp_name, handle_time, handle_nurse_code, handle_nurse_no, perform_time, perform_nurse_code, perform_nurse_no, out_hava_drug_flag, order_item_type, first_double_flag, take_drug_mode, dep_code, plan_usage_time, baby_admission_no, first_bottle_flag, perform_computer_no, perform_computer_ip, perform_list_sort_number, detail_perform_dep_code, detail_perform_ward_no, pc_pda_flag, order_dose_item, unit_item, price_item, order_total_item, reason_message, infusion_card_print, bottle_label_print, perform_cancel_time, perform_cancel_audit_doc, perform_cancel_audit_doc_name, perform_order_status, perform_order_change_time from td_pa_order_perform_h
+    </sql>
+
+    <select id="selectTdPaOrderPerformHList" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform" resultMap="TdPaOrderPerformHResult">
+        <include refid="selectTdPaOrderPerformHVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="performWardNo != null  and performWardNo != ''"> and perform_ward_no = #{performWardNo}</if>
+            <if test="performDepCode != null  and performDepCode != ''"> and perform_dep_code = #{performDepCode}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="orderDoctorCode != null  and orderDoctorCode != ''"> and order_doctor_code = #{orderDoctorCode}</if>
+            <if test="orderDoctorNo != null  and orderDoctorNo != ''"> and order_doctor_no = #{orderDoctorNo}</if>
+            <if test="orderDoctorWardNo != null  and orderDoctorWardNo != ''"> and order_doctor_ward_no = #{orderDoctorWardNo}</if>
+            <if test="orderDoctorDepCode != null  and orderDoctorDepCode != ''"> and order_doctor_dep_code = #{orderDoctorDepCode}</if>
+            <if test="orderStartTime != null "> and order_start_time = #{orderStartTime}</if>
+            <if test="documentTypeNo != null  and documentTypeNo != ''"> and document_type_no = #{documentTypeNo}</if>
+            <if test="performListStatus != null  and performListStatus != ''"> and perform_list_status = #{performListStatus}</if>
+            <if test="cpNo != null  and cpNo != ''"> and cp_no = #{cpNo}</if>
+            <if test="cpName != null  and cpName != ''"> and cp_name like concat(concat('%', #{cpName}), '%')</if>
+            <if test="handleTime != null "> and handle_time = #{handleTime}</if>
+            <if test="handleNurseCode != null  and handleNurseCode != ''"> and handle_nurse_code = #{handleNurseCode}</if>
+            <if test="handleNurseNo != null  and handleNurseNo != ''"> and handle_nurse_no = #{handleNurseNo}</if>
+            <if test="performTime != null "> and perform_time = #{performTime}</if>
+            <if test="performNurseCode != null  and performNurseCode != ''"> and perform_nurse_code = #{performNurseCode}</if>
+            <if test="performNurseNo != null  and performNurseNo != ''"> and perform_nurse_no = #{performNurseNo}</if>
+            <if test="outHavaDrugFlag != null  and outHavaDrugFlag != ''"> and out_hava_drug_flag = #{outHavaDrugFlag}</if>
+            <if test="orderItemType != null "> and order_item_type = #{orderItemType}</if>
+            <if test="firstDoubleFlag != null "> and first_double_flag = #{firstDoubleFlag}</if>
+            <if test="takeDrugMode != null  and takeDrugMode != ''"> and take_drug_mode = #{takeDrugMode}</if>
+            <if test="depCode != null  and depCode != ''"> and dep_code = #{depCode}</if>
+            <if test="planUsageTime != null "> and plan_usage_time = #{planUsageTime}</if>
+            <if test="babyAdmissionNo != null  and babyAdmissionNo != ''"> and baby_admission_no = #{babyAdmissionNo}</if>
+            <if test="firstBottleFlag != null "> and first_bottle_flag = #{firstBottleFlag}</if>
+            <if test="performComputerNo != null  and performComputerNo != ''"> and perform_computer_no = #{performComputerNo}</if>
+            <if test="performComputerIp != null  and performComputerIp != ''"> and perform_computer_ip = #{performComputerIp}</if>
+            <if test="detailPerformDepCode != null  and detailPerformDepCode != ''"> and detail_perform_dep_code = #{detailPerformDepCode}</if>
+            <if test="detailPerformWardNo != null  and detailPerformWardNo != ''"> and detail_perform_ward_no = #{detailPerformWardNo}</if>
+            <if test="pcPdaFlag != null "> and pc_pda_flag = #{pcPdaFlag}</if>
+            <if test="orderDoseItem != null "> and order_dose_item = #{orderDoseItem}</if>
+            <if test="unitItem != null  and unitItem != ''"> and unit_item = #{unitItem}</if>
+            <if test="priceItem != null "> and price_item = #{priceItem}</if>
+            <if test="orderTotalItem != null "> and order_total_item = #{orderTotalItem}</if>
+            <if test="reasonMessage != null  and reasonMessage != ''"> and reason_message = #{reasonMessage}</if>
+            <if test="infusionCardPrint != null "> and infusion_card_print = #{infusionCardPrint}</if>
+            <if test="bottleLabelPrint != null "> and bottle_label_print = #{bottleLabelPrint}</if>
+            <if test="performCancelTime != null "> and perform_cancel_time = #{performCancelTime}</if>
+            <if test="performCancelAuditDoc != null  and performCancelAuditDoc != ''"> and perform_cancel_audit_doc = #{performCancelAuditDoc}</if>
+            <if test="performCancelAuditDocName != null  and performCancelAuditDocName != ''"> and perform_cancel_audit_doc_name like concat(concat('%', #{performCancelAuditDocName}), '%')</if>
+            <if test="performOrderStatus != null  and performOrderStatus != ''"> and perform_order_status = #{performOrderStatus}</if>
+            <if test="performOrderChangeTime != null "> and perform_order_change_time = #{performOrderChangeTime}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderPerformHByPerformListNos" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform" resultMap="TdPaOrderPerformHResult">
+        <include refid="selectTdPaOrderPerformHVo"/>
+        where
+        <foreach collection="tdPaOrderPerformHList" item="item" open="(" separator=" OR " close=")">
+            (HOSPITAL_CODE = #{item.hospitalCode}
+            and PERFORM_LIST_NO = #{item.performListNo}
+            and ORDER_NO = #{item.orderNo}
+            and ORDER_SORT_NUMBER = #{item.orderSortNumber}
+            and ADMISSION_NO = #{item.admissionNo}
+            and HOSPITALIZED_COUNT = #{item.hospitalizedCount}
+            )
+        </foreach>
+    </select>
+
+    <select id="selectTdPaOrderPerformHById" parameterType="String" resultMap="TdPaOrderPerformHResult">
+        <include refid="selectTdPaOrderPerformHVo"/>
+        where perform_list_no = #{performListNo}
+    </select>
+
+    <insert id="insertTdPaOrderPerformH" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform">
+        insert into td_pa_order_perform_h
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code,</if>
+            <if test="performWardNo != null and performWardNo != ''">perform_ward_no,</if>
+            <if test="performDepCode != null and performDepCode != ''">perform_dep_code,</if>
+            <if test="caseNo != null and caseNo != ''">case_no,</if>
+            <if test="performListNo != null">perform_list_no,</if>
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="orderClassCode != null">order_class_code,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="orderDoctorCode != null">order_doctor_code,</if>
+            <if test="orderDoctorNo != null">order_doctor_no,</if>
+            <if test="orderDoctorWardNo != null">order_doctor_ward_no,</if>
+            <if test="orderDoctorDepCode != null">order_doctor_dep_code,</if>
+            <if test="orderStartTime != null">order_start_time,</if>
+            <if test="documentTypeNo != null">document_type_no,</if>
+            <if test="performListStatus != null">perform_list_status,</if>
+            <if test="cpNo != null">cp_no,</if>
+            <if test="cpName != null">cp_name,</if>
+            <if test="handleTime != null">handle_time,</if>
+            <if test="handleNurseCode != null">handle_nurse_code,</if>
+            <if test="handleNurseNo != null">handle_nurse_no,</if>
+            <if test="performTime != null">perform_time,</if>
+            <if test="performNurseCode != null">perform_nurse_code,</if>
+            <if test="performNurseNo != null">perform_nurse_no,</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag,</if>
+            <if test="orderItemType != null">order_item_type,</if>
+            <if test="firstDoubleFlag != null">first_double_flag,</if>
+            <if test="takeDrugMode != null">take_drug_mode,</if>
+            <if test="depCode != null">dep_code,</if>
+            <if test="planUsageTime != null">plan_usage_time,</if>
+            <if test="babyAdmissionNo != null">baby_admission_no,</if>
+            <if test="firstBottleFlag != null">first_bottle_flag,</if>
+            <if test="performComputerNo != null">perform_computer_no,</if>
+            <if test="performComputerIp != null">perform_computer_ip,</if>
+            <if test="performListSortNumber != null">perform_list_sort_number,</if>
+            <if test="detailPerformDepCode != null">detail_perform_dep_code,</if>
+            <if test="detailPerformWardNo != null">detail_perform_ward_no,</if>
+            <if test="pcPdaFlag != null">pc_pda_flag,</if>
+            <if test="orderDoseItem != null">order_dose_item,</if>
+            <if test="unitItem != null">unit_item,</if>
+            <if test="priceItem != null">price_item,</if>
+            <if test="orderTotalItem != null">order_total_item,</if>
+            <if test="reasonMessage != null">reason_message,</if>
+            <if test="infusionCardPrint != null">infusion_card_print,</if>
+            <if test="bottleLabelPrint != null">bottle_label_print,</if>
+            <if test="performCancelTime != null">perform_cancel_time,</if>
+            <if test="performCancelAuditDoc != null">perform_cancel_audit_doc,</if>
+            <if test="performCancelAuditDocName != null">perform_cancel_audit_doc_name,</if>
+            <if test="performOrderStatus != null">perform_order_status,</if>
+            <if test="performOrderChangeTime != null">perform_order_change_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">#{hospitalCode},</if>
+            <if test="performWardNo != null and performWardNo != ''">#{performWardNo},</if>
+            <if test="performDepCode != null and performDepCode != ''">#{performDepCode},</if>
+            <if test="caseNo != null and caseNo != ''">#{caseNo},</if>
+            <if test="performListNo != null">#{performListNo},</if>
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="orderClassCode != null">#{orderClassCode},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="orderDoctorCode != null">#{orderDoctorCode},</if>
+            <if test="orderDoctorNo != null">#{orderDoctorNo},</if>
+            <if test="orderDoctorWardNo != null">#{orderDoctorWardNo},</if>
+            <if test="orderDoctorDepCode != null">#{orderDoctorDepCode},</if>
+            <if test="orderStartTime != null">#{orderStartTime},</if>
+            <if test="documentTypeNo != null">#{documentTypeNo},</if>
+            <if test="performListStatus != null">#{performListStatus},</if>
+            <if test="cpNo != null">#{cpNo},</if>
+            <if test="cpName != null">#{cpName},</if>
+            <if test="handleTime != null">#{handleTime},</if>
+            <if test="handleNurseCode != null">#{handleNurseCode},</if>
+            <if test="handleNurseNo != null">#{handleNurseNo},</if>
+            <if test="performTime != null">#{performTime},</if>
+            <if test="performNurseCode != null">#{performNurseCode},</if>
+            <if test="performNurseNo != null">#{performNurseNo},</if>
+            <if test="outHavaDrugFlag != null">#{outHavaDrugFlag},</if>
+            <if test="orderItemType != null">#{orderItemType},</if>
+            <if test="firstDoubleFlag != null">#{firstDoubleFlag},</if>
+            <if test="takeDrugMode != null">#{takeDrugMode},</if>
+            <if test="depCode != null">#{depCode},</if>
+            <if test="planUsageTime != null">#{planUsageTime},</if>
+            <if test="babyAdmissionNo != null">#{babyAdmissionNo},</if>
+            <if test="firstBottleFlag != null">#{firstBottleFlag},</if>
+            <if test="performComputerNo != null">#{performComputerNo},</if>
+            <if test="performComputerIp != null">#{performComputerIp},</if>
+            <if test="performListSortNumber != null">#{performListSortNumber},</if>
+            <if test="detailPerformDepCode != null">#{detailPerformDepCode},</if>
+            <if test="detailPerformWardNo != null">#{detailPerformWardNo},</if>
+            <if test="pcPdaFlag != null">#{pcPdaFlag},</if>
+            <if test="orderDoseItem != null">#{orderDoseItem},</if>
+            <if test="unitItem != null">#{unitItem},</if>
+            <if test="priceItem != null">#{priceItem},</if>
+            <if test="orderTotalItem != null">#{orderTotalItem},</if>
+            <if test="reasonMessage != null">#{reasonMessage},</if>
+            <if test="infusionCardPrint != null">#{infusionCardPrint},</if>
+            <if test="bottleLabelPrint != null">#{bottleLabelPrint},</if>
+            <if test="performCancelTime != null">#{performCancelTime},</if>
+            <if test="performCancelAuditDoc != null">#{performCancelAuditDoc},</if>
+            <if test="performCancelAuditDocName != null">#{performCancelAuditDocName},</if>
+            <if test="performOrderStatus != null">#{performOrderStatus},</if>
+            <if test="performOrderChangeTime != null">#{performOrderChangeTime},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsertTdPaOrderPerformH" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform">
+        insert into td_pa_order_perform_h
+            select * from td_pa_order_perform
+        where
+        <foreach collection="tdPaOrderPerformHList" item="item" open="(" separator=" OR " close=")">
+            (HOSPITAL_CODE = #{item.hospitalCode}
+            and PERFORM_LIST_NO = #{item.performListNo}
+            and ORDER_NO = #{item.orderNo}
+            and ORDER_SORT_NUMBER = #{item.orderSortNumber}
+            and ADMISSION_NO = #{item.admissionNo}
+            and HOSPITALIZED_COUNT = #{item.hospitalizedCount}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="batchInsert" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform">
+        insert all
+        <foreach collection="tdPaOrderPerformHList" item="item">
+            into td_pa_order_perform_h
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null and item.hospitalCode != ''">hospital_code,</if>
+                <if test="item.performWardNo != null and item.performWardNo != ''">perform_ward_no,</if>
+                <if test="item.performDepCode != null and item.performDepCode != ''">perform_dep_code,</if>
+                <if test="item.caseNo != null and item.caseNo != ''">case_no,</if>
+                <if test="item.performListNo != null">perform_list_no,</if>
+                <if test="item.orderNo != null and item.orderNo != ''">order_no,</if>
+                <if test="item.orderType != null">order_type,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.orderClassCode != null">order_class_code,</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no,</if>
+                <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+                <if test="item.orderDoctorCode != null">order_doctor_code,</if>
+                <if test="item.orderDoctorNo != null">order_doctor_no,</if>
+                <if test="item.orderDoctorWardNo != null">order_doctor_ward_no,</if>
+                <if test="item.orderDoctorDepCode != null">order_doctor_dep_code,</if>
+                <if test="item.orderStartTime != null">order_start_time,</if>
+                <if test="item.documentTypeNo != null">document_type_no,</if>
+                <if test="item.performListStatus != null">perform_list_status,</if>
+                <if test="item.cpNo != null">cp_no,</if>
+                <if test="item.cpName != null">cp_name,</if>
+                <if test="item.handleTime != null">handle_time,</if>
+                <if test="item.handleNurseCode != null">handle_nurse_code,</if>
+                <if test="item.handleNurseNo != null">handle_nurse_no,</if>
+                <if test="item.performTime != null">perform_time,</if>
+                <if test="item.performNurseCode != null">perform_nurse_code,</if>
+                <if test="item.performNurseNo != null">perform_nurse_no,</if>
+                <if test="item.outHavaDrugFlag != null">out_hava_drug_flag,</if>
+                <if test="item.orderItemType != null">order_item_type,</if>
+                <if test="item.firstDoubleFlag != null">first_double_flag,</if>
+                <if test="item.takeDrugMode != null">take_drug_mode,</if>
+                <if test="item.depCode != null">dep_code,</if>
+                <if test="item.planUsageTime != null">plan_usage_time,</if>
+                <if test="item.babyAdmissionNo != null">baby_admission_no,</if>
+                <if test="item.firstBottleFlag != null">first_bottle_flag,</if>
+                <if test="item.performComputerNo != null">perform_computer_no,</if>
+                <if test="item.performComputerIp != null">perform_computer_ip,</if>
+                <if test="item.performListSortNumber != null">perform_list_sort_number,</if>
+                <if test="item.detailPerformDepCode != null">detail_perform_dep_code,</if>
+                <if test="item.detailPerformWardNo != null">detail_perform_ward_no,</if>
+                <if test="item.pcPdaFlag != null">pc_pda_flag,</if>
+                <if test="item.orderDoseItem != null">order_dose_item,</if>
+                <if test="item.unitItem != null">unit_item,</if>
+                <if test="item.priceItem != null">price_item,</if>
+                <if test="item.orderTotalItem != null">order_total_item,</if>
+                <if test="item.reasonMessage != null">reason_message,</if>
+                <if test="item.infusionCardPrint != null">infusion_card_print,</if>
+                <if test="item.bottleLabelPrint != null">bottle_label_print,</if>
+                <if test="item.performCancelTime != null">perform_cancel_time,</if>
+                <if test="item.performCancelAuditDoc != null">perform_cancel_audit_doc,</if>
+                <if test="item.performCancelAuditDocName != null">perform_cancel_audit_doc_name,</if>
+                <if test="item.performOrderStatus != null">perform_order_status,</if>
+                <if test="item.performOrderChangeTime != null">perform_order_change_time,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null and item.hospitalCode != ''">#{item.hospitalCode},</if>
+                <if test="item.performWardNo != null and item.performWardNo != ''">#{item.performWardNo},</if>
+                <if test="item.performDepCode != null and item.performDepCode != ''">#{item.performDepCode},</if>
+                <if test="item.caseNo != null and item.caseNo != ''">#{item.caseNo},</if>
+                <if test="item.performListNo != null">#{item.performListNo},</if>
+                <if test="item.orderNo != null and item.orderNo != ''">#{item.orderNo},</if>
+                <if test="item.orderType != null">#{item.orderType},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.orderClassCode != null">#{item.orderClassCode},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">#{item.admissionNo},</if>
+                <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+                <if test="item.orderDoctorCode != null">#{item.orderDoctorCode},</if>
+                <if test="item.orderDoctorNo != null">#{item.orderDoctorNo},</if>
+                <if test="item.orderDoctorWardNo != null">#{item.orderDoctorWardNo},</if>
+                <if test="item.orderDoctorDepCode != null">#{item.orderDoctorDepCode},</if>
+                <if test="item.orderStartTime != null">#{item.orderStartTime},</if>
+                <if test="item.documentTypeNo != null">#{item.documentTypeNo},</if>
+                <if test="item.performListStatus != null">#{item.performListStatus},</if>
+                <if test="item.cpNo != null">#{item.cpNo},</if>
+                <if test="item.cpName != null">#{item.cpName},</if>
+                <if test="item.handleTime != null">#{item.handleTime},</if>
+                <if test="item.handleNurseCode != null">#{item.handleNurseCode},</if>
+                <if test="item.handleNurseNo != null">#{item.handleNurseNo},</if>
+                <if test="item.performTime != null">#{item.performTime},</if>
+                <if test="item.performNurseCode != null">#{item.performNurseCode},</if>
+                <if test="item.performNurseNo != null">#{item.performNurseNo},</if>
+                <if test="item.outHavaDrugFlag != null">#{item.outHavaDrugFlag},</if>
+                <if test="item.orderItemType != null">#{item.orderItemType},</if>
+                <if test="item.firstDoubleFlag != null">#{item.firstDoubleFlag},</if>
+                <if test="item.takeDrugMode != null">#{item.takeDrugMode},</if>
+                <if test="item.depCode != null">#{item.depCode},</if>
+                <if test="item.planUsageTime != null">#{item.planUsageTime},</if>
+                <if test="item.babyAdmissionNo != null">#{item.babyAdmissionNo},</if>
+                <if test="item.firstBottleFlag != null">#{item.firstBottleFlag},</if>
+                <if test="item.performComputerNo != null">#{item.performComputerNo},</if>
+                <if test="item.performComputerIp != null">#{item.performComputerIp},</if>
+                <if test="item.performListSortNumber != null">#{item.performListSortNumber},</if>
+                <if test="item.detailPerformDepCode != null">#{item.detailPerformDepCode},</if>
+                <if test="item.detailPerformWardNo != null">#{item.detailPerformWardNo},</if>
+                <if test="item.pcPdaFlag != null">#{item.pcPdaFlag},</if>
+                <if test="item.orderDoseItem != null">#{item.orderDoseItem},</if>
+                <if test="item.unitItem != null">#{item.unitItem},</if>
+                <if test="item.priceItem != null">#{item.priceItem},</if>
+                <if test="item.orderTotalItem != null">#{item.orderTotalItem},</if>
+                <if test="item.reasonMessage != null">#{item.reasonMessage},</if>
+                <if test="item.infusionCardPrint != null">#{item.infusionCardPrint},</if>
+                <if test="item.bottleLabelPrint != null">#{item.bottleLabelPrint},</if>
+                <if test="item.performCancelTime != null">#{item.performCancelTime},</if>
+                <if test="item.performCancelAuditDoc != null">#{item.performCancelAuditDoc},</if>
+                <if test="item.performCancelAuditDocName != null">#{item.performCancelAuditDocName},</if>
+                <if test="item.performOrderStatus != null">#{item.performOrderStatus},</if>
+                <if test="item.performOrderChangeTime != null">#{item.performOrderChangeTime},</if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateTdPaOrderPerformH" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform">
+        update td_pa_order_perform_h
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code = #{hospitalCode},</if>
+            <if test="performWardNo != null and performWardNo != ''">perform_ward_no = #{performWardNo},</if>
+            <if test="performDepCode != null and performDepCode != ''">perform_dep_code = #{performDepCode},</if>
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="orderClassCode != null">order_class_code = #{orderClassCode},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="orderDoctorCode != null">order_doctor_code = #{orderDoctorCode},</if>
+            <if test="orderDoctorNo != null">order_doctor_no = #{orderDoctorNo},</if>
+            <if test="orderDoctorWardNo != null">order_doctor_ward_no = #{orderDoctorWardNo},</if>
+            <if test="orderDoctorDepCode != null">order_doctor_dep_code = #{orderDoctorDepCode},</if>
+            <if test="orderStartTime != null">order_start_time = #{orderStartTime},</if>
+            <if test="documentTypeNo != null">document_type_no = #{documentTypeNo},</if>
+            <if test="performListStatus != null">perform_list_status = #{performListStatus},</if>
+            <if test="cpNo != null">cp_no = #{cpNo},</if>
+            <if test="cpName != null">cp_name = #{cpName},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+            <if test="handleNurseCode != null">handle_nurse_code = #{handleNurseCode},</if>
+            <if test="handleNurseNo != null">handle_nurse_no = #{handleNurseNo},</if>
+            <if test="performTime != null">perform_time = #{performTime},</if>
+            <if test="performNurseCode != null">perform_nurse_code = #{performNurseCode},</if>
+            <if test="performNurseNo != null">perform_nurse_no = #{performNurseNo},</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag = #{outHavaDrugFlag},</if>
+            <if test="orderItemType != null">order_item_type = #{orderItemType},</if>
+            <if test="firstDoubleFlag != null">first_double_flag = #{firstDoubleFlag},</if>
+            <if test="takeDrugMode != null">take_drug_mode = #{takeDrugMode},</if>
+            <if test="depCode != null">dep_code = #{depCode},</if>
+            <if test="planUsageTime != null">plan_usage_time = #{planUsageTime},</if>
+            <if test="babyAdmissionNo != null">baby_admission_no = #{babyAdmissionNo},</if>
+            <if test="firstBottleFlag != null">first_bottle_flag = #{firstBottleFlag},</if>
+            <if test="performComputerNo != null">perform_computer_no = #{performComputerNo},</if>
+            <if test="performComputerIp != null">perform_computer_ip = #{performComputerIp},</if>
+            <if test="performListSortNumber != null">perform_list_sort_number = #{performListSortNumber},</if>
+            <if test="detailPerformDepCode != null">detail_perform_dep_code = #{detailPerformDepCode},</if>
+            <if test="detailPerformWardNo != null">detail_perform_ward_no = #{detailPerformWardNo},</if>
+            <if test="pcPdaFlag != null">pc_pda_flag = #{pcPdaFlag},</if>
+            <if test="orderDoseItem != null">order_dose_item = #{orderDoseItem},</if>
+            <if test="unitItem != null">unit_item = #{unitItem},</if>
+            <if test="priceItem != null">price_item = #{priceItem},</if>
+            <if test="orderTotalItem != null">order_total_item = #{orderTotalItem},</if>
+            <if test="reasonMessage != null">reason_message = #{reasonMessage},</if>
+            <if test="infusionCardPrint != null">infusion_card_print = #{infusionCardPrint},</if>
+            <if test="bottleLabelPrint != null">bottle_label_print = #{bottleLabelPrint},</if>
+            <if test="performCancelTime != null">perform_cancel_time = #{performCancelTime},</if>
+            <if test="performCancelAuditDoc != null">perform_cancel_audit_doc = #{performCancelAuditDoc},</if>
+            <if test="performCancelAuditDocName != null">perform_cancel_audit_doc_name = #{performCancelAuditDocName},</if>
+            <if test="performOrderStatus != null">perform_order_status = #{performOrderStatus},</if>
+            <if test="performOrderChangeTime != null">perform_order_change_time = #{performOrderChangeTime},</if>
+        </trim>
+        where perform_list_no = #{performListNo}
+    </update>
+
+    <delete id="deleteTdPaOrderPerformHById" parameterType="String">
+        delete from td_pa_order_perform_h where perform_list_no = #{performListNo}
+    </delete>
+
+    <delete id="deleteTdPaOrderPerformHByIds" parameterType="String">
+        delete from td_pa_order_perform_h where perform_list_no in
+        <foreach item="performListNo" collection="array" open="(" separator="," close=")">
+            #{performListNo}
+        </foreach>
+    </delete>
+</mapper>

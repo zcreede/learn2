@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.ExamItemMapper">
+
+    <resultMap type="ExamItem" id="ExamItemResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="examRepNo"    column="exam_rep_no"    />
+        <result property="appCd"    column="app_cd"    />
+        <result property="examAppOrg"    column="exam_app_org"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="examTime"    column="exam_time"    />
+        <result property="examPos"    column="exam_pos"    />
+        <result property="examItemCd"    column="exam_item_cd"    />
+        <result property="examItemName"    column="exam_item_name"    />
+        <result property="examResObj"    column="exam_res_obj"    />
+        <result property="examResSub"    column="exam_res_sub"    />
+        <result property="examResQua"    column="exam_res_qua"    />
+        <result property="examResUnit"    column="exam_res_unit"    />
+        <result property="examResCd"    column="exam_res_cd"    />
+        <result property="examRemark"    column="exam_remark"    />
+        <result property="imageWay"    column="image_way"    />
+        <result property="examRepOrg"    column="exam_rep_org"    />
+        <result property="examRepDeptCd"    column="exam_rep_dept_cd"    />
+        <result property="examRepDeptName"    column="exam_rep_dept_name"    />
+        <result property="examDocCd"    column="exam_doc_cd"    />
+        <result property="examDocName"    column="exam_doc_name"    />
+        <result property="examTecCd"    column="exam_tec_cd"    />
+        <result property="examTecName"    column="exam_tec_name"    />
+        <result property="examRepDate"    column="exam_rep_date"    />
+        <result property="repDocCd"    column="rep_doc_cd"    />
+        <result property="repDocName"    column="rep_doc_name"    />
+        <result property="examWayCd"    column="exam_way_cd"    />
+        <result property="examWayName"    column="exam_way_name"    />
+        <result property="examSpecNo"    column="exam_spec_no"    />
+        <result property="examSpecName"    column="exam_spec_name"    />
+        <result property="examType"    column="exam_type"    />
+        <result property="conDocCd"    column="con_doc_cd"    />
+        <result property="conDocName"    column="con_doc_name"    />
+        <result property="source"    column="source"    />
+        <result property="identify"    column="identify"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="alterFlag"    column="alter_flag"    />
+        <result property="accnum"    column="accnum"    />
+        <result property="diagClicName"    column="diag_clic_name"    />
+        <result property="recDocCd"    column="REC_DOC_CD"    />
+        <result property="recDate"    column="REC_DATE"    />
+    </resultMap>
+
+    <resultMap id="ExamItemVoResult" type="ExamItemVo" extends="ExamItemResult">
+        <result property="patientName"    column="patient_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="maItemName"    column="ma_item_name"    />
+        <result property="asptAim"    column="aspt_aim"    />
+        <result property="itemState"    column="item_state"    />
+        <result property="resType"    column="resType"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="reportUrl" column="report_url"/>
+        <result property="caseNo" column="case_no"/>
+        <result property="hospitalizedCount" column="HOSPITALIZED_COUNT"/>
+        <result property="idcard" column="idcard"/>
+        <result property="hospitalizedDate" column="HOSPITALIZED_DATE"/>
+        <result property="leaveHospitalDate" column="LEAVE_HOSPITAL_DATE"/>
+        <result property="visitingStaffNo" column="visiting_staff_no" />
+        <result property="visitingStaffName" column="visiting_staff_name" />
+        <result property="msgId" column="msg_id"/>
+        <result property="mainFileId" column="main_file_id" />
+        <result property="patientMainId" column="patient_main_id" />
+        <result property="browserType"    column="browser_type"    />
+        <result property="browserTypeName"    column="browser_type_name"    />
+        <result property="babyNo" column="baby_no" />
+        <result property="babyName" column="baby_name" />
+        <result property="babySex" column="baby_sex" />
+    </resultMap>
+
+    <sql id="selectExamItemVo">
+        select id, org_cd, patient_id, exam_rep_no, app_cd, exam_app_org, app_time, app_dept_cd, app_dept_name, app_doc_cd, app_doc_name, exam_time, exam_pos, exam_item_cd, exam_item_name, exam_res_obj, exam_res_sub, exam_res_qua, exam_res_unit, exam_res_cd, exam_remark, image_way, exam_rep_org, exam_rep_dept_cd, exam_rep_dept_name, exam_doc_cd, exam_doc_name, exam_tec_cd, exam_tec_name, exam_rep_date, rep_doc_cd, rep_doc_name, exam_way_cd, exam_way_name, exam_spec_no, exam_spec_name, exam_type, con_doc_cd, con_doc_name, source, identify, cre_date, cre_per_code, cre_per_name, alt_date, alt_per_code, alt_per_name, alter_flag, accnum,diag_clic_name,REC_DOC_CD,REC_DATE from exam_item
+    </sql>
+
+    <select id="selectExamItemList" parameterType="ExamItemVo" resultMap="ExamItemVoResult">
+        select ei.exam_rep_date,ei.id,ei.exam_res_sub,ei.exam_res_obj,ei.exam_item_name
+        from  exam_item ei
+        where ei.patient_id=#{patientId}
+        <if test="startDate != null and endDate !=null">and ei.exam_rep_date >=#{startDate} and ei.exam_rep_date &lt; #{endDate}</if>
+        order by ei.exam_rep_date desc
+    </select>
+
+    <select id="selectExamItemById" parameterType="String" resultMap="ExamItemResult">
+        <include refid="selectExamItemVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectExamItemResultList" parameterType="String" resultMap="ExamItemVoResult">
+        select em.id, em.org_cd, em.patient_id, em.exam_rep_no, em.app_cd, em.exam_app_org, em.app_time, em.app_dept_cd, em.app_dept_name,em.diag_clic_name,
+          em.app_doc_cd, em.app_doc_name, em.exam_time, em.exam_pos, em.exam_item_cd, em.exam_item_name, em.exam_res_obj, em.exam_res_sub,
+          em.exam_res_qua, em.exam_res_unit, em.exam_res_cd, em.exam_remark, em.image_way, em.exam_rep_org, em.exam_rep_dept_cd,
+          em.exam_rep_dept_name, em.exam_doc_cd, em.exam_doc_name, em.exam_tec_cd, em.exam_tec_name, em.exam_rep_date, em.rep_doc_cd,
+          em.rep_doc_name, em.exam_way_cd, em.exam_way_name, em.exam_spec_no, em.exam_spec_name, em.exam_type, em.con_doc_cd,
+          em.con_doc_name, em.source, em.identify, em.cre_date, em.cre_per_code, em.cre_per_name, em.alt_date, em.alt_per_code,
+          em.alt_per_name, em.alter_flag, em.accnum, pp.patient_name, pp.sex, pp.age_y,pp.age_m,pp.age_d,pp.age_h,pp.age_mi,pv.inp_no,
+          pv.bed_no, pv.dept_name, paf.baby_no, baby.baby_name,dsex.data_tag baby_sex,pv.record_no as case_no
+          from  exam_item em
+          left join td_pa_apply_form_all paf on paf.apply_form_no = em.app_cd
+          left join pat_personalinfo pp ON pp.patient_id = em.patient_id
+          left join pat_visitinfo pv ON pv.patient_id = pp.patient_id
+          left join td_na_baby_info baby on paf.admission_no = baby.admission_no and paf.baby_no=baby.baby_no
+          left join tm_bs_dict_data dsex on baby.baby_sex = dsex.data_val and dsex.dict_type = 's028'
+          where paf.apply_form_no = #{id}
+    </select>
+    <select id="selectItemList" parameterType="String" resultMap="ExamItemVoResult">
+        select i.PURPOSE_EXAMINATION as aspt_aim, i.APPLY_TIME as app_time, i.APPLY_FORM_STATUS as item_state,
+        i.apply_form_no as id,dt.report_url,i.apply_form_no,m.admission_no inp_no,m.case_no,m.HOSPITALIZED_COUNT,
+        b.idcard,m.HOSPITALIZED_DATE,m.LEAVE_HOSPITAL_DATE,dt.browser_type,dt.browser_type_name
+        from TD_PA_APPLY_FORM_ALL i
+        left join TM_BS_DOCUMENT_TYPE dt on i.APPLY_FORM_TYPE_CODE = dt.document_type_cd
+        left join T_AR_MEDICALINFORMATION_ALL m on m.admission_no = i.ADMISSION_NO
+        left join T_AR_BASEINFOMATION_ALL b on m.ADMISSION_NO = b.ADMISSION_NO
+        where i.APPLY_FORM_CLASS_CODE='02' and i.ADMISSION_NO in
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+        order by i.REPORT_DATE
+    </select>
+
+    <select id="selectItemListByDate" parameterType="examItemVo" resultMap="ExamItemVoResult">
+        select ei.app_time,ai.PURPOSE_EXAMINATION aspt_aim, ei.exam_rep_date
+        from exam_item ei left join TD_PA_APPLY_FORM ai on ei.app_cd=ai.APPLY_FORM_NO
+        where ei.patient_id=#{patientId} and  ei.exam_rep_date between #{startDate} and #{endDate} order by ei.exam_rep_date desc
+    </select>
+
+    <insert id="insertExamItem" parameterType="ExamItem">
+        insert into exam_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="examRepNo != null">exam_rep_no,</if>
+            <if test="appCd != null">app_cd,</if>
+            <if test="examAppOrg != null">exam_app_org,</if>
+            <if test="appTime != null">app_time,</if>
+            <if test="appDeptCd != null">app_dept_cd,</if>
+            <if test="appDeptName != null">app_dept_name,</if>
+            <if test="appDocCd != null">app_doc_cd,</if>
+            <if test="appDocName != null">app_doc_name,</if>
+            <if test="examTime != null">exam_time,</if>
+            <if test="examPos != null">exam_pos,</if>
+            <if test="examItemCd != null">exam_item_cd,</if>
+            <if test="examItemName != null and examItemName != ''">exam_item_name,</if>
+            <if test="examResObj != null">exam_res_obj,</if>
+            <if test="examResSub != null">exam_res_sub,</if>
+            <if test="examResQua != null">exam_res_qua,</if>
+            <if test="examResUnit != null">exam_res_unit,</if>
+            <if test="examResCd != null">exam_res_cd,</if>
+            <if test="examRemark != null">exam_remark,</if>
+            <if test="imageWay != null">image_way,</if>
+            <if test="examRepOrg != null">exam_rep_org,</if>
+            <if test="examRepDeptCd != null">exam_rep_dept_cd,</if>
+            <if test="examRepDeptName != null">exam_rep_dept_name,</if>
+            <if test="examDocCd != null">exam_doc_cd,</if>
+            <if test="examDocName != null">exam_doc_name,</if>
+            <if test="examTecCd != null">exam_tec_cd,</if>
+            <if test="examTecName != null">exam_tec_name,</if>
+            <if test="examRepDate != null">exam_rep_date,</if>
+            <if test="repDocCd != null">rep_doc_cd,</if>
+            <if test="repDocName != null">rep_doc_name,</if>
+            <if test="examWayCd != null">exam_way_cd,</if>
+            <if test="examWayName != null">exam_way_name,</if>
+            <if test="examSpecNo != null">exam_spec_no,</if>
+            <if test="examSpecName != null">exam_spec_name,</if>
+            <if test="examType != null">exam_type,</if>
+            <if test="conDocCd != null">con_doc_cd,</if>
+            <if test="conDocName != null">con_doc_name,</if>
+            <if test="source != null and source != ''">source,</if>
+            <if test="identify != null and identify != ''">identify,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="alterFlag != null">alter_flag,</if>
+            <if test="accnum != null">accnum,</if>
+            <if test="diagClicName != null">diag_clic_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="examRepNo != null">#{examRepNo},</if>
+            <if test="appCd != null">#{appCd},</if>
+            <if test="examAppOrg != null">#{examAppOrg},</if>
+            <if test="appTime != null">#{appTime},</if>
+            <if test="appDeptCd != null">#{appDeptCd},</if>
+            <if test="appDeptName != null">#{appDeptName},</if>
+            <if test="appDocCd != null">#{appDocCd},</if>
+            <if test="appDocName != null">#{appDocName},</if>
+            <if test="examTime != null">#{examTime},</if>
+            <if test="examPos != null">#{examPos},</if>
+            <if test="examItemCd != null">#{examItemCd},</if>
+            <if test="examItemName != null and examItemName != ''">#{examItemName},</if>
+            <if test="examResObj != null">#{examResObj},</if>
+            <if test="examResSub != null">#{examResSub},</if>
+            <if test="examResQua != null">#{examResQua},</if>
+            <if test="examResUnit != null">#{examResUnit},</if>
+            <if test="examResCd != null">#{examResCd},</if>
+            <if test="examRemark != null">#{examRemark},</if>
+            <if test="imageWay != null">#{imageWay},</if>
+            <if test="examRepOrg != null">#{examRepOrg},</if>
+            <if test="examRepDeptCd != null">#{examRepDeptCd},</if>
+            <if test="examRepDeptName != null">#{examRepDeptName},</if>
+            <if test="examDocCd != null">#{examDocCd},</if>
+            <if test="examDocName != null">#{examDocName},</if>
+            <if test="examTecCd != null">#{examTecCd},</if>
+            <if test="examTecName != null">#{examTecName},</if>
+            <if test="examRepDate != null">#{examRepDate},</if>
+            <if test="repDocCd != null">#{repDocCd},</if>
+            <if test="repDocName != null">#{repDocName},</if>
+            <if test="examWayCd != null">#{examWayCd},</if>
+            <if test="examWayName != null">#{examWayName},</if>
+            <if test="examSpecNo != null">#{examSpecNo},</if>
+            <if test="examSpecName != null">#{examSpecName},</if>
+            <if test="examType != null">#{examType},</if>
+            <if test="conDocCd != null">#{conDocCd},</if>
+            <if test="conDocName != null">#{conDocName},</if>
+            <if test="source != null and source != ''">#{source},</if>
+            <if test="identify != null and identify != ''">#{identify},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="alterFlag != null">#{alterFlag},</if>
+            <if test="accnum != null">#{accnum},</if>
+            <if test="diagClicName != null">#{diagClicName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamItem" parameterType="ExamItem">
+        update exam_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="examRepNo != null">exam_rep_no = #{examRepNo},</if>
+            <if test="appCd != null">app_cd = #{appCd},</if>
+            <if test="examAppOrg != null">exam_app_org = #{examAppOrg},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="appDeptCd != null">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null">app_dept_name = #{appDeptName},</if>
+            <if test="appDocCd != null">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null">app_doc_name = #{appDocName},</if>
+            <if test="examTime != null">exam_time = #{examTime},</if>
+            <if test="examPos != null">exam_pos = #{examPos},</if>
+            <if test="examItemCd != null">exam_item_cd = #{examItemCd},</if>
+            <if test="examItemName != null and examItemName != ''">exam_item_name = #{examItemName},</if>
+            <if test="examResObj != null">exam_res_obj = #{examResObj},</if>
+            <if test="examResSub != null">exam_res_sub = #{examResSub},</if>
+            <if test="examResQua != null">exam_res_qua = #{examResQua},</if>
+            <if test="examResUnit != null">exam_res_unit = #{examResUnit},</if>
+            <if test="examResCd != null">exam_res_cd = #{examResCd},</if>
+            <if test="examRemark != null">exam_remark = #{examRemark},</if>
+            <if test="imageWay != null">image_way = #{imageWay},</if>
+            <if test="examRepOrg != null">exam_rep_org = #{examRepOrg},</if>
+            <if test="examRepDeptCd != null">exam_rep_dept_cd = #{examRepDeptCd},</if>
+            <if test="examRepDeptName != null">exam_rep_dept_name = #{examRepDeptName},</if>
+            <if test="examDocCd != null">exam_doc_cd = #{examDocCd},</if>
+            <if test="examDocName != null">exam_doc_name = #{examDocName},</if>
+            <if test="examTecCd != null">exam_tec_cd = #{examTecCd},</if>
+            <if test="examTecName != null">exam_tec_name = #{examTecName},</if>
+            <if test="examRepDate != null">exam_rep_date = #{examRepDate},</if>
+            <if test="repDocCd != null">rep_doc_cd = #{repDocCd},</if>
+            <if test="repDocName != null">rep_doc_name = #{repDocName},</if>
+            <if test="examWayCd != null">exam_way_cd = #{examWayCd},</if>
+            <if test="examWayName != null">exam_way_name = #{examWayName},</if>
+            <if test="examSpecNo != null">exam_spec_no = #{examSpecNo},</if>
+            <if test="examSpecName != null">exam_spec_name = #{examSpecName},</if>
+            <if test="examType != null">exam_type = #{examType},</if>
+            <if test="conDocCd != null">con_doc_cd = #{conDocCd},</if>
+            <if test="conDocName != null">con_doc_name = #{conDocName},</if>
+            <if test="source != null and source != ''">source = #{source},</if>
+            <if test="identify != null and identify != ''">identify = #{identify},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="alterFlag != null">alter_flag = #{alterFlag},</if>
+            <if test="accnum != null">accnum = #{accnum},</if>
+            <if test="diagClicName != null">diag_clic_name = #{diagClicName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExamItemById" parameterType="String">
+        delete from exam_item where id = #{id}
+    </delete>
+
+    <delete id="deleteExamItemByIds" parameterType="String">
+        delete from exam_item where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertMap" parameterType="map">
+        insert into exam_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="org_cd!=null and org_cd!=''">org_cd,</if>
+            <if test="patient_id!=null and patient_id!=''">patient_id,</if>
+            <if test="id!=null and id!=''">id,</if>
+            <if test="exam_rep_no!=null and exam_rep_no!=''">exam_rep_no,</if>
+            <if test="app_cd!=null and app_cd!=''">app_cd,</if>
+            <if test="exam_app_org!=null and exam_app_org!=''">exam_app_org,</if>
+            <if test="app_time!=null">app_time,</if>
+            <if test="app_dept_cd!=null and app_dept_cd!=''">app_dept_cd,</if>
+            <if test="app_dept_name!=null and app_dept_name!=''">app_dept_name,</if>
+            <if test="app_doc_cd!=null and app_doc_cd!=''">app_doc_cd,</if>
+            <if test="app_doc_name!=null and app_doc_name!=''">app_doc_name,</if>
+            <if test="exam_time!=null">exam_time,</if>
+            <if test="exam_pos!=null and exam_pos!=''">exam_pos,</if>
+            <if test="exam_item_cd!=null and exam_item_cd!=''">exam_item_cd,</if>
+            <if test="exam_item_name!=null and exam_item_name!=''">exam_item_name,</if>
+            <if test="exam_res_obj!=null and exam_res_obj!=''">exam_res_obj,</if>
+            <if test="exam_res_sub!=null and exam_res_sub!=''">exam_res_sub,</if>
+            <if test="exam_res_qua!=null and exam_res_qua!=''">exam_res_qua,</if>
+            <if test="exam_res_unit!=null and exam_res_unit!=''">exam_res_unit,</if>
+            <if test="exam_res_cd!=null and exam_res_cd!=''">exam_res_cd,</if>
+            <if test="exam_remark!=null and exam_remark!=''">exam_remark,</if>
+            <if test="image_way!=null and image_way!=''">image_way,</if>
+            <if test="exam_rep_org!=null and exam_rep_org!=''">exam_rep_org,</if>
+            <if test="exam_rep_dept_cd!=null and exam_rep_dept_cd!=''">exam_rep_dept_cd,</if>
+            <if test="exam_rep_dept_name!=null and exam_rep_dept_name!=''">exam_rep_dept_name,</if>
+            <if test="exam_doc_cd!=null and exam_doc_cd!=''">exam_doc_cd,</if>
+            <if test="exam_doc_name!=null and exam_doc_name!=''">exam_doc_name,</if>
+            <if test="exam_tec_cd!=null and exam_tec_cd!=''">exam_tec_cd,</if>
+            <if test="exam_tec_name!=null and exam_tec_name!=''">exam_tec_name,</if>
+            <if test="exam_rep_date!=null">exam_rep_date,</if>
+            <if test="rep_doc_cd!=null and rep_doc_cd!=''">rep_doc_cd,</if>
+            <if test="rep_doc_name!=null and rep_doc_name!=''">rep_doc_name,</if>
+            <if test="exam_way_cd!=null and exam_way_cd!=''">exam_way_cd,</if>
+            <if test="exam_way_name!=null and exam_way_name!=''">exam_way_name,</if>
+            <if test="exam_spec_no!=null and exam_spec_no!=''">exam_spec_no,</if>
+            <if test="exam_spec_name!=null and exam_spec_name!=''">exam_spec_name,</if>
+            <if test="exam_type!=null and exam_type!=''">exam_type,</if>
+            <if test="con_doc_cd!=null and con_doc_cd!=''">con_doc_cd,</if>
+            <if test="con_doc_name!=null and con_doc_name!=''">con_doc_name,</if>
+            <if test="source!=null and source!=''">source,</if>
+            <if test="identify!=null and identify!=''">identify,</if>
+            <if test="alter_flag!=null and alter_flag!=''">alter_flag,</if>
+            <if test="accnum!=null and accnum!=''">accnum,</if>
+            <if test="diag_clic_name!=null and diag_clic_name!=''">diag_clic_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="org_cd!=null and org_cd!=''">#{org_cd},</if>
+            <if test="patient_id!=null and patient_id!=''">#{patient_id},</if>
+            <if test="id!=null and id!=''">#{id},</if>
+            <if test="exam_rep_no!=null and exam_rep_no!=''">#{exam_rep_no},</if>
+            <if test="app_cd!=null and app_cd!=''">#{app_cd},</if>
+            <if test="exam_app_org!=null and exam_app_org!=''">#{exam_app_org},</if>
+            <if test="app_time!=null">#{app_time},</if>
+            <if test="app_dept_cd!=null and app_dept_cd!=''">#{app_dept_cd},</if>
+            <if test="app_dept_name!=null and app_dept_name!=''">#{app_dept_name},</if>
+            <if test="app_doc_cd!=null and app_doc_cd!=''">#{app_doc_cd},</if>
+            <if test="app_doc_name!=null and app_doc_name!=''">#{app_doc_name},</if>
+            <if test="exam_time!=null">#{exam_time},</if>
+            <if test="exam_pos!=null and exam_pos!=''">#{exam_pos},</if>
+            <if test="exam_item_cd!=null and exam_item_cd!=''">#{exam_item_cd},</if>
+            <if test="exam_item_name!=null and exam_item_name!=''">#{exam_item_name},</if>
+            <if test="exam_res_obj!=null and exam_res_obj!=''">#{exam_res_obj},</if>
+            <if test="exam_res_sub!=null and exam_res_sub!=''">#{exam_res_sub},</if>
+            <if test="exam_res_qua!=null and exam_res_qua!=''">#{exam_res_qua},</if>
+            <if test="exam_res_unit!=null and exam_res_unit!=''">#{exam_res_unit},</if>
+            <if test="exam_res_cd!=null and exam_res_cd!=''">#{exam_res_cd},</if>
+            <if test="exam_remark!=null and exam_remark!=''">#{exam_remark},</if>
+            <if test="image_way!=null and image_way!=''">#{image_way},</if>
+            <if test="exam_rep_org!=null and exam_rep_org!=''">#{exam_rep_org},</if>
+            <if test="exam_rep_dept_cd!=null and exam_rep_dept_cd!=''">#{exam_rep_dept_cd},</if>
+            <if test="exam_rep_dept_name!=null and exam_rep_dept_name!=''">#{exam_rep_dept_name},</if>
+            <if test="exam_doc_cd!=null and exam_doc_cd!=''">#{exam_doc_cd},</if>
+            <if test="exam_doc_name!=null and exam_doc_name!=''">#{exam_doc_name},</if>
+            <if test="exam_tec_cd!=null and exam_tec_cd!=''">#{exam_tec_cd},</if>
+            <if test="exam_tec_name!=null and exam_tec_name!=''">#{exam_tec_name},</if>
+            <if test="exam_rep_date!=null">#{exam_rep_date},</if>
+            <if test="rep_doc_cd!=null and rep_doc_cd!=''">#{rep_doc_cd},</if>
+            <if test="rep_doc_name!=null and rep_doc_name!=''">#{rep_doc_name},</if>
+            <if test="exam_way_cd!=null and exam_way_cd!=''">#{exam_way_cd},</if>
+            <if test="exam_way_name!=null and exam_way_name!=''">#{exam_way_name},</if>
+            <if test="exam_spec_no!=null and exam_spec_no!=''">#{exam_spec_no},</if>
+            <if test="exam_spec_name!=null and exam_spec_name!=''">#{exam_spec_name},</if>
+            <if test="exam_type!=null and exam_type!=''">#{exam_type},</if>
+            <if test="con_doc_cd!=null and con_doc_cd!=''">#{con_doc_cd},</if>
+            <if test="con_doc_name!=null and con_doc_name!=''">#{con_doc_name},</if>
+            <if test="source!=null and source!=''">#{source},</if>
+            <if test="identify!=null and identify!=''">#{identify},</if>
+            <if test="alter_flag!=null and alter_flag!=''">#{alter_flag},</if>
+            <if test="accnum!=null and accnum!=''">#{accnum},</if>
+            <if test="diag_clic_name!=null and diag_clic_name!=''">#{diag_clic_name},</if>
+        </trim>
+    </insert>
+    <select id="selectExamUnLookList" parameterType="String" resultMap="ExamItemVoResult">
+        select ei.APP_CD as ID,ei.PATIENT_ID,ei.EXAM_ITEM_CD,ei.EXAM_ITEM_NAME,ei.EXAM_REP_DATE,'检查' as resType,ei.APP_CD as apply_form_no,
+        ei.EXAM_POS,dt.report_url,m.admission_no inp_no,m.case_no,m.HOSPITALIZED_COUNT,b.idcard,m.HOSPITALIZED_DATE,m.LEAVE_HOSPITAL_DATE,
+        dt.BROWSER_TYPE,dt.BROWSER_TYPE_NAME
+        from exam_item ei
+        left join TD_PA_APPLY_FORM_ALL i on i.apply_form_no = ei.app_cd
+        left join TM_BS_DOCUMENT_TYPE dt on i.APPLY_FORM_TYPE_CODE = dt.document_type_cd
+        left join T_AR_MEDICALINFORMATION_ALL m on m.admission_no = i.ADMISSION_NO
+        left join T_AR_BASEINFOMATION_ALL b on m.ADMISSION_NO = b.ADMISSION_NO
+        where ei.patient_id=#{patientId}  and ei.REC_DOC_CD is null and ei.rec_date is null and m.case_no is not null
+        order by ei.EXAM_REP_DATE desc
+    </select>
+    <select id="selectTestUnLookList" parameterType="String" resultMap="ExamItemVoResult">
+        select tr.ID,tr.PATIENT_ID,tr.TEST_AIM as EXAM_ITEM_NAME,tr.CLIN_ITEM_CD as EXAM_ITEM_CD,tr.REP_DATE as EXAM_REP_DATE,'检验' as resType,
+        tr.APP_CD as apply_form_no,tr.SPEC_NAME as EXAM_POS,dt.report_url,m.admission_no inp_no,m.case_no,m.HOSPITALIZED_COUNT,b.idcard,m.HOSPITALIZED_DATE,m.LEAVE_HOSPITAL_DATE,
+        dt.BROWSER_TYPE,dt.BROWSER_TYPE_NAME
+        from TEST_REPORT tr
+        left join TD_PA_APPLY_FORM_ALL i on i.apply_form_no = tr.app_cd
+        left join TM_BS_DOCUMENT_TYPE dt on i.APPLY_FORM_TYPE_CODE = dt.document_type_cd
+        left join T_AR_MEDICALINFORMATION_ALL m on m.admission_no = i.ADMISSION_NO
+        left join T_AR_BASEINFOMATION_ALL b on m.ADMISSION_NO = b.ADMISSION_NO
+        where tr.patient_id=#{patientId}  and tr.REC_DOC_CD is null and tr.rec_date is null and m.case_no is not null
+        order by tr.REP_DATE desc
+    </select>
+    <update id="updateLookState" parameterType="ExamItem" >
+        update exam_item set rec_doc_Cd=#{recDocCd} ,rec_date=sysdate where id=#{id}
+    </update>
+    <select id="selectHisExamItemList" parameterType="SqlVo" resultMap="ExamItemVoResult">
+        ${sqlStr}
+    </select>
+    <select id="selectExamAlertMsg" parameterType="ExamItemVo" resultMap="ExamItemVoResult">
+        select t.id, t.org_cd, t.patient_id, t.exam_rep_no, t.app_cd, t.exam_app_org, t.app_time, t.app_dept_cd, t.app_dept_name,
+        t.app_doc_cd, t.app_doc_name, t.exam_time, t.exam_pos, t.exam_item_cd, t.exam_item_name, t.exam_res_obj,
+        t.exam_res_sub, t.exam_res_qua, t.exam_res_unit, t.exam_res_cd, t.exam_remark, t.image_way, t.exam_rep_org,
+        t.exam_rep_dept_cd, t.exam_rep_dept_name, t.exam_doc_cd, t.exam_doc_name, t.exam_tec_cd, t.exam_tec_name,
+        t.exam_rep_date, t.rep_doc_cd, t.rep_doc_name, t.exam_way_cd, t.exam_way_name, t.exam_spec_no, t.exam_spec_name,
+        t.exam_type, t.con_doc_cd, t.con_doc_name, t.source, t.identify, t.cre_date, t.cre_per_code, t.cre_per_name,
+        t.alt_date, t.alt_per_code, t.alt_per_name, t.alter_flag, t.accnum, t.diag_clic_name,m.name patient_name,m.admission_no inp_no,
+        m.bedid bed_no,m.case_no,m.visiting_staff_no,m.visiting_staff_name,em.id msg_id, ei.id main_file_id,p.patient_main_id
+        from exam_item t
+        left join test_exam_alert_result te on t.id = te.report_id
+        left join t_ar_medicalinformation_all m on m.admission_no = t.patient_id
+        left join t_ar_baseinfomation_all b on m.admission_no = b.admission_no
+        left join emr_message em on t.id = em.bus_id
+        left join emr_index ei on t.patient_id = ei.patient_id and ei.mr_type = 'MAINFILE'  and ei.del_flag = '0'
+        left join pat_personalinfo p on t.patient_id = p.PATIENT_ID
+        where 1=1 and te.handle_doc_no is null and t.alter_flag = '1'
+        <if test="appDocCd != null and appDocCd != ''">
+            and t.APP_DOC_CD = #{appDocCd}
+        </if>
+        <if test="appDeptCd !=null and appDeptCd != ''">
+            and t.APP_DEPT_CD = #{appDeptCd}
+        </if>
+        <if test="examIdList != null and examIdList.size > 0">
+            and t.id not in
+            <foreach collection="examIdList" item="examId" open="(" separator="," close=")">
+                #{examId}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectByAppCd" parameterType="String" resultMap="ExamItemResult">
+        select * from exam_item where app_cd=#{appCd}
+    </select>
+    <select id="selectExamItemByAppCdList" resultMap="ExamItemResult">
+        select * from exam_item where app_cd in
+        <foreach collection="list" item="appCd" open="(" separator="," close=")">
+            #{appCd}
+        </foreach>
+    </select>
+    <resultMap id="HisExamAlertResult" type="com.emr.project.pat.domain.vo.ExamAlertResultVo">
+        <result property="examResSub"    column="examResSub"    />
+        <result property="examPos"    column="examPos"    />
+        <result property="examRepDate"    column="examRepDate"    />
+        <result property="examDocName"    column="examDocName"    />
+        <result property="handleDocName"    column="handleDocName"    />
+        <result property="handleDocTime"    column="handleDocTime"    />
+        <result property="handleDocContent"    column="handleDocContent"    />
+    </resultMap>
+    <select id="selectHisExamAlertList" resultMap="HisExamAlertResult">
+        select
+            a.result_wjz as examResSub,
+            a.body_part as examPos,
+            a.Report_Date as examRepDate,
+            a.Transcriber as examDocName,
+            a.qrr_ys as handleDocName,
+            a.qrsj_ys as handleDocTime,
+            a.czyy_ys as handleDocContent
+        from EXAM_REPORT_RECORD a
+        where  a.wjzbz ='1' and  a.Patient_ID = #{patientId}
+        <if test="startDate != null">
+            and a.Report_Date &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and a.Report_Date &lt; #{endDate}
+        </if>
+    </select>
+    <select id="selectMzExamItemList" parameterType="ExamItemVo" resultMap="ExamItemVoResult">
+        select ei.exam_rep_date,ei.id,ei.exam_res_sub,ei.exam_res_obj,ei.exam_item_name
+        from  exam_item ei
+        where ei.patient_id = (select PATIENT_ID from T_AR_BASEINFOMATION where ADMISSION_NO=#{patientId})
+        <if test="startDate != null and endDate !=null">and ei.exam_rep_date >=#{startDate} and ei.exam_rep_date &lt; #{endDate}</if>
+        order by ei.exam_rep_date desc
+    </select>
+</mapper>

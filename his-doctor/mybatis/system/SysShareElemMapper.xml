@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysShareElemMapper">
+
+    <resultMap type="SysShareElem" id="SysShareElemResult">
+        <result property="id"    column="id"    />
+        <result property="tempType"    column="temp_type"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="isValid"    column="is_valid"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="creatorid"    column="creatorid"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+    <resultMap id="SysShareElemVoResult" type="SysShareElemVo" extends="SysShareElemResult">
+        <result property="patientId"    column="patient_id"    />
+        <result property="elemCon"    column="elem_con"    />
+        <result property="elemTypeCd"    column="elem_type_cd"    />
+        <result property="elemConText"    column="elem_con_text"    />
+    </resultMap>
+
+    <sql id="selectSysShareElemVo">
+        select id, temp_type, elem_id, elem_name, elem_cd, is_valid, createtime, creatorid, alt_per_code, alt_date from sys_share_elem
+    </sql>
+
+    <select id="selectSysShareElemList" parameterType="SysShareElem" resultMap="SysShareElemResult">
+        <include refid="selectSysShareElemVo"/>
+        <where>
+            <if test="tempType != null  and tempType != ''"> and temp_type = #{tempType}</if>
+            <if test="elemId != null  and elemId != ''"> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="isValid != null  and isValid != ''"> and is_valid = #{isValid}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="creatorid != null  and creatorid != ''"> and creatorid = #{creatorid}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+        order by createtime desc
+    </select>
+
+    <select id="selectSysShareElemById" parameterType="Long" resultMap="SysShareElemResult">
+        <include refid="selectSysShareElemVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectSysShareElemByPatientId" parameterType="SysShareElemVo" resultMap="SysShareElemVoResult">
+        select sse.id,sse.elem_id,sse.elem_cd,sse.elem_name,sse.TEMP_TYPE,s.elem_con_text,s.elem_con,s.ELEM_TYPE_CD from  SYS_SHARE_ELEM sse left join(
+			select  t.*  from (
+                select es.elem_id,es.elem_cd,es.elem_con,es.elem_name,es.elem_con_text,es.ELEM_TYPE_CD, row_number() over(partition by elem_id order by CRE_DATE desc) rw
+                from EMR_SHARING es
+                where PATIENT_ID=#{patientId}
+            ) t
+        where t.rw = 1) s
+        on sse.ELEM_ID=s.ELEM_ID where sse.IS_VALID='1' and sse.TEMP_TYPE=#{tempType}
+        <where>
+            <if test="elemName != null  and elemName != ''"> and sse.elem_name like concat(concat('%', #{elemName}), '%')</if>
+        </where>
+    </select>
+
+    <insert id="insertSysShareElem" parameterType="SysShareElem">
+        insert into sys_share_elem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tempType != null">temp_type,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="isValid != null">is_valid,</if>
+            <if test="creatorid != null">creatorid,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            createtime,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tempType != null">#{tempType},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="isValid != null">#{isValid},</if>
+            <if test="creatorid != null">#{creatorid},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateSysShareElem" parameterType="SysShareElem">
+        update sys_share_elem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tempType != null">temp_type = #{tempType},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="isValid != null">is_valid = #{isValid},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="creatorid != null">creatorid = #{creatorid},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysShareElemById" parameterType="Long">
+        delete from sys_share_elem where id = #{id}
+    </delete>
+
+    <delete id="deleteSysShareElemByIds" parameterType="String">
+        delete from sys_share_elem where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

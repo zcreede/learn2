@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaTakeDrugListMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.TakeDrugList">
+        <id column="perform_list_no" jdbcType="VARCHAR" property="performListNo"/>
+        <id column="perform_list_sort_number" jdbcType="INTEGER" property="performListSortNumber"/>
+        <id column="order_sort_number" jdbcType="VARCHAR" property="orderSortNumber"/>
+        <id column="order_group_sort_number" jdbcType="VARCHAR" property="orderGroupSortNumber"/>
+        <id column="order_group_no" jdbcType="VARCHAR" property="orderGroupNo"/>
+        <result column="admission_no" jdbcType="VARCHAR" property="admissionNo"/>
+        <result column="hospitalized_count" jdbcType="INTEGER" property="hospitalizedCount"/>
+        <result column="take_drug_ward_no" jdbcType="VARCHAR" property="takeDrugWardNo"/>
+        <result column="patient_name" jdbcType="VARCHAR" property="patientName"/>
+        <result column="bedid" jdbcType="VARCHAR" property="bedid"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="order_type" jdbcType="VARCHAR" property="orderType"/>
+        <result column="drug_name" jdbcType="VARCHAR" property="drugName"/>
+        <result column="drug_name_pym" jdbcType="VARCHAR" property="drugNamePym"/>
+        <result column="order_standard" jdbcType="VARCHAR" property="orderStandard"/>
+        <result column="drug_actual_usage" jdbcType="DECIMAL" property="drugActualUsage"/>
+        <result column="usage_unit" jdbcType="VARCHAR" property="usageUnit"/>
+        <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
+        <result column="order_dose" jdbcType="DECIMAL" property="orderDose"/>
+        <result column="order_unit" jdbcType="VARCHAR" property="orderUnit"/>
+        <result column="drug_form" jdbcType="VARCHAR" property="drugForm"/>
+        <result column="drug_class_code" jdbcType="VARCHAR" property="drugClassCode"/>
+        <result column="drug_stock_no" jdbcType="VARCHAR" property="drugStockNo"/>
+        <result column="pharmacopoeia_no" jdbcType="VARCHAR" property="pharmacopoeiaNo"/>
+        <result column="take_drug_time" jdbcType="TIMESTAMP" property="takeDrugTime"/>
+        <result column="take_drug_operator" jdbcType="VARCHAR" property="takeDrugOperator"/>
+        <result column="take_drug_operator_name" jdbcType="VARCHAR" property="takeDrugOperatorName"/>
+        <result column="drug_usage_way" jdbcType="VARCHAR" property="drugUsageWay"/>
+        <result column="drug_freq" jdbcType="VARCHAR" property="drugFreq"/>
+        <result column="order_doctor_code" jdbcType="VARCHAR" property="orderDoctorCode"/>
+        <result column="order_doctor_name" jdbcType="VARCHAR" property="orderDoctorName"/>
+        <result column="drug_eat_time" jdbcType="TIMESTAMP" property="drugEatTime"/>
+        <result column="hygienic_material_flag" jdbcType="INTEGER" property="hygienicMaterialFlag"/>
+        <result column="herbal_dose" jdbcType="INTEGER" property="herbalDose"/>
+        <result column="herbal_flag" jdbcType="INTEGER" property="herbalFlag"/>
+        <result column="out_drug_flag" jdbcType="VARCHAR" property="outDrugFlag"/>
+        <result column="patient_dep_code" jdbcType="VARCHAR" property="patientDepCode"/>
+        <result column="patient_dep_name" jdbcType="VARCHAR" property="patientDepName"/>
+        <result column="pharmacy_no" jdbcType="VARCHAR" property="pharmacyNo"/>
+        <result column="today_account_times" jdbcType="INTEGER" property="todayAccountTimes"/>
+        <result column="performed_times" jdbcType="INTEGER" property="performedTimes"/>
+        <result column="purpose_antimicrobial_use" jdbcType="INTEGER" property="purposeAntimicrobialUse"/>
+        <result column="prescribe_no" jdbcType="VARCHAR" property="prescribeNo"/>
+        <result column="prescribe_name" jdbcType="VARCHAR" property="prescribeName"/>
+        <result column="cp_no" jdbcType="VARCHAR" property="cpNo"/>
+        <result column="doctor_instructions" jdbcType="VARCHAR" property="doctorInstructions"/>
+        <result column="baby_admission_no" jdbcType="VARCHAR" property="babyAdmissionNo"/>
+        <result column="surgical_form_no" jdbcType="VARCHAR" property="surgicalFormNo"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="take_drug_status" jdbcType="INTEGER" property="takeDrugStatus"/>
+        <result column="return_drug_status" jdbcType="INTEGER" property="returnDrugStatus"/>
+        <result column="valid" jdbcType="INTEGER" property="valid"/>
+        <result column="pharmacy_name" jdbcType="VARCHAR" property="pharmacyName"/>
+        <result column="order_doctor_name" jdbcType="VARCHAR" property="orderDoctorName"/>
+        <result column="id" property="id"/>
+        <result column="apply_no" property="applyNo"/>
+    </resultMap>
+    <resultMap id="TdPaTakeDrugListVoResult" type="com.emr.project.docOrder.domain.vo.TdPaTakeDrugListVO" >
+        <result property="id"    column="id"    />
+        <result property="performListNo"    column="perform_list_no"    />
+        <result property="performListSortNumber"    column="perform_list_sort_number"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="takeDrugWardNo"    column="take_drug_ward_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="bedid"    column="bed_id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderGroupSortNumber"    column="order_group_sort_number"/>
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="drugName"    column="drug_name"    />
+        <result property="drugNamePym"    column="drug_name_pym"    />
+        <result property="orderStandard"    column="order_Standard"    />
+        <result property="drugActualUsage"    column="drug_actual_usage"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="orderPrice"    column="order_price"    />
+        <result property="patientDepName"    column="patient_dep_name"    />
+        <result property="patientDepCode"    column="patient_dep_code"    />
+        <result property="orderDose"    column="ORDER_DOSE"    />
+        <result property="orderUnit"    column="ORDER_UNIT"    />
+        <result property="orderPrice"    column="ORDER_PRICE"    />
+        <result property="orderTotal"    column="orderTotal"    />
+        <result property="drugUsageWay"    column="DRUG_USAGE_WAY"    />
+        <result property="drugFreq"    column="DRUG_FREQ"    />
+        <result property="takeDrugTime"    column="TAKE_DRUG_TIME"    />
+        <result property="takeDrugOperator"    column="TAKE_DRUG_OPERATOR"    />
+        <result property="pharmacyNo"    column="PHARMACY_NO"    />
+        <result property="prescription"    column="prescription"    />
+        <result property="issueDate"    column="issue_date"    />
+        <result property="issueOper"    column="issue_oper"    />
+        <result property="drugCode"    column="drug_code"    />
+        <result property="issueOperName"    column="issue_oper_name"    />
+        <result property="takeDrugOperatorName"    column="take_drug_operator_name"    />
+        <result property="pharmacyNoName"    column="pharmacy_no_name"    />
+        <result property="takeDrugStatus"    column="take_drug_status"    />
+
+        <result property="personAge"    column="personAge"    />
+        <result property="sex"    column="sex"    />
+        <result property="expenseCategory"    column="expenseCategory"    />
+        <result property="deposIt"    column="deposIt"    />
+        <result property="money"    column="money"    />
+        <result property="staffName"    column="staffName"    />
+    </resultMap>
+    <select id="selectTakeDrugPatList" parameterType="TdPaTakeDrugListVO" resultMap="TdPaTakeDrugListVoResult">
+        select
+            dl.admission_no,
+            dl.patient_name,
+            t6.DEPT_NAME as patient_dep_name,
+            t1.DEPARTMENT_NO as PATIENT_DEP_CODE,
+            count( * ),
+            t1.case_no,
+            t2.person_age AS personAge,
+            dd.DATA_TAG AS sex,
+            t2.expense_category AS expenseCategory,
+            t10.depos_it AS deposIt,
+            (t10.depos_it - t10.cumulative_cost) AS money,
+            t5.staff_name AS staffName
+        from
+        td_pa_take_drug_list dl
+        LEFT JOIN t_ar_medicalinformation t1 ON t1.admission_no=dl.admission_no
+        LEFT JOIN t_ar_baseinfomation t2 ON t1.admission_no = t2.admission_no
+        LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE='s028' and dd.DATA_VAL = t2.sex
+        LEFT JOIN t_ih_cumulativecost t10 ON t1.admission_no = t10.admission_no
+        LEFT JOIN TM_BS_STAFF t5 ON t5.staff_no = t1.Resident_no
+        LEFT join TM_BS_DEPT t6 on t6.DEPT_CODE = t1.DEPARTMENT_NO
+        <where>
+        and dl.TAKE_DRUG_STATUS in ('1','0','2','3','10','11') AND dl.VALID = '1'
+            <if test="startDate!=null and endDate!=null">
+                and dl.take_drug_time between #{startDate} and #{endDate}
+            </if>
+            <if test="pharmacyNo!=null and pharmacyNo!=''">
+                and dl.pharmacy_no=#{pharmacyNo}
+            </if>
+            <if test="drugName!=null and drugName!=''">
+                and (dl.drug_name like concat(concat('%', #{drugName}), '%')
+                or dl.drug_name_pym like concat(concat('%', #{drugName}), '%'))
+            </if>
+            <if test="takeDrugWardNo!=null and takeDrugWardNo!=''">
+                and dl.TAKE_DRUG_WARD_NO=#{takeDrugWardNo}
+            </if>
+            <if test="searchStr != null and searchStr.trim() != ''">
+                and (dl.admission_no like concat( concat('%', #{searchStr}), '%')
+                or dl.patient_name like concat( concat('%', #{searchStr}), '%')
+                or dl.CASE_NO like concat( concat('%', #{searchStr}), '%'))
+            </if>
+        </where>
+        group by
+            t5.staff_name,
+            t10.depos_it,
+            t10.cumulative_cost,
+            t1.CASE_NO,
+            dd.DATA_TAG,
+            dl.admission_no,
+            dl.patient_name,
+            t1.DEPARTMENT_NO,
+            t6.DEPT_NAME,
+            t2.person_age,
+            t2.expense_category
+    </select>
+    <select id="selectTakeDrugFYPatList" parameterType="TdPaTakeDrugListVO" resultMap="TdPaTakeDrugListVoResult">
+        select prescription,issue_date,issue_oper,staff.staff_name as issue_oper_name from
+         (select
+        prescription,issue_date,issue_oper
+        from
+        td_pa_take_drug_list_fy
+        <where>
+            <if test="startDate!=null and endDate!=null">
+                and issue_date between #{startDate} and #{endDate}
+            </if>
+            <if test="pharmacyNo!=null and pharmacyNo!=''">
+                and pharmacy_no=#{pharmacyNo}
+            </if>
+            <if test="drugName!=null and drugName!=''">
+                and (drug_name like concat(concat('%', #{drugName}), '%') or drug_name_pym like concat(concat('%', #{drugName}), '%'))
+            </if>
+            <if test="takeDrugWardNo!=null and takeDrugWardNo!=''">
+                and TAKE_DRUG_WARD_NO=#{takeDrugWardNo}
+            </if>
+        </where>
+        group by
+        prescription,issue_date,issue_oper)  fy
+        left join tm_bs_staff staff on staff.staff_code=fy.issue_oper
+        order by fy.issue_date desc
+    </select>
+
+    <select id="selectTakeDrugDetailList" parameterType="TdPaTakeDrugListVO" resultMap="TdPaTakeDrugListVoResult">
+        select
+        list.ID, list.PERFORM_LIST_NO, list.PERFORM_LIST_SORT_NUMBER, list.CASE_NO, list.ADMISSION_NO, list.HOSPITALIZED_COUNT, list.TAKE_DRUG_WARD_NO, list.PATIENT_NAME, list.BEDID, list.ORDER_NO, list.ORDER_SORT_NUMBER, list.ORDER_GROUP_SORT_NUMBER, list.ORDER_GROUP_NO, list.ORDER_TYPE, list.DRUG_NAME, list.DRUG_NAME_PYM, list.ORDER_STANDARD, list.DRUG_ACTUAL_USAGE, list.USAGE_UNIT, list.ORDER_PRICE, list.ORDER_DOSE, list.ORDER_UNIT, list.DRUG_FORM, list.DRUG_CLASS_CODE, list.DRUG_STOCK_NO, list.PHARMACOPOEIA_NO, list.TAKE_DRUG_TIME, list.TAKE_DRUG_OPERATOR, list.DRUG_USAGE_WAY_CODE, list.DRUG_USAGE_WAY, list.DRUG_FREQ_CODE, list.DRUG_FREQ, list.ORDER_DOCTOR_CODE, list.DRUG_EAT_TIME, list.HYGIENIC_MATERIAL_FLAG, list.HERBAL_DOSE, list.HERBAL_FLAG, list.OUT_DRUG_FLAG, list.PATIENT_DEP_CODE, list.PATIENT_DEP_NAME, list.PHARMACY_NO, list.TODAY_ACCOUNT_TIMES, list.PERFORMED_TIMES, list.PURPOSE_ANTIMICROBIAL_USE, list.PRESCRIBE_NO, list.PRESCRIBE_NAME, list.CP_NO, list.DOCTOR_INSTRUCTIONS, list.BABY_ADMISSION_NO, list.SURGICAL_FORM_NO, list.REMARK, list.TAKE_DRUG_STATUS, list.RETURN_DRUG_STATUS, list.VALID, list.PRESCRIPTION, list.UP_STATUS,
+        round(list.order_price*list.order_dose,2) as orderTotal,
+        list.pharmacopoeia_no as drug_code,
+        sft.staff_name as take_drug_operator_name,
+        dept.dept_name as pharmacy_no_name
+        from
+            td_pa_take_drug_list list
+            left join TD_PA_ORDER_DETAIL detail on detail.order_no=list.order_no and detail.ORDER_GROUP_NO = list.ORDER_GROUP_NO and detail.order_group_sort_number=list.order_group_sort_number
+           left join tm_bs_staff sft on sft.staff_code=list.take_drug_operator
+            left join tm_bs_dept dept on dept.dept_code=list.pharmacy_no
+        <where>
+            and list.take_drug_status in ('1','10','11') AND list.VALID = '1'
+            <if test="admissionNoList != null and admissionNoList.size > 0">
+                and list.admission_no in
+                <foreach item="admissionNo" collection="admissionNoList" open="(" separator="," close=")">
+                    #{admissionNo}
+                </foreach>
+            </if>
+            <if test="prescriptionList != null and prescriptionList.size > 0">
+                and list.prescription in
+                <foreach item="prescription" collection="prescriptionList" open="(" separator="," close=")">
+                    #{prescription}
+                </foreach>
+            </if>
+            <if test="startDate!=null and endDate!=null">
+                and list.take_drug_time between #{startDate} and #{endDate}
+            </if>
+            <if test="pharmacyNo!=null and pharmacyNo!=''">
+                and list.pharmacy_no=#{pharmacyNo}
+            </if>
+            <if test="drugName!=null and drugName!=''">
+                and (list.drug_name like concat(concat('%', #{drugName}), '%') or list.drug_name_pym like concat(concat('%', #{drugName}), '%'))
+            </if>
+            <if test="takeDrugWardNo!=null and takeDrugWardNo!=''">
+                and list.TAKE_DRUG_WARD_NO=#{takeDrugWardNo}
+            </if>
+        </where>
+        order by list.admission_no,list.take_drug_time,list.perform_list_no,list.perform_list_sort_number
+    </select>
+
+    <select id="selectTakeDrugFYDetailList" parameterType="TdPaTakeDrugListVO" resultMap="TdPaTakeDrugListVoResult">
+        select
+        list.id,
+        list.patient_name,
+        list.admission_no,
+        list.order_type,
+        list.drug_name,
+        list.order_standard,
+        list.order_dose,
+        list.order_unit,
+        list.order_price,
+        round(list.order_price*list.order_dose,2) as orderTotal,
+        list.drug_usage_way,
+        list.drug_freq,
+        list.drug_actual_usage,
+        list.usage_unit,
+        list.take_drug_time,
+        list.take_drug_operator,
+        list.pharmacy_no,
+        list.order_group_sort_number,
+        list.order_no,
+        list.PHARMACOPOEIA_NO as drug_code,
+        sft.staff_name as take_drug_operator_name,
+        list.ISSUE_DATE,
+        list.ISSUE_OPER,
+        iss.staff_name as issue_oper_name,
+        dept.dept_name as pharmacy_no_name,
+        list.perform_list_no,
+        list.case_no
+        from
+        td_pa_take_drug_list_fy list
+        left join TD_PA_ORDER_DETAIL detail on detail.order_no=list.order_no and detail.ORDER_GROUP_NO = list.ORDER_GROUP_NO and detail.order_group_sort_number=list.order_group_sort_number
+        left join tm_bs_staff sft on sft.staff_code=list.take_drug_operator
+        left join tm_bs_staff iss on iss.staff_code=list.ISSUE_OPER
+        left join tm_bs_dept dept on dept.dept_code=list.pharmacy_no
+        <where>
+            <if test="admissionNoList != null and admissionNoList.size > 0">
+                and list.admission_no in
+                <foreach item="admissionNo" collection="admissionNoList" open="(" separator="," close=")">
+                    #{admissionNo}
+                </foreach>
+            </if>
+            <if test="prescriptionList != null and prescriptionList.size > 0">
+                and list.prescription in
+                <foreach item="prescription" collection="prescriptionList" open="(" separator="," close=")">
+                    #{prescription}
+                </foreach>
+            </if>
+            <if test="startDate!=null and endDate!=null">
+                and list.issue_date between #{startDate} and #{endDate}
+            </if>
+            <if test="pharmacyNo!=null and pharmacyNo!=''">
+                and list.pharmacy_no=#{pharmacyNo}
+            </if>
+            <if test="drugName!=null and drugName!=''">
+                and (list.drug_name like concat(concat('%', #{drugName}), '%') or list.drug_name_pym like concat(concat('%', #{drugName}), '%'))
+            </if>
+            <if test="takeDrugWardNo!=null and takeDrugWardNo!=''">
+                and list.TAKE_DRUG_WARD_NO=#{takeDrugWardNo}
+            </if>
+        </where>
+        order by list.admission_no,list.issue_date,list.perform_list_no,list.perform_list_sort_number
+    </select>
+
+    <update id="updateTakeDrugList" >
+        <foreach collection="takeDrugListVOList" item="item" index="index" open="begin" close=";end;" separator=";">
+            update td_pa_take_drug_list set VALID=#{vaild} where id = #{item.id}
+        </foreach>
+    </update>
+
+    <update id="updateHisYfkc" parameterType="HisYfkcHz">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update yy_P_yfkc_hz
+            set djsl = (a.djsl + (${item.sl}))
+            from yy_P_yfkc_hz a
+            where yfbm = a.yfbm and ypbm = a.ypbm and kcbh = a.kcbh
+            and yfbm = #{item.yfbm} and ypbm = #{item.ypbm} and kcbh = #{item.kcbh}
+        </foreach>
+    </update>
+
+    <select id="selectTakeDrugFYDeptPatList" parameterType="TdPaTakeDrugListVO" resultMap="TdPaTakeDrugListVoResult">
+        SELECT
+            fy.admission_no,
+            fy.patient_name,
+            t6.DEPT_NAME as patient_dep_name,
+            t1.DEPARTMENT_NO as PATIENT_DEP_CODE,
+            fy.case_no,
+            t2.person_age AS personAge,
+            dd.DATA_TAG AS sex,
+            t2.expense_category AS expenseCategory,
+            t10.depos_it AS deposIt,
+            ( t10.depos_it - t10.cumulative_cost ) AS money,
+            t5.staff_name AS staffName
+        FROM
+            td_pa_take_drug_list_fy fy
+            LEFT JOIN t_ar_medicalinformation t1 ON t1.admission_no=fy.admission_no
+            LEFT JOIN TM_BS_STAFF t5 ON t5.staff_no = t1.Resident_no
+            LEFT JOIN t_ar_baseinfomation t2 ON fy.admission_no = t2.admission_no
+            LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE = 's028'
+            AND dd.DATA_VAL = t2.sex
+            LEFT JOIN t_ih_cumulativecost t10 ON fy.admission_no = t10.admission_no
+            LEFT join TM_BS_DEPT t6 on t6.DEPT_CODE = t1.DEPARTMENT_NO
+        <where>
+            AND fy.VALID = '1' and t1.hospital_mark='1' and t1.bedid is not null
+            <if test="searchStr != null and searchStr.trim() != ''">
+                and (fy.admission_no like concat( concat('%', #{searchStr}), '%')
+                or fy.patient_name like concat( concat('%', #{searchStr}), '%')
+                or fy.case_no like concat( concat('%', #{searchStr}), '%'))
+            </if>
+            <if test="takeDrugWardNo!=null and takeDrugWardNo!=''">
+                and fy.TAKE_DRUG_WARD_NO=#{takeDrugWardNo}
+            </if>
+        </where>
+        GROUP BY
+            fy.admission_no,
+            fy.patient_name,
+            t1.DEPARTMENT_NO,
+            t6.DEPT_NAME,
+            fy.case_no,
+            t2.person_age,
+            dd.DATA_TAG,
+            t2.expense_category,
+            t10.depos_it,
+            t5.staff_name,
+            t10.cumulative_cost
+    </select>
+    <resultMap id="InfoByAdmissionNoResult" type="com.emr.project.docOrder.domain.resp.TdPaTakeDrugListDetailPrint">
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="bedid"    column="bedid"    />
+        <result property="deptName"    column="dept_name"    />
+    </resultMap>
+    <select id="selectInfoByAdmissionNoList" resultMap="InfoByAdmissionNoResult">
+        select
+            a.admission_no,
+            a.bedid,
+            b.dept_name
+        from t_ar_medicalinformation a
+        left join pat_visitinfo b on b.record_no = a.case_no
+        <where>
+            <if test="list !=null and list.size>0">
+                and a.admission_no in
+                <foreach collection="list" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="TdPaTakeDrugListPageVoResult" type="com.emr.project.operation.domain.vo.TdPaTakeDrugListPageVo" extends="BaseResultMap">
+        <result property="orderDoctorName" column="ORDER_DOCTOR_NAME"></result>
+        <result property="highRiskFlag" column="high_risk_flag"></result>
+        <result property="pharmacyName" column="pharmacy_name"/>
+    </resultMap>
+    <select id="selectTakeDrugList" resultMap="TdPaTakeDrugListPageVoResult">
+        SELECT
+        list.bedid,
+        list.admission_no,
+        list.patient_name,
+        list.case_no,
+        list.drug_name,
+        list.order_dose,
+        list.order_unit,
+        list.order_price,
+        round(list.order_price*list.order_dose,2) as amount,
+        list.drug_actual_usage,
+        list.drug_freq,
+        list.drug_freq_code,
+        list.drug_usage_way_code,
+        list.drug_usage_way,
+        list.doctor_instructions,
+        list.pharmacopoeia_no,
+        list.drug_stock_no,
+        list.baby_admission_no,
+        list.drug_eat_time,
+        list.order_group_no,
+        list.order_no,
+        list.order_group_sort_number,
+        list.up_status,
+        list.order_type,
+        list.order_standard,
+        list.usage_unit,
+        s.STAFF_NAME as ORDER_DOCTOR_NAME,
+        list.take_drug_time,
+        detail.high_risk_flag,
+        list.take_drug_status,
+        list.PERFORM_LIST_NO,
+        list.id,
+        list.PERFORM_LIST_SORT_NUMBER,
+        bz.bzbm,
+        bz.bzmc,
+        list.pharmacy_no,
+        d.dept_name pharmacy_name
+        FROM
+        td_pa_take_drug_list list
+        left join TM_BS_STAFF s on list.ORDER_DOCTOR_CODE=s.STAFF_CODE
+        left join TD_PA_ORDER_DETAIL detail on detail.order_no=list.order_no and detail.ORDER_GROUP_NO = list.ORDER_GROUP_NO and detail.order_group_sort_number=list.order_group_sort_number
+        left join TM_BS_ORDER_SIG sig on detail.ORDER_USAGE_WAY = sig.sig_cd
+        left join YY_BZBM_XMDZ_YP bz on list.pharmacopoeia_no = bz.xmbh
+        left join tm_bs_dept d on d.dept_code = list.PHARMACY_NO
+        left join TM_NA_BEDS bed on bed.BEDID = list.bedid and bed.WARD_NO = list.PATIENT_DEP_CODE
+        <where>
+            and list.VALID='1' and list.TAKE_DRUG_STATUS in ('0')
+            <if test="takeDrugWardNo!=null and takeDrugWardNo!=''">
+                and list.TAKE_DRUG_WARD_NO=#{takeDrugWardNo}
+            </if>
+            <if test="admissionNo!=null and admissionNo!=''">
+                and list.admission_no=#{admissionNo}
+            </if>
+            <if test="orderType!=null and orderType!=''">
+                and list.order_type=#{orderType}
+            </if>
+            <if test="sigStandCode!=null and sigStandCode!=''">
+                and sig.STANDARD_CD = #{sigStandCode}
+            </if>
+            <if test="pharmacyNo!=null and pharmacyNo!=''">
+                and list.PHARMACY_NO=#{pharmacyNo}
+            </if>
+            <if test='drugEatTimeFlag!=null and drugEatTimeFlag=="1"'>
+                and list.drug_eat_time &gt;= to_date(#{drugEatTimeBegin},'yyyy-MM-dd HH24:MI:ss')
+                and list.drug_eat_time &lt; to_date(#{drugEatTimeEnd},'yyyy-MM-dd HH24:MI:ss')
+            </if>
+            <if test='drugEatTimeFlag!=null and drugEatTimeFlag=="2"'>
+                and (list.drug_eat_time &lt; to_date(#{drugEatTimeBegin},'yyyy-MM-dd HH24:MI:ss')
+                or list.drug_eat_time &gt;= to_date(#{drugEatTimeEnd},'yyyy-MM-dd HH24:MI:ss'))
+            </if>
+            <if test="performListNoList!=null and performListNoList.size >0">
+                and list.perform_list_no in
+                <foreach collection="performListNoList" item="performListNo" open="(" separator="," close=")">
+                    #{performListNo}
+                </foreach>
+            </if>
+        </where>
+        order by bed.BED_ORDER,list.ADMISSION_NO,list.DRUG_EAT_TIME,list.order_no,list.perform_list_no,list.ORDER_GROUP_NO,list.ORDER_GROUP_SORT_NUMBER
+    </select>
+    <select id="selectDrugListStatusByIds" resultMap="BaseResultMap">
+        select * from td_pa_take_drug_list
+        <where>
+            <if test="idList != null and idList.size() > 0">
+                and id in
+                <foreach collection="idList" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <resultMap id="PrintDrugListResult" type="com.emr.project.operation.domain.vo.PrintDrugListVo">
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="bedid"    column="bedid"    />
+        <result property="drugName"    column="drug_name"    />
+        <result property="orderStandard"    column="order_standard"    />
+        <result property="orderPrice"    column="order_price"    />
+        <result property="orderDose"    column="order_dose"    />
+        <result property="orderUnit"    column="order_unit"    />
+        <result property="orderTotal"    column="orderTotal"    />
+        <result property="pharmacyNoName"    column="pharmacy_no_name"    />
+        <result property="deptName"    column="deptName"    />
+        <result property="applyNo"    column="applyNo"    />
+    </resultMap>
+    <select id="selectPrintDataByIds" resultMap="PrintDrugListResult">
+        SELECT
+        list.case_no,
+        list.admission_no,
+        list.patient_name,
+        list.bedid,
+        list.drug_name,
+        list.order_standard,
+        list.order_price,
+        list.order_dose,
+        list.order_unit,
+        round( list.order_price * list.order_dose, 2 ) AS orderTotal,
+        dept.dept_name AS pharmacy_no_name ,
+        (select DEPT_NAME from tm_bs_dept where DEPT_CODE =list.TAKE_DRUG_WARD_NO ) as deptName,
+        list.APPLY_NO as applyNo
+        FROM
+        td_pa_take_drug_list list
+        left join tm_bs_dept dept ON dept.dept_code = list.pharmacy_no
+        <where>
+            and list.APPLY_NO in
+            <foreach collection="applyNo" separator="," item="item" close=")" open="(">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+    <insert id="insertList" parameterType="TakeDrugList">
+        insert all
+        <foreach collection="list" item="item" index="index">
+            into td_pa_take_drug_list (id,perform_list_no, perform_list_sort_number,
+            admission_no, case_no, hospitalized_count, take_drug_ward_no,
+            patient_name, bedid, order_no,
+            order_sort_number, order_group_sort_number, order_group_no, order_type,
+            drug_name, drug_name_pym, order_standard,
+            drug_actual_usage, usage_unit, order_price,
+            order_dose, order_unit, drug_form,
+            drug_class_code, drug_stock_no, pharmacopoeia_no,
+            take_drug_time, take_drug_operator, drug_usage_way,drug_usage_way_code,
+            drug_freq,drug_freq_code, order_doctor_code, drug_eat_time,
+            hygienic_material_flag, herbal_dose, herbal_flag,
+            out_drug_flag, patient_dep_code, patient_dep_name,
+            pharmacy_no, today_account_times, performed_times,
+            purpose_antimicrobial_use, prescribe_no, prescribe_name,
+            cp_no, doctor_instructions, baby_admission_no,
+            surgical_form_no, remark, take_drug_status,
+            return_drug_status,valid,up_status,apply_no,physician_dpt_no,physician_dpt_name,source_flag, HOSPITAL_CODE) values
+            (
+            #{item.id,jdbcType=LONGVARBINARY},
+            #{item.performListNo,jdbcType=VARCHAR},
+            #{item.performListSortNumber,jdbcType=INTEGER} ,
+            #{item.admissionNo,jdbcType=VARCHAR} ,
+            #{item.caseNo,jdbcType=VARCHAR} ,
+            #{item.hospitalizedCount,jdbcType=INTEGER} ,
+            #{item.takeDrugWardNo,jdbcType=VARCHAR} ,
+            #{item.patientName,jdbcType=VARCHAR},
+            #{item.bedid,jdbcType=VARCHAR},
+            #{item.orderNo,jdbcType=VARCHAR} ,
+            #{item.orderSortNumber,jdbcType=VARCHAR} ,
+            #{item.orderGroupSortNumber,jdbcType=VARCHAR} ,
+            #{item.orderGroupNo,jdbcType=VARCHAR} ,
+            #{item.orderType,jdbcType=VARCHAR},
+            #{item.drugName,jdbcType=VARCHAR},
+            #{item.drugNamePym,jdbcType=VARCHAR},
+            #{item.orderStandard,jdbcType=VARCHAR},
+            #{item.drugActualUsage,jdbcType=DECIMAL},
+            #{item.usageUnit,jdbcType=VARCHAR},
+            #{item.orderPrice,jdbcType=DECIMAL},
+            #{item.orderDose,jdbcType=DECIMAL},
+            #{item.orderUnit,jdbcType=VARCHAR},
+            #{item.drugForm,jdbcType=VARCHAR},
+            #{item.drugClassCode,jdbcType=VARCHAR},
+            #{item.drugStockNo,jdbcType=VARCHAR},
+            #{item.pharmacopoeiaNo,jdbcType=VARCHAR},
+            #{item.takeDrugTime,jdbcType=TIMESTAMP},
+            #{item.takeDrugOperator,jdbcType=VARCHAR},
+            #{item.drugUsageWay,jdbcType=VARCHAR},
+            #{item.drugUsageWayCode,jdbcType=VARCHAR},
+            #{item.drugFreq,jdbcType=VARCHAR},
+            #{item.drugFreqCode,jdbcType=VARCHAR},
+            #{item.orderDoctorCode,jdbcType=VARCHAR},
+            #{item.drugEatTime,jdbcType=TIMESTAMP},
+            #{item.hygienicMaterialFlag,jdbcType=INTEGER},
+            #{item.herbalDose,jdbcType=INTEGER},
+            #{item.herbalFlag,jdbcType=INTEGER},
+            #{item.outDrugFlag,jdbcType=VARCHAR},
+            #{item.patientDepCode,jdbcType=VARCHAR},
+            #{item.patientDepName,jdbcType=VARCHAR},
+            #{item.pharmacyNo,jdbcType=VARCHAR},
+            #{item.todayAccountTimes,jdbcType=INTEGER},
+            #{item.performedTimes,jdbcType=INTEGER},
+            #{item.purposeAntimicrobialUse,jdbcType=INTEGER},
+            #{item.prescribeNo,jdbcType=VARCHAR},
+            #{item.prescribeName,jdbcType=VARCHAR},
+            #{item.cpNo,jdbcType=VARCHAR},
+            #{item.doctorInstructions,jdbcType=VARCHAR},
+            #{item.babyAdmissionNo,jdbcType=VARCHAR},
+            #{item.surgicalFormNo,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.takeDrugStatus,jdbcType=INTEGER},
+            #{item.returnDrugStatus,jdbcType=INTEGER},
+            #{item.valid,jdbcType=INTEGER},
+            #{item.upStatus,jdbcType=VARCHAR},
+            #{item.applyNo,jdbcType=VARCHAR},
+            #{item.physicianDptNo,jdbcType=VARCHAR},
+            #{item.physicianDptName,jdbcType=VARCHAR},
+            #{item.sourceFlag,jdbcType=VARCHAR},
+            #{item.hospitalCode,jdbcType=VARCHAR}
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <insert id="moveToDeleteTable" parameterType="Long">
+        insert into td_pa_take_drug_list_delete
+        select * from td_pa_take_drug_list
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </insert>
+    <delete id="deleteByIds" parameterType="Long" >
+        delete from td_pa_take_drug_list
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="cancelMoveToDeleteTable" parameterType="Long">
+        insert into td_pa_take_drug_list
+        select * from td_pa_take_drug_list_delete
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </insert>
+    <delete id="deleteDelTableByIds" parameterType="Long" >
+        delete from td_pa_take_drug_list_delete
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateTakeDrugStatusApply">
+        <foreach collection="list" item="item" index="index" separator=";" open="begin" close=";end;" >
+            update td_pa_take_drug_list
+            set take_drug_status = #{takeDrugStatus,jdbcType=INTEGER}
+            ,apply_no = #{applyNo}
+            <if test="takeDrugTime!=null">
+                ,take_drug_time = #{takeDrugTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="takeDrugOperator!=null">
+                ,TAKE_DRUG_OPERATOR = #{takeDrugOperator}
+            </if>
+            where valid = 1
+            and take_drug_status = #{oldTakeDrugStatus,jdbcType=INTEGER}
+            and id = #{item.id}
+        </foreach>
+    </update>
+    <insert id="moveToDeleteTableByIds" parameterType="Long">
+        insert into td_pa_take_drug_list_delete
+        select * from td_pa_take_drug_list
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </insert>
+    <delete id="deleteListTableByIds" parameterType="Long">
+        delete from td_pa_take_drug_list
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updateStatusByIds" parameterType="Long">
+        update td_pa_take_drug_list_delete
+        set take_drug_status = '-1' , TAKE_DRUG_TIME = sysdate, TAKE_DRUG_OPERATOR = #{staffCode}
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <select id="selectTakeDrugListByType" resultMap="BaseResultMap">
+        select  * from TD_PA_TAKE_DRUG_LIST
+        <where>
+            <if test="type == '1'.toString()">
+                and APPLY_NO in
+                <foreach collection="revokeId" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="type == '2'.toString()">
+                and id in
+                <foreach collection="revokeId" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectOrderTakeDrugLists" resultMap="BaseResultMap">
+        select * from td_pa_take_drug_list
+        where order_no in
+        <foreach collection="orderNoList" item="orderNo" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+
+    <select id="selectMaxGroupNo" resultType="java.lang.Integer">
+        select max(a.ORDER_GROUP_NO) from (
+            select ORDER_GROUP_NO from td_pa_take_drug_list where ADMISSION_NO =#{admissionNo} and SOURCE_FLAG = '2'
+            union all
+            select ORDER_GROUP_NO from TD_PA_TAKE_DRUG_LIST_DELETE where ADMISSION_NO =#{admissionNo} and SOURCE_FLAG = '2'
+        ) a
+    </select>
+</mapper>

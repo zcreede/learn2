@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderDetailMapper">
+
+    <resultMap type="TdPaOrderDetail" id="TdPaOrderDetailResult">
+        <result property="id"    column="id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderGroupSortNumber"    column="order_group_sort_number"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="chargeNo"    column="charge_no"    />
+        <result property="chargeName"    column="charge_name"    />
+        <result property="standardCode"    column="standard_code"    />
+        <result property="standardName"    column="standard_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="unit"    column="unit"    />
+        <result property="orderActualUsage"    column="order_actual_usage"    />
+        <result property="usageUnit"    column="usage_unit"    />
+        <result property="orderDose"    column="order_dose"    />
+        <result property="orderTotalDose"    column="order_total_dose"    />
+        <result property="price"    column="price"    />
+        <result property="orderTotal"    column="order_total"    />
+        <result property="orderFreq"    column="order_freq"    />
+        <result property="orderUsageWay"    column="order_usage_way"    />
+        <result property="herbalFlag"    column="herbal_flag"    />
+        <result property="herbalDose"    column="herbal_dose"    />
+        <result property="drugForm"    column="drug_form"    />
+        <result property="drugClassCode"    column="drug_class_code"    />
+        <result property="subjectFlag"    column="subject_flag"    />
+        <result property="detailPerformDepCode"    column="detail_perform_dep_code"    />
+        <result property="patientSelfDrugFlag"    column="patient_self_drug_flag"    />
+        <result property="orderUsageDays"    column="order_usage_days"    />
+        <result property="purposeAntimicrobialUse"    column="purpose_antimicrobial_use"    />
+        <result property="drippingSpeed"    column="dripping_speed"    />
+        <result property="firstDoubleFlag"    column="first_double_flag"    />
+        <result property="firstPerformNum"    column="first_perform_num"    />
+        <result property="firstPerformTotalDose"    column="first_perform_total_dose"    />
+        <result property="skinTestResults"    column="skin_test_results"    />
+        <result property="skinTestResultsTime"    column="skin_test_results_time"    />
+        <result property="skinTestResultsLot"    column="skin_test_results_lot"    />
+        <result property="pharmacopoeiaNo"    column="pharmacopoeia_no"    />
+        <result property="doctorInstructions"    column="doctor_instructions"    />
+        <result property="babyAdmissionNo"    column="baby_admission_no"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="reOrganizationNo"    column="re_organization_no"    />
+        <result property="sourceOrderNo"    column="source_order_no"    />
+        <result property="distributionFlag"    column="distribution_flag"    />
+        <result property="stockNo"    column="stock_no"    />
+        <result property="outHavaDrugFlag"    column="out_hava_drug_flag"    />
+        <result property="hygienicMaterialFlag"    column="hygienic_material_flag"    />
+        <result property="orderItemFlag"    column="order_item_flag"    />
+        <result property="highRiskFlag"    column="high_risk_flag"    />
+        <result property="masterOrder"    column="master_order"    />
+        <result property="doseCoef"    column="dose_coef"    />
+    </resultMap>
+
+    <resultMap type="TdPaOrderDetailVo" id="TdPaOrderDetailVoResult" extends="TdPaOrderDetailResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="itemOrderUsageWayName"    column="item_order_usage_way_name"    />
+        <result property="itemOrderFreqName"    column="item_order_freq_name"    />
+        <result property="prescribeNo"    column="prescribe_no"    />
+        <result property="prescribeName"    column="prescribe_name"    />
+        <result property="orderStartDoc"    column="order_start_doc"    />
+        <result property="orderStartDocName"    column="order_start_doc_name"    />
+        <result property="emrEventCd"    column="EMR_EVENT_CD"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderDetailVo">
+        select id, order_no, order_type, order_sort_number, order_group_sort_number, order_group_no, order_class_code, charge_no, charge_name, standard_code,
+               standard_name, standard, unit, order_actual_usage, usage_unit, order_dose, order_total_dose, price, order_total, order_freq, order_usage_way,
+               herbal_flag, herbal_dose, drug_form, drug_class_code, subject_flag, detail_perform_dep_code, patient_self_drug_flag, order_usage_days,
+               purpose_antimicrobial_use, dripping_speed, first_double_flag, first_perform_num, first_perform_total_dose, skin_test_results, skin_test_results_time,
+               skin_test_results_lot, pharmacopoeia_no, doctor_instructions, baby_admission_no, cp_no, cp_name, re_organization_no, source_order_no, distribution_flag,
+               stock_no, out_hava_drug_flag, hygienic_material_flag, order_item_flag, high_risk_flag,master_order,dose_coef from td_pa_order_detail
+    </sql>
+
+    <select id="selectTdPaOrderDetailList" parameterType="TdPaOrderDetailVo" resultMap="TdPaOrderDetailResult">
+        <include refid="selectTdPaOrderDetailVo"/>
+        <where>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="orderGroupSortNumber != null  and orderGroupSortNumber != ''"> and order_group_sort_number = #{orderGroupSortNumber}</if>
+            <if test="orderGroupNo != null "> and order_group_no = #{orderGroupNo}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="chargeNo != null  and chargeNo != ''"> and charge_no = #{chargeNo}</if>
+            <if test="chargeName != null  and chargeName != ''"> and charge_name like concat(concat('%', #{chargeName}), '%')</if>
+            <if test="standardCode != null  and standardCode != ''"> and standard_code = #{standardCode}</if>
+            <if test="standardName != null  and standardName != ''"> and standard_name like concat(concat('%', #{standardName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="orderActualUsage != null "> and order_actual_usage = #{orderActualUsage}</if>
+            <if test="usageUnit != null  and usageUnit != ''"> and usage_unit = #{usageUnit}</if>
+            <if test="orderDose != null "> and order_dose = #{orderDose}</if>
+            <if test="orderTotalDose != null "> and order_total_dose = #{orderTotalDose}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="orderTotal != null "> and order_total = #{orderTotal}</if>
+            <if test="orderFreq != null  and orderFreq != ''"> and order_freq = #{orderFreq}</if>
+            <if test="orderUsageWay != null  and orderUsageWay != ''"> and order_usage_way = #{orderUsageWay}</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and herbal_flag = #{herbalFlag}</if>
+            <if test="herbalDose != null "> and herbal_dose = #{herbalDose}</if>
+            <if test="drugForm != null  and drugForm != ''"> and drug_form = #{drugForm}</if>
+            <if test="drugClassCode != null  and drugClassCode != ''"> and drug_class_code = #{drugClassCode}</if>
+            <if test="subjectFlag != null  and subjectFlag != ''"> and subject_flag = #{subjectFlag}</if>
+            <if test="detailPerformDepCode != null  and detailPerformDepCode != ''"> and detail_perform_dep_code = #{detailPerformDepCode}</if>
+            <if test="patientSelfDrugFlag != null  and patientSelfDrugFlag != ''"> and patient_self_drug_flag = #{patientSelfDrugFlag}</if>
+            <if test="orderUsageDays != null "> and order_usage_days = #{orderUsageDays}</if>
+            <if test="purposeAntimicrobialUse != null  and purposeAntimicrobialUse != ''"> and purpose_antimicrobial_use = #{purposeAntimicrobialUse}</if>
+            <if test="drippingSpeed != null  and drippingSpeed != ''"> and dripping_speed = #{drippingSpeed}</if>
+            <if test="firstDoubleFlag != null  and firstDoubleFlag != ''"> and first_double_flag = #{firstDoubleFlag}</if>
+            <if test="firstPerformNum != null "> and first_perform_num = #{firstPerformNum}</if>
+            <if test="firstPerformTotalDose != null "> and first_perform_total_dose = #{firstPerformTotalDose}</if>
+            <if test="skinTestResults != null  and skinTestResults != ''"> and skin_test_results = #{skinTestResults}</if>
+            <if test="skinTestResultsTime != null "> and skin_test_results_time = #{skinTestResultsTime}</if>
+            <if test="skinTestResultsLot != null  and skinTestResultsLot != ''"> and skin_test_results_lot = #{skinTestResultsLot}</if>
+            <if test="pharmacopoeiaNo != null  and pharmacopoeiaNo != ''"> and pharmacopoeia_no = #{pharmacopoeiaNo}</if>
+            <if test="doctorInstructions != null  and doctorInstructions != ''"> and doctor_instructions = #{doctorInstructions}</if>
+            <if test="babyAdmissionNo != null  and babyAdmissionNo != ''"> and baby_admission_no = #{babyAdmissionNo}</if>
+            <if test="cpNo != null  and cpNo != ''"> and cp_no = #{cpNo}</if>
+            <if test="cpName != null  and cpName != ''"> and cp_name like concat(concat('%', #{cpName}), '%')</if>
+            <if test="reOrganizationNo != null "> and re_organization_no = #{reOrganizationNo}</if>
+            <if test="sourceOrderNo != null  and sourceOrderNo != ''"> and source_order_no = #{sourceOrderNo}</if>
+            <if test="distributionFlag != null  and distributionFlag != ''"> and distribution_flag = #{distributionFlag}</if>
+            <if test="stockNo != null "> and stock_no = #{stockNo}</if>
+            <if test="outHavaDrugFlag != null  and outHavaDrugFlag != ''"> and out_hava_drug_flag = #{outHavaDrugFlag}</if>
+            <if test="hygienicMaterialFlag != null  and hygienicMaterialFlag != ''"> and hygienic_material_flag = #{hygienicMaterialFlag}</if>
+            <if test="orderItemFlag != null  and orderItemFlag != ''"> and order_item_flag = #{orderItemFlag}</if>
+            <if test="highRiskFlag != null  and highRiskFlag != ''"> and high_risk_flag = #{highRiskFlag}</if>
+            <if test="masterOrder != null  and masterOrder != ''"> and master_order = #{masterOrder}</if>
+            <if test="lcljCpNoList != null  and lcljCpNoList.size > 0"> and cp_no in
+                <foreach collection="lcljCpNoList" item="cpNo" open="(" separator="," close=")">
+                    #{cpNo}
+                </foreach>
+            </if>
+        </where>
+        order by order_No,order_Group_No,order_Group_Sort_Number
+    </select>
+
+    <select id="selectTdPaOrderDetailById" parameterType="Long" resultMap="TdPaOrderDetailResult">
+        <include refid="selectTdPaOrderDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPaOrderDetail" parameterType="TdPaOrderDetail">
+        insert into td_pa_order_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="orderType != null and orderType != ''">order_type,</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number,</if>
+            <if test="orderGroupSortNumber != null and orderGroupSortNumber != ''">order_group_sort_number,</if>
+            <if test="orderGroupNo != null">order_group_no,</if>
+            <if test="orderClassCode != null">order_class_code,</if>
+            <if test="chargeNo != null">charge_no,</if>
+            <if test="chargeName != null">charge_name,</if>
+            <if test="standardCode != null">standard_code,</if>
+            <if test="standardName != null">standard_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="unit != null">unit,</if>
+            <if test="orderActualUsage != null">order_actual_usage,</if>
+            <if test="usageUnit != null">usage_unit,</if>
+            <if test="orderDose != null">order_dose,</if>
+            <if test="orderTotalDose != null">order_total_dose,</if>
+            <if test="price != null">price,</if>
+            <if test="orderTotal != null">order_total,</if>
+            <if test="orderFreq != null">order_freq,</if>
+            <if test="orderUsageWay != null">order_usage_way,</if>
+            <if test="herbalFlag != null">herbal_flag,</if>
+            <if test="herbalDose != null">herbal_dose,</if>
+            <if test="drugForm != null">drug_form,</if>
+            <if test="drugClassCode != null">drug_class_code,</if>
+            <if test="subjectFlag != null">subject_flag,</if>
+            <if test="detailPerformDepCode != null">detail_perform_dep_code,</if>
+            <if test="patientSelfDrugFlag != null">patient_self_drug_flag,</if>
+            <if test="orderUsageDays != null">order_usage_days,</if>
+            <if test="purposeAntimicrobialUse != null">purpose_antimicrobial_use,</if>
+            <if test="drippingSpeed != null">dripping_speed,</if>
+            <if test="firstDoubleFlag != null">first_double_flag,</if>
+            <if test="firstPerformNum != null">first_perform_num,</if>
+            <if test="firstPerformTotalDose != null">first_perform_total_dose,</if>
+            <if test="skinTestResults != null">skin_test_results,</if>
+            <if test="skinTestResultsTime != null">skin_test_results_time,</if>
+            <if test="skinTestResultsLot != null">skin_test_results_lot,</if>
+            <if test="pharmacopoeiaNo != null">pharmacopoeia_no,</if>
+            <if test="doctorInstructions != null">doctor_instructions,</if>
+            <if test="babyAdmissionNo != null">baby_admission_no,</if>
+            <if test="cpNo != null">cp_no,</if>
+            <if test="cpName != null">cp_name,</if>
+            <if test="reOrganizationNo != null">re_organization_no,</if>
+            <if test="sourceOrderNo != null">source_order_no,</if>
+            <if test="distributionFlag != null">distribution_flag,</if>
+            <if test="stockNo != null">stock_no,</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag,</if>
+            <if test="hygienicMaterialFlag != null">hygienic_material_flag,</if>
+            <if test="orderItemFlag != null">order_item_flag,</if>
+            <if test="highRiskFlag != null">high_risk_flag,</if>
+            <if test="masterOrder != null">master_order,</if>
+            <if test="doseCoef != null">dose_coef,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="orderType != null and orderType != ''">#{orderType},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">#{orderSortNumber},</if>
+            <if test="orderGroupSortNumber != null and orderGroupSortNumber != ''">#{orderGroupSortNumber},</if>
+            <if test="orderGroupNo != null">#{orderGroupNo},</if>
+            <if test="orderClassCode != null">#{orderClassCode},</if>
+            <if test="chargeNo != null">#{chargeNo},</if>
+            <if test="chargeName != null">#{chargeName},</if>
+            <if test="standardCode != null">#{standardCode},</if>
+            <if test="standardName != null">#{standardName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="orderActualUsage != null">#{orderActualUsage},</if>
+            <if test="usageUnit != null">#{usageUnit},</if>
+            <if test="orderDose != null">#{orderDose},</if>
+            <if test="orderTotalDose != null">#{orderTotalDose},</if>
+            <if test="price != null">#{price},</if>
+            <if test="orderTotal != null">#{orderTotal},</if>
+            <if test="orderFreq != null">#{orderFreq},</if>
+            <if test="orderUsageWay != null">#{orderUsageWay},</if>
+            <if test="herbalFlag != null">#{herbalFlag},</if>
+            <if test="herbalDose != null">#{herbalDose},</if>
+            <if test="drugForm != null">#{drugForm},</if>
+            <if test="drugClassCode != null">#{drugClassCode},</if>
+            <if test="subjectFlag != null">#{subjectFlag},</if>
+            <if test="detailPerformDepCode != null">#{detailPerformDepCode},</if>
+            <if test="patientSelfDrugFlag != null">#{patientSelfDrugFlag},</if>
+            <if test="orderUsageDays != null">#{orderUsageDays},</if>
+            <if test="purposeAntimicrobialUse != null">#{purposeAntimicrobialUse},</if>
+            <if test="drippingSpeed != null">#{drippingSpeed},</if>
+            <if test="firstDoubleFlag != null">#{firstDoubleFlag},</if>
+            <if test="firstPerformNum != null">#{firstPerformNum},</if>
+            <if test="firstPerformTotalDose != null">#{firstPerformTotalDose},</if>
+            <if test="skinTestResults != null">#{skinTestResults},</if>
+            <if test="skinTestResultsTime != null">#{skinTestResultsTime},</if>
+            <if test="skinTestResultsLot != null">#{skinTestResultsLot},</if>
+            <if test="pharmacopoeiaNo != null">#{pharmacopoeiaNo},</if>
+            <if test="doctorInstructions != null">#{doctorInstructions},</if>
+            <if test="babyAdmissionNo != null">#{babyAdmissionNo},</if>
+            <if test="cpNo != null">#{cpNo},</if>
+            <if test="cpName != null">#{cpName},</if>
+            <if test="reOrganizationNo != null">#{reOrganizationNo},</if>
+            <if test="sourceOrderNo != null">#{sourceOrderNo},</if>
+            <if test="distributionFlag != null">#{distributionFlag},</if>
+            <if test="stockNo != null">#{stockNo},</if>
+            <if test="outHavaDrugFlag != null">#{outHavaDrugFlag},</if>
+            <if test="hygienicMaterialFlag != null">#{hygienicMaterialFlag},</if>
+            <if test="orderItemFlag != null">#{orderItemFlag},</if>
+            <if test="highRiskFlag != null">#{highRiskFlag},</if>
+            <if test="masterOrder != null">#{masterOrder},</if>
+            <if test="doseCoef != null">#{doseCoef},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertList" parameterType="TdPaOrderDetail">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_detail
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orderNo != null and item.orderNo != ''">order_no,</if>
+                <if test="item.orderType != null and item.orderType != ''">order_type,</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">order_sort_number,</if>
+                <if test="item.orderGroupSortNumber != null and item.orderGroupSortNumber != ''">order_group_sort_number,</if>
+                <if test="item.orderGroupNo != null">order_group_no,</if>
+                <if test="item.orderClassCode != null">order_class_code,</if>
+                <if test="item.chargeNo != null">charge_no,</if>
+                <if test="item.chargeName != null">charge_name,</if>
+                <if test="item.standardCode != null">standard_code,</if>
+                <if test="item.standardName != null">standard_name,</if>
+                <if test="item.standard != null">standard,</if>
+                <if test="item.unit != null">unit,</if>
+                <if test="item.orderActualUsage != null">order_actual_usage,</if>
+                <if test="item.usageUnit != null">usage_unit,</if>
+                <if test="item.orderDose != null">order_dose,</if>
+                <if test="item.orderTotalDose != null">order_total_dose,</if>
+                <if test="item.price != null">price,</if>
+                <if test="item.orderTotal != null">order_total,</if>
+                <if test="item.orderFreq != null">order_freq,</if>
+                <if test="item.orderUsageWay != null">order_usage_way,</if>
+                <if test="item.herbalFlag != null">herbal_flag,</if>
+                <if test="item.herbalDose != null">herbal_dose,</if>
+                <if test="item.drugForm != null">drug_form,</if>
+                <if test="item.drugClassCode != null">drug_class_code,</if>
+                <if test="item.subjectFlag != null">subject_flag,</if>
+                <if test="item.detailPerformDepCode != null">detail_perform_dep_code,</if>
+                <if test="item.patientSelfDrugFlag != null">patient_self_drug_flag,</if>
+                <if test="item.orderUsageDays != null">order_usage_days,</if>
+                <if test="item.purposeAntimicrobialUse != null">purpose_antimicrobial_use,</if>
+                <if test="item.drippingSpeed != null">dripping_speed,</if>
+                <if test="item.firstDoubleFlag != null">first_double_flag,</if>
+                <if test="item.firstPerformNum != null">first_perform_num,</if>
+                <if test="item.firstPerformTotalDose != null">first_perform_total_dose,</if>
+                <if test="item.skinTestResults != null">skin_test_results,</if>
+                <if test="item.skinTestResultsTime != null">skin_test_results_time,</if>
+                <if test="item.skinTestResultsLot != null">skin_test_results_lot,</if>
+                <if test="item.pharmacopoeiaNo != null">pharmacopoeia_no,</if>
+                <if test="item.doctorInstructions != null">doctor_instructions,</if>
+                <if test="item.babyAdmissionNo != null">baby_admission_no,</if>
+                <if test="item.cpNo != null">cp_no,</if>
+                <if test="item.cpName != null">cp_name,</if>
+                <if test="item.reOrganizationNo != null">re_organization_no,</if>
+                <if test="item.sourceOrderNo != null">source_order_no,</if>
+                <if test="item.distributionFlag != null">distribution_flag,</if>
+                <if test="item.stockNo != null">stock_no,</if>
+                <if test="item.outHavaDrugFlag != null">out_hava_drug_flag,</if>
+                <if test="item.hygienicMaterialFlag != null">hygienic_material_flag,</if>
+                <if test="item.orderItemFlag != null">order_item_flag,</if>
+                <if test="item.highRiskFlag != null">high_risk_flag,</if>
+                <if test="item.masterOrder != null">master_order,</if>
+                <if test="item.doseCoef != null">dose_coef,</if>
+                <if test="item.cpStageCode != null">cp_stage_code,</if>
+                <if test="item.cpItemCode != null">cp_item_code,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orderNo != null and item.orderNo != ''">#{item.orderNo},</if>
+                <if test="item.orderType != null and item.orderType != ''">#{item.orderType},</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">#{item.orderSortNumber},</if>
+                <if test="item.orderGroupSortNumber != null and item.orderGroupSortNumber != ''">#{item.orderGroupSortNumber},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+                <if test="item.orderClassCode != null">#{item.orderClassCode},</if>
+                <if test="item.chargeNo != null">#{item.chargeNo},</if>
+                <if test="item.chargeName != null">#{item.chargeName},</if>
+                <if test="item.standardCode != null">#{item.standardCode},</if>
+                <if test="item.standardName != null">#{item.standardName},</if>
+                <if test="item.standard != null">#{item.standard},</if>
+                <if test="item.unit != null">#{item.unit},</if>
+                <if test="item.orderActualUsage != null">#{item.orderActualUsage},</if>
+                <if test="item.usageUnit != null">#{item.usageUnit},</if>
+                <if test="item.orderDose != null">#{item.orderDose},</if>
+                <if test="item.orderTotalDose != null">#{item.orderTotalDose},</if>
+                <if test="item.price != null">#{item.price},</if>
+                <if test="item.orderTotal != null">#{item.orderTotal},</if>
+                <if test="item.orderFreq != null">#{item.orderFreq},</if>
+                <if test="item.orderUsageWay != null">#{item.orderUsageWay},</if>
+                <if test="item.herbalFlag != null">#{item.herbalFlag},</if>
+                <if test="item.herbalDose != null">#{item.herbalDose},</if>
+                <if test="item.drugForm != null">#{item.drugForm},</if>
+                <if test="item.drugClassCode != null">#{item.drugClassCode},</if>
+                <if test="item.subjectFlag != null">#{item.subjectFlag},</if>
+                <if test="item.detailPerformDepCode != null">#{item.detailPerformDepCode},</if>
+                <if test="item.patientSelfDrugFlag != null">#{item.patientSelfDrugFlag},</if>
+                <if test="item.orderUsageDays != null">#{item.orderUsageDays},</if>
+                <if test="item.purposeAntimicrobialUse != null">#{item.purposeAntimicrobialUse},</if>
+                <if test="item.drippingSpeed != null">#{item.drippingSpeed},</if>
+                <if test="item.firstDoubleFlag != null">#{item.firstDoubleFlag},</if>
+                <if test="item.firstPerformNum != null">#{item.firstPerformNum},</if>
+                <if test="item.firstPerformTotalDose != null">#{item.firstPerformTotalDose},</if>
+                <if test="item.skinTestResults != null">#{item.skinTestResults},</if>
+                <if test="item.skinTestResultsTime != null">#{item.skinTestResultsTime},</if>
+                <if test="item.skinTestResultsLot != null">#{item.skinTestResultsLot},</if>
+                <if test="item.pharmacopoeiaNo != null">#{item.pharmacopoeiaNo},</if>
+                <if test="item.doctorInstructions != null">#{item.doctorInstructions},</if>
+                <if test="item.babyAdmissionNo != null">#{item.babyAdmissionNo},</if>
+                <if test="item.cpNo != null">#{item.cpNo},</if>
+                <if test="item.cpName != null">#{item.cpName},</if>
+                <if test="item.reOrganizationNo != null">#{item.reOrganizationNo},</if>
+                <if test="item.sourceOrderNo != null">#{item.sourceOrderNo},</if>
+                <if test="item.distributionFlag != null">#{item.distributionFlag},</if>
+                <if test="item.stockNo != null">#{item.stockNo},</if>
+                <if test="item.outHavaDrugFlag != null">#{item.outHavaDrugFlag},</if>
+                <if test="item.hygienicMaterialFlag != null">#{item.hygienicMaterialFlag},</if>
+                <if test="item.orderItemFlag != null">#{item.orderItemFlag},</if>
+                <if test="item.highRiskFlag != null">#{item.highRiskFlag},</if>
+                <if test="item.masterOrder != null">#{item.masterOrder},</if>
+                <if test="item.doseCoef != null">#{item.doseCoef},</if>
+                <if test="item.cpStageCode != null">#{item.cpStageCode},</if>
+                <if test="item.cpItemCode != null">#{item.cpItemCode},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTdPaOrderDetail" parameterType="TdPaOrderDetail">
+        update td_pa_order_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="orderType != null and orderType != ''">order_type = #{orderType},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number = #{orderSortNumber},</if>
+            <if test="orderGroupSortNumber != null and orderGroupSortNumber != ''">order_group_sort_number = #{orderGroupSortNumber},</if>
+            <if test="orderGroupNo != null">order_group_no = #{orderGroupNo},</if>
+            <if test="orderClassCode != null">order_class_code = #{orderClassCode},</if>
+            <if test="chargeNo != null">charge_no = #{chargeNo},</if>
+            <if test="chargeName != null">charge_name = #{chargeName},</if>
+            <if test="standardCode != null">standard_code = #{standardCode},</if>
+            <if test="standardName != null">standard_name = #{standardName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="orderActualUsage != null">order_actual_usage = #{orderActualUsage},</if>
+            <if test="usageUnit != null">usage_unit = #{usageUnit},</if>
+            <if test="orderDose != null">order_dose = #{orderDose},</if>
+            <if test="orderTotalDose != null">order_total_dose = #{orderTotalDose},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="orderTotal != null">order_total = #{orderTotal},</if>
+            <if test="orderFreq != null">order_freq = #{orderFreq},</if>
+            <if test="orderUsageWay != null">order_usage_way = #{orderUsageWay},</if>
+            <if test="herbalFlag != null">herbal_flag = #{herbalFlag},</if>
+            <if test="herbalDose != null">herbal_dose = #{herbalDose},</if>
+            <if test="drugForm != null">drug_form = #{drugForm},</if>
+            <if test="drugClassCode != null">drug_class_code = #{drugClassCode},</if>
+            <if test="subjectFlag != null">subject_flag = #{subjectFlag},</if>
+            <if test="detailPerformDepCode != null">detail_perform_dep_code = #{detailPerformDepCode},</if>
+            <if test="patientSelfDrugFlag != null">patient_self_drug_flag = #{patientSelfDrugFlag},</if>
+            <if test="orderUsageDays != null">order_usage_days = #{orderUsageDays},</if>
+            <if test="purposeAntimicrobialUse != null">purpose_antimicrobial_use = #{purposeAntimicrobialUse},</if>
+            <if test="drippingSpeed != null">dripping_speed = #{drippingSpeed},</if>
+            <if test="firstDoubleFlag != null">first_double_flag = #{firstDoubleFlag},</if>
+            <if test="firstPerformNum != null">first_perform_num = #{firstPerformNum},</if>
+            <if test="firstPerformTotalDose != null">first_perform_total_dose = #{firstPerformTotalDose},</if>
+            <if test="skinTestResults != null">skin_test_results = #{skinTestResults},</if>
+            <if test="skinTestResultsTime != null">skin_test_results_time = #{skinTestResultsTime},</if>
+            <if test="skinTestResultsLot != null">skin_test_results_lot = #{skinTestResultsLot},</if>
+            <if test="pharmacopoeiaNo != null">pharmacopoeia_no = #{pharmacopoeiaNo},</if>
+            <if test="doctorInstructions != null">doctor_instructions = #{doctorInstructions},</if>
+            <if test="babyAdmissionNo != null">baby_admission_no = #{babyAdmissionNo},</if>
+            <if test="cpNo != null">cp_no = #{cpNo},</if>
+            <if test="cpName != null">cp_name = #{cpName},</if>
+            <if test="reOrganizationNo != null">re_organization_no = #{reOrganizationNo},</if>
+            <if test="sourceOrderNo != null">source_order_no = #{sourceOrderNo},</if>
+            <if test="distributionFlag != null">distribution_flag = #{distributionFlag},</if>
+            <if test="stockNo != null">stock_no = #{stockNo},</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag = #{outHavaDrugFlag},</if>
+            <if test="hygienicMaterialFlag != null">hygienic_material_flag = #{hygienicMaterialFlag},</if>
+            <if test="orderItemFlag != null">order_item_flag = #{orderItemFlag},</if>
+            <if test="highRiskFlag != null">high_risk_flag = #{highRiskFlag},</if>
+            <if test="masterOrder != null">master_order = #{masterOrder},</if>
+            <if test="doseCoef != null">dose_coef = #{doseCoef},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderDetailById" parameterType="Long">
+        delete from td_pa_order_detail where id = #{id}
+    </delete>
+    <delete id="deleteTdPaOrderDetailByOrder" parameterType="String">
+        delete from td_pa_order_detail where order_no = #{orderNo}
+    </delete>
+
+    <delete id="deleteTdPaOrderDetailByIds" parameterType="String">
+        delete from td_pa_order_detail where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectOrderDetailListByPat" parameterType="String" resultMap="TdPaOrderDetailResult">
+        select detail.* from TD_PA_ORDER_DETAIL detail left join TD_PA_ORDER od on detail.ORDER_NO = od.ORDER_NO where od.patient_id=#{patientId}
+    </select>
+    <select id="selectByOrderNoList" parameterType="String" resultMap="TdPaOrderDetailResult">
+        select * from (
+            select * from TD_PA_ORDER_DETAIL
+            union
+            select * from TD_PA_ORDER_DETAIL_h
+        ) a
+        where a.order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+    <select id="selectByOrderNo" parameterType="String" resultMap="TdPaOrderDetailVoResult">
+        select * from (
+            select id, order_no, order_type, order_sort_number, order_group_sort_number, order_group_no, order_class_code, charge_no, charge_name, standard_code,
+            standard_name, standard, unit, order_actual_usage, usage_unit, order_dose, order_total_dose, price, order_total, order_freq, order_usage_way,
+            herbal_flag, herbal_dose, drug_form, drug_class_code, subject_flag, detail_perform_dep_code, patient_self_drug_flag, order_usage_days,
+            purpose_antimicrobial_use, dripping_speed, first_double_flag, first_perform_num, first_perform_total_dose, skin_test_results, skin_test_results_time,
+            skin_test_results_lot, pharmacopoeia_no, doctor_instructions, baby_admission_no, cp_no, cp_name, re_organization_no, source_order_no, distribution_flag,
+            stock_no, out_hava_drug_flag, hygienic_material_flag, order_item_flag, high_risk_flag,master_order,dose_coef from td_pa_order_detail
+            union
+            select id, order_no, order_type, order_sort_number, order_group_sort_number, order_group_no, order_class_code, charge_no, charge_name, standard_code,
+            standard_name, standard, unit, order_actual_usage, usage_unit, order_dose, order_total_dose, price, order_total, order_freq, order_usage_way,
+            herbal_flag, herbal_dose, drug_form, drug_class_code, subject_flag, detail_perform_dep_code, patient_self_drug_flag, order_usage_days,
+            purpose_antimicrobial_use, dripping_speed, first_double_flag, first_perform_num, first_perform_total_dose, skin_test_results, skin_test_results_time,
+            skin_test_results_lot, pharmacopoeia_no, doctor_instructions, baby_admission_no, cp_no, cp_name, re_organization_no, source_order_no, distribution_flag,
+            stock_no, out_hava_drug_flag, hygienic_material_flag, order_item_flag, high_risk_flag,master_order,dose_coef from td_pa_order_detail
+        ) a
+        where a.order_no =#{orderNo}
+        order by a.ORDER_GROUP_SORT_NUMBER
+    </select>
+
+    <insert id="toDelTable" parameterType="TdPaOrderDetail">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_detail_del
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orderNo != null and item.orderNo != ''">order_no,</if>
+                <if test="item.orderType != null and item.orderType != ''">order_type,</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">order_sort_number,</if>
+                <if test="item.orderGroupSortNumber != null and item.orderGroupSortNumber != ''">order_group_sort_number,</if>
+                <if test="item.orderGroupNo != null">order_group_no,</if>
+                <if test="item.orderClassCode != null">order_class_code,</if>
+                <if test="item.chargeNo != null">charge_no,</if>
+                <if test="item.chargeName != null">charge_name,</if>
+                <if test="item.standardCode != null">standard_code,</if>
+                <if test="item.standardName != null">standard_name,</if>
+                <if test="item.standard != null">standard,</if>
+                <if test="item.unit != null">unit,</if>
+                <if test="item.orderActualUsage != null">order_actual_usage,</if>
+                <if test="item.usageUnit != null">usage_unit,</if>
+                <if test="item.orderDose != null">order_dose,</if>
+                <if test="item.orderTotalDose != null">order_total_dose,</if>
+                <if test="item.price != null">price,</if>
+                <if test="item.orderTotal != null">order_total,</if>
+                <if test="item.orderFreq != null">order_freq,</if>
+                <if test="item.orderUsageWay != null">order_usage_way,</if>
+                <if test="item.herbalFlag != null">herbal_flag,</if>
+                <if test="item.herbalDose != null">herbal_dose,</if>
+                <if test="item.drugForm != null">drug_form,</if>
+                <if test="item.drugClassCode != null">drug_class_code,</if>
+                <if test="item.subjectFlag != null">subject_flag,</if>
+                <if test="item.detailPerformDepCode != null">detail_perform_dep_code,</if>
+                <if test="item.patientSelfDrugFlag != null">patient_self_drug_flag,</if>
+                <if test="item.orderUsageDays != null">order_usage_days,</if>
+                <if test="item.purposeAntimicrobialUse != null">purpose_antimicrobial_use,</if>
+                <if test="item.drippingSpeed != null">dripping_speed,</if>
+                <if test="item.firstDoubleFlag != null">first_double_flag,</if>
+                <if test="item.firstPerformNum != null">first_perform_num,</if>
+                <if test="item.firstPerformTotalDose != null">first_perform_total_dose,</if>
+                <if test="item.skinTestResults != null">skin_test_results,</if>
+                <if test="item.skinTestResultsTime != null">skin_test_results_time,</if>
+                <if test="item.skinTestResultsLot != null">skin_test_results_lot,</if>
+                <if test="item.pharmacopoeiaNo != null">pharmacopoeia_no,</if>
+                <if test="item.doctorInstructions != null">doctor_instructions,</if>
+                <if test="item.babyAdmissionNo != null">baby_admission_no,</if>
+                <if test="item.cpNo != null">cp_no,</if>
+                <if test="item.cpName != null">cp_name,</if>
+                <if test="item.reOrganizationNo != null">re_organization_no,</if>
+                <if test="item.sourceOrderNo != null">source_order_no,</if>
+                <if test="item.distributionFlag != null">distribution_flag,</if>
+                <if test="item.stockNo != null">stock_no,</if>
+                <if test="item.outHavaDrugFlag != null">out_hava_drug_flag,</if>
+                <if test="item.hygienicMaterialFlag != null">hygienic_material_flag,</if>
+                <if test="item.orderItemFlag != null">order_item_flag,</if>
+                <if test="item.highRiskFlag != null">high_risk_flag,</if>
+                <if test="item.masterOrder != null">master_order,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orderNo != null and item.orderNo != ''">#{item.orderNo},</if>
+                <if test="item.orderType != null and item.orderType != ''">#{item.orderType},</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">#{item.orderSortNumber},</if>
+                <if test="item.orderGroupSortNumber != null and item.orderGroupSortNumber != ''">#{item.orderGroupSortNumber},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+                <if test="item.orderClassCode != null">#{item.orderClassCode},</if>
+                <if test="item.chargeNo != null">#{item.chargeNo},</if>
+                <if test="item.chargeName != null">#{item.chargeName},</if>
+                <if test="item.standardCode != null">#{item.standardCode},</if>
+                <if test="item.standardName != null">#{item.standardName},</if>
+                <if test="item.standard != null">#{item.standard},</if>
+                <if test="item.unit != null">#{item.unit},</if>
+                <if test="item.orderActualUsage != null">#{item.orderActualUsage},</if>
+                <if test="item.usageUnit != null">#{item.usageUnit},</if>
+                <if test="item.orderDose != null">#{item.orderDose},</if>
+                <if test="item.orderTotalDose != null">#{item.orderTotalDose},</if>
+                <if test="item.price != null">#{item.price},</if>
+                <if test="item.orderTotal != null">#{item.orderTotal},</if>
+                <if test="item.orderFreq != null">#{item.orderFreq},</if>
+                <if test="item.orderUsageWay != null">#{item.orderUsageWay},</if>
+                <if test="item.herbalFlag != null">#{item.herbalFlag},</if>
+                <if test="item.herbalDose != null">#{item.herbalDose},</if>
+                <if test="item.drugForm != null">#{item.drugForm},</if>
+                <if test="item.drugClassCode != null">#{item.drugClassCode},</if>
+                <if test="item.subjectFlag != null">#{item.subjectFlag},</if>
+                <if test="item.detailPerformDepCode != null">#{item.detailPerformDepCode},</if>
+                <if test="item.patientSelfDrugFlag != null">#{item.patientSelfDrugFlag},</if>
+                <if test="item.orderUsageDays != null">#{item.orderUsageDays},</if>
+                <if test="item.purposeAntimicrobialUse != null">#{item.purposeAntimicrobialUse},</if>
+                <if test="item.drippingSpeed != null">#{item.drippingSpeed},</if>
+                <if test="item.firstDoubleFlag != null">#{item.firstDoubleFlag},</if>
+                <if test="item.firstPerformNum != null">#{item.firstPerformNum},</if>
+                <if test="item.firstPerformTotalDose != null">#{item.firstPerformTotalDose},</if>
+                <if test="item.skinTestResults != null">#{item.skinTestResults},</if>
+                <if test="item.skinTestResultsTime != null">#{item.skinTestResultsTime},</if>
+                <if test="item.skinTestResultsLot != null">#{item.skinTestResultsLot},</if>
+                <if test="item.pharmacopoeiaNo != null">#{item.pharmacopoeiaNo},</if>
+                <if test="item.doctorInstructions != null">#{item.doctorInstructions},</if>
+                <if test="item.babyAdmissionNo != null">#{item.babyAdmissionNo},</if>
+                <if test="item.cpNo != null">#{item.cpNo},</if>
+                <if test="item.cpName != null">#{item.cpName},</if>
+                <if test="item.reOrganizationNo != null">#{item.reOrganizationNo},</if>
+                <if test="item.sourceOrderNo != null">#{item.sourceOrderNo},</if>
+                <if test="item.distributionFlag != null">#{item.distributionFlag},</if>
+                <if test="item.stockNo != null">#{item.stockNo},</if>
+                <if test="item.outHavaDrugFlag != null">#{item.outHavaDrugFlag},</if>
+                <if test="item.hygienicMaterialFlag != null">#{item.hygienicMaterialFlag},</if>
+                <if test="item.orderItemFlag != null">#{item.orderItemFlag},</if>
+                <if test="item.highRiskFlag != null">#{item.highRiskFlag},</if>
+                <if test="item.masterOrder != null">#{item.masterOrder},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <delete id="deleteTdPaOrderDetailByOrderNos" parameterType="String">
+        delete from td_pa_order_detail where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </delete>
+
+    <select id="selectMaxReOrganizationNo" parameterType="String" resultType="Integer">
+        select max(re_organization_no)
+        from td_pa_order_detail od
+        left join td_pa_order o on od.order_no = o.order_no
+        where o.patient_id = #{patientId}
+    </select>
+
+    <select id="selectListByTime" parameterType="Date" resultMap="TdPaOrderDetailVoResult">
+        select od.*,oi.cp_no,oi.cp_name,o.hospital_code,oi.PRESCRIBE_NO, oi.PRESCRIBE_Name,oi.ITEM_ORDER_FREQ_NAME, oi.ITEM_ORDER_USAGE_WAY_NAME, oi.order_start_doc
+        from td_pa_order_detail od
+        left join td_pa_order_item oi on od.ORDER_NO=oi.ORDER_NO
+        left join td_pa_order o on oi.order_no = o.order_no
+        <where>
+            <if test="orderStartTime != null">and oi.order_start_time >= #{orderStartTime}</if>
+            <if test="orderStartTimeEnd != null">and oi.order_start_time &lt; #{orderStartTimeEnd}</if>
+        </where>
+    </select>
+    <select id="selectDetailEventCode" resultMap="TdPaOrderDetailVoResult">
+        select det.order_no, det.order_type, det.order_group_no, det.order_class_code, det.charge_no, det.charge_name,item.emr_event_cd from td_pa_order_detail det left join TM_BS_CLIN_ITEM_MAIN item on det.CHARGE_NO = item.ITEM_CD
+        where det.order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+    <update id="updateTdPaOrderPerformList" >
+        <foreach collection="performList" item="item" index="index" open="begin" close=";end;" separator=";">
+            update td_pa_order_perform
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.orderNo != null and item.orderNo != ''">ORDER_NO = #{item.orderNo},</if>
+            </trim>
+            where perform_list_no = #{item.performListNo} and PERFORM_LIST_SORT_NUMBER=#{item.performListSortNumber}
+        </foreach>
+    </update>
+    <update id="updateTdPaOrderPerformDetailList" >
+        <foreach collection="performDetailList" item="item" index="index" open="begin" close=";end;" separator=";">
+            update td_pa_order_perform_detail
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.orderGroupNo != null and item.orderGroupNo != ''">order_group_no = #{item.orderGroupNoRe},</if>
+            </trim>
+            where perform_list_no = #{item.performListNo} and PERFORM_LIST_SORT_NUMBER=#{item.performListSortNumber}
+            and ORDER_GROUP_NO=#{item.orderGroupNo} and ORDER_GROUP_SORT_NUMBER=#{item.orderGroupSortNumber} and ORDER_SORT_NUMBER=#{item.orderSortNumber}
+        </foreach>
+    </update>
+
+    <update id="drugUpdateList" >
+        <foreach collection="drugUpdateList" item="item" index="index" open="begin" close=";end;" separator=";">
+            update TD_PA_TAKE_DRUG_LIST
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.orderGroupNo != null and item.orderGroupNo != ''">order_group_no = #{item.orderGroupNo},</if>
+                <if test="item.orderNo != null and item.orderNo != ''">ORDER_NO = #{item.orderNo},</if>
+            </trim>
+            where id=#{item.id}
+        </foreach>
+    </update>
+    <select id="queryExecutorDptNo" parameterType="java.lang.String" resultType="java.lang.String">
+    select detail_perform_dep_code from td_pa_order_detail
+    where order_no=#{orderNo,jdbcType=VARCHAR} and order_group_no=#{orderGroupNo,jdbcType=VARCHAR}
+    and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR} and rownum = 1
+  </select>
+    <resultMap id="ItemAndDetail_ResultMap" extends="TdPaOrderDetailResult" type="com.emr.project.docOrder.domain.OrderDetailDTO">
+        <result column="perform_dep_code" jdbcType="VARCHAR" property="performDepCode"/>
+        <result column="order_item_typd" jdbcType="VARCHAR" property="orderItemTypd"/>
+        <result column="order_total_item" jdbcType="INTEGER" property="orderTotalItem"/>
+        <result column="use_limit" jdbcType="VARCHAR" property="useLimit"/>
+        <result column="zxbz" jdbcType="VARCHAR" property="zxbz"/>
+    </resultMap>
+    <select id="selectByCpNoList" parameterType="String" resultMap="ItemAndDetail_ResultMap">
+        select b.id, b.item_cd cp_no, b.sort_sn, b.standard_code, b.standard_name, b.charge_code, b.charge_name, b.amount order_dose,
+        b.unit, b.price, b.sub_flag, b.charge_hour,a.EXEC_DEPT_CD perform_dep_code,a.item_flag_cd order_item_typd,
+        a.ITEM_TYPE_CD order_total_item,a.in_enabled use_limit,'0' zxbz
+        from TM_BS_CLIN_ITEM_MAIN a ,TM_BS_CLIN_ITEM_DETAIL b
+        where a.item_cd = b.item_cd
+        and a.in_enabled = '1'
+        -- and a.zxbz = 0
+        -- and b.flag = 0
+        and a.item_cd in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectOrderDetail" resultMap="TdPaOrderDetailResult">
+        <include refid="selectTdPaOrderDetailVo"/> WHERE ORDER_NO = #{orderNo} and rownum = 1
+    </select>
+    <update id="updaTeskinTestResults">
+    update td_pa_order_detail  set skin_test_results_time =#{operatorDate,jdbcType=TIMESTAMP} ,
+                                             skin_test_results_lot=#{batchNumber,jdbcType=VARCHAR},
+                                             skin_test_results = #{allergyType,jdbcType=VARCHAR}
+    WHERE order_no=#{orderNo,jdbcType=VARCHAR}  and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+  </update>
+    <select id="selectTdPaOrderDetailListByPatientId" parameterType="TdPaOrderDetailVo" resultMap="TdPaOrderDetailResult">
+        select d.* from td_pa_order_detail d
+        left join td_pa_order_item i on d.order_no = i.order_no
+        <where>
+            <if test="patientId != null  and patientId != ''"> and i.patient_id = #{patientId}</if>
+            <if test="lcljCpNoList != null  and lcljCpNoList.size > 0"> and d.cp_no in
+                <foreach collection="lcljCpNoList" item="cpNo" open="(" separator="," close=")">
+                    #{cpNo}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

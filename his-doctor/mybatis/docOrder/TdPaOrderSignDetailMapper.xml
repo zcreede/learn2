@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderSignDetailMapper">
+
+    <resultMap type="TdPaOrderSignDetail" id="TdPaOrderSignDetailResult">
+        <result property="id"    column="id"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="signId"    column="sign_id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderSignDetailVo">
+        select id, admission_no, patient_id, sign_id, order_no, order_group_no, order_sort_number, from td_pa_order_sign_detail
+    </sql>
+
+    <select id="selectTdPaOrderSignDetailList" parameterType="TdPaOrderSignDetail" resultMap="TdPaOrderSignDetailResult">
+        <include refid="selectTdPaOrderSignDetailVo"/>
+        <where>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="signId != null "> and sign_id = #{signId}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderGroupNo != null "> and order_group_no = #{orderGroupNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderSignDetailById" parameterType="Long" resultMap="TdPaOrderSignDetailResult">
+        <include refid="selectTdPaOrderSignDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPaOrderSignDetail" parameterType="TdPaOrderSignDetail">
+        insert into td_pa_order_sign_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="admissionNo != null">admission_no,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="signId != null">sign_id,</if>
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="orderGroupNo != null">order_group_no,</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="admissionNo != null">#{admissionNo},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="signId != null">#{signId},</if>
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="orderGroupNo != null">#{orderGroupNo},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">#{orderSortNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderSignDetail" parameterType="TdPaOrderSignDetail">
+        update td_pa_order_sign_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="admissionNo != null">admission_no = #{admissionNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="signId != null">sign_id = #{signId},</if>
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="orderGroupNo != null">order_group_no = #{orderGroupNo},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number = #{orderSortNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderSignDetailById" parameterType="Long">
+        delete from td_pa_order_sign_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderSignDetailByIds" parameterType="String">
+        delete from td_pa_order_sign_detail where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertList" parameterType="TdPaOrderSignDetail">
+        insert all
+        <foreach collection="list" item="item" index="index">
+            into td_pa_order_sign_detail
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.admissionNo != null">admission_no,</if>
+                <if test="item.patientId != null">patient_id,</if>
+                <if test="item.signId != null">sign_id,</if>
+                <if test="item.orderNo != null and item.orderNo != ''">order_no,</if>
+                <if test="item.orderGroupNo != null">order_group_no,</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">order_sort_number,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.admissionNo != null">#{item.admissionNo},</if>
+                <if test="item.patientId != null">#{item.patientId},</if>
+                <if test="item.signId != null">#{item.signId},</if>
+                <if test="item.orderNo != null and item.orderNo != ''">#{item.orderNo},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+                <if test="item.orderSortNumber != null and item.orderSortNumber != ''">#{item.orderSortNumber},</if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+</mapper>

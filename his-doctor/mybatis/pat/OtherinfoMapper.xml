@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.OtherinfoMapper">
+
+    <resultMap type="Otherinfo" id="OtherinfoResult">
+        <result property="patientId"    column="patient_id"    />
+        <result property="catFlag"    column="cat_flag"    />
+        <result property="catName"    column="cat_name"    />
+        <result property="infectFlag"    column="infect_flag"    />
+        <result property="infectTime"    column="infect_time"    />
+        <result property="infectPart"    column="infect_part"    />
+        <result property="alleFlag"    column="alle_flag"    />
+        <result property="alleDrug"    column="alle_drug"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="operFlag"    column="oper_flag"    />
+        <result property="consFlag"    column="cons_flag"    />
+        <result property="bloodFlag"    column="blood_flag"    />
+        <result property="interFlag"    column="inter_flag"    />
+        <result property="anesFlag"    column="anes_flag"    />
+        <result property="dieFlag"    column="die_flag"    />
+        <result property="changeFlag"    column="change_flag"    />
+        <result property="bloodTrans"    column="blood_trans"    />
+        <result property="modiFlag"    column="modi_flag"    />
+        <result property="singleFlag"    column="single_flag"    />
+        <result property="medicineFlag"    column="medicine_flag"    />
+
+        <result property="rescueFlag"    column="rescue_flag"    />
+        <result property="illFlag"    column="ILL_FLAG"    />
+        <result property="dyFlag"    column="DY_FLAG"    />
+        <result property="antiFlag"    column="ANTI_FLAG"    />
+        <result property="crisisFlag"    column="CRISIS_FLAG"    />
+    </resultMap>
+
+    <sql id="selectOtherinfoVo">
+        select patient_id, cat_flag, cat_name, infect_flag, infect_time, infect_part, alle_flag, alle_drug, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, oper_flag, cons_flag, blood_flag, inter_flag, anes_flag, die_flag, change_flag, blood_trans, modi_flag, single_flag, medicine_flag from pat_otherinfo
+    </sql>
+
+    <select id="selectOtherinfoList" parameterType="Otherinfo" resultMap="OtherinfoResult">
+        <include refid="selectOtherinfoVo"/>
+        <where>
+            <if test="catFlag != null  and catFlag != ''"> and cat_flag = #{catFlag}</if>
+            <if test="catName != null  and catName != ''"> and cat_name like concat(concat('%', #{catName}), '%')</if>
+            <if test="infectFlag != null  and infectFlag != ''"> and infect_flag = #{infectFlag}</if>
+            <if test="infectTime != null "> and infect_time = #{infectTime}</if>
+            <if test="infectPart != null  and infectPart != ''"> and infect_part = #{infectPart}</if>
+            <if test="alleFlag != null  and alleFlag != ''"> and alle_flag = #{alleFlag}</if>
+            <if test="alleDrug != null  and alleDrug != ''"> and alle_drug = #{alleDrug}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="operFlag != null  and operFlag != ''"> and oper_flag = #{operFlag}</if>
+            <if test="consFlag != null  and consFlag != ''"> and cons_flag = #{consFlag}</if>
+            <if test="bloodFlag != null  and bloodFlag != ''"> and blood_flag = #{bloodFlag}</if>
+            <if test="interFlag != null  and interFlag != ''"> and inter_flag = #{interFlag}</if>
+            <if test="anesFlag != null  and anesFlag != ''"> and anes_flag = #{anesFlag}</if>
+            <if test="dieFlag != null  and dieFlag != ''"> and die_flag = #{dieFlag}</if>
+            <if test="changeFlag != null  and changeFlag != ''"> and change_flag = #{changeFlag}</if>
+            <if test="bloodTrans != null  and bloodTrans != ''"> and blood_trans = #{bloodTrans}</if>
+            <if test="modiFlag != null  and modiFlag != ''"> and modi_flag = #{modiFlag}</if>
+            <if test="singleFlag != null  and singleFlag != ''"> and single_flag = #{singleFlag}</if>
+            <if test="medicineFlag != null  and medicineFlag != ''"> and medicine_flag = #{medicineFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectOtherinfoById" parameterType="Long" resultMap="OtherinfoResult">
+        <include refid="selectOtherinfoVo"/>
+        where patient_id = #{patientId}
+    </select>
+    <resultMap id="DeptTotalCountResult" type="com.emr.project.pat.domain.resp.KeyPatientsResp">
+        <result property="deptCode"    column="department_no"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="totalCount"    column="total"    />
+    </resultMap>
+    <select id="selectDeptTotalCount" resultMap="DeptTotalCountResult">
+        SELECT
+            m.DEPARTMENT_NO,
+            dept.dept_name,
+            count(0) AS total
+        FROM
+            T_AR_MEDICALINFORMATION_all m
+            LEFT JOIN tm_bs_dept dept ON dept.DEPt_Code = m.DEPARTMENT_NO
+        WHERE
+            dept.UPPER_DEPT ='2'
+            <if test="flag != null and flag !='' and flag == '1'.toString()">
+                and m.HOSPITAL_MARK = '1' and m.LEAVE_HOSPITAL_DATE IS NULL  and m.BEDID is not null
+            </if>
+            <if test="flag != null and flag !='' and flag == '2'.toString()">
+                and m.HOSPITAL_MARK in ('3','4')
+                <if test="startDate != null">
+                    and m.LEAVE_HOSPITAL_DATE &gt;= #{startDate}
+                </if>
+                <if test="endDate != null">
+                    and m.LEAVE_HOSPITAL_DATE &lt; #{endDate}
+                </if>
+            </if>
+        GROUP BY
+            m.DEPARTMENT_NO,
+            dept.dept_name
+    </select>
+    <resultMap id="OtherInfoDeptResult" type="com.emr.project.pat.domain.resp.OtherInfoDeptResp" extends="OtherinfoResult">
+        <result property="deptCode"    column="department_no"    />
+    </resultMap>
+    <select id="selectOtherinfoListByDeptList" resultMap="OtherInfoDeptResult">
+        select
+            a.*,m.DEPARTMENT_NO
+        from pat_otherinfo a
+        left join T_AR_MEDICALINFORMATION_all m on m.ADMISSION_NO = a.PATIENT_ID
+        <where>
+            and (
+             a.OPER_FLAG='1' or a.CONS_FLAG='1' or a.DIE_FLAG='1' or a.BLOOD_TRANS='1'
+             or a.RESCUE_FLAG='1' or a.ILL_FLAG='1' or a.DY_FLAG='1' or a.ANTI_FLAG='1' or a.CRISIS_FLAG='1'
+            )
+            <if test="flag != null and flag !='' and flag == '1'.toString()">
+                and m.HOSPITAL_MARK = '1' and m.LEAVE_HOSPITAL_DATE IS NULL  and m.BEDID is not null
+            </if>
+            <if test="flag != null and flag !='' and flag == '2'.toString()">
+                and m.HOSPITAL_MARK in ('3','4')
+                <if test="startDate != null">
+                    and m.LEAVE_HOSPITAL_DATE &gt;= #{startDate}
+                </if>
+                <if test="endDate != null">
+                    and m.LEAVE_HOSPITAL_DATE &lt; #{endDate}
+                </if>
+            </if>
+            <if test="deptList != null and deptList.size() > 0">
+                and m.DEPARTMENT_NO in
+                <foreach collection="deptList" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <resultMap id="KeyPatientsDetailResult" type="com.emr.project.pat.domain.resp.keyPatientsDetailResp">
+        <result property="deptCode"    column="deptCode"    />
+        <result property="deptName"    column="deptName"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="name"    column="name"    />
+        <result property="hospitalizedDate"    column="hospitalized_date"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="bedid"    column="bedid"    />
+        <result property="sex"    column="sex"    />
+        <result property="ageY"    column="ageY"    />
+        <result property="ageMonth"    column="age_month"    />
+        <result property="ageDay"    column="age_day"    />
+        <result property="ageHour"    column="age_hour"    />
+        <result property="ageBranch"    column="age_branch"    />
+        <result property="residentName"    column="residentName"    />
+
+        <result property="operFlag"    column="oper_flag"    />
+        <result property="consFlag"    column="cons_flag"    />
+        <result property="dieFlag"    column="die_flag"    />
+        <result property="bloodTrans"    column="blood_trans"    />
+        <result property="rescueFlag"    column="rescue_flag"    />
+        <result property="illFlag"    column="ill_flag"    />
+        <result property="dyFlag"    column="dy_flag"    />
+        <result property="antiFlag"    column="anti_flag"    />
+        <result property="crisisFlag"    column="crisis_flag"    />
+    </resultMap>
+    <select id="selectKeyPatientsDetail" resultMap="KeyPatientsDetailResult">
+        select
+            m.department_no  as deptCode,
+            dept.dept_name   as deptName,
+            m.case_no,m.admission_no,m.name,m.hospitalized_date,m.leave_hospital_date,
+            bed.bedid,dd.DATA_TAG AS sex,(select STAFF_NAME from TM_BS_STAFF where STAFF_NO = m.RESIDENT_NO ) as residentName,
+            b.PERSON_AGE as ageY,b.age_month,b.AGE_DAY,b.AGE_HOUR,b.AGE_BRANCH,
+            nvl(o.oper_flag,'0') as oper_flag,nvl(o.CONS_FLAG,'0') as CONS_FLAG,nvl(o.BLOOD_TRANS,'0') as BLOOD_TRANS,nvl(o.DIE_FLAG,'0') as DIE_FLAG,
+            nvl(o.RESCUE_FLAG,'0') as rescue_flag,nvl(o.ILL_FLAG,'0') as ill_flag,nvl(o.DY_FLAG,'0') as dy_flag,nvl(o.ANTI_FLAG,'0') as anti_flag,nvl(o.CRISIS_FLAG,'0') as crisis_flag
+        from T_AR_MEDICALINFORMATION_all m
+	    left join T_AR_BASEINFOMATION_all b on m.ADMISSION_NO=b.ADMISSION_NO
+        LEFT JOIN tm_bs_dept dept ON dept.dept_code = m.department_no
+	    left join PAT_OTHERINFO o on o.PATIENT_ID = m.ADMISSION_NO
+	    LEFT JOIN tm_na_beds bed ON m.bed_no = bed.bed_no and bed.WARD_NO= m.department_no
+        LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE='s028' and dd.DATA_VAL = b.sex
+	    where m.DEPARTMENT_NO = #{deptCode} and ${fieldName} = '1'
+        <if test="flag != null and flag !='' and flag == '1'.toString()">
+            and m.HOSPITAL_MARK = '1' and m.LEAVE_HOSPITAL_DATE IS NULL  and m.BEDID is not null
+        </if>
+        <if test="flag != null and flag !='' and flag == '2'.toString()">
+            and m.HOSPITAL_MARK in ('3','4')
+            <if test="startDate != null">
+                and m.LEAVE_HOSPITAL_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and m.LEAVE_HOSPITAL_DATE &lt; #{endDate}
+            </if>
+        </if>
+        order by bed.BED_ORDER
+    </select>
+
+    <insert id="insertOtherinfo" parameterType="Otherinfo">
+        <selectKey keyProperty="patientId" resultType="long" order="BEFORE">
+            SELECT seq_pat_otherinfo.NEXTVAL as patientId FROM DUAL
+        </selectKey>
+        insert into pat_otherinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">patient_id,</if>
+            <if test="catFlag != null">cat_flag,</if>
+            <if test="catName != null">cat_name,</if>
+            <if test="infectFlag != null">infect_flag,</if>
+            <if test="infectTime != null">infect_time,</if>
+            <if test="infectPart != null">infect_part,</if>
+            <if test="alleFlag != null">alle_flag,</if>
+            <if test="alleDrug != null">alle_drug,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="operFlag != null">oper_flag,</if>
+            <if test="consFlag != null">cons_flag,</if>
+            <if test="bloodFlag != null">blood_flag,</if>
+            <if test="interFlag != null">inter_flag,</if>
+            <if test="anesFlag != null">anes_flag,</if>
+            <if test="dieFlag != null">die_flag,</if>
+            <if test="changeFlag != null">change_flag,</if>
+            <if test="bloodTrans != null">blood_trans,</if>
+            <if test="modiFlag != null">modi_flag,</if>
+            <if test="singleFlag != null">single_flag,</if>
+            <if test="medicineFlag != null">medicine_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">#{patientId},</if>
+            <if test="catFlag != null">#{catFlag},</if>
+            <if test="catName != null">#{catName},</if>
+            <if test="infectFlag != null">#{infectFlag},</if>
+            <if test="infectTime != null">#{infectTime},</if>
+            <if test="infectPart != null">#{infectPart},</if>
+            <if test="alleFlag != null">#{alleFlag},</if>
+            <if test="alleDrug != null">#{alleDrug},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="operFlag != null">#{operFlag},</if>
+            <if test="consFlag != null">#{consFlag},</if>
+            <if test="bloodFlag != null">#{bloodFlag},</if>
+            <if test="interFlag != null">#{interFlag},</if>
+            <if test="anesFlag != null">#{anesFlag},</if>
+            <if test="dieFlag != null">#{dieFlag},</if>
+            <if test="changeFlag != null">#{changeFlag},</if>
+            <if test="bloodTrans != null">#{bloodTrans},</if>
+            <if test="modiFlag != null">#{modiFlag},</if>
+            <if test="singleFlag != null">#{singleFlag},</if>
+            <if test="medicineFlag != null">#{medicineFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOtherinfo" parameterType="Otherinfo">
+        update pat_otherinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="catFlag != null">cat_flag = #{catFlag},</if>
+            <if test="catName != null">cat_name = #{catName},</if>
+            <if test="infectFlag != null">infect_flag = #{infectFlag},</if>
+            <if test="infectTime != null">infect_time = #{infectTime},</if>
+            <if test="infectPart != null">infect_part = #{infectPart},</if>
+            <if test="alleFlag != null">alle_flag = #{alleFlag},</if>
+            <if test="alleDrug != null">alle_drug = #{alleDrug},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="operFlag != null">oper_flag = #{operFlag},</if>
+            <if test="consFlag != null">cons_flag = #{consFlag},</if>
+            <if test="bloodFlag != null">blood_flag = #{bloodFlag},</if>
+            <if test="interFlag != null">inter_flag = #{interFlag},</if>
+            <if test="anesFlag != null">anes_flag = #{anesFlag},</if>
+            <if test="dieFlag != null">die_flag = #{dieFlag},</if>
+            <if test="changeFlag != null">change_flag = #{changeFlag},</if>
+            <if test="bloodTrans != null">blood_trans = #{bloodTrans},</if>
+            <if test="modiFlag != null">modi_flag = #{modiFlag},</if>
+            <if test="singleFlag != null">single_flag = #{singleFlag},</if>
+            <if test="medicineFlag != null">medicine_flag = #{medicineFlag},</if>
+        </trim>
+        where patient_id = #{patientId}
+    </update>
+
+    <delete id="deleteOtherinfoById" parameterType="Long">
+        delete from pat_otherinfo where patient_id = #{patientId}
+    </delete>
+
+    <delete id="deleteOtherinfoByIds" parameterType="String">
+        delete from pat_otherinfo where patient_id in
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </delete>
+</mapper>

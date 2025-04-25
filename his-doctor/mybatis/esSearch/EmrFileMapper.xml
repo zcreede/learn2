@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.esSearch.mapper.EmrFileMapper">
+    <resultMap type="EmrFile" id="EmrFileResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrFileShowName"    column="mr_file_show_name"    />
+        <result property="mrFileCreDate"    column="mr_file_cre_date"    />
+
+        <result property="inpNo"    column="inp_no"    />
+        <result property="visitId"    column="visit_id"    />
+        <result property="recordNo"    column="record_no"    />
+        <result property="inhosTime"    column="inhos_time"    />
+        <result property="outTime"    column="out_time"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="ngCd"    column="ng_cd"    />
+        <result property="ngName"    column="ng_name"    />
+        <result property="pcCd"    column="pc_cd"    />
+        <result property="pcName"    column="pc_name"    />
+        <result property="inhosWayCd"    column="inhos_way_cd"    />
+        <result property="inhosWayName"    column="inhos_way_name"    />
+
+        <result property="patientName"    column="patient_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="sex"    column="sex"    />
+        <result property="sexCd"    column="sex_cd"    />
+        <result property="birDate"    column="bir_date"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+
+        <result property="treatType"    column="treat_type"    />
+        <result property="treatTypeName"    column="treat_type_name"    />
+        <result property="fileTime" column="file_time"/>
+        <result property="mainId" column="main_id"/>
+        <result property="patientMainId" column="patient_main_id"/>
+    </resultMap>
+
+    <select id="selectList" parameterType="EmrFileVo" resultMap="EmrFileResult">
+        select * from (
+        select ei.id,v.org_cd,v.org_name,ei.patient_id,p.patient_name,p.inputstrphtc,v.inp_no,v.visit_id,v.record_no,p.sex,p.sex_cd,
+        p.bir_date,p.age_y,p.age_m,p.age_d,p.age_h,p.age_mi,v.dept_cd,v.dept_name,v.inhos_time,v.out_time,v.INHOS_COND_CD as pc_cd,v.INHOS_COND as pc_name,v.inhos_way_cd, v.inhos_way_name,
+        v.ng_cd,v.ng_name,
+        ei.mr_type,ei.mr_file_show_name,ei.cre_date mr_file_cre_date,
+        mh.treat_type,
+        case when mh.treat_type='1.1' then  '中医'
+        when mh.treat_type='1.2' then  '民族医'
+        when mh.treat_type='2' then  '中西医'
+        when mh.treat_type='3' then  '西医'
+        else null end treat_type_name,
+        case when ei.alt_date is null then ei.cre_date else ei.alt_date end alt_date,f.file_time,p.patient_main_id,ei.main_id,
+        case when v.hospital_mark in ('0','1') then g.diag_name
+        when v.hospital_mark in ('3','4') and mh.mr_state in ('03','04') then md.dia_name
+        when v.hospital_mark in ('3','4') and (mh.mr_state is null or mh.mr_state in ('01','02')) then g2.diag_name
+        else g.diag_name end as diagsStr,
+
+        case when v.hospital_mark in ('0','1') then gall.diag_name
+        when v.hospital_mark in ('3','4') and mh.mr_state  in ('03','04') then mdall.dia_name
+        when v.hospital_mark in ('3','4') and (mh.mr_state is null or mh.mr_state in ('01','02')) then gall2.diag_name
+        else gall.diag_name end as diagAllStr
+        from (
+        select ei.id, ei.patient_id,ei.mr_type,ei.mr_file_show_name,ei.cre_date,ei.alt_date,null as main_id from emr_index ei where del_flag = '0' and mr_type != 'MAINFILE'
+        union all
+        select esi.id,ei.patient_id,esi.mr_type,esi.mr_file_show_name,esi.cre_date,esi.alt_date,ei.id as main_id from emr_subfile_index esi inner join emr_index ei on ei.id = esi.main_id
+        where esi.del_flag = '0'
+        ) ei
+        left join pat_visitinfo v on ei.patient_id = v.patient_id
+        left join pat_personalinfo p on ei.patient_id = p.patient_id
+        left join mr_hp mh on mh.patient_id = ei.patient_id
+        left join emr_qc_flow f on ei.patient_id = f.patient_id
+        left join diag_info g on g.patient_id = p.patient_id and g.diag_class_cd = '01'and g.diag_type_cd = '02'
+        left join mr_hp_dia md on mh.record_id = md.record_id and md.dia_type = 'XY' and md.dia_class='01' and md.dia_item = '03'
+        left join (select patient_id,LISTAGG(diag_name, ',') WITHIN GROUP (ORDER BY diag_name) as diag_name from diag_info group by patient_id) gall on gall.patient_id = p.patient_id
+        left join (select record_id,LISTAGG(dia_name, ',') WITHIN GROUP (ORDER BY dia_name) as dia_name from mr_hp_dia where dia_type = 'XY' and dia_item = '03' group by record_id) mdall on mh.record_id = mdall.record_id
+        left join diag_info g2 on g2.patient_id = v.patient_id and g2.diag_class_cd = '01' and g2.diag_type_cd = '03'
+        left join (select patient_id,LISTAGG(diag_name, ',') WITHIN GROUP (ORDER BY diag_name) as diag_name from diag_info where diag_type_cd = '03' group by patient_id) gall2 on gall2.patient_id = p.patient_id
+        where v.inp_no is not null
+        ) a
+        <where>
+            <if test="beginDate!=null and beginDate != ''">and alt_date &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+            <if test="endDate!=null and endDate!= ''">and alt_date &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+            <if test="patientId != null and patientId != ''">and patient_id = #{patientId}</if>
+        </where>
+        order by alt_date
+    </select>
+    <select id="selectRevokeEmrAllIds" resultType="java.lang.Long">
+        select a.id from EMR_INDEX a left join T_AR_CANCEL_ADMISSION b on a.patient_id=b.ADMISSION_NO
+        left join T_AR_MEDICALINFORMATION_ALL c on a.patient_id=c.ADMISSION_NO
+        left join T_AR_CANCEL_ADMISSION d on a.PATIENT_ID=d.ADMISSION_NO
+        where b.ADMISSION_NO is not null
+        <if test="beginDate!=null and beginDate != ''">and d.OPERATION_DATE &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        <if test="endDate!=null and endDate!= ''">and d.OPERATION_DATE &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        union all
+        select ex.id from EMR_SUBFILE_INDEX ex left join  EMR_INDEX a on ex.main_id=a.id left join T_AR_CANCEL_ADMISSION b on a.patient_id=b.ADMISSION_NO
+        left join T_AR_MEDICALINFORMATION_ALL c on a.patient_id=c.ADMISSION_NO
+        left join T_AR_CANCEL_ADMISSION d on a.PATIENT_ID=d.ADMISSION_NO
+        where b.ADMISSION_NO is not null and a.mr_type ='MAINFILE'
+        <if test="beginDate!=null and beginDate != ''">and d.OPERATION_DATE &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        <if test="endDate!=null and endDate!= ''">and d.OPERATION_DATE &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+
+    </select>
+</mapper>

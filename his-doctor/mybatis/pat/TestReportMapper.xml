@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.TestReportMapper">
+
+    <resultMap type="TestReport" id="TestReportResult">
+        <result property="id"    column="id"    />
+        <result property="testRepNo"    column="test_rep_no"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="repUnitName"    column="rep_unit_name"    />
+        <result property="samTime"    column="sam_time"    />
+        <result property="specNo"    column="spec_no"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specRemark"    column="spec_remark"    />
+        <result property="appCd"    column="app_cd"    />
+        <result property="appOrgName"    column="app_org_name"    />
+        <result property="appTime"    column="app_time"    />
+        <result property="appDocCd"    column="app_doc_cd"    />
+        <result property="appDocName"    column="app_doc_name"    />
+        <result property="appDeptCd"    column="app_dept_cd"    />
+        <result property="appDeptName"    column="app_dept_name"    />
+        <result property="testType"    column="test_type"    />
+        <result property="testWayName"    column="test_way_name"    />
+        <result property="repDeptName"    column="rep_dept_name"    />
+        <result property="repOrgName"    column="rep_org_name"    />
+        <result property="testTecCd"    column="test_tec_cd"    />
+        <result property="testTecName"    column="test_tec_name"    />
+        <result property="testDocCd"    column="test_doc_cd"    />
+        <result property="testDocName"    column="test_doc_name"    />
+        <result property="conDate"    column="con_date"    />
+        <result property="conDocCd"    column="con_doc_cd"    />
+        <result property="conDocName"    column="con_doc_name"    />
+        <result property="labAdvice"    column="lab_advice"    />
+        <result property="repDeptCd"    column="rep_dept_cd"    />
+        <result property="repDocCd"    column="rep_doc_cd"    />
+        <result property="repDocName"    column="rep_doc_name"    />
+        <result property="issCd"    column="iss_cd"    />
+        <result property="issName"    column="iss_name"    />
+        <result property="issTime"    column="iss_time"    />
+        <result property="lastAltTime"    column="last_alt_time"    />
+        <result property="source"    column="source"    />
+        <result property="identify"    column="identify"    />
+        <result property="repDate"    column="rep_date"    />
+        <result property="testAim"    column="test_aim"    />
+        <result property="modFlag"    column="mod_flag"    />
+        <result property="reportModFlag"    column="report_mod_flag"    />
+        <result property="bactFlag"    column="bact_flag"    />
+        <result property="testRemark"    column="test_remark"    />
+        <result property="alterFlag"    column="alter_flag"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="clinItemCd"    column="clin_item_cd"    />
+        <result property="recDate"    column="rec_date"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="clinItemName"    column="clin_item_name"    />
+    </resultMap>
+
+    <resultMap id="TestReportVoResult" type="TestReportVo" extends="TestReportResult">
+        <result property="maItemName"    column="ma_item_name"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="testCount"    column="testCount"    />
+        <result property="maItemCd"    column="ma_item_cd"    />
+        <result property="itemState"    column="item_state"    />
+        <result property="clinRepDate"    column="clin_rep_date"    />
+        <result property="normalSign2"    column="normal_sign2"    />
+        <result property="caseNo"    column="case_no"    />
+    </resultMap>
+
+    <sql id="selectTestReportVo">
+        select id, test_rep_no, org_cd, patient_id, rep_unit_name, sam_time, spec_no, spec_name, spec_cd, spec_remark, app_cd, app_org_name, app_time, app_doc_cd, app_doc_name, app_dept_cd, app_dept_name, test_type, test_way_name, rep_dept_name, rep_org_name, test_tec_cd, test_tec_name, test_doc_cd, test_doc_name, con_date, con_doc_cd, con_doc_name, lab_advice, rep_dept_cd, rep_doc_cd, rep_doc_name, iss_cd, iss_name, iss_time, last_alt_time, source, identify, rep_date, test_aim, mod_flag, report_mod_flag, bact_flag, test_remark, alter_flag, cre_date, cre_per_code, cre_per_name, alt_date, alt_per_code, alt_per_name, clin_item_cd, rec_date, del_flag,clin_item_name from test_report
+    </sql>
+
+    <select id="selectTestReportList" parameterType="TestReportVo" resultMap="TestReportResult">
+        select clin_item_name,rep_date,source,id from test_report where patient_id=#{patientId}
+        <if test="startDate != null and endDate !=null"> and rep_date >=#{startDate} and rep_date &lt;=#{endDate}</if>
+        order by rep_date desc
+    </select>
+
+    <select id="selectTestReportById" parameterType="String" resultMap="TestReportResult">
+        <include refid="selectTestReportVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTestReportByPatientId" parameterType="String" resultMap="TestReportResult">
+        <include refid="selectTestReportVo"/>
+        where patient_id=#{patientId}
+    </select>
+
+    <select id="selectAppReportItemList" parameterType="String" resultMap="TestReportVoResult">
+        SELECT
+        i.PURPOSE_EXAMINATION AS clin_item_name,
+        i.SAMPLE_NAME as spec_name,
+        i.APPLY_TIME AS app_time,
+        tr.REP_DATE AS clin_rep_date,
+        i.APPLY_FORM_STATUS AS item_state,
+        i.APPLY_FORM_NO AS app_cd,
+        i.APPLY_FORM_NO AS clin_item_cd
+        FROM
+        TD_PA_APPLY_FORM_ALL i
+        left join TEST_REPORT tr on tr.APP_CD = i.APPLY_FORM_NO
+        WHERE
+        i.APPLY_FORM_CLASS_CODE = '03' and i.admission_no in
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+        order by i.APPLY_TIME desc
+    </select>
+
+    <select id="selectTestresultList" parameterType="TestReportVo" resultMap="TestReportVoResult">
+        select tr.id, tr.test_rep_no, tr.org_cd, tr.patient_id, tr.rep_unit_name, tr.sam_time, tr.spec_no, tr.spec_name, tr.spec_cd, tr.spec_remark,
+               tr.app_cd, tr.app_org_name, tr.app_time, tr.app_doc_cd, tr.app_doc_name, tr.app_dept_cd, tr.app_dept_name, tr.test_type, tr.test_way_name,
+               tr.rep_dept_name, tr.rep_org_name, tr.test_tec_cd, tr.test_tec_name, tr.test_doc_cd, tr.test_doc_name, tr.con_date, tr.con_doc_cd, tr.con_doc_name,
+               tr.lab_advice, tr.rep_dept_cd, tr.rep_doc_cd, tr.rep_doc_name, tr.iss_cd, tr.iss_name, tr.iss_time, tr.last_alt_time, tr.source, tr.identify,
+               tr.rep_date, tr.test_aim, tr.mod_flag, tr.report_mod_flag, tr.bact_flag, tr.test_remark, tr.alter_flag, tr.cre_date, tr.cre_per_code, tr.cre_per_name,
+               tr.alt_date, tr.alt_per_code, tr.alt_per_name, tr.clin_item_cd, tr.rec_date,tr.clin_item_name, tr.del_flag, pp.patient_name, pp.sex, pp.age_y,pp.age_m,
+               pp.age_d,pp.age_h,pp.age_mi,pv.inp_no, pv.bed_no,pv.record_no as case_no
+        from test_report tr
+        left join pat_personalinfo pp on pp.patient_id = tr.patient_id
+        left join pat_visitinfo pv on pv.patient_id = pp.patient_id
+        where 1=1
+        <if test="testRepNo != null">
+            and tr.test_rep_no=#{testRepNo}
+        </if>
+        <if test="testRepNo == null">
+            and tr.app_cd=#{appCd}
+        </if>
+    </select>
+
+    <select id="selectGroupItemList" parameterType="String" resultMap="TestReportVoResult">
+         select nvl(tr.spec_name,'无') as spec_name,tr.spec_cd,tr.id,tr.test_aim,tr.clin_item_cd,tr.clin_item_name
+         from test_report tr
+         where tr.patient_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectNormalSignList" parameterType="String" resultMap="TestReportVoResult">
+        select r.app_cd,r.clin_item_cd,nvl(re.normal_sign2,'M')as normal_sign2 from test_result re
+        left join test_report r on r.id = re.report_id
+        where r.patient_id in
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </select>
+    <select id="selectTestReportVoListByDate" parameterType="TestReportVo" resultMap="TestReportVoResult">
+        select tr.clin_item_name, tr.spec_name, tr.rep_date,nvl(re.normal_sign2,'M')as normal_sign2,tr.id
+        from test_result re left join test_report tr on re.report_id = tr.id
+        where tr.patient_id=#{patientId} and tr.rep_date between #{startDate} and #{endDate} order by tr.rep_date desc
+    </select>
+
+    <insert id="insertTestReport" parameterType="TestReport">
+        insert into test_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="testRepNo != null and testRepNo != ''">test_rep_no,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="repUnitName != null">rep_unit_name,</if>
+            <if test="samTime != null">sam_time,</if>
+            <if test="specNo != null">spec_no,</if>
+            <if test="specName != null">spec_name,</if>
+            <if test="specCd != null">spec_cd,</if>
+            <if test="specRemark != null">spec_remark,</if>
+            <if test="appCd != null">app_cd,</if>
+            <if test="appOrgName != null">app_org_name,</if>
+            <if test="appTime != null">app_time,</if>
+            <if test="appDocCd != null">app_doc_cd,</if>
+            <if test="appDocName != null">app_doc_name,</if>
+            <if test="appDeptCd != null">app_dept_cd,</if>
+            <if test="appDeptName != null">app_dept_name,</if>
+            <if test="testType != null">test_type,</if>
+            <if test="testWayName != null">test_way_name,</if>
+            <if test="repDeptName != null">rep_dept_name,</if>
+            <if test="repOrgName != null">rep_org_name,</if>
+            <if test="testTecCd != null">test_tec_cd,</if>
+            <if test="testTecName != null">test_tec_name,</if>
+            <if test="testDocCd != null">test_doc_cd,</if>
+            <if test="testDocName != null">test_doc_name,</if>
+            <if test="conDate != null">con_date,</if>
+            <if test="conDocCd != null">con_doc_cd,</if>
+            <if test="conDocName != null">con_doc_name,</if>
+            <if test="labAdvice != null">lab_advice,</if>
+            <if test="repDeptCd != null">rep_dept_cd,</if>
+            <if test="repDocCd != null">rep_doc_cd,</if>
+            <if test="repDocName != null">rep_doc_name,</if>
+            <if test="issCd != null">iss_cd,</if>
+            <if test="issName != null">iss_name,</if>
+            <if test="issTime != null">iss_time,</if>
+            <if test="lastAltTime != null">last_alt_time,</if>
+            <if test="source != null and source != ''">source,</if>
+            <if test="identify != null and identify != ''">identify,</if>
+            <if test="repDate != null">rep_date,</if>
+            <if test="testAim != null">test_aim,</if>
+            <if test="modFlag != null">mod_flag,</if>
+            <if test="reportModFlag != null">report_mod_flag,</if>
+            <if test="bactFlag != null">bact_flag,</if>
+            <if test="testRemark != null">test_remark,</if>
+            <if test="alterFlag != null">alter_flag,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code,</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name,</if>
+            <if test="clinItemCd != null">clin_item_cd,</if>
+            <if test="recDate != null">rec_date,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="clinItemName != null">clin_item_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="testRepNo != null and testRepNo != ''">#{testRepNo},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="repUnitName != null">#{repUnitName},</if>
+            <if test="samTime != null">#{samTime},</if>
+            <if test="specNo != null">#{specNo},</if>
+            <if test="specName != null">#{specName},</if>
+            <if test="specCd != null">#{specCd},</if>
+            <if test="specRemark != null">#{specRemark},</if>
+            <if test="appCd != null">#{appCd},</if>
+            <if test="appOrgName != null">#{appOrgName},</if>
+            <if test="appTime != null">#{appTime},</if>
+            <if test="appDocCd != null">#{appDocCd},</if>
+            <if test="appDocName != null">#{appDocName},</if>
+            <if test="appDeptCd != null">#{appDeptCd},</if>
+            <if test="appDeptName != null">#{appDeptName},</if>
+            <if test="testType != null">#{testType},</if>
+            <if test="testWayName != null">#{testWayName},</if>
+            <if test="repDeptName != null">#{repDeptName},</if>
+            <if test="repOrgName != null">#{repOrgName},</if>
+            <if test="testTecCd != null">#{testTecCd},</if>
+            <if test="testTecName != null">#{testTecName},</if>
+            <if test="testDocCd != null">#{testDocCd},</if>
+            <if test="testDocName != null">#{testDocName},</if>
+            <if test="conDate != null">#{conDate},</if>
+            <if test="conDocCd != null">#{conDocCd},</if>
+            <if test="conDocName != null">#{conDocName},</if>
+            <if test="labAdvice != null">#{labAdvice},</if>
+            <if test="repDeptCd != null">#{repDeptCd},</if>
+            <if test="repDocCd != null">#{repDocCd},</if>
+            <if test="repDocName != null">#{repDocName},</if>
+            <if test="issCd != null">#{issCd},</if>
+            <if test="issName != null">#{issName},</if>
+            <if test="issTime != null">#{issTime},</if>
+            <if test="lastAltTime != null">#{lastAltTime},</if>
+            <if test="source != null and source != ''">#{source},</if>
+            <if test="identify != null and identify != ''">#{identify},</if>
+            <if test="repDate != null">#{repDate},</if>
+            <if test="testAim != null">#{testAim},</if>
+            <if test="modFlag != null">#{modFlag},</if>
+            <if test="reportModFlag != null">#{reportModFlag},</if>
+            <if test="bactFlag != null">#{bactFlag},</if>
+            <if test="testRemark != null">#{testRemark},</if>
+            <if test="alterFlag != null">#{alterFlag},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">#{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">#{altPerName},</if>
+            <if test="clinItemCd != null">#{clinItemCd},</if>
+            <if test="recDate != null">#{recDate},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="clinItemName != null">#{clinItemName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestReport" parameterType="TestReport">
+        update test_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="testRepNo != null and testRepNo != ''">test_rep_no = #{testRepNo},</if>
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="repUnitName != null">rep_unit_name = #{repUnitName},</if>
+            <if test="samTime != null">sam_time = #{samTime},</if>
+            <if test="specNo != null">spec_no = #{specNo},</if>
+            <if test="specName != null">spec_name = #{specName},</if>
+            <if test="specCd != null">spec_cd = #{specCd},</if>
+            <if test="specRemark != null">spec_remark = #{specRemark},</if>
+            <if test="appCd != null">app_cd = #{appCd},</if>
+            <if test="appOrgName != null">app_org_name = #{appOrgName},</if>
+            <if test="appTime != null">app_time = #{appTime},</if>
+            <if test="appDocCd != null">app_doc_cd = #{appDocCd},</if>
+            <if test="appDocName != null">app_doc_name = #{appDocName},</if>
+            <if test="appDeptCd != null">app_dept_cd = #{appDeptCd},</if>
+            <if test="appDeptName != null">app_dept_name = #{appDeptName},</if>
+            <if test="testType != null">test_type = #{testType},</if>
+            <if test="testWayName != null">test_way_name = #{testWayName},</if>
+            <if test="repDeptName != null">rep_dept_name = #{repDeptName},</if>
+            <if test="repOrgName != null">rep_org_name = #{repOrgName},</if>
+            <if test="testTecCd != null">test_tec_cd = #{testTecCd},</if>
+            <if test="testTecName != null">test_tec_name = #{testTecName},</if>
+            <if test="testDocCd != null">test_doc_cd = #{testDocCd},</if>
+            <if test="testDocName != null">test_doc_name = #{testDocName},</if>
+            <if test="conDate != null">con_date = #{conDate},</if>
+            <if test="conDocCd != null">con_doc_cd = #{conDocCd},</if>
+            <if test="conDocName != null">con_doc_name = #{conDocName},</if>
+            <if test="labAdvice != null">lab_advice = #{labAdvice},</if>
+            <if test="repDeptCd != null">rep_dept_cd = #{repDeptCd},</if>
+            <if test="repDocCd != null">rep_doc_cd = #{repDocCd},</if>
+            <if test="repDocName != null">rep_doc_name = #{repDocName},</if>
+            <if test="issCd != null">iss_cd = #{issCd},</if>
+            <if test="issName != null">iss_name = #{issName},</if>
+            <if test="issTime != null">iss_time = #{issTime},</if>
+            <if test="lastAltTime != null">last_alt_time = #{lastAltTime},</if>
+            <if test="source != null and source != ''">source = #{source},</if>
+            <if test="identify != null and identify != ''">identify = #{identify},</if>
+            <if test="repDate != null">rep_date = #{repDate},</if>
+            <if test="testAim != null">test_aim = #{testAim},</if>
+            <if test="modFlag != null">mod_flag = #{modFlag},</if>
+            <if test="reportModFlag != null">report_mod_flag = #{reportModFlag},</if>
+            <if test="bactFlag != null">bact_flag = #{bactFlag},</if>
+            <if test="testRemark != null">test_remark = #{testRemark},</if>
+            <if test="alterFlag != null">alter_flag = #{alterFlag},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="clinItemCd != null">clin_item_cd = #{clinItemCd},</if>
+            <if test="recDate != null">rec_date = #{recDate},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTestReportById" parameterType="String">
+        delete from test_report where id = #{id}
+    </delete>
+
+    <delete id="deleteTestReportByIds" parameterType="String">
+        delete from test_report where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertMap" parameterType="map">
+        insert into test_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="org_cd!=null and org_cd!=''">org_cd,</if>
+            <if test="id!=null and id!=''">id,</if>
+            <if test="test_rep_no!=null and test_rep_no!=''">test_rep_no,</if>
+            <if test="patient_id!=null and patient_id!=''">patient_id,</if>
+            <if test="rep_unit_name!=null and rep_unit_name!=''">rep_unit_name,</if>
+            <if test="sam_time!=null">sam_time,</if>
+            <if test="spec_no!=null and spec_no!=''">spec_no,</if>
+            <if test="spec_name!=null and spec_name!=''">spec_name,</if>
+            <if test="spec_cd!=null and spec_cd!=''">spec_cd,</if>
+            <if test="spec_remark!=null and spec_remark!=''">spec_remark,</if>
+            <if test="app_cd!=null and app_cd!=''">app_cd,</if>
+            <if test="app_org_name!=null and app_org_name!=''">app_org_name,</if>
+            <if test="app_time!=null">app_time,</if>
+            <if test="app_doc_cd!=null and app_doc_cd!=''">app_doc_cd,</if>
+            <if test="app_doc_name!=null and app_doc_name!=''">app_doc_name,</if>
+            <if test="app_dept_cd!=null and app_dept_cd!=''">app_dept_cd,</if>
+            <if test="app_dept_name!=null and app_dept_name!=''">app_dept_name,</if>
+            <if test="test_type!=null and test_type!=''">test_type,</if>
+            <if test="test_way_name!=null and test_way_name!=''">test_way_name,</if>
+            <if test="rep_dept_name!=null and rep_dept_name!=''">rep_dept_name,</if>
+            <if test="rep_org_name!=null and rep_org_name!=''">rep_org_name,</if>
+            <if test="test_tec_cd!=null and test_tec_cd!=''">test_tec_cd,</if>
+            <if test="test_tec_name!=null and test_tec_name!=''">test_tec_name,</if>
+            <if test="test_doc_cd!=null and test_doc_cd!=''">test_doc_cd,</if>
+            <if test="test_doc_name!=null and test_doc_name!=''">test_doc_name,</if>
+            <if test="con_date!=null">con_date,</if>
+            <if test="con_doc_cd!=null and con_doc_cd!=''">con_doc_cd,</if>
+            <if test="con_doc_name!=null and con_doc_name!=''">con_doc_name,</if>
+            <if test="lab_advice!=null and lab_advice!=''">lab_advice,</if>
+            <if test="rep_dept_cd!=null and rep_dept_cd!=''">rep_dept_cd,</if>
+            <if test="rep_doc_cd!=null and rep_doc_cd!=''">rep_doc_cd,</if>
+            <if test="rep_doc_name!=null and rep_doc_name!=''">rep_doc_name,</if>
+            <if test="iss_cd!=null and iss_cd!=''">iss_cd,</if>
+            <if test="iss_name!=null and iss_name!=''">iss_name,</if>
+            <if test="iss_time!=null">iss_time,</if>
+            <if test="last_alt_time!=null">last_alt_time,</if>
+            <if test="source!=null and source!=''">source,</if>
+            <if test="identify!=null and identify!=''">identify,</if>
+            <if test="rep_date!=null">rep_date,</if>
+            <if test="test_aim!=null and test_aim!=''">test_aim,</if>
+            <if test="mod_flag!=null and mod_flag!=''">mod_flag,</if>
+            <if test="report_mod_flag!=null and report_mod_flag!=''">report_mod_flag,</if>
+            <if test="bact_flag!=null and bact_flag!=''">bact_flag,</if>
+            <if test="test_remark!=null and test_remark!=''">test_remark,</if>
+            <if test="alter_flag!=null and alter_flag!=''">alter_flag,</if>
+            <if test="cre_date!=null">cre_date,</if>
+            <if test="cre_per_code!=null and cre_per_code!=''">cre_per_code,</if>
+            <if test="cre_per_name!=null and cre_per_name!=''">cre_per_name,</if>
+            <if test="clin_item_cd!=null and clin_item_cd!=''">clin_item_cd,</if>
+            <if test="clin_item_name!=null and clin_item_name!=''">clin_item_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="org_cd!=null and org_cd!=''">#{org_cd},</if>
+            <if test="id!=null and id!=''">#{id},</if>
+            <if test="test_rep_no!=null and test_rep_no!=''">#{test_rep_no},</if>
+            <if test="patient_id!=null and patient_id!=''">#{patient_id},</if>
+            <if test="rep_unit_name!=null and rep_unit_name!=''">#{rep_unit_name},</if>
+            <if test="sam_time!=null">#{sam_time},</if>
+            <if test="spec_no!=null and spec_no!=''">#{spec_no},</if>
+            <if test="spec_name!=null and spec_name!=''">#{spec_name},</if>
+            <if test="spec_cd!=null and spec_cd!=''">#{spec_cd},</if>
+            <if test="spec_remark!=null and spec_remark!=''">#{spec_remark},</if>
+            <if test="app_cd!=null and app_cd!=''">#{app_cd},</if>
+            <if test="app_org_name!=null and app_org_name!=''">#{app_org_name},</if>
+            <if test="app_time!=null">#{app_time},</if>
+            <if test="app_doc_cd!=null and app_doc_cd!=''">#{app_doc_cd},</if>
+            <if test="app_doc_name!=null and app_doc_name!=''">#{app_doc_name},</if>
+            <if test="app_dept_cd!=null and app_dept_cd!=''">#{app_dept_cd},</if>
+            <if test="app_dept_name!=null and app_dept_name!=''">#{app_dept_name},</if>
+            <if test="test_type!=null and test_type!=''">#{test_type},</if>
+            <if test="test_way_name!=null and test_way_name!=''">#{test_way_name},</if>
+            <if test="rep_dept_name!=null and rep_dept_name!=''">#{rep_dept_name},</if>
+            <if test="rep_org_name!=null and rep_org_name!=''">#{rep_org_name},</if>
+            <if test="test_tec_cd!=null and test_tec_cd!=''">#{test_tec_cd},</if>
+            <if test="test_tec_name!=null and test_tec_name!=''">#{test_tec_name},</if>
+            <if test="test_doc_cd!=null and test_doc_cd!=''">#{test_doc_cd},</if>
+            <if test="test_doc_name!=null and test_doc_name!=''">#{test_doc_name},</if>
+            <if test="con_date!=null">#{con_date},</if>
+            <if test="con_doc_cd!=null and con_doc_cd!=''">#{con_doc_cd},</if>
+            <if test="con_doc_name!=null and con_doc_name!=''">#{con_doc_name},</if>
+            <if test="lab_advice!=null and lab_advice!=''">#{lab_advice},</if>
+            <if test="rep_dept_cd!=null and rep_dept_cd!=''">#{rep_dept_cd},</if>
+            <if test="rep_doc_cd!=null and rep_doc_cd!=''">#{rep_doc_cd},</if>
+            <if test="rep_doc_name!=null and rep_doc_name!=''">#{rep_doc_name},</if>
+            <if test="iss_cd!=null and iss_cd!=''">#{iss_cd},</if>
+            <if test="iss_name!=null and iss_name!=''">#{iss_name},</if>
+            <if test="iss_time!=null">#{iss_time},</if>
+            <if test="last_alt_time!=null">#{last_alt_time},</if>
+            <if test="source!=null and source!=''">#{source},</if>
+            <if test="identify!=null and identify!=''">#{identify},</if>
+            <if test="rep_date!=null">#{rep_date},</if>
+            <if test="test_aim!=null and test_aim!=''">#{test_aim},</if>
+            <if test="mod_flag!=null and mod_flag!=''">#{mod_flag},</if>
+            <if test="report_mod_flag!=null and report_mod_flag!=''">#{report_mod_flag},</if>
+            <if test="bact_flag!=null and bact_flag!=''">#{bact_flag},</if>
+            <if test="test_remark!=null and test_remark!=''">#{test_remark},</if>
+            <if test="alter_flag!=null and alter_flag!=''">#{alter_flag},</if>
+            <if test="cre_date!=null">#{cre_date},</if>
+            <if test="cre_per_code!=null and cre_per_code!=''">#{cre_per_code},</if>
+            <if test="cre_per_name!=null and cre_per_name!=''">#{cre_per_name},</if>
+            <if test="clin_item_cd!=null and clin_item_cd!=''">#{clin_item_cd},</if>
+            <if test="clin_item_name!=null and clin_item_name!=''">#{clin_item_name},</if>
+        </trim>
+    </insert>
+    <update id="updateTestReportByAppCd" parameterType="TestReport">
+        update test_report set rec_date=sysdate,rec_doc_cd=#{recDocCd} where app_cd=#{appCd}
+    </update>
+
+    <select id="selectHisReportList" parameterType="SqlVo" resultMap="TestReportResult">
+        ${sqlStr}
+    </select>
+    <select id="selectByAppCd" parameterType="String" resultMap="TestReportResult">
+        select * from test_report where app_cd=#{appCd}
+    </select>
+    <select id="selectByAppCds" parameterType="String" resultMap="TestReportResult">
+        select * from test_report where app_cd in
+        <foreach collection="list" item="appCd" open="(" separator="," close=")">
+            #{appCd}
+        </foreach>
+    </select>
+    <select id="selectMzTestReportList" parameterType="TestReportVo" resultMap="TestReportResult">
+        select oi.ITEM_NAME as clin_item_name, tr.rep_date, source, tr.id from test_report tr
+        inner join TD_DR_APPLY_FORM_MAIN af
+        on tr.org_cd = af.org_cd
+        and tr.app_cd = af.apply_no
+        and tr.patient_id = af.patient_id
+        INNER join TD_DR_ORDER_ITEM oi on oi.rp_no = af.apply_no
+        where af.patient_id = (select PATIENT_ID from T_AR_BASEINFOMATION where ADMISSION_NO=#{patientId})
+        <if test="startDate != null and endDate !=null"> and tr.rep_date >=#{startDate} and tr.rep_date &lt;=#{endDate}</if>
+        order by tr.rep_date desc
+    </select>
+</mapper>

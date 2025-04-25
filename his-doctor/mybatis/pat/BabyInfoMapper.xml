@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.BabyInfoMapper">
+
+    <resultMap type="BabyInfo" id="BabyInfoResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patBabyId"    column="pat_baby_id"    />
+        <result property="babyName"    column="baby_name"    />
+        <result property="babySexCd"    column="baby_sex_cd"    />
+        <result property="babySexName"    column="baby_sex_name"    />
+        <result property="birDate"    column="bir_date"    />
+        <result property="birthWay"    column="birth_way"    />
+        <result property="weight"    column="weight"    />
+        <result property="areaCode"    column="area_code"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectBabyInfoVo">
+        select ID, ADMISSION_NO as patient_id, baby_no as pat_baby_id, BABY_NAME as baby_name,
+        BABY_SEX as baby_sex_cd, BABY_SEX as baby_sex_name, BABY_BIRTH as bir_date, null as birth_way, BABY_WEIGHT as weight, null as area_code,
+        OPERATOR_CODE as cre_per_code,OPERATOR_NAME as cre_per_name, OPERATOR_DATE as cre_date, OPERATOR_CODE as alt_per_code,
+        OPERATOR_NAME as alt_per_name, OPERATOR_DATE as alt_date from td_na_baby_info
+    </sql>
+
+    <select id="selectBabyInfoList" parameterType="BabyInfo" resultMap="BabyInfoResult">
+        <include refid="selectBabyInfoVo"/>
+        <where>
+            <if test="babyName != null  and babyName != ''"> and baby_name like concat(concat('%', #{babyName}), '%')</if>
+            <if test="babySexCd != null  and babySexCd != ''"> and BABY_SEX = #{babySexCd}</if>
+            <if test="babySexName != null  and babySexName != ''"> and BABY_SEX like concat(concat('%', #{babySexName}), '%')</if>
+            <if test="birDate != null "> and BABY_BIRTH = #{birDate}</if>
+<!--            <if test="birthWay != null  and birthWay != ''"> and birth_way = #{birthWay}</if>-->
+            <if test="weight != null "> and BABY_WEIGHT = #{weight}</if>
+<!--            <if test="areaCode != null  and areaCode != ''"> and area_code = #{areaCode}</if>-->
+            <if test="crePerCode != null  and crePerCode != ''"> and OPERATOR_CODE = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and OPERATOR_NAME like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and OPERATOR_DATE = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and OPERATOR_CODE = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and OPERATOR_NAME like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and OPERATOR_DATE = #{altDate}</if>
+            <if test="beginTime != null and endTime!=null"> and BABY_BIRTH between #{beginTime} and #{endTime}</if>
+        </where>
+    </select>
+
+    <select id="selectBabyInfoByDeptCodeList" parameterType="BabyInfo" resultMap="BabyInfoResult">
+        select ID,
+        a.ADMISSION_NO  as patient_id,
+        a.baby_no       as pat_baby_id,
+        a.BABY_NAME     as baby_name,
+        a.BABY_SEX      as baby_sex_cd,
+        a.BABY_SEX      as baby_sex_name,
+        a.BABY_BIRTH    as bir_date,
+        null          as birth_way,
+        a.BABY_WEIGHT   as weight,
+        null          as area_code,
+        a.OPERATOR_CODE as cre_per_code,
+        a.OPERATOR_NAME as cre_per_name,
+        a.OPERATOR_DATE as cre_date,
+        a.OPERATOR_CODE as alt_per_code,
+        a.OPERATOR_NAME as alt_per_name,
+        a.OPERATOR_DATE as alt_date
+        from td_na_baby_info a left join t_ar_medicalinformation b on a.admission_no=b.admission_no
+        <where>
+            b.ward_no = #{wardNo}
+            <if test="babyName != null  and babyName != ''"> and a.baby_name like concat(concat('%', #{babyName}), '%')</if>
+            <if test="babySexCd != null  and babySexCd != ''"> and a.BABY_SEX = #{babySexCd}</if>
+            <if test="babySexName != null  and babySexName != ''"> and a.BABY_SEX like concat(concat('%', #{babySexName}), '%')</if>
+            <if test="birDate != null "> and a.BABY_BIRTH = #{birDate}</if>
+<!--            <if test="birthWay != null  and birthWay != ''"> and birth_way = #{birthWay}</if>-->
+            <if test="weight != null "> and a.BABY_WEIGHT = #{weight}</if>
+<!--            <if test="areaCode != null  and areaCode != ''"> and area_code = #{areaCode}</if>-->
+            <if test="crePerCode != null  and crePerCode != ''"> and a.OPERATOR_CODE = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and a.OPERATOR_NAME like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and a.OPERATOR_DATE = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and a.OPERATOR_CODE = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and a.OPERATOR_NAME like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and a.OPERATOR_DATE = #{altDate}</if>
+            <if test="beginTime != null and endTime!=null"> and a.BABY_BIRTH between #{beginTime} and #{endTime}</if>
+        </where>
+    </select>
+    <select id="selectBabyTreeList" parameterType="BabyInfo" resultMap="BabyInfoResult">
+        select ADMISSION_NO as patient_id, baby_no as pat_baby_id, BABY_NAME as baby_name,
+        BABY_SEX as baby_sex_cd, BABY_SEX as baby_sex_name, BABY_BIRTH as bir_date, null as birth_way, BABY_WEIGHT as weight, null as area_code,
+        OPERATOR_CODE as cre_per_code,OPERATOR_NAME as cre_per_name, OPERATOR_DATE as cre_date, OPERATOR_CODE as alt_per_code,
+        OPERATOR_NAME as alt_per_name, OPERATOR_DATE as alt_date from td_na_baby_info
+        <where>
+            <if test="patientId != null  and patientId != ''"> and ADMISSION_NO = #{patientId}</if>
+        </where>
+    </select>
+
+    <select id="selectBabyInfoById" parameterType="String" resultMap="BabyInfoResult">
+        <include refid="selectBabyInfoVo"/>
+        where ADMISSION_NO = #{patientId}
+    </select>
+
+    <insert id="insertBabyInfo" parameterType="BabyInfo">
+        insert into baby_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">patient_id,</if>
+            <if test="patBabyId != null">pat_baby_id,</if>
+            <if test="babyName != null">baby_name,</if>
+            <if test="babySexCd != null">baby_sex_cd,</if>
+            <if test="babySexName != null">baby_sex_name,</if>
+            <if test="birDate != null">bir_date,</if>
+            <if test="birthWay != null">birth_way,</if>
+            <if test="weight != null">weight,</if>
+            <if test="areaCode != null">area_code,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code,</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patBabyId != null">#{patBabyId},</if>
+            <if test="babyName != null">#{babyName},</if>
+            <if test="babySexCd != null">#{babySexCd},</if>
+            <if test="babySexName != null">#{babySexName},</if>
+            <if test="birDate != null">#{birDate},</if>
+            <if test="birthWay != null">#{birthWay},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="areaCode != null">#{areaCode},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">#{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBabyInfo" parameterType="BabyInfo">
+        update td_na_baby_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patBabyId != null">id = #{patBabyId},</if>
+            <if test="babyName != null">baby_name = #{babyName,jdbcType = NVARCHAR},</if>
+            <if test="babySexCd != null">BABY_SEX = #{babySexCd},</if>
+            <if test="babySexName != null">BABY_SEX = #{babySexName},</if>
+            <if test="birDate != null">BABY_BIRTH = #{birDate},</if>
+<!--            <if test="birthWay != null">birth_way = #{birthWay},</if>-->
+            <if test="weight != null">BABY_WEIGHT = #{weight},</if>
+<!--            <if test="areaCode != null">area_code = #{areaCode},</if>-->
+            <if test="crePerCode != null and crePerCode != ''">OPERATOR_CODE = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">OPERATOR_NAME = #{crePerName},</if>
+            <if test="creDate != null">OPERATOR_DATE = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">OPERATOR_CODE = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">OPERATOR_NAME = #{altPerName},</if>
+            <if test="altDate != null">OPERATOR_DATE = #{altDate},</if>
+        </trim>
+        where ADMISSION_NO = #{patientId}
+    </update>
+
+    <select id="selectBabyInfoListByPatientId" parameterType="String" resultMap="BabyInfoResult">
+       select b.ADMISSION_NO as patient_id,
+       b.baby_no as pat_baby_id, b.baby_name, b.BABY_SEX as baby_sex_cd, dsex.data_tag as baby_sex_name, b.BABY_BIRTH as bir_date,
+       null as birth_way, b.BABY_WEIGHT as weight,
+       null as area_code,
+        b.OPERATOR_CODE as cre_per_code, b.OPERATOR_NAME as cre_per_name, b.OPERATOR_DATE as cre_date,
+        b.OPERATOR_CODE as alt_per_code, b.OPERATOR_NAME as alt_per_name, b.OPERATOR_DATE as alt_date
+         from td_na_baby_info b
+         left join tm_bs_dict_data dsex on b.baby_sex = dsex.data_val and dsex.dict_type = 's028'
+         where b.ADMISSION_NO=#{patientId}
+    </select>
+
+    <select id="selectBabyInfoListGroupByPat" parameterType="BabyInfo" resultMap="BabyInfoResult">
+       select ADMISSION_NO as patient_id from td_na_baby_info
+       where  BABY_BIRTH between #{beginTime} and #{endTime} group by ADMISSION_NO
+    </select>
+
+    <select id="selectBabyInfoByDeptCodeListGroupByPat" parameterType="BabyInfo" resultMap="BabyInfoResult">
+       select a.ADMISSION_NO as patient_id from td_na_baby_info a left join t_ar_medicalinformation b on a.admission_no=b.admission_no
+       where  b.ward_no = #{wardNo} and a.BABY_BIRTH between #{beginTime} and #{endTime} group by a.ADMISSION_NO
+    </select>
+
+    <delete id="deleteBabyInfoById" parameterType="String">
+        delete from td_na_baby_info where ADMISSION_NO = #{patientId}
+    </delete>
+
+    <delete id="deleteBabyInfoByIds" parameterType="String">
+        delete from td_na_baby_info where ADMISSION_NO in
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </delete>
+
+    <select id="selectBabyInfolistByDeptCd" parameterType="String" resultType="java.lang.Integer">
+        SELECT count(bb.ID) FROM td_na_baby_info bb LEFT JOIN pat_visitinfo pv ON bb.ADMISSION_NO = pv.inp_no WHERE pv.dept_cd =#{deptCode} AND trunc( bb.BABY_BIRTH ) = trunc( SYSDATE )
+    </select>
+    <select id="selectHisBabyInfoList" parameterType="SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+        <if test="inpNoList!=null and inpNoList.size()>0">
+            where b.zyh in
+            <foreach item="item" collection="inpNoList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <delete id="deleteBabyInfoByInpNo" >
+        delete from td_na_baby_info where ADMISSION_NO in
+        <foreach item="inpNo" collection="inpNoList" open="(" separator="," close=")">
+            #{inpNo}
+        </foreach>
+    </delete>
+    <insert id="insertMap" parameterType="map">
+        insert into td_na_baby_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID!=null">id,</if>
+            <if test="HOSPITAL_CODE!=null and HOSPITAL_CODE!=''">HOSPITAL_CODE,</if>
+            <if test="CASE_NO!=null and CASE_NO!=''">CASE_NO,</if>
+            <if test="ADMISSION_NO!=null and ADMISSION_NO!=''">ADMISSION_NO,</if>
+            <if test="HOSPITALIZED_COUNT!=null">HOSPITALIZED_COUNT,</if>
+            <if test="PATIENT_NAME!=null and PATIENT_NAME!=''">PATIENT_NAME,</if>
+            <if test="BABY_NO!=null and BABY_NO!=''">BABY_NO,</if>
+            <if test="BABY_NAME!=null and BABY_NAME!=''">BABY_NAME,</if>
+            <if test="BABY_SEX!=null">BABY_SEX,</if>
+            <if test="BABY_BIRTH!=null">BABY_BIRTH,</if>
+            <if test="BABY_WEIGHT!=null">BABY_WEIGHT,</if>
+            <if test="CONFINED_MODE!=null and CONFINED_MODE!=''">CONFINED_MODE,</if>
+            <if test="OPERATOR_CODE != null and OPERATOR_CODE != ''">OPERATOR_CODE,</if>
+            <if test="OPERATOR_CODE != null and OPERATOR_CODE != ''">OPERATOR_NO,</if>
+            <if test="OPERATOR_NAME != null and OPERATOR_NAME != ''">OPERATOR_NAME,</if>
+            OPERATOR_DATE,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID!=null">#{ID},</if>
+            <if test="HOSPITAL_CODE!=null and HOSPITAL_CODE!=''">#{HOSPITAL_CODE},</if>
+            <if test="CASE_NO!=null and CASE_NO!=''">#{CASE_NO},</if>
+            <if test="ADMISSION_NO!=null and ADMISSION_NO!=''">#{ADMISSION_NO},</if>
+            <if test="HOSPITALIZED_COUNT!=null">#{HOSPITALIZED_COUNT},</if>
+            <if test="PATIENT_NAME!=null and PATIENT_NAME!=''">#{PATIENT_NAME,jdbcType = NVARCHAR},</if>
+            <if test="BABY_NO!=null and BABY_NO!=''">#{BABY_NO},</if>
+            <if test="BABY_NAME!=null and BABY_NAME!=''">#{BABY_NAME,jdbcType = NVARCHAR},</if>
+            <if test="BABY_SEX!=null">#{BABY_SEX},</if>
+            <if test="BABY_BIRTH!=null">#{BABY_BIRTH},</if>
+            <if test="BABY_WEIGHT!=null">#{BABY_WEIGHT},</if>
+            <if test="CONFINED_MODE!=null and CONFINED_MODE!=''">#{CONFINED_MODE},</if>
+            <if test="OPERATOR_CODE != null and OPERATOR_CODE != ''">#{OPERATOR_CODE},</if>
+            <if test="OPERATOR_CODE != null and OPERATOR_CODE != ''">#{OPERATOR_CODE},</if>
+            <if test="OPERATOR_NAME != null and OPERATOR_NAME != ''">#{OPERATOR_NAME},</if>
+            sysdate,
+        </trim>
+    </insert>
+    <select id="selectListByBabyAdmissionNoList" parameterType="java.lang.String" resultMap="BabyInfoResult">
+        <include refid="selectBabyInfoVo"/>
+        where baby_no in
+        <foreach collection="list" item="babyNo" open="(" separator="," close=")">
+            #{babyNo}
+        </foreach>
+    </select>
+</mapper>

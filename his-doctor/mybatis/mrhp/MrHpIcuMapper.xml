@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrHpIcuMapper">
+
+    <resultMap type="MrHpIcu" id="MrHpIcuResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="icuNo"    column="icu_no"    />
+        <result property="icuCode"    column="icu_code"    />
+        <result property="icuName"    column="icu_name"    />
+        <result property="icuInTime"    column="icu_in_time"    />
+        <result property="icuOutTime"    column="icu_out_time"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="icuId"    column="icu_id"    />
+        <result property="icuHour"    column="icu_hour"    />
+    </resultMap>
+
+    <sql id="selectMrHpIcuVo">
+        select record_id, patient_id, icu_no, icu_code, icu_name, icu_in_time, icu_out_time, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, icu_id,icu_hour from mr_hp_icu
+    </sql>
+
+    <select id="selectMrHpIcuList" parameterType="MrHpIcu" resultMap="MrHpIcuResult">
+        <include refid="selectMrHpIcuVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="recordId != null"> and record_id = #{recordId}</if>
+            <if test="icuId != null"> and icu_id = #{icuId}</if>
+            <if test="icuHour != null'"> and icu_hour = #{icuHour}</if>
+            <if test="icuNo != null "> and icu_no = #{icuNo}</if>
+            <if test="icuCode != null  and icuCode != ''"> and icu_code = #{icuCode}</if>
+            <if test="icuName != null  and icuName != ''"> and icu_name like concat(concat('%', #{icuName}), '%')</if>
+            <if test="icuInTime != null "> and icu_in_time = #{icuInTime}</if>
+            <if test="icuOutTime != null "> and icu_out_time = #{icuOutTime}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectMrHpIcuById" parameterType="String" resultMap="MrHpIcuResult">
+        <include refid="selectMrHpIcuVo"/>
+        where icu_id = #{icuId}
+    </select>
+    <select id="selectMrHpIcuListByRecordId" parameterType="String" resultMap="MrHpIcuResult">
+        <include refid="selectMrHpIcuVo"/>
+        where record_id = #{recordId}
+    </select>
+
+    <insert id="insertMrHpIcu" parameterType="MrHpIcu">
+        insert into mr_hp_icu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">record_id,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="icuNo != null">icu_no,</if>
+            <if test="icuCode != null">icu_code,</if>
+            <if test="icuName != null">icu_name,</if>
+            <if test="icuInTime != null">icu_in_time,</if>
+            <if test="icuOutTime != null">icu_out_time,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="icuId != null">icu_id,</if>
+            <if test="icuHour != null">icu_hour,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">#{recordId},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="icuNo != null">#{icuNo},</if>
+            <if test="icuCode != null">#{icuCode},</if>
+            <if test="icuName != null">#{icuName},</if>
+            <if test="icuInTime != null">#{icuInTime},</if>
+            <if test="icuOutTime != null">#{icuOutTime},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="icuId != null">#{icuId},</if>
+            <if test="icuHour != null">#{icuHour},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateMrHpIcu" parameterType="MrHpIcu">
+        update mr_hp_icu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="icuNo != null">icu_no = #{icuNo},</if>
+            <if test="icuCode != null">icu_code = #{icuCode},</if>
+            <if test="icuName != null">icu_name = #{icuName},</if>
+            <if test="icuInTime != null">icu_in_time = #{icuInTime},</if>
+            <if test="icuOutTime != null">icu_out_time = #{icuOutTime},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="icuId != null">icu_id = #{icuId},</if>
+            alt_date =sysdate,
+        </trim>
+        where icu_id = #{icuId}
+    </update>
+
+    <delete id="deleteMrHpIcuById" parameterType="String">
+        delete from mr_hp_icu where icu_id = #{icuId}
+    </delete>
+    <delete id="deleteMrHpIcuByRecordId" parameterType="String">
+        delete from mr_hp_icu where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteMrHpIcuByIds" parameterType="String">
+        delete from mr_hp_icu where icu_id in
+        <foreach item="icuId" collection="array" open="(" separator="," close=")">
+            #{icuId}
+        </foreach>
+    </delete>
+    <select id="selectMrHpIcuDataSourceList" parameterType="com.emr.project.system.domain.vo.SqlVo" resultMap="MrHpIcuResult">
+        ${sqlStr}
+    </select>
+    <select id="selectMrisHpIcuListByRecordId" resultType="com.emr.project.mrhp.domain.mris.TdCmIcuSave">
+        select record_id as record_id, patient_id as patient_id, icu_no as icu_seq, icu_code as icu_code, icu_name as icu_name,
+        icu_in_time as icu_in_time, icu_out_time as icu_out_time, cre_per_code as cre_per_code, cre_per_name as cre_per_name,
+         cre_date as cre_date, alt_per_code as alt_per_code, alt_per_name as alt_per_name, alt_date as alt_date, icu_id as icu_id,
+         icu_hour as icu_hour from mr_hp_icu
+        where record_id = #{recordId}
+    </select>
+
+    <insert id="insertMrHpIcuList" parameterType="MrHpIcu">
+        insert into mr_hp_icu
+        (icu_id,record_id,patient_id,icu_no,icu_code,icu_name,icu_in_time,icu_out_time,icu_hour,cre_per_code,cre_per_name,cre_date)
+        <foreach collection ="list" item="list" index= "index" separator="union all" >
+            select  #{list.icuId,jdbcType=NUMERIC},
+            #{list.recordId,jdbcType=VARCHAR},
+            #{list.patientId,jdbcType=VARCHAR},
+            #{list.icuNo,jdbcType=NUMERIC},
+            #{list.icuCode,jdbcType=VARCHAR},
+            #{list.icuName,jdbcType=VARCHAR},
+            #{list.icuInTime,jdbcType=TIMESTAMP},
+            #{list.icuOutTime,jdbcType=TIMESTAMP},
+            #{list.icuHour,jdbcType=VARCHAR},
+            #{list.crePerCode,jdbcType=VARCHAR},
+            #{list.crePerName,jdbcType=VARCHAR},
+            sysdate
+            from dual
+        </foreach >
+    </insert>
+</mapper>

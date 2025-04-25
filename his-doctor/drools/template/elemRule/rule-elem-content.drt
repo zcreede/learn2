@@ -1,0 +1,32 @@
+template header
+
+rule
+ruleId
+ruleName
+ruleCode
+eventVariable
+errorMsg
+errorColumn
+eventType
+otherRule
+ruleConditions
+ruleOrder
+ruleResuleVo
+
+
+template "judge condition"
+
+rule "@{ruleName}"
+salience @{ruleOrder}
+when
+   @{eventVariable} : @{eventType}()
+   @{otherRule};
+then
+   @{ruleResuleVo} $checkResult = new @{ruleResuleVo}("@{ruleId}", "");
+   $checkResult.setContElemName($s.getContElemName());
+   $checkResult.setElemName($s.getElemName());
+   $checkResult.setElemId($s.getElemId().toString());
+   @{eventVariable}.getResultVoList().add($checkResult);
+end
+
+end template

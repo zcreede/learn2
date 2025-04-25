@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.VisitinfoMapper">
+
+    <resultMap  id="PatientInfoVoResult"  type="PatientInfoVo">
+        <result property="admissionNo"		 column="admission_no"    />
+        <result property="bedid"		 column="bedid"    />
+        <result property="name"		 column="name"    />
+        <result property="sex"		 column="sex"    />
+        <result property="personAge"		 column="person_age"    />
+        <result property="hospitalizedDate"		 column="hospitalized_date"    />
+        <result property="depName"		 column="dept_name dep_name"    />
+        <result property="visitingStaffName"		 column="visiting_staff_name"    />
+        <result property="deposIt"		 column="depos_it"    />
+        <result property="cumulativeCost"		 column="cumulative_cost"    />
+        <result property="money"		 column="money"    />
+        <result property="amountGuaranteed"		 column="amount_guaranteed"    />
+        <result property="birdthDate"		 column="birdth_date"    />
+        <result property="expenseCategoryNo"		 column="expense_category_no"    />
+        <result property="expenseCategory"		 column="expense_category"    />
+        <result property="nation"		 column="nation"    />
+        <result property="maritalSt"		 column="marital_st"    />
+        <result property="occuType"		 column="occu_type"    />
+        <result property="cardEdBgCd"		 column="card_ed_bg_cd"    />
+        <result property="postcode"		 column="postcode"    />
+        <result property="tel"		 column="tel"    />
+        <result property="idcard"		 column="idcard"    />
+        <result property="inpatArrearageMark"		 column="inpat_arrearage_mark"    />
+        <result property="presentAddressSheng"		 column="present_address_sheng"    />
+        <result property="presentAddressShi"		 column="present_address_shi"    />
+        <result property="presentAddressXian"		 column="present_address_xian"    />
+        <result property="presentAddressXiang"		 column="present_address_xiang"    />
+        <result property="presentAddressCun"		 column="present_address_cun"    />
+        <result property="entryDate"		 column="entry_date"    />
+        <result property="hospitalizedDate"		 column="hospitalized_date"    />
+        <result property="ResidentName"		 column="Resident_name"    />
+        <result property="ResidentNo"		 column="Resident_no"    />
+        <result property="visitingStaffNo"		 column="visiting_staff_no"    />
+        <result property="supervisorNurseNo"		 column="supervisor_nurse_no"    />
+        <result property="archiaterName"		 column="archiater_name"    />
+        <result property="visitingStaffName"		 column="visiting_staff_name"    />
+        <result property="supervisorNurseName"		 column="supervisor_nurse_name"    />
+        <result property="bedSurcharge"		 column="bed_surcharge"    />
+        <result property="levelName"		 column="level_Name"    />
+        <result property="levelCode"		 column="level_code"    />
+        <result property="outpatientDoctor"		 column="outpatient_doctor"    />
+        <result property="hospitalCondition"		 column="hospital_condition"    />
+        <result property="hospitalWay"		 column="hospital_way"    />
+        <result property="bloodType"		 column="blood_type"    />
+        <result property="outpatientDiagnosis"		 column="outpatient_diagnosis"    />
+        <result property="t11.weight"		 column="t11.weight"    />
+        <result property="hospitalCode"		 column="hospital_code"    />
+        <result property="caseNo"		 column="case_no"    />
+        <result property="hospitalizedCount"		 column="hospitalized_count"    />
+        <result property="admittingDiagnosis"		 column="admitting_diagnosis"    />
+        <result property="ageMonth"		 column="age_month"    />
+        <result property="ageDay"		 column="age_day"    />
+        <result property="ageHour"		 column="age_hour"    />
+    </resultMap>
+
+    <select id="getCountByAdmissionNo" parameterType="String" resultType="int">
+        select count(1) from t_ar_medicalinformation a
+        where a.admission_no=#{patientId,jdbcType=VARCHAR}
+        <!--and a.hospitalized_count= '1'-->
+<!--        <if test="wardNo != null and wardNo !=''">-->
+<!--            AND a.ward_no = #{wardNo,jdbcType=VARCHAR}-->
+<!--        </if>-->
+<!--        <if test="departmentNo != null and departmentNo !=''">-->
+<!--            AND a.department_no = #{departmentNo,jdbcType=VARCHAR}-->
+<!--        </if>-->
+    </select>
+
+    <select id="getPatientInfoDetail" parameterType="OperRoomVisitinfoVo" resultMap="PatientInfoVoResult">
+        SELECT
+        t1.admission_no,
+        t1.bedid,
+        t1.name,
+        t2.sex,
+        t2.person_age,
+        t1.hospitalized_date,
+        t6.dept_name dep_name,
+        t1.visiting_staff_name,
+        t10.depos_it,
+        t10.cumulative_cost,
+        ( t10.depos_it - t10.cumulative_cost ) money,
+        t10.amount_guaranteed,
+        t2.birdth_date,
+        t2.expense_category_no,
+        t2.expense_category,
+        t2.nation,
+        t2.marital_st,
+        t2.occu_type,
+        t2.card_ed_bg_cd,
+        t2.postcode,
+        t1.tel,
+        t2.idcard,
+        t1.inpat_arrearage_mark,
+        t2.present_address_sheng,
+        t2.present_address_shi,
+        t2.present_address_xian,
+        t2.present_address_xiang,
+        t2.present_address_cun,
+        t1.entry_date,
+        t1.hospitalized_date,
+        t1.Resident_name,
+        t1.Resident_no,
+        t1.visiting_staff_no,
+        t1.supervisor_nurse_no,
+        t1.archiater_name,
+        t1.visiting_staff_name,
+        t1.supervisor_nurse_name,
+        t1.bed_surcharge,
+        t8.level_Name,
+        t8.level_code,
+        (select staff_name from TM_BS_STAFF where t1.outpatient_doctor=staff_code) as outpatient_doctor,
+        t1.hospital_condition,
+        t1.hospital_way,
+        t2.blood_type,
+        t1.outpatient_diagnosis,
+        t11.weight,
+        t1.hospital_code,
+        t1.case_no,
+        t1.hospitalized_count,
+        t1.admitting_diagnosis,
+        t2.age_month,
+        t2.age_day,
+        t2.age_hour
+        FROM
+        t_ar_medicalinformation t1
+        LEFT JOIN t_ar_baseinfomation t2 ON t1.admission_no = t2.admission_no and
+        t1.hospitalized_count=t2.hospitalized_count
+        LEFT JOIN tm_na_beds t3 ON t1.bed_no = t3.bed_no
+        LEFT JOIN TM_BS_STAFF t5 ON t5.staff_no = t1.Resident_no
+        LEFT JOIN TM_BS_DEPT t6 ON t6.dept_code = t1.department_no
+        LEFT JOIN tm_na_nursing_level t8 ON t8.level_code = t1.level_care
+        LEFT JOIN TM_BS_WARD t9 ON t1.ward_no = t9.ward_no
+        LEFT JOIN t_ih_cumulativecost t10 ON t1.admission_no = t10.admission_no
+        left join td_na_pat_att t11 on t11.admission_no=t1.admission_no and t11.hospitalized_count=t1.hospitalized_count
+        WHERE t1.admission_no=#{patientId,jdbcType=VARCHAR}
+        <!--and t1.hospitalized_count=#{hospitalized_count,jdbcType=INTEGER}-->
+        <if test="wardNo != null and wardNo !=''">
+            AND t1.ward_no = #{wardNo,jdbcType=VARCHAR}
+        </if>
+        <if test="departmentNo != null and departmentNo !=''">
+            AND t1.department_no = #{departmentNo,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getPatientInfoDetailFromHis" parameterType="OperRoomVisitinfoVo" resultMap="PatientInfoVoResult">
+        SELECT
+        aa.admission_no,
+        aa.case_no,
+        aa.bedid,
+        aa.name,
+        aa.sex,
+        aa.person_age,
+        aa.hospitalized_date,
+        t6.dept_name dep_name,
+        t10.depos_it,
+        t10.cumulative_cost,
+        ( t10.depos_it - t10.cumulative_cost ) money,
+        t10.amount_guaranteed,
+        aa.birdth_date,
+        aa.expense_category_no,
+        aa.expense_category,
+        aa.nation,
+        aa.marital_st,
+        aa.occu_type,
+        aa.card_ed_bg_cd,
+        aa.postcode,
+        aa.tel,
+        aa.idcard,
+        aa.inpat_arrearage_mark,
+        aa.present_address_sheng,
+        aa.present_address_shi,
+        aa.present_address_xian,
+        aa.present_address_xiang,
+        aa.present_address_cun,
+        aa.entry_date,
+        aa.archiater_name,
+        aa.visiting_staff_name,
+        aa.supervisor_nurse_name,
+        aa.bed_surcharge,
+        t8.level_Name,
+        t8.level_code,
+        aa.outpatient_doctor,
+        aa.hospital_condition,
+        aa.hospital_way,
+        aa.blood_type,
+        aa.outpatient_diagnosis,
+        t11.weight,
+        aa.admitting_diagnosis,
+        (select mc from yy_p_dbzwh where icd=aa.admitting_diagnosis) as admitting_diagnosis_name,
+        aa.age_month,aa.age_day,aa.age_hour
+        FROM
+        (
+        SELECT
+        t1.ward_no,
+        t1.hospitalized_count,
+        t1.level_care,
+        t1.department_no,
+        t1.bed_no,
+        t1.admission_no,
+        t1.case_no,
+        t1.bedid,
+        t1.NAME,
+        t2.sex,
+        t2.person_age,
+        t1.hospitalized_date,
+        t2.birdth_date,
+        t2.expense_category_no,
+        t2.expense_category,
+        t2.nation,
+        t2.marital_st,
+        t2.occu_type,
+        t2.card_ed_bg_cd,
+        t2.postcode,
+        t1.tel,
+        t2.idcard,
+        t1.inpat_arrearage_mark,
+        t2.present_address_sheng,
+        t2.present_address_shi,
+        t2.present_address_xian,
+        t2.present_address_xiang,
+        t2.present_address_cun,
+        t1.entry_date,
+        t1.archiater_name,
+        t1.visiting_staff_name,
+        t1.supervisor_nurse_name,
+        t1.bed_surcharge,
+        t1.outpatient_doctor,
+        t1.hospital_condition,
+        t1.hospital_way,
+        t2.blood_type,
+        t1.outpatient_diagnosis,
+        t1.admitting_diagnosis,
+        t2.age_month,t2.age_day,t2.age_hour
+        FROM
+        t_ar_medicalinformation_day t1
+        LEFT JOIN t_ar_baseinfomation_day t2 ON t1.admission_no = t2.admission_no
+        AND t1.hospitalized_count = t2.hospitalized_count
+        UNION ALL
+        SELECT
+        t3.ward_no,
+        t3.hospitalized_count,
+        t3.level_care,
+        t3.department_no,
+        t3.bed_no,
+        t3.admission_no,
+        t3.case_no,
+        t3.bedid,
+        t3.NAME,
+        t4.sex,
+        t4.person_age,
+        t3.hospitalized_date,
+        t4.birdth_date,
+        t4.expense_category_no,
+        t4.expense_category,
+        t4.nation,
+        t4.marital_st,
+        t4.occu_type,
+        t4.card_ed_bg_cd,
+        t4.postcode,
+        t3.tel,
+        t4.idcard,
+        t3.inpat_arrearage_mark,
+        t4.present_address_sheng,
+        t4.present_address_shi,
+        t4.present_address_xian,
+        t4.present_address_xiang,
+        t4.present_address_cun,
+        t3.entry_date,
+        t3.archiater_name,
+        t3.visiting_staff_name,
+        t3.supervisor_nurse_name,
+        t3.bed_surcharge,
+        t3.outpatient_doctor,
+        t3.hospital_condition,
+        t3.hospital_way,
+        t4.blood_type,
+        t3.outpatient_diagnosis,
+        t3.admitting_diagnosis,
+        t4.age_month,t4.age_day,t4.age_hour
+        FROM
+        t_ar_medicalinformation_h t3
+        LEFT JOIN t_ar_baseinfomation_h t4 ON t3.admission_no = t4.admission_no
+        AND t3.hospitalized_count = t4.hospitalized_count
+        ) aa
+        LEFT JOIN tm_na_beds t3 ON aa.bed_no = t3.bed_no
+        LEFT JOIN TM_BS_DEPT t6 ON t6.dept_code = aa.department_no
+        LEFT JOIN tm_na_nursing_level t8 ON t8.level_code = aa.level_care
+        LEFT JOIN TM_BS_WARD t9 ON aa.ward_no = t9.ward_no
+        LEFT JOIN t_ih_cumulativecost t10 ON aa.admission_no = t10.admission_no
+        LEFT JOIN td_na_pat_att t11 ON t11.admission_no = aa.admission_no
+        AND t11.hospitalized_count = aa.hospitalized_count
+        WHERE aa.admission_no = #{patientId,jdbcType=VARCHAR}
+        <!--and aa.hospitalized_count=#{hospitalized_count,jdbcType=INTEGER}-->
+        <if test="wardNo != null and wardNo !=''">
+            AND aa.ward_no = #{wardNo,jdbcType=VARCHAR}
+        </if>
+        <if test="departmentNo != null and departmentNo !=''">
+            AND aa.department_no = #{departmentNo,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
+</mapper>

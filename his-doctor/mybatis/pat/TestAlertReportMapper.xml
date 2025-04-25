@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.TestAlertReportMapper">
+
+    <resultMap type="TestAlertReport" id="TestAlertReportResult">
+        <result property="resultalertid"    column="resultalertid"    />
+        <result property="alertman"    column="alertman"    />
+        <result property="alertdt"    column="alertdt"    />
+        <result property="reportid"    column="reportid"    />
+        <result property="resultid"    column="resultid"    />
+        <result property="rptunitid"    column="rptunitid"    />
+        <result property="rptunitname"    column="rptunitname"    />
+        <result property="hospitalcode"    column="hospitalcode"    />
+        <result property="patType"    column="pat_type"    />
+        <result property="patNo"    column="pat_no"    />
+        <result property="patId"    column="pat_id"    />
+        <result property="patCardno"    column="pat_cardno"    />
+        <result property="inpId"    column="inp_id"    />
+        <result property="patName"    column="pat_name"    />
+        <result property="patSex"    column="pat_sex"    />
+        <result property="patAgestr"    column="pat_agestr"    />
+        <result property="reqWardno"    column="req_wardno"    />
+        <result property="reqBedno"    column="req_bedno"    />
+        <result property="reqDeptno"    column="req_deptno"    />
+        <result property="reqDocno"    column="req_docno"    />
+        <result property="emerFlag"    column="emer_flag"    />
+        <result property="specimenName"    column="specimen_name"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="recieveDt"    column="recieve_dt"    />
+        <result property="descriptions"    column="descriptions"    />
+        <result property="rptItemid"    column="rpt_itemid"    />
+        <result property="rptItemcode"    column="rpt_itemcode"    />
+        <result property="itemcodeEn"    column="itemcode_en"    />
+        <result property="rptItemname"    column="rpt_itemname"    />
+        <result property="externalcode1"    column="externalcode1"    />
+        <result property="externalcode2"    column="externalcode2"    />
+        <result property="result"    column="result"    />
+        <result property="result1"    column="result1"    />
+        <result property="result2"    column="result2"    />
+        <result property="result3"    column="result3"    />
+        <result property="resultFlag"    column="result_flag"    />
+        <result property="resultUnit"    column="result_unit"    />
+        <result property="resultRef"    column="result_ref"    />
+        <result property="redoFlag"    column="redo_flag"    />
+        <result property="redoResult"    column="redo_result"    />
+        <result property="alertrules"    column="alertrules"    />
+        <result property="repDocCd" column="rep_doc_cd"/>
+        <result property="repDocName" column="rep_doc_name"/>
+        <result property="repDeptCd" column="rep_dept_cd"/>
+        <result property="repDeptName" column="rep_dept_name"/>
+    </resultMap>
+
+    <sql id="selectTestAlertReportVo">
+        select resultalertid, alertman, alertdt, reportid, resultid, rptunitid, rptunitname, hospitalcode, pat_type, pat_no, pat_id, pat_cardno, inp_id, pat_name, pat_sex, pat_agestr, req_wardno, req_bedno, req_deptno, req_docno, emer_flag, specimen_name, barcode, recieve_dt, descriptions, rpt_itemid, rpt_itemcode, itemcode_en, rpt_itemname, externalcode1, externalcode2, result, result1, result2, result3, result_flag, result_unit, result_ref, redo_flag, redo_result, alertrules from test_alert_report
+    </sql>
+
+    <select id="selectTestAlertReportList" parameterType="TestAlertReport" resultMap="TestAlertReportResult">
+        <include refid="selectTestAlertReportVo"/>
+        <where>
+            <if test="resultalertid != null  and resultalertid != ''"> and resultalertid = #{resultalertid}</if>
+            <if test="alertman != null  and alertman != ''"> and alertman = #{alertman}</if>
+            <if test="alertdt != null "> and alertdt = #{alertdt}</if>
+            <if test="reportid != null  and reportid != ''"> and reportid = #{reportid}</if>
+            <if test="resultid != null  and resultid != ''"> and resultid = #{resultid}</if>
+            <if test="rptunitid != null  and rptunitid != ''"> and rptunitid = #{rptunitid}</if>
+            <if test="rptunitname != null  and rptunitname != ''"> and rptunitname like concat(concat('%', #{rptunitname}), '%')</if>
+            <if test="hospitalcode != null  and hospitalcode != ''"> and hospitalcode = #{hospitalcode}</if>
+            <if test="patType != null  and patType != ''"> and pat_type = #{patType}</if>
+            <if test="patNo != null  and patNo != ''"> and pat_no = #{patNo}</if>
+            <if test="patId != null  and patId != ''"> and pat_id = #{patId}</if>
+            <if test="patCardno != null  and patCardno != ''"> and pat_cardno = #{patCardno}</if>
+            <if test="inpId != null  and inpId != ''"> and inp_id = #{inpId}</if>
+            <if test="patName != null  and patName != ''"> and pat_name like concat(concat('%', #{patName}), '%')</if>
+            <if test="patSex != null  and patSex != ''"> and pat_sex = #{patSex}</if>
+            <if test="patAgestr != null  and patAgestr != ''"> and pat_agestr = #{patAgestr}</if>
+            <if test="reqWardno != null  and reqWardno != ''"> and req_wardno = #{reqWardno}</if>
+            <if test="reqBedno != null  and reqBedno != ''"> and req_bedno = #{reqBedno}</if>
+            <if test="reqDeptno != null  and reqDeptno != ''"> and req_deptno = #{reqDeptno}</if>
+            <if test="reqDocno != null  and reqDocno != ''"> and req_docno = #{reqDocno}</if>
+            <if test="emerFlag != null  and emerFlag != ''"> and emer_flag = #{emerFlag}</if>
+            <if test="specimenName != null  and specimenName != ''"> and specimen_name like concat(concat('%', #{specimenName}), '%')</if>
+            <if test="barcode != null  and barcode != ''"> and barcode = #{barcode}</if>
+            <if test="recieveDt != null "> and recieve_dt = #{recieveDt}</if>
+            <if test="descriptions != null  and descriptions != ''"> and descriptions = #{descriptions}</if>
+            <if test="rptItemid != null  and rptItemid != ''"> and rpt_itemid = #{rptItemid}</if>
+            <if test="rptItemcode != null  and rptItemcode != ''"> and rpt_itemcode = #{rptItemcode}</if>
+            <if test="itemcodeEn != null  and itemcodeEn != ''"> and itemcode_en = #{itemcodeEn}</if>
+            <if test="rptItemname != null  and rptItemname != ''"> and rpt_itemname like concat(concat('%', #{rptItemname}), '%')</if>
+            <if test="externalcode1 != null  and externalcode1 != ''"> and externalcode1 = #{externalcode1}</if>
+            <if test="externalcode2 != null  and externalcode2 != ''"> and externalcode2 = #{externalcode2}</if>
+            <if test="result != null  and result != ''"> and result = #{result}</if>
+            <if test="result1 != null  and result1 != ''"> and result1 = #{result1}</if>
+            <if test="result2 != null  and result2 != ''"> and result2 = #{result2}</if>
+            <if test="result3 != null  and result3 != ''"> and result3 = #{result3}</if>
+            <if test="resultFlag != null  and resultFlag != ''"> and result_flag = #{resultFlag}</if>
+            <if test="resultUnit != null  and resultUnit != ''"> and result_unit = #{resultUnit}</if>
+            <if test="resultRef != null  and resultRef != ''"> and result_ref = #{resultRef}</if>
+            <if test="redoFlag != null  and redoFlag != ''"> and redo_flag = #{redoFlag}</if>
+            <if test="redoResult != null  and redoResult != ''"> and redo_result = #{redoResult}</if>
+            <if test="alertrules != null  and alertrules != ''"> and alertrules = #{alertrules}</if>
+        </where>
+    </select>
+
+    <select id="selectTestAlertReportById" parameterType="String" resultMap="TestAlertReportResult">
+        <include refid="selectTestAlertReportVo"/>
+        where resultalertid = #{resultalertid}
+    </select>
+
+    <insert id="insertTestAlertReport" parameterType="TestAlertReport">
+        insert into test_alert_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resultalertid != null">resultalertid,</if>
+            <if test="alertman != null">alertman,</if>
+            <if test="alertdt != null">alertdt,</if>
+            <if test="reportid != null">reportid,</if>
+            <if test="resultid != null">resultid,</if>
+            <if test="rptunitid != null">rptunitid,</if>
+            <if test="rptunitname != null">rptunitname,</if>
+            <if test="hospitalcode != null">hospitalcode,</if>
+            <if test="patType != null">pat_type,</if>
+            <if test="patNo != null">pat_no,</if>
+            <if test="patId != null">pat_id,</if>
+            <if test="patCardno != null">pat_cardno,</if>
+            <if test="inpId != null">inp_id,</if>
+            <if test="patName != null">pat_name,</if>
+            <if test="patSex != null">pat_sex,</if>
+            <if test="patAgestr != null">pat_agestr,</if>
+            <if test="reqWardno != null">req_wardno,</if>
+            <if test="reqBedno != null">req_bedno,</if>
+            <if test="reqDeptno != null">req_deptno,</if>
+            <if test="reqDocno != null">req_docno,</if>
+            <if test="emerFlag != null">emer_flag,</if>
+            <if test="specimenName != null">specimen_name,</if>
+            <if test="barcode != null">barcode,</if>
+            <if test="recieveDt != null">recieve_dt,</if>
+            <if test="descriptions != null">descriptions,</if>
+            <if test="rptItemid != null">rpt_itemid,</if>
+            <if test="rptItemcode != null">rpt_itemcode,</if>
+            <if test="itemcodeEn != null">itemcode_en,</if>
+            <if test="rptItemname != null">rpt_itemname,</if>
+            <if test="externalcode1 != null">externalcode1,</if>
+            <if test="externalcode2 != null">externalcode2,</if>
+            <if test="result != null">result,</if>
+            <if test="result1 != null">result1,</if>
+            <if test="result2 != null">result2,</if>
+            <if test="result3 != null">result3,</if>
+            <if test="resultFlag != null">result_flag,</if>
+            <if test="resultUnit != null">result_unit,</if>
+            <if test="resultRef != null">result_ref,</if>
+            <if test="redoFlag != null">redo_flag,</if>
+            <if test="redoResult != null">redo_result,</if>
+            <if test="alertrules != null">alertrules,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="resultalertid != null">#{resultalertid},</if>
+            <if test="alertman != null">#{alertman},</if>
+            <if test="alertdt != null">#{alertdt},</if>
+            <if test="reportid != null">#{reportid},</if>
+            <if test="resultid != null">#{resultid},</if>
+            <if test="rptunitid != null">#{rptunitid},</if>
+            <if test="rptunitname != null">#{rptunitname},</if>
+            <if test="hospitalcode != null">#{hospitalcode},</if>
+            <if test="patType != null">#{patType},</if>
+            <if test="patNo != null">#{patNo},</if>
+            <if test="patId != null">#{patId},</if>
+            <if test="patCardno != null">#{patCardno},</if>
+            <if test="inpId != null">#{inpId},</if>
+            <if test="patName != null">#{patName},</if>
+            <if test="patSex != null">#{patSex},</if>
+            <if test="patAgestr != null">#{patAgestr},</if>
+            <if test="reqWardno != null">#{reqWardno},</if>
+            <if test="reqBedno != null">#{reqBedno},</if>
+            <if test="reqDeptno != null">#{reqDeptno},</if>
+            <if test="reqDocno != null">#{reqDocno},</if>
+            <if test="emerFlag != null">#{emerFlag},</if>
+            <if test="specimenName != null">#{specimenName},</if>
+            <if test="barcode != null">#{barcode},</if>
+            <if test="recieveDt != null">#{recieveDt},</if>
+            <if test="descriptions != null">#{descriptions},</if>
+            <if test="rptItemid != null">#{rptItemid},</if>
+            <if test="rptItemcode != null">#{rptItemcode},</if>
+            <if test="itemcodeEn != null">#{itemcodeEn},</if>
+            <if test="rptItemname != null">#{rptItemname},</if>
+            <if test="externalcode1 != null">#{externalcode1},</if>
+            <if test="externalcode2 != null">#{externalcode2},</if>
+            <if test="result != null">#{result},</if>
+            <if test="result1 != null">#{result1},</if>
+            <if test="result2 != null">#{result2},</if>
+            <if test="result3 != null">#{result3},</if>
+            <if test="resultFlag != null">#{resultFlag},</if>
+            <if test="resultUnit != null">#{resultUnit},</if>
+            <if test="resultRef != null">#{resultRef},</if>
+            <if test="redoFlag != null">#{redoFlag},</if>
+            <if test="redoResult != null">#{redoResult},</if>
+            <if test="alertrules != null">#{alertrules},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestAlertReport" parameterType="TestAlertReport">
+        update test_alert_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="alertman != null">alertman = #{alertman},</if>
+            <if test="alertdt != null">alertdt = #{alertdt},</if>
+            <if test="reportid != null">reportid = #{reportid},</if>
+            <if test="resultid != null">resultid = #{resultid},</if>
+            <if test="rptunitid != null">rptunitid = #{rptunitid},</if>
+            <if test="rptunitname != null">rptunitname = #{rptunitname},</if>
+            <if test="hospitalcode != null">hospitalcode = #{hospitalcode},</if>
+            <if test="patType != null">pat_type = #{patType},</if>
+            <if test="patNo != null">pat_no = #{patNo},</if>
+            <if test="patId != null">pat_id = #{patId},</if>
+            <if test="patCardno != null">pat_cardno = #{patCardno},</if>
+            <if test="inpId != null">inp_id = #{inpId},</if>
+            <if test="patName != null">pat_name = #{patName},</if>
+            <if test="patSex != null">pat_sex = #{patSex},</if>
+            <if test="patAgestr != null">pat_agestr = #{patAgestr},</if>
+            <if test="reqWardno != null">req_wardno = #{reqWardno},</if>
+            <if test="reqBedno != null">req_bedno = #{reqBedno},</if>
+            <if test="reqDeptno != null">req_deptno = #{reqDeptno},</if>
+            <if test="reqDocno != null">req_docno = #{reqDocno},</if>
+            <if test="emerFlag != null">emer_flag = #{emerFlag},</if>
+            <if test="specimenName != null">specimen_name = #{specimenName},</if>
+            <if test="barcode != null">barcode = #{barcode},</if>
+            <if test="recieveDt != null">recieve_dt = #{recieveDt},</if>
+            <if test="descriptions != null">descriptions = #{descriptions},</if>
+            <if test="rptItemid != null">rpt_itemid = #{rptItemid},</if>
+            <if test="rptItemcode != null">rpt_itemcode = #{rptItemcode},</if>
+            <if test="itemcodeEn != null">itemcode_en = #{itemcodeEn},</if>
+            <if test="rptItemname != null">rpt_itemname = #{rptItemname},</if>
+            <if test="externalcode1 != null">externalcode1 = #{externalcode1},</if>
+            <if test="externalcode2 != null">externalcode2 = #{externalcode2},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="result1 != null">result1 = #{result1},</if>
+            <if test="result2 != null">result2 = #{result2},</if>
+            <if test="result3 != null">result3 = #{result3},</if>
+            <if test="resultFlag != null">result_flag = #{resultFlag},</if>
+            <if test="resultUnit != null">result_unit = #{resultUnit},</if>
+            <if test="resultRef != null">result_ref = #{resultRef},</if>
+            <if test="redoFlag != null">redo_flag = #{redoFlag},</if>
+            <if test="redoResult != null">redo_result = #{redoResult},</if>
+            <if test="alertrules != null">alertrules = #{alertrules},</if>
+        </trim>
+        where resultalertid = #{resultalertid}
+    </update>
+
+    <delete id="deleteTestAlertReportById" parameterType="String">
+        delete from test_alert_report where resultalertid = #{resultalertid}
+    </delete>
+
+    <delete id="deleteTestAlertReportByIds" parameterType="String">
+        delete from test_alert_report where resultalertid in
+        <foreach item="resultalertid" collection="array" open="(" separator="," close=")">
+            #{resultalertid}
+        </foreach>
+    </delete>
+
+    <resultMap id="TestAlertReportVoResult" type="TestAlertReportVo" extends="TestAlertReportResult">
+        <result property="patientName"    column="patient_name"    />
+        <result property="sex"    column="pat_sex"    />
+        <result property="age"    column="pat_agestr"    />
+        <result property="ageY"    column="age_y"    />
+        <result property="ageM"    column="age_m"    />
+        <result property="ageD"    column="age_d"    />
+        <result property="ageH"    column="age_h"    />
+        <result property="ageMi"    column="age_mi"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="maItemName"    column="ma_item_name"    />
+        <result property="asptAim"    column="aspt_aim"    />
+        <result property="itemState"    column="item_state"    />
+        <result property="resType"    column="resType"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="reportUrl" column="report_url"/>
+        <result property="caseNo" column="case_no"/>
+        <result property="hospitalizedCount" column="HOSPITALIZED_COUNT"/>
+        <result property="idcard" column="idcard"/>
+        <result property="hospitalizedDate" column="HOSPITALIZED_DATE"/>
+        <result property="leaveHospitalDate" column="LEAVE_HOSPITAL_DATE"/>
+        <result property="visitingStaffNo" column="visiting_staff_no" />
+        <result property="visitingStaffName" column="visiting_staff_name" />
+        <result property="msgId" column="msg_id" />
+        <result property="mainFileId" column="main_file_id" />
+        <result property="patientMainId" column="patient_main_id" />
+        <result property="reqDeptname" column="req_deptname" />
+        <result property="residentNo" column="resident_no" />
+        <result property="residentName" column="resident_name" />
+    </resultMap>
+
+    <select id="selectTestAlertMsg" parameterType="TestAlertReportVo" resultMap="TestAlertReportVoResult">
+        select t.resultalertid, t.alertman, t.alertdt, t.reportid, t.resultid, t.rptunitid, t.rptunitname, t.hospitalcode, t.pat_type, t.pat_no,
+        t.pat_id, t.pat_cardno, t.inp_id, t.pat_name, t.pat_sex, t.pat_agestr, t.req_wardno, t.req_bedno, t.req_deptno,d.dept_name req_deptname, t.req_docno, t.emer_flag,
+        t.specimen_name, t.barcode, t.recieve_dt, t.descriptions, t.rpt_itemid, t.rpt_itemcode, t.itemcode_en, t.rpt_itemname, t.externalcode1,
+        t.externalcode2, t.result, t.result1, t.result2, t.result3, t.result_flag, t.result_unit, t.result_ref, t.redo_flag, t.redo_result,
+        t.alertrules,m.name patient_name,m.admission_no inp_no, m.bedid bed_no,m.case_no,m.VISITING_STAFF_NO,m.VISITING_STAFF_NAME,em.id msg_id,
+        t.rep_doc_cd, t.rep_doc_name, ei.id main_file_id,p.patient_main_id,t.REP_DEPT_CD,t.rep_dept_name,m.resident_no,m.resident_name
+        from test_alert_report t
+        left join test_exam_alert_result te on t.resultalertid = te.report_id
+        left join T_AR_MEDICALINFORMATION_ALL m on m.admission_no = t.pat_id
+        left join T_AR_BASEINFOMATION_ALL b on m.ADMISSION_NO = b.ADMISSION_NO
+        left join emr_message em on t.resultalertid = em.bus_id
+        left join emr_index ei on t.pat_id = ei.patient_id and ei.mr_type = 'MAINFILE'  and ei.del_flag = '0'
+        left join pat_personalinfo p on t.PAT_ID = p.PATIENT_ID
+        left join tm_bs_dept d on t.req_deptno = d.dept_code
+        where 1=1 and te.handle_doc_no is null and t.pat_type='3'
+        <if test="reqDeptno != null and reqDeptno != ''">
+            and t.REQ_DEPTNO = #{reqDeptno}
+        </if>
+        <if test="reqDocno != null and reqDocno != ''">
+            and t.REQ_DOCNO = #{reqDocno}
+        </if>
+        <if test="resultalertidList != null and resultalertidList.size > 0">
+            and t.resultalertid not in
+            <foreach collection="resultalertidList" item="resultalertid" open="(" separator="," close=")">
+                #{resultalertid}
+            </foreach>
+        </if>
+    </select>
+</mapper>

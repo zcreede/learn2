@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderOperationMapper">
+
+    <resultMap type="TdPaOrderOperation" id="TdPaOrderOperationResult">
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="handleTime"    column="handle_time"    />
+        <result property="valid"    column="valid"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderOperationVo">
+        select order_no, order_group_no, order_sort_number, handle_time, valid, from td_pa_order_operation
+    </sql>
+
+    <select id="selectTdPaOrderOperationList" parameterType="TdPaOrderOperation" resultMap="TdPaOrderOperationResult">
+        <include refid="selectTdPaOrderOperationVo"/>
+        <where>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderGroupNo != null  and orderGroupNo != ''"> and order_group_no = #{orderGroupNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="handleTime != null "> and handle_time = #{handleTime}</if>
+            <if test="valid != null "> and valid = #{valid}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderOperationById" parameterType="String" resultMap="TdPaOrderOperationResult">
+        <include refid="selectTdPaOrderOperationVo"/>
+        where order_no = #{orderNo}
+    </select>
+
+    <insert id="insertTdPaOrderOperation" parameterType="TdPaOrderOperation">
+        insert into td_pa_order_operation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="orderGroupNo != null and orderGroupNo != ''">order_group_no,</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number,</if>
+            handle_time,
+            <if test="valid != null">valid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="orderGroupNo != null and orderGroupNo != ''">#{orderGroupNo},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">#{orderSortNumber},</if>
+            sysdate,
+            <if test="valid != null">#{valid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderOperation" parameterType="TdPaOrderOperation">
+        update td_pa_order_operation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderGroupNo != null and orderGroupNo != ''">order_group_no = #{orderGroupNo},</if>
+            <if test="orderSortNumber != null and orderSortNumber != ''">order_sort_number = #{orderSortNumber},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+            <if test="valid != null">valid = #{valid},</if>
+        </trim>
+        where order_no = #{orderNo}
+    </update>
+
+    <delete id="deleteTdPaOrderOperationById" parameterType="String">
+        delete from td_pa_order_operation where order_no = #{orderNo}
+    </delete>
+
+    <delete id="deleteTdPaOrderOperationByIds" parameterType="String">
+        delete from td_pa_order_operation where order_no in
+        <foreach item="orderNo" collection="array" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </delete>
+</mapper>

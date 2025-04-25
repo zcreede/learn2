@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.OperatRecordMapper">
+    
+    <resultMap type="OperatRecord" id="OperatRecordResult">
+        <result property="oprId"    column="opr_id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="oprApplNo"    column="opr_appl_no"    />
+        <result property="areaCode"    column="area_code"    />
+        <result property="wardName"    column="ward_name"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="oprRomNo"    column="opr_rom_no"    />
+        <result property="oprRomName"    column="opr_rom_name"    />
+        <result property="oprPreDigIcd"    column="opr_pre_dig_icd"    />
+        <result property="oprPreDigName"    column="opr_pre_dig_name"    />
+        <result property="oprOpstDigName"    column="opr_opst_dig_name"    />
+        <result property="oprOpstDigIcd"    column="opr_opst_dig_icd"    />
+        <result property="oprBeginDatetime"    column="opr_begin_datetime"    />
+        <result property="oprEndDatetime"    column="opr_end_datetime"    />
+        <result property="oprDuraMins"    column="opr_dura_mins"    />
+        <result property="oprIcd"    column="opr_icd"    />
+        <result property="oprName"    column="opr_name"    />
+        <result property="oprLevelCode"    column="opr_level_code"    />
+        <result property="oprLevel"    column="opr_level"    />
+        <result property="oprPart"    column="opr_part"    />
+        <result property="oprPosiCode"    column="opr_posi_code"    />
+        <result property="oprInciName"    column="opr_inci_name"    />
+        <result property="oprInciCode"    column="opr_inci_code"    />
+        <result property="bleeVolu"    column="blee_volu"    />
+        <result property="transQuan"    column="trans_quan"    />
+        <result property="blooQuan"    column="bloo_quan"    />
+        <result property="oprPreDrug"    column="opr_pre_drug"    />
+        <result property="oprDrug"    column="opr_drug"    />
+        <result property="draiMate"    column="drai_mate"    />
+        <result property="draiMateNum"    column="drai_mate_num"    />
+        <result property="draiFlag"    column="drai_flag"    />
+        <result property="draiMatePosi"    column="drai_mate_posi"    />
+        <result property="transReacFlag"    column="trans_reac_flag"    />
+        <result property="transReacTypeCode"    column="trans_reac_type_code"    />
+        <result property="oprDoctCode"    column="opr_doct_code"    />
+        <result property="oprDoctName"    column="opr_doct_name"    />
+        <result property="oprAssiName"    column="opr_assi_name"    />
+        <result property="aidName1"    column="aid_name1"    />
+        <result property="aidName2"    column="aid_name2"    />
+        <result property="instNurseCode"    column="inst_nurse_code"    />
+        <result property="instNurseName"    column="inst_nurse_name"    />
+        <result property="patrNurseCode"    column="patr_nurse_code"    />
+        <result property="patrNurseName"    column="patr_nurse_name"    />
+        <result property="anestCode"    column="anest_code"    />
+        <result property="anestName"    column="anest_name"    />
+        <result property="anestMethCode"    column="anest_meth_code"    />
+        <result property="anestMethName"    column="anest_meth_name"    />
+        <result property="oprSameDayNo"    column="opr_same_day_no"    />
+        <result property="hbv"    column="hbv"    />
+        <result property="hcb"    column="hcb"    />
+        <result property="hiv"    column="hiv"    />
+        <result property="oprApplState"    column="opr_appl_state"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectOperatRecordVo">
+        select opr_id, org_cd, patient_id, opr_appl_no, area_code, ward_name, dept_name, dept_cd, opr_rom_no, opr_rom_name, opr_pre_dig_icd, opr_pre_dig_name, opr_opst_dig_name, opr_opst_dig_icd, opr_begin_datetime, opr_end_datetime, opr_dura_mins, opr_icd, opr_name, opr_level_code, opr_level, opr_part, opr_posi_code, opr_inci_name, opr_inci_code, blee_volu, trans_quan, bloo_quan, opr_pre_drug, opr_drug, drai_mate, drai_mate_num, drai_flag, drai_mate_posi, trans_reac_flag, trans_reac_type_code, opr_doct_code, opr_doct_name, opr_assi_name, aid_name1, aid_name2, inst_nurse_code, inst_nurse_name, patr_nurse_code, patr_nurse_name, anest_code, anest_name, anest_meth_code, anest_meth_name, opr_same_day_no, hbv, hcb, hiv, opr_appl_state, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from operat_record
+    </sql>
+
+    <select id="selectOperatRecordList" parameterType="OperatRecord" resultMap="OperatRecordResult">
+        <include refid="selectOperatRecordVo"/>
+        <where>  
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="oprApplNo != null  and oprApplNo != ''"> and opr_appl_no = #{oprApplNo}</if>
+            <if test="areaCode != null  and areaCode != ''"> and area_code = #{areaCode}</if>
+            <if test="wardName != null  and wardName != ''"> and ward_name like concat(concat('%', #{wardName}), '%')</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="oprRomNo != null  and oprRomNo != ''"> and opr_rom_no = #{oprRomNo}</if>
+            <if test="oprRomName != null  and oprRomName != ''"> and opr_rom_name like concat(concat('%', #{oprRomName}), '%')</if>
+            <if test="oprPreDigIcd != null  and oprPreDigIcd != ''"> and opr_pre_dig_icd = #{oprPreDigIcd}</if>
+            <if test="oprPreDigName != null  and oprPreDigName != ''"> and opr_pre_dig_name like concat(concat('%', #{oprPreDigName}), '%')</if>
+            <if test="oprOpstDigName != null  and oprOpstDigName != ''"> and opr_opst_dig_name like concat(concat('%', #{oprOpstDigName}), '%')</if>
+            <if test="oprOpstDigIcd != null  and oprOpstDigIcd != ''"> and opr_opst_dig_icd = #{oprOpstDigIcd}</if>
+            <if test="oprBeginDatetime != null "> and opr_begin_datetime = #{oprBeginDatetime}</if>
+            <if test="oprEndDatetime != null "> and opr_end_datetime = #{oprEndDatetime}</if>
+            <if test="oprDuraMins != null "> and opr_dura_mins = #{oprDuraMins}</if>
+            <if test="oprIcd != null  and oprIcd != ''"> and opr_icd = #{oprIcd}</if>
+            <if test="oprName != null  and oprName != ''"> and opr_name like concat(concat('%', #{oprName}), '%')</if>
+            <if test="oprLevelCode != null  and oprLevelCode != ''"> and opr_level_code = #{oprLevelCode}</if>
+            <if test="oprLevel != null  and oprLevel != ''"> and opr_level = #{oprLevel}</if>
+            <if test="oprPart != null  and oprPart != ''"> and opr_part = #{oprPart}</if>
+            <if test="oprPosiCode != null  and oprPosiCode != ''"> and opr_posi_code = #{oprPosiCode}</if>
+            <if test="oprInciName != null  and oprInciName != ''"> and opr_inci_name like concat(concat('%', #{oprInciName}), '%')</if>
+            <if test="oprInciCode != null  and oprInciCode != ''"> and opr_inci_code = #{oprInciCode}</if>
+            <if test="bleeVolu != null "> and blee_volu = #{bleeVolu}</if>
+            <if test="transQuan != null "> and trans_quan = #{transQuan}</if>
+            <if test="blooQuan != null "> and bloo_quan = #{blooQuan}</if>
+            <if test="oprPreDrug != null  and oprPreDrug != ''"> and opr_pre_drug = #{oprPreDrug}</if>
+            <if test="oprDrug != null  and oprDrug != ''"> and opr_drug = #{oprDrug}</if>
+            <if test="draiMate != null  and draiMate != ''"> and drai_mate = #{draiMate}</if>
+            <if test="draiMateNum != null  and draiMateNum != ''"> and drai_mate_num = #{draiMateNum}</if>
+            <if test="draiFlag != null "> and drai_flag = #{draiFlag}</if>
+            <if test="draiMatePosi != null  and draiMatePosi != ''"> and drai_mate_posi = #{draiMatePosi}</if>
+            <if test="transReacFlag != null "> and trans_reac_flag = #{transReacFlag}</if>
+            <if test="transReacTypeCode != null  and transReacTypeCode != ''"> and trans_reac_type_code = #{transReacTypeCode}</if>
+            <if test="oprDoctCode != null  and oprDoctCode != ''"> and opr_doct_code = #{oprDoctCode}</if>
+            <if test="oprDoctName != null  and oprDoctName != ''"> and opr_doct_name like concat(concat('%', #{oprDoctName}), '%')</if>
+            <if test="oprAssiName != null  and oprAssiName != ''"> and opr_assi_name like concat(concat('%', #{oprAssiName}), '%')</if>
+            <if test="aidName1 != null  and aidName1 != ''"> and aid_name1 = #{aidName1}</if>
+            <if test="aidName2 != null  and aidName2 != ''"> and aid_name2 = #{aidName2}</if>
+            <if test="instNurseCode != null  and instNurseCode != ''"> and inst_nurse_code = #{instNurseCode}</if>
+            <if test="instNurseName != null  and instNurseName != ''"> and inst_nurse_name like concat(concat('%', #{instNurseName}), '%')</if>
+            <if test="patrNurseCode != null  and patrNurseCode != ''"> and patr_nurse_code = #{patrNurseCode}</if>
+            <if test="patrNurseName != null  and patrNurseName != ''"> and patr_nurse_name like concat(concat('%', #{patrNurseName}), '%')</if>
+            <if test="anestCode != null  and anestCode != ''"> and anest_code = #{anestCode}</if>
+            <if test="anestName != null  and anestName != ''"> and anest_name like concat(concat('%', #{anestName}), '%')</if>
+            <if test="anestMethCode != null  and anestMethCode != ''"> and anest_meth_code = #{anestMethCode}</if>
+            <if test="anestMethName != null  and anestMethName != ''"> and anest_meth_name like concat(concat('%', #{anestMethName}), '%')</if>
+            <if test="oprSameDayNo != null  and oprSameDayNo != ''"> and opr_same_day_no = #{oprSameDayNo}</if>
+            <if test="hbv != null  and hbv != ''"> and hbv = #{hbv}</if>
+            <if test="hcb != null  and hcb != ''"> and hcb = #{hcb}</if>
+            <if test="hiv != null  and hiv != ''"> and hiv = #{hiv}</if>
+            <if test="oprApplState != null  and oprApplState != ''"> and opr_appl_state = #{oprApplState}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectOperatRecordById" parameterType="String" resultMap="OperatRecordResult">
+        <include refid="selectOperatRecordVo"/>
+        where opr_id = #{oprId}
+    </select>
+
+    <select id="selectOperatRecordByDate" parameterType="OperatRecordVo" resultMap="OperatRecordResult">
+        <include refid="selectOperatRecordVo"/>
+        where patient_id = #{patientId}
+        <if test="creDateBegin != null and creDateBegin != ''">and cre_date &gt;= to_date(#{creDateBegin},'yyyy-MM-dd HH24:mi:ss') </if>
+        <if test="creDateEnd != null and creDateEnd != ''">and cre_date &lt; to_date(#{creDateEnd},'yyyy-MM-dd HH24:mi:ss')</if>
+        order by OPR_BEGIN_DATETIME desc
+    </select>
+
+    <insert id="insertOperatRecord" parameterType="OperatRecord">
+<!--        <selectKey keyProperty="oprId" resultType="long" order="BEFORE">-->
+<!--            SELECT seq_operat_record.NEXTVAL as oprId FROM DUAL-->
+<!--        </selectKey>-->
+        insert into operat_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="oprId != null">opr_id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="oprApplNo != null">opr_appl_no,</if>
+            <if test="areaCode != null">area_code,</if>
+            <if test="wardName != null">ward_name,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="oprRomNo != null">opr_rom_no,</if>
+            <if test="oprRomName != null">opr_rom_name,</if>
+            <if test="oprPreDigIcd != null">opr_pre_dig_icd,</if>
+            <if test="oprPreDigName != null">opr_pre_dig_name,</if>
+            <if test="oprOpstDigName != null">opr_opst_dig_name,</if>
+            <if test="oprOpstDigIcd != null">opr_opst_dig_icd,</if>
+            <if test="oprBeginDatetime != null">opr_begin_datetime,</if>
+            <if test="oprEndDatetime != null">opr_end_datetime,</if>
+            <if test="oprDuraMins != null">opr_dura_mins,</if>
+            <if test="oprIcd != null">opr_icd,</if>
+            <if test="oprName != null">opr_name,</if>
+            <if test="oprLevelCode != null">opr_level_code,</if>
+            <if test="oprLevel != null">opr_level,</if>
+            <if test="oprPart != null">opr_part,</if>
+            <if test="oprPosiCode != null">opr_posi_code,</if>
+            <if test="oprInciName != null">opr_inci_name,</if>
+            <if test="oprInciCode != null">opr_inci_code,</if>
+            <if test="bleeVolu != null">blee_volu,</if>
+            <if test="transQuan != null">trans_quan,</if>
+            <if test="blooQuan != null">bloo_quan,</if>
+            <if test="oprPreDrug != null">opr_pre_drug,</if>
+            <if test="oprDrug != null">opr_drug,</if>
+            <if test="draiMate != null">drai_mate,</if>
+            <if test="draiMateNum != null">drai_mate_num,</if>
+            <if test="draiFlag != null">drai_flag,</if>
+            <if test="draiMatePosi != null">drai_mate_posi,</if>
+            <if test="transReacFlag != null">trans_reac_flag,</if>
+            <if test="transReacTypeCode != null">trans_reac_type_code,</if>
+            <if test="oprDoctCode != null">opr_doct_code,</if>
+            <if test="oprDoctName != null">opr_doct_name,</if>
+            <if test="oprAssiName != null">opr_assi_name,</if>
+            <if test="aidName1 != null">aid_name1,</if>
+            <if test="aidName2 != null">aid_name2,</if>
+            <if test="instNurseCode != null">inst_nurse_code,</if>
+            <if test="instNurseName != null">inst_nurse_name,</if>
+            <if test="patrNurseCode != null">patr_nurse_code,</if>
+            <if test="patrNurseName != null">patr_nurse_name,</if>
+            <if test="anestCode != null">anest_code,</if>
+            <if test="anestName != null">anest_name,</if>
+            <if test="anestMethCode != null">anest_meth_code,</if>
+            <if test="anestMethName != null">anest_meth_name,</if>
+            <if test="oprSameDayNo != null">opr_same_day_no,</if>
+            <if test="hbv != null">hbv,</if>
+            <if test="hcb != null">hcb,</if>
+            <if test="hiv != null">hiv,</if>
+            <if test="oprApplState != null">opr_appl_state,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="oprId != null">#{oprId},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="oprApplNo != null">#{oprApplNo},</if>
+            <if test="areaCode != null">#{areaCode},</if>
+            <if test="wardName != null">#{wardName},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="oprRomNo != null">#{oprRomNo},</if>
+            <if test="oprRomName != null">#{oprRomName},</if>
+            <if test="oprPreDigIcd != null">#{oprPreDigIcd},</if>
+            <if test="oprPreDigName != null">#{oprPreDigName},</if>
+            <if test="oprOpstDigName != null">#{oprOpstDigName},</if>
+            <if test="oprOpstDigIcd != null">#{oprOpstDigIcd},</if>
+            <if test="oprBeginDatetime != null">#{oprBeginDatetime},</if>
+            <if test="oprEndDatetime != null">#{oprEndDatetime},</if>
+            <if test="oprDuraMins != null">#{oprDuraMins},</if>
+            <if test="oprIcd != null">#{oprIcd},</if>
+            <if test="oprName != null">#{oprName},</if>
+            <if test="oprLevelCode != null">#{oprLevelCode},</if>
+            <if test="oprLevel != null">#{oprLevel},</if>
+            <if test="oprPart != null">#{oprPart},</if>
+            <if test="oprPosiCode != null">#{oprPosiCode},</if>
+            <if test="oprInciName != null">#{oprInciName},</if>
+            <if test="oprInciCode != null">#{oprInciCode},</if>
+            <if test="bleeVolu != null">#{bleeVolu},</if>
+            <if test="transQuan != null">#{transQuan},</if>
+            <if test="blooQuan != null">#{blooQuan},</if>
+            <if test="oprPreDrug != null">#{oprPreDrug},</if>
+            <if test="oprDrug != null">#{oprDrug},</if>
+            <if test="draiMate != null">#{draiMate},</if>
+            <if test="draiMateNum != null">#{draiMateNum},</if>
+            <if test="draiFlag != null">#{draiFlag},</if>
+            <if test="draiMatePosi != null">#{draiMatePosi},</if>
+            <if test="transReacFlag != null">#{transReacFlag},</if>
+            <if test="transReacTypeCode != null">#{transReacTypeCode},</if>
+            <if test="oprDoctCode != null">#{oprDoctCode},</if>
+            <if test="oprDoctName != null">#{oprDoctName},</if>
+            <if test="oprAssiName != null">#{oprAssiName},</if>
+            <if test="aidName1 != null">#{aidName1},</if>
+            <if test="aidName2 != null">#{aidName2},</if>
+            <if test="instNurseCode != null">#{instNurseCode},</if>
+            <if test="instNurseName != null">#{instNurseName},</if>
+            <if test="patrNurseCode != null">#{patrNurseCode},</if>
+            <if test="patrNurseName != null">#{patrNurseName},</if>
+            <if test="anestCode != null">#{anestCode},</if>
+            <if test="anestName != null">#{anestName},</if>
+            <if test="anestMethCode != null">#{anestMethCode},</if>
+            <if test="anestMethName != null">#{anestMethName},</if>
+            <if test="oprSameDayNo != null">#{oprSameDayNo},</if>
+            <if test="hbv != null">#{hbv},</if>
+            <if test="hcb != null">#{hcb},</if>
+            <if test="hiv != null">#{hiv},</if>
+            <if test="oprApplState != null">#{oprApplState},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateOperatRecord" parameterType="OperatRecord">
+        update operat_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="oprApplNo != null">opr_appl_no = #{oprApplNo},</if>
+            <if test="areaCode != null">area_code = #{areaCode},</if>
+            <if test="wardName != null">ward_name = #{wardName},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="oprRomNo != null">opr_rom_no = #{oprRomNo},</if>
+            <if test="oprRomName != null">opr_rom_name = #{oprRomName},</if>
+            <if test="oprPreDigIcd != null">opr_pre_dig_icd = #{oprPreDigIcd},</if>
+            <if test="oprPreDigName != null">opr_pre_dig_name = #{oprPreDigName},</if>
+            <if test="oprOpstDigName != null">opr_opst_dig_name = #{oprOpstDigName},</if>
+            <if test="oprOpstDigIcd != null">opr_opst_dig_icd = #{oprOpstDigIcd},</if>
+            <if test="oprBeginDatetime != null">opr_begin_datetime = #{oprBeginDatetime},</if>
+            <if test="oprEndDatetime != null">opr_end_datetime = #{oprEndDatetime},</if>
+            <if test="oprDuraMins != null">opr_dura_mins = #{oprDuraMins},</if>
+            <if test="oprIcd != null">opr_icd = #{oprIcd},</if>
+            <if test="oprName != null">opr_name = #{oprName},</if>
+            <if test="oprLevelCode != null">opr_level_code = #{oprLevelCode},</if>
+            <if test="oprLevel != null">opr_level = #{oprLevel},</if>
+            <if test="oprPart != null">opr_part = #{oprPart},</if>
+            <if test="oprPosiCode != null">opr_posi_code = #{oprPosiCode},</if>
+            <if test="oprInciName != null">opr_inci_name = #{oprInciName},</if>
+            <if test="oprInciCode != null">opr_inci_code = #{oprInciCode},</if>
+            <if test="bleeVolu != null">blee_volu = #{bleeVolu},</if>
+            <if test="transQuan != null">trans_quan = #{transQuan},</if>
+            <if test="blooQuan != null">bloo_quan = #{blooQuan},</if>
+            <if test="oprPreDrug != null">opr_pre_drug = #{oprPreDrug},</if>
+            <if test="oprDrug != null">opr_drug = #{oprDrug},</if>
+            <if test="draiMate != null">drai_mate = #{draiMate},</if>
+            <if test="draiMateNum != null">drai_mate_num = #{draiMateNum},</if>
+            <if test="draiFlag != null">drai_flag = #{draiFlag},</if>
+            <if test="draiMatePosi != null">drai_mate_posi = #{draiMatePosi},</if>
+            <if test="transReacFlag != null">trans_reac_flag = #{transReacFlag},</if>
+            <if test="transReacTypeCode != null">trans_reac_type_code = #{transReacTypeCode},</if>
+            <if test="oprDoctCode != null">opr_doct_code = #{oprDoctCode},</if>
+            <if test="oprDoctName != null">opr_doct_name = #{oprDoctName},</if>
+            <if test="oprAssiName != null">opr_assi_name = #{oprAssiName},</if>
+            <if test="aidName1 != null">aid_name1 = #{aidName1},</if>
+            <if test="aidName2 != null">aid_name2 = #{aidName2},</if>
+            <if test="instNurseCode != null">inst_nurse_code = #{instNurseCode},</if>
+            <if test="instNurseName != null">inst_nurse_name = #{instNurseName},</if>
+            <if test="patrNurseCode != null">patr_nurse_code = #{patrNurseCode},</if>
+            <if test="patrNurseName != null">patr_nurse_name = #{patrNurseName},</if>
+            <if test="anestCode != null">anest_code = #{anestCode},</if>
+            <if test="anestName != null">anest_name = #{anestName},</if>
+            <if test="anestMethCode != null">anest_meth_code = #{anestMethCode},</if>
+            <if test="anestMethName != null">anest_meth_name = #{anestMethName},</if>
+            <if test="oprSameDayNo != null">opr_same_day_no = #{oprSameDayNo},</if>
+            <if test="hbv != null">hbv = #{hbv},</if>
+            <if test="hcb != null">hcb = #{hcb},</if>
+            <if test="hiv != null">hiv = #{hiv},</if>
+            <if test="oprApplState != null">opr_appl_state = #{oprApplState},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where opr_id = #{oprId}
+    </update>
+
+    <delete id="deleteOperatRecordById" parameterType="String">
+        delete from operat_record where opr_id = #{oprId}
+    </delete>
+
+    <delete id="deleteOperatRecordByIds" parameterType="String">
+        delete from operat_record where opr_id in 
+        <foreach item="oprId" collection="array" open="(" separator="," close=")">
+            #{oprId}
+        </foreach>
+    </delete>
+</mapper>

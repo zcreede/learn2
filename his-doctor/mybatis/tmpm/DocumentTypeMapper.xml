@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.DocumentTypeMapper">
+
+    <resultMap type="DocumentType" id="DocumentTypeResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="documentTypeCd"    column="document_type_cd"    />
+        <result property="documentTypeName"    column="document_type_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="sort"    column="sort"    />
+        <result property="documentClass"    column="document_class"    />
+        <result property="inputFormat"    column="input_format"    />
+        <result property="printFormat"    column="print_format"    />
+        <result property="execDeptCd"    column="exec_dept_cd"    />
+        <result property="execDeptName"    column="exec_dept_name"    />
+        <result property="examMachineCd"    column="exam_machine_cd"    />
+        <result property="examMachineName"    column="exam_machine_name"    />
+        <result property="printFlag"    column="print_flag"    />
+        <result property="orderFlag"    column="order_flag"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="reportUrl"    column="report_url"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="browserType"    column="browser_type"    />
+        <result property="browserType"    column="browser_type_name"    />
+    </resultMap>
+
+    <sql id="selectDocumentTypeVo">
+        select hospital_code, document_type_cd, document_type_name, inputstrphtc, sort, document_class, input_format, print_format, exec_dept_cd, exec_dept_name, exam_machine_cd, exam_machine_name, print_flag, order_flag, enabled, report_url, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date, browser_type, browser_type_name  from TM_BS_DOCUMENT_TYPE
+    </sql>
+
+    <select id="selectDocumentTypeList" parameterType="DocumentType" resultMap="DocumentTypeResult">
+        <include refid="selectDocumentTypeVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="documentTypeCd != null  and documentTypeCd != ''"> and document_type_cd = #{documentTypeCd}</if>
+            <if test="documentTypeName != null  and documentTypeName != ''"> and document_type_name like concat(concat('%', #{documentTypeName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="documentClass != null  and documentClass != ''"> and document_class = #{documentClass}</if>
+            <if test="inputFormat != null  and inputFormat != ''"> and input_format = #{inputFormat}</if>
+            <if test="printFormat != null  and printFormat != ''"> and print_format = #{printFormat}</if>
+            <if test="execDeptCd != null  and execDeptCd != ''"> and exec_dept_cd = #{execDeptCd}</if>
+            <if test="execDeptName != null  and execDeptName != ''"> and exec_dept_name like concat(concat('%', #{execDeptName}), '%')</if>
+            <if test="examMachineCd != null  and examMachineCd != ''"> and exam_machine_cd = #{examMachineCd}</if>
+            <if test="examMachineName != null  and examMachineName != ''"> and exam_machine_name like concat(concat('%', #{examMachineName}), '%')</if>
+            <if test="printFlag != null  and printFlag != ''"> and print_flag = #{printFlag}</if>
+            <if test="orderFlag != null  and orderFlag != ''"> and order_flag = #{orderFlag}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="reportUrl != null  and reportUrl != ''"> and report_url = #{reportUrl}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectDocumentTypeById" parameterType="String" resultMap="DocumentTypeResult">
+        <include refid="selectDocumentTypeVo"/>
+        where document_type_cd = #{documentTypeCd}
+    </select>
+
+    <insert id="insertDocumentType" parameterType="DocumentType">
+        insert into TM_BS_DOCUMENT_TYPE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="documentTypeCd != null">document_type_cd,</if>
+            <if test="documentTypeName != null">document_type_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="sort != null">sort,</if>
+            <if test="documentClass != null">document_class,</if>
+            <if test="inputFormat != null">input_format,</if>
+            <if test="printFormat != null">print_format,</if>
+            <if test="execDeptCd != null">exec_dept_cd,</if>
+            <if test="execDeptName != null">exec_dept_name,</if>
+            <if test="examMachineCd != null">exam_machine_cd,</if>
+            <if test="examMachineName != null">exam_machine_name,</if>
+            <if test="printFlag != null">print_flag,</if>
+            <if test="orderFlag != null">order_flag,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="reportUrl != null">report_url,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="documentTypeCd != null">#{documentTypeCd},</if>
+            <if test="documentTypeName != null">#{documentTypeName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="documentClass != null">#{documentClass},</if>
+            <if test="inputFormat != null">#{inputFormat},</if>
+            <if test="printFormat != null">#{printFormat},</if>
+            <if test="execDeptCd != null">#{execDeptCd},</if>
+            <if test="execDeptName != null">#{execDeptName},</if>
+            <if test="examMachineCd != null">#{examMachineCd},</if>
+            <if test="examMachineName != null">#{examMachineName},</if>
+            <if test="printFlag != null">#{printFlag},</if>
+            <if test="orderFlag != null">#{orderFlag},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="reportUrl != null">#{reportUrl},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDocumentType" parameterType="DocumentType">
+        update TM_BS_DOCUMENT_TYPE
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentTypeCd != null">document_type_cd = #{documentTypeCd},</if>
+            <if test="documentTypeName != null">document_type_name = #{documentTypeName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="documentClass != null">document_class = #{documentClass},</if>
+            <if test="inputFormat != null">input_format = #{inputFormat},</if>
+            <if test="printFormat != null">print_format = #{printFormat},</if>
+            <if test="execDeptCd != null">exec_dept_cd = #{execDeptCd},</if>
+            <if test="execDeptName != null">exec_dept_name = #{execDeptName},</if>
+            <if test="examMachineCd != null">exam_machine_cd = #{examMachineCd},</if>
+            <if test="examMachineName != null">exam_machine_name = #{examMachineName},</if>
+            <if test="printFlag != null">print_flag = #{printFlag},</if>
+            <if test="orderFlag != null">order_flag = #{orderFlag},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="reportUrl != null">report_url = #{reportUrl},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where hospital_code = #{hospitalCode}
+    </update>
+
+    <delete id="deleteDocumentTypeById" parameterType="String">
+        delete from TM_BS_DOCUMENT_TYPE where hospital_code = #{hospitalCode}
+    </delete>
+
+    <delete id="deleteDocumentTypeByIds" parameterType="String">
+        delete from TM_BS_DOCUMENT_TYPE where hospital_code in
+        <foreach item="hospitalCode" collection="array" open="(" separator="," close=")">
+            #{hospitalCode}
+        </foreach>
+    </delete>
+    <select id="selectDocumentListByType" parameterType="DocumentType" resultMap="DocumentTypeResult">
+        select * from TM_BS_DOCUMENT_TYPE  type left join TM_BS_DOCUMENT_TYPE_DEPT dept on type.DOCUMENT_TYPE_CD=dept.DOCUMENT_TYPE_CD
+        where type.enabled = '1' and type.del_flag = '0' and type.DOCUMENT_CLASS=#{documentClass} and (dept.DEPT_CD=#{deptCd} or dept.dept_Cd='000000')
+        <if test="inputFormat!=null and inputFormat!=''">
+            and type.INPUT_FORMAT=#{inputFormat}
+        </if>
+        order by type.document_type_name asc
+    </select>
+</mapper>

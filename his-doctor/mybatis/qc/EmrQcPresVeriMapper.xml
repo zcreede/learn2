@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcPresVeriMapper">
+    
+    <resultMap type="EmrQcPresVeri" id="EmrQcPresVeriResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="veriDate"    column="veri_date"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="recoDate"    column="reco_date"    />
+        <result property="mrFileShowName"    column="mr_file_show_name"    />
+        <result property="mrCreDate"    column="mr_cre_date"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="deadline"    column="deadline"    />
+        <result property="veriResult"    column="veri_result"    />
+        <result property="fsotHours"    column="fsot_hours"    />
+        <result property="veriRuleId"    column="veri_rule_id"    />
+        <result property="veriRuleCd"    column="veri_rule_cd"    />
+        <result property="veriRuleName"    column="veri_rule_name"    />
+        <result property="ruleEventType"    column="rule_event_type"    />
+        <result property="ruleEventTypeName"    column="rule_event_type_name"    />
+        <result property="eventId"    column="event_id"    />
+        <result property="eventDesc"    column="event_desc"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+    </resultMap>
+
+    <sql id="selectEmrQcPresVeriVo">
+        select id, org_cd, veri_date, patient_id, mr_type_name, mr_type, mr_file_id, reco_date, mr_file_show_name, mr_cre_date, sign_time, deadline, veri_result, fsot_hours, veri_rule_id, veri_rule_cd, veri_rule_name, rule_event_type, rule_event_type_name, event_id, event_desc, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date from emr_qc_pres_veri
+    </sql>
+
+    <select id="selectEmrQcPresVeriList" parameterType="EmrQcPresVeri" resultMap="EmrQcPresVeriResult">
+        <include refid="selectEmrQcPresVeriVo"/>
+        <where>  
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="veriDate != null "> and veri_date = #{veriDate}</if>
+            <if test="patientId != null "> and patient_id = #{patientId}</if>
+            <if test="mrTypeName != null  and mrTypeName != ''"> and mr_type_name like concat(concat('%', #{mrTypeName}), '%')</if>
+            <if test="mrType != null  and mrType != ''"> and mr_type = #{mrType}</if>
+            <if test="mrFileId != null  and mrFileId != ''"> and mr_file_id = #{mrFileId}</if>
+            <if test="recoDate != null "> and reco_date = #{recoDate}</if>
+            <if test="mrFileShowName != null  and mrFileShowName != ''"> and mr_file_show_name like concat(concat('%', #{mrFileShowName}), '%')</if>
+            <if test="mrCreDate != null "> and mr_cre_date = #{mrCreDate}</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="deadline != null "> and deadline = #{deadline}</if>
+            <if test="veriResult != null "> and veri_result = #{veriResult}</if>
+            <if test="fsotHours != null "> and fsot_hours = #{fsotHours}</if>
+            <if test="veriRuleId != null "> and veri_rule_id = #{veriRuleId}</if>
+            <if test="veriRuleCd != null  and veriRuleCd != ''"> and veri_rule_cd = #{veriRuleCd}</if>
+            <if test="veriRuleName != null  and veriRuleName != ''"> and veri_rule_name like concat(concat('%', #{veriRuleName}), '%')</if>
+            <if test="ruleEventType != null  and ruleEventType != ''"> and rule_event_type = #{ruleEventType}</if>
+            <if test="ruleEventTypeName != null  and ruleEventTypeName != ''"> and rule_event_type_name like concat(concat('%', #{ruleEventTypeName}), '%')</if>
+            <if test="eventId != null "> and event_id = #{eventId}</if>
+            <if test="eventDesc != null  and eventDesc != ''"> and event_desc = #{eventDesc}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectEmrQcPresVeriById" parameterType="Long" resultMap="EmrQcPresVeriResult">
+        <include refid="selectEmrQcPresVeriVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEmrQcPresVeri" parameterType="EmrQcPresVeri">
+        insert into emr_qc_pres_veri
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="veriDate != null">veri_date,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="mrTypeName != null">mr_type_name,</if>
+            <if test="mrType != null">mr_type,</if>
+            <if test="mrFileId != null and mrFileId != ''">mr_file_id,</if>
+            <if test="recoDate != null">reco_date,</if>
+            <if test="mrFileShowName != null">mr_file_show_name,</if>
+            <if test="mrCreDate != null">mr_cre_date,</if>
+            <if test="signTime != null">sign_time,</if>
+            <if test="deadline != null">deadline,</if>
+            <if test="veriResult != null">veri_result,</if>
+            <if test="fsotHours != null">fsot_hours,</if>
+            <if test="veriRuleId != null">veri_rule_id,</if>
+            <if test="veriRuleCd != null">veri_rule_cd,</if>
+            <if test="veriRuleName != null">veri_rule_name,</if>
+            <if test="ruleEventType != null">rule_event_type,</if>
+            <if test="ruleEventTypeName != null">rule_event_type_name,</if>
+            <if test="eventId != null">event_id,</if>
+            <if test="eventDesc != null">event_desc,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="veriDate != null">#{veriDate},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="mrTypeName != null">#{mrTypeName},</if>
+            <if test="mrType != null">#{mrType},</if>
+            <if test="mrFileId != null and mrFileId != ''">#{mrFileId},</if>
+            <if test="recoDate != null">#{recoDate},</if>
+            <if test="mrFileShowName != null">#{mrFileShowName},</if>
+            <if test="mrCreDate != null">#{mrCreDate},</if>
+            <if test="signTime != null">#{signTime},</if>
+            <if test="deadline != null">#{deadline},</if>
+            <if test="veriResult != null">#{veriResult},</if>
+            <if test="fsotHours != null">#{fsotHours},</if>
+            <if test="veriRuldId != null">#{veriRuldId},</if>
+            <if test="veriRuldCd != null">#{veriRuldCd},</if>
+            <if test="veriRuldName != null">#{veriRuldName},</if>
+            <if test="ruleEventType != null">#{ruleEventType},</if>
+            <if test="ruleEventTypeName != null">#{ruleEventTypeName},</if>
+            <if test="eventId != null">#{eventId},</if>
+            <if test="eventDesc != null">#{eventDesc},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateEmrQcPresVeri" parameterType="EmrQcPresVeri">
+        update emr_qc_pres_veri
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="veriDate != null">veri_date = #{veriDate},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="mrTypeName != null">mr_type_name = #{mrTypeName},</if>
+            <if test="mrType != null">mr_type = #{mrType},</if>
+            <if test="mrFileId != null and mrFileId != ''">mr_file_id = #{mrFileId},</if>
+            <if test="recoDate != null">reco_date = #{recoDate},</if>
+            <if test="mrFileShowName != null">mr_file_show_name = #{mrFileShowName},</if>
+            <if test="mrCreDate != null">mr_cre_date = #{mrCreDate},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="deadline != null">deadline = #{deadline},</if>
+            <if test="veriResult != null">veri_result = #{veriResult},</if>
+            <if test="fsotHours != null">fsot_hours = #{fsotHours},</if>
+            <if test="veriRuleId != null">veri_rule_id = #{veriRuleId},</if>
+            <if test="veriRuleCd != null">veri_rule_cd = #{veriRuleCd},</if>
+            <if test="veriRuleName != null">veri_rule_name = #{veriRuleName},</if>
+            <if test="ruleEventType != null">rule_event_type = #{ruleEventType},</if>
+            <if test="ruleEventTypeName != null">rule_event_type_name = #{ruleEventTypeName},</if>
+            <if test="eventId != null">event_id = #{eventId},</if>
+            <if test="eventDesc != null">event_desc = #{eventDesc},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcPresVeriById" parameterType="Long">
+        delete from emr_qc_pres_veri where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcPresVeriByIds" parameterType="String">
+        delete from emr_qc_pres_veri where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertList" parameterType="EmrQcPresVeri">
+        insert all
+        <foreach item="item" index="index" collection="list">
+        into qc_score_ded_rule
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orgCd != null and orgCd != ''">org_cd,</if>
+                <if test="item.veriDate != null">veri_date,</if>
+                <if test="item.patientId != null">patient_id,</if>
+                <if test="item.mrTypeName != null">mr_type_name,</if>
+                <if test="item.mrType != null">mr_type,</if>
+                <if test="item.mrFileId != null and mrFileId != ''">mr_file_id,</if>
+                <if test="item.recoDate != null">reco_date,</if>
+                <if test="item.mrFileShowName != null">mr_file_show_name,</if>
+                <if test="item.mrCreDate != null">mr_cre_date,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.deadline != null">deadline,</if>
+                <if test="item.veriResult != null">veri_result,</if>
+                <if test="item.fsotHours != null">fsot_hours,</if>
+                <if test="item.veriRuleId != null">veri_rule_id,</if>
+                <if test="item.veriRuleCd != null">veri_rule_cd,</if>
+                <if test="item.veriRuleName != null">veri_rule_name,</if>
+                <if test="item.ruleEventType != null">rule_event_type,</if>
+                <if test="item.ruleEventTypeName != null">rule_event_type_name,</if>
+                <if test="item.eventId != null">event_id,</if>
+                <if test="item.eventDesc != null">event_desc,</if>
+                <if test="item.altPerName != null">alt_per_name,</if>
+                <if test="item.altPerCode != null">alt_per_code,</if>
+                <if test="item.altDate != null">alt_date,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                cre_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orgCd != null and item.orgCd != ''">#{item.orgCd},</if>
+                <if test="item.veriDate != null">#{item.veriDate},</if>
+                <if test="item.patientId != null">#{item.patientId},</if>
+                <if test="item.mrTypeName != null">#{item.mrTypeName},</if>
+                <if test="item.mrType != null">#{item.mrType},</if>
+                <if test="item.mrFileId != null and item.mrFileId != ''">#{item.mrFileId},</if>
+                <if test="item.recoDate != null">#{item.recoDate},</if>
+                <if test="item.mrFileShowName != null">#{item.mrFileShowName},</if>
+                <if test="item.mrCreDate != null">#{item.mrCreDate},</if>
+                <if test="item.signTime != null">#{item.signTime},</if>
+                <if test="item.deadline != null">#{item.deadline},</if>
+                <if test="item.veriResult != null">#{item.veriResult},</if>
+                <if test="item.fsotHours != null">#{item.fsotHours},</if>
+                <if test="item.veriRuleId != null">#{item.veriRuleId},</if>
+                <if test="item.veriRuleCd != null">#{item.veriRuleCd},</if>
+                <if test="item.veriRuleName != null">#{item.veriRuleName},</if>
+                <if test="item.ruleEventType != null">#{item.ruleEventType},</if>
+                <if test="item.ruleEventTypeName != null">#{item.ruleEventTypeName},</if>
+                <if test="item.eventId != null">#{item.eventId},</if>
+                <if test="item.eventDesc != null">#{item.eventDesc},</if>
+                <if test="item.altPerName != null">#{item.altPerName},</if>
+                <if test="item.altPerCode != null">#{item.altPerCode},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+                <if test="citem.rePerName != null">#{item.crePerName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                sysdate,
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+</mapper>

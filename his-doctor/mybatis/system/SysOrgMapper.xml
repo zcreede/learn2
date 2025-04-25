@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysOrgMapper">
+
+    <resultMap type="SysOrg" id="SysOrgResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="orgCode"    column="org_code"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="orgNameSecond"    column="org_name_second"    />
+        <result property="manageType"    column="manage_type"    />
+        <result property="orgType"    column="org_type"    />
+        <result property="orgTypeName"    column="org_type_name"    />
+        <result property="orgLevel"    column="org_level"    />
+        <result property="orgLevelName"    column="org_level_name"    />
+        <result property="corporationName"    column="corporation_name"    />
+        <result property="corporationPhone"    column="corporation_phone"    />
+        <result property="address"    column="address"    />
+        <result property="medicalInsuranceOrgCode"    column="medical_insurance_org_code"    />
+        <result property="sort"    column="sort"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="parentCode"    column="parentCode"    />
+        <result property="searchCode" column="search_code" />
+        <result property="chsCode" column="chs_code"/>
+        <result property="chsName" column="chs_name"/>
+        <result property="addressSheng" column="address_sheng"/>
+        <result property="addressShi" column="address_shi"/>
+        <result property="addressXian" column="address_xian"/>
+        <result property="addressXiang" column="address_xiang"/>
+        <result property="addressShengCode" column="ADDRESS_SHENG_CODE" />
+        <result property="addressShiCode" column="ADDRESS_SHI_CODE" />
+        <result property="addressXianCode" column="ADDRESS_XIAN_CODE" />
+        <result property="addressXiangCode" column="ADDRESS_XIANG_CODE" />
+    </resultMap>
+
+    <sql id="selectSysOrgVo">
+        select id, parent_id,HOSPITAL_NO as org_code, HOSPITAL_NAME as org_name, HOSPITAL_PYM as search_code, SHORT_NAME as org_name_second,HOSPITAL_SITE as address,HOSPITAL_NO as parentCode,chs_code,chs_name,address_sheng,address_shi,address_xian,address_xiang,ADDRESS_SHENG_CODE,ADDRESS_SHI_CODE,ADDRESS_XIAN_CODE,ADDRESS_XIANG_CODE from tm_bs_hospital
+    </sql>
+
+    <select id="selectSysDept" resultMap="SysOrgResult">
+        <if test="deptFlag == null or deptFlag == ''">
+            select
+            dept.id,
+            dept.HOSPITAL_NO  as parent_id ,
+            dept.dept_name as org_name,
+            dept.SORT_ORDER as sort, del_flag,
+            dept.dept_code as org_code,
+            dept.HOSPITAL_NO as parentCode,
+            dept.dept_type as org_type
+            from tm_bs_dept dept
+            WHERE dept.HOSPITAL_NO=#{parentId} AND dept.del_flag = '0'
+            <if test="orgName != null  and orgName != ''"> and (dept.dept_name like concat(concat('%', #{orgName}), '%') or dept.DEPT_NAME_PYM1 like concat(concat('%', #{orgName}), '%') or dept.dept_code like concat(concat('%', #{orgName}), '%'))</if>
+            order by dept.HOSPITAL_NO, dept.dept_name_pym1, dept.SORT_ORDER
+        </if>
+        <if test="deptFlag != null and deptFlag != '' and deptFlag == '0'.toString()">
+            select
+            dept.id,
+            dept.HOSPITAL_NO  as parent_id ,
+            dept.dept_name as org_name,
+            dept.SORT_ORDER as sort, del_flag,
+            dept.dept_code as org_code,
+            dept.HOSPITAL_NO as parentCode,
+            dept.dept_type as org_type
+            from tm_bs_dept dept
+            LEFT JOIN TM_BS_DEPT_TYPE_CONTRAST dtc ON dtc.DEPT_CODE = dept.DEPT_CODE
+            WHERE dept.HOSPITAL_NO=#{parentId} AND dept.del_flag = '0'
+            AND dtc.DEPT_TYPE='11'
+            <if test="orgName != null  and orgName != ''"> and (dept.dept_name like concat(concat('%', #{orgName}), '%') or dept.DEPT_NAME_PYM1 like concat(concat('%', #{orgName}), '%') or dept.dept_code like concat(concat('%', #{orgName}), '%'))</if>
+            order by dept.HOSPITAL_NO, dept.SORT_ORDER
+        </if>
+
+    </select>
+
+    <select id="selectSysOrgList" parameterType="SysOrg" resultMap="SysOrgResult">
+        SELECT
+        s.id,
+        s.HOSPITAL_NO AS org_code,
+        s.PARENT_ID AS PARENT_ID,
+        s.HOSPITAL_NAME AS org_name,
+        s.HOSPITAL_PYM AS search_code,
+        s.SHORT_NAME AS org_name_second,
+        s.HOSPITAL_LEADER AS corporation_name,
+        s.HOSPITAL_PHONE1 AS corporation_phone,
+        s.HOSPITAL_SITE AS address,
+        nvl( h.HOSPITAL_NO, '0' ) AS parentCode,s.chs_code,s.chs_name
+        FROM
+        tm_bs_hospital s
+        LEFT JOIN tm_bs_hospital h ON s.PARENT_ID = h.id
+        <where>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="orgCode != null  and orgCode != ''"> and HOSPITAL_CODE = #{orgCode}</if>
+            <if test="orgName != null  and orgName != ''"> and HOSPITAL_NAME like concat(concat('%', #{orgName}), '%')</if>
+            <if test="orgNameSecond != null  and orgNameSecond != ''"> and SHORT_NAME = #{orgNameSecond}</if>
+            <if test="corporationName != null  and corporationName != ''"> and HOSPITAL_LEADER like concat(concat('%', #{corporationName}), '%')</if>
+            <if test="corporationPhone != null  and corporationPhone != ''"> and HOSPITAL_PHONE1 = #{corporationPhone}</if>
+            <if test="address != null  and address != ''"> and HOSPITAL_SITE = #{address}</if>
+        </where>
+        order by parent_id
+    </select>
+
+    <select id="selectSysOrgById" parameterType="Long" resultMap="SysOrgResult">
+        <include refid="selectSysOrgVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSysOrg" parameterType="SysOrg">
+        insert into sys_org
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="orgCode != null">org_code,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="searchCode != null">search_code,</if>
+            <if test="orgNameSecond != null">org_name_second,</if>
+            <if test="manageType != null">manage_type,</if>
+            <if test="orgType != null">org_type,</if>
+            <if test="orgTypeName != null">org_type_name,</if>
+            <if test="orgLevel != null">org_level,</if>
+            <if test="orgLevelName != null">org_level_name,</if>
+            <if test="corporationName != null">corporation_name,</if>
+            <if test="corporationPhone != null">corporation_phone,</if>
+            <if test="address != null">address,</if>
+            <if test="medicalInsuranceOrgCode != null">medical_insurance_org_code,</if>
+            <if test="sort != null">sort,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code,</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="orgCode != null">#{orgCode},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="searchCode != null">#{searchCode},</if>
+            <if test="orgNameSecond != null">#{orgNameSecond},</if>
+            <if test="manageType != null">#{manageType},</if>
+            <if test="orgType != null">#{orgType},</if>
+            <if test="orgTypeName != null">#{orgTypeName},</if>
+            <if test="orgLevel != null">#{orgLevel},</if>
+            <if test="orgLevelName != null">#{orgLevelName},</if>
+            <if test="corporationName != null">#{corporationName},</if>
+            <if test="corporationPhone != null">#{corporationPhone},</if>
+            <if test="address != null">#{address},</if>
+            <if test="medicalInsuranceOrgCode != null">#{medicalInsuranceOrgCode},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">#{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysOrg" parameterType="SysOrg">
+        update sys_org
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="orgCode != null">org_code = #{orgCode},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+            <if test="searchCode != null">search_code=#{searchCode},</if>
+            <if test="orgNameSecond != null">org_name_second = #{orgNameSecond},</if>
+            <if test="manageType != null">manage_type = #{manageType},</if>
+            <if test="orgType != null">org_type = #{orgType},</if>
+            <if test="orgTypeName != null">org_type_name = #{orgTypeName},</if>
+            <if test="orgLevel != null">org_level = #{orgLevel},</if>
+            <if test="orgLevelName != null">org_level_name = #{orgLevelName},</if>
+            <if test="corporationName != null">corporation_name = #{corporationName},</if>
+            <if test="corporationPhone != null">corporation_phone = #{corporationPhone},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="medicalInsuranceOrgCode != null">medical_insurance_org_code = #{medicalInsuranceOrgCode},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysOrgById" parameterType="Long">
+        delete from sys_org where id = #{id}
+    </delete>
+
+    <delete id="deleteSysOrgByIds" parameterType="String">
+        delete from sys_org where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="checkOrgNameUnique" resultMap="SysOrgResult">
+        <include refid="selectSysOrgVo"/>
+        where HOSPITAL_NAME=#{orgName} and parent_id = #{parentId} and rownum <![CDATA[ <= ]]> 1
+    </select>
+
+    <select id="checkOrgCodeUnique" resultMap="SysOrgResult">
+        <include refid="selectSysOrgVo"/>
+        where HOSPITAL_NO=#{orgCode} and rownum <![CDATA[ <= ]]> 1
+    </select>
+
+    <select id="hasChildById" parameterType="Long" resultType="int">
+        select count(1) from sys_dept
+        where del_flag = '0' and parent_id = #{id} and rownum <![CDATA[ <= ]]> 1
+    </select>
+
+    <select id="selectNormalChildrenById" parameterType="Long" resultType="int">
+        select count(*) from sys_dept where status = 0 and del_flag = '0' and FIND_IN_SET(#{id}, ancestors)
+    </select>
+    <select id="selectSysOrgByOrgNo" resultMap="SysOrgResult">
+        select
+        id, parent_id,BZ_1 as org_code,
+        HOSPITAL_NAME as org_name, HOSPITAL_PYM as search_code,
+        SHORT_NAME as org_name_second,HOSPITAL_SITE as address,HOSPITAL_NO as parentCode
+        from tm_bs_hospital
+        where HOSPITAL_NO=#{hospitalNo} and rownum = 1
+    </select>
+</mapper>

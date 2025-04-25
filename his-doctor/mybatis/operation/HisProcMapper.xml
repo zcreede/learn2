@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.HisProcMapper">
+
+    <parameterMap id="insert_fymx_param" type="java.util.HashMap">
+        <parameter property="prescription" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+        <parameter property="admissionNo" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+        <parameter property="hospitalizedCount" jdbcType="INTEGER" javaType="java.lang.Integer" mode="IN"/>
+        <parameter property="flag" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+        <parameter property="operator" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+        <parameter property="resCode" jdbcType="INTEGER" javaType="java.lang.Integer" mode="OUT"/>
+        <parameter property="resMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>
+    </parameterMap>
+    <resultMap id="insert_fymx_resultMap" type="java.util.HashMap">
+        <result column="rtn_code" property="rtnCode" jdbcType="INTEGER" />
+        <result column="rtn_msg" property="rtnMsg" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="pro_0203_insert_fymx" parameterMap="insert_fymx_param" resultMap="insert_fymx_resultMap" statementType="CALLABLE">
+        {call pro_0203_insert_fymx(?,?,?,?,?,?,?)}
+    </select>
+
+    <parameterMap id="get_djbh_param" type="java.util.HashMap">
+        <parameter property="czybh" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+        <parameter property="i_djlx" jdbcType="INTEGER" javaType="java.lang.Integer" mode="IN"/>
+        <parameter property="s_djh_new" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>
+        <parameter property="s_msg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>
+    </parameterMap>
+    <resultMap id="get_djbh_resultMap" type="java.util.HashMap">
+        <result column="s_djh_new" property="s_djh_new" jdbcType="VARCHAR" />
+        <result column="s_msg" property="s_msg" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="pro_0204_get_djbh" parameterMap="get_djbh_param" resultMap="get_djbh_resultMap" statementType="CALLABLE">
+        {call pro_0204_get_djbh(?,?,?,?)}
+    </select>
+
+    <select id="proc_0205_yy_zyb_cx_ckd_new" parameterType="java.util.Map"  statementType="CALLABLE" resultType="java.util.Map">
+
+        SELECT  zyh ,
+        xm  ,
+        rybqbh AS bqbh ,
+        c.cw AS cwh ,
+        xb ,
+        yjk ,
+        ljfy ,
+        b.fbmc ,
+        ryrq ,
+        rksj ,
+        0 ckje,
+        bah ,
+        rycs
+        FROM    yy_p_brqk a
+        JOIN yy_p_fbbh b   ON b.fbbh = a.fb
+        JOIN yy_p_bfct c  ON c.cwbh = a.cwh
+        WHERE   ((#{flag} = '0' and rybqbh = #{tjtj}) or (#{flag} = '1' and zyh = #{tjtj}))
+        AND sd1 = '1'
+        AND (ryqfbz is null or ryqfbz !='' )
+        AND yjk - ljfy &lt;= #{je}
+        ORDER BY zyh
+
+    </select>
+    <select id="proc_0205_cx_jcjyjgcx" parameterType="java.util.Map" statementType="CALLABLE" resultType="java.util.Map">
+        {call proc_0205_cx_jcjyjgcx(
+                #{rq_flag,jdbcType=VARCHAR,mode=IN},
+                #{rq1,jdbcType=VARCHAR,mode=IN},
+                #{rq2,jdbcType=DECIMAL,mode=IN},
+                #{djlb,jdbcType=DECIMAL,mode=IN},
+                #{bz,jdbcType=DECIMAL,mode=IN},
+                #{tj,jdbcType=DECIMAL,mode=IN},
+                #{bqdm,jdbcType=DECIMAL,mode=IN}
+            )}
+    </select>
+</mapper>

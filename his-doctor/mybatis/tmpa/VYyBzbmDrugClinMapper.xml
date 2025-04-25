@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpa.mapper.VYyBzbmDrugClinMapper">
+
+    <resultMap type="VYyBzbmDrugClin" id="VYyBzbmDrugClinResult">
+        <result property="xmbh"    column="xmbh"    />
+        <result property="bzbm"    column="bzbm"    />
+        <result property="bzmc"    column="bzmc"    />
+        <result property="zfbl"    column="zfbl"    />
+        <result property="xmdj"    column="xmdj"    />
+        <result property="ybfl"    column="ybfl"    />
+        <result property="scbz"    column="scbz"    />
+        <result property="dzbz"    column="dzbz"    />
+        <result property="add3"    column="add3"    />
+        <result property="sm"    column="sm"    />
+        <result property="xmlb"    column="xmlb"    />
+        <result property="version"    column="version"    />
+        <result property="vername"    column="vername"    />
+        <result property="xmfl"    column="xmfl"    />
+    </resultMap>
+
+    <sql id="selectVYyBzbmDrugClinVo">
+        select xmbh, bzbm, bzmc, zfbl, xmdj, ybfl, scbz, dzbz, add3, sm, xmlb, version, vername, xmfl from v_yy_bzbm_drug_clin
+    </sql>
+
+    <select id="selectVYyBzbmDrugClinList" parameterType="VYyBzbmDrugClin" resultMap="VYyBzbmDrugClinResult">
+        <include refid="selectVYyBzbmDrugClinVo"/>
+        <where>
+            <if test="xmbh != null  and xmbh != ''"> and xmbh = #{xmbh}</if>
+            <if test="bzbm != null  and bzbm != ''"> and bzbm = #{bzbm}</if>
+            <if test="bzmc != null  and bzmc != ''"> and bzmc = #{bzmc}</if>
+            <if test="zfbl != null "> and zfbl = #{zfbl}</if>
+            <if test="xmdj != null  and xmdj != ''"> and xmdj = #{xmdj}</if>
+            <if test="ybfl != null  and ybfl != ''"> and ybfl = #{ybfl}</if>
+            <if test="scbz != null  and scbz != ''"> and scbz = #{scbz}</if>
+            <if test="dzbz != null  and dzbz != ''"> and dzbz = #{dzbz}</if>
+            <if test="add3 != null  and add3 != ''"> and add3 = #{add3}</if>
+            <if test="sm != null  and sm != ''"> and sm = #{sm}</if>
+            <if test="xmlb != null  and xmlb != ''"> and xmlb = #{xmlb}</if>
+            <if test="version != null  and version != ''"> and version = #{version}</if>
+            <if test="vername != null  and vername != ''"> and vername like concat(concat('%', #{vername}), '%')</if>
+            <if test="xmfl != null  and xmfl != ''"> and xmfl = #{xmfl}</if>
+        </where>
+    </select>
+
+    <select id="selectVYyBzbmDrugClinById" parameterType="String" resultMap="VYyBzbmDrugClinResult">
+        <include refid="selectVYyBzbmDrugClinVo"/>
+        where xmbh = #{xmbh}
+    </select>
+
+    <insert id="insertVYyBzbmDrugClin" parameterType="VYyBzbmDrugClin">
+        insert into v_yy_bzbm_drug_clin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="xmbh != null">xmbh,</if>
+            <if test="bzbm != null">bzbm,</if>
+            <if test="bzmc != null">bzmc,</if>
+            <if test="zfbl != null">zfbl,</if>
+            <if test="xmdj != null">xmdj,</if>
+            <if test="ybfl != null">ybfl,</if>
+            <if test="scbz != null">scbz,</if>
+            <if test="dzbz != null">dzbz,</if>
+            <if test="add3 != null">add3,</if>
+            <if test="sm != null">sm,</if>
+            <if test="xmlb != null">xmlb,</if>
+            <if test="version != null">version,</if>
+            <if test="vername != null">vername,</if>
+            <if test="xmfl != null">xmfl,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="xmbh != null">#{xmbh},</if>
+            <if test="bzbm != null">#{bzbm},</if>
+            <if test="bzmc != null">#{bzmc},</if>
+            <if test="zfbl != null">#{zfbl},</if>
+            <if test="xmdj != null">#{xmdj},</if>
+            <if test="ybfl != null">#{ybfl},</if>
+            <if test="scbz != null">#{scbz},</if>
+            <if test="dzbz != null">#{dzbz},</if>
+            <if test="add3 != null">#{add3},</if>
+            <if test="sm != null">#{sm},</if>
+            <if test="xmlb != null">#{xmlb},</if>
+            <if test="version != null">#{version},</if>
+            <if test="vername != null">#{vername},</if>
+            <if test="xmfl != null">#{xmfl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateVYyBzbmDrugClin" parameterType="VYyBzbmDrugClin">
+        update v_yy_bzbm_drug_clin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bzbm != null">bzbm = #{bzbm},</if>
+            <if test="bzmc != null">bzmc = #{bzmc},</if>
+            <if test="zfbl != null">zfbl = #{zfbl},</if>
+            <if test="xmdj != null">xmdj = #{xmdj},</if>
+            <if test="ybfl != null">ybfl = #{ybfl},</if>
+            <if test="scbz != null">scbz = #{scbz},</if>
+            <if test="dzbz != null">dzbz = #{dzbz},</if>
+            <if test="add3 != null">add3 = #{add3},</if>
+            <if test="sm != null">sm = #{sm},</if>
+            <if test="xmlb != null">xmlb = #{xmlb},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="vername != null">vername = #{vername},</if>
+            <if test="xmfl != null">xmfl = #{xmfl},</if>
+        </trim>
+        where xmbh = #{xmbh}
+    </update>
+
+    <delete id="deleteVYyBzbmDrugClinById" parameterType="String">
+        delete from v_yy_bzbm_drug_clin where xmbh = #{xmbh}
+    </delete>
+
+    <delete id="deleteVYyBzbmDrugClinByIds" parameterType="String">
+        delete from v_yy_bzbm_drug_clin where xmbh in
+        <foreach item="xmbh" collection="array" open="(" separator="," close=")">
+            #{xmbh}
+        </foreach>
+    </delete>
+
+    <select id="selectBzbmDrugClinListByCpNoList" parameterType="String" resultMap="VYyBzbmDrugClinResult">
+        <include refid="selectVYyBzbmDrugClinVo"/>
+        where xmbh in
+        <foreach collection="cpNoList" item="cpNo" open="(" separator="," close=")">
+            #{cpNo}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaItemDocQueryMapper">
+
+    <resultMap type="TdPaItemDocQuery" id="TdPaItemDocQueryResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="docCd"    column="doc_cd"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="queryStatus"    column="query_status"    />
+        <result property="orderFlag"    column="order_flag"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectTdPaItemDocQueryVo">
+        select id, org_cd, doc_cd, doc_name, query_status, order_flag, alt_date from td_pa_item_doc_query
+    </sql>
+
+    <select id="selectTdPaItemDocQueryList" parameterType="TdPaItemDocQuery" resultMap="TdPaItemDocQueryResult">
+        <include refid="selectTdPaItemDocQueryVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="docCd != null  and docCd != ''"> and doc_cd = #{docCd}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="queryStatus != null  and queryStatus != ''"> and query_status = #{queryStatus}</if>
+            <if test="orderFlag != null  and orderFlag != ''"> and order_flag = #{orderFlag}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaItemDocQueryById" parameterType="Long" resultMap="TdPaItemDocQueryResult">
+        <include refid="selectTdPaItemDocQueryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPaItemDocQuery" parameterType="TdPaItemDocQuery">
+        insert into td_pa_item_doc_query
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="docCd != null">doc_cd,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="queryStatus != null">query_status,</if>
+            <if test="orderFlag != null">order_flag,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="docCd != null">#{docCd},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="queryStatus != null">#{queryStatus},</if>
+            <if test="orderFlag != null">#{orderFlag},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaItemDocQuery" parameterType="TdPaItemDocQuery">
+        update td_pa_item_doc_query
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="queryStatus != null">query_status = #{queryStatus},</if>
+            <if test="orderFlag != null">order_flag = #{orderFlag},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaItemDocQueryById" parameterType="Long">
+        delete from td_pa_item_doc_query where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaItemDocQueryByIds" parameterType="String">
+        delete from td_pa_item_doc_query where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

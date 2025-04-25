@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrTimeoutCaseMapper">
+
+    <resultMap id="EmrTimeoutCaseVoResultMap" type="com.emr.project.emr.domain.vo.EmrTimeoutCaseVo">
+        <result column="task_id" property="taskId" />
+        <result column="patient_id" property="patientId" />
+        <result column="mr_type" property="mrType" />
+        <result column="mr_type_name" property="mrTypeName" />
+        <result column="mr_type_class" property="mrTypeClass" />
+        <result column="mr_type_class_name" property="mrTypeClassName" />
+        <result column="remaining_time" property="remainingTime" />
+        <result column="task_state" property="taskState" />
+        <result column="dept_cd" property="deptCd" />
+        <result column="dept_name" property="deptName" />
+        <result column="doc_cd" property="docCd" />
+        <result column="doc_name" property="docName" />
+        <result column="emr_file_id" property="emrFileId" />
+        <result column="pat_name" property="patName" />
+        <result column="end_time" property="endTime" />
+        <result column="task_finish_flag" property="taskFinishFlag" />
+        <result column="resident_code" property="residentCode" />
+        <result column="resident_name" property="residentName" />
+        <result column="entry_date" property="entryDate" />
+        <result column="sex" property="sex"  />
+        <result column="age_str" property="ageStr" />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+    </resultMap>
+
+    <select id="getTimeoutCaseList" parameterType="com.emr.project.emr.domain.vo.EmrTimeoutCaseVo" resultMap="EmrTimeoutCaseVoResultMap">
+        select a.task_id,
+                a.patient_id,
+                a.mr_type,
+                sdd.data_tag as mr_type_name,
+                a.mr_type_class,
+                bdd.data_tag as mr_type_class_name,
+                case
+                when a.remaining_time_int &lt; 0 then concat(concat('超时', abs(a.remaining_time_int)), '小时')
+                else concat(a.remaining_time_int, '小时')
+                end as remaining_time,
+                a.task_state,
+                a.dept_cd,
+                a.dept_name,
+                a.doc_cd,
+                a.doc_name,
+                a.emr_file_id,
+                a.main_id,
+                a.patient_name as pat_name,
+                a.end_time,
+                a.task_finish_flag,
+                tam.RESIDENT_CODE,
+                tam.RESIDENT_NAME,
+                tam.ENTRY_DATE,
+                tbd.data_tag as sex,
+                tab.person_age as age_str
+                tab.ADMISSION_NO as inp_no,
+                case when tab.IDCARD is null then tab.CASE_NO else tab.IDCARD end as patient_main_id,
+        from (select t.id as task_id,
+                    t.patient_id,
+                    agi.emr_type_code as mr_type,
+                    etc.emr_class_code as mr_type_class,
+                    CEIL((t.END_TIME - sysdate) * 24) remaining_time_int,
+                    t.treat_flag as task_state,
+                    t.dept_cd,
+                    t.dept_name,
+                    t.doc_cd,
+                    t.doc_name,
+                    t.mr_file_id as emr_file_id,
+                    esi.main_id,
+                    t.patient_name,
+                    t.end_time,
+                    agi.task_finish_flag
+                from EMR_TASK_INFO t
+                left join QC_AGI_RULE agi on t.BUS_ID = agi.id
+                left join sys_emr_type_config etc on etc.emr_type_code = agi.emr_type_code
+                left join emr_subfile_index esi on t.mr_file_id = esi.id
+                <where>
+                    t.task_type = '1'
+                    <if test="searchValue != null and searchValue != ''">
+                        and (t.patient_id like concat(concat('%',#{searchValue}),'%')
+                        or t.patient_name like concat(concat('%',#{searchValue}),'%'))
+                    </if>
+                    <if test="deptCd != null and deptCd != ''">
+                        and t.dept_cd = #{deptCd}
+                    </if>
+                    <if test="docCd != null and docCd != ''">
+                        and t.doc_cd = #{docCd}
+                    </if>
+                    <if test="mrType != null and mrType != ''">
+                        and agi.emr_type_code = #{mrType}
+                    </if>
+                    <if test="taskFinishFlag != null and taskFinishFlag != ''">
+                        and agi.task_finish_flag = #{taskFinishFlag}
+                    </if>
+                    <if test="taskState != null and taskState != ''">
+                        and t.treat_flag = #{taskState}
+                    </if>
+                </where>
+                 ) a
+        left join TM_BS_DICT_DATA sdd on sdd.data_val=a.mr_type and sdd.dict_type='s004'
+        left join TM_BS_DICT_DATA bdd on bdd.data_val=a.mr_type_class and bdd.dict_type='s003'
+        left join t_ar_baseinfomation_all tab on a.patient_id = tab.ADMISSION_NO
+        left join tm_bs_dict_data tbd on tbd.data_val = tab.sex and tbd.dict_type = 's028'
+        left join t_ar_medicalinformation_all tam on tam.ADMISSION_NO = a.patient_id
+        order by a.end_time desc
+    </select>
+
+</mapper>

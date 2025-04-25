@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.BasEmrAcceAuthorMapper">
+    
+    <resultMap type="BasEmrAcceAuthor" id="BasEmrAcceAuthorResult">
+        <result property="id"    column="id"    />
+        <result property="objectId"    column="object_id"    />
+        <result property="objectType"    column="object_type"    />
+        <result property="authorLevel"    column="author_level"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectBasEmrAcceAuthorVo">
+        select id, object_id, object_type, author_level, del_flag, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from bas_emr_acce_author
+    </sql>
+
+    <select id="selectBasEmrAcceAuthorList" parameterType="BasEmrAcceAuthor" resultMap="BasEmrAcceAuthorResult">
+        <include refid="selectBasEmrAcceAuthorVo"/>
+        <where>  
+            <if test="objectId != null  and objectId != ''"> and object_id = #{objectId}</if>
+            <if test="objectType != null "> and object_type = #{objectType}</if>
+            <if test="authorLevel != null  and authorLevel != ''"> and author_level = #{authorLevel}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasEmrAcceAuthorById" parameterType="Long" resultMap="BasEmrAcceAuthorResult">
+        <include refid="selectBasEmrAcceAuthorVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasEmrAcceAuthorByObjectId" parameterType="String" resultMap="BasEmrAcceAuthorResult">
+        <include refid="selectBasEmrAcceAuthorVo"/>
+        where object_id = #{objectId}
+    </select>
+
+    <select id="selectBasEmrAcceAuthorByObjectIds" parameterType="String" resultMap="BasEmrAcceAuthorResult">
+        <include refid="selectBasEmrAcceAuthorVo"/>
+        where object_id in
+        <foreach collection="list" item="objectId" open="(" separator="," close=")">
+            #{objectId}
+        </foreach>
+    </select>
+
+    <insert id="insertBasEmrAcceAuthor" parameterType="BasEmrAcceAuthor">
+        <!--<selectKey keyProperty="id" resultType="long" order="BEFORE">-->
+            <!--SELECT seq_bas_emr_acce_author.NEXTVAL as id FROM DUAL-->
+        <!--</selectKey>-->
+        insert into bas_emr_acce_author
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="objectId != null">object_id,</if>
+            <if test="objectType != null">object_type,</if>
+            <if test="authorLevel != null">author_level,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code,</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name,</if>
+            cre_date,alt_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="objectId != null">#{objectId},</if>
+            <if test="objectType != null">#{objectType},</if>
+            <if test="authorLevel != null">#{authorLevel},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="altPerCode != null and altPerCode != ''">#{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">#{altPerName},</if>
+            sysDate,sysDate,
+         </trim>
+    </insert>
+
+    <update id="updateBasEmrAcceAuthor" parameterType="BasEmrAcceAuthor">
+        update bas_emr_acce_author
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="objectId != null">object_id = #{objectId},</if>
+            <if test="objectType != null">object_type = #{objectType},</if>
+            <if test="authorLevel != null">author_level = #{authorLevel},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date=sysDate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasEmrAcceAuthorById" parameterType="Long">
+        delete from bas_emr_acce_author where id = #{id}
+    </delete>
+
+    <delete id="deleteBasEmrAcceAuthorByIds" parameterType="String">
+        delete from bas_emr_acce_author where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.InpatientOrderPerformFirstBottleMapper">
+  <resultMap id="BaseResultMap" type="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="perform_list_sort_number" jdbcType="INTEGER" property="performListSortNumber" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_sort_number" jdbcType="VARCHAR" property="orderSortNumber" />
+    <result column="first_flag" jdbcType="BIGINT" property="firstFlag" />
+    <result column="ward_no" jdbcType="VARCHAR" property="wardNo" />
+    <result column="admission_no" jdbcType="VARCHAR" property="admissionNo" />
+    <result column="hospitalized_count" jdbcType="BIGINT" property="hospitalizedCount" />
+    <result column="jjbz" jdbcType="BIGINT" property="jjbz" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, perform_list_sort_number, order_no, order_sort_number, first_flag,id,ward_no,admission_no,hospitalized_count,jjbz
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from td_pa_order_perform_first
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+    and order_sort_number = #{orderSortNumber,jdbcType=VARCHAR}
+    and perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from td_pa_order_perform_first
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+    and order_sort_number = #{orderSortNumber,jdbcType=VARCHAR}
+    and perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+    insert into td_pa_order_perform_first (id, perform_list_sort_number, order_no,
+      order_sort_number, first_flag,ward_no,admission_no,hospitalized_count,jjbz )
+    values (#{id}, #{performListSortNumber,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR},
+      #{orderSortNumber,jdbcType=VARCHAR}, #{firstFlag,jdbcType=BIGINT}, #{wardNo,jdbcType=VARCHAR},
+      #{admissionNo,jdbcType=VARCHAR}, #{hospitalizedCount,jdbcType=BIGINT}, #{jjbz,jdbcType=BIGINT} )
+  </insert>
+  <insert id="insertSelective" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+    insert into td_pa_order_perform_first
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="performListSortNumber != null">
+        perform_list_sort_number,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="orderSortNumber != null">
+        order_sort_number,
+      </if>
+      <if test="firstFlag != null">
+        first_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      seq_td_pa_order_perform_first.nextval,
+      <if test="performListSortNumber != null">
+        #{performListSortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSortNumber != null">
+        #{orderSortNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="firstFlag != null">
+        #{firstFlag,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+    update td_pa_order_perform_first
+      set  first_flag = #{firstFlag,jdbcType=BIGINT},jjbz=#{jjbz,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+    update td_pa_order_perform_first
+    set first_flag = #{firstFlag,jdbcType=BIGINT}
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+    and order_sort_number = #{orderSortNumber,jdbcType=VARCHAR}
+    and perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER}
+  </update>
+  <select id="selectListByConn" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from td_pa_order_perform_first
+    <where>
+      <if test="performListSortNumber != null">
+        and perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER}
+      </if>
+      <if test="orderNo != null">
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderSortNumber != null">
+        and order_sort_number = #{orderSortNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="wardNo != null">
+        and ward_No = #{wardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="hospitalizedCount != null">
+        and hospitalized_Count = #{hospitalizedCount,jdbcType=BIGINT}
+      </if>
+      <if test="admissionNo != null">
+        and admission_No = #{admissionNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+        order by perform_list_sort_number asc
+  </select>
+  <select id="selectByConn" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from td_pa_order_perform_first
+    <where>
+      <if test="performListSortNumber != null">
+        and perform_list_sort_number = #{performListSortNumber,jdbcType=INTEGER}
+      </if>
+      <if test="orderNo != null">
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderSortNumber != null">
+        and order_sort_number = #{orderSortNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="wardNo != null">
+        and ward_No = #{wardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="hospitalizedCount != null">
+        and hospitalized_Count = #{hospitalizedCount,jdbcType=BIGINT}
+      </if>
+      <if test="admissionNo != null">
+        and admission_No = #{admissionNo,jdbcType=VARCHAR}
+      </if>
+
+    </where>
+  </select>
+
+  <select id="selectListByAdminssionNos" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerform" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from td_pa_order_perform_first
+    where
+    <foreach collection="orderPerformList" item="item" separator=" OR ">
+      (ADMISSION_NO = #{item.admissionNo} and order_no = #{item.orderNo})
+    </foreach>
+  </select>
+
+  <delete id="deleteByids" parameterType="Long">
+    delete from td_pa_order_perform_first where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+</mapper>

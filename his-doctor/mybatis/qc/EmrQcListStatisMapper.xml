@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcListStatisMapper">
+    <resultMap id="EmrQcListStatisResult" type="EmrQcListStatisticByMrTypeVo" >
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="flawTotal"    column="flaw_total"    />
+        <result property="flawFileTotal"    column="flaw_file_total"    />
+        <result property="flawYxgTotal"    column="flaw_yxg_total"    />
+        <result property="flawYwTotal"    column="flaw_yw_total"    />
+        <result property="flawWxgTotal"    column="flaw_wxg_total"    />
+    </resultMap>
+
+    <select id="selectQcListByMrType" parameterType="EmrQcFlowStatis" resultMap="EmrQcListStatisResult">
+        select td.data_val as mr_type,td.data_tag as mr_type_name, nvl(m.flaw_total,0) as flaw_total,nvl(m.flaw_file_total,0) as flaw_file_total,
+        nvl(n.flaw_yxg_total,0) as flaw_yxg_total, nvl(k.flaw_yw_total,0) as flaw_yw_total, nvl(p.flaw_wxg_total,0) as flaw_wxg_total
+        from TM_BS_DICT_DATA td
+        left join
+        (select a.mr_type,
+        a.mr_type_name,
+        count(1) as flaw_total,
+        count(distinct(a.mr_file_id)) as flaw_file_total
+        from emr_qc_list a
+        left join emr_qc_record b
+        on a.main_id = b.id
+        left join t_ar_medicalinformation_all c
+        on a.patient_id = c.admission_no
+        <where>
+            <if test="qcSection != null and qcSection != ''">
+                and b.qc_section = #{qcSection}
+            </if>
+            <if test="dateStart != null">
+                and a.qc_date &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.qc_date &lt; #{dateEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and c.department_no = #{deptCd}
+            </if>
+        </where>
+        group by a.mr_type, a.mr_type_name) m
+        on td.data_val = m.mr_type
+        left join (select a.mr_type, a.mr_type_name, count(1) as flaw_yxg_total
+        from emr_qc_list a
+        left join emr_qc_record b
+        on a.main_id = b.id
+        left join t_ar_medicalinformation_all c
+        on a.patient_id = c.admission_no
+        <where>
+            a.qc_state = '4'
+            <if test="qcSection != null and qcSection != ''">
+                and b.qc_section = #{qcSection}
+            </if>
+            <if test="dateStart != null">
+                and a.qc_date &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.qc_date &lt; #{dateEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and c.department_no = #{deptCd}
+            </if>
+        </where>
+        group by a.mr_type, a.mr_type_name) n
+        on m.mr_type = n.mr_type
+        left join (select a.mr_type, a.mr_type_name, count(1) as flaw_yw_total
+        from emr_qc_list a
+        left join emr_qc_record b
+        on a.main_id = b.id
+        left join t_ar_medicalinformation_all c
+        on a.patient_id = c.admission_no
+        <where>
+            a.qc_state = '1'
+            <if test="qcSection != null and qcSection != ''">
+                and b.qc_section = #{qcSection}
+            </if>
+            <if test="dateStart != null">
+                and a.qc_date &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.qc_date &lt; #{dateEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and c.department_no = #{deptCd}
+            </if>
+        </where>
+        group by a.mr_type, a.mr_type_name) k
+        on td.data_val = k.mr_type
+        left join (select a.mr_type, a.mr_type_name, count(1) as flaw_wxg_total
+        from emr_qc_list a
+        left join emr_qc_record b
+        on a.main_id = b.id
+        left join t_ar_medicalinformation_all c
+        on a.patient_id = c.admission_no
+        <where>
+            a.qc_state = '0'
+            <if test="qcSection != null and qcSection != ''">
+                and b.qc_section = #{qcSection}
+            </if>
+            <if test="dateStart != null">
+                and a.qc_date &gt;= #{dateStart}
+            </if>
+            <if test="dateEnd != null">
+                and a.qc_date &lt; #{dateEnd}
+            </if>
+            <if test="deptCd != null and deptCd != ''">
+                and c.department_no = #{deptCd}
+            </if>
+        </where>
+        group by a.mr_type, a.mr_type_name) p
+        on td.data_val = p.mr_type
+        <where>
+            td.dict_type='s004'
+        </where>
+        order by m.flaw_total desc nulls last
+    </select>
+
+</mapper>

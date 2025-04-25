@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.SysEmrTypeConfigMapper">
+
+    <resultMap type="SysEmrTypeConfig" id="SysEmrTypeConfigResult">
+        <result property="id"    column="id"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="emrClassCode"    column="emr_class_code"    />
+        <result property="mrFileType"    column="mr_file_type"    />
+        <result property="signFlag"    column="sign_flag"    />
+        <result property="mergeFlag"    column="merge_flag"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="editMode"    column="edit_mode"    />
+        <result property="reviewedLevel"    column="reviewed_level"    />
+        <result property="secondDocCode"    column="second_doc_code"    />
+        <result property="secondDeptCode"    column="second_dept_code"    />
+        <result property="secondDocName"    column="second_doc_name"    />
+        <result property="secondDeptName"    column="second_dept_name"    />
+        <result property="thirdDocCode"    column="third_doc_code"    />
+        <result property="thirdDeptCode"    column="third_dept_code"    />
+        <result property="thirdDocName"    column="third_doc_name"    />
+        <result property="thirdDeptName"    column="third_dept_name"    />
+        <result property="isOds"    column="is_ods"    />
+        <result property="limitWriteNum" column="limit_write_num" />
+        <result property="limitWriteFlag" column="LIMIT_WRITE_FLAG" />
+    </resultMap>
+
+    <resultMap id="SysEmrTypeConfigVoResult" type="SysEmrTypeConfigVo" extends="SysEmrTypeConfigResult">
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="emrClassName"    column="emr_class_name"    />
+        <result property="mrFileTypeName"    column="mr_file_type_name"    />
+        <result property="dictLabel"    column="data_tag"    />
+        <result property="dictValue"    column="data_val"    />
+    </resultMap>
+
+    <sql id="selectSysEmrTypeConfigVo">
+        select id, emr_type_code, emr_class_code, mr_file_type, sign_flag, merge_flag, valid_flag, cre_per_code,
+        cre_per_name, alt_date, alt_per_code, alt_per_name,
+        cre_date, edit_mode ,reviewed_level,second_doc_code,second_doc_name,second_dept_code,
+        second_dept_name,third_doc_code,third_doc_name,third_dept_code,third_dept_name,is_ods,limit_write_num,limit_write_flag
+        from sys_emr_type_config
+    </sql>
+
+    <select id="selectSysEmrTypeConfigList" parameterType="SysEmrTypeConfigVo" resultMap="SysEmrTypeConfigVoResult">
+        select c.id, d1.data_val emr_type_code, c.emr_class_code, c.mr_file_type, c.sign_flag, c.merge_flag, c.valid_flag, c.cre_per_code,
+        c.cre_per_name, c.alt_date, c.alt_per_code, c.alt_per_name, c.cre_date, d1.data_tag emr_type_name,
+        d2.data_tag emr_class_name, d3.data_tag mr_file_type_name,c.edit_mode,c.reviewed_level,c.second_doc_code,c.second_doc_name,c.second_dept_code,
+        c.second_dept_name,c.third_doc_code,c.third_doc_name,c.third_dept_code,c.third_dept_name,c.is_ods,c.limit_write_num,c.limit_write_flag
+        from sys_emr_type_config c
+        right join TM_BS_DICT_DATA d1 on to_char(c.EMR_TYPE_CODE) = d1.data_val
+        left join TM_BS_DICT_DATA d2 on to_char(c.EMR_CLASS_CODE) = d2.data_val and d2.DICT_TYPE = 's003'
+        left join TM_BS_DICT_DATA d3 on to_char(c.MR_FILE_TYPE) = d3.data_val and d3.DICT_TYPE = 's006'
+        <where>
+            and d1.DICT_TYPE = 's004'
+            <if test="emrTypeCode != null and emrTypeCode != ''"> and c.emr_type_code = #{emrTypeCode}</if>
+            <if test="emrClassCode != null and emrClassCode != ''"> and c.emr_class_code = #{emrClassCode}</if>
+            <if test="mrFileType != null and mrFileType != ''"> and c.mr_file_type = #{mrFileType}</if>
+            <if test="signFlag != null "> and c.sign_flag = #{signFlag}</if>
+            <if test="mergeFlag != null "> and c.merge_flag = #{mergeFlag}</if>
+            <if test="validFlag != null  and validFlag != ''"> and c.valid_flag = #{validFlag}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and c.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and c.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altDate != null "> and c.alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and c.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and c.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="creDate != null "> and c.cre_date = #{creDate}</if>
+            <if test="isOds != null "> and c.is_ods = #{isOds}</if>
+        </where>
+    </select>
+
+    <select id="selectListByNameAndClass" parameterType="SysEmrTypeConfigVo" resultMap="SysEmrTypeConfigVoResult">
+        select c.*, d1.data_tag emr_type_name,d1.data_tag,d1.data_val
+        from sys_emr_type_config c
+        right join TM_BS_DICT_DATA d1 on to_char(c.EMR_TYPE_CODE) = d1.data_val
+        <where>
+            and d1.DICT_TYPE = 's004'
+            and c.valid_flag = '1'
+            <if test="emrTypeName != null and emrTypeName != ''"> and (d1.data_val like concat(concat('%',#{emrTypeName}),'%') or c.emr_type_code like concat(concat('%',#{emrTypeName}),'%') ) </if>
+            <if test="emrTypeCode != null and emrTypeCode != ''"> and c.emr_type_code = #{emrTypeCode}</if>
+            <if test="emrClassCode != null and emrClassCode != ''"> and c.emr_class_code = #{emrClassCode}</if>
+            <if test="mergeFlag != null "> and c.merge_flag = #{mergeFlag}</if>
+            <if test="mrFileType != null and mrFileType != ''"> and c.mr_file_type = #{mrFileType}</if>
+        </where>
+        order by d1.data_sort
+    </select>
+
+    <select id="selectSysEmrTypeConfigById" parameterType="Long" resultMap="SysEmrTypeConfigResult">
+        <include refid="selectSysEmrTypeConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectSysEmrTypeConfigByTypeId" parameterType="String" resultMap="SysEmrTypeConfigVoResult">
+        select tc.id, tc.emr_type_code, tc.emr_class_code, tc.mr_file_type, tc.sign_flag, tc.merge_flag, tc.valid_flag, tc.cre_per_code,
+        tc.cre_per_name, tc.alt_date, tc.alt_per_code, tc.alt_per_name, tc.cre_date,dd.data_tag as emr_class_name,tc.edit_mode,tc.reviewed_level,tc.second_doc_code,tc.second_doc_name,tc.second_dept_code,
+        tc.second_dept_name,tc.third_doc_code,tc.third_doc_name,tc.third_dept_code,tc.third_dept_name,tc.limit_write_num,tc.limit_write_flag
+        from sys_emr_type_config tc left join TM_BS_DICT_DATA dd on tc.emr_class_code=dd.data_val and dict_type='s003'
+        where tc.emr_type_code = #{emrTypeCode}
+    </select>
+
+    <insert id="insertSysEmrTypeConfig" parameterType="SysEmrTypeConfig">
+        insert into sys_emr_type_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="emrTypeCode != null">emr_type_code,</if>
+            <if test="emrClassCode != null">emr_class_code,</if>
+            <if test="mrFileType != null">mr_file_type,</if>
+            <if test="signFlag != null">sign_flag,</if>
+            <if test="mergeFlag != null">merge_flag,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="reviewedLevel != null and reviewedLevel != ''">reviewed_level,</if>
+            cre_date,
+            <if test="editMode != null and editMode != ''">edit_mode,</if>
+            <if test="secondDocCode != null and secondDocCode != ''">second_doc_code,</if>
+            <if test="secondDeptCode != null and secondDeptCode != ''">second_dept_code,</if>
+            <if test="secondDocName != null and secondDocName != ''">second_doc_name,</if>
+            <if test="secondDeptName != null and secondDeptName != ''">second_dept_name,</if>
+            <if test="thirdDocCode != null and thirdDocCode != ''">third_doc_code,</if>
+            <if test="thirdDeptCode != null and thirdDeptCode != ''">third_dept_code,</if>
+            <if test="thirdDocName != null and thirdDocName != ''">third_doc_name,</if>
+            <if test="thirdDeptName != null and thirdDeptName != ''">third_dept_name,</if>
+            <if test="isOds != null and isOds != ''">is_ods,</if>
+            <if test="limitWriteNum != null">LIMIT_WRITE_NUM,</if>
+            <if test="limitWriteFlag != null and limitWriteFlag != ''">LIMIT_WRITE_FLAG</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="emrTypeCode != null">#{emrTypeCode},</if>
+            <if test="emrClassCode != null">#{emrClassCode},</if>
+            <if test="mrFileType != null">#{mrFileType},</if>
+            <if test="signFlag != null">#{signFlag},</if>
+            <if test="mergeFlag != null">#{mergeFlag},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="reviewedLevel != null and reviewedLevel != ''">#{reviewedLevel},</if>
+            sysdate,
+            <if test="editMode != null and editMode != ''">#{editMode},</if>
+            <if test="secondDocCode != null and secondDocCode != ''">#{secondDocCode},</if>
+            <if test="secondDeptCode != null and secondDeptCode != ''">#{secondDeptCode},</if>
+            <if test="secondDocName != null and secondDocName != ''">#{secondDocName},</if>
+            <if test="secondDeptName != null and secondDeptName != ''">#{secondDeptName},</if>
+            <if test="thirdDocCode != null and thirdDocCode != ''">#{thirdDocCode},</if>
+            <if test="thirdDeptCode != null and thirdDeptCode != ''">#{thirdDeptCode},</if>
+            <if test="thirdDocName != null and thirdDocName != ''">#{thirdDocName},</if>
+            <if test="thirdDeptName != null and thirdDeptName != ''">#{thirdDocCode},</if>
+            <if test="isOds != null and isOds != ''">#{isOds},</if>
+            <if test="limitWriteNum != null">#{limitWriteNum},</if>
+            <if test="limitWriteFlag != null and limitWriteFlag != ''">#{limitWriteFlag}</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysEmrTypeConfig" parameterType="SysEmrTypeConfig">
+        update sys_emr_type_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="emrTypeCode != null and emrTypeCode != ''">emr_type_code = #{emrTypeCode},</if>
+            <if test="emrClassCode != null and emrClassCode != ''">emr_class_code = #{emrClassCode},</if>
+            <if test="mrFileType != null and mrFileType != ''">mr_file_type = #{mrFileType},</if>
+            <if test="signFlag != null">sign_flag = #{signFlag},</if>
+            <if test="mergeFlag != null">merge_flag = #{mergeFlag},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="reviewedLevel != null and reviewedLevel != ''">reviewed_level = #{reviewedLevel},</if>
+            alt_date = sysdate,
+            <if test="editMode != null and editMode != ''">edit_mode = #{editMode},</if>
+            <if test="isOds != null and isOds != ''">is_ods = #{isOds},</if>
+            second_doc_code = #{secondDocCode},
+            second_dept_code = #{secondDeptCode},
+            second_doc_name = #{secondDocName},
+            second_dept_name = #{secondDeptName},
+            third_doc_code = #{thirdDocCode},
+            third_dept_code = #{thirdDeptCode},
+            third_doc_name = #{thirdDocName},
+            third_dept_name = #{thirdDeptName},
+            <if test="limitWriteNum != null">LIMIT_WRITE_NUM=#{limitWriteNum},</if>
+            <if test="limitWriteFlag != null and limitWriteFlag != ''">LIMIT_WRITE_FLAG=#{limitWriteFlag}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysEmrTypeConfigById" parameterType="Long">
+        delete from sys_emr_type_config where id = #{id}
+    </delete>
+
+    <delete id="deleteSysEmrTypeConfigByIds" parameterType="String">
+        delete from sys_emr_type_config where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

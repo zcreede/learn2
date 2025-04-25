@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.LisLabItemHisMapper">
+
+    <resultMap type="LisLabItemHis" id="LisLabItemHisResult">
+        <result property="id"    column="id"    />
+        <result property="hisItemCd"    column="his_item_cd"    />
+        <result property="hisItemName"    column="his_item_name"    />
+        <result property="lisItemCd"    column="lis_item_cd"    />
+        <result property="lisItemName"    column="lis_item_name"    />
+    </resultMap>
+
+    <sql id="selectLisLabItemHisVo">
+        select id, his_item_cd, his_item_name, lis_item_cd, lis_item_name from tm_pm_lis_lab_item_his
+    </sql>
+
+    <select id="selectLisLabItemHisList" parameterType="LisLabItemHis" resultMap="LisLabItemHisResult">
+        <include refid="selectLisLabItemHisVo"/>
+        <where>
+            <if test="hisItemCd != null  and hisItemCd != ''"> and his_item_cd = #{hisItemCd}</if>
+            <if test="hisItemName != null  and hisItemName != ''"> and his_item_name like concat(concat('%', #{hisItemName}), '%')</if>
+            <if test="lisItemCd != null  and lisItemCd != ''"> and lis_item_cd = #{lisItemCd}</if>
+            <if test="lisItemName != null  and lisItemName != ''"> and lis_item_name like concat(concat('%', #{lisItemName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectLisLabItemHisById" parameterType="Long" resultMap="LisLabItemHisResult">
+        <include refid="selectLisLabItemHisVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLisLabItemHis" parameterType="LisLabItemHis">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_tm_pm_lis_lab_item_his.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into tm_pm_lis_lab_item_his
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="hisItemCd != null">his_item_cd,</if>
+            <if test="hisItemName != null">his_item_name,</if>
+            <if test="lisItemCd != null">lis_item_cd,</if>
+            <if test="lisItemName != null">lis_item_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="hisItemCd != null">#{hisItemCd},</if>
+            <if test="hisItemName != null">#{hisItemName},</if>
+            <if test="lisItemCd != null">#{lisItemCd},</if>
+            <if test="lisItemName != null">#{lisItemName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLisLabItemHis" parameterType="LisLabItemHis">
+        update tm_pm_lis_lab_item_his
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hisItemCd != null">his_item_cd = #{hisItemCd},</if>
+            <if test="hisItemName != null">his_item_name = #{hisItemName},</if>
+            <if test="lisItemCd != null">lis_item_cd = #{lisItemCd},</if>
+            <if test="lisItemName != null">lis_item_name = #{lisItemName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLisLabItemHisById" parameterType="Long">
+        delete from tm_pm_lis_lab_item_his where id = #{id}
+    </delete>
+
+    <delete id="deleteLisLabItemHisByIds" parameterType="String">
+        delete from tm_pm_lis_lab_item_his where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

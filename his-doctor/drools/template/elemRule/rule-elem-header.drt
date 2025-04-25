@@ -1,0 +1,22 @@
+template header
+
+rule
+ruleCode
+eventVariable
+errorMsg
+
+
+package com.ai.prd
+
+import com.emr.project.emr.domain.vo.IndexSaveVo;
+import com.emr.project.tmpl.domain.vo.ElemAttriVo;
+import com.emr.project.qc.domain.vo.QcRuleResultVo;
+import com.emr.common.utils.DroolsUtil;
+import com.emr.common.utils.StringUtils;
+import java.util.List;
+
+template "judge condition"
+
+
+
+end template

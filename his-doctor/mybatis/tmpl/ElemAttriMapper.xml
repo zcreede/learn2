@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpl.mapper.ElemAttriMapper">
+
+    <resultMap type="ElemAttri" id="ElemAttriResult">
+        <result property="id"    column="id"    />
+        <result property="tempId"    column="temp_id"    />
+        <result property="tempName"    column="temp_name"    />
+        <result property="contElemName"    column="cont_elem_name"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="typeFlag"    column="type_flag"    />
+        <result property="contType"    column="cont_type"    />
+        <result property="elemAttri"    column="elem_attri"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+    </resultMap>
+
+    <sql id="selectElemAttriVo">
+        select id, temp_id, temp_name, cont_elem_name, elem_id, elem_name, elem_cd, type_flag, cont_type, elem_attri, cre_date, cre_per_name, alt_date, alt_per_name from tmpl_elem_attri
+    </sql>
+
+    <sql id="selectElemAttriStandardVo">
+        select id, temp_id, temp_name, cont_elem_name, elem_id, elem_name, elem_cd, type_flag, cont_type, elem_attri, cre_date, cre_per_name, alt_date, alt_per_name from tmpl_elem_attri_standard
+    </sql>
+
+    <select id="selectElemAttriList" parameterType="ElemAttri" resultMap="ElemAttriResult">
+        <include refid="selectElemAttriVo"/>
+        <where>
+            <if test="tempId != null "> and temp_id = #{tempId}</if>
+            <if test="tempName != null  and tempName != ''"> and temp_name like concat(concat('%', #{tempName}), '%')</if>
+            <if test="contElemName != null  and contElemName != ''"> and cont_elem_name like concat(concat('%', #{contElemName}), '%')</if>
+            <if test="elemId != null "> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="typeFlag != null  and typeFlag != ''"> and type_flag = #{typeFlag}</if>
+            <if test="contType != null  and contType != ''"> and cont_type = #{contType}</if>
+            <if test="elemAttri != null  and elemAttri != ''"> and elem_attri = #{elemAttri}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectElemAttriStandardList" parameterType="ElemAttri" resultMap="ElemAttriResult">
+        <include refid="selectElemAttriStandardVo"/>
+        <where>
+            <if test="tempId != null "> and temp_id = #{tempId}</if>
+            <if test="tempName != null  and tempName != ''"> and temp_name like concat(concat('%', #{tempName}), '%')</if>
+            <if test="contElemName != null  and contElemName != ''"> and cont_elem_name like concat(concat('%', #{contElemName}), '%')</if>
+            <if test="elemId != null "> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="typeFlag != null  and typeFlag != ''"> and type_flag = #{typeFlag}</if>
+            <if test="contType != null  and contType != ''"> and cont_type = #{contType}</if>
+            <if test="elemAttri != null  and elemAttri != ''"> and elem_attri = #{elemAttri}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectElemAttriById" parameterType="Long" resultMap="ElemAttriResult">
+        <include refid="selectElemAttriVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectElemAttriByTempId" resultMap="ElemAttriResult">
+        <include refid="selectElemAttriVo"/>
+        where TEMP_ID = #{tempId}
+    </select>
+
+    <insert id="insertElemAttri" parameterType="ElemAttri">
+        insert into tmpl_elem_attri
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tempId != null">temp_id,</if>
+            <if test="tempName != null">temp_name,</if>
+            <if test="contElemName != null">cont_elem_name,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="typeFlag != null">type_flag,</if>
+            <if test="contType != null">cont_type,</if>
+            <if test="elemAttri != null">elem_attri,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tempId != null">#{tempId},</if>
+            <if test="tempName != null">#{tempName},</if>
+            <if test="contElemName != null">#{contElemName},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="typeFlag != null">#{typeFlag},</if>
+            <if test="contType != null">#{contType},</if>
+            <if test="elemAttri != null">#{elemAttri},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <insert id="insertElemAttriList" parameterType="java.util.List">
+        insert all
+        <foreach collection ="list" item="elemAttriList" index= "index" >
+            into tmpl_elem_attri
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="elemAttriList.id != null">id,</if>
+                <if test="elemAttriList.tempId != null">temp_id,</if>
+                <if test="elemAttriList.tempName != null">temp_name,</if>
+                <if test="elemAttriList.contElemName != null">cont_elem_name,</if>
+                <if test="elemAttriList.elemId != null">elem_id,</if>
+                <if test="elemAttriList.elemName != null">elem_name,</if>
+                <if test="elemAttriList.elemCd != null">elem_cd,</if>
+                <if test="elemAttriList.typeFlag != null">type_flag,</if>
+                <if test="elemAttriList.contType != null">cont_type,</if>
+                <if test="elemAttriList.elemAttri != null">elem_attri,</if>
+                <if test="elemAttriList.crePerName != null">cre_per_name,</if>
+                <if test="elemAttriList.altDate != null">alt_date,</if>
+                <if test="elemAttriList.altPerName != null">alt_per_name,</if>
+                cre_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="elemAttriList.id != null">#{elemAttriList.id},</if>
+                <if test="elemAttriList.tempId != null">#{elemAttriList.tempId},</if>
+                <if test="elemAttriList.tempName != null">#{elemAttriList.tempName},</if>
+                <if test="elemAttriList.contElemName != null">#{elemAttriList.contElemName},</if>
+                <if test="elemAttriList.elemId != null">#{elemAttriList.elemId},</if>
+                <if test="elemAttriList.elemName != null">#{elemAttriList.elemName},</if>
+                <if test="elemAttriList.elemCd != null">#{elemAttriList.elemCd},</if>
+                <if test="elemAttriList.typeFlag != null">#{elemAttriList.typeFlag},</if>
+                <if test="elemAttriList.contType != null">#{elemAttriList.contType},</if>
+                <if test="elemAttriList.elemAttri != null">#{elemAttriList.elemAttri},</if>
+                <if test="elemAttriList.crePerName != null">#{elemAttriList.crePerName},</if>
+                <if test="elemAttriList.altDate != null">#{elemAttriList.altDate},</if>
+                <if test="elemAttriList.altPerName != null">#{elemAttriList.altPerName},</if>
+                sysdate,
+            </trim>
+        </foreach >
+        select 1 from dual
+    </insert>
+
+    <insert id="insertElemAttriStandardList" parameterType="java.util.List">
+        insert all
+        <foreach collection ="list" item="elemAttriList" index= "index" >
+            into tmpl_elem_attri_standard
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="elemAttriList.id != null">id,</if>
+                <if test="elemAttriList.tempId != null">temp_id,</if>
+                <if test="elemAttriList.tempName != null">temp_name,</if>
+                <if test="elemAttriList.contElemName != null">cont_elem_name,</if>
+                <if test="elemAttriList.elemId != null">elem_id,</if>
+                <if test="elemAttriList.elemName != null">elem_name,</if>
+                <if test="elemAttriList.elemCd != null">elem_cd,</if>
+                <if test="elemAttriList.typeFlag != null">type_flag,</if>
+                <if test="elemAttriList.contType != null">cont_type,</if>
+                <if test="elemAttriList.elemAttri != null">elem_attri,</if>
+                <if test="elemAttriList.crePerName != null">cre_per_name,</if>
+                <if test="elemAttriList.altDate != null">alt_date,</if>
+                <if test="elemAttriList.altPerName != null">alt_per_name,</if>
+                cre_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="elemAttriList.id != null">#{elemAttriList.id},</if>
+                <if test="elemAttriList.tempId != null">#{elemAttriList.tempId},</if>
+                <if test="elemAttriList.tempName != null">#{elemAttriList.tempName},</if>
+                <if test="elemAttriList.contElemName != null">#{elemAttriList.contElemName},</if>
+                <if test="elemAttriList.elemId != null">#{elemAttriList.elemId},</if>
+                <if test="elemAttriList.elemName != null">#{elemAttriList.elemName},</if>
+                <if test="elemAttriList.elemCd != null">#{elemAttriList.elemCd},</if>
+                <if test="elemAttriList.typeFlag != null">#{elemAttriList.typeFlag},</if>
+                <if test="elemAttriList.contType != null">#{elemAttriList.contType},</if>
+                <if test="elemAttriList.elemAttri != null">#{elemAttriList.elemAttri},</if>
+                <if test="elemAttriList.crePerName != null">#{elemAttriList.crePerName},</if>
+                <if test="elemAttriList.altDate != null">#{elemAttriList.altDate},</if>
+                <if test="elemAttriList.altPerName != null">#{elemAttriList.altPerName},</if>
+                sysdate,
+            </trim>
+        </foreach >
+        select 1 from dual
+    </insert>
+
+    <update id="updateElemAttri" parameterType="ElemAttri">
+        update tmpl_elem_attri
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tempId != null">temp_id = #{tempId},</if>
+            <if test="tempName != null">temp_name = #{tempName},</if>
+            <if test="contElemName != null">cont_elem_name = #{contElemName},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="typeFlag != null">type_flag = #{typeFlag},</if>
+            <if test="contType != null">cont_type = #{contType},</if>
+            <if test="elemAttri != null">elem_attri = #{elemAttri},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteElemAttriById" parameterType="Long">
+        delete from tmpl_elem_attri where id = #{id}
+    </delete>
+
+    <delete id="deleteElemAttriByTempId" parameterType="Long">
+        delete from tmpl_elem_attri where temp_id = #{tempId}
+    </delete>
+
+    <delete id="deleteElemAttriStandardByTempId" parameterType="Long">
+        delete from tmpl_elem_attri_standard where temp_id = #{tempId}
+    </delete>
+
+    <delete id="deleteElemAttriByIds" parameterType="String">
+        delete from tmpl_elem_attri where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectElemAttriByTempIdAndContElemName" parameterType="ElemAttri" resultMap="ElemAttriResult">
+        select * from tmpl_elem_attri where
+        <foreach collection="paramList" item="item" open="(" separator=" or " close=")">
+            (temp_id = #{item.tempId} and cont_elem_name = #{item.contElemName})
+        </foreach>
+    </select>
+</mapper>

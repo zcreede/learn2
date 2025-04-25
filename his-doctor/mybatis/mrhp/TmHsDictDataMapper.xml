@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.TmHsDictDataMapper">
+
+    <resultMap type="TmHsDictData" id="TmHsDictDataResult">
+        <result property="id"    column="id"    />
+        <result property="dictType"    column="dict_type"    />
+        <result property="dataName"    column="data_name"    />
+        <result property="dataVal"    column="data_val"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="state"    column="state"    />
+        <result property="sort"    column="sort"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTmHsDictDataVo">
+        select id, dict_type, data_name, data_val, inputstrphtc, state, sort, cre_per_name, cre_date, alt_per_name, alt_date, remark from tm_hs_dict_data
+    </sql>
+
+    <select id="selectTmHsDictDataList" parameterType="TmHsDictData" resultMap="TmHsDictDataResult">
+        <include refid="selectTmHsDictDataVo"/>
+        <where>
+            <if test="dictType != null  and dictType != ''"> and dict_type = #{dictType}</if>
+            <if test="dataName != null  and dataName != ''"> and data_name like concat(concat('%', #{dataName}), '%')</if>
+            <if test="dataVal != null  and dataVal != ''"> and data_val = #{dataVal}</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectTmHsDictDataById" parameterType="Long" resultMap="TmHsDictDataResult">
+        <include refid="selectTmHsDictDataVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectDataByTypeList" resultMap="TmHsDictDataResult">
+        select
+            DICT_TYPE as dict_type,
+            DATA_TAG as data_name,
+             DATA_VAL as data_val,
+             DATA_PYM as inputstrphtc,
+             '0' as state,
+            DATA_SORT as sort
+        from TM_BS_DICT_DATA
+        <where>
+            <if test="list!=null and list.size() >0">
+                and DICT_TYPE in
+                <foreach collection="list" open="(" close=")" separator="," item="item">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="insertTmHsDictData" parameterType="TmHsDictData">
+        insert into tm_hs_dict_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="dictType != null">dict_type,</if>
+            <if test="dataName != null">data_name,</if>
+            <if test="dataVal != null">data_val,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="state != null">state,</if>
+            <if test="sort != null">sort,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="remark != null">remark,</if>
+            cre_date
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="dictType != null">#{dictType},</if>
+            <if test="dataName != null">#{dataName},</if>
+            <if test="dataVal != null">#{dataVal},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="state != null">#{state},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="remark != null">#{remark},</if>
+            sysdate
+        </trim>
+    </insert>
+    <insert id="insertAllList">
+        insert all
+        <foreach collection="list" item="item">
+            into tm_hs_dict_data
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.dictType != null">dict_type,</if>
+                <if test="item.dataName != null">data_name,</if>
+                <if test="item.dataVal != null">data_val,</if>
+                <if test="item.inputstrphtc != null">inputstrphtc,</if>
+                <if test="item.state != null">state,</if>
+                <if test="item.sort != null">sort,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.remark != null">remark,</if>
+                cre_date
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.dictType != null">#{item.dictType},</if>
+                <if test="item.dataName != null">#{item.dataName},</if>
+                <if test="item.dataVal != null">#{item.dataVal},</if>
+                <if test="item.inputstrphtc != null">#{item.inputstrphtc},</if>
+                <if test="item.state != null">#{item.state},</if>
+                <if test="item.sort != null">#{item.sort},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+                sysdate
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTmHsDictData" parameterType="TmHsDictData">
+        update tm_hs_dict_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dictType != null">dict_type = #{dictType},</if>
+            <if test="dataName != null">data_name = #{dataName},</if>
+            <if test="dataVal != null">data_val = #{dataVal},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmHsDictDataById" parameterType="Long">
+        delete from tm_hs_dict_data where id = #{id}
+    </delete>
+
+    <delete id="deleteTmHsDictDataByIds" parameterType="String">
+        delete from tm_hs_dict_data where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteByTypeList">
+        delete from tm_hs_dict_data where DICT_TYPE in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

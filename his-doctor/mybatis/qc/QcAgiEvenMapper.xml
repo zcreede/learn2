@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcAgiEvenMapper">
+
+    <resultMap type="QcAgiEven" id="QcAgiEvenResult">
+        <result property="id"    column="id"    />
+        <result property="evenCode"    column="even_code"    />
+        <result property="evenName"    column="even_name"    />
+        <result property="evenFreq"    column="even_freq"    />
+        <result property="desc"    column="desc"    />
+        <result property="addMeth"    column="add_meth"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+    </resultMap>
+
+    <sql id="selectQcAgiEvenVo">
+        select id, even_code, even_name, even_freq, "DESC", add_meth, del_flag, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date from qc_agi_even
+    </sql>
+
+    <select id="selectQcAgiEvenList" parameterType="QcAgiEven" resultMap="QcAgiEvenResult">
+        <include refid="selectQcAgiEvenVo"/>
+        <where>
+            and DEL_FLAG='0'
+            <if test="evenCode != null  and evenCode != ''"> and even_code = #{evenCode}</if>
+            <if test="evenName != null  and evenName != ''"> and even_name like concat(concat('%', #{evenName}), '%')</if>
+            <if test="evenFreq != null  and evenFreq != ''"> and even_freq = #{evenFreq}</if>
+            <if test="desc != null  and desc != ''"> and desc = #{desc}</if>
+            <if test="addMeth != null  and addMeth != ''"> and add_meth = #{addMeth}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+        </where>
+    </select>
+
+    <select id="selectListByEvenCodes" parameterType="String" resultMap="QcAgiEvenResult">
+        <include refid="selectQcAgiEvenVo"/>
+        where even_code in
+        <foreach collection="evenCodeList" item="evenCode" open="(" separator="," close=")">
+            #{evenCode}
+        </foreach>
+    </select>
+
+    <select id="selectQcAgiEvenById" parameterType="Long" resultMap="QcAgiEvenResult">
+        <include refid="selectQcAgiEvenVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertQcAgiEven" parameterType="QcAgiEven">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_qc_agi_even.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into qc_agi_even
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="evenCode != null">even_code,</if>
+            <if test="evenName != null">even_name,</if>
+            <if test="evenFreq != null">even_freq,</if>
+            <if test="desc != null">desc,</if>
+            <if test="addMeth != null">add_meth,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="evenCode != null">#{evenCode},</if>
+            <if test="evenName != null">#{evenName},</if>
+            <if test="evenFreq != null">#{evenFreq},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="addMeth != null">#{addMeth},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQcAgiEven" parameterType="QcAgiEven">
+        update qc_agi_even
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="evenCode != null">even_code = #{evenCode},</if>
+            <if test="evenName != null">even_name = #{evenName},</if>
+            <if test="evenFreq != null">even_freq = #{evenFreq},</if>
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="addMeth != null">add_meth = #{addMeth},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQcAgiEvenById" parameterType="Long">
+        delete from qc_agi_even where id = #{id}
+    </delete>
+
+    <delete id="deleteQcAgiEvenByIds" parameterType="String">
+        delete from qc_agi_even where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

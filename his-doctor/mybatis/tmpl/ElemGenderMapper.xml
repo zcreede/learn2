@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpl.mapper.ElemGenderMapper">
+
+    <resultMap type="ElemGender" id="ElemGenderResult">
+        <result property="id"    column="id"    />
+        <result property="tempId"    column="temp_id"    />
+        <result property="tempName"    column="temp_name"    />
+        <result property="tempType"    column="temp_type"    />
+        <result property="contElemName"    column="cont_elem_name"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="typeFlag"    column="type_flag"    />
+        <result property="contType"    column="cont_type"    />
+        <result property="sexCd"    column="sex_cd"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="elemQua"    column="elem_qua"    />
+    </resultMap>
+
+    <sql id="selectElemGenderVo">
+        select id, temp_id, temp_name, temp_type, cont_elem_name, elem_id, elem_name, elem_cd, type_flag, cont_type, sex_cd, cre_per_name, cre_per_code, alt_per_name, alt_date,elem_qua from tmpl_elem_gender
+    </sql>
+
+    <select id="selectElemGenderList" parameterType="ElemGender" resultMap="ElemGenderResult">
+        <include refid="selectElemGenderVo"/>
+        <where>
+            <if test="tempId != null "> and temp_id = #{tempId}</if>
+            <if test="tempName != null  and tempName != ''"> and temp_name like concat(concat('%', #{tempName}), '%')</if>
+            <if test="tempType != null  and tempType != ''"> and temp_type = #{tempType}</if>
+            <if test="contElemName != null  and contElemName != ''"> and cont_elem_name like concat(concat('%', #{contElemName}), '%')</if>
+            <if test="elemId != null "> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="typeFlag != null  and typeFlag != ''"> and type_flag = #{typeFlag}</if>
+            <if test="contType != null  and contType != ''"> and cont_type = #{contType}</if>
+            <if test="sexCd != null  and sexCd != ''"> and sex_cd = #{sexCd}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectElemGenderById" parameterType="Long" resultMap="ElemGenderResult">
+        <include refid="selectElemGenderVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertElemGender" parameterType="ElemGender">
+        insert into tmpl_elem_gender
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tempId != null">temp_id,</if>
+            <if test="tempName != null">temp_name,</if>
+            <if test="tempType != null">temp_type,</if>
+            <if test="contElemName != null">cont_elem_name,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="typeFlag != null">type_flag,</if>
+            <if test="contType != null">cont_type,</if>
+            <if test="sexCd != null">sex_cd,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="elemQua != null">elem_qua,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tempId != null">#{tempId},</if>
+            <if test="tempName != null">#{tempName},</if>
+            <if test="tempType != null">#{tempType},</if>
+            <if test="contElemName != null">#{contElemName},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="typeFlag != null">#{typeFlag},</if>
+            <if test="contType != null">#{contType},</if>
+            <if test="sexCd != null">#{sexCd},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="elemQua != null">#{elemQua},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertElemGenderList" parameterType="java.util.List">
+        insert into tmpl_elem_gender
+        (id,temp_id,temp_name,temp_type,cont_elem_name,elem_id,elem_name,elem_cd,type_flag,cont_type,sex_cd,cre_per_name,cre_per_code,elem_qua)
+        <foreach collection ="list" item="elemGenderList" index= "index" separator="union all" >
+            select #{elemGenderList.id,jdbcType=NUMERIC},
+            #{elemGenderList.tempId,jdbcType=NUMERIC},
+            #{elemGenderList.tempName,jdbcType=VARCHAR},
+            #{elemGenderList.tempType,jdbcType=VARCHAR},
+            #{elemGenderList.contElemName,jdbcType=VARCHAR},
+            #{elemGenderList.elemId,jdbcType=NUMERIC},
+            #{elemGenderList.elemName,jdbcType=VARCHAR},
+            #{elemGenderList.elemCd,jdbcType=VARCHAR},
+            #{elemGenderList.typeFlag,jdbcType=VARCHAR},
+            #{elemGenderList.contType,jdbcType=VARCHAR},
+            #{elemGenderList.sexCd,jdbcType=VARCHAR},
+            #{elemGenderList.crePerName,jdbcType=VARCHAR},
+            #{elemGenderList.crePerCode,jdbcType=VARCHAR},
+            #{elemGenderList.elemQua,jdbcType=VARCHAR} from dual
+        </foreach >
+    </insert>
+
+    <insert id="insertElemGenderStandardList" parameterType="java.util.List">
+        insert into tmpl_elem_gender_standard
+        (id,temp_id,temp_name,temp_type,cont_elem_name,elem_id,elem_name,elem_cd,type_flag,cont_type,sex_cd,cre_per_name,cre_per_code,elem_qua)
+        <foreach collection ="list" item="elemGenderList" index= "index" separator="union all" >
+            select #{elemGenderList.id,jdbcType=NUMERIC},
+            #{elemGenderList.tempId,jdbcType=NUMERIC},
+            #{elemGenderList.tempName,jdbcType=VARCHAR},
+            #{elemGenderList.tempType,jdbcType=VARCHAR},
+            #{elemGenderList.contElemName,jdbcType=VARCHAR},
+            #{elemGenderList.elemId,jdbcType=NUMERIC},
+            #{elemGenderList.elemName,jdbcType=VARCHAR},
+            #{elemGenderList.elemCd,jdbcType=VARCHAR},
+            #{elemGenderList.typeFlag,jdbcType=VARCHAR},
+            #{elemGenderList.contType,jdbcType=VARCHAR},
+            #{elemGenderList.sexCd,jdbcType=VARCHAR},
+            #{elemGenderList.crePerName,jdbcType=VARCHAR},
+            #{elemGenderList.crePerCode,jdbcType=VARCHAR},
+            #{elemGenderList.elemQua,jdbcType=VARCHAR} from dual
+        </foreach >
+    </insert>
+
+    <update id="updateElemGender" parameterType="ElemGender">
+        update tmpl_elem_gender
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tempId != null">temp_id = #{tempId},</if>
+            <if test="tempName != null">temp_name = #{tempName},</if>
+            <if test="tempType != null">temp_type = #{tempType},</if>
+            <if test="contElemName != null">cont_elem_name = #{contElemName},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="typeFlag != null">type_flag = #{typeFlag},</if>
+            <if test="contType != null">cont_type = #{contType},</if>
+            <if test="sexCd != null">sex_cd = #{sexCd},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="elemQua != null">elem_qua = #{elemQua},</if>
+            alt_date=sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteElemGenderById" parameterType="Long">
+        delete from tmpl_elem_gender where id = #{id}
+    </delete>
+
+    <delete id="deleteElemGenderByTempId" parameterType="Long">
+        delete from tmpl_elem_gender where temp_id = #{tempId}
+    </delete>
+
+    <delete id="deleteElemGenderStandardByTempId" parameterType="Long">
+        delete from tmpl_elem_gender_standard where temp_id = #{tempId}
+    </delete>
+
+    <delete id="deleteElemGenderByIds" parameterType="String">
+        delete from tmpl_elem_gender where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectElemGenderQuaList" parameterType="Long" resultMap="ElemGenderResult">
+        select teg.* from TMPL_ELEM_GENDER teg
+        where teg.TEMP_ID = #{tempId}
+    </select>
+</mapper>

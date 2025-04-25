@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.SysEmrLogMapper">
+    
+    <resultMap type="SysEmrLog" id="SysEmrLogResult">
+        <result property="id"    column="id"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="mrFileName"    column="mr_file_name"    />
+        <result property="mrTypeCd"    column="mr_type_cd"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="optType"    column="opt_type"    />
+        <result property="optTypeName"    column="opt_type_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="ip"    column="ip"    />
+    </resultMap>
+<resultMap id="SysEmrLogVoResult" type="SysEmrLogVo" extends="SysEmrLogResult">
+
+</resultMap>
+    <sql id="selectSysEmrLogVo">
+        select id, inp_no, patient_id, patient_name, mr_file_id, mr_file_name, mr_type_cd, mr_type_name, opt_type, opt_type_name,
+               cre_per_code, cre_per_name, cre_date,ip from sys_emr_log
+    </sql>
+
+    <select id="selectSysEmrLogList" parameterType="SysEmrLogVo" resultMap="SysEmrLogResult">
+        select sel.id, sel.inp_no, sel.patient_id, sel.patient_name, sel.mr_file_id, sel.mr_file_name, sel.mr_type_cd, sel.mr_type_name,
+        sel.opt_type, sel.opt_type_name, sel.cre_per_code, sel.cre_per_name, sel.cre_date,sel.ip
+         from sys_emr_log sel
+        <where>  
+            <if test="inpNo != null  and inpNo != ''"> and sel.inp_no like concat(concat('%', #{inpNo}), '%')</if>
+            <if test="mrTypeCd != null  and mrTypeCd != ''"> and sel.mr_type_cd = #{mrTypeCd}</if>
+            <if test="crePerName != null  and crePerName != ''"> and sel.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creBeginDate != null ">
+                and sel.cre_date &gt;=  #{creBeginDate}
+            </if>
+            <if test="creEndDate != null ">
+                and sel.cre_date &lt; #{creEndDate} + 1
+            </if>
+
+        </where>
+        order by cre_date
+    </select>
+    
+    <select id="selectSysEmrLogById" parameterType="Long" resultMap="SysEmrLogResult">
+        <include refid="selectSysEmrLogVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectSysEmrLogByMrFileId"  resultMap="SysEmrLogResult">
+        <include refid="selectSysEmrLogVo"/>
+        where mr_file_id = #{mrFileId}
+        <if test="optTypeList!=null"> and OPT_TYPE in
+            <foreach item="item" collection="optTypeList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+         </if>
+        order by cre_date
+    </select>
+        
+    <insert id="insertSysEmrLog" parameterType="SysEmrLog">
+        insert into sys_emr_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="inpNo != null and inpNo != ''">inp_no,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null and patientName != ''">patient_name,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="mrFileName != null">mr_file_name,</if>
+            <if test="mrTypeCd != null and mrTypeCd != ''">mr_type_cd,</if>
+            <if test="mrTypeName != null">mr_type_name,</if>
+            <if test="optType != null">opt_type,</if>
+            <if test="optTypeName != null">opt_type_name,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="ip != null and ip != ''">ip,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="inpNo != null and inpNo != ''">#{inpNo},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null and patientName != ''">#{patientName},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="mrFileName != null">#{mrFileName},</if>
+            <if test="mrTypeCd != null and mrTypeCd != ''">#{mrTypeCd},</if>
+            <if test="mrTypeName != null">#{mrTypeName},</if>
+            <if test="optType != null">#{optType},</if>
+            <if test="optTypeName != null">#{optTypeName},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="ip != null and ip != ''">#{ip},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <insert id="insertSysEmrLogList" parameterType="java.util.List">
+        insert into sys_emr_log
+        (id,inp_no,patient_id, patient_name, mr_file_id,mr_file_name,mr_type_cd,mr_type_name,opt_type,opt_type_name,cre_per_code,cre_per_name,ip,cre_date)
+        <foreach collection ="list" item="sysEmrLogList" index= "index" separator="union all" >
+            select  #{sysEmrLogList.id,jdbcType=NUMERIC},
+            #{sysEmrLogList.inpNo,jdbcType=VARCHAR},
+            #{sysEmrLogList.patientId,jdbcType=VARCHAR},
+            #{sysEmrLogList.patientName,jdbcType=VARCHAR},
+            #{sysEmrLogList.mrFileId,jdbcType=NUMERIC},
+            #{sysEmrLogList.mrFileName,jdbcType=VARCHAR},
+            #{sysEmrLogList.mrTypeCd,jdbcType=VARCHAR},
+            #{sysEmrLogList.mrTypeName,jdbcType=VARCHAR},
+            #{sysEmrLogList.optType,jdbcType=NUMERIC},
+            #{sysEmrLogList.optTypeName,jdbcType=VARCHAR},
+            #{sysEmrLogList.crePerCode,jdbcType=VARCHAR},
+            #{sysEmrLogList.crePerName,jdbcType=VARCHAR},
+            #{sysEmrLogList.ip,jdbcType=VARCHAR},
+            sysdate from dual
+        </foreach >
+    </insert>
+
+    <update id="updateSysEmrLog" parameterType="SysEmrLog">
+        update sys_emr_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inpNo != null and inpNo != ''">inp_no = #{inpNo},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="mrFileName != null">mr_file_name = #{mrFileName},</if>
+            <if test="mrTypeCd != null and mrTypeCd != ''">mr_type_cd = #{mrTypeCd},</if>
+            <if test="mrTypeName != null">mr_type_name = #{mrTypeName},</if>
+            <if test="optType != null">opt_type = #{optType},</if>
+            <if test="optTypeName != null">opt_type_name = #{optTypeName},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="ip != null">ip = #{ip},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysEmrLogById" parameterType="Long">
+        delete from sys_emr_log where id = #{id}
+    </delete>
+
+    <delete id="deleteSysEmrLogByIds" parameterType="String">
+        delete from sys_emr_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

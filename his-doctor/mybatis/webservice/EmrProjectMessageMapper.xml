@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.webservice.mapper.EmrProjectMessageMapper">
+    
+    <resultMap type="EmrProjectMessage" id="EmrProjectMessageResult">
+        <result property="projectCode"    column="project_code"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectKey"    column="project_key"    />
+    </resultMap>
+
+    <sql id="selectEmrProjectMessageVo">
+        select project_code, project_name, project_key from emr_project_message
+    </sql>
+
+    <select id="selectEmrProjectMessageList" parameterType="EmrProjectMessage" resultMap="EmrProjectMessageResult">
+        <include refid="selectEmrProjectMessageVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat(concat('%', #{projectName}), '%')</if>
+            <if test="projectKey != null  and projectKey != ''"> and project_key = #{projectKey}</if>
+        </where>
+    </select>
+    
+    <select id="selectEmrProjectMessageById" parameterType="String" resultMap="EmrProjectMessageResult">
+        <include refid="selectEmrProjectMessageVo"/>
+        where project_code = #{projectCode}
+    </select>
+
+    <insert id="insertEmrProjectMessage" parameterType="EmrProjectMessage">
+        insert into emr_project_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectCode != null">project_code,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="projectKey != null">project_key,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectCode != null">#{projectCode},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="projectKey != null">#{projectKey},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrProjectMessage" parameterType="EmrProjectMessage">
+        update emr_project_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="projectKey != null">project_key = #{projectKey},</if>
+        </trim>
+        where project_code = #{projectCode}
+    </update>
+
+    <delete id="deleteEmrProjectMessageById" parameterType="String">
+        delete from emr_project_message where project_code = #{projectCode}
+    </delete>
+
+    <delete id="deleteEmrProjectMessageByIds" parameterType="String">
+        delete from emr_project_message where project_code in 
+        <foreach item="projectCode" collection="array" open="(" separator="," close=")">
+            #{projectCode}
+        </foreach>
+    </delete>
+</mapper>

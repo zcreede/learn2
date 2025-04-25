@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.DrgMrGroupMapper">
+    
+    <resultMap type="DrgMrGroup" id="DrgMrGroupResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="drgCode"    column="drg_code"    />
+        <result property="drgName"    column="drg_name"    />
+        <result property="drgVersion"    column="drg_version"    />
+        <result property="weight"    column="weight"    />
+        <result property="paymentStandard"    column="payment_standard"    />
+        <result property="isIndrg"    column="is_indrg"    />
+        <result property="riskFlag"    column="risk_flag"    />
+        <result property="riskFlagName"    column="risk_flag_name"    />
+        <result property="notDrgReason"    column="not_drg_reason"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+    <resultMap type="DrgMrGroupVo" id="DrgMrGroupVoResult" extends="DrgMrGroupResult">
+        <result property="costSum"    column="cost_sum"    />
+    </resultMap>
+    <sql id="selectDrgMrGroupVo">
+        select id, patient_id, drg_code, drg_name, drg_version, weight, payment_standard, is_indrg, risk_flag, risk_flag_name, not_drg_reason, del_flag, update_time, update_by, create_time, create_by from drg_mr_group
+    </sql>
+
+    <select id="selectDrgMrGroupList" parameterType="DrgMrGroup" resultMap="DrgMrGroupResult">
+        <include refid="selectDrgMrGroupVo"/>
+        <where>  
+            <if test="patientId != null "> and patient_id = #{patientId}</if>
+            <if test="drgCode != null  and drgCode != ''"> and drg_code = #{drgCode}</if>
+            <if test="drgName != null  and drgName != ''"> and drg_name like concat(concat('%', #{drgName}), '%')</if>
+            <if test="drgVersion != null  and drgVersion != ''"> and drg_version = #{drgVersion}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="paymentStandard != null "> and payment_standard = #{paymentStandard}</if>
+            <if test="isIndrg != null "> and is_indrg = #{isIndrg}</if>
+            <if test="riskFlag != null  and riskFlag != ''"> and risk_flag = #{riskFlag}</if>
+            <if test="riskFlagName != null  and riskFlagName != ''"> and risk_flag_name like concat(concat('%', #{riskFlagName}), '%')</if>
+            <if test="notDrgReason != null  and notDrgReason != ''"> and not_drg_reason = #{notDrgReason}</if>
+        </where>
+    </select>
+    
+    <select id="selectDrgMrGroupById" parameterType="Long" resultMap="DrgMrGroupResult">
+        <include refid="selectDrgMrGroupVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectInfo" parameterType="DrgMrGroupVo" resultMap="DrgMrGroupVoResult">
+        SELECT dg.id,dg.patient_id, dg.drg_code, dg.drg_name,dg.drg_version,dg.weight, dg.payment_standard,
+        dg.is_indrg,dg.risk_flag,dg.risk_flag_name, dg.not_drg_reason,dg.del_flag,
+        dg.update_time,dg.update_by,dg.create_time, dg.create_by,pv.cost_sum
+        FROM drg_mr_group dg
+        left join PAT_VISITINFO pv on dg.PATIENT_ID=pv.PATIENT_ID
+        <where>
+            <if test="patientId != null "> and dg.patient_id = #{patientId}</if>
+            <if test="drgCode != null  and drgCode != ''"> and dg.drg_code = #{drgCode}</if>
+            <if test="drgName != null  and drgName != ''"> and dg.drg_name like concat(concat('%', #{drgName}), '%')</if>
+            <if test="drgVersion != null  and drgVersion != ''"> and dg.drg_version = #{drgVersion}</if>
+            <if test="weight != null "> and dg.weight = #{weight}</if>
+            <if test="paymentStandard != null "> and dg.payment_standard = #{paymentStandard}</if>
+            <if test="isIndrg != null "> and dg.is_indrg = #{isIndrg}</if>
+            <if test="riskFlag != null  and riskFlag != ''"> and dg.risk_flag = #{riskFlag}</if>
+            <if test="riskFlagName != null  and riskFlagName != ''"> and dg.risk_flag_name like concat(concat('%', #{riskFlagName}), '%')</if>
+            <if test="notDrgReason != null  and notDrgReason != ''"> and dg.not_drg_reason = #{notDrgReason}</if>
+        </where>
+    </select>
+    <insert id="insertDrgMrGroup" parameterType="DrgMrGroup">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_drg_mr_group.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into drg_mr_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="drgCode != null">drg_code,</if>
+            <if test="drgName != null">drg_name,</if>
+            <if test="drgVersion != null">drg_version,</if>
+            <if test="weight != null">weight,</if>
+            <if test="paymentStandard != null">payment_standard,</if>
+            <if test="isIndrg != null">is_indrg,</if>
+            <if test="riskFlag != null">risk_flag,</if>
+            <if test="riskFlagName != null">risk_flag_name,</if>
+            <if test="notDrgReason != null">not_drg_reason,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="drgCode != null">#{drgCode},</if>
+            <if test="drgName != null">#{drgName},</if>
+            <if test="drgVersion != null">#{drgVersion},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="paymentStandard != null">#{paymentStandard},</if>
+            <if test="isIndrg != null">#{isIndrg},</if>
+            <if test="riskFlag != null">#{riskFlag},</if>
+            <if test="riskFlagName != null">#{riskFlagName},</if>
+            <if test="notDrgReason != null">#{notDrgReason},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDrgMrGroup" parameterType="DrgMrGroup">
+        update drg_mr_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="drgCode != null">drg_code = #{drgCode},</if>
+            <if test="drgName != null">drg_name = #{drgName},</if>
+            <if test="drgVersion != null">drg_version = #{drgVersion},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="paymentStandard != null">payment_standard = #{paymentStandard},</if>
+            <if test="isIndrg != null">is_indrg = #{isIndrg},</if>
+            <if test="riskFlag != null">risk_flag = #{riskFlag},</if>
+            <if test="riskFlagName != null">risk_flag_name = #{riskFlagName},</if>
+            <if test="notDrgReason != null">not_drg_reason = #{notDrgReason},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDrgMrGroupById" parameterType="Long">
+        delete from drg_mr_group where id = #{id}
+    </delete>
+
+    <delete id="deleteDrgMrGroupByIds" parameterType="String">
+        delete from drg_mr_group where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

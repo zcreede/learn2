@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.PharmacyStockMapper">
+
+  <select id="searchPharmacyStockByStockNo" parameterType="java.lang.String" resultType="java.lang.String">
+    <!-- select sum(sl)
+    from yy_p_yfkc_xycf_v
+    WHERE kcbh = #{stockNo,jdbcType=VARCHAR} and yfbm=#{pharmacyNo,jdbcType=VARCHAR} -->
+
+    select sum(0)+10000 from dual
+
+  </select>
+
+
+</mapper>

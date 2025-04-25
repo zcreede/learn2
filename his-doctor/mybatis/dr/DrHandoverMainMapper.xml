@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.dr.mapper.DrHandoverMainMapper">
+
+    <resultMap type="DrHandoverMain" id="DrHandoverMainResult">
+        <result property="id"    column="id"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="handoverDate"    column="handover_date"    />
+        <result property="schemeCd"    column="scheme_cd"    />
+        <result property="schemeName"    column="scheme_name"    />
+        <result property="schemeBegin"    column="scheme_begin"    />
+        <result property="schemeEnd"    column="scheme_end"    />
+        <result property="shiftDocCd"    column="shift_doc_cd"    />
+        <result property="shiftDocName"    column="shift_doc_name"    />
+        <result property="shiftDocSignDate"    column="shift_doc_sign_date"    />
+        <result property="joinDocCd"    column="join_doc_cd"    />
+        <result property="joinDocName"    column="join_doc_name"    />
+        <result property="joinDocSignDate"    column="join_doc_sign_date"    />
+        <result property="originalNum"    column="original_num"    />
+        <result property="nowNum"    column="now_num"    />
+        <result property="newNum"    column="new_num"    />
+        <result property="tiNum"    column="ti_num"    />
+        <result property="toNum"    column="to_num"    />
+        <result property="deathNum"    column="death_num"    />
+        <result property="criticalNum"    column="critical_num"    />
+        <result property="operatNum"    column="operat_num"    />
+        <result property="outHosNum"    column="out_hos_num"    />
+        <result property="dangNum"    column="dang_num"    />
+        <result property="planNum"    column="plan_num"    />
+        <result property="partNum"    column="part_num"    />
+        <result property="babyNum"    column="baby_num"    />
+        <result property="addBedNum"    column="add_bed_num"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="state"    column="state"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+    </resultMap>
+<resultMap id="DrHandoverMainVoResult" type="DrHandoverMainVo" extends="DrHandoverMainResult">
+    <result property="stateName"    column="stateName"    />
+</resultMap>
+    <sql id="selectDrHandoverMainVo">
+        select id, dept_cd, dept_name, handover_date, scheme_cd, scheme_name, scheme_begin, scheme_end, shift_doc_cd, shift_doc_name, shift_doc_sign_date, join_doc_cd, join_doc_name, join_doc_sign_date, original_num, now_num, new_num, ti_num, to_num, death_num, critical_num, operat_num, out_hos_num, dang_num, plan_num, part_num, baby_num, add_bed_num, del_flag, state, alt_date, alt_per_code, alt_per_name, cre_date, cre_per_code, cre_per_name from dr_handover_main
+    </sql>
+
+    <select id="selectDrHandoverMainList" parameterType="DrHandoverMainVo" resultMap="DrHandoverMainVoResult">
+        <include refid="selectDrHandoverMainVo"/>
+        <where>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="schemeCd != null "> and scheme_cd = #{schemeCd}</if>
+            <if test="schemeName != null  and schemeName != ''"> and scheme_name like concat(concat('%', #{schemeName}), '%')</if>
+            <if test="schemeBegin != null "> and scheme_begin = #{schemeBegin}</if>
+            <if test="schemeEnd != null "> and scheme_end = #{schemeEnd}</if>
+            <if test="shiftDocCd != null  and shiftDocCd != ''"> and shift_doc_cd = #{shiftDocCd}</if>
+            <if test="shiftDocName != null  and shiftDocName != ''"> and shift_doc_name like concat(concat('%', #{shiftDocName}), '%')</if>
+            <if test="shiftDocSignDate != null "> and shift_doc_sign_date = #{shiftDocSignDate}</if>
+            <if test="joinDocCd != null  and joinDocCd != ''"> and join_doc_cd = #{joinDocCd}</if>
+            <if test="joinDocName != null  and joinDocName != ''"> and join_doc_name like concat(concat('%', #{joinDocName}), '%')</if>
+            <if test="joinDocSignDate != null "> and join_doc_sign_date = #{joinDocSignDate}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="handoverBeginDate != null and handoverEndDate!=null"> and HANDOVER_DATE between #{handoverBeginDate} and #{handoverEndDate}</if>
+            <if test="handoverDateTime != null"> and HANDOVER_DATE = #{handoverDateTime}</if>
+            and del_flag ='0'
+            <if test="stateList != null and stateList.size > 0">
+                and state in
+                <foreach collection="stateList" item="state" open="(" separator="," close=")">
+                    #{state}
+                </foreach>
+            </if>
+        </where>
+        order by HANDOVER_DATE DESC,scheme_begin DESC
+    </select>
+
+    <select id="selectHandoverByInfo" parameterType="DrHandoverMain" resultMap="DrHandoverMainResult">
+        <include refid="selectDrHandoverMainVo"/>
+        where dept_cd = #{deptCd}
+        and scheme_cd = #{schemeCd}
+        and handover_date = #{handoverDate}
+        and del_flag = '0'
+    </select>
+
+    <select id="selectDrHandoverMainById" parameterType="Long" resultMap="DrHandoverMainResult">
+        <include refid="selectDrHandoverMainVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDrHandoverMain" parameterType="DrHandoverMain">
+        insert into dr_handover_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="deptCd != null and deptCd != ''">dept_cd,</if>
+            <if test="deptName != null and deptName != ''">dept_name,</if>
+            <if test="handoverDate != null">handover_date,</if>
+            <if test="schemeCd != null">scheme_cd,</if>
+            <if test="schemeName != null and schemeName != ''">scheme_name,</if>
+            <if test="schemeBegin != null">scheme_begin,</if>
+            <if test="schemeEnd != null">scheme_end,</if>
+            <if test="shiftDocCd != null and shiftDocCd != ''">shift_doc_cd,</if>
+            <if test="shiftDocName != null and shiftDocName != ''">shift_doc_name,</if>
+            <if test="joinDocCd != null and joinDocCd != ''">join_doc_cd,</if>
+            <if test="joinDocName != null and joinDocName != ''">join_doc_name,</if>
+            <if test="originalNum != null">original_num,</if>
+            <if test="nowNum != null">now_num,</if>
+            <if test="newNum != null">new_num,</if>
+            <if test="tiNum != null">ti_num,</if>
+            <if test="toNum != null">to_num,</if>
+            <if test="deathNum != null">death_num,</if>
+            <if test="criticalNum != null">critical_num,</if>
+            <if test="operatNum != null">operat_num,</if>
+            <if test="outHosNum != null">out_hos_num,</if>
+            <if test="dangNum != null">dang_num,</if>
+            <if test="planNum != null">plan_num,</if>
+            <if test="partNum != null">part_num,</if>
+            <if test="babyNum != null">baby_num,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="state != null and state != ''">state,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            cre_date,
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="deptCd != null and deptCd != ''">#{deptCd},</if>
+            <if test="deptName != null and deptName != ''">#{deptName},</if>
+            <if test="handoverDate != null">#{handoverDate},</if>
+            <if test="schemeCd != null">#{schemeCd},</if>
+            <if test="schemeName != null and schemeName != ''">#{schemeName},</if>
+            <if test="schemeBegin != null">#{schemeBegin},</if>
+            <if test="schemeEnd != null">#{schemeEnd},</if>
+            <if test="shiftDocCd != null and shiftDocCd != ''">#{shiftDocCd},</if>
+            <if test="shiftDocName != null and shiftDocName != ''">#{shiftDocName},</if>
+            <if test="joinDocCd != null and joinDocCd != ''">#{joinDocCd},</if>
+            <if test="joinDocName != null and joinDocName != ''">#{joinDocName},</if>
+            <if test="originalNum != null">#{originalNum},</if>
+            <if test="nowNum != null">#{nowNum},</if>
+            <if test="newNum != null">#{newNum},</if>
+            <if test="tiNum != null">#{tiNum},</if>
+            <if test="toNum != null">#{toNum},</if>
+            <if test="deathNum != null">#{deathNum},</if>
+            <if test="criticalNum != null">#{criticalNum},</if>
+            <if test="operatNum != null">#{operatNum},</if>
+            <if test="outHosNum != null">#{outHosNum},</if>
+            <if test="dangNum != null">#{dangNum},</if>
+            <if test="planNum != null">#{planNum},</if>
+            <if test="partNum != null">#{partNum},</if>
+            <if test="babyNum != null">#{babyNum},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="state != null and state != ''">#{state},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            sysDate,
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDrHandoverMain" parameterType="DrHandoverMain">
+        update dr_handover_main
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptCd != null and deptCd != ''">dept_cd = #{deptCd},</if>
+            <if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+            <if test="handoverDate != null">handover_date = #{handoverDate},</if>
+            <if test="schemeCd != null">scheme_cd = #{schemeCd},</if>
+            <if test="schemeName != null and schemeName != ''">scheme_name = #{schemeName},</if>
+            <if test="schemeBegin != null">scheme_begin = #{schemeBegin},</if>
+            <if test="schemeEnd != null">scheme_end = #{schemeEnd},</if>
+            <if test="shiftDocCd != null and shiftDocCd != ''">shift_doc_cd = #{shiftDocCd},</if>
+            <if test="shiftDocName != null and shiftDocName != ''">shift_doc_name = #{shiftDocName},</if>
+            <if test="shiftDocSignDate != null">shift_doc_sign_date = #{shiftDocSignDate},</if>
+            <if test="joinDocCd != null and joinDocCd != ''">join_doc_cd = #{joinDocCd},</if>
+            <if test="joinDocName != null and joinDocName != ''">join_doc_name = #{joinDocName},</if>
+            <if test="joinDocSignDate != null">join_doc_sign_date = #{joinDocSignDate},</if>
+            <if test="originalNum != null">original_num = #{originalNum},</if>
+            <if test="nowNum != null">now_num = #{nowNum},</if>
+            <if test="newNum != null">new_num = #{newNum},</if>
+            <if test="tiNum != null">ti_num = #{tiNum},</if>
+            <if test="toNum != null">to_num = #{toNum},</if>
+            <if test="deathNum != null">death_num = #{deathNum},</if>
+            <if test="criticalNum != null">critical_num = #{criticalNum},</if>
+            <if test="operatNum != null">operat_num = #{operatNum},</if>
+            <if test="outHosNum != null">out_hos_num = #{outHosNum},</if>
+            <if test="dangNum != null">dang_num = #{dangNum},</if>
+            <if test="planNum != null">plan_num = #{planNum},</if>
+            <if test="partNum != null">part_num = #{partNum},</if>
+            <if test="babyNum != null">baby_num = #{babyNum},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="state != null and state != ''">state = #{state},</if>
+            alt_date = sysdate,
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDrHandoverMainById" parameterType="Long">
+        delete from dr_handover_main where id = #{id}
+    </delete>
+    <delete id="deleteDrHandoverMain" parameterType="DrHandoverMain">
+        update dr_handover_main set del_flag='1',alt_date=sysdate,alt_per_code=#{altPerCode},alt_per_name = #{altPerName} where id = #{id}
+    </delete>
+
+    <delete id="deleteDrHandoverMainByIds" parameterType="String">
+        delete from dr_handover_main where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updateState" parameterType="DrHandoverMain">
+        update dr_handover_main set state = #{state},shift_doc_sign_date= case  #{state}  when  '0' then null else sysdate  end,
+        join_doc_sign_date=case  #{state}  when  '0' then null else sysdate  end ,join_Doc_Cd=#{joinDocCd},join_doc_name=#{joinDocName} where id = #{id}
+    </update>
+    <select id="selectDeptLastDrHandoverMain" parameterType="DrHandoverMain" resultMap="DrHandoverMainVoResult">
+        SELECT * FROM
+        (SELECT * FROM dr_handover_main where dept_cd = #{deptCd} and STATE=#{state}  and del_flag ='0' ORDER BY scheme_begin desc)
+        WHERE ROWNUM &lt;= 1
+    </select>
+    <select id="selectDeptNoDrHandoverMain" parameterType="String" resultMap="DrHandoverMainResult">
+        SELECT * FROM dr_handover_main where dept_cd = #{deptCd} and state = #{state} and del_flag ='0'
+    </select>
+    <select id="selectRecentRecordList" parameterType="DrHandoverMain" resultMap="DrHandoverMainVoResult">
+        SELECT main.* FROM dr_handover_main main
+        where main.dept_cd = #{deptCd} and main.CRE_DATE >=(sysdate-7) and main.del_flag='0'
+    </select>
+    <select id="checkCancel" resultType="java.lang.Integer" parameterType="com.emr.project.dr.domain.DrHandoverMain">
+        SELECT
+            COUNT(0)
+        FROM
+            DR_HANDOVER_MAIN
+        <where>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="handoverDate != null and handoverDate!=null"> and HANDOVER_DATE <![CDATA[>]]> #{handoverDate} </if>
+            <if test="deptCd != null  and deptCd != ''"> and dept_cd = #{deptCd}</if>
+            AND del_flag = '0'
+        </where>
+    </select>
+</mapper>

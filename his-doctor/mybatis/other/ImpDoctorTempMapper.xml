@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.other.mapper.ImpDoctorTempMapper">
+
+    <resultMap type="ImpDoctorTemp" id="ImpDoctorTempResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="docCode"    column="doc_code"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="impDocCd"    column="imp_doc_cd"    />
+        <result property="impDocName"    column="imp_doc_name"    />
+        <result property="impDeptCd"    column="imp_dept_cd"    />
+        <result property="impDeptName"    column="imp_dept_name"    />
+        <result property="impRange"    column="imp_range"    />
+        <result property="impDate"    column="imp_date"    />
+        <result property="impBegTime"    column="imp_beg_time"    />
+        <result property="impEndTime"    column="imp_end_time"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="impType"    column="imp_type"    />
+        <result property="impAim"    column="imp_aim"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+    <resultMap id="ImpDoctorTempVoResult" type="ImpDoctorTempVo" extends="ImpDoctorTempResult">
+        <result property="impStatus"    column="imp_status"    />
+        <result property="inpNo"    column="inp_no"    />
+    </resultMap>
+
+    <sql id="selectImpDoctorTempVo">
+        select id, org_cd, patient_id, patient_name, bed_no, doc_code, doc_name, imp_doc_cd, imp_doc_name, imp_dept_cd, imp_dept_name, imp_range, imp_date, imp_beg_time, imp_end_time, valid_flag, imp_type, imp_aim, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from imp_doctor_temp
+    </sql>
+
+    <select id="selectImpDoctorTempList" parameterType="ImpDoctorTempVo" resultMap="ImpDoctorTempVoResult">
+        select idt.id, idt.org_cd, idt.patient_id, nvl(idt.patient_name,tam.name) as patient_name, nvl(idt.bed_no,pv.bed_no) as bed_no, idt.doc_code, idt.doc_name, idt.imp_doc_cd,
+               idt.imp_doc_name, idt.imp_dept_cd,idt.imp_dept_name, idt.imp_range, idt.imp_date, idt.imp_beg_time,
+               idt.imp_end_time, idt.valid_flag, idt.imp_type, idt.imp_aim, idt.cre_per_code,
+               idt.cre_per_name, idt.cre_date, idt.alt_per_code, idt.alt_per_name, idt.alt_date,
+               case when idt.imp_end_time > sysdate then '1' else '0' end imp_status, pv.inp_no
+        from imp_doctor_temp idt
+        left join pat_visitinfo pv on idt.patient_id = pv.patient_id
+        left join tm_bs_staff tbs on idt.imp_doc_cd = tbs.staff_code
+        left join t_ar_medicalinformation_all tam on tam.ADMISSION_NO = idt.patient_id
+        <where>
+            and pv.out_time is null and pv.dept_cd = #{deptCd}
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="patientName != null  and patientName != ''">
+                and (
+                idt.patient_name like concat(concat('%', #{patientName}), '%')
+                or idt.bed_no like concat(concat('%', #{patientName}), '%')
+                or pv.inp_no like concat(concat('%', #{patientName}), '%')
+                )
+            </if>
+            <if test="impDocCd != null  and impDocCd != ''">
+                and (
+                tbs.staff_code like concat(concat('%', #{impDocCd}), '%')
+                or tbs.staff_name_pym like concat(concat('%', #{impDocCd}), '%')
+                or tbs.staff_name like concat(concat('%', #{impDocCd}), '%')
+                )
+            </if>
+            <if test='impStatus != null  and impStatus != "" and impStatus == "1"'> and idt.imp_end_time &gt;= sysdate</if>
+            <if test='impStatus != null  and impStatus != "" and impStatus == "0"'> and idt.imp_end_time &lt; sysdate</if>
+            <if test='impType != null  and impType != ""'> and idt.imp_type = #{impType}</if>
+            <if test='impBegTimeStr != null  and impEndTimeStr != null'> and idt.cre_date between #{impBegTimeStr} and #{impEndTimeStr}</if>
+        </where>
+        order by idt.cre_date desc
+    </select>
+
+    <select id="selectImpDoctorTempById" parameterType="Long" resultMap="ImpDoctorTempResult">
+        <include refid="selectImpDoctorTempVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertImpDoctorTemp" parameterType="ImpDoctorTemp">
+        insert into imp_doctor_temp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="bedNo != null">bed_no,</if>
+            <if test="docCode != null and docCode != ''">doc_code,</if>
+            <if test="docName != null and docName != ''">doc_name,</if>
+            <if test="impDocCd != null">imp_doc_cd,</if>
+            <if test="impDocName != null">imp_doc_name,</if>
+            <if test="impDeptCd != null">imp_dept_cd,</if>
+            <if test="impDeptName != null">imp_dept_name,</if>
+            <if test="impRange != null">imp_range,</if>
+            <if test="impBegTime != null">imp_beg_time,</if>
+            <if test="impEndTime != null">imp_end_time,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="impType != null">imp_type,</if>
+            <if test="impAim != null">imp_aim,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            imp_date,
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="bedNo != null">#{bedNo},</if>
+            <if test="docCode != null and docCode != ''">#{docCode},</if>
+            <if test="docName != null and docName != ''">#{docName},</if>
+            <if test="impDocCd != null">#{impDocCd},</if>
+            <if test="impDocName != null">#{impDocName},</if>
+            <if test="impDeptCd != null">#{impDeptCd},</if>
+            <if test="impDeptName != null">#{impDeptName},</if>
+            <if test="impRange != null">#{impRange},</if>
+            <if test="impBegTime != null">#{impBegTime},</if>
+            <if test="impEndTime != null">#{impEndTime},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="impType != null">#{impType},</if>
+            <if test="impAim != null">#{impAim},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            sysdate,
+            sysdate,
+         </trim>
+    </insert>
+
+    <insert id="batchAddImpDoctorTemp" parameterType="ImpDoctorTemp">
+        insert all
+        <foreach item="item" index="index" collection="list">
+        into imp_doctor_temp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">id,</if>
+            <if test="item.orgCd != null and item.orgCd != ''">org_cd,</if>
+            <if test="item.patientId != null">patient_id,</if>
+            <if test="item.patientName != null">patient_name,</if>
+            <if test="item.bedNo != null">bed_no,</if>
+            <if test="item.docCode != null and item.docCode != ''">doc_code,</if>
+            <if test="item.docName != null and item.docName != ''">doc_name,</if>
+            <if test="item.impDocCd != null">imp_doc_cd,</if>
+            <if test="item.impDocName != null">imp_doc_name,</if>
+            <if test="item.impDeptCd != null">imp_dept_cd,</if>
+            <if test="item.impDeptName != null">imp_dept_name,</if>
+            <if test="item.impRange != null">imp_range,</if>
+            <if test="item.impBegTime != null">imp_beg_time,</if>
+            <if test="item.impEndTime != null">imp_end_time,</if>
+            <if test="item.validFlag != null and item.validFlag != ''">valid_flag,</if>
+            <if test="item.impType != null">imp_type,</if>
+            <if test="item.impAim != null">imp_aim,</if>
+            <if test="item.crePerCode != null and item.crePerCode != ''">cre_per_code,</if>
+            <if test="item.crePerName != null and item.crePerName != ''">cre_per_name,</if>
+            imp_date,
+            cre_date,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">#{item.id},</if>
+            <if test="item.orgCd != null and item.orgCd != ''">#{item.orgCd},</if>
+            <if test="item.patientId != null">#{item.patientId},</if>
+            <if test="item.patientName != null">#{item.patientName},</if>
+            <if test="item.bedNo != null">#{item.bedNo},</if>
+            <if test="item.docCode != null and item.docCode != ''">#{item.docCode},</if>
+            <if test="item.docName != null and item.docName != ''">#{item.docName},</if>
+            <if test="item.impDocCd != null">#{item.impDocCd},</if>
+            <if test="item.impDocName != null">#{item.impDocName},</if>
+            <if test="item.impDeptCd != null">#{item.impDeptCd},</if>
+            <if test="item.impDeptName != null">#{item.impDeptName},</if>
+            <if test="item.impRange != null">#{item.impRange},</if>
+            <if test="item.impBegTime != null">#{item.impBegTime},</if>
+            <if test="item.impEndTime != null">#{item.impEndTime},</if>
+            <if test="item.validFlag != null and item.validFlag != ''">#{item.validFlag},</if>
+            <if test="item.impType != null">#{item.impType},</if>
+            <if test="item.impAim != null">#{item.impAim},</if>
+            <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+            <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+            sysdate,
+            sysdate,
+        </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateImpDoctorTemp" parameterType="ImpDoctorTemp">
+        update imp_doctor_temp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="docCode != null and docCode != ''">doc_code = #{docCode},</if>
+            <if test="docName != null and docName != ''">doc_name = #{docName},</if>
+            <if test="impDocCd != null">imp_doc_cd = #{impDocCd},</if>
+            <if test="impDocName != null">imp_doc_name = #{impDocName},</if>
+            <if test="impDeptCd != null">imp_dept_cd = #{impDeptCd},</if>
+            <if test="impDeptName != null">imp_dept_name = #{impDeptName},</if>
+            <if test="impRange != null">imp_range = #{impRange},</if>
+            <if test="impDate != null">imp_date = #{impDate},</if>
+            <if test="impBegTime != null">imp_beg_time = #{impBegTime},</if>
+            <if test="impEndTime != null">imp_end_time = #{impEndTime},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="impType != null">imp_type = #{impType},</if>
+            <if test="impAim != null">imp_aim = #{impAim},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateImpDoctorTempForMove" parameterType="ImpDoctorTemp">
+        update imp_doctor_temp a set a.valid_flag='0'
+        where
+            a.patient_id = #{patientId}
+            and a.imp_doc_cd = #{impDocCd}
+            and a.imp_range = #{impRange}
+            and a.valid_flag = #{validFlag}
+            and a.imp_type = #{impType}
+    </update>
+
+    <delete id="deleteImpDoctorTempById" parameterType="Long">
+        delete from imp_doctor_temp where id = #{id}
+    </delete>
+
+    <delete id="deleteImpDoctorTempByIds" parameterType="String">
+        delete from imp_doctor_temp where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectDocTempImpowerList" parameterType="String" resultMap="ImpDoctorTempResult">
+       select * from imp_doctor_temp where VALID_FLAG='1' and IMP_END_TIME>sysdate and (IMP_DOC_CD=#{docCd} or IMP_DEPT_CD=#{deptCd})
+    </select>
+    <select id="selectTmpByPatAndDoc" parameterType="String" resultMap="ImpDoctorTempResult">
+        select * from imp_doctor_temp where VALID_FLAG='1' and IMP_END_TIME>sysdate and PATIENT_ID=#{patientId} and IMP_DOC_CD=#{impDocCd}
+<if test="impType!=null and impType!=''">
+    and imp_type=#{impType}
+</if>
+    </select>
+    <select id="selectImpDoctorTemp" resultMap="ImpDoctorTempResult">
+        select * from imp_doctor_temp where VALID_FLAG='1' and  PATIENT_ID=#{patientId} and imp_type='2' and IMP_DOC_CD=#{userName} and IMP_END_TIME &gt;= sysdate
+    </select>
+    <update id="updateImpPatAndDoc" parameterType="String">
+        update imp_doctor_temp set IMP_END_TIME=sysdate where VALID_FLAG='1' and PATIENT_ID=#{patientId} and IMP_DOC_CD=#{impDocCd}
+        <if test="impType!=null and impType!=''">
+            and imp_type=#{impType}
+        </if>
+    </update>
+    <update id="updateImpDoctorTempByThird">
+        update
+            imp_doctor_temp
+        set IMP_END_TIME=sysdate
+        where VALID_FLAG='1'
+         and PATIENT_ID=#{patientId}
+         and CRE_PER_CODE=#{userName}
+         and imp_type='2'
+         and IMP_AIM ='病历签名'
+    </update>
+
+    <select id="selectTmpByPatAndDocOrDept" parameterType="String" resultMap="ImpDoctorTempResult">
+       select * from imp_doctor_temp where VALID_FLAG='1' and IMP_END_TIME>sysdate and PATIENT_ID=#{patientId}
+       and ((IMP_RANGE='0' and IMP_DOC_CD=#{docCd}) or (IMP_RANGE='1' and IMP_DEPT_CD=#{deptCd}))
+    </select>
+</mapper>

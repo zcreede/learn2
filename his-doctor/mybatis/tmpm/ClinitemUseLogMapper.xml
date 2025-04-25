@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.ClinitemUseLogMapper">
+
+    <resultMap type="ClinitemUseLog" id="ClinitemUseLogResult">
+        <result property="id"    column="id"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="docCd"    column="doc_cd"    />
+        <result property="docName"    column="doc_name"    />
+        <result property="itemClassCd"    column="item_class_cd"    />
+        <result property="itemClassName"    column="item_class_name"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="usageTimes"    column="usage_times"    />
+        <result property="herbalFlag"    column="herbal_flag"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectClinitemUseLogVo">
+        select id, hospital_code, doc_cd, doc_name, item_class_cd, item_class_name, item_cd, item_name, standard, usage_times, herbal_flag, alt_date from tm_pm_clinitem_use_log
+    </sql>
+
+    <select id="selectClinitemUseLogList" parameterType="ClinitemUseLog" resultMap="ClinitemUseLogResult">
+        <include refid="selectClinitemUseLogVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="docCd != null  and docCd != ''"> and doc_cd = #{docCd}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="itemClassCd != null  and itemClassCd != ''"> and item_class_cd = #{itemClassCd}</if>
+            <if test="itemClassName != null  and itemClassName != ''"> and item_class_name like concat(concat('%', #{itemClassName}), '%')</if>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="usageTimes != null "> and usage_times = #{usageTimes}</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and herbal_flag = #{herbalFlag}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectClinitemUseLogListVo" parameterType="ClinitemUseLog" resultMap="ClinitemUseLogResult">
+        <include refid="selectClinitemUseLogVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="docCd != null  and docCd != ''"> and doc_cd = #{docCd}</if>
+            <if test="docName != null  and docName != ''"> and doc_name like concat(concat('%', #{docName}), '%')</if>
+            <if test="itemClassCd != null  and itemClassCd != ''"> and item_class_cd = #{itemClassCd}</if>
+            <if test="itemClassName != null  and itemClassName != ''"> and item_class_name like concat(concat('%', #{itemClassName}), '%')</if>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="usageTimes != null "> and usage_times = #{usageTimes}</if>
+            <if test="herbalFlag != null  and herbalFlag != ''"> and herbal_flag = #{herbalFlag}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="itemClassCdList != null  and itemClassCdList.size > 0">
+                and item_class_cd in
+                <foreach collection="itemClassCdList" item="itemClassCd" open="(" separator="," close=")">
+                    #{itemClassCd}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectClinitemUseLogById" parameterType="Long" resultMap="ClinitemUseLogResult">
+        <include refid="selectClinitemUseLogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertClinitemUseLog" parameterType="ClinitemUseLog">
+        insert into tm_pm_clinitem_use_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="docCd != null">doc_cd,</if>
+            <if test="docName != null">doc_name,</if>
+            <if test="itemClassCd != null">item_class_cd,</if>
+            <if test="itemClassName != null">item_class_name,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="usageTimes != null">usage_times,</if>
+            <if test="herbalFlag != null">herbal_flag,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="docCd != null">#{docCd},</if>
+            <if test="docName != null">#{docName},</if>
+            <if test="itemClassCd != null">#{itemClassCd},</if>
+            <if test="itemClassName != null">#{itemClassName},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="usageTimes != null">#{usageTimes},</if>
+            <if test="herbalFlag != null">#{herbalFlag},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClinitemUseLog" parameterType="ClinitemUseLog">
+        update tm_pm_clinitem_use_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="docCd != null">doc_cd = #{docCd},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="itemClassCd != null">item_class_cd = #{itemClassCd},</if>
+            <if test="itemClassName != null">item_class_name = #{itemClassName},</if>
+            <if test="itemCd != null">item_cd = #{itemCd},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="usageTimes != null">usage_times = #{usageTimes},</if>
+            <if test="herbalFlag != null">herbal_flag = #{herbalFlag},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClinitemUseLogById" parameterType="Long">
+        delete from tm_pm_clinitem_use_log where id = #{id}
+    </delete>
+
+    <delete id="deleteClinitemUseLogByIds" parameterType="String">
+        delete from tm_pm_clinitem_use_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectMaxAltDate" resultMap="ClinitemUseLogResult">
+        select max(alt_date) alt_date from tm_pm_clinitem_use_log
+    </select>
+
+    <select id="selectListByDocList" resultMap="ClinitemUseLogResult">
+        select * from tm_pm_clinitem_use_log where doc_cd in
+        <foreach item="docCd" collection="list" open="(" separator="," close=")">
+            #{docCd}
+        </foreach>
+    </select>
+
+    <insert id="insertList" parameterType="ClinitemUseLog">
+        insert all
+        <foreach collection="list" item="item">
+            into tm_pm_clinitem_use_log
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.hospitalCode != null">hospital_code,</if>
+                <if test="item.docCd != null">doc_cd,</if>
+                <if test="item.docName != null">doc_name,</if>
+                <if test="item.itemClassCd != null">item_class_cd,</if>
+                <if test="item.itemClassName != null">item_class_name,</if>
+                <if test="item.itemCd != null">item_cd,</if>
+                <if test="item.itemName != null">item_name,</if>
+                <if test="item.standard != null">standard,</if>
+                <if test="item.usageTimes != null">usage_times,</if>
+                <if test="item.herbalFlag != null">herbal_flag,</if>
+                <if test="item.altDate != null">alt_date,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.hospitalCode != null">#{item.hospitalCode},</if>
+                <if test="item.docCd != null">#{item.docCd},</if>
+                <if test="item.docName != null">#{item.docName},</if>
+                <if test="item.itemClassCd != null">#{item.itemClassCd},</if>
+                <if test="item.itemClassName != null">#{item.itemClassName},</if>
+                <if test="item.itemCd != null">#{item.itemCd},</if>
+                <if test="item.itemName != null">#{item.itemName},</if>
+                <if test="item.standard != null">#{item.standard},</if>
+                <if test="item.usageTimes != null">#{item.usageTimes},</if>
+                <if test="item.herbalFlag != null">#{item.herbalFlag},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateusageTimes" parameterType="ClinitemUseLog">
+        <foreach item="item" index="index" collection="list" open="begin" separator=";" close=";end;">
+            update tm_pm_clinitem_use_log
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.usageTimes != null">usage_times = #{item.usageTimes},</if>
+                <if test="item.altDate != null">alt_date = #{item.altDate},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+</mapper>

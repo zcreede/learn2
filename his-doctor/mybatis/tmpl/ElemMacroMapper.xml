@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpl.mapper.ElemMacroMapper">
+
+    <resultMap type="ElemMacro" id="ElemMacroResult">
+        <result property="id"    column="id"    />
+        <result property="tempId"    column="temp_id"    />
+        <result property="tempName"    column="temp_name"    />
+        <result property="tempType"    column="temp_type"    />
+        <result property="contElemName"    column="cont_elem_name"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="typeFlag"    column="type_flag"    />
+        <result property="contType"    column="cont_type"    />
+        <result property="replMeth"    column="repl_meth"    />
+        <result property="sourTable"    column="sour_table"    />
+        <result property="sourColu"    column="sour_colu"    />
+        <result property="dataForm"    column="data_form"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="replType"    column="repl_type"    />
+        <result property="changeAlertFlag"    column="change_alert_flag"    />
+    </resultMap>
+
+    <sql id="selectElemMacroVo">
+        select id, temp_id, temp_name, temp_type, cont_elem_name, elem_id, elem_name, elem_cd, type_flag, cont_type, repl_meth,
+               sour_table, sour_colu, data_form, cre_date, cre_per_name, alt_date, alt_per_name,repl_type,change_alert_flag from tmpl_elem_macro
+    </sql>
+
+    <select id="selectElemMacroList" parameterType="ElemMacro" resultMap="ElemMacroResult">
+        <include refid="selectElemMacroVo"/>
+        <where>
+            <if test="tempId != null "> and temp_id = #{tempId}</if>
+            <if test="tempName != null  and tempName != ''"> and temp_name like concat(concat('%', #{tempName}), '%')</if>
+            <if test="tempType != null  and tempType != ''"> and temp_type = #{tempType}</if>
+            <if test="contElemName != null  and contElemName != ''"> and cont_elem_name like concat(concat('%', #{contElemName}), '%')</if>
+            <if test="elemId != null "> and elem_id = #{elemId}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="typeFlag != null  and typeFlag != ''"> and type_flag = #{typeFlag}</if>
+            <if test="contType != null  and contType != ''"> and cont_type = #{contType}</if>
+            <if test="replMeth != null  and replMeth != ''"> and repl_meth = #{replMeth}</if>
+            <if test="sourTable != null  and sourTable != ''"> and sour_table = #{sourTable}</if>
+            <if test="sourColu != null  and sourColu != ''"> and sour_colu = #{sourColu}</if>
+            <if test="dataForm != null  and dataForm != ''"> and data_form = #{dataForm}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="replType != null  and replType != ''"> and repl_type=#{replType}</if>
+            <if test="changeAlertFlag != null  and changeAlertFlag != ''"> and change_alert_flag=#{changeAlertFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectElemMacroById" parameterType="Long" resultMap="ElemMacroResult">
+        <include refid="selectElemMacroVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectElemMacroListByTempId" parameterType="Long" resultMap="ElemMacroResult">
+        <include refid="selectElemMacroVo"/>
+        where temp_id = #{tempId}
+    </select>
+
+    <insert id="insertElemMacro" parameterType="ElemMacro">
+        insert into tmpl_elem_macro
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tempId != null">temp_id,</if>
+            <if test="tempName != null">temp_name,</if>
+            <if test="tempType != null">temp_type,</if>
+            <if test="contElemName != null">cont_elem_name,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="typeFlag != null">type_flag,</if>
+            <if test="contType != null">cont_type,</if>
+            <if test="replMeth != null">repl_meth,</if>
+            <if test="sourTable != null">sour_table,</if>
+            <if test="sourColu != null">sour_colu,</if>
+            <if test="dataForm != null">data_form,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="replType != null">repl_type,</if>
+            <if test="changeAlertFlag != null">change_alert_flag,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tempId != null">#{tempId},</if>
+            <if test="tempName != null">#{tempName},</if>
+            <if test="tempType != null">#{tempType},</if>
+            <if test="contElemName != null">#{contElemName},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="typeFlag != null">#{typeFlag},</if>
+            <if test="contType != null">#{contType},</if>
+            <if test="replMeth != null">#{replMeth},</if>
+            <if test="sourTable != null">#{sourTable},</if>
+            <if test="sourColu != null">#{sourColu},</if>
+            <if test="dataForm != null">#{dataForm},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="replType != null">#{replType},</if>
+            <if test="changeAlertFlag != null">#{changeAlertFlag},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <insert id="insertElemMacroList" parameterType="java.util.List">
+        insert into tmpl_elem_macro
+        (id,temp_id,temp_name,temp_type,cont_elem_name,elem_id,elem_name,elem_cd,type_flag,cont_type,repl_meth,sour_table,sour_colu,data_form,cre_per_name,repl_type,change_alert_flag,cre_date)
+        <foreach collection ="list" item="elemMacroList" index= "index" separator="union all" >
+            select #{elemMacroList.id,jdbcType=NUMERIC},
+            #{elemMacroList.tempId,jdbcType=NUMERIC},
+            #{elemMacroList.tempName,jdbcType=VARCHAR},
+            #{elemMacroList.tempType,jdbcType=VARCHAR},
+            #{elemMacroList.contElemName,jdbcType=VARCHAR},
+            #{elemMacroList.elemId,jdbcType=NUMERIC},
+            #{elemMacroList.elemName,jdbcType=VARCHAR},
+            #{elemMacroList.elemCd,jdbcType=VARCHAR},
+            #{elemMacroList.typeFlag,jdbcType=VARCHAR},
+            #{elemMacroList.contType,jdbcType=VARCHAR},
+            #{elemMacroList.replMeth,jdbcType=VARCHAR},
+            #{elemMacroList.sourTable,jdbcType=VARCHAR},
+            #{elemMacroList.sourColu,jdbcType=VARCHAR},
+            #{elemMacroList.dataForm,jdbcType=VARCHAR},
+            #{elemMacroList.crePerName,jdbcType=VARCHAR},
+            #{elemMacroList.replType,jdbcType=VARCHAR},
+            #{elemMacroList.changeAlertFlag,jdbcType=VARCHAR},
+            sysdate from dual
+        </foreach >
+    </insert>
+
+    <insert id="insertElemMacroStandardList" parameterType="java.util.List">
+        insert into tmpl_elem_macro_standard
+        (id,temp_id,temp_name,temp_type,cont_elem_name,elem_id,elem_name,elem_cd,type_flag,cont_type,repl_meth,sour_table,sour_colu,data_form,cre_per_name,repl_type,change_alert_flag,cre_date)
+        <foreach collection ="list" item="elemMacroList" index= "index" separator="union all" >
+            select #{elemMacroList.id,jdbcType=NUMERIC},
+            #{elemMacroList.tempId,jdbcType=NUMERIC},
+            #{elemMacroList.tempName,jdbcType=VARCHAR},
+            #{elemMacroList.tempType,jdbcType=VARCHAR},
+            #{elemMacroList.contElemName,jdbcType=VARCHAR},
+            #{elemMacroList.elemId,jdbcType=NUMERIC},
+            #{elemMacroList.elemName,jdbcType=VARCHAR},
+            #{elemMacroList.elemCd,jdbcType=VARCHAR},
+            #{elemMacroList.typeFlag,jdbcType=VARCHAR},
+            #{elemMacroList.contType,jdbcType=VARCHAR},
+            #{elemMacroList.replMeth,jdbcType=VARCHAR},
+            #{elemMacroList.sourTable,jdbcType=VARCHAR},
+            #{elemMacroList.sourColu,jdbcType=VARCHAR},
+            #{elemMacroList.dataForm,jdbcType=VARCHAR},
+            #{elemMacroList.crePerName,jdbcType=VARCHAR},
+            #{elemMacroList.replType,jdbcType=VARCHAR},
+            #{elemMacroList.changeAlertFlag,jdbcType=VARCHAR},
+            sysdate from dual
+        </foreach >
+    </insert>
+
+    <update id="updateElemMacro" parameterType="ElemMacro">
+        update tmpl_elem_macro
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tempId != null">temp_id = #{tempId},</if>
+            <if test="tempName != null">temp_name = #{tempName},</if>
+            <if test="tempType != null">temp_type = #{tempType},</if>
+            <if test="contElemName != null">cont_elem_name = #{contElemName},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="typeFlag != null">type_flag = #{typeFlag},</if>
+            <if test="contType != null">cont_type = #{contType},</if>
+            <if test="replMeth != null">repl_meth = #{replMeth},</if>
+            <if test="sourTable != null">sour_table = #{sourTable},</if>
+            <if test="sourColu != null">sour_colu = #{sourColu},</if>
+            <if test="dataForm != null">data_form = #{dataForm},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="replType != null">repl_type = #{replType},</if>
+            <if test="changeAlertFlag != null">change_alert_flag = #{changeAlertFlag},</if>
+            alt_date=sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteElemMacroById" parameterType="Long">
+        delete from tmpl_elem_macro where id = #{id}
+    </delete>
+
+    <delete id="deleteElemMacroByTempId" parameterType="Long">
+        delete from tmpl_elem_macro where temp_id = #{tempId}
+    </delete>
+
+    <delete id="deleteElemMacroStandardByTempId" parameterType="Long">
+        delete from tmpl_elem_macro_standard where temp_id = #{tempId}
+    </delete>
+
+    <delete id="deleteElemMacroByIds" parameterType="String">
+        delete from tmpl_elem_macro where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectElemMacroInfoByTable" parameterType="ElemMacroVo" resultType="java.util.Map">
+        select * from ${sourTable} where patient_id=#{patientId}
+        <if test="babyId != null and babyId != ''">
+            and baby_no = #{babyId}
+        </if>
+    </select>
+    <select id="selectElemMacroInfoByPat" parameterType="ElemMacroVo" resultType="java.util.Map">
+        select * from V_PAT_INFO where patient_id=#{patientId}
+    </select>
+    <select id="selectElemMacroListByTempIds" parameterType="Long" resultMap="ElemMacroResult">
+        select distinct elem_id, elem_cd, elem_name, type_flag, cont_type, repl_meth, sour_table, sour_colu, data_form from tmpl_elem_macro
+        where 1=1
+        <if test="mainId != null">
+            and sour_colu not in ('dept_name','bed_no')
+        </if>
+        <if test="list != null and list.size > 0">
+            and temp_id in
+            <foreach collection="list" item="tempId" open="(" separator="," close=")">
+                #{tempId}
+            </foreach>
+        </if>
+    </select>
+</mapper>

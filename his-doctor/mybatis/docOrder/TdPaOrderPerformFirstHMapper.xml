@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderPerformFirstHMapper">
+
+    <resultMap type="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle" id="TdPaOrderPerformFirstHResult">
+        <result property="id"    column="id"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="performListSortNumber"    column="perform_list_sort_number"    />
+        <result property="wardNo"    column="ward_no"    />
+        <result property="firstFlag"    column="first_flag"    />
+        <result property="jjbz"    column="jjbz"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderPerformFirstHVo">
+        select id, admission_no, hospitalized_count, order_no, order_sort_number, perform_list_sort_number, ward_no, first_flag, jjbz from td_pa_order_perform_first_h
+    </sql>
+
+    <select id="selectTdPaOrderPerformFirstHList" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle" resultMap="TdPaOrderPerformFirstHResult">
+        <include refid="selectTdPaOrderPerformFirstHVo"/>
+        <where>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="performListSortNumber != null  and performListSortNumber != ''"> and perform_list_sort_number = #{performListSortNumber}</if>
+            <if test="wardNo != null  and wardNo != ''"> and ward_no = #{wardNo}</if>
+            <if test="firstFlag != null  and firstFlag != ''"> and first_flag = #{firstFlag}</if>
+            <if test="jjbz != null  and jjbz != ''"> and jjbz = #{jjbz}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderPerformFirstHById" parameterType="Long" resultMap="TdPaOrderPerformFirstHResult">
+        <include refid="selectTdPaOrderPerformFirstHVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTdPaOrderPerformFirstHByIds" parameterType="Long" resultMap="TdPaOrderPerformFirstHResult">
+        <include refid="selectTdPaOrderPerformFirstHVo"/>
+        where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertTdPaOrderPerformFirstH" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+        insert into td_pa_order_perform_first_h
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="admissionNo != null">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="performListSortNumber != null">perform_list_sort_number,</if>
+            <if test="wardNo != null">ward_no,</if>
+            <if test="firstFlag != null">first_flag,</if>
+            <if test="jjbz != null">jjbz,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="admissionNo != null">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="performListSortNumber != null">#{performListSortNumber},</if>
+            <if test="wardNo != null">#{wardNo},</if>
+            <if test="firstFlag != null">#{firstFlag},</if>
+            <if test="jjbz != null">#{jjbz},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+        insert all
+        <foreach collection="tdPaOrderPerformFirstHList" item="item">
+            into td_pa_order_perform_first_h
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.admissionNo != null">admission_no,</if>
+                <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+                <if test="item.orderNo != null">order_no,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.performListSortNumber != null">perform_list_sort_number,</if>
+                <if test="item.wardNo != null">ward_no,</if>
+                <if test="item.firstFlag != null">first_flag,</if>
+                <if test="item.jjbz != null">jjbz,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.admissionNo != null">#{item.admissionNo},</if>
+                <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.performListSortNumber != null">#{item.performListSortNumber},</if>
+                <if test="item.wardNo != null">#{item.wardNo},</if>
+                <if test="item.firstFlag != null">#{item.firstFlag},</if>
+                <if test="item.jjbz != null">#{item.jjbz},</if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <insert id="batchInsertTdPaOrderPerformFirstH" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+        insert into td_pa_order_perform_first_h
+            select * from td_pa_order_perform_first
+        where
+        <foreach collection="tdPaOrderPerformFirstHList" item="item" open="(" separator=" OR " close=")">
+            (id = #{item.id}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateTdPaOrderPerformFirstH" parameterType="com.emr.project.docOrder.domain.InpatientOrderPerformFirstBottle">
+        update td_pa_order_perform_first_h
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="admissionNo != null">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="performListSortNumber != null">perform_list_sort_number = #{performListSortNumber},</if>
+            <if test="wardNo != null">ward_no = #{wardNo},</if>
+            <if test="firstFlag != null">first_flag = #{firstFlag},</if>
+            <if test="jjbz != null">jjbz = #{jjbz},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderPerformFirstHById" parameterType="Long">
+        delete from td_pa_order_perform_first_h where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderPerformFirstHByIds" parameterType="Long">
+        delete from td_pa_order_perform_first_h where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

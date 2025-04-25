@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.ClinItemDetailMapper">
+
+    <resultMap type="ClinItemDetail" id="ClinItemDetailResult">
+        <result property="id"    column="id"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="sortSn"    column="sort_sn"    />
+        <result property="standardCode"    column="standard_code"    />
+        <result property="standardName"    column="standard_name"    />
+        <result property="chargeCode"    column="charge_code"    />
+        <result property="chargeName"    column="charge_name"    />
+        <result property="amount"    column="amount"    />
+        <result property="unit"    column="unit"    />
+        <result property="price"    column="price"    />
+        <result property="subFlag"    column="sub_flag"    />
+        <result property="chargeHour"    column="charge_hour"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+<resultMap id="ClinItemDetailVoResult" type="ClinItemDetailVo" extends="ClinItemDetailResult">
+
+</resultMap>
+    <sql id="selectClinItemDetailVo">
+        select id, item_cd, sort_sn, standard_code, standard_name, charge_code, charge_name, amount, unit, price, sub_flag, charge_hour,remark from TM_BS_CLIN_ITEM_DETAIL
+    </sql>
+
+    <select id="selectClinItemDetailList" parameterType="ClinItemDetail" resultMap="ClinItemDetailResult">
+        <include refid="selectClinItemDetailVo"/>
+        <where>
+            <if test="itemCd != null  and itemCd != ''"> and item_cd = #{itemCd}</if>
+            <if test="sortSn != null  and sortSn != ''"> and sort_sn = #{sortSn}</if>
+            <if test="standardCode != null  and standardCode != ''"> and standard_code = #{standardCode}</if>
+            <if test="standardName != null  and standardName != ''"> and standard_name like concat(concat('%', #{standardName}), '%')</if>
+            <if test="chargeCode != null  and chargeCode != ''"> and charge_code = #{chargeCode}</if>
+            <if test="chargeName != null  and chargeName != ''"> and charge_name like concat(concat('%', #{chargeName}), '%')</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="subFlag != null  and subFlag != ''"> and sub_flag = #{subFlag}</if>
+            <if test="chargeHour != null "> and charge_hour = #{chargeHour}</if>
+        </where>
+    </select>
+
+    <select id="selectClinItemDetailById" parameterType="Long" resultMap="ClinItemDetailResult">
+        <include refid="selectClinItemDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertClinItemDetail" parameterType="ClinItemDetail">
+        insert into TM_BS_CLIN_ITEM_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="itemCd != null">item_cd,</if>
+            <if test="sortSn != null">sort_sn,</if>
+            <if test="standardCode != null">standard_code,</if>
+            <if test="standardName != null">standard_name,</if>
+            <if test="chargeCode != null">charge_code,</if>
+            <if test="chargeName != null">charge_name,</if>
+            <if test="amount != null">amount,</if>
+            <if test="unit != null">unit,</if>
+            <if test="price != null">price,</if>
+            <if test="subFlag != null">sub_flag,</if>
+            <if test="chargeHour != null">charge_hour,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="itemCd != null">#{itemCd},</if>
+            <if test="sortSn != null">#{sortSn},</if>
+            <if test="standardCode != null">#{standardCode},</if>
+            <if test="standardName != null">#{standardName},</if>
+            <if test="chargeCode != null">#{chargeCode},</if>
+            <if test="chargeName != null">#{chargeName},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="price != null">#{price},</if>
+            <if test="subFlag != null">#{subFlag},</if>
+            <if test="chargeHour != null">#{chargeHour},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClinItemDetail" parameterType="ClinItemDetail">
+        update TM_BS_CLIN_ITEM_DETAIL
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemCd != null">item_cd = #{itemCd},</if>
+            <if test="sortSn != null">sort_sn = #{sortSn},</if>
+            <if test="standardCode != null">standard_code = #{standardCode},</if>
+            <if test="standardName != null">standard_name = #{standardName},</if>
+            <if test="chargeCode != null">charge_code = #{chargeCode},</if>
+            <if test="chargeName != null">charge_name = #{chargeName},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="subFlag != null">sub_flag = #{subFlag},</if>
+            <if test="chargeHour != null">charge_hour = #{chargeHour},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClinItemDetailById" parameterType="Long">
+        delete from TM_BS_CLIN_ITEM_DETAIL where id = #{id}
+    </delete>
+
+    <delete id="deleteClinItemDetailByIds" parameterType="String">
+        delete from TM_BS_CLIN_ITEM_DETAIL where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectClinItemDetailByItemCds" parameterType="String" resultMap="ClinItemDetailResult">
+        <include refid="selectClinItemDetailVo"/>
+        where item_cd in
+        <foreach item="itemCd" collection="itemCdList" open="(" separator="," close=")">
+            #{itemCd}
+        </foreach>
+    </select>
+    <select id="selectClinItemDetailByItemCd" parameterType="String" resultMap="ClinItemDetailVoResult">
+        <include refid="selectClinItemDetailVo"/>
+        where item_cd=#{itemCd}
+    </select>
+    <select id="selectClinItemDetailBySetCd" parameterType="String" resultMap="ClinItemDetailVoResult">
+        SELECT set_cd as item_cd,item_Cd as standard_code,item_name as standard_name,item_Cd as charge_code,item_name as charge_name,1 as amount,price
+        FROM tm_pm_order_set_detail where set_cd=#{setCd}
+    </select>
+</mapper>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderSignMainMapper">
+
+    <resultMap type="TdPaOrderSignMain" id="TdPaOrderSignMainResult">
+        <result property="id"    column="id"    />
+        <result property="signCertificate"    column="sign_certificate"    />
+        <result property="encryptionType"    column="encryption_type"    />
+        <result property="signMode"    column="sign_mode"    />
+        <result property="signedText"    column="signed_text"    />
+        <result property="encryptionInfo"    column="encryption_info"    />
+        <result property="signTimestamp"    column="sign_timestamp"    />
+        <result property="signDesc"    column="sign_desc"    />
+        <result property="operationType"    column="operation_type"    />
+        <result property="operationName"    column="operation_name"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="operatorCode"    column="operator_code"    />
+        <result property="operatorName"    column="operator_name"    />
+    </resultMap>
+    <resultMap id="OrderSignTextVoResult" type="OrderSignTextVo">
+        <result property="orderNo"    column="order_no"    />
+        <result property="chargeName"    column="charge_name"    />
+        <result property="submitDoctorNo"    column="submit_doctor_no"    />
+        <result property="submitTime"    column="submit_time"    />
+        <result property="stopDoctorNo"    column="stop_doctor_no"    />
+        <result property="stopTime"    column="stop_time"    />
+        <result property="cancelDoctorNo"    column="cancel_doctor_no"    />
+        <result property="cancelTime"    column="cancel_time"    />
+    </resultMap>
+    <resultMap id="OrderSignPicVoResult" type="OrderSignPicVo" extends="TdPaOrderSignMainResult">
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="certPic"    column="cert_pic"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderSignMainVo">
+        select id, sign_certificate, encryption_type, sign_mode, signed_text, encryption_info, sign_timestamp, sign_desc, operation_type, operation_name, sign_time, operator_code, operator_name from td_pa_order_sign_main
+    </sql>
+
+    <select id="selectTdPaOrderSignMainList" parameterType="TdPaOrderSignMain" resultMap="TdPaOrderSignMainResult">
+        <include refid="selectTdPaOrderSignMainVo"/>
+        <where>
+            <if test="signCertificate != null  and signCertificate != ''"> and sign_certificate = #{signCertificate}</if>
+            <if test="encryptionType != null  and encryptionType != ''"> and encryption_type = #{encryptionType}</if>
+            <if test="signMode != null  and signMode != ''"> and sign_mode = #{signMode}</if>
+            <if test="signedText != null  and signedText != ''"> and signed_text = #{signedText}</if>
+            <if test="encryptionInfo != null  and encryptionInfo != ''"> and encryption_info = #{encryptionInfo}</if>
+            <if test="signTimestamp != null  and signTimestamp != ''"> and sign_timestamp = #{signTimestamp}</if>
+            <if test="signDesc != null  and signDesc != ''"> and sign_desc = #{signDesc}</if>
+            <if test="operationType != null  and operationType != ''"> and operation_type = #{operationType}</if>
+            <if test="operationName != null  and operationName != ''"> and operation_name like concat(concat('%', #{operationName}), '%')</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="operatorCode != null  and operatorCode != ''"> and operator_code = #{operatorCode}</if>
+            <if test="operatorName != null  and operatorName != ''"> and operator_name like concat(concat('%', #{operatorName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderSignMainById" parameterType="Long" resultMap="TdPaOrderSignMainResult">
+        <include refid="selectTdPaOrderSignMainVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPaOrderSignMain" parameterType="TdPaOrderSignMain">
+        insert into td_pa_order_sign_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="signCertificate != null">sign_certificate,</if>
+            <if test="encryptionType != null">encryption_type,</if>
+            <if test="signMode != null">sign_mode,</if>
+            <if test="signedText != null">signed_text,</if>
+            <if test="encryptionInfo != null">encryption_info,</if>
+            <if test="signTimestamp != null">sign_timestamp,</if>
+            <if test="signDesc != null">sign_desc,</if>
+            <if test="operationType != null">operation_type,</if>
+            <if test="operationName != null">operation_name,</if>
+            <if test="signTime != null">sign_time,</if>
+            <if test="operatorCode != null">operator_code,</if>
+            <if test="operatorName != null">operator_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="signCertificate != null">#{signCertificate},</if>
+            <if test="encryptionType != null">#{encryptionType},</if>
+            <if test="signMode != null">#{signMode},</if>
+            <if test="signedText != null">#{signedText},</if>
+            <if test="encryptionInfo != null">#{encryptionInfo},</if>
+            <if test="signTimestamp != null">#{signTimestamp},</if>
+            <if test="signDesc != null">#{signDesc},</if>
+            <if test="operationType != null">#{operationType},</if>
+            <if test="operationName != null">#{operationName},</if>
+            <if test="signTime != null">#{signTime},</if>
+            <if test="operatorCode != null">#{operatorCode},</if>
+            <if test="operatorName != null">#{operatorName},</if>
+         </trim>
+    </insert>
+    <insert id="insertList" parameterType="com.emr.project.docOrder.domain.TdPaOrderSignMain">
+        insert all
+        <foreach collection="list" item="item" index="index">
+            into td_pa_order_sign_main
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.signCertificate != null">sign_certificate,</if>
+                <if test="item.encryptionType != null and item.encryptionType != ''">encryption_type,</if>
+                <if test="item.signMode != null">sign_mode,</if>
+                <if test="item.signedText != null">signed_text,</if>
+                <if test="item.encryptionInfo != null">encryption_info,</if>
+                <if test="item.signTimestamp != null">sign_timestamp,</if>
+                <if test="item.signDesc != null">sign_desc,</if>
+                <if test="item.operationType != null">operation_type,</if>
+                <if test="item.operationName != null">operation_name,</if>
+                <if test="item.signTime != null">sign_time,</if>
+                <if test="item.operatorCode != null">operator_code,</if>
+                <if test="item.operatorName != null">operator_name,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.signCertificate != null">#{item.signCertificate},</if>
+                <if test="item.encryptionType != null and item.encryptionType != ''">#{item.encryptionType},</if>
+                <if test="item.signMode != null">#{item.signMode},</if>
+                <if test="item.signedText != null">#{item.signedText},</if>
+                <if test="item.encryptionInfo != null">#{item.encryptionInfo},</if>
+                <if test="item.signTimestamp != null">#{item.signTimestamp},</if>
+                <if test="item.signDesc != null">#{item.signDesc},</if>
+                <if test="item.operationType != null">#{item.operationType},</if>
+                <if test="item.operationName != null">#{item.operationName},</if>
+                <if test="item.signTime != null">#{item.signTime,jdbcType=TIMESTAMP},</if>
+                <if test="item.operatorCode != null">#{item.operatorCode},</if>
+                <if test="item.operatorName != null">#{item.operatorName},</if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateTdPaOrderSignMain" parameterType="TdPaOrderSignMain">
+        update td_pa_order_sign_main
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="signCertificate != null">sign_certificate = #{signCertificate},</if>
+            <if test="encryptionType != null">encryption_type = #{encryptionType},</if>
+            <if test="signMode != null">sign_mode = #{signMode},</if>
+            <if test="signedText != null">signed_text = #{signedText},</if>
+            <if test="encryptionInfo != null">encryption_info = #{encryptionInfo},</if>
+            <if test="signTimestamp != null">sign_timestamp = #{signTimestamp},</if>
+            <if test="signDesc != null">sign_desc = #{signDesc},</if>
+            <if test="operationType != null">operation_type = #{operationType},</if>
+            <if test="operationName != null">operation_name = #{operationName},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="operatorCode != null">operator_code = #{operatorCode},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderSignMainById" parameterType="Long">
+        delete from td_pa_order_sign_main where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderSignMainByIds" parameterType="String">
+        delete from td_pa_order_sign_main where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectOrderSignTextList" parameterType="String" resultMap="OrderSignTextVoResult">
+        select a.charge_name, a.submit_doctor_code,a.submit_time,a.order_no,
+        case when os.OPERATOR_NO is null then '' else os.OPERATOR_NO end stop_doctor_code,
+        case when os.OPERATION_TIME is null then '' else to_char(os.OPERATION_TIME,'yyyy-MM-dd HH24:mi') end stop_time,
+        case when oc.OPERATOR_NO is null then '' else oc.OPERATOR_NO end cancel_doctor_code,
+        case when oc.OPERATION_TIME is null then '' else to_char(oc.OPERATION_TIME,'yyyy-MM-dd HH24:mi') end cancel_TIME
+        from (
+        select charge_name||','||standard||','||order_actual_usage||','||usage_unit||','||item_order_freq||','||item_order_usage_way||','||order_dose||','||unit||','||first_perform_num||','||order_item_flag||','||herbal_dose||','||oeder_desc||','||doctor_instructions||','||exam_part||','||sample_no charge_name, submit_doctor_code, submit_time,order_no  from (
+        select o.admission_no||','||o.order_no||','||oi.order_sort_number||','||od.order_group_sort_number||','||od.order_type||','||oi.order_class_code||','||o.order_doctor_dep_code||','||o.order_doctor_code||','||to_char(oi.order_start_time,'yyyy-MM-dd HH24:mi')||','||od.charge_no||','||od.charge_name charge_name,case when od.standard is null then '' else od.standard end standard,
+        case when od.order_actual_usage is null then '' else to_char(od.order_actual_usage) end order_actual_usage,
+        case when od.usage_unit is null then '' else od.usage_unit end usage_unit,
+        case when oi.item_order_freq is null then '' else oi.item_order_freq end item_order_freq,
+        case when oi.item_order_usage_way is null then '' else oi.item_order_usage_way end item_order_usage_way,
+        case when od.order_dose is null then '' else to_char(od.order_dose) end order_dose,
+        case when od.unit is null then '' else od.unit end unit,
+        case when od.first_perform_num is null then '' else to_char(od.first_perform_num) end first_perform_num,
+        case when od.order_item_flag is null then '' else od.order_item_flag end order_item_flag,
+        case when oi.herbal_dose is null then '' else to_char(oi.herbal_dose) end herbal_dose,
+        case when oi.oeder_desc is null then '' else oi.oeder_desc end oeder_desc,
+        case when od.doctor_instructions is NULL then '' else od.doctor_instructions end doctor_instructions,
+        '' exam_part,'' sample_no,
+        case when oi.submit_doctor_code is null then '' else oi.submit_doctor_code end submit_doctor_code,
+        case when oi.submit_time is null then '' else to_char(oi.submit_time,'yyyy-MM-dd HH24:mi') end submit_time,
+        o.order_no
+        from td_pa_order o
+        left join td_pa_order_item oi on o.order_no = oi.order_no
+        left join TD_PA_ORDER_DETAIL od on o.order_no = od.order_no
+        WHERE o.ORDER_CLASS_CODE ='01'
+        )
+        union all
+        select charge_name||','||standard||','||order_actual_usage||','||usage_unit||','||item_order_freq||','||item_order_usage_way||','||order_dose||','||unit||','||first_perform_num||','||order_item_flag||','||herbal_dose||','||oeder_desc||','||doctor_instructions||','||exam_part||','||sample_no charge_name, submit_doctor_code, submit_time,order_no  from (
+        select o.admission_no||','||o.order_no||','||oi.order_sort_number||','||'01'||','||oi.order_type||','||oi.order_class_code||','||o.order_doctor_dep_code||','||o.order_doctor_code||','||to_char(oi.order_start_time,'yyyy-MM-dd HH24:mi')||','||oi.cp_no||','||oi.cp_name charge_name,'' standard,
+        '' order_actual_usage,
+        '' usage_unit,
+        case when oi.item_order_freq is null then '' else oi.item_order_freq end item_order_freq,
+        case when oi.item_order_usage_way is null then '' else oi.item_order_usage_way end item_order_usage_way,
+        case when oi.ORDER_DOSE_ITEM is null then '' else to_char(oi.ORDER_DOSE_ITEM) end order_dose,
+        '' unit,
+        '' first_perform_num,
+        '' order_item_flag,
+        case when oi.herbal_dose is null then '' else to_char(oi.herbal_dose) end herbal_dose,
+        case when oi.oeder_desc is null then '' else oi.oeder_desc end oeder_desc,
+        '' doctor_instructions,
+        case when af.exam_part is null then '' else af.exam_part end exam_part,
+        case when af.sample_no is null then '' else af.sample_no end sample_no,
+        case when oi.submit_doctor_code is null then '' else oi.submit_doctor_code end submit_doctor_code,
+        case when oi.submit_time is null then '' else to_char(oi.submit_time,'yyyy-MM-dd HH24:mi') end submit_time,
+        o.order_no
+        from td_pa_order o
+        left join td_pa_order_item oi on o.order_no = oi.order_no
+        left join td_pa_apply_form af on o.apply_form_no = af.apply_form_no and o.ORDER_CLASS_CODE in ('02','03')
+        WHERE o.ORDER_CLASS_CODE &lt;&gt; '01')
+        ) a
+        left join td_pa_order_status os on a.order_no = os.order_no and os.operation_type = '4'
+        left join td_pa_order_status oc on a.order_no = oc.order_no and oc.operation_type = '6'
+        where a.order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+
+    <select id="selectSignPicByOrderNos" parameterType="String" resultMap="OrderSignPicVoResult">
+        select sm.id, sm.sign_certificate, sm.encryption_type, sm.sign_mode, sm.signed_text, sm.encryption_info, sm.sign_timestamp, sm.sign_desc,
+               sm.operation_type, sm.operation_name, sm.sign_time, sm.operator_code, sm.operator_name, sd.order_no, sd.order_group_no,
+               sd.order_sort_number, bc.cert_pic
+        from TD_PA_ORDER_SIGN_DETAIL sd
+        left join TD_PA_ORDER_SIGN_MAIN sm on sd.SIGN_ID = sm.id
+        left join bas_cert_info bc on bc.employeenumber = sm.operator_code
+        <where>
+            <if test="orderNoList != null and orderNoList.size > 0">
+            and sd.order_no in
+                <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+                    #{orderNo}
+                </foreach>
+            </if>
+            <if test="operationTypeList != null and operationTypeList.size > 0">
+            and sm.operation_type in
+                <foreach item="operationType" collection="operationTypeList" open="(" separator="," close=")">
+                    #{operationType}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectStaffSignPicAll" parameterType="String" resultMap="OrderSignPicVoResult">
+        select a.* from bas_cert_info a where a.is_valid='1'
+    </select>
+    <resultMap id="OrderSignTextVoHandleResult" type="com.emr.project.docOrder.domain.vo.OrderSignTextHandleVo">
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="chargeName"    column="charge_name"    />
+        <result property="submitDoctorNo"    column="submit_doctor_no"    />
+        <result property="submitTime"    column="submit_time"    />
+        <result property="auditTime"    column="order_audit_time"    />
+        <result property="auditDoctorNo"    column="order_audit_doc"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+    </resultMap>
+    <select id="selectOrderItemList" resultMap="OrderSignTextVoHandleResult">
+        select a.charge_name, a.submit_doctor_code,a.submit_time,a.order_no,a.admission_no,a.order_audit_doc,a.order_audit_time,a.order_group_no,a.order_sort_number
+        from (
+        select charge_name||','||standard||','||order_actual_usage||','||usage_unit||','||item_order_freq||','||item_order_usage_way||','||order_dose||','||unit||','||first_perform_num||','||order_item_flag||','||herbal_dose||','||oeder_desc||','||doctor_instructions||','||exam_part||','||sample_no charge_name, submit_doctor_code, submit_time,order_no,admission_no,order_audit_doc,order_audit_time ,order_group_no,order_sort_number from (
+        select o.admission_no||','||o.order_no||','||oi.order_sort_number||','||od.order_group_sort_number||','||od.order_type||','||oi.order_class_code||','||o.order_doctor_dep_code||','||o.order_doctor_code||','||to_char(oi.order_start_time,'yyyy-MM-dd HH24:mi')||','||od.charge_no||','||od.charge_name charge_name,case when od.standard is null then '' else od.standard end standard,
+        case when od.order_actual_usage is null then '' else to_char(od.order_actual_usage) end order_actual_usage,
+        case when od.usage_unit is null then '' else od.usage_unit end usage_unit,
+        case when oi.item_order_freq is null then '' else oi.item_order_freq end item_order_freq,
+        case when oi.item_order_usage_way is null then '' else oi.item_order_usage_way end item_order_usage_way,
+        case when od.order_dose is null then '' else to_char(od.order_dose) end order_dose,
+        case when od.unit is null then '' else od.unit end unit,
+        case when od.first_perform_num is null then '' else to_char(od.first_perform_num) end first_perform_num,
+        case when od.order_item_flag is null then '' else od.order_item_flag end order_item_flag,
+        case when oi.herbal_dose is null then '' else to_char(oi.herbal_dose) end herbal_dose,
+        case when oi.oeder_desc is null then '' else oi.oeder_desc end oeder_desc,
+        case when od.doctor_instructions is NULL then '' else od.doctor_instructions end doctor_instructions,
+        '' exam_part,'' sample_no,
+        case when oi.submit_doctor_code is null then '' else oi.submit_doctor_code end submit_doctor_code,
+        case when oi.submit_time is null then '' else to_char(oi.submit_time,'yyyy-MM-dd HH24:mi') end submit_time,
+        case when oi.order_audit_doc is null then '' else oi.order_audit_doc end order_audit_doc,
+        case when oi.order_audit_time is null then '' else to_char(oi.order_audit_time,'yyyy-MM-dd HH24:mi') end order_audit_time,
+        o.order_no,o.admission_no,oi.order_group_no,oi.order_sort_number
+        from td_pa_order o
+        left join td_pa_order_item oi on o.order_no = oi.order_no
+        left join TD_PA_ORDER_DETAIL od on o.order_no = od.order_no
+        WHERE o.ORDER_CLASS_CODE ='01'
+        )
+        union all
+        select charge_name||','||standard||','||order_actual_usage||','||usage_unit||','||item_order_freq||','||item_order_usage_way||','||order_dose||','||unit||','||first_perform_num||','||order_item_flag||','||herbal_dose||','||oeder_desc||','||doctor_instructions||','||exam_part||','||sample_no charge_name, submit_doctor_code, submit_time,order_no,admission_no,order_audit_doc,order_audit_time,order_group_no,order_sort_number  from (
+        select o.admission_no||','||o.order_no||','||oi.order_sort_number||','||'01'||','||oi.order_type||','||oi.order_class_code||','||o.order_doctor_dep_code||','||o.order_doctor_code||','||to_char(oi.order_start_time,'yyyy-MM-dd HH24:mi')||','||oi.cp_no||','||oi.cp_name charge_name,'' standard,
+        '' order_actual_usage,
+        '' usage_unit,
+        case when oi.item_order_freq is null then '' else oi.item_order_freq end item_order_freq,
+        case when oi.item_order_usage_way is null then '' else oi.item_order_usage_way end item_order_usage_way,
+        case when oi.ORDER_DOSE_ITEM is null then '' else to_char(oi.ORDER_DOSE_ITEM) end order_dose,
+        '' unit,
+        '' first_perform_num,
+        '' order_item_flag,
+        case when oi.herbal_dose is null then '' else to_char(oi.herbal_dose) end herbal_dose,
+        case when oi.oeder_desc is null then '' else oi.oeder_desc end oeder_desc,
+        '' doctor_instructions,
+        case when af.exam_part is null then '' else af.exam_part end exam_part,
+        case when af.sample_no is null then '' else af.sample_no end sample_no,
+        case when oi.submit_doctor_code is null then '' else oi.submit_doctor_code end submit_doctor_code,
+        case when oi.submit_time is null then '' else to_char(oi.submit_time,'yyyy-MM-dd HH24:mi') end submit_time,
+        case when oi.order_audit_doc is null then '' else oi.order_audit_doc end order_audit_doc,
+        case when oi.order_audit_time is null then '' else to_char(oi.order_audit_time,'yyyy-MM-dd HH24:mi') end order_audit_time,
+        o.order_no,o.admission_no,oi.order_group_no,oi.order_sort_number
+        from td_pa_order o
+        left join td_pa_order_item oi on o.order_no = oi.order_no
+        left join td_pa_apply_form af on o.apply_form_no = af.apply_form_no and o.ORDER_CLASS_CODE in ('02','03')
+        WHERE o.ORDER_CLASS_CODE &lt;&gt; '01')
+        ) a
+        where a.order_no in
+        <foreach item="orderNo" collection="list" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+
+    </select>
+</mapper>

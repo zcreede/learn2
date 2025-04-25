@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderOperationLogMapper">
+
+    <resultMap type="TdPaOrderOperationLog" id="TdPaOrderOperationLogResult">
+        <result property="id"    column="id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="operationTime"    column="operation_time"    />
+        <result property="operationType"    column="operation_type"    />
+        <result property="operationName"    column="operation_name"    />
+        <result property="operatorCode"    column="operator_code"    />
+        <result property="operatorNo"    column="operator_no"    />
+        <result property="operatorName"    column="operator_name"    />
+        <result property="operatorDesc"    column="operator_desc"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderOperationLogVo">
+        select id, order_no, order_sort_number, order_group_no, operation_time, operation_type, operation_name, operator_code, operator_no, operator_name, operator_desc from td_pa_order_operation_log
+    </sql>
+
+    <select id="selectTdPaOrderOperationLogList" parameterType="TdPaOrderOperationLog" resultMap="TdPaOrderOperationLogResult">
+        <include refid="selectTdPaOrderOperationLogVo"/>
+        <where>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="orderGroupNo != null  and orderGroupNo != ''"> and order_group_no = #{orderGroupNo}</if>
+            <if test="operationTime != null "> and operation_time = #{operationTime}</if>
+            <if test="operationType != null "> and operation_type = #{operationType}</if>
+            <if test="operationName != null  and operationName != ''"> and operation_name like concat(concat('%', #{operationName}), '%')</if>
+            <if test="operatorCode != null  and operatorCode != ''"> and operator_code = #{operatorCode}</if>
+            <if test="operatorNo != null  and operatorNo != ''"> and operator_no = #{operatorNo}</if>
+            <if test="operatorName != null  and operatorName != ''"> and operator_name like concat(concat('%', #{operatorName}), '%')</if>
+            <if test="operatorDesc != null  and operatorDesc != ''"> and operator_desc = #{operatorDesc}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderOperationLogById" parameterType="Long" resultMap="TdPaOrderOperationLogResult">
+        <include refid="selectTdPaOrderOperationLogVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectLogByOrderNo" resultMap="TdPaOrderOperationLogResult">
+        <include refid="selectTdPaOrderOperationLogVo"/>
+        where order_no = #{orderNo}
+            and to_char(operation_time, 'yyyy-MM-dd HH24:mi:ss')&gt;= #{startDate,jdbcType=VARCHAR}
+            and to_char(operation_time, 'yyyy-MM-dd HH24:mi:ss')&lt;= #{endDate,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertTdPaOrderOperationLog" parameterType="TdPaOrderOperationLog">
+        insert into td_pa_order_operation_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="orderGroupNo != null">order_group_no,</if>
+            <if test="operationTime != null">operation_time,</if>
+            <if test="operationType != null">operation_type,</if>
+            <if test="operationName != null">operation_name,</if>
+            <if test="operatorCode != null">operator_code,</if>
+            <if test="operatorNo != null">operator_no,</if>
+            <if test="operatorName != null">operator_name,</if>
+            <if test="operatorDesc != null">operator_desc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="orderGroupNo != null">#{orderGroupNo},</if>
+            <if test="operationTime != null">#{operationTime},</if>
+            <if test="operationType != null">#{operationType},</if>
+            <if test="operationName != null">#{operationName},</if>
+            <if test="operatorCode != null">#{operatorCode},</if>
+            <if test="operatorNo != null">#{operatorNo},</if>
+            <if test="operatorName != null">#{operatorName},</if>
+            <if test="operatorDesc != null">#{operatorDesc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderOperationLog" parameterType="TdPaOrderOperationLog">
+        update td_pa_order_operation_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="orderGroupNo != null">order_group_no = #{orderGroupNo},</if>
+            <if test="operationTime != null">operation_time = #{operationTime},</if>
+            <if test="operationType != null">operation_type = #{operationType},</if>
+            <if test="operationName != null">operation_name = #{operationName},</if>
+            <if test="operatorCode != null">operator_code = #{operatorCode},</if>
+            <if test="operatorNo != null">operator_no = #{operatorNo},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+            <if test="operatorDesc != null">operator_desc = #{operatorDesc},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderOperationLogById" parameterType="Long">
+        delete from td_pa_order_operation_log where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderOperationLogByIds" parameterType="String">
+        delete from td_pa_order_operation_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.emr.project.docOrder.domain.TdPaOrderOperationLog">
+    insert into td_pa_order_operation_log (id, order_no, order_sort_number,
+      order_group_no, operation_time, operation_type,operation_name,
+      operator_code, operator_no,operator_name, operator_desc )
+    values (#{id}, #{orderNo,jdbcType=VARCHAR}, #{orderSortNumber,jdbcType=VARCHAR},
+      #{orderGroupNo,jdbcType=VARCHAR}, #{operationTime,jdbcType=TIMESTAMP}, #{operationType,jdbcType=INTEGER},#{operationName,jdbcType=INTEGER},
+      #{operatorCode,jdbcType=VARCHAR}, #{operatorNo,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, #{operatorDesc,jdbcType=VARCHAR} )
+  </insert>
+    <insert id="insertList" parameterType="TdPaOrderOperationLog">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_operation_log
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orderNo != null">order_no,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.orderGroupNo != null">order_group_no,</if>
+                <if test="item.operationTime != null">operation_time,</if>
+                <if test="item.operationType != null">operation_type,</if>
+                <if test="item.operationName != null">operation_name,</if>
+                <if test="item.operatorCode != null">operator_code,</if>
+                <if test="item.operatorNo != null">operator_no,</if>
+                <if test="item.operatorName != null">operator_name,</if>
+                <if test="item.operatorDesc != null">operator_desc,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+                <if test="item.operationTime != null">#{item.operationTime},</if>
+                <if test="item.operationType != null">#{item.operationType},</if>
+                <if test="item.operationName != null">#{item.operationName},</if>
+                <if test="item.operatorCode != null">#{item.operatorCode},</if>
+                <if test="item.operatorNo != null">#{item.operatorNo},</if>
+                <if test="item.operatorName != null">#{item.operatorName},</if>
+                <if test="item.operatorDesc != null">#{item.operatorDesc},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+</mapper>

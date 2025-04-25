@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderAgentMapper">
+
+    <resultMap type="TdPaOrderAgent" id="TdPaOrderAgentResult">
+        <result property="id"    column="id"    />
+        <result property="diagCd"    column="diag_cd"    />
+        <result property="diagName"    column="diag_name"    />
+        <result property="prescriptionCd"    column="prescription_cd"    />
+        <result property="prescriptionName"    column="prescription_name"    />
+        <result property="agentName"    column="agent_name"    />
+        <result property="agentIdCard"    column="agent_id_card"    />
+        <result property="agentAge"    column="agent_age"    />
+        <result property="agentSex"    column="agent_sex"    />
+        <result property="agentSexCd"    column="agent_sex_cd"    />
+        <result property="relaCd"    column="rela_cd"    />
+        <result property="relaName"    column="rela_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderAgentVo">
+        select id, diag_cd, diag_name, prescription_cd, prescription_name, agent_name, agent_id_card, agent_age, agent_sex, agent_sex_cd, rela_cd, rela_name, cre_per_code, cre_per_name, cre_date, from td_pa_order_agent
+    </sql>
+
+    <select id="selectTdPaOrderAgentList" parameterType="TdPaOrderAgent" resultMap="TdPaOrderAgentResult">
+        <include refid="selectTdPaOrderAgentVo"/>
+        <where>
+            <if test="diagCd != null  and diagCd != ''"> and diag_cd = #{diagCd}</if>
+            <if test="diagName != null  and diagName != ''"> and diag_name like concat(concat('%', #{diagName}), '%')</if>
+            <if test="prescriptionCd != null  and prescriptionCd != ''"> and prescription_cd = #{prescriptionCd}</if>
+            <if test="prescriptionName != null  and prescriptionName != ''"> and prescription_name like concat(concat('%', #{prescriptionName}), '%')</if>
+            <if test="agentName != null  and agentName != ''"> and agent_name like concat(concat('%', #{agentName}), '%')</if>
+            <if test="agentIdCard != null  and agentIdCard != ''"> and agent_id_card = #{agentIdCard}</if>
+            <if test="agentAge != null  and agentAge != ''"> and agent_age = #{agentAge}</if>
+            <if test="agentSex != null  and agentSex != ''"> and agent_sex = #{agentSex}</if>
+            <if test="agentSexCd != null  and agentSexCd != ''"> and agent_sex_cd = #{agentSexCd}</if>
+            <if test="relaCd != null  and relaCd != ''"> and rela_cd = #{relaCd}</if>
+            <if test="relaName != null  and relaName != ''"> and rela_name like concat(concat('%', #{relaName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderAgentById" parameterType="Long" resultMap="TdPaOrderAgentResult">
+        <include refid="selectTdPaOrderAgentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTdPaOrderAgent" parameterType="TdPaOrderAgent">
+        insert into td_pa_order_agent
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="diagCd != null">diag_cd,</if>
+            <if test="diagName != null">diag_name,</if>
+            <if test="prescriptionCd != null">prescription_cd,</if>
+            <if test="prescriptionName != null">prescription_name,</if>
+            <if test="agentName != null">agent_name,</if>
+            <if test="agentIdCard != null">agent_id_card,</if>
+            <if test="agentAge != null">agent_age,</if>
+            <if test="agentSex != null">agent_sex,</if>
+            <if test="agentSexCd != null">agent_sex_cd,</if>
+            <if test="relaCd != null">rela_cd,</if>
+            <if test="relaName != null">rela_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            cre_date,
+            <if test="admissionNo != null">ADMISSION_NO,</if>
+            <if test="orderNo != null">ORDER_NO,</if>
+            <if test="orderSortNumber != null">ORDER_SORT_NUMBER,</if>
+            <if test="orderGroupSortNumber != null">ORDER_GROUP_SORT_NUMBER,</if>
+            <if test="orderGroupNo != null">ORDER_GROUP_NO,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="diagCd != null">#{diagCd},</if>
+            <if test="diagName != null">#{diagName},</if>
+            <if test="prescriptionCd != null">#{prescriptionCd},</if>
+            <if test="prescriptionName != null">#{prescriptionName},</if>
+            <if test="agentName != null">#{agentName},</if>
+            <if test="agentIdCard != null">#{agentIdCard},</if>
+            <if test="agentAge != null">#{agentAge},</if>
+            <if test="agentSex != null">#{agentSex},</if>
+            <if test="agentSexCd != null">#{agentSexCd},</if>
+            <if test="relaCd != null">#{relaCd},</if>
+            <if test="relaName != null">#{relaName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            sysdate,
+            <if test="admissionNo != null">#{admissionNo},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="orderGroupSortNumber != null">#{orderGroupSortNumber},</if>
+            <if test="orderGroupNo != null">#{orderGroupNo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderAgent" parameterType="TdPaOrderAgent">
+        update td_pa_order_agent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="diagCd != null">diag_cd = #{diagCd},</if>
+            <if test="diagName != null">diag_name = #{diagName},</if>
+            <if test="prescriptionCd != null">prescription_cd = #{prescriptionCd},</if>
+            <if test="prescriptionName != null">prescription_name = #{prescriptionName},</if>
+            <if test="agentName != null">agent_name = #{agentName},</if>
+            <if test="agentIdCard != null">agent_id_card = #{agentIdCard},</if>
+            <if test="agentAge != null">agent_age = #{agentAge},</if>
+            <if test="agentSex != null">agent_sex = #{agentSex},</if>
+            <if test="agentSexCd != null">agent_sex_cd = #{agentSexCd},</if>
+            <if test="relaCd != null">rela_cd = #{relaCd},</if>
+            <if test="relaName != null">rela_name = #{relaName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTdPaOrderAgentById" parameterType="Long">
+        delete from td_pa_order_agent where id = #{id}
+    </delete>
+
+    <delete id="deleteTdPaOrderAgentByIds" parameterType="String">
+        delete from td_pa_order_agent where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertTdPaOrderAgentList" parameterType="TdPaOrderAgent">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_agent
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.diagCd != null">diag_cd,</if>
+                <if test="item.diagName != null">diag_name,</if>
+                <if test="item.prescriptionCd != null">prescription_cd,</if>
+                <if test="item.prescriptionName != null">prescription_name,</if>
+                <if test="item.agentName != null">agent_name,</if>
+                <if test="item.agentIdCard != null">agent_id_card,</if>
+                <if test="item.agentAge != null">agent_age,</if>
+                <if test="item.agentSex != null">agent_sex,</if>
+                <if test="item.agentSexCd != null">agent_sex_cd,</if>
+                <if test="item.relaCd != null">rela_cd,</if>
+                <if test="item.relaName != null">rela_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                cre_date,
+                <if test="item.admissionNo != null">ADMISSION_NO,</if>
+                <if test="item.orderNo != null">ORDER_NO,</if>
+                <if test="item.orderSortNumber != null">ORDER_SORT_NUMBER,</if>
+                <if test="item.orderGroupSortNumber != null">ORDER_GROUP_SORT_NUMBER,</if>
+                <if test="item.orderGroupNo != null">ORDER_GROUP_NO,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.diagCd != null">#{item.diagCd},</if>
+                <if test="item.diagName != null">#{item.diagName},</if>
+                <if test="item.prescriptionCd != null">#{item.prescriptionCd},</if>
+                <if test="item.prescriptionName != null">#{item.prescriptionName},</if>
+                <if test="item.agentName != null">#{item.agentName},</if>
+                <if test="item.agentIdCard != null">#{item.agentIdCard},</if>
+                <if test="item.agentAge != null">#{item.agentAge},</if>
+                <if test="item.agentSex != null">#{item.agentSex},</if>
+                <if test="item.agentSexCd != null">#{item.agentSexCd},</if>
+                <if test="item.relaCd != null">#{item.relaCd},</if>
+                <if test="item.relaName != null">#{item.relaName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                sysdate,
+                <if test="item.admissionNo != null">#{item.admissionNo},</if>
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.orderGroupSortNumber != null">#{item.orderGroupSortNumber},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+</mapper>

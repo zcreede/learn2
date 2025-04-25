@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrElemstoeMapper">
+
+    <resultMap type="EmrElemstoe" id="EmrElemstoeResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="mrTypeCd"    column="mr_type_cd"    />
+        <result property="prioFileElemid"    column="prio_file_elemid"    />
+        <result property="prioElemId"    column="prio_elem_id"    />
+        <result property="prioElemCd"    column="prio_elem_cd"    />
+        <result property="prioElemName"    column="prio_elem_name"    />
+        <result property="fileElemId"    column="file_elem_id"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCon"    column="elem_con"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="elemConCode"    column="elem_con_code"    />
+        <result property="elemConBase64"    column="elem_con_base64"    />
+    </resultMap>
+
+    <sql id="selectEmrElemstoeVo">
+        select id, org_cd, org_name, patient_id, mr_file_id, mr_type_name, mr_type_cd, prio_file_elemid, prio_elem_id, prio_elem_cd, prio_elem_name, file_elem_id, elem_id, elem_cd, elem_name, elem_con, unit_id, cre_per_name, cre_per_code, cre_date, alt_per_name, alt_per_code, alt_date,elem_con_code,elem_con_base64 from emr_elemstoe
+    </sql>
+
+    <select id="selectEmrElemstoeList" parameterType="EmrElemstoe" resultMap="EmrElemstoeResult">
+        <include refid="selectEmrElemstoeVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="orgName != null  and orgName != ''"> and org_name like concat(concat('%', #{orgName}), '%')</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="mrFileId != null  and mrFileId != ''"> and mr_file_id = #{mrFileId}</if>
+            <if test="mrTypeName != null  and mrTypeName != ''"> and mr_type_name like concat(concat('%', #{mrTypeName}), '%')</if>
+            <if test="mrTypeCd != null  and mrTypeCd != ''"> and mr_type_cd = #{mrTypeCd}</if>
+            <if test="prioFileElemid != null  and prioFileElemid != ''"> and prio_file_elemid = #{prioFileElemid}</if>
+            <if test="prioElemId != null  and prioElemId != ''"> and prio_elem_id = #{prioElemId}</if>
+            <if test="prioElemCd != null  and prioElemCd != ''"> and prio_elem_cd = #{prioElemCd}</if>
+            <if test="prioElemName != null  and prioElemName != ''"> and prio_elem_name like concat(concat('%', #{prioElemName}), '%')</if>
+            <if test="fileElemId != null  and fileElemId != ''"> and file_elem_id = #{fileElemId}</if>
+            <if test="elemId != null  and elemId != ''"> and elem_id = #{elemId}</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCon != null  and elemCon != ''"> and elem_con = #{elemCon}</if>
+            <if test="unitId != null  and unitId != ''"> and unit_id = #{unitId}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="elemConCode != null and elemConCode!=''"> and elem_con_code = #{elemConCode}</if>
+        </where>
+    </select>
+
+    <select id="selectEmrElemstoeById" parameterType="Long" resultMap="EmrElemstoeResult">
+        <include refid="selectEmrElemstoeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrElemstoe" parameterType="EmrElemstoe">
+        insert into emr_elemstoe
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="mrTypeName != null">mr_type_name,</if>
+            <if test="mrTypeCd != null">mr_type_cd,</if>
+            <if test="prioFileElemid != null">prio_file_elemid,</if>
+            <if test="prioElemId != null">prio_elem_id,</if>
+            <if test="prioElemCd != null">prio_elem_cd,</if>
+            <if test="prioElemName != null">prio_elem_name,</if>
+            <if test="fileElemId != null">file_elem_id,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCon != null">elem_con,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="elemConCode != null and elemConCode!=''">elem_con_code ,</if>
+            <if test="elemConBase64 != null and elemConBase64!=''">elem_con_base64 ,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="mrTypeName != null">#{mrTypeName},</if>
+            <if test="mrTypeCd != null">#{mrTypeCd},</if>
+            <if test="prioFileElemid != null">#{prioFileElemid},</if>
+            <if test="prioElemId != null">#{prioElemId},</if>
+            <if test="prioElemCd != null">#{prioElemCd},</if>
+            <if test="prioElemName != null">#{prioElemName},</if>
+            <if test="fileElemId != null">#{fileElemId},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCon != null">#{elemCon},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="elemConCode != null and elemConCode!=''">#{elemConCode} ,</if>
+            <if test="elemConBase64 != null and elemConBase64!=''">#{elemConBase64} ,</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateEmrElemstoe" parameterType="EmrElemstoe">
+        update emr_elemstoe
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="mrTypeName != null">mr_type_name = #{mrTypeName},</if>
+            <if test="mrTypeCd != null">mr_type_cd = #{mrTypeCd},</if>
+            <if test="prioFileElemid != null">prio_file_elemid = #{prioFileElemid},</if>
+            <if test="prioElemId != null">prio_elem_id = #{prioElemId},</if>
+            <if test="prioElemCd != null">prio_elem_cd = #{prioElemCd},</if>
+            <if test="prioElemName != null">prio_elem_name = #{prioElemName},</if>
+            <if test="fileElemId != null">file_elem_id = #{fileElemId},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCon != null">elem_con = #{elemCon},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="elemConCode != null and elemConCode!=''">elem_con_code = #{elemConCode},</if>
+            <if test="elemConBase64 != null and elemConBase64!=''">elem_con_base64 = #{elemConBase64},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrElemstoeById" parameterType="Long">
+        delete from emr_elemstoe where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrElemstoeByIds" parameterType="String">
+        delete from emr_elemstoe where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEmrElemstoeByMrFileId" parameterType="Long">
+        delete from emr_elemstoe where mr_file_id = #{mrFileId}
+    </delete>
+
+    <insert id="insertList" parameterType="EmrElemstoe">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_elemstoe
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orgCd != null and item.orgCd != ''">org_cd,</if>
+                <if test="item.orgName != null and item.orgName != ''">org_name,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.mrFileId != null">mr_file_id,</if>
+                <if test="item.mrTypeName != null and item.mrTypeName != ''">mr_type_name,</if>
+                <if test="item.mrTypeCd != null and item.mrTypeCd != ''">mr_type_cd,</if>
+                <if test="item.prioFileElemid != null and item.prioFileElemid != ''">prio_file_elemid,</if>
+                <if test="item.prioElemId != null">prio_elem_id,</if>
+                <if test="item.prioElemCd != null and item.prioElemCd != ''">prio_elem_cd,</if>
+                <if test="item.prioElemName != null and item.prioElemName != ''">prio_elem_name,</if>
+                <if test="item.fileElemId != null and item.fileElemId != ''">file_elem_id,</if>
+                <if test="item.elemId != null">elem_id,</if>
+                <if test="item.elemCd != null and item.elemCd != ''">elem_cd,</if>
+                <if test="item.elemName != null and item.elemName != ''">elem_name,</if>
+                <if test="item.elemCon != null and item.elemCon != ''">elem_con,</if>
+                <if test="item.unitId != null">unit_id,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">cre_per_name,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">cre_per_code,</if>
+                <if test="item.elemConCode != null and item.elemConCode != ''">elem_con_code,</if>
+                <if test="item.elemConBase64 != null and item.elemConBase64!=''">elem_con_base64,</if>
+                cre_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orgCd != null and item.orgCd != ''">#{item.orgCd},</if>
+                <if test="item.orgName != null and item.orgName != ''">#{item.orgName},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.mrFileId != null">#{item.mrFileId},</if>
+                <if test="item.mrTypeName != null and item.mrTypeName != ''">#{item.mrTypeName},</if>
+                <if test="item.mrTypeCd != null and item.mrTypeCd != ''">#{item.mrTypeCd},</if>
+                <if test="item.prioFileElemid != null and item.prioFileElemid != ''">#{item.prioFileElemid},</if>
+                <if test="item.prioElemId != null">#{item.prioElemId},</if>
+                <if test="item.prioElemCd != null and item.prioElemCd != ''">#{item.prioElemCd},</if>
+                <if test="item.prioElemName != null and item.prioElemName != ''">#{item.prioElemName},</if>
+                <if test="item.fileElemId != null and item.fileElemId != ''">#{item.fileElemId},</if>
+                <if test="item.elemId != null">#{item.elemId},</if>
+                <if test="item.elemCd != null and item.elemCd != ''">#{item.elemCd},</if>
+                <if test="item.elemName != null and item.elemName != ''">#{item.elemName},</if>
+                <if test="item.elemCon != null and item.elemCon != ''">#{item.elemCon},</if>
+                <if test="item.unitId != null">#{item.unitId},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.elemConCode != null and item.elemConCode != ''">#{item.elemConCode},</if>
+                <if test="item.elemConBase64 != null and item.elemConBase64!=''">#{item.elemConBase64},</if>
+                sysdate,
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <select id="selectListByDate" parameterType="String" resultMap="EmrElemstoeResult">
+        select * from emr_elemstoe
+        <where>
+            <if test="beginDate!=null and beginDate != ''">and cre_date &gt;= to_date(#{beginDate},'yyyy-MM-dd HH24:mi:ss')</if>
+            <if test="endDate!=null and endDate!= ''">and cre_date &lt; to_date(#{endDate},'yyyy-MM-dd HH24:mi:ss')</if>
+        </where>
+        order by cre_date desc
+    </select>
+    <select id="selectEmrElemstoeListByPatientIdAndTypeList" resultMap="EmrElemstoeResult">
+        <include refid="selectEmrElemstoeVo"/>
+        where patient_id = #{patientId}
+        <if test="list != null and list.size()>0">
+            and MR_TYPE_CD in
+            <foreach collection="list" separator="," close=")" open="(" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <resultMap type="com.emr.project.emr.domain.resp.TertiaryIndexResp" id="TertiaryIndexResult">
+        <result property="mrFileShowName"    column="mr_file_show_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCon"    column="elem_con"    />
+        <result property="patientId"    column="patient_id"    />
+    </resultMap>
+    <select id="selectTertiaryIndexList" resultMap="TertiaryIndexResult"
+            parameterType="com.emr.project.emr.domain.vo.IndexVo">
+        SELECT
+            b.*,
+            a.elem_cd,
+            a.elem_name,
+            a.elem_con
+        FROM
+            EMR_ELEMSTOE a
+            LEFT JOIN (
+            SELECT
+                es.id,
+                es.mr_file_show_name,
+                e.patient_id
+            FROM
+                emr_subfile_index es
+                LEFT JOIN EMR_INDEX e ON e.id = es.MAIN_ID
+            WHERE
+                es.del_flag = '0' UNION ALL
+            SELECT
+                id,
+                MR_FILE_SHOW_NAME,
+                patient_id
+            FROM
+                EMR_INDEX
+            ) b ON a.mr_file_id = b.id
+            AND a.patient_id = b.patient_id
+            LEFT JOIN sys_sta_elem sse ON a.ELEM_CD = sse.ELEM_CD
+        WHERE
+            a.patient_id = #{patientId}
+            AND sse.ELEM_OTHER_PRO = '1'
+            and a.ORG_CD=#{orgCd}
+    </select>
+</mapper>

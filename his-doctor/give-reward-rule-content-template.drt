@@ -1,0 +1,25 @@
+template header
+
+rule
+ruleCode
+eventVariable
+errorMsg
+eventType
+otherRule
+
+
+
+
+template "judge condition"
+
+rule "judge_@{ruleCode}"
+
+when
+   @{eventVariable} : @{eventType}(@{rule})
+   @{otherRule};
+
+then
+   @{eventVariable}.getErrorMsg().add(@{errorMsg});
+end
+
+end template

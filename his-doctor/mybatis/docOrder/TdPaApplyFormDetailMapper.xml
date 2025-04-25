@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaApplyFormDetailMapper">
+
+    <resultMap type="TdPaApplyFormDetail" id="TdPaApplyFormDetailResult">
+        <result property="id"    column="id"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="itemSortNumber"    column="item_sort_number"    />
+        <result property="orderGroupSortNumber"    column="order_group_sort_number"    />
+        <result property="chargeNo"    column="charge_no"    />
+        <result property="chargeName"    column="charge_name"    />
+        <result property="standardCode"    column="standard_code"    />
+        <result property="standardName"    column="standard_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="unit"    column="unit"    />
+        <result property="price"    column="price"    />
+        <result property="dose"    column="dose"    />
+    </resultMap>
+
+    <sql id="selectTdPaApplyFormDetailVo">
+        select id, apply_form_no, item_sort_number, order_group_sort_number, charge_no, charge_name, standard_code, standard_name, standard, unit, price, dose from td_pa_apply_form_detail
+    </sql>
+
+    <select id="selectTdPaApplyFormDetailList" parameterType="TdPaApplyFormDetail" resultMap="TdPaApplyFormDetailResult">
+        <include refid="selectTdPaApplyFormDetailVo"/>
+        <where>
+            <if test="orderGroupSortNumber != null  and orderGroupSortNumber != ''"> and order_group_sort_number = #{orderGroupSortNumber}</if>
+            <if test="chargeName != null  and chargeName != ''"> and charge_name like concat(concat('%', #{chargeName}), '%')</if>
+            <if test="standardCode != null  and standardCode != ''"> and standard_code = #{standardCode}</if>
+            <if test="standardName != null  and standardName != ''"> and standard_name like concat(concat('%', #{standardName}), '%')</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="itemSortNumber != null "> and item_Sort_Number = #{itemSortNumber}</if>
+            <if test="dose != null "> and dose = #{dose}</if>
+            <if test="applyFormNo != null "> and apply_form_no = #{applyFormNo}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaApplyFormDetailByFormNo" parameterType="String" resultMap="TdPaApplyFormDetailResult">
+        <include refid="selectTdPaApplyFormDetailVo"/>
+        where apply_form_no = #{applyFormNo}
+    </select>
+
+    <insert id="insertTdPaApplyFormDetail" parameterType="TdPaApplyFormDetail">
+        insert into td_pa_apply_form_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="applyFormNo != null">apply_form_no,</if>
+            <if test="itemSortNumber != null">item_sort_number,</if>
+            <if test="orderGroupSortNumber != null">order_group_sort_number,</if>
+            <if test="chargeNo != null">charge_no,</if>
+            <if test="chargeName != null">charge_name,</if>
+            <if test="standardCode != null">standard_code,</if>
+            <if test="standardName != null">standard_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="unit != null">unit,</if>
+            <if test="price != null">price,</if>
+            <if test="dose != null">dose,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="applyFormNo != null">#{applyFormNo},</if>
+            <if test="itemSortNumber != null">#{itemSortNumber},</if>
+            <if test="orderGroupSortNumber != null">#{orderGroupSortNumber},</if>
+            <if test="chargeNo != null">#{chargeNo},</if>
+            <if test="chargeName != null">#{chargeName},</if>
+            <if test="standardCode != null">#{standardCode},</if>
+            <if test="standardName != null">#{standardName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="price != null">#{price},</if>
+            <if test="dose != null">#{dose},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertTdPaApplyFormDetailList" parameterType="TdPaApplyFormDetail">
+        insert all
+        <foreach item="item" index="index" collection="list">
+        into td_pa_apply_form_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">id,</if>
+            <if test="item.applyFormNo != null">apply_form_no,</if>
+            <if test="item.itemSortNumber != null">item_sort_number,</if>
+            <if test="item.orderGroupSortNumber != null">order_group_sort_number,</if>
+            <if test="item.chargeNo != null">charge_no,</if>
+            <if test="item.chargeName != null">charge_name,</if>
+            <if test="item.standardCode != null">standard_code,</if>
+            <if test="item.standardName != null">standard_name,</if>
+            <if test="item.standard != null">standard,</if>
+            <if test="item.unit != null">unit,</if>
+            <if test="item.price != null">price,</if>
+            <if test="item.dose != null">dose,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">#{item.id},</if>
+            <if test="item.applyFormNo != null">#{item.applyFormNo},</if>
+            <if test="item.itemSortNumber != null">#{item.itemSortNumber},</if>
+            <if test="item.orderGroupSortNumber != null">#{item.orderGroupSortNumber},</if>
+            <if test="item.chargeNo != null">#{item.chargeNo},</if>
+            <if test="item.chargeName != null">#{item.chargeName},</if>
+            <if test="item.standardCode != null">#{item.standardCode},</if>
+            <if test="item.standardName != null">#{item.standardName},</if>
+            <if test="item.standard != null">#{item.standard},</if>
+            <if test="item.unit != null">#{item.unit},</if>
+            <if test="item.price != null">#{item.price},</if>
+            <if test="item.dose != null">#{item.dose},</if>
+         </trim>
+        </foreach>
+SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTdPaApplyFormDetail" parameterType="TdPaApplyFormDetail">
+        update td_pa_apply_form_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null">id = #{id},</if>
+            <if test="itemSortNumber != null">item_sort_number = #{itemSortNumber},</if>
+            <if test="orderGroupSortNumber != null">order_group_sort_number = #{orderGroupSortNumber},</if>
+            <if test="chargeNo != null">charge_no = #{chargeNo},</if>
+            <if test="chargeName != null">charge_name = #{chargeName},</if>
+            <if test="standardCode != null">standard_code = #{standardCode},</if>
+            <if test="standardName != null">standard_name = #{standardName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="dose != null">dose = #{dose},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+
+    <delete id="deleteTdPaApplyFormDetailByFormNo" parameterType="String">
+        delete from td_pa_apply_form_detail where apply_form_no = #{applyFormNo}
+    </delete>
+
+    <delete id="deleteTdPaApplyFormDetailByIds" parameterType="String">
+        delete from td_pa_apply_form_detail where apply_form_no in
+        <foreach item="applyFormNo" collection="array" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </delete>
+</mapper>

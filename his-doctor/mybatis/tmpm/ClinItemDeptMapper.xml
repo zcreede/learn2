@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.ClinItemDeptMapper">
+
+    <resultMap type="ClinItemDept" id="ClinItemDeptResult">
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="clinItemCd"    column="clin_item_cd"    />
+        <result property="clinItemName"    column="clin_item_name"    />
+    </resultMap>
+
+    <sql id="selectClinItemDeptVo">
+        select dept_cd, dept_name, clin_item_cd, clin_item_name from TM_BS_CLIN_ITEM_DEPT
+    </sql>
+
+    <select id="selectClinItemDeptList" parameterType="ClinItemDept" resultMap="ClinItemDeptResult">
+        <include refid="selectClinItemDeptVo"/>
+        <where>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="clinItemName != null  and clinItemName != ''"> and clin_item_name like concat(concat('%', #{clinItemName}), '%')</if>
+        </where>
+    </select>
+
+    <select id="selectClinItemDeptById" parameterType="String" resultMap="ClinItemDeptResult">
+        <include refid="selectClinItemDeptVo"/>
+        where dept_cd = #{deptCd}
+    </select>
+
+    <insert id="insertClinItemDept" parameterType="ClinItemDept">
+        insert into TM_BS_CLIN_ITEM_DEPT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="clinItemCd != null">clin_item_cd,</if>
+            <if test="clinItemName != null">clin_item_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="clinItemCd != null">#{clinItemCd},</if>
+            <if test="clinItemName != null">#{clinItemName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClinItemDept" parameterType="ClinItemDept">
+        update TM_BS_CLIN_ITEM_DEPT
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="clinItemCd != null">clin_item_cd = #{clinItemCd},</if>
+            <if test="clinItemName != null">clin_item_name = #{clinItemName},</if>
+        </trim>
+        where dept_cd = #{deptCd}
+    </update>
+
+    <delete id="deleteClinItemDeptById" parameterType="String">
+        delete from TM_BS_CLIN_ITEM_DEPT where dept_cd = #{deptCd}
+    </delete>
+
+    <delete id="deleteClinItemDeptByIds" parameterType="String">
+        delete from TM_BS_CLIN_ITEM_DEPT where dept_cd in
+        <foreach item="deptCd" collection="array" open="(" separator="," close=")">
+            #{deptCd}
+        </foreach>
+    </delete>
+</mapper>

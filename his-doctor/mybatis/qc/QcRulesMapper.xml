@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.QcRulesMapper">
+
+    <resultMap type="QcRules" id="QcRulesResult">
+        <result property="id"    column="id"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="ruleType"    column="rule_type"    />
+        <result property="ruleTypeName"    column="rule_type_name"    />
+        <result property="ruleDesc"    column="rule_desc"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="emrTypeName"    column="emr_type_name"    />
+        <result property="emrTypeCode"    column="emr_type_code"    />
+        <result property="elemFlag"    column="elem_flag"    />
+        <result property="ruleClass"    column="rule_class"    />
+        <result property="defeLevel"    column="defe_level"    />
+    </resultMap>
+    <resultMap type="QcRulesVo" id="QcRulesVoResult" extends="QcRulesResult">
+        <result property="defeLevelName"    column="defe_level_name"    />
+        <result property="dedId"    column="ded_id"    />
+        <result property="dedDesc"    column="ded_desc"    />
+        <result property="itemCd"    column="item_cd"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="dedType"    column="ded_type"    />
+        <result property="dedScoreSingle"    column="ded_score_single"    />
+        <result property="dedScoreDesc"    column="ded_score_desc"    />
+    </resultMap>
+    <sql id="selectQcRulesVo">
+        select id, rule_name, rule_type, rule_type_name, rule_desc, cre_date, emr_type_name, emr_type_code, elem_flag, rule_class, defe_level from qc_rules
+    </sql>
+
+    <select id="selectQcRulesList" parameterType="QcRules" resultMap="QcRulesResult">
+        <include refid="selectQcRulesVo"/>
+        <where>
+            <if test="ruleName != null  and ruleName != ''"> and rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="ruleType != null "> and rule_type = #{ruleType}</if>
+            <if test="ruleTypeName != null  and ruleTypeName != ''"> and rule_type_name like concat(concat('%', #{ruleTypeName}), '%')</if>
+            <if test="ruleDesc != null  and ruleDesc != ''"> and rule_desc = #{ruleDesc}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="emrTypeName != null  and emrTypeName != ''"> and emr_type_name like concat(concat('%', #{emrTypeName}), '%')</if>
+            <if test="emrTypeCode != null  and emrTypeCode != ''"> and emr_type_code = #{emrTypeCode}</if>
+            <if test="elemFlag != null  and elemFlag != ''"> and elem_flag = #{elemFlag}</if>
+            <if test="ruleClass != null  and ruleClass != ''"> and rule_class = #{ruleClass}</if>
+            <if test="defeLevel != null  and defeLevel != ''"> and defe_level = #{defeLevel}</if>
+        </where>
+    </select>
+
+    <select id="selectQcRulesListTop20" parameterType="QcRules" resultMap="QcRulesVoResult">
+        select id, rule_name, rule_type, rule_type_name, rule_desc, cre_date, emr_type_name, emr_type_code, elem_flag, rule_class, defe_level,
+               case defe_level when '1' then '一般' when '2' then '严重' when '3' then '非常严重' else '' end defe_level_name
+        from qc_rules
+        <where>
+            <if test="ruleName != null  and ruleName != ''"> and rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="ruleType != null "> and rule_type = #{ruleType}</if>
+            <if test="ruleTypeName != null  and ruleTypeName != ''"> and rule_type_name like concat(concat('%', #{ruleTypeName}), '%')</if>
+            <if test="ruleDesc != null  and ruleDesc != ''"> and rule_desc = #{ruleDesc}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="emrTypeName != null  and emrTypeName != ''"> and emr_type_name like concat(concat('%', #{emrTypeName}), '%')</if>
+            <if test="emrTypeCode != null  and emrTypeCode != ''"> and FIND_IN_SET(#{emrTypeCode},EMR_TYPE_CODE) <![CDATA[ <> ]]> 0</if>
+            <if test="elemFlag != null  and elemFlag != ''"> and elem_flag = #{elemFlag}</if>
+            <if test="ruleClass != null  and ruleClass != ''"> and rule_class = #{ruleClass}</if>
+            <if test="defeLevel != null  and defeLevel != ''"> and defe_level = #{defeLevel}</if>
+        </where>
+    </select>
+
+    <select id="selectQcRulesById" parameterType="Long" resultMap="QcRulesResult">
+        <include refid="selectQcRulesVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectRulesByMrTypeElems" parameterType="QcRules" resultMap="QcRulesVoResult">
+        select distinct r.*,d.data_tag defe_level_name from qc_rules r
+        left join QC_CHECK_ELEM e on r.id = e.CHECK_ID
+        left join TM_BS_DICT_DATA d on r.defe_level = d.data_val and d.dict_type = 's052'
+        where FIND_IN_SET(#{emrTypeCode},EMR_TYPE_CODE) <![CDATA[ <> ]]> 0
+        <if test="qcCheckElemList!=null and qcCheckElemList.size > 0">
+            and e.ELEM_ID in
+            <foreach collection="qcCheckElemList" item="qcCheckElem" open="(" separator="," close=")">
+                #{qcCheckElem.elemId}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectScoreRulesList" parameterType="QcRulesVo" resultMap="QcRulesVoResult">
+        SELECT
+        rule.*,det.id as ded_id,det.ded_desc,det.item_cd,det.item_name,det.ded_type,det.ded_score_single,det.ded_score_desc
+        FROM
+        qc_rules rule
+        left join QC_SCORE_DED_RULE sr on rule.id=sr.RULE_ID
+        left join QC_SCORE_DED_DETAIL det on sr.ded_id=det.id and det.del_flag='0'
+        left join QC_SCORE_SCHE_DED sd on sd.ded_id=det.ID
+        left join QC_SCORE_SCHE sche on sche.sche_id=sd.sche_id and sche.DEL_FLAG='0'
+        WHERE
+        rule.rule_type = '8'
+        and sche.APP_SEG=#{qcSection}
+        and FIND_IN_SET(#{emrTypeCode},rule.emr_type_code) <![CDATA[ <> ]]> 0
+            <if test="ruleName!=null and ruleName!=''">
+                and rule.ruleName  like concat(concat('%', #{ruleName}), '%')
+            </if>
+    </select>
+</mapper>

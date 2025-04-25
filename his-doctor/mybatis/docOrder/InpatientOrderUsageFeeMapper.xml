@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.InpatientOrderUsageFeeMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.docOrder.domain.InpatientOrderUsageFee">
+        <id column="no" jdbcType="VARCHAR" property="no"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="standard" jdbcType="VARCHAR" property="standard"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="dose" jdbcType="DECIMAL" property="dose"/>
+        <result column="yongfa_bh" jdbcType="VARCHAR" property="yongfaBh"/>
+        <result column="ward_no" jdbcType="VARCHAR" property="wardNo"/>
+        <result column="standard_code" jdbcType="VARCHAR" property="standardCode"/>
+        <result column="item_no" jdbcType="VARCHAR" property="itemNo"/>
+        <result column="zfbz" jdbcType="VARCHAR" property="zfbz"/>
+        <result column="crbz" jdbcType="VARCHAR" property="crbz"/>
+        <result column="first_flag" jdbcType="VARCHAR" property="firstFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        no, item_name, standard, price, unit, dose, yongfa_bh, ward_no, standard_code, item_no,
+    zfbz, crbz, first_flag
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tm_pa_order_usage_fee
+        where no = #{no,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from tm_pa_order_usage_fee
+        where no = #{no,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.emr.project.docOrder.domain.InpatientOrderUsageFee">
+        insert into tm_pa_order_usage_fee (no, item_name, standard,
+                                                         price, unit, dose,
+                                                         yongfa_bh, ward_no, standard_code,
+                                                         item_no, zfbz, crbz,
+                                                         first_flag)
+        values (seq_tm_pa_order_usage_fee.nextval, #{itemName,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR},
+                #{price,jdbcType=DECIMAL}, #{unit,jdbcType=VARCHAR}, #{dose,jdbcType=DECIMAL},
+                #{yongfaBh,jdbcType=VARCHAR}, #{wardNo,jdbcType=VARCHAR}, #{standardCode,jdbcType=VARCHAR},
+                #{itemNo,jdbcType=VARCHAR}, #{zfbz,jdbcType=VARCHAR}, #{crbz,jdbcType=VARCHAR},
+                #{firstFlag,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.emr.project.docOrder.domain.InpatientOrderUsageFee">
+        insert into tm_pa_order_usage_fee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            no,
+            <if test="itemName != null">
+                item_name,
+            </if>
+            <if test="standard != null">
+                standard,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="dose != null">
+                dose,
+            </if>
+            <if test="yongfaBh != null">
+                yongfa_bh,
+            </if>
+            <if test="wardNo != null">
+                ward_no,
+            </if>
+            <if test="standardCode != null">
+                standard_code,
+            </if>
+            <if test="itemNo != null">
+                item_no,
+            </if>
+            <if test="zfbz != null">
+                zfbz,
+            </if>
+            <if test="crbz != null">
+                crbz,
+            </if>
+            <if test="firstFlag != null">
+                first_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            seq_tm_pa_order_usage_fee.nextval
+            <if test="itemName != null">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="standard != null">
+                #{standard,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="dose != null">
+                #{dose,jdbcType=DECIMAL},
+            </if>
+            <if test="yongfaBh != null">
+                #{yongfaBh,jdbcType=VARCHAR},
+            </if>
+            <if test="wardNo != null">
+                #{wardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="standardCode != null">
+                #{standardCode,jdbcType=VARCHAR},
+            </if>
+            <if test="itemNo != null">
+                #{itemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="zfbz != null">
+                #{zfbz,jdbcType=VARCHAR},
+            </if>
+            <if test="crbz != null">
+                #{crbz,jdbcType=VARCHAR},
+            </if>
+            <if test="firstFlag != null">
+                #{firstFlag,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.emr.project.docOrder.domain.InpatientOrderUsageFee">
+        update tm_pa_order_usage_fee
+        <set>
+            <if test="itemName != null">
+                item_name = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="standard != null">
+                standard = #{standard,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="dose != null">
+                dose = #{dose,jdbcType=DECIMAL},
+            </if>
+            <if test="yongfaBh != null">
+                yongfa_bh = #{yongfaBh,jdbcType=VARCHAR},
+            </if>
+            <if test="wardNo != null">
+                ward_no = #{wardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="standardCode != null">
+                standard_code = #{standardCode,jdbcType=VARCHAR},
+            </if>
+            <if test="itemNo != null">
+                item_no = #{itemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="zfbz != null">
+                zfbz = #{zfbz,jdbcType=VARCHAR},
+            </if>
+            <if test="crbz != null">
+                crbz = #{crbz,jdbcType=VARCHAR},
+            </if>
+            <if test="firstFlag != null">
+                first_flag = #{firstFlag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where no = #{no,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.emr.project.docOrder.domain.InpatientOrderUsageFee">
+        update tm_pa_order_usage_fee
+        set item_name     = #{itemName,jdbcType=VARCHAR},
+            standard      = #{standard,jdbcType=VARCHAR},
+            price         = #{price,jdbcType=DECIMAL},
+            unit          = #{unit,jdbcType=VARCHAR},
+            dose          = #{dose,jdbcType=DECIMAL},
+            yongfa_bh     = #{yongfaBh,jdbcType=VARCHAR},
+            ward_no       = #{wardNo,jdbcType=VARCHAR},
+            standard_code = #{standardCode,jdbcType=VARCHAR},
+            item_no       = #{itemNo,jdbcType=VARCHAR},
+            zfbz          = #{zfbz,jdbcType=VARCHAR},
+            crbz          = #{crbz,jdbcType=VARCHAR},
+            first_flag    = #{firstFlag,jdbcType=VARCHAR}
+        where no = #{no,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByConn" parameterType="com.emr.project.docOrder.domain.InpatientOrderUsageFee" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tm_pa_order_usage_fee
+        <where>
+            <if test="no != null and no != ''">
+                and no = #{no,jdbcType=VARCHAR}
+            </if>
+            <if test="itemName != null and itemName != ''">
+                and item_name = #{itemName,jdbcType=VARCHAR}
+            </if>
+            <if test="standard != null and standard != ''">
+                and standard = #{standard,jdbcType=VARCHAR}
+            </if>
+            <if test="price != null">
+                and price = #{price,jdbcType=DECIMAL}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="dose != null and dose != ''">
+                and dose = #{dose,jdbcType=DECIMAL}
+            </if>
+            <if test="yongfaBh != null and yongfaBh != ''">
+                and yongfa_bh = #{yongfaBh,jdbcType=VARCHAR}
+            </if>
+            <!-- 用发表去除病区编号<if test="wardNo != null and wardNo != ''">
+                and ward_no = #{wardNo,jdbcType=VARCHAR}
+            </if>-->
+            <if test="standardCode != null and standardCode != ''">
+                and standard_code = #{standardCode,jdbcType=VARCHAR}
+            </if>
+            <if test="itemNo != null and itemNo != ''">
+                and item_no = #{itemNo,jdbcType=VARCHAR}
+            </if>
+            and zfbz = 0
+            <if test="crbz != null and crbz != ''">
+                and crbz = #{crbz,jdbcType=VARCHAR}
+            </if>
+            <if test="firstFlag != null and firstFlag != ''">
+                and first_flag = #{firstFlag,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectListByConn" parameterType="com.emr.project.docOrder.domain.InpatientOrderUsageFee" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tm_pa_order_usage_fee
+        <where>
+            <if test="no != null and no != ''">
+                and no = #{no,jdbcType=VARCHAR}
+            </if>
+            <if test="itemName != null and itemName != ''">
+                and item_name = #{itemName,jdbcType=VARCHAR}
+            </if>
+            <if test="standard != null and standard != ''">
+                and standard = #{standard,jdbcType=VARCHAR}
+            </if>
+            <if test="price != null">
+                and price = #{price,jdbcType=DECIMAL}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="dose != null and dose != ''">
+                and dose = #{dose,jdbcType=DECIMAL}
+            </if>
+            <if test="yongfaBh != null and yongfaBh != ''">
+                and yongfa_bh = #{yongfaBh,jdbcType=VARCHAR}
+            </if>
+            <!-- 用发表去除病区编号<if test="wardNo != null and wardNo != ''">
+                and ward_no = #{wardNo,jdbcType=VARCHAR}
+            </if>-->
+            <if test="standardCode != null and standardCode != ''">
+                and standard_code = #{standardCode,jdbcType=VARCHAR}
+            </if>
+            <if test="itemNo != null and itemNo != ''">
+                and item_no = #{itemNo,jdbcType=VARCHAR}
+            </if>
+            and zfbz = 0
+            <if test="crbz != null and crbz != ''">
+                and crbz = #{crbz,jdbcType=VARCHAR}
+            </if>
+            <if test="firstFlag != null and firstFlag != ''">
+                and first_flag = #{firstFlag,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="OrderUsageFeeVoMap" type="com.emr.project.docOrder.domain.vo.InpatientOrderUsageFeeVo" extends="BaseResultMap">
+        <result property="feeName" column="fee_name" />
+    </resultMap>
+
+    <select id="selectOrderUsageFeeVoAll" resultMap="OrderUsageFeeVoMap">
+        select f.yongfa_bh,f.first_flag,d.data_tag fee_name,f.crbz from tm_pa_order_usage_fee f
+        left join tm_bs_dict_data d on f.first_flag = d.data_val and d.dict_type='s094'
+        where zfbz='0' order by yongfa_bh,first_flag
+    </select>
+</mapper>

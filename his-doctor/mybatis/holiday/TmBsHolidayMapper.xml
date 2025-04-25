@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.holiday.mapper.TmBsHolidayMapper">
+
+    <resultMap type="TmBsHoliday" id="TmBsHolidayResult">
+        <result property="id"    column="id"    />
+        <result property="holidayDesc"    column="holiday_desc"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="holidayType"    column="holiday_type"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectTmBsHolidayVo">
+        select id, holiday_desc, start_date, end_date, holiday_type, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from tm_bs_holiday
+    </sql>
+
+    <select id="selectTmBsHolidayList" parameterType="TmBsHoliday" resultMap="TmBsHolidayResult">
+        <include refid="selectTmBsHolidayVo"/>
+        <where>
+            <if test="holidayDesc != null  and holidayDesc != ''">
+             and holiday_desc like concat(concat('%', #{holidayDesc}), '%')
+            </if>
+            <if test="startDate != null ">
+             and start_date = #{startDate}
+            </if>
+            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="holidayType != null  and holidayType != ''"> and holiday_type = #{holidayType}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+        order by cre_date desc
+    </select>
+
+    <select id="selectTmBsHolidayById" parameterType="Long" resultMap="TmBsHolidayResult">
+        <include refid="selectTmBsHolidayVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectHolidayCount" resultType="java.lang.Integer">
+        select count(0) FROM TM_BS_HOLIDAY
+        where HOLIDAY_TYPE = #{holidayType}
+        and START_DATE &lt;= #{dbSysdate} and END_DATE+1 &gt; #{dbSysdate}
+    </select>
+
+    <insert id="insertTmBsHoliday" parameterType="TmBsHoliday">
+        insert into tm_bs_holiday
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="holidayDesc != null and holidayDesc != ''">holiday_desc,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="holidayType != null and holidayType != ''">holiday_type,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="holidayDesc != null and holidayDesc != ''">#{holidayDesc},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="holidayType != null and holidayType != ''">#{holidayType},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmBsHoliday" parameterType="TmBsHoliday">
+        update tm_bs_holiday
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="holidayDesc != null and holidayDesc != ''">holiday_desc = #{holidayDesc},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="holidayType != null and holidayType != ''">holiday_type = #{holidayType},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmBsHolidayById" parameterType="Long">
+        delete from tm_bs_holiday where id = #{id}
+    </delete>
+
+    <delete id="deleteTmBsHolidayByIds" parameterType="String">
+        delete from tm_bs_holiday where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

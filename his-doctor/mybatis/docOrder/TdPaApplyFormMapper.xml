@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaApplyFormMapper">
+
+    <resultMap type="TdPaApplyForm" id="TdPaApplyFormResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="applyFormNo"    column="apply_form_no"    />
+        <result property="applyFormClassCode"    column="apply_form_class_code"    />
+        <result property="applyFormTypeCode"    column="apply_form_type_code"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="babyNo"    column="baby_no"    />
+        <result property="patientDepCode"    column="patient_dep_code"    />
+        <result property="patientDepName"    column="patient_dep_name"    />
+        <result property="applyTime"    column="apply_time"    />
+        <result property="orderDoctorCode"    column="order_doctor_code"    />
+        <result property="orderDoctorName"    column="order_doctor_name"    />
+        <result property="physicianDptNo"    column="physician_dpt_no"    />
+        <result property="physicianDptName"    column="physician_dpt_name"    />
+        <result property="performDepCode"    column="perform_dep_code"    />
+        <result property="performDepName"    column="perform_dep_name"    />
+        <result property="diagnosisCode"    column="diagnosis_code"    />
+        <result property="diagnosisName"    column="diagnosis_name"    />
+        <result property="complaint"    column="complaint"    />
+        <result property="medicalRecordDigest"    column="medical_record_digest"    />
+        <result property="purposeExamination"    column="purpose_examination"    />
+        <result property="examCategory"    column="exam_category"    />
+        <result property="examPart"    column="exam_part"    />
+        <result property="sampleNo"    column="sample_no"    />
+        <result property="sampleName"    column="sample_name"    />
+        <result property="examMethodName"    column="exam_method_name"    />
+        <result property="applyFormStatus"    column="apply_form_status"    />
+        <result property="operatorCode"    column="operator_code"    />
+        <result property="imagingDiag"    column="imaging_diag"    />
+        <result property="operatorName"    column="operator_name"    />
+        <result property="pathologicDiagH"    column="pathologic_diag_h"    />
+        <result property="remark"    column="remark"    />
+        <result property="tumorFindDate"    column="tumor_find_date"    />
+        <result property="tumorMovePart"    column="tumor_move_part"    />
+        <result property="urgentFlag"    column="urgent_flag"    />
+        <result property="printFlag"    column="print_flag"    />
+        <result property="treatment"    column="treatment"    />
+        <result property="surgicalDescr"    column="surgical_descr"    />
+        <result property="settleAccountDate"    column="settle_account_date"    />
+        <result property="settleAccountCode"    column="settle_account_code"    />
+        <result property="tumorShape"    column="tumor_shape"    />
+        <result property="settleAccountNo"    column="settle_account_no"    />
+        <result property="tumorSize"    column="tumor_size"    />
+        <result property="settleAccountName"    column="settle_account_name"    />
+        <result property="tumorColor"    column="tumor_color"    />
+        <result property="reportDate"    column="report_date"    />
+        <result property="tumorAroundTissuesRelation"    column="tumor_around_tissues_relation"    />
+        <result property="reportDoctor"    column="report_doctor"    />
+        <result property="specFixative"    column="spec_fixative"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="specInVitroDate"    column="spec_in_vitro_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="specFixationDate"    column="spec_fixation_date"    />
+        <result property="specHandoverDate"    column="spec_handover_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="infectiousFlag"    column="infectious_flag"    />
+        <result property="examMethodCode"    column="exam_method_code"    />
+        <result property="physiologicalCycle"    column="physiological_cycle"    />
+    </resultMap>
+    <resultMap id="TdPaApplyFormVoResult" type="TdPaApplyFormVo" extends="TdPaApplyFormResult">
+        <result property="inputFormat"    column="input_format"    />
+        <result property="printFlag"    column="print_flag"    />
+        <result property="printFormat"    column="print_format"    />
+        <result property="applyFormName"    column="applyFormName"    />
+        <result property="reportUrl" column="report_url"/>
+        <result property="examId" column="exam_id"/>
+        <result property="bedid" column="bedid"/>
+        <result property="browserType" column="BROWSER_TYPE"/>
+        <result property="browserTypeName" column="BROWSER_TYPE_NAME"/>
+        <result property="sctmsj" column="sctmsj"/>
+        <result property="printSj" column="print_sj"/>
+        <result property="oper" column="OPER"/>
+        <result property="printOper" column="PRINT_OPER"/>
+        <result property="smOper" column="sm_oper"/>
+        <result property="smSj" column="sm_sj"/>
+        <result property="scOper" column="sc_oper"/>
+        <result property="scSj" column="sc_sj"/>
+        <result property="id" column="id"/>
+        <result property="recieveUser" column="recieve_user"/>
+        <result property="recieveDt" column="recieve_dt"/>
+        <result property="testUser" column="test_user"/>
+        <result property="testDt" column="test_dt"/>
+        <result property="reportUser" column="report_user"/>
+        <result property="reportDt" column="report_dt"/>
+        <result property="reportPrintUser" column="report_print_user"/>
+        <result property="reportPrintDt" column="report_print_dt"/>
+        <result property="barcodeNo" column="barcode_no"/>
+        <result property="babyName" column="baby_name" />
+        <result property="babySex" column="baby_sex" />
+        <result property="babyBirth" column="baby_birth" />
+    </resultMap>
+    <sql id="selectTdPaApplyFormVo">
+        select hospital_code, apply_form_no, apply_form_class_code, apply_form_type_code, order_no, order_sort_number,
+               patient_id, case_no, admission_no, hospitalized_count, patient_name, baby_no, patient_dep_code,
+               patient_dep_name, apply_time, order_doctor_code, order_doctor_name, physician_dpt_no, physician_dpt_name,
+               perform_dep_code, perform_dep_name, diagnosis_code, diagnosis_name, complaint, medical_record_digest,
+               purpose_examination, exam_category, exam_part, sample_no, sample_name, exam_method_name, apply_form_status,
+               operator_code, imaging_diag, operator_name, pathologic_diag_h, remark, tumor_find_date, tumor_move_part,
+               urgent_flag, print_flag, treatment, surgical_descr, settle_account_date, settle_account_code, tumor_shape,
+               settle_account_no, tumor_size, settle_account_name, tumor_color, report_date, tumor_around_tissues_relation,
+               report_doctor, spec_fixative, alt_date, spec_in_vitro_date, alt_per_code, spec_fixation_date, spec_handover_date,
+               alt_per_name,infectious_flag,exam_method_code,physiological_cycle from td_pa_apply_form
+    </sql>
+
+    <select id="selectTdPaApplyFormList" parameterType="TdPaApplyForm" resultMap="TdPaApplyFormVoResult">
+        select form.*,type.input_format,type.print_format,type.print_flag,type.DOCUMENT_TYPE_NAME as applyFormName,type.report_url, dept.SITE as performDepSite,
+        type.BROWSER_TYPE,type.BROWSER_TYPE_NAME,form.apply_form_no as id,b.baby_name,dsex.data_tag baby_sex,b.baby_birth
+        from td_pa_apply_form form left join TM_BS_DOCUMENT_TYPE type
+            on form.APPLY_FORM_TYPE_CODE=type.DOCUMENT_TYPE_CD
+        left join TM_BS_DEPT dept on dept.DEPT_CODE = form.PERFORM_DEP_CODE
+        left join exam_item ei on FORM.apply_form_no = ei.app_cd
+        left join td_na_baby_info b on form.admission_no = b.admission_no and form.baby_no=b.baby_no
+        left join tm_bs_dict_data dsex on b.baby_sex = dsex.data_val and dsex.dict_type = 's028'
+        <where>
+            and form.apply_form_status != '99'
+            <if test="hospitalCode != null  and hospitalCode != ''"> and form.hospital_code = #{hospitalCode}</if>
+            <if test="applyFormNo != null  and applyFormNo != ''"> and form.apply_form_no = #{applyFormNo}</if>
+            <if test="applyFormClassCode != null  and applyFormClassCode != ''"> and form.apply_form_class_code = #{applyFormClassCode}</if>
+            <if test="applyFormTypeCode != null  and applyFormTypeCode != ''"> and form.apply_form_type_code = #{applyFormTypeCode}</if>
+            <if test="orderNo != null  and orderNo != ''"> and form.order_no = #{orderNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and form.order_sort_number = #{orderSortNumber}</if>
+            <if test="patientId != null  and patientId != ''"> and form.patient_id = #{patientId}</if>
+            <if test="caseNo != null  and caseNo != ''"> and form.case_no = #{caseNo}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and form.admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and form.hospitalized_count = #{hospitalizedCount}</if>
+            <if test="patientName != null  and patientName != ''"> and form.patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="babyNo != null  and babyNo != ''"> and form.baby_no = #{babyNo}</if>
+            <if test="patientDepCode != null  and patientDepCode != ''"> and form.patient_dep_code = #{patientDepCode}</if>
+            <if test="patientDepName != null  and patientDepName != ''"> and form.patient_dep_name like concat(concat('%', #{patientDepName}), '%')</if>
+            <if test="applyTime != null "> and form.apply_time = #{applyTime}</if>
+            <if test="orderDoctorCode != null  and orderDoctorCode != ''"> and form.order_doctor_code = #{orderDoctorCode}</if>
+            <if test="orderDoctorName != null  and orderDoctorName != ''"> and form.order_doctor_name like concat(concat('%', #{orderDoctorName}), '%')</if>
+            <if test="physicianDptNo != null  and physicianDptNo != ''"> and form.physician_dpt_no = #{physicianDptNo}</if>
+            <if test="physicianDptName != null  and physicianDptName != ''"> and form.physician_dpt_name like concat(concat('%', #{physicianDptName}), '%')</if>
+            <if test="performDepCode != null  and performDepCode != ''"> and form.perform_dep_code = #{performDepCode}</if>
+            <if test="performDepName != null  and performDepName != ''"> and form.perform_dep_name like concat(concat('%', #{performDepName}), '%')</if>
+            <if test="diagnosisCode != null  and diagnosisCode != ''"> and form.diagnosis_code = #{diagnosisCode}</if>
+            <if test="diagnosisName != null  and diagnosisName != ''"> and form.diagnosis_name like concat(concat('%', #{diagnosisName}), '%')</if>
+            <if test="complaint != null  and complaint != ''"> and form.complaint = #{complaint}</if>
+            <if test="medicalRecordDigest != null  and medicalRecordDigest != ''"> and form.medical_record_digest = #{medicalRecordDigest}</if>
+            <if test="purposeExamination != null  and purposeExamination != ''"> and form.purpose_examination = #{purposeExamination}</if>
+            <if test="examCategory != null  and examCategory != ''"> and form.exam_category = #{examCategory}</if>
+            <if test="examPart != null  and examPart != ''"> and form.exam_part = #{examPart}</if>
+            <if test="sampleNo != null  and sampleNo != ''"> and form.sample_no = #{sampleNo}</if>
+            <if test="sampleName != null  and sampleName != ''"> and form.sample_name like concat(concat('%', #{sampleName}), '%')</if>
+            <if test="examMethodName != null  and examMethodName != ''"> and form.exam_method_name like concat(concat('%', #{examMethodName}), '%')</if>
+            <if test="applyFormStatus != null  and applyFormStatus != ''"> and form.apply_form_status = #{applyFormStatus}</if>
+            <if test="operatorCode != null  and operatorCode != ''"> and form.operator_code = #{operatorCode}</if>
+            <if test="imagingDiag != null  and imagingDiag != ''"> and form.imaging_diag = #{imagingDiag}</if>
+            <if test="operatorName != null  and operatorName != ''"> and form.operator_name like concat(concat('%', #{operatorName}), '%')</if>
+            <if test="pathologicDiagH != null  and pathologicDiagH != ''"> and form.pathologic_diag_h = #{pathologicDiagH}</if>
+            <if test="tumorFindDate != null "> and form.tumor_find_date = #{tumorFindDate}</if>
+            <if test="tumorMovePart != null  and tumorMovePart != ''"> and form.tumor_move_part = #{tumorMovePart}</if>
+            <if test="urgentFlag != null  and urgentFlag != ''"> and form.urgent_flag = #{urgentFlag}</if>
+            <if test="printFlag != null  and printFlag != ''"> and form.print_flag = #{printFlag}</if>
+            <if test="treatment != null  and treatment != ''"> and form.treatment = #{treatment}</if>
+            <if test="surgicalDescr != null  and surgicalDescr != ''"> and form.surgical_descr = #{surgicalDescr}</if>
+            <if test="settleAccountDate != null "> and form.settle_account_date = #{settleAccountDate}</if>
+            <if test="settleAccountCode != null  and settleAccountCode != ''"> and form.settle_account_code = #{settleAccountCode}</if>
+            <if test="tumorShape != null  and tumorShape != ''"> and form.tumor_shape = #{tumorShape}</if>
+            <if test="settleAccountNo != null  and settleAccountNo != ''"> and form.settle_account_no = #{settleAccountNo}</if>
+            <if test="tumorSize != null  and tumorSize != ''"> and form.tumor_size = #{tumorSize}</if>
+            <if test="settleAccountName != null  and settleAccountName != ''"> and form.settle_account_name like concat(concat('%', #{settleAccountName}), '%')</if>
+            <if test="tumorColor != null  and tumorColor != ''"> and form.tumor_color = #{tumorColor}</if>
+            <if test="reportDate != null "> and form.report_date = #{reportDate}</if>
+            <if test="tumorAroundTissuesRelation != null  and tumorAroundTissuesRelation != ''"> and form.tumor_around_tissues_relation = #{tumorAroundTissuesRelation}</if>
+            <if test="reportDoctor != null  and reportDoctor != ''"> and form.report_doctor = #{reportDoctor}</if>
+            <if test="specFixative != null  and specFixative != ''"> and form.spec_fixative = #{specFixative}</if>
+            <if test="altDate != null "> and form.alt_date = #{altDate}</if>
+            <if test="specInVitroDate != null "> and form.spec_in_vitro_date = #{specInVitroDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and form.alt_per_code = #{altPerCode}</if>
+            <if test="specFixationDate != null "> and form.spec_fixation_date = #{specFixationDate}</if>
+            <if test="specHandoverDate != null "> and form.spec_handover_date = #{specHandoverDate}</if>
+            <if test="infectiousFlag != null "> and form.infectious_flag = #{infectiousFlag}</if>
+            <if test="examMethodCode != null "> and form.exam_method_code = #{examMethodCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and form.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        </where>
+         order by form.APPLY_TIME desc
+    </select>
+    <select id="selectTdPaApplyFormListAll" parameterType="TdPaApplyForm" resultMap="TdPaApplyFormVoResult">
+        select form.*,type.input_format,type.print_format,type.print_flag,type.DOCUMENT_TYPE_NAME as applyFormName,type.report_url, dept.SITE as performDepSite,
+        type.BROWSER_TYPE,type.BROWSER_TYPE_NAME,form.apply_form_no as id,b.baby_name,dsex.data_tag baby_sex,b.baby_birth,form.sample_no as spec_no
+        from td_pa_apply_form_all form left join TM_BS_DOCUMENT_TYPE type
+        on form.APPLY_FORM_TYPE_CODE=type.DOCUMENT_TYPE_CD
+        left join TM_BS_DEPT dept on dept.DEPT_CODE = form.PERFORM_DEP_CODE
+        left join exam_item ei on FORM.apply_form_no = ei.app_cd
+        left join td_na_baby_info b on form.admission_no = b.admission_no and form.baby_no=b.baby_no
+        left join tm_bs_dict_data dsex on b.baby_sex = dsex.data_val and dsex.dict_type = 's028'
+        <where>
+            and form.apply_form_status != '99'
+            <if test="hospitalCode != null  and hospitalCode != ''"> and form.hospital_code = #{hospitalCode}</if>
+            <if test="applyFormNo != null  and applyFormNo != ''"> and form.apply_form_no = #{applyFormNo}</if>
+            <if test="applyFormClassCode != null  and applyFormClassCode != ''"> and form.apply_form_class_code = #{applyFormClassCode}</if>
+            <if test="applyFormTypeCode != null  and applyFormTypeCode != ''"> and form.apply_form_type_code = #{applyFormTypeCode}</if>
+            <if test="orderNo != null  and orderNo != ''"> and form.order_no = #{orderNo}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and form.order_sort_number = #{orderSortNumber}</if>
+            <if test="patientId != null  and patientId != ''"> and form.patient_id = #{patientId}</if>
+            <if test="caseNo != null  and caseNo != ''"> and form.case_no = #{caseNo}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and form.admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and form.hospitalized_count = #{hospitalizedCount}</if>
+            <if test="patientName != null  and patientName != ''"> and form.patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="babyNo != null  and babyNo != ''"> and form.baby_no = #{babyNo}</if>
+            <if test="patientDepCode != null  and patientDepCode != ''"> and form.patient_dep_code = #{patientDepCode}</if>
+            <if test="patientDepName != null  and patientDepName != ''"> and form.patient_dep_name like concat(concat('%', #{patientDepName}), '%')</if>
+            <if test="applyTime != null "> and form.apply_time = #{applyTime}</if>
+            <if test="orderDoctorCode != null  and orderDoctorCode != ''"> and form.order_doctor_code = #{orderDoctorCode}</if>
+            <if test="orderDoctorName != null  and orderDoctorName != ''"> and form.order_doctor_name like concat(concat('%', #{orderDoctorName}), '%')</if>
+            <if test="physicianDptNo != null  and physicianDptNo != ''"> and form.physician_dpt_no = #{physicianDptNo}</if>
+            <if test="physicianDptName != null  and physicianDptName != ''"> and form.physician_dpt_name like concat(concat('%', #{physicianDptName}), '%')</if>
+            <if test="performDepCode != null  and performDepCode != ''"> and form.perform_dep_code = #{performDepCode}</if>
+            <if test="performDepName != null  and performDepName != ''"> and form.perform_dep_name like concat(concat('%', #{performDepName}), '%')</if>
+            <if test="diagnosisCode != null  and diagnosisCode != ''"> and form.diagnosis_code = #{diagnosisCode}</if>
+            <if test="diagnosisName != null  and diagnosisName != ''"> and form.diagnosis_name like concat(concat('%', #{diagnosisName}), '%')</if>
+            <if test="complaint != null  and complaint != ''"> and form.complaint = #{complaint}</if>
+            <if test="medicalRecordDigest != null  and medicalRecordDigest != ''"> and form.medical_record_digest = #{medicalRecordDigest}</if>
+            <if test="purposeExamination != null  and purposeExamination != ''"> and form.purpose_examination = #{purposeExamination}</if>
+            <if test="examCategory != null  and examCategory != ''"> and form.exam_category = #{examCategory}</if>
+            <if test="examPart != null  and examPart != ''"> and form.exam_part = #{examPart}</if>
+            <if test="sampleNo != null  and sampleNo != ''"> and form.sample_no = #{sampleNo}</if>
+            <if test="sampleName != null  and sampleName != ''"> and form.sample_name like concat(concat('%', #{sampleName}), '%')</if>
+            <if test="examMethodName != null  and examMethodName != ''"> and form.exam_method_name like concat(concat('%', #{examMethodName}), '%')</if>
+            <if test="applyFormStatus != null  and applyFormStatus != ''"> and form.apply_form_status = #{applyFormStatus}</if>
+            <if test="operatorCode != null  and operatorCode != ''"> and form.operator_code = #{operatorCode}</if>
+            <if test="imagingDiag != null  and imagingDiag != ''"> and form.imaging_diag = #{imagingDiag}</if>
+            <if test="operatorName != null  and operatorName != ''"> and form.operator_name like concat(concat('%', #{operatorName}), '%')</if>
+            <if test="pathologicDiagH != null  and pathologicDiagH != ''"> and form.pathologic_diag_h = #{pathologicDiagH}</if>
+            <if test="tumorFindDate != null "> and form.tumor_find_date = #{tumorFindDate}</if>
+            <if test="tumorMovePart != null  and tumorMovePart != ''"> and form.tumor_move_part = #{tumorMovePart}</if>
+            <if test="urgentFlag != null  and urgentFlag != ''"> and form.urgent_flag = #{urgentFlag}</if>
+            <if test="printFlag != null  and printFlag != ''"> and form.print_flag = #{printFlag}</if>
+            <if test="treatment != null  and treatment != ''"> and form.treatment = #{treatment}</if>
+            <if test="surgicalDescr != null  and surgicalDescr != ''"> and form.surgical_descr = #{surgicalDescr}</if>
+            <if test="settleAccountDate != null "> and form.settle_account_date = #{settleAccountDate}</if>
+            <if test="settleAccountCode != null  and settleAccountCode != ''"> and form.settle_account_code = #{settleAccountCode}</if>
+            <if test="tumorShape != null  and tumorShape != ''"> and form.tumor_shape = #{tumorShape}</if>
+            <if test="settleAccountNo != null  and settleAccountNo != ''"> and form.settle_account_no = #{settleAccountNo}</if>
+            <if test="tumorSize != null  and tumorSize != ''"> and form.tumor_size = #{tumorSize}</if>
+            <if test="settleAccountName != null  and settleAccountName != ''"> and form.settle_account_name like concat(concat('%', #{settleAccountName}), '%')</if>
+            <if test="tumorColor != null  and tumorColor != ''"> and form.tumor_color = #{tumorColor}</if>
+            <if test="reportDate != null "> and form.report_date = #{reportDate}</if>
+            <if test="tumorAroundTissuesRelation != null  and tumorAroundTissuesRelation != ''"> and form.tumor_around_tissues_relation = #{tumorAroundTissuesRelation}</if>
+            <if test="reportDoctor != null  and reportDoctor != ''"> and form.report_doctor = #{reportDoctor}</if>
+            <if test="specFixative != null  and specFixative != ''"> and form.spec_fixative = #{specFixative}</if>
+            <if test="altDate != null "> and form.alt_date = #{altDate}</if>
+            <if test="specInVitroDate != null "> and form.spec_in_vitro_date = #{specInVitroDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and form.alt_per_code = #{altPerCode}</if>
+            <if test="specFixationDate != null "> and form.spec_fixation_date = #{specFixationDate}</if>
+            <if test="specHandoverDate != null "> and form.spec_handover_date = #{specHandoverDate}</if>
+            <if test="infectiousFlag != null "> and form.infectious_flag = #{infectiousFlag}</if>
+            <if test="examMethodCode != null "> and form.exam_method_code = #{examMethodCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and form.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+        </where>
+        order by form.APPLY_TIME desc
+    </select>
+
+    <select id="selectTdPaApplyFormById" parameterType="String" resultMap="TdPaApplyFormVoResult">
+        select hospital_code, apply_form_no, apply_form_class_code, apply_form_type_code, order_no, order_sort_number,
+        patient_id, case_no, admission_no, hospitalized_count, patient_name, baby_no, patient_dep_code,
+        patient_dep_name, apply_time, order_doctor_code, order_doctor_name, physician_dpt_no, physician_dpt_name,
+        perform_dep_code, perform_dep_name, diagnosis_code, diagnosis_name, complaint, medical_record_digest,
+        purpose_examination, exam_category, exam_part, sample_no, sample_name, exam_method_name, apply_form_status,
+        operator_code, imaging_diag, operator_name, pathologic_diag_h, remark, tumor_find_date, tumor_move_part,
+        urgent_flag, print_flag, treatment, surgical_descr, settle_account_date, settle_account_code, tumor_shape,
+        settle_account_no, tumor_size, settle_account_name, tumor_color, report_date, tumor_around_tissues_relation,
+        report_doctor, spec_fixative, alt_date, spec_in_vitro_date, alt_per_code, spec_fixation_date, spec_handover_date,
+        alt_per_name,infectious_flag,exam_method_code from td_pa_apply_form_all
+        where apply_form_no = #{applyFormNo}
+    </select>
+
+    <insert id="insertTdPaApplyForm" parameterType="TdPaApplyForm">
+        insert into td_pa_apply_form
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="applyFormNo != null">apply_form_no,</if>
+            <if test="applyFormClassCode != null and applyFormClassCode != ''">apply_form_class_code,</if>
+            <if test="applyFormTypeCode != null and applyFormTypeCode != ''">apply_form_type_code,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="caseNo != null">case_no,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="patientName != null and patientName != ''">patient_name,</if>
+            <if test="babyNo != null">baby_no,</if>
+            <if test="patientDepCode != null and patientDepCode != ''">patient_dep_code,</if>
+            <if test="patientDepName != null">patient_dep_name,</if>
+            <if test="applyTime != null">apply_time,</if>
+            <if test="orderDoctorCode != null and orderDoctorCode != ''">order_doctor_code,</if>
+            <if test="orderDoctorName != null">order_doctor_name,</if>
+            <if test="physicianDptNo != null">physician_dpt_no,</if>
+            <if test="physicianDptName != null">physician_dpt_name,</if>
+            <if test="performDepCode != null and performDepCode != ''">perform_dep_code,</if>
+            <if test="performDepName != null">perform_dep_name,</if>
+            <if test="diagnosisCode != null">diagnosis_code,</if>
+            <if test="diagnosisName != null">diagnosis_name,</if>
+            <if test="complaint != null">complaint,</if>
+            <if test="medicalRecordDigest != null">medical_record_digest,</if>
+            <if test="purposeExamination != null">purpose_examination,</if>
+            <if test="examCategory != null">exam_category,</if>
+            <if test="examPart != null">exam_part,</if>
+            <if test="sampleNo != null">sample_no,</if>
+            <if test="sampleName != null">sample_name,</if>
+            <if test="examMethodName != null">exam_method_name,</if>
+            <if test="applyFormStatus != null">apply_form_status,</if>
+            <if test="operatorCode != null">operator_code,</if>
+            <if test="imagingDiag != null">imaging_diag,</if>
+            <if test="operatorName != null">operator_name,</if>
+            <if test="pathologicDiagH != null">pathologic_diag_h,</if>
+            <if test="remark != null">remark,</if>
+            <if test="tumorFindDate != null">tumor_find_date,</if>
+            <if test="tumorMovePart != null">tumor_move_part,</if>
+            <if test="urgentFlag != null">urgent_flag,</if>
+            <if test="printFlag != null">print_flag,</if>
+            <if test="treatment != null">treatment,</if>
+            <if test="surgicalDescr != null">surgical_descr,</if>
+            <if test="settleAccountDate != null">settle_account_date,</if>
+            <if test="settleAccountCode != null">settle_account_code,</if>
+            <if test="tumorShape != null">tumor_shape,</if>
+            <if test="settleAccountNo != null">settle_account_no,</if>
+            <if test="tumorSize != null">tumor_size,</if>
+            <if test="settleAccountName != null">settle_account_name,</if>
+            <if test="tumorColor != null">tumor_color,</if>
+            <if test="reportDate != null">report_date,</if>
+            <if test="tumorAroundTissuesRelation != null">tumor_around_tissues_relation,</if>
+            <if test="reportDoctor != null">report_doctor,</if>
+            <if test="specFixative != null">spec_fixative,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="specInVitroDate != null">spec_in_vitro_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="specFixationDate != null">spec_fixation_date,</if>
+            <if test="specHandoverDate != null">spec_handover_date,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="infectiousFlag != null ">infectious_flag,</if>
+            <if test="examMethodCode != null ">exam_method_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="applyFormNo != null">#{applyFormNo},</if>
+            <if test="applyFormClassCode != null and applyFormClassCode != ''">#{applyFormClassCode},</if>
+            <if test="applyFormTypeCode != null and applyFormTypeCode != ''">#{applyFormTypeCode},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="caseNo != null">#{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="patientName != null and patientName != ''">#{patientName},</if>
+            <if test="babyNo != null">#{babyNo},</if>
+            <if test="patientDepCode != null and patientDepCode != ''">#{patientDepCode},</if>
+            <if test="patientDepName != null">#{patientDepName},</if>
+            <if test="applyTime != null">#{applyTime},</if>
+            <if test="orderDoctorCode != null and orderDoctorCode != ''">#{orderDoctorCode},</if>
+            <if test="orderDoctorName != null">#{orderDoctorName},</if>
+            <if test="physicianDptNo != null">#{physicianDptNo},</if>
+            <if test="physicianDptName != null">#{physicianDptName},</if>
+            <if test="performDepCode != null and performDepCode != ''">#{performDepCode},</if>
+            <if test="performDepName != null">#{performDepName},</if>
+            <if test="diagnosisCode != null">#{diagnosisCode},</if>
+            <if test="diagnosisName != null">#{diagnosisName},</if>
+            <if test="complaint != null">#{complaint},</if>
+            <if test="medicalRecordDigest != null">#{medicalRecordDigest},</if>
+            <if test="purposeExamination != null">#{purposeExamination},</if>
+            <if test="examCategory != null">#{examCategory},</if>
+            <if test="examPart != null">#{examPart},</if>
+            <if test="sampleNo != null">#{sampleNo},</if>
+            <if test="sampleName != null">#{sampleName},</if>
+            <if test="examMethodName != null">#{examMethodName},</if>
+            <if test="applyFormStatus != null">#{applyFormStatus},</if>
+            <if test="operatorCode != null">#{operatorCode},</if>
+            <if test="imagingDiag != null">#{imagingDiag},</if>
+            <if test="operatorName != null">#{operatorName},</if>
+            <if test="pathologicDiagH != null">#{pathologicDiagH},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="tumorFindDate != null">#{tumorFindDate},</if>
+            <if test="tumorMovePart != null">#{tumorMovePart},</if>
+            <if test="urgentFlag != null">#{urgentFlag},</if>
+            <if test="printFlag != null">#{printFlag},</if>
+            <if test="treatment != null">#{treatment},</if>
+            <if test="surgicalDescr != null">#{surgicalDescr},</if>
+            <if test="settleAccountDate != null">#{settleAccountDate},</if>
+            <if test="settleAccountCode != null">#{settleAccountCode},</if>
+            <if test="tumorShape != null">#{tumorShape},</if>
+            <if test="settleAccountNo != null">#{settleAccountNo},</if>
+            <if test="tumorSize != null">#{tumorSize},</if>
+            <if test="settleAccountName != null">#{settleAccountName},</if>
+            <if test="tumorColor != null">#{tumorColor},</if>
+            <if test="reportDate != null">#{reportDate},</if>
+            <if test="tumorAroundTissuesRelation != null">#{tumorAroundTissuesRelation},</if>
+            <if test="reportDoctor != null">#{reportDoctor},</if>
+            <if test="specFixative != null">#{specFixative},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="specInVitroDate != null">#{specInVitroDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="specFixationDate != null">#{specFixationDate},</if>
+            <if test="specHandoverDate != null">#{specHandoverDate},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="infectiousFlag != null ">#{infectiousFlag},</if>
+            <if test="examMethodCode != null ">#{examMethodCode},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertTdPaApplyFormList" parameterType="TdPaApplyFormVo">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_apply_form
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null">hospital_code,</if>
+                <if test="item.applyFormNo != null">apply_form_no,</if>
+                <if test="item.applyFormClassCode != null and item.applyFormClassCode != ''">apply_form_class_code,</if>
+                <if test="item.applyFormTypeCode != null and item.applyFormTypeCode != ''">apply_form_type_code,</if>
+                <if test="item.orderNo != null">order_no,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.patientId != null">patient_id,</if>
+                <if test="item.caseNo != null">case_no,</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no,</if>
+                <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+                <if test="item.patientName != null and item.patientName != ''">patient_name,</if>
+                <if test="item.babyNo != null">baby_no,</if>
+                <if test="item.patientDepCode != null and item.patientDepCode != ''">patient_dep_code,</if>
+                <if test="item.patientDepName != null">patient_dep_name,</if>
+                <if test="item.applyTime != null">apply_time,</if>
+                <if test="item.orderDoctorCode != null and item.orderDoctorCode != ''">order_doctor_code,</if>
+                <if test="item.orderDoctorName != null">order_doctor_name,</if>
+                <if test="item.physicianDptNo != null">physician_dpt_no,</if>
+                <if test="item.physicianDptName != null">physician_dpt_name,</if>
+                <if test="item.performDepCode != null and item.performDepCode != ''">perform_dep_code,</if>
+                <if test="item.performDepName != null">perform_dep_name,</if>
+                <if test="item.diagnosisCode != null">diagnosis_code,</if>
+                <if test="item.diagnosisName != null">diagnosis_name,</if>
+                <if test="item.complaint != null">complaint,</if>
+                <if test="item.medicalRecordDigest != null">medical_record_digest,</if>
+                <if test="item.purposeExamination != null">purpose_examination,</if>
+                <if test="item.examCategory != null">exam_category,</if>
+                <if test="item.examPart != null">exam_part,</if>
+                <if test="item.sampleNo != null">sample_no,</if>
+                <if test="item.sampleName != null">sample_name,</if>
+                <if test="item.examMethodName != null">exam_method_name,</if>
+                <if test="item.applyFormStatus != null">apply_form_status,</if>
+                <if test="item.operatorCode != null">operator_code,</if>
+                <if test="item.imagingDiag != null">imaging_diag,</if>
+                <if test="item.operatorName != null">operator_name,</if>
+                <if test="item.pathologicDiagH != null">pathologic_diag_h,</if>
+                <if test="item.remark != null">remark,</if>
+                <if test="item.tumorFindDate != null">tumor_find_date,</if>
+                <if test="item.tumorMovePart != null">tumor_move_part,</if>
+                <if test="item.urgentFlag != null">urgent_flag,</if>
+                <if test="item.printFlag != null">print_flag,</if>
+                <if test="item.treatment != null">treatment,</if>
+                <if test="item.surgicalDescr != null">surgical_descr,</if>
+                <if test="item.settleAccountDate != null">settle_account_date,</if>
+                <if test="item.settleAccountCode != null">settle_account_code,</if>
+                <if test="item.tumorShape != null">tumor_shape,</if>
+                <if test="item.settleAccountNo != null">settle_account_no,</if>
+                <if test="item.tumorSize != null">tumor_size,</if>
+                <if test="item.settleAccountName != null">settle_account_name,</if>
+                <if test="item.tumorColor != null">tumor_color,</if>
+                <if test="item.reportDate != null">report_date,</if>
+                <if test="item.tumorAroundTissuesRelation != null">tumor_around_tissues_relation,</if>
+                <if test="item.reportDoctor != null">report_doctor,</if>
+                <if test="item.specFixative != null">spec_fixative,</if>
+                <if test="item.altDate != null">alt_date,</if>
+                <if test="item.specInVitroDate != null">spec_in_vitro_date,</if>
+                <if test="item.altPerCode != null">alt_per_code,</if>
+                <if test="item.specFixationDate != null">spec_fixation_date,</if>
+                <if test="item.specHandoverDate != null">spec_handover_date,</if>
+                <if test="item.altPerName != null">alt_per_name,</if>
+                <if test="item.infectiousFlag != null ">infectious_Flag,</if>
+                <if test="item.examMethodCode != null ">exam_Method_Code,</if>
+                <if test="item.physiologicalCycle != null ">physiological_cycle,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null">#{item.hospitalCode},</if>
+                <if test="item.applyFormNo != null">#{item.applyFormNo},</if>
+                <if test="item.applyFormClassCode != null and item.applyFormClassCode != ''">#{item.applyFormClassCode},</if>
+                <if test="item.applyFormTypeCode != null and item.applyFormTypeCode != ''">#{item.applyFormTypeCode},</if>
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.patientId != null">#{item.patientId},</if>
+                <if test="item.caseNo != null">#{item.caseNo},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">#{item.admissionNo},</if>
+                <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.babyNo != null">#{item.babyNo},</if>
+                <if test="item.patientDepCode != null and item.patientDepCode != ''">#{item.patientDepCode},</if>
+                <if test="item.patientDepName != null">#{item.patientDepName},</if>
+                <if test="item.applyTime != null">#{item.applyTime},</if>
+                <if test="item.orderDoctorCode != null and item.orderDoctorCode != ''">#{item.orderDoctorCode},</if>
+                <if test="item.orderDoctorName != null">#{item.orderDoctorName},</if>
+                <if test="item.physicianDptNo != null">#{item.physicianDptNo},</if>
+                <if test="item.physicianDptName != null">#{item.physicianDptName},</if>
+                <if test="item.performDepCode != null and item.performDepCode != ''">#{item.performDepCode},</if>
+                <if test="item.performDepName != null">#{item.performDepName},</if>
+                <if test="item.diagnosisCode != null">#{item.diagnosisCode},</if>
+                <if test="item.diagnosisName != null">#{item.diagnosisName},</if>
+                <if test="item.complaint != null">#{item.complaint},</if>
+                <if test="item.medicalRecordDigest != null">#{item.medicalRecordDigest},</if>
+                <if test="item.purposeExamination != null">#{item.purposeExamination},</if>
+                <if test="item.examCategory != null">#{item.examCategory},</if>
+                <if test="item.examPart != null">#{item.examPart},</if>
+                <if test="item.sampleNo != null">#{item.sampleNo},</if>
+                <if test="item.sampleName != null">#{item.sampleName},</if>
+                <if test="item.examMethodName != null">#{item.examMethodName},</if>
+                <if test="item.applyFormStatus != null">#{item.applyFormStatus},</if>
+                <if test="item.operatorCode != null">#{item.operatorCode},</if>
+                <if test="item.imagingDiag != null">#{item.imagingDiag},</if>
+                <if test="item.operatorName != null">#{item.operatorName},</if>
+                <if test="item.pathologicDiagH != null">#{item.pathologicDiagH},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+                <if test="item.tumorFindDate != null">#{item.tumorFindDate},</if>
+                <if test="item.tumorMovePart != null">#{item.tumorMovePart},</if>
+                <if test="item.urgentFlag != null">#{item.urgentFlag},</if>
+                <if test="item.printFlag != null">#{item.printFlag},</if>
+                <if test="item.treatment != null">#{item.treatment},</if>
+                <if test="item.surgicalDescr != null">#{item.surgicalDescr},</if>
+                <if test="item.settleAccountDate != null">#{item.settleAccountDate},</if>
+                <if test="item.settleAccountCode != null">#{item.settleAccountCode},</if>
+                <if test="item.tumorShape != null">#{item.tumorShape},</if>
+                <if test="item.settleAccountNo != null">#{item.settleAccountNo},</if>
+                <if test="item.tumorSize != null">#{item.tumorSize},</if>
+                <if test="item.settleAccountName != null">#{item.settleAccountName},</if>
+                <if test="item.tumorColor != null">#{item.tumorColor},</if>
+                <if test="item.reportDate != null">#{item.reportDate},</if>
+                <if test="item.tumorAroundTissuesRelation != null">#{item.tumorAroundTissuesRelation},</if>
+                <if test="item.reportDoctor != null">#{item.reportDoctor},</if>
+                <if test="item.specFixative != null">#{item.specFixative},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+                <if test="item.specInVitroDate != null">#{item.specInVitroDate},</if>
+                <if test="item.altPerCode != null">#{item.altPerCode},</if>
+                <if test="item.specFixationDate != null">#{item.specFixationDate},</if>
+                <if test="item.specHandoverDate != null">#{item.specHandoverDate},</if>
+                <if test="item.altPerName != null">#{item.altPerName},</if>
+                <if test="item.infectiousFlag != null ">#{item.infectiousFlag},</if>
+                <if test="item.examMethodCode != null ">#{item.examMethodCode},</if>
+                <if test="item.physiologicalCycle != null ">#{item.physiologicalCycle},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <insert id="insertList" parameterType="TdPaApplyForm">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_apply_form
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null">hospital_code,</if>
+                <if test="item.applyFormNo != null">apply_form_no,</if>
+                <if test="item.applyFormClassCode != null and item.applyFormClassCode != ''">apply_form_class_code,</if>
+                <if test="item.applyFormTypeCode != null and item.applyFormTypeCode != ''">apply_form_type_code,</if>
+                <if test="item.orderNo != null">order_no,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.patientId != null">patient_id,</if>
+                <if test="item.caseNo != null">case_no,</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no,</if>
+                <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+                <if test="item.patientName != null and item.patientName != ''">patient_name,</if>
+                <if test="item.babyNo != null">baby_no,</if>
+                <if test="item.patientDepCode != null and item.patientDepCode != ''">patient_dep_code,</if>
+                <if test="item.patientDepName != null">patient_dep_name,</if>
+                <if test="item.applyTime != null">apply_time,</if>
+                <if test="item.orderDoctorCode != null and item.orderDoctorCode != ''">order_doctor_code,</if>
+                <if test="item.orderDoctorName != null">order_doctor_name,</if>
+                <if test="item.physicianDptNo != null">physician_dpt_no,</if>
+                <if test="item.physicianDptName != null">physician_dpt_name,</if>
+                <if test="item.performDepCode != null and item.performDepCode != ''">perform_dep_code,</if>
+                <if test="item.performDepName != null">perform_dep_name,</if>
+                <if test="item.diagnosisCode != null">diagnosis_code,</if>
+                <if test="item.diagnosisName != null">diagnosis_name,</if>
+                <if test="item.complaint != null">complaint,</if>
+                <if test="item.medicalRecordDigest != null">medical_record_digest,</if>
+                <if test="item.purposeExamination != null">purpose_examination,</if>
+                <if test="item.examCategory != null">exam_category,</if>
+                <if test="item.examPart != null">exam_part,</if>
+                <if test="item.sampleNo != null">sample_no,</if>
+                <if test="item.sampleName != null">sample_name,</if>
+                <if test="item.examMethodName != null">exam_method_name,</if>
+                <if test="item.applyFormStatus != null">apply_form_status,</if>
+                <if test="item.operatorCode != null">operator_code,</if>
+                <if test="item.imagingDiag != null">imaging_diag,</if>
+                <if test="item.operatorName != null">operator_name,</if>
+                <if test="item.pathologicDiagH != null">pathologic_diag_h,</if>
+                <if test="item.remark != null">remark,</if>
+                <if test="item.tumorFindDate != null">tumor_find_date,</if>
+                <if test="item.tumorMovePart != null">tumor_move_part,</if>
+                <if test="item.urgentFlag != null">urgent_flag,</if>
+                <if test="item.printFlag != null">print_flag,</if>
+                <if test="item.treatment != null">treatment,</if>
+                <if test="item.surgicalDescr != null">surgical_descr,</if>
+                <if test="item.settleAccountDate != null">settle_account_date,</if>
+                <if test="item.settleAccountCode != null">settle_account_code,</if>
+                <if test="item.tumorShape != null">tumor_shape,</if>
+                <if test="item.settleAccountNo != null">settle_account_no,</if>
+                <if test="item.tumorSize != null">tumor_size,</if>
+                <if test="item.settleAccountName != null">settle_account_name,</if>
+                <if test="item.tumorColor != null">tumor_color,</if>
+                <if test="item.reportDate != null">report_date,</if>
+                <if test="item.tumorAroundTissuesRelation != null">tumor_around_tissues_relation,</if>
+                <if test="item.reportDoctor != null">report_doctor,</if>
+                <if test="item.specFixative != null">spec_fixative,</if>
+                <if test="item.altDate != null">alt_date,</if>
+                <if test="item.specInVitroDate != null">spec_in_vitro_date,</if>
+                <if test="item.altPerCode != null">alt_per_code,</if>
+                <if test="item.specFixationDate != null">spec_fixation_date,</if>
+                <if test="item.specHandoverDate != null">spec_handover_date,</if>
+                <if test="item.altPerName != null">alt_per_name,</if>
+                <if test="item.infectiousFlag != null ">infectious_Flag,</if>
+                <if test="item.examMethodCode != null ">exam_Method_Code,</if>
+                <if test="item.physiologicalCycle != null ">physiological_cycle,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.hospitalCode != null">#{item.hospitalCode},</if>
+                <if test="item.applyFormNo != null">#{item.applyFormNo},</if>
+                <if test="item.applyFormClassCode != null and item.applyFormClassCode != ''">#{item.applyFormClassCode},</if>
+                <if test="item.applyFormTypeCode != null and item.applyFormTypeCode != ''">#{item.applyFormTypeCode},</if>
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.patientId != null">#{item.patientId},</if>
+                <if test="item.caseNo != null">#{item.caseNo},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">#{item.admissionNo},</if>
+                <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.babyNo != null">#{item.babyNo},</if>
+                <if test="item.patientDepCode != null and item.patientDepCode != ''">#{item.patientDepCode},</if>
+                <if test="item.patientDepName != null">#{item.patientDepName},</if>
+                <if test="item.applyTime != null">#{item.applyTime},</if>
+                <if test="item.orderDoctorCode != null and item.orderDoctorCode != ''">#{item.orderDoctorCode},</if>
+                <if test="item.orderDoctorName != null">#{item.orderDoctorName},</if>
+                <if test="item.physicianDptNo != null">#{item.physicianDptNo},</if>
+                <if test="item.physicianDptName != null">#{item.physicianDptName},</if>
+                <if test="item.performDepCode != null and item.performDepCode != ''">#{item.performDepCode},</if>
+                <if test="item.performDepName != null">#{item.performDepName},</if>
+                <if test="item.diagnosisCode != null">#{item.diagnosisCode},</if>
+                <if test="item.diagnosisName != null">#{item.diagnosisName},</if>
+                <if test="item.complaint != null">#{item.complaint},</if>
+                <if test="item.medicalRecordDigest != null">#{item.medicalRecordDigest},</if>
+                <if test="item.purposeExamination != null">#{item.purposeExamination},</if>
+                <if test="item.examCategory != null">#{item.examCategory},</if>
+                <if test="item.examPart != null">#{item.examPart},</if>
+                <if test="item.sampleNo != null">#{item.sampleNo},</if>
+                <if test="item.sampleName != null">#{item.sampleName},</if>
+                <if test="item.examMethodName != null">#{item.examMethodName},</if>
+                <if test="item.applyFormStatus != null">#{item.applyFormStatus},</if>
+                <if test="item.operatorCode != null">#{item.operatorCode},</if>
+                <if test="item.imagingDiag != null">#{item.imagingDiag},</if>
+                <if test="item.operatorName != null">#{item.operatorName},</if>
+                <if test="item.pathologicDiagH != null">#{item.pathologicDiagH},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+                <if test="item.tumorFindDate != null">#{item.tumorFindDate},</if>
+                <if test="item.tumorMovePart != null">#{item.tumorMovePart},</if>
+                <if test="item.urgentFlag != null">#{item.urgentFlag},</if>
+                <if test="item.printFlag != null">#{item.printFlag},</if>
+                <if test="item.treatment != null">#{item.treatment},</if>
+                <if test="item.surgicalDescr != null">#{item.surgicalDescr},</if>
+                <if test="item.settleAccountDate != null">#{item.settleAccountDate},</if>
+                <if test="item.settleAccountCode != null">#{item.settleAccountCode},</if>
+                <if test="item.tumorShape != null">#{item.tumorShape},</if>
+                <if test="item.settleAccountNo != null">#{item.settleAccountNo},</if>
+                <if test="item.tumorSize != null">#{item.tumorSize},</if>
+                <if test="item.settleAccountName != null">#{item.settleAccountName},</if>
+                <if test="item.tumorColor != null">#{item.tumorColor},</if>
+                <if test="item.reportDate != null">#{item.reportDate},</if>
+                <if test="item.tumorAroundTissuesRelation != null">#{item.tumorAroundTissuesRelation},</if>
+                <if test="item.reportDoctor != null">#{item.reportDoctor},</if>
+                <if test="item.specFixative != null">#{item.specFixative},</if>
+                <if test="item.altDate != null">#{item.altDate},</if>
+                <if test="item.specInVitroDate != null">#{item.specInVitroDate},</if>
+                <if test="item.altPerCode != null">#{item.altPerCode},</if>
+                <if test="item.specFixationDate != null">#{item.specFixationDate},</if>
+                <if test="item.specHandoverDate != null">#{item.specHandoverDate},</if>
+                <if test="item.altPerName != null">#{item.altPerName},</if>
+                <if test="item.infectiousFlag != null ">#{item.infectiousFlag},</if>
+                <if test="item.examMethodCode != null ">#{item.examMethodCode},</if>
+                <if test="item.physiologicalCycle != null ">#{item.physiologicalCycle},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTdPaApplyForm" parameterType="TdPaApplyForm">
+        update td_pa_apply_form
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="applyFormClassCode != null and applyFormClassCode != ''">apply_form_class_code = #{applyFormClassCode},</if>
+            <if test="applyFormTypeCode != null and applyFormTypeCode != ''">apply_form_type_code = #{applyFormTypeCode},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="caseNo != null">case_no = #{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="babyNo != null">baby_no = #{babyNo},</if>
+            <if test="patientDepCode != null and patientDepCode != ''">patient_dep_code = #{patientDepCode},</if>
+            <if test="patientDepName != null">patient_dep_name = #{patientDepName},</if>
+            <if test="applyTime != null">apply_time = #{applyTime},</if>
+            <if test="orderDoctorCode != null and orderDoctorCode != ''">order_doctor_code = #{orderDoctorCode},</if>
+            <if test="orderDoctorName != null">order_doctor_name = #{orderDoctorName},</if>
+            <if test="physicianDptNo != null">physician_dpt_no = #{physicianDptNo},</if>
+            <if test="physicianDptName != null">physician_dpt_name = #{physicianDptName},</if>
+            <if test="performDepCode != null and performDepCode != ''">perform_dep_code = #{performDepCode},</if>
+            <if test="performDepName != null">perform_dep_name = #{performDepName},</if>
+            <if test="diagnosisCode != null">diagnosis_code = #{diagnosisCode},</if>
+            <if test="diagnosisName != null">diagnosis_name = #{diagnosisName},</if>
+            <if test="complaint != null">complaint = #{complaint},</if>
+            <if test="medicalRecordDigest != null">medical_record_digest = #{medicalRecordDigest},</if>
+            <if test="purposeExamination != null">purpose_examination = #{purposeExamination},</if>
+            <if test="examCategory != null">exam_category = #{examCategory},</if>
+            <if test="examPart != null">exam_part = #{examPart},</if>
+            <if test="sampleNo != null">sample_no = #{sampleNo},</if>
+            <if test="sampleName != null">sample_name = #{sampleName},</if>
+            <if test="examMethodName != null">exam_method_name = #{examMethodName},</if>
+            <if test="applyFormStatus != null">apply_form_status = #{applyFormStatus},</if>
+            <if test="operatorCode != null">operator_code = #{operatorCode},</if>
+            <if test="imagingDiag != null">imaging_diag = #{imagingDiag},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+            <if test="pathologicDiagH != null">pathologic_diag_h = #{pathologicDiagH},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="tumorFindDate != null">tumor_find_date = #{tumorFindDate},</if>
+            <if test="tumorMovePart != null">tumor_move_part = #{tumorMovePart},</if>
+            <if test="urgentFlag != null">urgent_flag = #{urgentFlag},</if>
+            <if test="printFlag != null">print_flag = #{printFlag},</if>
+            <if test="treatment != null">treatment = #{treatment},</if>
+            <if test="surgicalDescr != null">surgical_descr = #{surgicalDescr},</if>
+            <if test="settleAccountDate != null">settle_account_date = #{settleAccountDate},</if>
+            <if test="settleAccountCode != null">settle_account_code = #{settleAccountCode},</if>
+            <if test="tumorShape != null">tumor_shape = #{tumorShape},</if>
+            <if test="settleAccountNo != null">settle_account_no = #{settleAccountNo},</if>
+            <if test="tumorSize != null">tumor_size = #{tumorSize},</if>
+            <if test="settleAccountName != null">settle_account_name = #{settleAccountName},</if>
+            <if test="tumorColor != null">tumor_color = #{tumorColor},</if>
+            <if test="reportDate != null">report_date = #{reportDate},</if>
+            <if test="tumorAroundTissuesRelation != null">tumor_around_tissues_relation = #{tumorAroundTissuesRelation},</if>
+            <if test="reportDoctor != null">report_doctor = #{reportDoctor},</if>
+            <if test="specFixative != null">spec_fixative = #{specFixative},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="specInVitroDate != null">spec_in_vitro_date = #{specInVitroDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="specFixationDate != null">spec_fixation_date = #{specFixationDate},</if>
+            <if test="specHandoverDate != null">spec_handover_date = #{specHandoverDate},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="infectiousFlag != null ">infectious_Flag=#{infectiousFlag},</if>
+            <if test="examMethodCode != null ">exam_Method_Code=#{examMethodCode},</if>
+        </trim>
+        where apply_form_no = #{applyFormNo}
+    </update>
+
+    <delete id="deleteTdPaApplyFormById" parameterType="String">
+        delete from td_pa_apply_form where apply_form_no = #{applyFormNo}
+    </delete>
+
+    <delete id="deleteTdPaApplyFormByIds" parameterType="String">
+        delete from td_pa_apply_form where apply_form_no in
+        <foreach item="applyFormNo" collection="array" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </delete>
+
+    <select id="selectListByOrderNos" parameterType="String" resultMap="TdPaApplyFormResult">
+        select order_no, apply_form_status,apply_form_no
+        from td_pa_apply_form
+        where order_no in
+        <foreach item="orderNo" collection="orderNoList" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </select>
+
+    <update id="updateStatusByApplyFormNos" parameterType="String">
+        update td_pa_apply_form set apply_form_status = #{applyFormStatus}
+        where apply_form_no in
+        <foreach item="applyFormNo" collection="applyFormNoList" open="(" separator="," close=")">
+            #{applyFormNo}
+        </foreach>
+    </update>
+
+    <select id="selectList" parameterType="TdPaApplyFormVo" resultMap="TdPaApplyFormResult">
+        <include refid="selectTdPaApplyFormVo"/>
+        <where>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="applyFormStatusList != null  and applyFormStatusList.size > 0">
+             and apply_form_status in
+                <foreach item="applyFormStatus" collection="applyFormStatusList" open="(" separator="," close=")">
+                    #{applyFormStatus}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectApplyFormStatus" resultType="java.lang.String">
+        select APPLY_FORM_STATUS from TD_PA_APPLY_FORM where ORDER_NO=#{orderNo} and APPLY_FORM_CLASS_CODE=#{orderClassCode}
+     </select>
+    <select id="selectApplyFormListByPatientId" resultMap="TdPaApplyFormResult">
+        select * from TD_PA_APPLY_FORM where PATIENT_ID = #{patientId}
+        and COMPLAINT is not null and MEDICAL_RECORD_DIGEST is not null order by APPLY_TIME desc
+    </select>
+    <select id="testExamList" resultMap="TdPaApplyFormVoResult">
+        SELECT
+        apply.*,
+        apply.APPLY_FORM_NO as exam_id,
+        m.bedid,
+        docType.input_format,
+        docType.print_format,
+        docType.DOCUMENT_TYPE_NAME AS applyFormName,
+        docType.report_url,docType.BROWSER_TYPE,docType.BROWSER_TYPE_NAME
+        FROM
+        td_pa_apply_form_all apply
+        left join TM_BS_DOCUMENT_TYPE docType ON apply.APPLY_FORM_TYPE_CODE = docType.DOCUMENT_TYPE_CD
+        left join t_ar_medicalinformation_all m on apply.admission_no = m.admission_no
+        <where>
+            <if test="patientDepCode != null and patientDepCode != ''">
+                and apply.PATIENT_DEP_CODE= #{patientDepCode}
+            </if>
+            <if test='applyFlag != null and applyFlag == "1"'>
+                <if test='applyTimeStart != null and applyTimeStart != ""'>
+                    and apply.APPLY_TIME &gt;= to_date(#{applyTimeStart},'yyyy-MM-dd')
+                </if>
+                <if test='applyTimeEnd != null and applyTimeEnd != ""'>
+                    and apply.APPLY_TIME &lt; to_date(#{applyTimeEnd},'yyyy-MM-dd')
+                </if>
+            </if>
+            <if test='applyFlag != null and applyFlag == "2"'>
+                <if test='reportDateStart != null and reportDateStart != ""'>
+                    and apply.REPORT_DATE &gt;= to_date(#{reportDateStart},'yyyy-MM-dd')
+                </if>
+                <if test='reportDateEnd != null and reportDateEnd != ""'>
+                    and apply.REPORT_DATE &lt; to_date(#{reportDateEnd},'yyyy-MM-dd')
+                </if>
+            </if>
+            <if test="applyFormClassCode != null and applyFormClassCode != ''">
+                and apply.APPLY_FORM_CLASS_CODE = #{applyFormClassCode}
+            </if>
+            <if test="patientName != null and patientName != ''">
+                and (apply.ADMISSION_NO like concat(concat('%', #{patientName}), '%')
+                or apply.CASE_NO like concat(concat('%', #{patientName}), '%')
+                or apply.PATIENT_NAME like concat(concat('%', #{patientName}), '%')
+                or docType.DOCUMENT_TYPE_NAME like concat(concat('%', #{patientName}), '%'))
+            </if>
+        </where>
+        order by apply.APPLY_TIME desc
+    </select>
+    <select id="testTmInfo" parameterType="String" resultMap="TdPaApplyFormVoResult">
+        select t.djh apply_form_no,t.tm barcode_no,sctmsj,print_sj,s1.staff_name OPER,s2.staff_name PRINT_OPER,sm_sj,s3.staff_name sm_oper,sc_sj,s4.staff_name sc_oper,
+        recieve_user,recieve_dt,test_user,test_dt,report_user,report_dt,report_print_user,report_print_dt,baby.baby_name,dsex.data_tag baby_sex,f.baby_no
+        from yy_lis_tmdy t
+        left join tm_bs_staff s1 on t.OPER = s1.staff_code
+        left join tm_bs_staff s2 on t.PRINT_OPER = s2.staff_code
+        left join tm_bs_staff s3 on t.sm_oper = s3.staff_code
+        left join tm_bs_staff s4 on t.sc_oper = s4.staff_code
+        left join td_pa_apply_form_all f on t.djh = f.apply_form_no
+        left join td_na_baby_info baby on f.admission_no = baby.admission_no and f.BABY_NO=baby.baby_no
+        left join tm_bs_dict_data dsex on baby.baby_sex = dsex.data_val and dsex.dict_type = 's028'
+        where zf_sj is null
+        and t.tm in (select barcode_no from td_pa_apply_form_item_all where apply_form_no=#{applyFormNo})
+    </select>
+</mapper>

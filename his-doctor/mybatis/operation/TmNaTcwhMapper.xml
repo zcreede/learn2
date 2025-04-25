@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.TmNaTcwhMapper">
+
+    <resultMap type="TmNaTcwh" id="TmNaTcwhResult">
+        <result property="id"    column="id"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="wardNo"    column="ward_no"    />
+        <result property="packageNo"    column="package_no"    />
+        <result property="packageName"    column="package_name"    />
+        <result property="packagePym"    column="package_pym"    />
+        <result property="shareClass"    column="share_class"    />
+        <result property="flag"    column="flag"    />
+        <result property="operatorNo"    column="operator_no"    />
+    </resultMap>
+
+    <sql id="selectTmNaTcwhVo">
+        select id, hospital_code, ward_no, package_no, package_name, package_pym, share_class, flag, operator_no from tm_na_tcwh
+    </sql>
+
+    <select id="selectTmNaTcwhList" parameterType="TmNaTcwh" resultMap="TmNaTcwhResult">
+        <include refid="selectTmNaTcwhVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="wardNo != null  and wardNo != ''"> and ward_no = #{wardNo}</if>
+            <if test="packageNo != null  and packageNo != ''"> and package_no = #{packageNo}</if>
+            <if test="packageName != null  and packageName != ''"> and package_name like concat(concat('%', #{packageName}), '%')</if>
+            <if test="packagePym != null  and packagePym != ''"> and package_pym = #{packagePym}</if>
+            <if test="shareClass != null  and shareClass != ''"> and share_class = #{shareClass}</if>
+            <if test="flag != null  and flag != ''"> and flag = #{flag}</if>
+            <if test="operatorNo != null  and operatorNo != ''"> and operator_no = #{operatorNo}</if>
+        </where>
+    </select>
+
+    <select id="selectTmNaTcwhInfoList" parameterType="TcwhListReq" resultMap="TmNaTcwhResult">
+        <include refid="selectTmNaTcwhVo"/>
+        <where>
+            (
+            (share_class = '1' and hospital_code = #{hospitalCode})
+            or (share_class = '2' and hospital_code = #{hospitalCode} and ward_no = #{wardNo})
+            or (share_class = '3' and operator_no= #{operatorNo})
+            )
+            <if test="packagePym != null and packagePym != ''">
+                and package_pym like CONCAT(CONCAT('%', #{packagePym}), '%')
+            </if>
+            <if test="shareClass != null and shareClass != ''">
+                and share_class = #{shareClass}
+            </if>
+            <if test="flag != null and flag != ''">
+                and flag = #{flag}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectListFromMx" resultMap="TmNaTcwhResult">
+    select t.id, t.hospital_code, t.ward_no, t.package_no, t.package_name, t.package_pym, t.share_class, t.flag, t.operator_no
+        from tm_na_tcwh t
+    inner join tm_na_tcwh_mx m on t.package_no = m.package_no
+    </select>
+
+    <select id="selectMaxId" resultType="long">
+        select SEQ_TM_NA_TCWH.nextval from dual
+    </select>
+
+    <select id="selectTmNaTcwhById" parameterType="Long" resultMap="TmNaTcwhResult">
+        <include refid="selectTmNaTcwhVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTmNaTcwh" parameterType="TmNaTcwh">
+        insert into tm_na_tcwh
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="wardNo != null">ward_no,</if>
+            <if test="packageNo != null">package_no,</if>
+            <if test="packageName != null">package_name,</if>
+            <if test="packagePym != null">package_pym,</if>
+            <if test="shareClass != null">share_class,</if>
+            <if test="flag != null">flag,</if>
+            <if test="operatorNo != null">operator_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="wardNo != null">#{wardNo},</if>
+            <if test="packageNo != null">#{packageNo},</if>
+            <if test="packageName != null">#{packageName},</if>
+            <if test="packagePym != null">#{packagePym},</if>
+            <if test="shareClass != null">#{shareClass},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="operatorNo != null">#{operatorNo},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT ALL
+        <foreach item="item" collection="list">
+            into tm_na_tcwh
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">id,
+                    </if>
+                    <if test="item.hospitalCode != null">hospital_code,
+                    </if>
+                    <if test="item.wardNo != null">ward_no,
+                    </if>
+                    <if test="item.packageNo != null">package_no,
+                    </if>
+                    <if test="item.packageName != null">package_name,
+                    </if>
+                    <if test="item.packagePym != null">package_pym,
+                    </if>
+                    <if test="item.shareClass != null">share_class,
+                    </if>
+                    <if test="item.flag != null">flag,
+                    </if>
+                    <if test="item.operatorNo != null">operator_no,
+                    </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">#{item.id},
+                    </if>
+                    <if test="item.hospitalCode != null">#{item.hospitalCode},
+                    </if>
+                    <if test="item.wardNo != null">#{item.wardNo},
+                    </if>
+                    <if test="item.packageNo != null">#{item.packageNo},
+                    </if>
+                    <if test="item.packageName != null">#{item.packageName},
+                    </if>
+                    <if test="item.packagePym != null">#{item.packagePym},
+                    </if>
+                    <if test="item.shareClass != null">#{item.shareClass},
+                    </if>
+                    <if test="item.flag != null">#{item.flag},
+                    </if>
+                    <if test="item.operatorNo != null">#{item.operatorNo},
+                    </if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateTmNaTcwh" parameterType="TmNaTcwh">
+        update tm_na_tcwh
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="wardNo != null">ward_no = #{wardNo},</if>
+            <if test="packageNo != null">package_no = #{packageNo},</if>
+            <if test="packageName != null">package_name = #{packageName},</if>
+            <if test="packagePym != null">package_pym = #{packagePym},</if>
+            <if test="shareClass != null">share_class = #{shareClass},</if>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="operatorNo != null">operator_no = #{operatorNo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update tm_na_tcwh
+            <trim prefix="SET" suffixOverrides=",">
+                        <if test="item.hospitalCode != null">hospital_code = #{item.hospitalCode},</if>
+                        <if test="item.wardNo != null">ward_no = #{item.wardNo},</if>
+                        <if test="item.packageNo != null">package_no = #{item.packageNo},</if>
+                        <if test="item.packageName != null">package_name = #{item.packageName},</if>
+                        <if test="item.packagePym != null">package_pym = #{item.packagePym},</if>
+                        <if test="item.shareClass != null">share_class = #{item.shareClass},</if>
+                        <if test="item.flag != null">flag = #{item.flag},</if>
+                        <if test="item.operatorNo != null">operator_no = #{item.operatorNo},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteTmNaTcwhById" parameterType="Long">
+        delete from tm_na_tcwh where id = #{id}
+    </delete>
+
+    <delete id="deleteTmNaTcwhByIds" parameterType="String">
+        delete from tm_na_tcwh where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

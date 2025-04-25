@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderPerformMapper">
+
+    <resultMap type="TdPaOrderPerform" id="TdPaOrderPerformResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="performWardNo"    column="perform_ward_no"    />
+        <result property="performDepCode"    column="perform_dep_code"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="performListNo"    column="perform_list_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="orderDoctorCode"    column="order_doctor_code"    />
+        <result property="orderDoctorNo"    column="order_doctor_no"    />
+        <result property="orderDoctorWardNo"    column="order_doctor_ward_no"    />
+        <result property="orderDoctorDepCode"    column="order_doctor_dep_code"    />
+        <result property="orderStartTime"    column="order_start_time"    />
+        <result property="documentTypeNo"    column="document_type_no"    />
+        <result property="performListStatus"    column="perform_list_status"    />
+        <result property="cpNo"    column="cp_no"    />
+        <result property="cpName"    column="cp_name"    />
+        <result property="handleTime"    column="handle_time"    />
+        <result property="handleNurseCode"    column="handle_nurse_code"    />
+        <result property="handleNurseNo"    column="handle_nurse_no"    />
+        <result property="performTime"    column="perform_time"    />
+        <result property="performNurseCode"    column="perform_nurse_code"    />
+        <result property="performNurseNo"    column="perform_nurse_no"    />
+        <result property="outHavaDrugFlag"    column="out_hava_drug_flag"    />
+        <result property="orderItemType"    column="order_item_type"    />
+        <result property="firstDoubleFlag"    column="first_double_flag"    />
+        <result property="takeDrugMode"    column="take_drug_mode"    />
+        <result property="depCode"    column="dep_code"    />
+        <result property="planUsageTime"    column="plan_usage_time"    />
+        <result property="babyAdmissionNo"    column="baby_admission_no"    />
+        <result property="firstBottleFlag"    column="first_bottle_flag"    />
+        <result property="performComputerNo"    column="perform_computer_no"    />
+        <result property="performComputerIp"    column="perform_computer_ip"    />
+        <result property="performListSortNumber"    column="perform_list_sort_number"    />
+        <result property="detailPerformDepCode"    column="detail_perform_dep_code"    />
+        <result property="detailPerformWardNo"    column="detail_perform_ward_no"    />
+        <result property="pcPdaFlag"    column="pc_pda_flag"    />
+        <result property="orderDoseItem"    column="order_dose_item"    />
+        <result property="unitItem"    column="unit_item"    />
+        <result property="priceItem"    column="price_item"    />
+        <result property="orderTotalItem"    column="order_total_item"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderPerformVo">
+        select hospital_code, perform_ward_no, perform_dep_code, case_no, perform_list_no, order_no, order_type, order_sort_number, order_class_code, admission_no, hospitalized_count, order_doctor_code, order_doctor_no, order_doctor_ward_no, order_doctor_dep_code, order_start_time, document_type_no, perform_list_status, cp_no, cp_name, handle_time, handle_nurse_code, handle_nurse_no, perform_time, perform_nurse_code, perform_nurse_no, out_hava_drug_flag, order_item_type, first_double_flag, take_drug_mode, dep_code, plan_usage_time, baby_admission_no, first_bottle_flag, perform_computer_no, perform_computer_ip, perform_list_sort_number, detail_perform_dep_code, detail_perform_ward_no, pc_pda_flag, order_dose_item, unit_item, price_item, order_total_item, from td_pa_order_perform
+    </sql>
+
+    <select id="selectTdPaOrderPerformList" parameterType="TdPaOrderPerform" resultMap="TdPaOrderPerformResult">
+        <include refid="selectTdPaOrderPerformVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="performWardNo != null  and performWardNo != ''"> and perform_ward_no = #{performWardNo}</if>
+            <if test="performDepCode != null  and performDepCode != ''"> and perform_dep_code = #{performDepCode}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="orderSortNumber != null  and orderSortNumber != ''"> and order_sort_number = #{orderSortNumber}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="hospitalizedCount != null "> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="orderDoctorCode != null  and orderDoctorCode != ''"> and order_doctor_code = #{orderDoctorCode}</if>
+            <if test="orderDoctorNo != null  and orderDoctorNo != ''"> and order_doctor_no = #{orderDoctorNo}</if>
+            <if test="orderDoctorWardNo != null  and orderDoctorWardNo != ''"> and order_doctor_ward_no = #{orderDoctorWardNo}</if>
+            <if test="orderDoctorDepCode != null  and orderDoctorDepCode != ''"> and order_doctor_dep_code = #{orderDoctorDepCode}</if>
+            <if test="orderStartTime != null "> and order_start_time = #{orderStartTime}</if>
+            <if test="documentTypeNo != null  and documentTypeNo != ''"> and document_type_no = #{documentTypeNo}</if>
+            <if test="performListStatus != null  and performListStatus != ''"> and perform_list_status = #{performListStatus}</if>
+            <if test="cpNo != null  and cpNo != ''"> and cp_no = #{cpNo}</if>
+            <if test="cpName != null  and cpName != ''"> and cp_name like concat(concat('%', #{cpName}), '%')</if>
+            <if test="handleTime != null "> and handle_time = #{handleTime}</if>
+            <if test="handleNurseCode != null  and handleNurseCode != ''"> and handle_nurse_code = #{handleNurseCode}</if>
+            <if test="handleNurseNo != null  and handleNurseNo != ''"> and handle_nurse_no = #{handleNurseNo}</if>
+            <if test="performTime != null "> and perform_time = #{performTime}</if>
+            <if test="performNurseCode != null  and performNurseCode != ''"> and perform_nurse_code = #{performNurseCode}</if>
+            <if test="performNurseNo != null  and performNurseNo != ''"> and perform_nurse_no = #{performNurseNo}</if>
+            <if test="outHavaDrugFlag != null  and outHavaDrugFlag != ''"> and out_hava_drug_flag = #{outHavaDrugFlag}</if>
+            <if test="orderItemType != null "> and order_item_type = #{orderItemType}</if>
+            <if test="firstDoubleFlag != null "> and first_double_flag = #{firstDoubleFlag}</if>
+            <if test="takeDrugMode != null  and takeDrugMode != ''"> and take_drug_mode = #{takeDrugMode}</if>
+            <if test="depCode != null  and depCode != ''"> and dep_code = #{depCode}</if>
+            <if test="planUsageTime != null "> and plan_usage_time = #{planUsageTime}</if>
+            <if test="babyAdmissionNo != null  and babyAdmissionNo != ''"> and baby_admission_no = #{babyAdmissionNo}</if>
+            <if test="firstBottleFlag != null "> and first_bottle_flag = #{firstBottleFlag}</if>
+            <if test="performComputerNo != null  and performComputerNo != ''"> and perform_computer_no = #{performComputerNo}</if>
+            <if test="performComputerIp != null  and performComputerIp != ''"> and perform_computer_ip = #{performComputerIp}</if>
+            <if test="detailPerformDepCode != null  and detailPerformDepCode != ''"> and detail_perform_dep_code = #{detailPerformDepCode}</if>
+            <if test="detailPerformWardNo != null  and detailPerformWardNo != ''"> and detail_perform_ward_no = #{detailPerformWardNo}</if>
+            <if test="pcPdaFlag != null "> and pc_pda_flag = #{pcPdaFlag}</if>
+            <if test="orderDoseItem != null "> and order_dose_item = #{orderDoseItem}</if>
+            <if test="unitItem != null  and unitItem != ''"> and unit_item = #{unitItem}</if>
+            <if test="priceItem != null "> and price_item = #{priceItem}</if>
+            <if test="orderTotalItem != null "> and order_total_item = #{orderTotalItem}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderPerformById" parameterType="String" resultMap="TdPaOrderPerformResult">
+        <include refid="selectTdPaOrderPerformVo"/>
+        where perform_list_no = #{performListNo}
+    </select>
+
+    <insert id="insertTdPaOrderPerform" parameterType="TdPaOrderPerform">
+        insert into td_pa_order_perform
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code,</if>
+            <if test="performWardNo != null and performWardNo != ''">perform_ward_no,</if>
+            <if test="performDepCode != null and performDepCode != ''">perform_dep_code,</if>
+            <if test="caseNo != null and caseNo != ''">case_no,</if>
+            <if test="performListNo != null">perform_list_no,</if>
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="orderClassCode != null">order_class_code,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="orderDoctorCode != null">order_doctor_code,</if>
+            <if test="orderDoctorNo != null">order_doctor_no,</if>
+            <if test="orderDoctorWardNo != null">order_doctor_ward_no,</if>
+            <if test="orderDoctorDepCode != null">order_doctor_dep_code,</if>
+            <if test="orderStartTime != null">order_start_time,</if>
+            <if test="documentTypeNo != null">document_type_no,</if>
+            <if test="performListStatus != null">perform_list_status,</if>
+            <if test="cpNo != null">cp_no,</if>
+            <if test="cpName != null">cp_name,</if>
+            <if test="handleTime != null">handle_time,</if>
+            <if test="handleNurseCode != null">handle_nurse_code,</if>
+            <if test="handleNurseNo != null">handle_nurse_no,</if>
+            <if test="performTime != null">perform_time,</if>
+            <if test="performNurseCode != null">perform_nurse_code,</if>
+            <if test="performNurseNo != null">perform_nurse_no,</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag,</if>
+            <if test="orderItemType != null">order_item_type,</if>
+            <if test="firstDoubleFlag != null">first_double_flag,</if>
+            <if test="takeDrugMode != null">take_drug_mode,</if>
+            <if test="depCode != null">dep_code,</if>
+            <if test="planUsageTime != null">plan_usage_time,</if>
+            <if test="babyAdmissionNo != null">baby_admission_no,</if>
+            <if test="firstBottleFlag != null">first_bottle_flag,</if>
+            <if test="performComputerNo != null">perform_computer_no,</if>
+            <if test="performComputerIp != null">perform_computer_ip,</if>
+            <if test="performListSortNumber != null">perform_list_sort_number,</if>
+            <if test="detailPerformDepCode != null">detail_perform_dep_code,</if>
+            <if test="detailPerformWardNo != null">detail_perform_ward_no,</if>
+            <if test="pcPdaFlag != null">pc_pda_flag,</if>
+            <if test="orderDoseItem != null">order_dose_item,</if>
+            <if test="unitItem != null">unit_item,</if>
+            <if test="priceItem != null">price_item,</if>
+            <if test="orderTotalItem != null">order_total_item,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">#{hospitalCode},</if>
+            <if test="performWardNo != null and performWardNo != ''">#{performWardNo},</if>
+            <if test="performDepCode != null and performDepCode != ''">#{performDepCode},</if>
+            <if test="caseNo != null and caseNo != ''">#{caseNo},</if>
+            <if test="performListNo != null">#{performListNo},</if>
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="orderClassCode != null">#{orderClassCode},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="orderDoctorCode != null">#{orderDoctorCode},</if>
+            <if test="orderDoctorNo != null">#{orderDoctorNo},</if>
+            <if test="orderDoctorWardNo != null">#{orderDoctorWardNo},</if>
+            <if test="orderDoctorDepCode != null">#{orderDoctorDepCode},</if>
+            <if test="orderStartTime != null">#{orderStartTime},</if>
+            <if test="documentTypeNo != null">#{documentTypeNo},</if>
+            <if test="performListStatus != null">#{performListStatus},</if>
+            <if test="cpNo != null">#{cpNo},</if>
+            <if test="cpName != null">#{cpName},</if>
+            <if test="handleTime != null">#{handleTime},</if>
+            <if test="handleNurseCode != null">#{handleNurseCode},</if>
+            <if test="handleNurseNo != null">#{handleNurseNo},</if>
+            <if test="performTime != null">#{performTime},</if>
+            <if test="performNurseCode != null">#{performNurseCode},</if>
+            <if test="performNurseNo != null">#{performNurseNo},</if>
+            <if test="outHavaDrugFlag != null">#{outHavaDrugFlag},</if>
+            <if test="orderItemType != null">#{orderItemType},</if>
+            <if test="firstDoubleFlag != null">#{firstDoubleFlag},</if>
+            <if test="takeDrugMode != null">#{takeDrugMode},</if>
+            <if test="depCode != null">#{depCode},</if>
+            <if test="planUsageTime != null">#{planUsageTime},</if>
+            <if test="babyAdmissionNo != null">#{babyAdmissionNo},</if>
+            <if test="firstBottleFlag != null">#{firstBottleFlag},</if>
+            <if test="performComputerNo != null">#{performComputerNo},</if>
+            <if test="performComputerIp != null">#{performComputerIp},</if>
+            <if test="performListSortNumber != null">#{performListSortNumber},</if>
+            <if test="detailPerformDepCode != null">#{detailPerformDepCode},</if>
+            <if test="detailPerformWardNo != null">#{detailPerformWardNo},</if>
+            <if test="pcPdaFlag != null">#{pcPdaFlag},</if>
+            <if test="orderDoseItem != null">#{orderDoseItem},</if>
+            <if test="unitItem != null">#{unitItem},</if>
+            <if test="priceItem != null">#{priceItem},</if>
+            <if test="orderTotalItem != null">#{orderTotalItem},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderPerform" parameterType="TdPaOrderPerform">
+        update td_pa_order_perform
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code = #{hospitalCode},</if>
+            <if test="performWardNo != null and performWardNo != ''">perform_ward_no = #{performWardNo},</if>
+            <if test="performDepCode != null and performDepCode != ''">perform_dep_code = #{performDepCode},</if>
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="orderClassCode != null">order_class_code = #{orderClassCode},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="orderDoctorCode != null">order_doctor_code = #{orderDoctorCode},</if>
+            <if test="orderDoctorNo != null">order_doctor_no = #{orderDoctorNo},</if>
+            <if test="orderDoctorWardNo != null">order_doctor_ward_no = #{orderDoctorWardNo},</if>
+            <if test="orderDoctorDepCode != null">order_doctor_dep_code = #{orderDoctorDepCode},</if>
+            <if test="orderStartTime != null">order_start_time = #{orderStartTime},</if>
+            <if test="documentTypeNo != null">document_type_no = #{documentTypeNo},</if>
+            <if test="performListStatus != null">perform_list_status = #{performListStatus},</if>
+            <if test="cpNo != null">cp_no = #{cpNo},</if>
+            <if test="cpName != null">cp_name = #{cpName},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+            <if test="handleNurseCode != null">handle_nurse_code = #{handleNurseCode},</if>
+            <if test="handleNurseNo != null">handle_nurse_no = #{handleNurseNo},</if>
+            <if test="performTime != null">perform_time = #{performTime},</if>
+            <if test="performNurseCode != null">perform_nurse_code = #{performNurseCode},</if>
+            <if test="performNurseNo != null">perform_nurse_no = #{performNurseNo},</if>
+            <if test="outHavaDrugFlag != null">out_hava_drug_flag = #{outHavaDrugFlag},</if>
+            <if test="orderItemType != null">order_item_type = #{orderItemType},</if>
+            <if test="firstDoubleFlag != null">first_double_flag = #{firstDoubleFlag},</if>
+            <if test="takeDrugMode != null">take_drug_mode = #{takeDrugMode},</if>
+            <if test="depCode != null">dep_code = #{depCode},</if>
+            <if test="planUsageTime != null">plan_usage_time = #{planUsageTime},</if>
+            <if test="babyAdmissionNo != null">baby_admission_no = #{babyAdmissionNo},</if>
+            <if test="firstBottleFlag != null">first_bottle_flag = #{firstBottleFlag},</if>
+            <if test="performComputerNo != null">perform_computer_no = #{performComputerNo},</if>
+            <if test="performComputerIp != null">perform_computer_ip = #{performComputerIp},</if>
+            <if test="detailPerformDepCode != null">detail_perform_dep_code = #{detailPerformDepCode},</if>
+            <if test="detailPerformWardNo != null">detail_perform_ward_no = #{detailPerformWardNo},</if>
+            <if test="pcPdaFlag != null">pc_pda_flag = #{pcPdaFlag},</if>
+            <if test="orderDoseItem != null">order_dose_item = #{orderDoseItem},</if>
+            <if test="unitItem != null">unit_item = #{unitItem},</if>
+            <if test="priceItem != null">price_item = #{priceItem},</if>
+            <if test="orderTotalItem != null">order_total_item = #{orderTotalItem},</if>
+        </trim>
+        where perform_list_no = #{performListNo} and perform_list_sort_number = #{performListSortNumber}
+    </update>
+
+    <update id="updatePerformByOrderNoAndStauts">
+      update TD_PA_ORDER_PERFORM
+      set PERFORM_ORDER_STATUS = #{resOrderStatus} ,PERFORM_ORDER_CHANGE_TIME = sysdate
+      where order_no =#{orderNo}
+    </update>
+
+    <delete id="deleteTdPaOrderPerformById" parameterType="String">
+        delete from td_pa_order_perform where perform_list_no = #{performListNo}
+    </delete>
+
+    <delete id="deleteTdPaOrderPerformByIds" parameterType="String">
+        delete from td_pa_order_perform where perform_list_no in
+        <foreach item="performListNo" collection="array" open="(" separator="," close=")">
+            #{performListNo}
+        </foreach>
+    </delete>
+
+    <insert id="insertList" parameterType="TdPaOrderPerform">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into td_pa_order_perform (
+            hospital_code, perform_ward_no, perform_dep_code,
+            case_no, perform_list_no, order_no,
+            order_type, order_sort_number, order_class_code,
+            admission_no, hospitalized_count, order_doctor_code,
+            order_doctor_no, order_doctor_ward_no, order_doctor_dep_code,
+            order_start_time, document_type_no, perform_list_status,
+            cp_no, cp_name, handle_time,
+            handle_nurse_code, handle_nurse_no, perform_time,
+            perform_nurse_code, perform_nurse_no, out_hava_drug_flag,
+            order_item_type, first_double_flag, take_drug_mode,
+            dep_code, plan_usage_time, baby_admission_no,
+            first_bottle_flag, perform_computer_no, perform_computer_ip,
+            perform_list_sort_number, detail_perform_dep_code,
+            detail_perform_ward_no,order_dose_item,unit_item,price_item,order_total_item,perform_first_gen_flag
+            ) values (
+            #{item.hospitalCode,jdbcType=VARCHAR} ,
+            #{item.performWardNo,jdbcType=VARCHAR} ,
+            #{item.performDepCode,jdbcType=VARCHAR} ,
+            #{item.caseNo,jdbcType=VARCHAR} ,
+            #{item.performListNo,jdbcType=VARCHAR} ,
+            #{item.orderNo,jdbcType=VARCHAR} ,
+            #{item.orderType,jdbcType=VARCHAR} ,
+            #{item.orderSortNumber,jdbcType=VARCHAR} ,
+            #{item.orderClassCode,jdbcType=VARCHAR} ,
+            #{item.admissionNo,jdbcType=VARCHAR} ,
+            #{item.hospitalizedCount,jdbcType=INTEGER} ,
+            #{item.orderDoctorCode,jdbcType=VARCHAR} ,
+            #{item.orderDoctorNo,jdbcType=VARCHAR} ,
+            #{item.orderDoctorWardNo,jdbcType=VARCHAR} ,
+            #{item.orderDoctorDepCode,jdbcType=VARCHAR} ,
+            #{item.orderStartTime,jdbcType=TIMESTAMP} ,
+            #{item.documentTypeNo,jdbcType=VARCHAR} ,
+            #{item.performListStatus,jdbcType=VARCHAR} ,
+            #{item.cpNo,jdbcType=VARCHAR} ,
+            #{item.cpName,jdbcType=VARCHAR} ,
+            #{item.handleTime,jdbcType=TIMESTAMP} ,
+            #{item.handleNurseCode,jdbcType=VARCHAR} ,
+            #{item.handleNurseNo,jdbcType=VARCHAR} ,
+            #{item.performTime,jdbcType=TIMESTAMP} ,
+            #{item.performNurseCode,jdbcType=VARCHAR} ,
+            #{item.performNurseNo,jdbcType=VARCHAR} ,
+            #{item.outHavaDrugFlag,jdbcType=INTEGER} ,
+            #{item.orderItemType,jdbcType=INTEGER} ,
+            #{item.firstDoubleFlag,jdbcType=BIGINT} ,
+            #{item.takeDrugMode,jdbcType=VARCHAR} ,
+            #{item.depCode,jdbcType=VARCHAR} ,
+            #{item.planUsageTime,jdbcType=TIMESTAMP} ,
+            #{item.babyAdmissionNo,jdbcType=VARCHAR} ,
+            #{item.firstBottleFlag,jdbcType=INTEGER} ,
+            #{item.performComputerNo,jdbcType=VARCHAR} ,
+            #{item.performComputerIp,jdbcType=VARCHAR} ,
+            #{item.performListSortNumber,jdbcType=INTEGER} ,
+            #{item.detailPerformDepCode,jdbcType=VARCHAR} ,
+            #{item.detailPerformWardNo,jdbcType=VARCHAR} ,
+            #{item.orderDoseItem,jdbcType=VARCHAR} ,
+            #{item.unitItem,jdbcType=VARCHAR} ,
+            #{item.priceItem,jdbcType=VARCHAR} ,
+            #{item.orderTotalItem,jdbcType=VARCHAR},
+            #{item.performFirstGenFlag,jdbcType=VARCHAR}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <select id="getPerformStatus" resultType="java.lang.Integer">
+        select perform_list_status from td_pa_order_perform
+        where perform_list_no=#{performListNo} and perform_list_sort_number=#{performListSortNumber} and rownum = 1
+    </select>
+    <resultMap id="PerformListResult" type="com.emr.project.docOrder.domain.vo.InpatientTodayOrderPerformDTO">
+        <result column="orderNo" property="orderNo"/>
+        <result column="orderType" property="orderType"/>
+        <result column="orderClassCode" property="orderClassCode"/>
+        <result column="orderSortNumber" property="orderSortNumber"/>
+        <result column="planUsageTime" property="planUsageTime"/>
+        <result column="performListNo" property="performListNo"/>
+        <result column="performListSortNumber" property="performListSortNumber"/>
+        <result column="performListStatus" property="performListStatus"/>
+        <result column="chargeName" property="chargeName"/>
+        <result column="chargeNo" property="chargeNo"/>
+        <result column="standard" property="standard"/>
+        <result column="unit" property="unit"/>
+        <result column="orderActualUsage" property="orderActualUsage"/>
+        <result column="usageUnit" property="usageUnit"/>
+        <result column="orderTotalDose" property="orderTotalDose"/>
+        <result column="sigName" property="sigName"/>
+        <result column="freqName" property="freqName"/>
+        <result column="executorDptName" property="executorDptName"/>
+        <result column="orderExecuteTime" property="orderExecuteTime"/>
+        <result column="orderExecuteTimeStr" property="orderExecuteTimeStr"/>
+        <result column="orderExecuteDoName" property="orderExecuteDoName"/>
+        <result column="orderGroupSortNumber" property="orderGroupSortNumber"/>
+        <result column="reasonMessage" property="reasonMessage"/>
+        <result column="orderExecuteDoCode" property="orderExecuteDoCode"/>
+    </resultMap>
+    <select id="selectPerformListByOrderNo" resultMap="PerformListResult">
+        select  * from (
+            SELECT
+            op.ORDER_NO as orderNo,
+            op.ORDER_TYPE as orderType,
+            op.ORDER_CLASS_CODE as orderClassCode,
+            op.ORDER_SORT_NUMBER as orderSortNumber,
+            op.PLAN_USAGE_TIME as planUsageTime,
+            op.PERFORM_LIST_NO as performListNo,
+            op.PERFORM_LIST_SORT_NUMBER as performListSortNumber,
+            op.PERFORM_LIST_STATUS as performListStatus,
+            pd.CHARGE_NAME as chargeName,
+            pd.CHARGE_NO as chargeNo,
+            pd.standard AS standard,
+            pd.unit AS unit,
+            pd.ORDER_ACTUAL_USAGE as orderActualUsage,
+            pd.USAGE_UNIT AS usageUnit,
+            pd.ORDER_DOSE AS orderTotalDose,
+            sig.SIG_NAME as sigName,
+            ofq.FREQ_NAME as freqName,
+            ( SELECT DEPT_NAME FROM TM_BS_DEPT WHERE DEPT_CODE = op.PERFORM_DEP_CODE ) AS executorDptName,
+            op.HANDLE_TIME as orderExecuteTime,
+            ( SELECT staff_name FROM TM_BS_STAFF WHERE staff_code = op.PERFORM_NURSE_NO) AS orderExecuteDoName,
+            op.REASON_MESSAGE as reasonMessage,
+            pd.ORDER_GROUP_SORT_NUMBER as orderGroupSortNumber,
+            op.perform_nurse_code as orderExecuteDoCode,
+            to_char(op.HANDLE_TIME,'yyyy-MM-dd') as orderExecuteTimeStr
+        FROM
+            TD_PA_ORDER_PERFORM op
+            LEFT JOIN TD_PA_ORDER_PERFORM_DETAIL pd ON op.PERFORM_LIST_NO = pd.PERFORM_LIST_NO
+            AND op.PERFORM_LIST_SORT_NUMBER = pd.PERFORM_LIST_SORT_NUMBER
+            LEFT JOIN TM_BS_ORDER_SIG sig ON pd.order_usage_way = sig.SIG_CD
+            LEFT JOIN TM_BS_ORDER_FREQ ofq ON ofq.FREQ_CD = pd.order_freq
+        WHERE
+            op.ORDER_NO = #{orderNo} and op.ORDER_CLASS_CODE != '07'
+        union all
+            SELECT
+            op.ORDER_NO as orderNo,
+            op.ORDER_TYPE as orderType,
+            op.ORDER_CLASS_CODE as orderClassCode,
+            op.ORDER_SORT_NUMBER as orderSortNumber,
+            op.PLAN_USAGE_TIME as planUsageTime,
+            op.PERFORM_LIST_NO as performListNo,
+            op.PERFORM_LIST_SORT_NUMBER as performListSortNumber,
+            op.PERFORM_LIST_STATUS as performListStatus,
+            pd.CHARGE_NAME as chargeName,
+            pd.CHARGE_NO as chargeNo,
+            pd.standard AS standard,
+            pd.unit AS unit,
+            pd.ORDER_ACTUAL_USAGE as orderActualUsage,
+            pd.USAGE_UNIT AS usageUnit,
+            pd.ORDER_DOSE AS orderTotalDose,
+            sig.SIG_NAME as sigName,
+            ofq.FREQ_NAME as freqName,
+            ( SELECT DEPT_NAME FROM TM_BS_DEPT WHERE DEPT_CODE = op.PERFORM_DEP_CODE ) AS executorDptName,
+            op.HANDLE_TIME as orderExecuteTime,
+            ( SELECT staff_name FROM TM_BS_STAFF WHERE staff_code = op.HANDLE_NURSE_CODE) AS orderExecuteDoName,
+            op.REASON_MESSAGE as reasonMessage,
+            pd.ORDER_GROUP_SORT_NUMBER as orderGroupSortNumber,
+            op.HANDLE_NURSE_CODE as orderExecuteDoCode,
+            to_char(op.HANDLE_TIME,'yyyy-MM-dd') as orderExecuteTimeStr
+        FROM
+            TD_PA_ORDER_PERFORM op
+            LEFT JOIN TD_PA_ORDER_PERFORM_DETAIL pd ON op.PERFORM_LIST_NO = pd.PERFORM_LIST_NO
+            AND op.PERFORM_LIST_SORT_NUMBER = pd.PERFORM_LIST_SORT_NUMBER
+            LEFT JOIN TM_BS_ORDER_SIG sig ON pd.order_usage_way = sig.SIG_CD
+            LEFT JOIN TM_BS_ORDER_FREQ ofq ON ofq.FREQ_CD = pd.order_freq
+        WHERE
+            op.ORDER_NO = #{orderNo} and op.ORDER_CLASS_CODE = '07'
+        ) a
+        where a.performListStatus is not null
+        order BY a.orderNo, a.performListNo,a.performListSortNumber,a.orderGroupSortNumber
+     </select>
+</mapper>

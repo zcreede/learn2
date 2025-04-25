@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysUserDeptMapper">
+
+    <resultMap type="SysUserDept" id="SysUserDeptResult">
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+
+    <sql id="selectSysUserDeptVo">
+        select user_id, dept_id from sys_user_dept
+    </sql>
+
+    <select id="selectSysUserDeptList" parameterType="SysUserDept" resultMap="SysUserDeptResult">
+        <include refid="selectSysUserDeptVo"/>
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+        </where>
+    </select>
+
+    <select id="selectSysUserDeptById" parameterType="Long" resultMap="SysUserDeptResult">
+        <include refid="selectSysUserDeptVo"/>
+        where user_id = #{userId}
+    </select>
+
+    <insert id="insertSysUserDept" parameterType="SysUserDept">
+        insert into TM_BS_STAFF_DEPT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId!=''">STAFF_CODE,</if>
+            <if test="deptId != null and deptId!=''">DEPT_CODE,</if>
+            <if test="deptId != null and deptId!=''">WARD_NO,</if>
+            <if test="userId != null and userId!=''">STAFF_NO,</if>
+            <if test="flag != null">flag,</if>
+            CREATE_TIME,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId!=''">#{userId},</if>
+            <if test="deptId != null and deptId!=''">#{deptId},</if>
+            <if test="deptId != null and deptId!=''">#{deptId},</if>
+            <if test="userId != null and userId!=''">#{userId},</if>
+            <if test="flag != null">#{flag},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateSysUserDept" parameterType="SysUserDept">
+        update sys_user_dept
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteSysUserDeptById" parameterType="Long">
+        delete from sys_user_dept where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteSysUserDeptByIds" parameterType="String">
+        delete from sys_user_dept where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+    <insert id="batchUserDept" useGeneratedKeys="false">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into TM_BS_STAFF_DEPT
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null and item.userId!=''">STAFF_CODE,</if>
+                <if test="item.deptId != null and item.deptId!=''">DEPT_CODE,</if>
+                <if test="item.deptId != null and item.deptId!=''">WARD_NO,</if>
+                <if test="item.userId != null and item.userId!=''">STAFF_NO,</if>
+                <if test="item.flag != null">flag,</if>
+                CREATE_TIME,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null and item.userId!=''">#{item.userId},</if>
+                <if test="item.deptId != null and item.deptId!=''">#{item.deptId},</if>
+                <if test="item.deptId != null and item.deptId!=''">#{item.deptId},</if>
+                <if test="item.userId != null and item.userId!=''">#{item.userId},</if>
+                <if test="item.flag != null">#{item.flag},</if>
+                sysdate,
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+    <delete id="deleteUserDeptByStaffCode" parameterType="String">
+        delete from TM_BS_STAFF_DEPT where staff_code=#{staffCode}
+    </delete>
+
+    <update id="addUseCount" parameterType="string">
+        update tm_bs_staff_dept a
+           set a.number_use = nvl(a.number_use, 0) + 1
+         where a.dept_code = #{deptCode}
+           and a.staff_code in
+            <foreach collection="staffCodes" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </update>
+
+    <update id="reduceUseCount" parameterType="string">
+        update tm_bs_staff_dept a
+           set a.number_use = (case when a.number_use is not null then a.number_use - 1
+                        else 0 end)
+         where a.dept_code = #{deptCode}
+           and a.staff_code in
+            <foreach collection="staffCodes" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </update>
+</mapper>

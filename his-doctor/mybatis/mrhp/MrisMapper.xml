@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.MrisMapper">
+
+    <resultMap type="com.emr.project.mrhp.domain.mris.TdCmHpLineVo" id="MrHpResult">
+        <result property="record_id"    column="record_id"    />
+        <result property="record_no"    column="record_no"    />
+        <result property="patient_id"    column="patient_id"    />
+        <result property="inp_no"    column="inp_no"    />
+        <result property="visit_id"    column="visit_id"    />
+        <result property="visit_num"    column="visit_id"    />
+        <result property="visit_times"    column="visit_id"    />
+        <result property="mr_type"    column="mr_type"    />
+        <result property="org_cd"    column="org_cd"    />
+        <result property="org_name"    column="org_name"    />
+        <result property="pay_type_cd"    column="pay_type_cd"    />
+        <result property="pay_type_name"    column="pay_type_name"    />
+        <result property="hc_no"    column="hc_no"    />
+        <result property="patient_name"    column="patient_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="sex_cd"    column="sex_cd"    />
+        <result property="bir_date"    column="bir_date"    />
+        <result property="age_y"    column="age_y"    />
+        <result property="age_m"    column="age_m"    />
+        <result property="age_d"    column="age_d"    />
+        <result property="age_h"    column="age_h"    />
+        <result property="age_mi"    column="age_mi"    />
+        <result property="baby1_bir_weight"    column="baby1_bir_weight"    />
+        <result property="baby2_bir_weight"    column="baby2_bir_weight"    />
+        <result property="baby3_bir_weight"    column="baby3_bir_weight"    />
+        <result property="baby4_bir_weight"    column="baby4_bir_weight"    />
+        <result property="inhos_weight"    column="inhos_weight"    />
+        <result property="bir_addr_pro"    column="bir_addr_pro"    />
+        <result property="bir_addr_plagty"    column="bir_addr_plagty"    />
+        <result property="bir_addr_cou"    column="bir_addr_cou"    />
+        <result property="ap_addr_pro"    column="ap_addr_pro"    />
+        <result property="ap_addr_plagty"    column="ap_addr_plagty"    />
+        <result property="citizenship"    column="citizenship"    />
+        <result property="citizenship_cd"    column="citizenship_cd"    />
+        <result property="nation"    column="nation"    />
+        <result property="nation_cd"    column="nation_cd"    />
+        <result property="card_type_name"    column="card_type_name"    />
+        <result property="card_type_cd"    column="card_type_cd"    />
+        <result property="card_type_no"    column="card_type_no"    />
+        <result property="pro_type_cd"    column="pro_type_cd"    />
+        <result property="pro_type_name"    column="pro_type_name"    />
+        <result property="pro_type_rem"    column="pro_type_rem"    />
+        <result property="mar_sta"    column="mar_sta"    />
+        <result property="mar_sta_cd"    column="mar_sta_cd"    />
+        <result property="now_addr_pro"    column="now_addr_pro"    />
+        <result property="now_addr_flagty"    column="now_addr_flagty"    />
+        <result property="now_addr_cou"    column="now_addr_cou"    />
+        <result property="now_addr"    column="now_addr"    />
+        <result property="now_addr_tel"    column="now_addr_tel"    />
+        <result property="now_addr_post"    column="now_addr_post"    />
+        <result property="rpr_addr_pro"    column="rpr_addr_pro"    />
+        <result property="rpr_addr_flagty"    column="rpr_addr_flagty"    />
+        <result property="rpr_addr_cou"    column="rpr_addr_cou"    />
+        <result property="rpr_addr"    column="rpr_addr"    />
+        <result property="prp_addr_post"    column="prp_addr_post"    />
+        <result property="work_addr_pro"    column="work_addr_pro"    />
+        <result property="work_addr_flagty"    column="work_addr_flagty"    />
+        <result property="work_addr_cou"    column="work_addr_cou"    />
+        <result property="work_name_addr"    column="work_name_addr"    />
+        <result property="work_tel"    column="work_tel"    />
+        <result property="work_post"    column="work_post"    />
+        <result property="cont_name"    column="cont_name"    />
+        <result property="con_rela_cd"    column="con_rela_cd"    />
+        <result property="con_rela_name"    column="con_rela_name"    />
+        <result property="con_rela_rem"    column="con_rela_rem"    />
+        <result property="cont_addr_pro"    column="cont_addr_pro"    />
+        <result property="cont_addr_flagty"    column="cont_addr_flagty"    />
+        <result property="cont_addr_cou"    column="cont_addr_cou"    />
+        <result property="cont_addr"    column="cont_addr"    />
+        <result property="cont_tel"    column="cont_tel"    />
+        <result property="in_way"    column="in_way"    />
+        <result property="treat_type"    column="treat_type"    />
+        <result property="inhos_time"    column="inhos_time"    />
+        <result property="in_dept_cd"    column="in_dept_cd"    />
+        <result property="in_dept_name"    column="in_dept_name"    />
+        <result property="in_room_no"    column="in_room_no"    />
+        <result property="ch_dept_no"    column="ch_dept_no"    />
+        <result property="out_time"    column="out_time"    />
+        <result property="out_dept_cd"    column="out_dept_cd"    />
+        <result property="out_dept_name"    column="out_dept_name"    />
+        <result property="out_room_no"    column="out_room_no"    />
+        <result property="real_inhos_days"    column="real_inhos_days"    />
+        <result property="os_chd_name"    column="os_chd_name"    />
+        <result property="os_chd_cd"    column="os_chd_cd"    />
+        <result property="os_wmd_name"    column="os_wmd_name"    />
+        <result property="os_wmd_cd"    column="os_wmd_cd"    />
+        <result property="cp_type"    column="cp_type"    />
+        <result property="med_prep_flag"    column="med_prep_flag"    />
+        <result property="cm_equi_flag"    column="cm_equi_flag"    />
+        <result property="cm_tech_flag"    column="cm_tech_flag"    />
+        <result property="plead_flag"    column="plead_flag"    />
+        <result property="harm_or"    column="harm_or"    />
+        <result property="harm_or_cd"    column="harm_or_cd"    />
+        <result property="patho_dia_name"    column="pat_dia_name"    />
+        <result property="patho_dia_cd"    column="pat_dia_cd"    />
+        <result property="patho_no"    column="pat_no"    />
+        <result property="drug_alle_flag"    column="drug_alle_flag"    />
+        <result property="alle_drug"    column="alle_drug"    />
+        <result property="test_flag"    column="test_flag"    />
+        <result property="abo_name"    column="abo_name"    />
+        <result property="abo_cd"    column="abo_cd"    />
+        <result property="rh_name"    column="rh_name"    />
+        <result property="rh_cd"    column="rh_cd"    />
+        <result property="hd_cd"    column="hd_cd"    />
+        <result property="hd_name"    column="hd_name"    />
+        <result property="arc_doc_cd"    column="arc_doc_cd"    />
+        <result property="arc_doc_name"    column="arc_doc_name"    />
+        <result property="att_doc_cd"    column="att_doc_cd"    />
+        <result property="att_doc_name"    column="att_doc_name"    />
+        <result property="res_doc_cd"    column="res_doc_cd"    />
+        <result property="res_doc_name"    column="res_doc_name"    />
+        <result property="duty_nur_name"    column="duty_nur_name"    />
+        <result property="duty_nur_cd"    column="duty_nur_cd"    />
+        <result property="stu_doc_cd"    column="stu_doc_cd"    />
+        <result property="stu_doc_name"    column="stu_doc_name"    />
+        <result property="int_doc_cd"    column="int_doc_cd"    />
+        <result property="int_doc_name"    column="int_doc_name"    />
+        <result property="coder_cd"    column="coder_cd"    />
+        <result property="coder_name"    column="coder_name"    />
+        <result property="mrq_cd"    column="mrq_cd"    />
+        <result property="qcon_doc_cd"    column="qcon_doc_cd"    />
+        <result property="qcon_doc_name"    column="qcon_doc_name"    />
+        <result property="qcon_nur_cd"    column="qcon_nur_cd"    />
+        <result property="qcon_nur_name"    column="qcon_nur_name"    />
+        <result property="qcon_date"    column="qcon_date"    />
+        <result property="leave_way_cd"    column="leave_way_cd"    />
+        <result property="in_org_name"    column="in_org_name"    />
+        <result property="out_in_flag"    column="out_in_flag"    />
+        <result property="out_in_aim"    column="out_in_aim"    />
+        <result property="ci_bef_day"    column="ci_bef_day"    />
+        <result property="ci_bef_hour"    column="ci_bef_hour"    />
+        <result property="ci_bef_min"    column="ci_bef_min"    />
+        <result property="ci_aft_day"    column="ci_aft_day"    />
+        <result property="ci_aft_hour"    column="ci_aft_hour"    />
+        <result property="ci_aft_min"    column="ci_aft_min"    />
+        <result property="cre_per_code"    column="cre_per_code"    />
+        <result property="cre_per_name"    column="cre_per_name"    />
+        <result property="cre_date"    column="cre_date"    />
+        <result property="alt_per_code"    column="alt_per_code"    />
+        <result property="alt_per_name"    column="alt_per_name"    />
+        <result property="alt_date"    column="alt_date"    />
+        <result property="mrState"    column="mr_state"    />
+        <result property="ch_dept_name"    column="ch_dept_name"    />
+        <result property="ch_dept_id"    column="ch_dept_id"    />
+        <result property="weight"    column="weight"    />
+    </resultMap>
+
+
+    <select id="selectMrHpByPatientId" resultMap="MrHpResult">
+        select record_id, record_no,ch_dept_name, patient_id, inp_no, visit_id, mr_type, org_cd, org_name, pay_type_cd,
+         pay_type_name, hc_no, patient_name, sex, sex_cd, bir_date, age_y, age_m, age_d, age_h, age_mi, baby1_bir_weight,
+         baby2_bir_weight, baby3_bir_weight, baby4_bir_weight, inhos_weight, bir_addr_pro, bir_addr_plagty, bir_addr_cou,
+         ap_addr_pro, ap_addr_plagty, citizenship, citizenship_cd, nation, nation_cd, card_type_name, card_type_cd, card_type_no,
+         pro_type_cd, pro_type_name, pro_type_rem, mar_sta, mar_sta_cd, now_addr_pro, now_addr_flagty, now_addr_cou, now_addr,
+         now_addr_tel, now_addr_post, rpr_addr_pro, rpr_addr_flagty, rpr_addr_cou, rpr_addr, prp_addr_post, work_addr_pro,
+         work_addr_flagty, work_addr_cou, work_name_addr, work_tel, work_post, cont_name, con_rela_cd, con_rela_name,
+         con_rela_rem, cont_addr_pro, cont_addr_flagty, cont_addr_cou, cont_addr, cont_tel, in_way, treat_type,
+         inhos_time, in_dept_cd, in_dept_name, in_room_no, ch_dept_no, out_time, out_dept_cd, out_dept_name, out_room_no, real_inhos_days,
+          os_chd_name, os_chd_cd, os_wmd_name, os_wmd_cd, cp_type, med_prep_flag, cm_equi_flag, cm_tech_flag, plead_flag, harm_or, harm_or_cd,
+          pat_dia_name, pat_dia_cd, pat_no, drug_alle_flag, alle_drug, test_flag, abo_name, abo_cd, rh_name, rh_cd, hd_cd, hd_name, arc_doc_cd,
+           arc_doc_name, att_doc_cd, att_doc_name, res_doc_cd, res_doc_name, duty_nur_name, duty_nur_cd, stu_doc_cd, stu_doc_name, int_doc_cd,
+           int_doc_name, coder_cd, coder_name, mrq_cd, qcon_doc_cd, qcon_doc_name, qcon_nur_cd, qcon_nur_name, qcon_date, leave_way_cd, in_org_name,
+           out_in_flag, out_in_aim, ci_bef_day, ci_bef_hour, ci_bef_min, ci_aft_day, ci_aft_hour, ci_aft_min, cre_per_code, cre_per_name,
+            cre_date, alt_per_code, alt_per_name, alt_date, mr_state,ch_dept_name,ch_dept_id from mr_hp
+        where patient_id = #{patientId}
+    </select>
+    <select id="selectVistVoByPatientId" resultMap="MrHpResult">
+        SELECT pp.patient_id, pp.patient_name, pp.sex_cd, bir_date, pp.age_y, pp.age_m, pp.age_d, pp.age_h, pp.age_mi,
+            pp.citizenship_cd, pp.mar_sta_cd, pp.card_type_cd, pp.id_card AS card_type_no, pp.nation_cd, pp.heal_file_no AS hc_no,
+            pp.pro_type_cd, ( pp.now_addr_town || pp.now_addr_vil || pp.now_addr_house_no ) AS now_addr, pp.now_addr_post,
+            pp.now_addr_pro, pp.now_addr_flagty, pp.now_addr_cou, pp.patient_tel as now_addr_tel, pp.cit_addr_pro AS ap_addr_pro,
+            pp.cit_addr_flagty AS ap_addr_plagty, ( pp.rpr_addr_town || pp.rpr_addr_vil || pp.rpr_addr_house_no ) AS rpr_addr,
+            pp.rpr_addr_pro, pp.rpr_addr_flagty, pp.rpr_addr_cou, pp.prp_addr_post, pp.work_addr AS work_name_addr,
+            pp.work_tel, pp.work_post, pp.bir_addr_pro, pp.bir_addr_plagty, pp.bir_addr_cou, pp.cont_tel, pp.cont_name, pp.cont_addr_pro,
+            pp.cont_addr_flagty, pp.cont_addr_cou, pp.CP_RELA AS con_rela_cd, ( pp.cont_addr_town || pp.cont_addr_vil) AS cont_addr,
+            pp.cp_rela, pp.abo_cd, pp.rh_cd, pv.record_no, pv.visit_id, pv.pay_type_cd, pv.inhos_weight, pv.bir_weight AS baby1_bir_weight,pv.inp_no,
+            pv.inhos_way_cd, pv.inhos_time, pv.in_dept_cd,pv.in_dept_name, pv.bed_no AS in_room_no, pv.out_time, pv.out_dept_cd,pv.out_dept_name, pv.res_doc_cd,
+            pv.res_doc_name, pv.att_doc_cd, pv.arc_doc_cd, pv.duty_nur_cd, pv.duty_nur_name, pv.org_cd,pv.weight,dd.DATA_TAG as con_rela_name,
+            pp.patient_tel,pp.CP_RELA_REM
+            FROM pat_personalinfo pp
+            LEFT JOIN pat_visitinfo pv ON pp.patient_id = pv.patient_id
+            LEFT JOIN TM_BS_DICT_DATA dd ON dd.DICT_TYPE = 'RC033' AND pp.CP_RELA = dd.DATA_VAL
+            WHERE pp.patient_id = #{ patientId}
+    </select>
+    <select id="selectMrisFee" resultType="com.emr.project.mrhp.domain.mris.TdCmHpLineVo">
+        select tch.patient_id, tch.patient_name, tch.record_no,
+        tcf."RECORD_ID",tcf."ZFY",tcf."ZFJE",tcf."YBYLFWF",tcf."YBZLCZF",tcf."HLF",tcf."QTFY",tcf."BLZDF",tcf."SYSZDF",
+        tcf."YXXZDF",tcf."LCZDXMF",tcf."FSSZLXMF",tcf."SSZLF",tcf."KFF",tcf."ZYZLF",tcf."ZYZD",tcf."ZYQT",tcf."XYF",
+        tcf."ZCYF",tcf."ZCYF_ZCY",tcf."XF",tcf."BDBLZPF",tcf."QDBLZPF",tcf."NXYZLZPF",tcf."XBYZLZPF",tcf."JCYYCXYYCLF",
+        tcf."ZLYYCXYYCLF",tcf."SSYYCXYYCLF",tcf."QTF",tcf."ZYBZLZF",tcf."ZYBZLZHZF",tcf."LCWLZLF",tcf."MZF",tcf."SSF",
+        tcf."ZYWZ",tcf."ZYGS",tcf."ZCYJF",tcf."ZYTZL",tcf."ZYGCZL",tcf."ZYTSZL",tcf."ZYTSTPJG",tcf."BZSS",tcf."KJYWFY",
+        tcf."YLJGZYZJF"
+        from (
+            select a.record_id,
+               nvl(sum(decode(a.fee_cd, '0001', a.amount)), '0') as zfy, --总费用
+               nvl(sum(decode(a.fee_cd, '000101', a.amount)), '0') as zfje, --自付金额
+               nvl(sum(decode(a.fee_cd, '0101', a.amount)), '0') as ybylfwf, --一般医疗服务费
+               nvl(sum(decode(a.fee_cd, '0102', a.amount)), '0') as ybzlczf, --一般治疗操作费
+               nvl(sum(decode(a.fee_cd, '0103', a.amount)), '0') as hlf, --护理费
+               nvl(sum(decode(a.fee_cd, '0104', a.amount)), '0') as qtfy, --其他费用
+               nvl(sum(decode(a.fee_cd, '0201', a.amount)), '0') as blzdf, --病理诊断费
+               nvl(sum(decode(a.fee_cd, '0202', a.amount)), '0') as syszdf, --实验室诊断费
+               nvl(sum(decode(a.fee_cd, '0203', a.amount)), '0') as yxxzdf, --影像学诊断费
+               nvl(sum(decode(a.fee_cd, '0204', a.amount)), '0') as lczdxmf, --临床诊断项目费
+               nvl(sum(decode(a.fee_cd, '0301', a.amount)), '0') as fsszlxmf, --非手术治疗项目费
+               nvl(sum(decode(a.fee_cd, '0302', a.amount)), '0') as sszlf, --手术治疗费
+               nvl(sum(decode(a.fee_cd, '0401', a.amount)), '0') as kff, --康复费
+               nvl(sum(decode(a.fee_cd, '0501', a.amount)), '0') as zyzlf, --中医治疗费
+               nvl(sum(decode(a.fee_cd, '0502', a.amount)), '0') as zyzd, --中医诊断
+               nvl(sum(decode(a.fee_cd, '0503', a.amount)), '0') as zyqt, --中医其他
+               nvl(sum(decode(a.fee_cd, '0601', a.amount)), '0') as xyf, --西药费
+               nvl(sum(decode(a.fee_cd, '0701', a.amount)), '0') as zcyf, --中成药费
+               nvl(sum(decode(a.fee_cd, '0702', a.amount)), '0') as zcyf_zcy, --中草药费
+               nvl(sum(decode(a.fee_cd, '0801', a.amount)), '0') as xf, --血费
+               nvl(sum(decode(a.fee_cd, '0802', a.amount)), '0') as bdblzpf, --白蛋白类制品费
+               nvl(sum(decode(a.fee_cd, '0803', a.amount)), '0') as qdblzpf, --球蛋白类制品费
+               nvl(sum(decode(a.fee_cd, '0804', a.amount)), '0') as nxyzlzpf, --凝血因子类制品费
+               nvl(sum(decode(a.fee_cd, '0805', a.amount)), '0') as xbyzlzpf, --细胞因子类制品费
+               nvl(sum(decode(a.fee_cd, '0901', a.amount)), '0') as jcyycxyyclf, --检查用一次性医用材料费
+               nvl(sum(decode(a.fee_cd, '0902', a.amount)), '0') as zlyycxyyclf, --治疗用一次性医用材料费
+               nvl(sum(decode(a.fee_cd, '0903', a.amount)), '0') as ssyycxyyclf, --手术用一次性医用材料费
+               nvl(sum(decode(a.fee_cd, '1001', a.amount)), '0') as qtf, --其他费
+               nvl(sum(decode(a.fee_cd, '010101', a.amount)), '0') as zybzlzf, --中医辨证论治费
+               nvl(sum(decode(a.fee_cd, '010102', a.amount)), '0') as zybzlzhzf, --中医辨证论治会诊费
+               nvl(sum(decode(a.fee_cd, '030101', a.amount)), '0') as lcwlzlf, --临床物理治疗费
+               nvl(sum(decode(a.fee_cd, '030201', a.amount)), '0') as mzf, --麻醉费
+               nvl(sum(decode(a.fee_cd, '030202', a.amount)), '0') as ssf, --手术费
+               nvl(sum(decode(a.fee_cd, '050101', a.amount)), '0') as zywz, --中医外治
+               nvl(sum(decode(a.fee_cd, '050102', a.amount)), '0') as zygs, --中医骨伤
+               nvl(sum(decode(a.fee_cd, '050103', a.amount)), '0') as zcyjf, --针刺与灸法
+               nvl(sum(decode(a.fee_cd, '050104', a.amount)), '0') as zytzl, --中医推拿治疗
+               nvl(sum(decode(a.fee_cd, '050105', a.amount)), '0') as zygczl, --中医肛肠治疗
+               nvl(sum(decode(a.fee_cd, '050106', a.amount)), '0') as zytszl, --中医特殊治疗
+               nvl(sum(decode(a.fee_cd, '050301', a.amount)), '0') as zytstpjg, --中药特殊调配加工
+               nvl(sum(decode(a.fee_cd, '050302', a.amount)), '0') as bzss, --辨证施膳
+               nvl(sum(decode(a.fee_cd, '060101', a.amount)), '0') as kjywfy, --抗菌药物费用
+               nvl(sum(decode(a.fee_cd, '070101', a.amount)), '0') as yljgzyzjf --医疗机构中药制剂费
+            from mr_hp_fee a
+            group by a.record_id) tcf
+        left join mr_hp tch on tcf.record_id = tch.record_id
+        WHERE tcf.record_id = #{recordId}
+    </select>
+</mapper>

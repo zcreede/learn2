@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysEmrConfigMapper">
+
+    <resultMap type="SysEmrConfig" id="SysEmrConfigResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="configName"    column="config_name"    />
+        <result property="configKey"    column="config_key"    />
+        <result property="configValue"    column="config_value"    />
+        <result property="configType"    column="config_type"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="orgCd"    column="org_cd"    />
+    </resultMap>
+
+    <sql id="selectSysEmrConfigVo">
+        select id, parent_id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time, remark, org_cd from sys_emr_config
+    </sql>
+
+    <select id="selectSysEmrConfigList" parameterType="SysEmrConfig" resultMap="SysEmrConfigResult">
+        <include refid="selectSysEmrConfigVo"/>
+        <where>
+            <if test="parentId != null  and parentId != ''"> and parent_id = #{parentId}</if>
+            <if test="configName != null  and configName != ''"> and config_name like concat(concat('%', #{configName}), '%')</if>
+            <if test="configKey != null  and configKey != ''"> and config_key = #{configKey}</if>
+            <if test="configValue != null  and configValue != ''"> and config_value = #{configValue}</if>
+            <if test="configType != null  and configType != ''"> and config_type = #{configType}</if>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+        </where>
+    </select>
+
+    <select id="selectSysEmrConfig" parameterType="SysEmrConfig" resultMap="SysEmrConfigResult">
+        <include refid="selectSysEmrConfigVo"/>
+        <where>
+            <if test="parentId != null  and parentId != ''"> and parent_id = #{parentId}</if>
+            <if test="configName != null  and configName != ''"> and config_name like concat(concat('%', #{configName}), '%')</if>
+            <if test="configKey != null  and configKey != ''"> and config_key = #{configKey}</if>
+            <if test="configValue != null  and configValue != ''"> and config_value = #{configValue}</if>
+            <if test="configType != null  and configType != ''"> and config_type = #{configType}</if>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+        </where>
+    </select>
+
+    <select id="selectSysEmrConfigById" parameterType="Long" resultMap="SysEmrConfigResult">
+        <include refid="selectSysEmrConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSysEmrConfig" parameterType="SysEmrConfig">
+        insert into sys_emr_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="configName != null">config_name,</if>
+            <if test="configKey != null">config_key,</if>
+            <if test="configValue != null">config_value,</if>
+            <if test="configType != null">config_type,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="configName != null">#{configName},</if>
+            <if test="configKey != null">#{configKey},</if>
+            <if test="configValue != null">#{configValue},</if>
+            <if test="configType != null">#{configType},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysEmrConfig" parameterType="SysEmrConfig">
+        update sys_emr_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="configName != null">config_name = #{configName},</if>
+            <if test="configKey != null">config_key = #{configKey},</if>
+            <if test="configValue != null">config_value = #{configValue},</if>
+            <if test="configType != null">config_type = #{configType},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysEmrConfigById" parameterType="Long">
+        delete from sys_emr_config where id = #{id}
+    </delete>
+
+    <delete id="deleteSysEmrConfigByIds" parameterType="String">
+        delete from sys_emr_config where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

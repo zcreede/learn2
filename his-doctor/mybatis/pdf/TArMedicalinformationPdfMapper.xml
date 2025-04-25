@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pdf.mapper.TArMedicalinformationPdfMapper">
+
+    <resultMap type="TArMedicalinformationPdf" id="TArMedicalinformationPdfResult">
+        <result property="id"    column="id"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="deptCode"    column="dept_code"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="babyAdmissionno"    column="baby_admissionno"    />
+        <result property="genType"    column="gen_type"    />
+        <result property="leaveHospitalDate"    column="leave_hospital_date"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="pdfPath"    column="pdf_path"    />
+    </resultMap>
+
+    <sql id="selectTArMedicalinformationPdfVo">
+        select id, hospital_code, dept_code, patient_id, case_no, admission_no, patient_name, baby_admissionno, gen_type, leave_hospital_date, order_type, cre_per_name, cre_per_code, cre_date, pdf_path from t_ar_medicalinformation_pdf
+    </sql>
+
+    <select id="selectTArMedicalinformationPdfList" parameterType="TArMedicalinformationPdf" resultMap="TArMedicalinformationPdfResult">
+        <include refid="selectTArMedicalinformationPdfVo"/>
+        <where>
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="deptCode != null  and deptCode != ''"> and dept_code = #{deptCode}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="babyAdmissionno != null  and babyAdmissionno != ''"> and baby_admissionno = #{babyAdmissionno}</if>
+            <if test="genType != null  and genType != ''"> and gen_type = #{genType}</if>
+            <if test="leaveHospitalDate != null "> and leave_hospital_date = #{leaveHospitalDate}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="pdfPath != null  and pdfPath != ''"> and pdf_path = #{pdfPath}</if>
+        </where>
+    </select>
+
+    <select id="selectUnGenerateOrderPdfList" parameterType="TArMedicalinformationPdf" resultMap="TArMedicalinformationPdfResult">
+        select * from (
+        select a.HOSPITAL_CODE,
+        a.DEPARTMENT_NO             as dept_code,
+        b.dept_name,
+        a.PATIENT_ID,
+        a.CASE_NO,
+        a.ADMISSION_NO,
+        null                  as baby_admissionno,
+        a.NAME                as patient_name,
+        a.LEAVE_HOSPITAL_DATE
+        from ((select tam.hospital_code,tam.name,tam.patient_id,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null and tam.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamh.hospital_code,tamh.name,tamh.patient_id,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null and tamh.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamd.hospital_code,tamd.name,tamd.patient_id,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null and tamd.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        )) a
+        left join tm_bs_dept b
+        on a.HOSPITAL_CODE = b.hospital_no and a.DEPARTMENT_NO = b.dept_code
+        <where>
+            a.LEAVE_HOSPITAL_DATE is not null
+            and a.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            and a.ADMISSION_NO not in
+            (select b.admission_no
+            from t_ar_medicalinformation_pdf b
+            where b.gen_type = '1' and b.baby_admissionno is null)
+            and a.ADMISSION_NO in(
+            select t.ADMISSION_NO
+            from (select po.hospital_code,po.admission_no from TD_PA_ORDER po
+            union all
+            select poh.hospital_code,poh.admission_no from TD_PA_ORDER_H poh) t
+            left join ((select tam.hospital_code,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null and tam.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            union all
+            select tamh.hospital_code,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null and tamh.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            union all
+            select tamd.hospital_code,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null and tamd.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            )) ta
+            on t.HOSPITAL_CODE = ta.HOSPITAL_CODE
+            and t.ADMISSION_NO = ta.ADMISSION_NO
+            where ta.LEAVE_HOSPITAL_DATE is not null
+            and ta.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            )
+            <if test="searchValue != null and searchValue != ''">
+                and (a.CASE_NO like concat(concat('%', #{searchValue}), '%')
+                or a.ADMISSION_NO like concat(concat('%', #{searchValue}), '%')
+                or a.NAME like concat(concat('%', #{searchValue}), '%')
+                )
+            </if>
+        </where>
+        union all
+        select a.HOSPITAL_CODE,
+        a.DEPARTMENT_NO             as dept_code,
+        c.dept_name,
+        a.PATIENT_ID,
+        a.CASE_NO,
+        a.ADMISSION_NO,
+        b.baby_no             as baby_admissionno,
+        b.baby_name                as patient_name,
+        a.LEAVE_HOSPITAL_DATE
+        from td_na_baby_info b
+        left join ((select tam.hospital_code,tam.name,tam.patient_id,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null and tam.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamh.hospital_code,tamh.name,tamh.patient_id,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null and tamh.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamd.hospital_code,tamd.name,tamd.patient_id,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null and tamd.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        )) a
+        on a.HOSPITAL_CODE = b.hospital_code
+        and a.CASE_NO = b.case_no
+        and a.ADMISSION_NO = b.admission_no
+        left join tm_bs_dept c
+        on a.HOSPITAL_CODE = c.hospital_no and a.DEPARTMENT_NO = c.dept_code
+        <where>
+            a.LEAVE_HOSPITAL_DATE is not null
+            and a.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            and b.baby_no not in
+            (select c.baby_admissionno
+            from t_ar_medicalinformation_pdf c
+            where c.gen_type = '1' and c.baby_admissionno is not null)
+            and a.ADMISSION_NO in(
+            select t.ADMISSION_NO
+            from (select po.hospital_code,po.admission_no from TD_PA_ORDER po
+            union all
+            select poh.hospital_code,poh.admission_no from TD_PA_ORDER_H poh) t
+            left join ((select tam.hospital_code,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null and tam.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            union all
+            select tamh.hospital_code,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null and tamh.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            union all
+            select tamd.hospital_code,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null and tamd.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            )) ta
+            on t.HOSPITAL_CODE = ta.HOSPITAL_CODE
+            and t.ADMISSION_NO = ta.ADMISSION_NO
+            where ta.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            )
+            <if test="searchValue != null and searchValue != ''">
+                and (a.CASE_NO like concat(concat('%', #{searchValue}), '%')
+                or a.ADMISSION_NO like concat(concat('%', #{searchValue}), '%')
+                or a.NAME like concat(concat('%', #{searchValue}), '%')
+                or b.baby_no like concat(concat('%', #{searchValue}), '%')
+                or b.baby_name like concat(concat('%', #{searchValue}), '%')
+                )
+            </if>
+        </where>
+        )
+        order by LEAVE_HOSPITAL_DATE asc,ADMISSION_NO
+    </select>
+
+    <select id="selectUnGenerateFeePdfList" parameterType="TArMedicalinformationPdf" resultMap="TArMedicalinformationPdfResult">
+        select * from (
+        select a.HOSPITAL_CODE,
+        a.DEPARTMENT_NO             as dept_code,
+        b.dept_name,
+        a.PATIENT_ID,
+        a.CASE_NO,
+        a.ADMISSION_NO,
+        null                  as baby_admissionno,
+        a.NAME                as patient_name,
+        a.LEAVE_HOSPITAL_DATE
+        from ((select tam.hospital_code,tam.name,tam.patient_id,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null and tam.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamh.hospital_code,tamh.name,tamh.patient_id,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null and tamh.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamd.hospital_code,tamd.name,tamd.patient_id,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null and tamd.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        )) a
+        join tm_bs_dept b
+        on a.HOSPITAL_CODE = b.hospital_no and a.DEPARTMENT_NO = b.dept_code
+        join (select ea.ADMISSION_NO, sum(ea.TOTAL) as total
+        from (select ie.hospital_code,ie.admission_no,ie.total from T_IH_EXPENSEDETAIL ie
+        union all
+        select iec.hospital_code,iec.admission_no,iec.total from T_IH_EXPENSEDETAIL_CYBR iec
+        union all
+        select ied.hospital_code,ied.admission_no,ied.total from T_IH_EXPENSEDETAIL_DRCY ied
+        union all
+        select ieh.hospital_code,ieh.admission_no,ieh.total from T_IH_EXPENSEDETAIL_H ieh) ea
+        left join ((select tam.hospital_code,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null and tam.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamh.hospital_code,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null and tamh.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        union all
+        select tamd.hospital_code,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null and tamd.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        )) ta
+        on ea.HOSPITAL_CODE = ta.HOSPITAL_CODE
+        and ea.ADMISSION_NO = ta.ADMISSION_NO
+        where ta.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+        group by ea.ADMISSION_NO
+        having(sum(ea.TOTAL)) > 0) c
+        on a.ADMISSION_NO = c.ADMISSION_NO
+        left join (select b.admission_no
+        from t_ar_medicalinformation_pdf b
+        where b.gen_type = '2') d
+        on a.ADMISSION_NO = d.admission_no
+        <where>
+            a.LEAVE_HOSPITAL_DATE is not null
+            and c.ADMISSION_NO is not null
+            and a.LEAVE_HOSPITAL_DATE &gt; #{updateTime}
+            and d.ADMISSION_NO is null
+            <if test="searchValue != null and searchValue != ''">
+                and (a.CASE_NO like concat(concat('%', #{searchValue}), '%')
+                or a.ADMISSION_NO like concat(concat('%', #{searchValue}), '%')
+                or a.NAME like concat(concat('%', #{searchValue}), '%')
+                )
+            </if>
+        </where>
+        )
+        order by LEAVE_HOSPITAL_DATE asc,ADMISSION_NO
+    </select>
+
+    <select id="selectMedByPatientId" parameterType="String" resultMap="TArMedicalinformationPdfResult">
+        select a.HOSPITAL_CODE,
+               a.DEPARTMENT_NO             as dept_code,
+               a.PATIENT_ID,
+               a.CASE_NO,
+               a.ADMISSION_NO,
+               null                  as baby_admissionno,
+               a.NAME                as patient_name,
+               a.LEAVE_HOSPITAL_DATE
+          from ((select tam.hospital_code,tam.name,tam.patient_id,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null
+                 union all
+                 select tamh.hospital_code,tamh.name,tamh.patient_id,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null
+                 union all
+                 select tamd.hospital_code,tamd.name,tamd.patient_id,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null
+                 )) a
+         where a.LEAVE_HOSPITAL_DATE is not null
+             and a.admission_no = #{patientId}
+        union all
+        select a.HOSPITAL_CODE,
+               a.DEPARTMENT_NO             as dept_code,
+               a.PATIENT_ID,
+               a.CASE_NO,
+               a.ADMISSION_NO,
+               b.baby_no             as baby_admissionno,
+               a.NAME                as patient_name,
+               a.LEAVE_HOSPITAL_DATE
+          from td_na_baby_info b
+          left join ((select tam.hospital_code,tam.name,tam.patient_id,tam.case_no,tam.admission_no,tam.department_no,tam.leave_hospital_date from t_ar_medicalinformation tam where tam.LEAVE_HOSPITAL_DATE is not null
+                     union all
+                     select tamh.hospital_code,tamh.name,tamh.patient_id,tamh.case_no,tamh.admission_no,tamh.department_no,tamh.leave_hospital_date from t_ar_medicalinformation_h tamh where tamh.LEAVE_HOSPITAL_DATE is not null
+                     union all
+                     select tamd.hospital_code,tamd.name,tamd.patient_id,tamd.case_no,tamd.admission_no,tamd.department_no,tamd.leave_hospital_date from t_ar_medicalinformation_day tamd where tamd.LEAVE_HOSPITAL_DATE is not null
+                     )) a
+            on a.HOSPITAL_CODE = b.hospital_code
+           and a.CASE_NO = b.case_no
+           and a.ADMISSION_NO = b.admission_no
+         where a.LEAVE_HOSPITAL_DATE is not null
+             and b.baby_no = #{patientId}
+    </select>
+
+    <select id="selectTArMedicalinformationPdfById" parameterType="Long" resultMap="TArMedicalinformationPdfResult">
+        <include refid="selectTArMedicalinformationPdfVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTArMedicalinformationPdf" parameterType="TArMedicalinformationPdf">
+        insert into t_ar_medicalinformation_pdf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code,</if>
+            <if test="deptCode != null and deptCode != ''">dept_code,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="caseNo != null and caseNo != ''">case_no,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="patientName != null and patientName != ''">patient_name,</if>
+            <if test="babyAdmissionno != null">baby_admissionno,</if>
+            <if test="genType != null and genType != ''">gen_type,</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="pdfPath != null">pdf_path,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="hospitalCode != null and hospitalCode != ''">#{hospitalCode},</if>
+            <if test="deptCode != null and deptCode != ''">#{deptCode},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="caseNo != null and caseNo != ''">#{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="patientName != null and patientName != ''">#{patientName},</if>
+            <if test="babyAdmissionno != null">#{babyAdmissionno},</if>
+            <if test="genType != null and genType != ''">#{genType},</if>
+            <if test="leaveHospitalDate != null">#{leaveHospitalDate},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="pdfPath != null">#{pdfPath},</if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT ALL
+        <foreach item="item" collection="list">
+            into t_ar_medicalinformation_pdf
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.hospitalCode != null and item.hospitalCode != ''">hospital_code,</if>
+                <if test="item.deptCode != null and item.deptCode != ''">dept_code,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.caseNo != null and item.caseNo != ''">case_no,</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no,</if>
+                <if test="item.patientName != null and item.patientName != ''">patient_name,</if>
+                <if test="item.babyAdmissionno != null">baby_admissionno,</if>
+                <if test="item.genType != null and item.genType != ''">gen_type,</if>
+                <if test="item.leaveHospitalDate != null">leave_hospital_date,</if>
+                <if test="item.orderType != null">order_type,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                <if test="item.creDate != null">cre_date,</if>
+                <if test="item.pdfPath != null">pdf_path,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.hospitalCode != null and item.hospitalCode != ''">#{item.hospitalCode},</if>
+                <if test="item.deptCode != null and item.deptCode != ''">#{item.deptCode},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.caseNo != null and item.caseNo != ''">#{item.caseNo},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">#{item.admissionNo},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.babyAdmissionno != null">#{item.babyAdmissionno},</if>
+                <if test="item.genType != null and item.genType != ''">#{item.genType},</if>
+                <if test="item.leaveHospitalDate != null">#{item.leaveHospitalDate},</if>
+                <if test="item.orderType != null">#{item.orderType},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.pdfPath != null">#{item.pdfPath},</if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="updateTArMedicalinformationPdf" parameterType="TArMedicalinformationPdf">
+        update t_ar_medicalinformation_pdf
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null and hospitalCode != ''">hospital_code = #{hospitalCode},</if>
+            <if test="deptCode != null and deptCode != ''">dept_code = #{deptCode},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="caseNo != null and caseNo != ''">case_no = #{caseNo},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no = #{admissionNo},</if>
+            <if test="patientName != null and patientName != ''">patient_name = #{patientName},</if>
+            <if test="babyAdmissionno != null">baby_admissionno = #{babyAdmissionno},</if>
+            <if test="genType != null and genType != ''">gen_type = #{genType},</if>
+            <if test="leaveHospitalDate != null">leave_hospital_date = #{leaveHospitalDate},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="pdfPath != null">pdf_path = #{pdfPath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update t_ar_medicalinformation_pdf
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.hospitalCode != null and item.hospitalCode != ''">hospital_code = #{item.hospitalCode},</if>
+                <if test="item.deptCode != null and item.deptCode != ''">dept_code = #{item.deptCode},</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id = #{item.patientId},</if>
+                <if test="item.caseNo != null and item.caseNo != ''">case_no = #{item.caseNo},</if>
+                <if test="item.admissionNo != null and item.admissionNo != ''">admission_no = #{item.admissionNo},</if>
+                <if test="item.patientName != null and item.patientName != ''">patient_name = #{item.patientName},</if>
+                <if test="item.babyAdmissionno != null">baby_admissionno = #{item.babyAdmissionno},</if>
+                <if test="item.genType != null and item.genType != ''">gen_type = #{item.genType},</if>
+                <if test="item.leaveHospitalDate != null">leave_hospital_date = #{item.leaveHospitalDate},</if>
+                <if test="item.orderType != null">order_type = #{item.orderType},</if>
+                <if test="item.crePerName != null">cre_per_name = #{item.crePerName},</if>
+                <if test="item.crePerCode != null">cre_per_code = #{item.crePerCode},</if>
+                <if test="item.creDate != null">cre_date = #{item.creDate},</if>
+                <if test="item.pdfPath != null">pdf_path = #{item.pdfPath},</if>
+            </trim>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteTArMedicalinformationPdfById" parameterType="Long">
+        delete from t_ar_medicalinformation_pdf where id = #{id}
+    </delete>
+
+    <delete id="deleteTArMedicalinformationPdfByIds" parameterType="String">
+        delete from t_ar_medicalinformation_pdf where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="lastLeaveHosDate" parameterType="String" resultMap="TArMedicalinformationPdfResult">
+        select max(leave_hospital_date) as leave_hospital_date from T_AR_MEDICALINFORMATION_PDF where gen_type = #{genType}
+    </select>
+</mapper>

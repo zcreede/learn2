@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.esSearch.mapper.DrugStockMapper">
+    <resultMap id="DrugAndClinMap" type="DrugAndClin">
+        <result column="id" property="id" />
+        <result column="ORG_CD" property="hospitalCode" />
+        <result column="DRUG_CD" property="cpNo" />
+        <result column="DRUG_NAME" property="cpName" />
+        <result column="ORDER_CLASS_CD" property="orderClassCode" />
+        <result column="ORDER_CLASS_NAME" property="orderClassName" />
+        <result column="DRUG_TYPE_CODE" property="drugType" />
+        <result column="DRUG_TYPE_NAME" property="drugTypeName" />
+        <result column="standard" property="standard" />
+        <result column="pym" property="inputstrphtc" />
+        <result column="price" property="price" />
+        <result column="perform_Dep_Code" property="performDepCode" />
+        <result column="perform_Dep_name" property="performDepName" />
+        <result column="jbywbz" property="jbywbz" />
+        <result column="sccj" property="sccj" />
+        <result column="sl" property="sl" />
+        <result column="xcsl" property="xcsl" />
+        <result column="unit" property="unit" />
+        <result column="dlcgbz" property="dlcgbz" />
+        <result column="drug_form" property="drugForm" />
+        <result column="psfl" property="psfl" />
+        <result column="HIGH_RISK_FLAG" property="highRiskFlag" />
+        <result column="ylxs" property="ylxs" />
+        <result column="usage_unit" property="usageUnit" />
+        <result column="dwxs" property="dwxs" />
+        <result column="yongfa" property="yongfa" />
+        <result column="" property="yongfaName" />
+        <result column="" property="yongfaShowName" />
+        <result column="order_freq" property="orderFreq" />
+        <result column="order_item_type" property="orderItemType" />
+        <result column="herbal_flag" property="herbalFlag" />
+        <result column="price_flag" property="priceFlag" />
+        <result column="freq_flag" property="freqFlag" />
+        <result column="item_flag_cd" property="itemFlagCd"/>
+        <result column="item_flag_name" property="itemFlagName"/>
+        <result column="zfbl" property="zfbl"/>
+        <result column="ybsm" property="ybsm"/>
+        <result column="order_flag" property="orderFlag" />
+        <result column="PRE_AUTH" property="preAuth" />
+        <result column="DRUG_TUMOR" property="drugTumor" />
+        <result column="CONTROL_CLASS" property="controlClass" />
+        <result column="CONTROL_CLASS_name" property="controlClassName" />
+        <result column="DRUG_ANTI" property="drugAnti" />
+        <result column="STOCK_NO" property="stockNo" />
+        <result column="MIN_UNIT" property="minUnit" />
+        <result column="dept_unit" property="deptUnits" />
+        <result column="dept_UNIT_RATIO" property="deptUnitRatio" />
+        <result column="pur_price" property="purPrice" />
+    </resultMap>
+    <select id="selectDrugList" parameterType="string" resultMap="DrugAndClinMap">
+        select a.id,a.ORG_CD,a.DRUG_CD, a.DRUG_NAME,'01' ORDER_CLASS_CD,'药疗' ORDER_CLASS_NAME,a.DRUG_TYPE_CODE,
+        a.DRUG_TYPE_NAME,d.standard,d.pym,a.RETAIL_PRICE price,a.DEPT_CODE perform_Dep_Code,b.dept_name perform_Dep_name,
+        d.dosage_form drug_form,d.DRUG_SKIN psfl,case when d.DRUG_HIGHRISK='1' then '0' when d.DRUG_HIGHRISK is null then '0' else '1' end HIGH_RISK_FLAG,
+        d.DRUG_BASIC jbywbz,p.detail_name sccj,null STOCK_NO,a.STORE_NUM sl,a.VALID_NUM xcsl,d.advice_unit_ratio ylxs,
+        d.advice_unit usage_unit,d.RECOM_USAGE yongfa,d.recom_rate order_freq,
+        case when d.MEASURE='1' then '1' else '0' end dlcgbz,'1' freq_flag,'1' price_flag,
+        case when dt.drug_cate_aff = '3' then '1' else '0' end as herbal_flag,'1' order_flag,'1' order_item_type,
+        '00' item_flag_cd,'正常医嘱' item_flag_name,
+        case when yb.zfbl is null then 100 else yb.zfbl end as zfbl,case when yb.xmdj is null then '自费' else yb.xmdj end as ybsm,
+        d.PRE_AUTH,d.DRUG_TUMOR,d.CONTROL_CLASS,dd.data_tag CONTROL_CLASS_name,d.DRUG_ANTI,
+        -- d.hos_unit unit,d.HOS_UNIT_RATIO dwxs 药房分装系数(0住院 1门诊)
+        case when b.DEP_RATIO = '0' then d.HOS_UNIT_RATIO else d.OUTPAT_UNIT_RATIO end as dwxs,
+        case when b.DEP_RATIO = '0' then d.hos_unit else d.OUTPAT_UNIT end as unit
+        from V_TM_PA_DRUG_STOCK_DEPT a
+        left join TM_PA_DRUGDICT d on d.DRUG_CD = a.DRUG_CD and a.org_cd = d.org_cd
+        left join TM_BS_DEPT b on a.dept_code = b.DEPT_CODE
+        left join TM_PA_PRODUCER p on d.MANUFACTURER = p.DETAIL_CD and d.org_cd = p.org_cd
+        left join YY_BZBM_XMDZ_YP yb on d.drug_cd = yb.xmbh
+        left join TM_PA_DRUG_TYPE dt on a.ORG_CD=dt.org_cd and a.DRUG_TYPE_CODE = dt.drug_type_code
+        left join tm_bs_dict_data dd on d.drug_anti = dd.data_val and dd.dict_type = 's135'
+        <where>
+            <if test="execDeptCdList != null and execDeptCdList.size > 0">
+                and a.dept_code in
+                <foreach collection="execDeptCdList" item="execDeptCd" open="(" separator="," close=")">
+                    #{execDeptCd}
+                </foreach>
+            </if>
+            <if test='herbalFlag != null and herbalFlag == "1"'>
+                and dt.drug_cate_aff = '3'
+            </if>
+            <if test='herbalFlag != null and herbalFlag == "0"'>
+                and dt.drug_cate_aff != '3'
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDrugListByDeptDrug" parameterType="DrugStockSearchReq" resultMap="DrugAndClinMap">
+        select CASE WHEN SUBSTR(a.ORG_CD||a.DRUG_CD||a.DEPT_CODE||to_char(a.RETAIL_PRICE,'fm99990.9999'), -1) = '.'
+        THEN SUBSTR(a.ORG_CD||a.DRUG_CD||a.DEPT_CODE||to_char(a.RETAIL_PRICE,'fm99990.9999'), 1,
+        LENGTH(a.ORG_CD||a.DRUG_CD||a.DEPT_CODE||to_char(a.RETAIL_PRICE,'fm99990.9999')) - 1)
+        ELSE a.ORG_CD||a.DRUG_CD||a.DEPT_CODE||to_char(a.RETAIL_PRICE, 'fm99990.9999') end  as id,
+        a.ORG_CD,a.DRUG_CD, a.DRUG_NAME,'01' ORDER_CLASS_CD,'药疗' ORDER_CLASS_NAME,a.DRUG_TYPE_CODE,
+        a.DRUG_TYPE_NAME,d.standard,d.pym,a.RETAIL_PRICE price,a.DEPT_CODE perform_Dep_Code,b.dept_name perform_Dep_name,
+        d.dosage_form drug_form,d.DRUG_SKIN psfl,case when d.DRUG_HIGHRISK='1' then '0' when d.DRUG_HIGHRISK is null then '0' else '1' end HIGH_RISK_FLAG,
+        d.DRUG_BASIC jbywbz,p.detail_name sccj,a.STOCK_NO,a.STORE_NUM sl,a.VALID_NUM xcsl,d.advice_unit unit,d.advice_unit_ratio ylxs,
+        d.advice_unit usage_unit,d.advice_unit_ratio dwxs,d.RECOM_USAGE yongfa,d.recom_rate order_freq,
+        case when d.MEASURE='1' then '1' else '0' end dlcgbz,'1' freq_flag,'1' price_flag,
+        case when a.DRUG_TYPE_CODE ='03' then '1' else '0' end as herbal_flag,'1' order_flag,'1' order_item_type,
+        '00' item_flag_cd,'正常医嘱' item_flag_name,
+        case when yb.zfbl is null then 100 else yb.zfbl end as zfbl,case when yb.xmdj is null then '自费' else yb.xmdj end as ybsm,
+        d.PRE_AUTH,d.DRUG_TUMOR,d.CONTROL_CLASS,dd.data_tag CONTROL_CLASS_name,d.DRUG_ANTI,a.MIN_UNIT,a.dept_unit,
+        case when b.DEP_RATIO = '0' then d.HOS_UNIT_RATIO else d.OUTPAT_UNIT_RATIO end as dept_UNIT_RATIO,a.pur_price
+        from TM_PA_DRUG_STOCK_DEPT a
+        left join TM_PA_DRUGDICT d on d.DRUG_CD = a.DRUG_CD and a.org_cd = d.org_cd
+        left join TM_BS_DEPT b on a.dept_code = b.DEPT_CODE
+        left join TM_PA_PRODUCER p on d.MANUFACTURER = p.DETAIL_CD and d.org_cd = p.org_cd
+        left join YY_BZBM_XMDZ_YP yb on d.drug_cd = yb.xmbh
+        left join TM_PA_DRUG_TYPE dt on a.ORG_CD=dt.org_cd and a.DRUG_TYPE_CODE = dt.drug_type_code
+        left join tm_bs_dict_data dd on d.drug_anti = dd.data_val and dd.dict_type = 's135'
+        <where>
+            <if test="allFlag == null">
+                a.VALID_FLAG = '1' and (a.VALIDITY_PERIOD is null or a.VALIDITY_PERIOD >= sysdate )
+            </if>
+            <if test="reqList != null and reqList.size > 0">
+                and
+                <foreach collection="reqList" item="req" open="(" separator=" or " close=")">
+                    (a.dept_code = #{req.deptCode} and a.drug_cd = #{req.drugCd})
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDrugDictByCd" parameterType="string" resultMap="DrugAndClinMap">
+        select d.ORG_CD||d.DRUG_CD id,
+        d.ORG_CD,d.DRUG_CD, d.DRUG_NAME,'01' ORDER_CLASS_CD,'药疗' ORDER_CLASS_NAME,d.DRUG_TYPE_CODE,
+        d.DRUG_TYPE_NAME,d.standard,d.pym,d.dosage_form drug_form,d.DRUG_SKIN psfl,
+        case when d.DRUG_HIGHRISK='1' then '0' when d.DRUG_HIGHRISK is null then '0' else '1' end HIGH_RISK_FLAG,
+        d.DRUG_BASIC jbywbz,p.detail_name sccj,d.advice_unit unit,d.advice_unit_ratio ylxs,
+        d.advice_unit usage_unit,d.advice_unit_ratio dwxs,d.RECOM_USAGE yongfa,d.recom_rate order_freq,
+        case when d.MEASURE='1' then '1' else '0' end dlcgbz,'1' freq_flag,'1' price_flag,
+        case when d.DRUG_TYPE_CODE ='03' then '1' else '0' end as herbal_flag,'1' order_flag,'1' order_item_type,
+        '00' item_flag_cd,'正常医嘱' item_flag_name,
+        case when yb.zfbl is null then 100 else yb.zfbl end as zfbl,case when yb.xmdj is null then '自费' else yb.xmdj end as ybsm,
+        d.PRE_AUTH,d.DRUG_TUMOR,d.CONTROL_CLASS,dd.data_tag CONTROL_CLASS_name,d.DRUG_ANTI
+        from TM_PA_DRUGDICT d
+        left join TM_PA_PRODUCER p on d.MANUFACTURER = p.DETAIL_CD and d.org_cd = p.org_cd
+        left join YY_BZBM_XMDZ_YP yb on d.drug_cd = yb.xmbh
+        left join TM_PA_DRUG_TYPE dt on d.ORG_CD=dt.org_cd and d.DRUG_TYPE_CODE = dt.drug_type_code
+        left join tm_bs_dict_data dd on d.drug_anti = dd.data_val and dd.dict_type = 's135'
+        where d.org_cd = #{orgCd}
+        and d.drug_cd = #{drugCd}
+    </select>
+
+    <select id="selectDrugDictByCds" parameterType="string" resultMap="DrugAndClinMap">
+        select d.ORG_CD||d.DRUG_CD id,d.ORG_CD,d.DRUG_CD, d.DRUG_NAME,'01' ORDER_CLASS_CD,'药疗' ORDER_CLASS_NAME,d.DRUG_TYPE_CODE,
+        d.DRUG_TYPE_NAME,d.standard,d.pym,d.dosage_form drug_form,d.DRUG_SKIN psfl,
+        case when d.DRUG_HIGHRISK='1' then '0' when d.DRUG_HIGHRISK is null then '0' else '1' end HIGH_RISK_FLAG,
+        d.DRUG_BASIC jbywbz,p.detail_name sccj,d.advice_unit unit,d.advice_unit_ratio ylxs,
+        d.advice_unit usage_unit,d.advice_unit_ratio dwxs,d.RECOM_USAGE yongfa,d.recom_rate order_freq,
+        case when d.MEASURE='1' then '1' else '0' end dlcgbz,'1' freq_flag,'1' price_flag,
+        case when d.DRUG_TYPE_CODE ='03' then '1' else '0' end as herbal_flag,'1' order_flag,'1' order_item_type,
+        '00' item_flag_cd,'正常医嘱' item_flag_name,
+        case when yb.zfbl is null then 100 else yb.zfbl end as zfbl,case when yb.xmdj is null then '自费' else yb.xmdj end as ybsm,
+        d.PRE_AUTH,d.DRUG_TUMOR,d.CONTROL_CLASS,dd.data_tag CONTROL_CLASS_name,d.DRUG_ANTI
+        from TM_PA_DRUGDICT d
+        left join TM_PA_PRODUCER p on d.MANUFACTURER = p.DETAIL_CD and d.org_cd = p.org_cd
+        left join YY_BZBM_XMDZ_YP yb on d.drug_cd = yb.xmbh
+        left join TM_PA_DRUG_TYPE dt on d.ORG_CD=dt.org_cd and d.DRUG_TYPE_CODE = dt.drug_type_code
+        left join tm_bs_dict_data dd on d.drug_anti = dd.data_val and dd.dict_type = 's135'
+        where d.org_cd = #{orgCd}
+        and d.drug_cd in
+        <foreach collection="drugCdList" item="drugCd" open="(" separator="," close=")">
+            #{drugCd}
+        </foreach>
+    </select>
+
+    <select id="selectDrugListForOperation" parameterType="string" resultMap="DrugAndClinMap">
+        select a.stock_no id,a.ORG_CD,a.DRUG_CD, a.DRUG_NAME,'01' ORDER_CLASS_CD,'药疗' ORDER_CLASS_NAME,a.DRUG_TYPE_CODE,
+        a.DRUG_TYPE_NAME,d.standard,d.pym,a.RETAIL_PRICE price,a.DEPT_CODE perform_Dep_Code,b.dept_name perform_Dep_name,
+        d.dosage_form drug_form,d.DRUG_SKIN psfl,case when d.DRUG_HIGHRISK='1' then '0' when d.DRUG_HIGHRISK is null then '0' else '1' end HIGH_RISK_FLAG,
+        d.DRUG_BASIC jbywbz,p.detail_name sccj,a.STOCK_NO,TRUNC(a.STORE_NUM/a.MIN_UNIT_RATIO,0) as sl,
+        TRUNC(a.VALID_NUM/a.MIN_UNIT_RATIO,0) as xcsl,d.advice_unit_ratio ylxs,
+        d.advice_unit usage_unit,d.RECOM_USAGE yongfa,d.recom_rate order_freq,
+        case when d.MEASURE='1' then '1' else '0' end dlcgbz,'1' freq_flag,'1' price_flag,
+        case when a.DRUG_TYPE_CODE ='03' then '1' else '0' end as herbal_flag,'1' order_flag,'1' order_item_type,
+        '00' item_flag_cd,'正常医嘱' item_flag_name,
+        case when yb.zfbl is null then 100 else yb.zfbl end as zfbl,case when yb.xmdj is null then '自费' else yb.xmdj end as ybsm,
+        d.PRE_AUTH,d.DRUG_TUMOR,d.CONTROL_CLASS,dd.data_tag CONTROL_CLASS_name,d.DRUG_ANTI,
+        -- d.hos_unit unit,d.HOS_UNIT_RATIO dwxs 药房分装系数(0住院 1门诊)
+        case when b.DEP_RATIO = '0' then d.HOS_UNIT_RATIO else d.OUTPAT_UNIT_RATIO end as dwxs,
+        case when b.DEP_RATIO = '0' then d.hos_unit else d.OUTPAT_UNIT end as unit
+        from tm_pa_drug_stock_dept a
+        left join TM_PA_DRUGDICT d on d.DRUG_CD = a.DRUG_CD and a.org_cd = d.org_cd
+        left join TM_BS_DEPT b on a.dept_code = b.DEPT_CODE
+        left join TM_PA_PRODUCER p on d.MANUFACTURER = p.DETAIL_CD and d.org_cd = p.org_cd
+        left join YY_BZBM_XMDZ_YP yb on d.drug_cd = yb.xmbh
+        left join TM_PA_DRUG_TYPE dt on a.ORG_CD=dt.org_cd and a.DRUG_TYPE_CODE = dt.drug_type_code
+        left join tm_bs_dict_data dd on d.drug_anti = dd.data_val and dd.dict_type = 's135'
+        where a.valid_flag = '1' and (a.VALIDITY_PERIOD is null or a.VALIDITY_PERIOD >= sysdate ) and a.valid_num > 0
+        <if test="performDepCode != null and performDepCode != ''">
+            and a.dept_code = #{performDepCode}
+        </if>
+        <if test="keyWord != null and keyWord != ''">
+            and (d.drug_name like concat(concat('%', #{keyWord}), '%')
+             or d.pym like concat(concat('%', #{keyWord}), '%')
+            or d.drug_cd like concat(concat('%', #{keyWord}), '%')
+            <if test="keyWordUpper != null and keyWordUpper != ''">
+                or d.drug_name like concat(concat('%', #{keyWord}), '%')
+                or d.pym like concat(concat('%', #{keyWord}), '%')
+                or d.drug_cd like concat(concat('%', #{keyWordUpper}), '%')
+            </if>
+             )
+        </if>
+    </select>
+
+    <select id="selectHisDrugStockList" parameterType="string" resultMap="DrugAndClinMap">
+        select drug_cd DRUG_CD,sum(valid_num) xcsl from V_TM_PA_DRUG_STOCK_DEPT
+        where dept_code = #{execDeptCd}
+        and drug_cd in
+        <foreach collection="drugCodeList" item="drugCode" open="(" separator="," close=")">
+            #{drugCode}
+        </foreach>
+        group by drug_cd
+    </select>
+
+    <select id="selectHisDrugStockByStockList" parameterType="string" resultMap="DrugAndClinMap">
+        select drug_cd DRUG_CD, stock_no,valid_num/MIN_UNIT_RATIO xcsl from TM_PA_DRUG_STOCK_DEPT
+        where dept_code = #{execDeptCd}
+        and (
+        <foreach collection="list" item="item" open="" separator=" or " close="">
+            (drug_cd = #{item.drugCd} and stock_no = #{item.stockNo})
+        </foreach>
+        )
+    </select>
+
+    <resultMap id="TmPaDrugPreMap" type="com.emr.project.esSearch.domain.TmPaDrugPre">
+        <result column="ORG_CD" property="orgCd" />
+        <result column="PRE_CD" property="preCd" />
+        <result column="DET_TYPE" property="detType" />
+        <result column="CONTROL" property="control" />
+        <result column="SEGMENT" property="segment" />
+        <result column="INTERFACE" property="innerInterface" />
+        <result column="PROMPT" property="prompt" />
+    </resultMap>
+    <resultMap id="TmPaDrugPreDetailMap" type="com.emr.project.esSearch.domain.TmPaDrugPreDetail">
+        <result column="ORG_CD" property="orgCd" />
+        <result column="PRE_CD" property="preCd" />
+        <result column="ITEM_NO" property="itemNo" />
+        <result column="ITEM_NAME" property="itemName" />
+    </resultMap>
+    <select id="selectDrugPreByCd" parameterType="string" resultMap="TmPaDrugPreMap">
+        select * from tm_pa_drug_pre where STATE = 1 and org_cd = #{orgCd} and pre_cd = #{preCd}
+    </select>
+    <select id="selectDrugPreDetailListByCd" parameterType="string" resultMap="TmPaDrugPreDetailMap">
+        select * from tm_pa_drug_pre_detail where org_cd = #{orgCd} and pre_cd = #{preCd}
+    </select>
+
+    <resultMap id="PharmacyResult" type="PharmacyVo">
+        <result property="pharmacyCode"    column="pharmacyCode"    />
+        <result property="pharmacyName"    column="pharmacyName"    />
+        <result property="pharmacyFlag"    column="pharmacyFlag"    />
+    </resultMap>
+    <select id="selectPharmacyListByDept" parameterType="string" resultMap="PharmacyResult">
+        select d.dept_name as pharmacyName, d.dept_code as pharmacyCode, d.PHARMACY_TYPE as pharmacyFlag
+        from tm_bs_dept d
+        left join TM_BS_DEPT_PHARMACY dp on d.dept_code = dp.PHARMACY_CODE
+        left join tm_bs_dept bd on bd.dept_code = dp.DEPT_CODE
+        where d.hospital_no = #{orgCd} and dp.dept_code = #{deptCode}
+        order by to_number(dp.sort_number),d.SORT_ORDER,d.DEPT_CODE
+    </select>
+    <select id="selectPharmacyListByDeptByFlag" parameterType="string" resultMap="PharmacyResult">
+        select d.dept_name as pharmacyName, d.dept_code as pharmacyCode, d.PHARMACY_TYPE as pharmacyFlag
+        from tm_bs_dept d
+        left join TM_BS_DEPT_PHARMACY dp on d.dept_code = dp.PHARMACY_CODE
+        left join tm_bs_dept bd on bd.dept_code = dp.DEPT_CODE
+        where d.hospital_no = #{orgCd} and dp.dept_code = #{deptCode} and dp.IN_FLAG = '1'
+        order by to_number(dp.sort_number),d.SORT_ORDER,d.DEPT_CODE
+    </select>
+
+    <insert id="batchInsert" parameterType="TmPaFreeze">
+        insert all
+        <foreach collection="tmPaFreezeList" item="item">
+            into tm_pa_freeze
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orgCd != null">org_cd,</if>
+                <if test="item.freezeSerial != null">freeze_serial,</if>
+                <if test="item.wareCode != null">ware_code,</if>
+                <if test="item.drugCd != null">drug_cd,</if>
+                <if test="item.drugName != null">drug_name,</if>
+                <if test="item.standard != null">standard,</if>
+                <if test="item.manufacturer != null">manufacturer,</if>
+                <if test="item.packUnits != null">pack_units,</if>
+                <if test="item.minUnitRatio != null">min_unit_ratio,</if>
+                <if test="item.purPrice != null">pur_price,</if>
+                <if test="item.retailPrice != null">retail_price,</if>
+                freeze_date,
+                <if test="item.freezeSourceCd != null">freeze_source_cd,</if>
+                <if test="item.freezeSourceName != null">freeze_source_name,</if>
+                <if test="item.freezeDept != null">freeze_dept,</if>
+                <if test="item.freezeOperCd != null">freeze_oper_cd,</if>
+                <if test="item.freezeOperName != null">freeze_oper_name,</if>
+                <if test="item.stockNo != null">stock_no,</if>
+                <if test="item.thawDate != null">thaw_date,</if>
+                <if test="item.thawOperCd != null">thaw_oper_cd,</if>
+                <if test="item.thawOperName != null">thaw_oper_name,</if>
+                <if test="item.thawWayCd != null">thaw_way_cd,</if>
+                <if test="item.thawWayName != null">thaw_way_name,</if>
+                <if test="item.freezeNum != null">freeze_Num,</if>
+                <if test="item.minUnit != null">min_Unit,</if>
+                <if test="item.freezeId != null">freeze_Id,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orgCd != null">#{item.orgCd},</if>
+                <if test="item.freezeSerial != null">#{item.freezeSerial},</if>
+                <if test="item.wareCode != null">#{item.wareCode},</if>
+                <if test="item.drugCd != null">#{item.drugCd},</if>
+                <if test="item.drugName != null">#{item.drugName},</if>
+                <if test="item.standard != null">#{item.standard},</if>
+                <if test="item.manufacturer != null">#{item.manufacturer},</if>
+                <if test="item.packUnits != null">#{item.packUnits},</if>
+                <if test="item.minUnitRatio != null">#{item.minUnitRatio},</if>
+                <if test="item.purPrice != null">#{item.purPrice},</if>
+                <if test="item.retailPrice != null">#{item.retailPrice},</if>
+                sysdate,
+                <if test="item.freezeSourceCd != null">#{item.freezeSourceCd},</if>
+                <if test="item.freezeSourceName != null">#{item.freezeSourceName},</if>
+                <if test="item.freezeDept != null">#{item.freezeDept},</if>
+                <if test="item.freezeOperCd != null">#{item.freezeOperCd},</if>
+                <if test="item.freezeOperName != null">#{item.freezeOperName},</if>
+                <if test="item.stockNo != null">#{item.stockNo},</if>
+                <if test="item.thawDate != null">#{item.thawDate},</if>
+                <if test="item.thawOperCd != null">#{item.thawOperCd},</if>
+                <if test="item.thawOperName != null">#{item.thawOperName},</if>
+                <if test="item.thawWayCd != null">#{item.thawWayCd},</if>
+                <if test="item.thawWayName != null">#{item.thawWayName},</if>
+                <if test="item.freezeNum != null">#{item.freezeNum},</if>
+                <if test="item.minUnit != null">#{item.minUnit},</if>
+                <if test="item.freezeId != null">#{item.freezeId},</if>
+            </trim>
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <resultMap id="TmPaFreezeMap" type="TmPaFreeze">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="freezeSerial"    column="freeze_serial"    />
+        <result property="wareCode"    column="ware_code"    />
+        <result property="drugCd"    column="drug_cd"    />
+        <result property="drugName"    column="drug_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="packUnits"    column="pack_units"    />
+        <result property="minUnitRatio"    column="min_unit_ratio"    />
+        <result property="purPrice"    column="pur_price"    />
+        <result property="retailPrice"    column="retail_price"    />
+        <result property="freezeDate"    column="freeze_date"    />
+        <result property="freezeSourceCd"    column="freeze_source_cd"    />
+        <result property="freezeSourceName"    column="freeze_source_name"    />
+        <result property="freezeDept"    column="freeze_dept"    />
+        <result property="freezeOperCd"    column="freeze_oper_cd"    />
+        <result property="freezeOperName"    column="freeze_oper_name"    />
+        <result property="stockNo"    column="stock_no"    />
+        <result property="thawDate"    column="thaw_date"    />
+        <result property="thawOperCd"    column="thaw_oper_cd"    />
+        <result property="thawOperName"    column="thaw_oper_name"    />
+        <result property="thawWayCd"    column="thaw_way_cd"    />
+        <result property="thawWayName"    column="thaw_way_name"    />
+        <result property="freezeNum"    column="freeze_num"    />
+        <result property="minUnit"    column="min_unit"    />
+        <result property="freezeId"    column="freeze_id"    />
+    </resultMap>
+    <select id="selectFreezeList" parameterType="FreezeQueryReq" resultMap="TmPaFreezeMap">
+        select * from tm_pa_freeze f where org_cd = #{orgCd} and drug_cd = #{drugCd}
+        <if test="deptCode != null and deptCode != ''">
+            and ware_code = #{deptCode}
+        </if>
+        <if test="freezeSerialList!=null and freezeSerialList.size > 0 and freezeIdList == null">
+            and f.FREEZE_SERIAL in
+            <foreach collection="freezeSerialList" item="freezeSerial" open="(" separator="," close=")">
+                #{freezeSerial}
+            </foreach>
+            and f.freeze_id is null
+        </if>
+        <if test="freezeSerialList!=null and freezeSerialList.size > 0 and freezeIdList != null and freezeIdList.size > 0">
+            and f.FREEZE_SERIAL in
+            <foreach collection="freezeSerialList" item="freezeSerial" open="(" separator="," close=")">
+                #{freezeSerial}
+            </foreach>
+            and f.FREEZE_ID in
+            <foreach collection="freezeIdList" item="freezeId" open="(" separator="," close=")">
+                #{freezeId}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectCheckOrderFirst" resultType="com.emr.project.PASS.domain.mk.PassCheckDrug">
+        select rtrim(y.fzxs) fzxs,rtrim(y.dw) dw,rtrim(y.ypbm) ypbm,l.hsxm,l.jzxm
+        from yy_p_ypwh y left join yy_p_lbdz l on y.lb = l.lb
+        <where>
+            <if test="list !=null and list.size()>0">
+                and y.ypbm in
+                <foreach collection="list" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <delete id="delFreezesByOrderNo" parameterType="string">
+        delete tm_pa_freeze where freeze_serial = #{orderNo} and freeze_id is null
+    </delete>
+
+    <select id="selectNewOrderFreezeList" parameterType="string" resultMap="TmPaFreezeMap">
+        select * from tm_pa_freeze where freeze_serial = #{orderNo} and freeze_id is null
+    </select>
+
+    <select id="selectFreezeListByTakeDrugListIds" parameterType="string" resultMap="TmPaFreezeMap">
+        select * from tm_pa_freeze where freeze_id in
+        <foreach collection="takeDrugListIds" item="takeDrugListId" open="(" separator="," close=")">
+            #{takeDrugListId}
+        </foreach>
+    </select>
+
+    <resultMap id="PassCheckDrugMap" type="PassCheckDrug">
+        <result column="hsxm" property="hsxm"/>
+        <result column="ypbm" property="ypbm"/>
+    </resultMap>
+    <select id="selectDrugsCostType" parameterType="string" resultMap="PassCheckDrugMap">
+        select dt.cost_zy hsxm, dd.drug_cd ypbm from tm_pa_drugdict dd
+        left join tm_pa_drug_type dt on dd.org_cd=dt.org_cd and dd.drug_type_code = dt.drug_type_code
+        where dd.org_cd = #{orgCd}
+        and dd.drug_cd in
+        <foreach collection="drugCdList" item="drugCd" open="(" close=")" separator=",">
+            #{drugCd}
+        </foreach>
+    </select>
+
+    <update id="updateFreezeOrderNoByRearrange">
+        <foreach collection="list" item="item" index="index" separator=";"  open="begin" close=";end;">
+            update tm_pa_freeze set freeze_serial = #{item.freezeSerial} where freeze_id = #{item.freezeId}
+        </foreach>
+    </update>
+</mapper>

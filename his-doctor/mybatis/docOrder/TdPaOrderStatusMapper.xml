@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TdPaOrderStatusMapper">
+
+    <resultMap type="TdPaOrderStatus" id="TdPaOrderStatusResult">
+        <result property="patientWardNo"    column="patient_ward_no"    />
+        <result property="patientDepCode"    column="patient_dep_code"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderGroupNo"    column="order_group_no"    />
+        <result property="orderSortNumber"    column="order_sort_number"    />
+        <result property="orderClassCode"    column="order_class_code"    />
+        <result property="operationType"    column="operation_type"    />
+        <result property="operationTypeName"    column="operation_type_name"    />
+        <result property="operationTime"    column="operation_time"    />
+        <result property="operatorType"    column="operator_type"    />
+        <result property="operatorCode"    column="operator_code"    />
+        <result property="operatorNo"    column="operator_no"    />
+        <result property="operatorName"    column="operator_name"    />
+        <result property="operatorSignFlag"    column="operator_sign_flag"    />
+        <result property="operatorDesc"    column="operator_desc"    />
+        <result property="signId"    column="sign_id"    />
+    </resultMap>
+
+    <sql id="selectTdPaOrderStatusVo">
+        select patient_ward_no, patient_dep_code, patient_id, case_no, hospitalized_count, admission_no, order_no, order_group_no, order_sort_number, order_class_code, operation_type, operation_type_name, operation_time, operator_type, operator_code, operator_no, operator_name, operator_sign_flag, operator_desc, sign_id from td_pa_order_status
+    </sql>
+
+    <select id="selectTdPaOrderStatusList" parameterType="TdPaOrderStatus" resultMap="TdPaOrderStatusResult">
+        <include refid="selectTdPaOrderStatusVo"/>
+        <where>
+            <if test="patientWardNo != null  and patientWardNo != ''"> and patient_ward_no = #{patientWardNo}</if>
+            <if test="patientDepCode != null  and patientDepCode != ''"> and patient_dep_code = #{patientDepCode}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="hospitalizedCount != null "> and hospitalized_count = #{hospitalizedCount}</if>
+            <if test="admissionNo != null  and admissionNo != ''"> and admission_no = #{admissionNo}</if>
+            <if test="orderClassCode != null  and orderClassCode != ''"> and order_class_code = #{orderClassCode}</if>
+            <if test="operationTypeName != null  and operationTypeName != ''"> and operation_type_name like concat(concat('%', #{operationTypeName}), '%')</if>
+            <if test="operationTime != null "> and operation_time = #{operationTime}</if>
+            <if test="operatorType != null  and operatorType != ''"> and operator_type = #{operatorType}</if>
+            <if test="operatorCode != null  and operatorCode != ''"> and operator_code = #{operatorCode}</if>
+            <if test="operatorNo != null  and operatorNo != ''"> and operator_no = #{operatorNo}</if>
+            <if test="operatorName != null  and operatorName != ''"> and operator_name like concat(concat('%', #{operatorName}), '%')</if>
+            <if test="operatorSignFlag != null  and operatorSignFlag != ''"> and operator_sign_flag = #{operatorSignFlag}</if>
+            <if test="operatorDesc != null  and operatorDesc != ''"> and operator_desc = #{operatorDesc}</if>
+            <if test="signId != null "> and sign_id = #{signId}</if>
+        </where>
+    </select>
+
+    <select id="selectTdPaOrderStatusById" parameterType="String" resultMap="TdPaOrderStatusResult">
+        <include refid="selectTdPaOrderStatusVo"/>
+        where order_no = #{orderNo}
+        order by operation_time
+    </select>
+
+    <insert id="insertTdPaOrderStatus" parameterType="TdPaOrderStatus">
+        insert into td_pa_order_status
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientWardNo != null">patient_ward_no,</if>
+            <if test="patientDepCode != null">patient_dep_code,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="caseNo != null">case_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="admissionNo != null">admission_no,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="orderGroupNo != null">order_group_no,</if>
+            <if test="orderSortNumber != null">order_sort_number,</if>
+            <if test="orderClassCode != null">order_class_code,</if>
+            <if test="operationType != null">operation_type,</if>
+            <if test="operationTypeName != null">operation_type_name,</if>
+            <if test="operationTime != null">operation_time,</if>
+            <if test="operatorType != null">operator_type,</if>
+            <if test="operatorCode != null">operator_code,</if>
+            <if test="operatorNo != null">operator_no,</if>
+            <if test="operatorName != null">operator_name,</if>
+            <if test="operatorSignFlag != null">operator_sign_flag,</if>
+            <if test="operatorDesc != null">operator_desc,</if>
+            <if test="signId != null">sign_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientWardNo != null">#{patientWardNo},</if>
+            <if test="patientDepCode != null">#{patientDepCode},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="caseNo != null">#{caseNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="admissionNo != null">#{admissionNo},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderGroupNo != null">#{orderGroupNo},</if>
+            <if test="orderSortNumber != null">#{orderSortNumber},</if>
+            <if test="orderClassCode != null">#{orderClassCode},</if>
+            <if test="operationType != null">#{operationType},</if>
+            <if test="operationTypeName != null">#{operationTypeName},</if>
+            <if test="operationTime != null">#{operationTime},</if>
+            <if test="operatorType != null">#{operatorType},</if>
+            <if test="operatorCode != null">#{operatorCode},</if>
+            <if test="operatorNo != null">#{operatorNo},</if>
+            <if test="operatorName != null">#{operatorName},</if>
+            <if test="operatorSignFlag != null">#{operatorSignFlag},</if>
+            <if test="operatorDesc != null">#{operatorDesc},</if>
+            <if test="signId != null">#{signId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTdPaOrderStatus" parameterType="TdPaOrderStatus">
+        update td_pa_order_status
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null">id = #{id},</if>
+            <if test="patientWardNo != null">patient_ward_no = #{patientWardNo},</if>
+            <if test="patientDepCode != null">patient_dep_code = #{patientDepCode},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="caseNo != null">case_no = #{caseNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count = #{hospitalizedCount},</if>
+            <if test="admissionNo != null">admission_no = #{admissionNo},</if>
+            <if test="orderGroupNo != null">order_group_no = #{orderGroupNo},</if>
+            <if test="orderSortNumber != null">order_sort_number = #{orderSortNumber},</if>
+            <if test="orderClassCode != null">order_class_code = #{orderClassCode},</if>
+            <if test="operationType != null">operation_type = #{operationType},</if>
+            <if test="operationTypeName != null">operation_type_name = #{operationTypeName},</if>
+            <if test="operationTime != null">operation_time = #{operationTime},</if>
+            <if test="operatorType != null">operator_type = #{operatorType},</if>
+            <if test="operatorCode != null">operator_code = #{operatorCode},</if>
+            <if test="operatorNo != null">operator_no = #{operatorNo},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+            <if test="operatorSignFlag != null">operator_sign_flag = #{operatorSignFlag},</if>
+            <if test="operatorDesc != null">operator_desc = #{operatorDesc},</if>
+            <if test="signId != null">sign_id = #{signId},</if>
+        </trim>
+        where order_no = #{orderNo}
+    </update>
+
+    <delete id="deleteTdPaOrderStatusById" parameterType="String">
+        delete from td_pa_order_status where order_no = #{orderNo}
+    </delete>
+
+    <delete id="deleteTdPaOrderStatusByIds" parameterType="String">
+        delete from td_pa_order_status where order_no in
+        <foreach item="orderNo" collection="array" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </delete>
+
+    <select id="selectByOrderNoList" resultType="String" resultMap="TdPaOrderStatusResult">
+        select * from (
+            select row_number() over (partition by order_no order by operation_time desc) row_num,patient_ward_no, patient_dep_code, patient_id, case_no, hospitalized_count, admission_no, order_no, order_group_no, order_sort_number, order_class_code, operation_type, operation_type_name, operation_time, operator_type, operator_code, operator_no, operator_name, operator_sign_flag, operator_desc, sign_id
+            from td_pa_order_status
+            where order_no in
+            <foreach collection="orderNoList" item="orderNo" open="(" separator="," close=")">
+                #{orderNo}
+            </foreach>
+        ) a where a.row_num = 1
+    </select>
+
+    <insert id="insertList" parameterType="TdPaOrderStatus">
+        insert all
+        <foreach collection="list" item="item">
+            into td_pa_order_status
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.patientWardNo != null">patient_ward_no,</if>
+                <if test="item.patientDepCode != null">patient_dep_code,</if>
+                <if test="item.patientId != null">patient_id,</if>
+                <if test="item.caseNo != null">case_no,</if>
+                <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+                <if test="item.admissionNo != null">admission_no,</if>
+                <if test="item.orderNo != null">order_no,</if>
+                <if test="item.orderGroupNo != null">order_group_no,</if>
+                <if test="item.orderSortNumber != null">order_sort_number,</if>
+                <if test="item.orderClassCode != null">order_class_code,</if>
+                <if test="item.operationType != null">operation_type,</if>
+                <if test="item.operationTypeName != null">operation_type_name,</if>
+                <if test="item.operationTime != null">operation_time,</if>
+                <if test="item.operatorType != null">operator_type,</if>
+                <if test="item.operatorCode != null">operator_code,</if>
+                <if test="item.operatorNo != null">operator_no,</if>
+                <if test="item.operatorName != null">operator_name,</if>
+                <if test="item.operatorSignFlag != null">operator_sign_flag,</if>
+                <if test="item.operatorDesc != null">operator_desc,</if>
+                <if test="item.signId != null">sign_id,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.patientWardNo != null">#{item.patientWardNo},</if>
+                <if test="item.patientDepCode != null">#{item.patientDepCode},</if>
+                <if test="item.patientId != null">#{item.patientId},</if>
+                <if test="item.caseNo != null">#{item.caseNo},</if>
+                <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+                <if test="item.admissionNo != null">#{item.admissionNo},</if>
+                <if test="item.orderNo != null">#{item.orderNo},</if>
+                <if test="item.orderGroupNo != null">#{item.orderGroupNo},</if>
+                <if test="item.orderSortNumber != null">#{item.orderSortNumber},</if>
+                <if test="item.orderClassCode != null">#{item.orderClassCode},</if>
+                <if test="item.operationType != null">#{item.operationType},</if>
+                <if test="item.operationTypeName != null">#{item.operationTypeName},</if>
+                <if test="item.operationTime != null">#{item.operationTime},</if>
+                <if test="item.operatorType != null">#{item.operatorType},</if>
+                <if test="item.operatorCode != null">#{item.operatorCode},</if>
+                <if test="item.operatorNo != null">#{item.operatorNo},</if>
+                <if test="item.operatorName != null">#{item.operatorName},</if>
+                <if test="item.operatorSignFlag != null">#{item.operatorSignFlag},</if>
+                <if test="item.operatorDesc != null">#{item.operatorDesc},</if>
+                <if test="item.signId != null">#{item.signId},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateTdPaOrderStatusByOrderNoList" parameterType="String">
+        update td_pa_order_status set OPERATION_TYPE = #{operationType}, OPERATION_TYPE_NAME = #{operationTypeName}, OPERATION_TIME = #{currDate}
+        <if test="operatorDesc != null">,OPERATOR_DESC = #{operatorDesc}</if>
+        where order_no in
+        <foreach collection="orderNoList" item="orderNo" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+    </update>
+
+    <select id="selectByOperationTypes" parameterType="String" resultMap="TdPaOrderStatusResult">
+        select a.* from (
+        select row_number() over (partition by i.order_no order by s.operation_time desc,i.order_group_no desc) row_num,
+        s.patient_ward_no, s.patient_dep_code, s.patient_id, s.case_no, s.hospitalized_count, s.admission_no, s.order_no, s.order_group_no,
+        s.order_sort_number, s.order_class_code, s.operation_type, s.operation_type_name, s.operation_time, s.operator_type, s.operator_code,
+        s.operator_no, s.operator_name, s.operator_sign_flag, s.operator_desc, s.sign_id,i.order_type
+        from td_pa_order_status s
+        left join td_pa_order_item i on s.order_no = i.order_no and i.patient_id = #{patientId}
+        where s.patient_id = #{patientId}
+        ) a
+        WHERE row_num = 1
+        and ((a.order_type = '1' and a.OPERATION_TYPE in ('1','2','3')) or (a.order_type = '2' and a.OPERATION_TYPE = '1') )
+    </select>
+
+    <select id="selectByOrderNoListAndStatusList" parameterType="String" resultMap="TdPaOrderStatusResult">
+        select patient_ward_no, patient_dep_code, patient_id, case_no, hospitalized_count, admission_no,
+               order_no, order_group_no, order_sort_number, order_class_code, operation_type, operation_type_name,
+               operation_time, operator_type, operator_code, operator_no, operator_name, operator_sign_flag,
+               operator_desc, sign_id from td_pa_order_status
+        where order_no in
+        <foreach collection="orderNoList" item="orderNo" open="(" separator="," close=")">
+            #{orderNo}
+        </foreach>
+        <if test="operationTypeList != null and operationTypeList.size > 0">
+            and operation_type in
+            <foreach collection="operationTypeList" item="operationType" open="(" separator="," close=")">
+                #{operationType}
+            </foreach>
+        </if>
+    </select>
+    <select id="getOrderStatus" parameterType="java.lang.String"  resultType="java.lang.Integer">
+    select order_status
+    from
+      td_pa_order_item
+    where  order_no = #{orderNo,jdbcType=VARCHAR}
+      and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+  </select>
+    <select id="selectOrderType" resultType="java.lang.String">
+        select ORDER_TYPE from td_pa_order_item where order_no =#{orderNo,jdbcType=VARCHAR}
+        and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+        and order_group_no=#{orderGroupNo,jdbcType=VARCHAR} and rowNum=1
+    </select>
+    <update id="updateItemTime" parameterType="com.emr.project.docOrder.domain.TdPaOrderItem">
+        update td_pa_order_item
+        <set>
+            <if test="orderStatus != null">
+                order_Status = #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAuditTime != null">
+                order_audit_time = #{orderAuditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderAuditDoc != null">
+                order_audit_doc = #{orderAuditDoc,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDealTime != null">
+                order_deal_time = #{orderDealTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderDealDoc != null">
+                order_deal_doc = #{orderDealDoc,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDealDocName != null">
+                order_deal_doc_name = #{orderDealDocName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderExecuteTime != null">
+                order_execute_time = #{orderExecuteTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderExecuteDoc != null">
+                order_execute_doc = #{orderExecuteDoc,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStopTime != null">
+                order_Stop_Time = #{orderStopTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderStopDoc != null">
+                order_Stop_Doc = #{orderStopDoc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where order_no =#{orderNo,jdbcType=VARCHAR}
+        and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+        and order_group_no=#{orderGroupNo,jdbcType=VARCHAR}
+    </update>
+    <update id="updateItemOrderStatus">
+        update td_pa_order_item set order_Status = #{orderStatus,jdbcType=VARCHAR},ORDER_EXECUTE_TIME=null,ORDER_EXECUTE_DOC=null,
+        ORDER_EXECUTE_DOC_NAME=null,ORDER_DEAL_TIME=null,ORDER_DEAL_DOC=null,ORDER_DEAL_DOC_NAME=null
+        where order_no =#{orderNo,jdbcType=VARCHAR}
+        and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+        and order_group_no=#{orderGroupNo,jdbcType=VARCHAR}
+    </update>
+    <update id="updateItemOrderCheckStatus">
+        update td_pa_order_item set order_Status = #{orderStatus,jdbcType=VARCHAR},
+        ORDER_AUDIT_TIME=null,ORDER_AUDIT_DOC=null,ORDER_AUDIT_DOC_NAME=null,ORDER_EXECUTE_TIME=null ,
+        ORDER_EXECUTE_DOC=null,ORDER_EXECUTE_DOC_NAME=null,ORDER_DEAL_TIME=null,ORDER_DEAL_DOC=null,ORDER_DEAL_DOC_NAME=null
+        where order_no =#{orderNo,jdbcType=VARCHAR}
+        and order_sort_number=#{orderSortNumber,jdbcType=VARCHAR}
+        and order_group_no=#{orderGroupNo,jdbcType=VARCHAR}
+    </update>
+    <insert id="insertSelective" parameterType="com.emr.project.docOrder.domain.TdPaOrderStatus">
+        insert into td_pa_order_status
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="orderGroupNo != null">
+                order_group_no,
+            </if>
+            <if test="orderSortNumber != null">
+                order_sort_number,
+            </if>
+            <if test="operationType != null">
+                operation_type,
+            </if>
+            <if test="operationType != null">
+                operation_type_name,
+            </if>
+            <if test="operationTime != null">
+                operation_time,
+            </if>
+            <if test="operatorType != null">
+                operator_type,
+            </if>
+            <if test="operatorCode != null">
+                operator_code,
+            </if>
+            <if test="operatorNo != null">
+                operator_no,
+            </if>
+            <if test="operatorName != null">
+                operator_name,
+            </if>
+            <if test="operatorSignFlag != null">
+                operator_sign_flag,
+            </if>
+            <if test="operatorDesc != null">
+                operator_desc,
+            </if>
+            <if test="patientWardNo != null">
+                patient_ward_no,
+            </if>
+            <if test="patientDepCode != null">
+                patient_dep_code,
+            </if>
+            <if test="caseNo != null">
+                case_no,
+            </if>
+            <if test="admissionNo != null">
+                admission_no,
+            </if>
+            <if test="hospitalizedCount != null">
+                hospitalized_count,
+            </if>
+            <if test="orderClassCode != null">
+                order_class_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id,jdbcType=VARCHAR},
+            --       seq_td_pa_order_status.nextval,
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderGroupNo != null">
+                #{orderGroupNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderSortNumber != null">
+                #{orderSortNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="operationType != null">
+                #{operationType,jdbcType=INTEGER},
+            </if>
+            <if test="operationTypeName != null">
+                #{operationTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="operationTime != null">
+                #{operationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorType != null">
+                #{operatorType,jdbcType=INTEGER},
+            </if>
+            <if test="operatorCode != null">
+                #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorNo != null">
+                #{operatorNo,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorName != null">
+                #{operatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorSignFlag != null">
+                #{operatorSignFlag,jdbcType=INTEGER},
+            </if>
+            <if test="operatorDesc != null">
+                #{operatorDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="patientWardNo != null">
+                #{patientWardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="patientDepCode != null">
+                #{patientDepCode,jdbcType=VARCHAR},
+            </if>
+            <if test="caseNo != null">
+                #{caseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="admissionNo != null">
+                #{admissionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="hospitalizedCount != null">
+                #{hospitalizedCount,jdbcType=INTEGER},
+            </if>
+            <if test="orderClassCode != null">
+                #{orderClassCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

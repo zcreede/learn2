@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.operation.mapper.PriceYyMapper">
+    <resultMap id="BaseResultMap" type="com.emr.project.operation.domain.PriceYy">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="hospital_no" jdbcType="VARCHAR" property="hospitalNo" />
+        <result column="item_no" jdbcType="VARCHAR" property="itemNo" />
+        <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+        <result column="item_name_pym" jdbcType="VARCHAR" property="itemNamePym" />
+        <result column="standard_code" jdbcType="VARCHAR" property="standardCode" />
+        <result column="standard_name" jdbcType="VARCHAR" property="standardName" />
+        <result column="item_no_Suffix" jdbcType="VARCHAR" property="itemNoSuffix" />
+        <result column="standard_name_pym" jdbcType="VARCHAR" property="standardNamePym" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="specs" jdbcType="VARCHAR" property="specs" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="price1" jdbcType="DECIMAL" property="price1" />
+        <result column="price2" jdbcType="DECIMAL" property="price2" />
+        <result column="price3" jdbcType="DECIMAL" property="price3" />
+        <result column="out_flag" jdbcType="VARCHAR" property="outFlag" />
+        <result column="out_upper" jdbcType="VARCHAR" property="outUpper" />
+        <result column="hos_flag" jdbcType="VARCHAR" property="hosFlag" />
+        <result column="hos_upper" jdbcType="VARCHAR" property="hosUpper" />
+        <result column="account_upper" jdbcType="VARCHAR" property="accountUpper" />
+        <result column="material_flag" jdbcType="VARCHAR" property="materialFlag" />
+        <result column="dep_exec_no" jdbcType="VARCHAR" property="depExecNo" />
+        <result column="compose_flag" jdbcType="VARCHAR" property="composeFlag" />
+        <result column="special_rate" jdbcType="DECIMAL" property="specialRate" />
+        <result column="medical_record1" jdbcType="VARCHAR" property="medicalRecord1" />
+        <result column="medical_record2" jdbcType="VARCHAR" property="medicalRecord2" />
+        <result column="waring_number" jdbcType="DECIMAL" property="waringNumber" />
+        <result column="item_connotation" jdbcType="DECIMAL" property="itemConnotation" />
+        <result column="item_except" jdbcType="DECIMAL" property="itemExcept" />
+        <result column="item_other" jdbcType="DECIMAL" property="itemOther" />
+        <result column="item_code_yb" jdbcType="DECIMAL" property="itemCodeYb" />
+    </resultMap>
+    <!-- 根据条件获取价格列表 -->
+    <!--  20210621 添加数据类型 standardCode-->
+    <select id="getPriceList" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+            t1.HOSPITAL_NO,t1.ID,t1.ITEM_NO,t1.ITEM_NAME,
+            t1.ITEM_NAME_PYM,t1.STANDARD_CODE,t1.STANDARD_NAME,
+            t1.ITEM_NO_SUFFIX,t1.STANDARD_NAME_PYM,t1.PRICE,
+            t1.STANDARD,t1.UNIT,t1.PRICE1,t1.PRICE2,t1.PRICE3,
+            t1.OUT_FLAG,t1.OUT_UPPER,t1.HOS_FLAG,t1.HOS_UPPER,
+            t1.MATERIAL_FLAG,t1.DEP_EXEC_NO,t1.COMPOSE_FLAG,
+            t1.SPECIAL_RATE,t1.MEDICAL_RECORD1,t1.MEDICAL_RECORD2,
+            t1.WARING_NUMBER,t1.ITEM_CODE_YB,t5.name AS hos_upper_name,
+        t5.code AS account_upper
+        from TM_BS_PRICE_YY t1
+        left join tm_BS_account_third t5 ON t1.hos_upper = t5.code
+        where t1.HOS_FLAG = '1'
+        <if test="code != null and code.trim() != ''">
+            and (t1.standard_name_pym like concat( concat('%', #{code}), '%')
+            or t1.standard_name like concat( concat('%', #{code}), '%')
+            or t1.standard_code like concat( concat('%', #{code}), '%'))
+        </if>
+    </select>
+
+    <select id="getPriceListCount" parameterType="java.util.Map" resultType="integer">
+        select count(1)
+        from TM_BS_PRICE_YY t1
+        left join tm_BS_account_third t5 ON t1.hos_upper = t5.code
+        where t1.HOS_FLAG = '1'
+        <if test="code != null and code.trim() != ''">
+            and (t1.standard_name_pym like concat( concat('%', #{code}), '%')
+            or t1.standard_name like concat( concat('%', #{code}), '%')
+            or t1.standard_code like concat( concat('%', #{code}), '%'))
+        </if>
+    </select>
+
+    <select id="selectListByItemNoList" parameterType="String" resultMap="BaseResultMap">
+        select a.*,b.sec_item_code as Account_upper
+        from TM_BS_PRICE_YY a
+        left join tm_BS_account_third_dygx b on a.hos_upper = b.third_code and sec_code = '04'
+        where item_no in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="getByCpNo" resultMap="PriceYyJzXmVoMap" parameterType="java.lang.String">
+        select  t1.*,t3.dept_name dep_name,t5.sec_item_name as hos_upper_name,t4.name,t4.code,t5.sec_item_code as account_upper,b.amount orderDose
+        from TM_BS_CLIN_ITEM_MAIN a ,TM_BS_CLIN_ITEM_DETAIL b ,TM_BS_PRICE_YY t1
+        left join TM_BS_DEPT t3 on t3.dept_code = t1.dep_exec_no
+        left join tm_BS_account_third_dygx t5 on t1.hos_upper = t5.third_code and t5.sec_code = '04'
+        left join tm_BS_account_third t4 on t5.third_code = t4.code
+        where a.item_cd = b.item_cd and b.charge_code = t1.item_no and a.item_cd = #{chargeNo,jdbcType=VARCHAR}
+        <if test="subjectFlag != null">
+            and b.sub_Flag=#{subjectFlag,jdbcType=DECIMAL}
+        </if>
+    </select>
+
+    <select id="getByStandardCode" parameterType="java.util.Map" resultMap="PriceYyJzXmVoMap">
+        select t1.*,t3.dept_name dep_name,t5.sec_item_name as hos_upper_name,t4.name,t4.code,t5.sec_item_code as account_upper
+        from TM_BS_PRICE_YY t1
+        left join TM_BS_DEPT t3 on t3.dept_code = t1.dep_exec_no
+        left join tm_BS_account_third_dygx t5 on t1.hos_upper = t5.third_code and sec_code = '04'
+        left join tm_BS_account_third t4 on t5.third_code = t4.code
+        where  t1.standard_code = #{standardCode,jdbcType=VARCHAR}
+        <if test="chargeNo != null and chargeNo != ''">
+            and t1.item_no = #{chargeNo,jdbcType=VARCHAR}
+        </if>
+        and rownum = 1
+    </select>
+    <resultMap id="PriceYyJzXmVoMap" type="com.emr.project.operation.domain.vo.PriceYyJzXmVo" extends="BaseResultMap">
+        <result column="hos_upper_name" jdbcType="VARCHAR" property="hosUpperName" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+    </resultMap>
+    <!-- 根据条件获取价格one -->
+    <select id="getByCode" parameterType="java.util.Map" resultMap="PriceYyJzXmVoMap">
+    select t1.*,t3.sec_item_name as hos_upper_name,t4.name,t4.code,t3.sec_item_code as account_upper from TM_BS_PRICE_YY t1
+    left join tm_BS_account_third_dygx t3 on t1.hos_upper = t3.third_code and sec_code = '04'
+    left join tm_BS_account_third t4 on t3.third_code = t4.code
+    where t1.item_no = #{item_no,jdbcType=VARCHAR} and rownum = 1
+  </select>
+</mapper>
+

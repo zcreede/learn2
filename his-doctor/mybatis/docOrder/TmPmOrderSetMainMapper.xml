@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.docOrder.mapper.TmPmOrderSetMainMapper">
+
+    <resultMap type="TmPmOrderSetMain" id="TmPmOrderSetMainResult">
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="setCd"    column="set_cd"    />
+        <result property="setName"    column="set_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="shareType"    column="share_type"    />
+        <result property="shareObject"    column="share_object"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="setType"    column="set_type"    />
+        <result property="groupSort"    column="group_sort"    />
+    </resultMap>
+<resultMap id="TmPmOrderSetMainVoResult" type="TmPmOrderSetMainVo" extends="TmPmOrderSetMainResult">
+
+</resultMap>
+<resultMap type="DrugAndClin" id="DrugAndClinResult">
+    <result property="id"    column="set_cd"    />
+    <result property="hospitalCode"    column="hospital_code"    />
+    <result property="cpNo"    column="set_cd"    />
+    <result property="cpName"    column="set_name"    />
+    <result property="orderClassCode"    column="orderClassCode"    />
+    <result property="orderClassName"    column="orderClassName"    />
+    <result property="inputstrphtc"    column="inputstrphtc"    />
+    <result property="herbalFlag"    column="herbalFlag"    />
+    <result property="orderFlag"    column="orderFlag"    />
+</resultMap>
+    <sql id="selectTmPmOrderSetMainVo">
+        select hospital_code, set_cd, set_name, inputstrphtc, share_type, share_object, enabled, cre_per_code, cre_per_name,
+               cre_date, alt_per_code, alt_per_name, alt_date,set_type, group_sort from tm_pm_order_set_main
+    </sql>
+
+    <select id="selectTmPmOrderSetMainList" parameterType="TmPmOrderSetMain" resultMap="TmPmOrderSetMainVoResult">
+        <include refid="selectTmPmOrderSetMainVo"/>
+        <where>
+            and (is_ods = '0' or is_ods is null)
+            <if test="hospitalCode != null  and hospitalCode != ''"> and hospital_code = #{hospitalCode}</if>
+            <if test="setName != null  and setName != ''"> and set_name like concat(concat('%', #{setName}), '%')</if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="shareType != null  and shareType != ''"> and share_type = #{shareType}</if>
+            <if test="shareObject != null  and shareObject != ''"> and share_object = #{shareObject}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="setType != null and setType!=''"> and set_type = #{setType}</if>
+            <if test="deptCode!=null and deptCode!='' and docCode!=null and docCode!=''">
+                and (share_Object=#{deptCode} or share_Object=#{docCode} or share_Object='000000')
+            </if>
+        </where>
+        order by group_sort*1
+    </select>
+
+    <select id="selectMaxgroupSort" resultType="String">
+        select max(group_sort) from tm_pm_order_set_main
+    </select>
+
+    <select id="selectTmPmOrderSetMainById" parameterType="String" resultMap="TmPmOrderSetMainResult">
+        <include refid="selectTmPmOrderSetMainVo"/>
+        where set_cd = #{setCd}
+    </select>
+
+    <insert id="insertTmPmOrderSetMain" parameterType="TmPmOrderSetMainVo">
+        insert into tm_pm_order_set_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code,</if>
+            <if test="setCd != null">set_cd,</if>
+            <if test="setName != null">set_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="shareType != null">share_type,</if>
+            <if test="shareObject != null">share_object,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="setType != null and setType!=''">set_type,</if>
+            <if test="groupSort != null">group_sort,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospitalCode != null">#{hospitalCode},</if>
+            <if test="setCd != null">#{setCd},</if>
+            <if test="setName != null">#{setName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="shareType != null">#{shareType},</if>
+            <if test="shareObject != null">#{shareObject},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="setType != null and setType!=''">#{setType},</if>
+            <if test="groupSort != null">#{groupSort},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmPmOrderSetMain" parameterType="TmPmOrderSetMain">
+        update tm_pm_order_set_main
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospitalCode != null">hospital_code = #{hospitalCode},</if>
+            <if test="setName != null">set_name = #{setName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="shareType != null">share_type = #{shareType},</if>
+            <if test="shareObject != null">share_object = #{shareObject},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="groupSort != null">group_sort = #{groupSort},</if>
+        </trim>
+        where set_cd = #{setCd}
+    </update>
+
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update tm_pm_order_set_main
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="item.hospitalCode != null">hospital_code = #{item.hospitalCode},</if>
+                <if test="item.setName != null">set_name = #{item.setName},</if>
+                <if test="item.inputstrphtc != null">inputstrphtc = #{item.inputstrphtc},</if>
+                <if test="item.shareType != null">share_type = #{item.shareType},</if>
+                <if test="item.shareObject != null">share_object = #{item.shareObject},</if>
+                <if test="item.setType != null">set_type = #{item.setType},</if>
+                <if test="item.enabled != null">enabled = #{item.enabled},</if>
+                <if test="item.crePerCode != null">cre_per_code = #{item.crePerCode},</if>
+                <if test="item.crePerName != null">cre_per_name = #{item.crePerName},</if>
+                <if test="item.creDate != null">cre_date = #{item.creDate},</if>
+                <if test="item.altPerCode != null">alt_per_code = #{item.altPerCode},</if>
+                <if test="item.altPerName != null">alt_per_name = #{item.altPerName},</if>
+                <if test="item.altDate != null">alt_date = #{item.altDate},</if>
+                <if test="item.isOds != null">is_ods = #{item.isOds},</if>
+                <if test="item.diseaseTypeCd != null">disease_type_cd = #{item.diseaseTypeCd},</if>
+                <if test="item.groupSort != null">group_sort = #{item.groupSort},</if>
+            </trim>
+            where set_cd = #{item.setCd}
+        </foreach>
+    </update>
+
+    <delete id="deleteTmPmOrderSetMainById" parameterType="String">
+        delete from tm_pm_order_set_main where set_cd = #{setCd}
+    </delete>
+
+    <delete id="deleteTmPmOrderSetMainByIds" parameterType="String">
+        delete from tm_pm_order_set_main where set_cd in
+        <foreach item="setCd" collection="array" open="(" separator="," close=")">
+            #{setCd}
+        </foreach>
+    </delete>
+    <select id="selectOrderSetListByClassCd" parameterType="TmPmOrderSetMainVo" resultMap="TmPmOrderSetMainVoResult">
+        select * from tm_pm_order_set_main
+        where ENABLED='1' and (is_ods = '0' or is_ods is null)
+        <if test="shareType != null  and shareType != ''"> and share_type = #{shareType}</if>
+        <if test="shareObject != null  and shareObject != ''"> and share_object = #{shareObject}</if>
+        <if test="setType != null and setType!=''"> and set_type = #{setType}</if>
+        <if test="setName != null  and setName != ''">
+            and (set_name like concat(concat('%', #{setName}), '%') or inputstrphtc like concat(concat('%', #{setName}), '%'))
+        </if>
+    </select>
+
+    <select id="selectDetailListByType" parameterType="TmPmOrderSetMain" resultMap="TmPmOrderSetMainResult">
+        <include refid="selectTmPmOrderSetMainVo"/>
+        <where>
+            <if test="shareType != null  and shareType != ''"> and share_type = #{shareType}</if>
+            <if test="shareObject != null  and shareObject != ''"> and share_object = #{shareObject}</if>
+            <if test="setType != null and setType!=''"> and set_type = #{setType}</if>
+            <if test="setName != null  and setName != ''">
+                and (set_name like concat(concat('%', #{setName}), '%') or inputstrphtc like concat(concat('%', #{setName}), '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEsItemSetList" parameterType="TmPmOrderSetMain" resultMap="DrugAndClinResult">
+        select hospital_code, set_cd, set_name, inputstrphtc,'00' as orderClassCode,'组套' as orderClassName,'0' as herbalFlag,'1' as orderFlag from tm_pm_order_set_main
+        <where>
+            and enabled='1' and (is_ods = '0' or is_ods is null)
+            <if test="setType != null and setType!=''"> and set_type = #{setType}</if>
+            <if test="deptCode!=null and deptCode!='' and docCode!=null and docCode!=''">
+                and (share_Object=#{deptCode} or share_Object=#{docCode} or share_Object='000000')
+            </if>
+        </where>
+    </select>
+</mapper>

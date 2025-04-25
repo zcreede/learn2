@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.tmpm.mapper.TmPmSpecMapper">
+
+    <resultMap type="TmPmSpec" id="TmPmSpecResult">
+        <result property="id"    column="id"    />
+        <result property="specCd"    column="spec_cd"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="specClassCd"    column="spec_class_cd"    />
+        <result property="specClassName"    column="spec_class_name"    />
+        <result property="specDeterminerCd"    column="spec_determiner_cd"    />
+        <result property="specDeterminerName"    column="spec_determiner_name"    />
+        <result property="specReq"    column="spec_req"    />
+        <result property="sort"    column="sort"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="examSex"    column="EXAM_SEX"    />
+    </resultMap>
+
+    <sql id="selectTmPmSpecVo">
+        select id, spec_cd, spec_name, inputstrphtc, spec_class_cd, spec_class_name, spec_determiner_cd, spec_determiner_name, spec_req, sort, enabled, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,EXAM_SEX from TM_BS_SPEC
+    </sql>
+
+    <select id="selectTmPmSpecList" parameterType="TmPmSpec" resultMap="TmPmSpecResult">
+        <include refid="selectTmPmSpecVo"/>
+        <where>
+            <if test="specCd != null  and specCd != ''"> and spec_cd = #{specCd}</if>
+            <if test="specName != null  and specName != ''">
+             and (spec_name like concat(concat('%', #{specName}), '%') or inputstrphtc like concat(concat('%', #{specName}), '%'))
+            </if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="specClassCd != null  and specClassCd != ''"> and spec_class_cd = #{specClassCd}</if>
+            <if test="specClassName != null  and specClassName != ''"> and spec_class_name like concat(concat('%', #{specClassName}), '%')</if>
+            <if test="specDeterminerCd != null  and specDeterminerCd != ''"> and spec_determiner_cd = #{specDeterminerCd}</if>
+            <if test="specDeterminerName != null  and specDeterminerName != ''"> and spec_determiner_name like concat(concat('%', #{specDeterminerName}), '%')</if>
+            <if test="specReq != null  and specReq != ''"> and spec_req = #{specReq}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+
+    <select id="selectTmPmSpecById" parameterType="Long" resultMap="TmPmSpecResult">
+        <include refid="selectTmPmSpecVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectTmPmSpecListByVo" parameterType="com.emr.project.tmpm.domain.vo.TmPmSpecVo" resultMap="TmPmSpecResult">
+        <include refid="selectTmPmSpecVo"/>
+        <where>
+            <if test="specCd != null  and specCd != ''"> and spec_cd = #{specCd}</if>
+            <if test="specName != null  and specName != ''">
+                and (spec_name like concat(concat('%', #{specName}), '%') or inputstrphtc like concat(concat('%', #{specName}), '%'))
+            </if>
+            <if test="inputstrphtc != null  and inputstrphtc != ''"> and inputstrphtc = #{inputstrphtc}</if>
+            <if test="specClassCd != null  and specClassCd != ''"> and spec_class_cd = #{specClassCd}</if>
+            <if test="specClassName != null  and specClassName != ''"> and spec_class_name like concat(concat('%', #{specClassName}), '%')</if>
+            <if test="specDeterminerCd != null  and specDeterminerCd != ''"> and spec_determiner_cd = #{specDeterminerCd}</if>
+            <if test="specDeterminerName != null  and specDeterminerName != ''"> and spec_determiner_name like concat(concat('%', #{specDeterminerName}), '%')</if>
+            <if test="specReq != null  and specReq != ''"> and spec_req = #{specReq}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="enabled != null  and enabled != ''"> and enabled = #{enabled}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="list != null and list.size()>0">
+                and EXAM_SEX in
+                <foreach collection="list" separator="," open="(" close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertTmPmSpec" parameterType="TmPmSpec">
+        insert into TM_BS_SPEC
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="specCd != null">spec_cd,</if>
+            <if test="specName != null">spec_name,</if>
+            <if test="inputstrphtc != null">inputstrphtc,</if>
+            <if test="specClassCd != null">spec_class_cd,</if>
+            <if test="specClassName != null">spec_class_name,</if>
+            <if test="specDeterminerCd != null">spec_determiner_cd,</if>
+            <if test="specDeterminerName != null">spec_determiner_name,</if>
+            <if test="specReq != null">spec_req,</if>
+            <if test="sort != null">sort,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="specCd != null">#{specCd},</if>
+            <if test="specName != null">#{specName},</if>
+            <if test="inputstrphtc != null">#{inputstrphtc},</if>
+            <if test="specClassCd != null">#{specClassCd},</if>
+            <if test="specClassName != null">#{specClassName},</if>
+            <if test="specDeterminerCd != null">#{specDeterminerCd},</if>
+            <if test="specDeterminerName != null">#{specDeterminerName},</if>
+            <if test="specReq != null">#{specReq},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTmPmSpec" parameterType="TmPmSpec">
+        update TM_BS_SPEC
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specCd != null">spec_cd = #{specCd},</if>
+            <if test="specName != null">spec_name = #{specName},</if>
+            <if test="inputstrphtc != null">inputstrphtc = #{inputstrphtc},</if>
+            <if test="specClassCd != null">spec_class_cd = #{specClassCd},</if>
+            <if test="specClassName != null">spec_class_name = #{specClassName},</if>
+            <if test="specDeterminerCd != null">spec_determiner_cd = #{specDeterminerCd},</if>
+            <if test="specDeterminerName != null">spec_determiner_name = #{specDeterminerName},</if>
+            <if test="specReq != null">spec_req = #{specReq},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTmPmSpecById" parameterType="Long">
+        delete from TM_BS_SPEC where id = #{id}
+    </delete>
+
+    <delete id="deleteTmPmSpecByIds" parameterType="String">
+        delete from TM_BS_SPEC where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectBySpecCdList" parameterType="String" resultMap="TmPmSpecResult">
+        select * from TM_BS_SPEC where spec_cd in
+        <foreach collection="specCdList" item="specCd" open="(" separator="," close=")">
+            #{specCd}
+        </foreach>
+    </select>
+</mapper>

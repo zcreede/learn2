@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.mrhp.mapper.TmCmRulesMapper">
+
+    <resultMap type="com.emr.project.mrhp.domain.TmCmRules" id="TmCmRulesResult">
+        <result property="id"    column="id"    />
+        <result property="ruleCode"    column="rule_code"    />
+        <result property="ruleQcFieids"    column="rule_qc_fieids"    />
+        <result property="ruleLocationFieids"    column="rule_location_fieids"    />
+        <result property="ruleLocationFieidsSort"    column="rule_location_fieids_sort"    />
+        <result property="ruleSourceCode"    column="rule_source_code"    />
+        <result property="ruleSourceName"    column="rule_source_name"    />
+        <result property="ruleTypeCode"    column="rule_type_code"    />
+        <result property="ruleTypeName"    column="rule_type_name"    />
+        <result property="ruleType"    column="rule_type"    />
+        <result property="ruleName"    column="rule_name"    />
+        <result property="ruleDesc"    column="rule_desc"    />
+        <result property="ruleScript"    column="rule_script"    />
+        <result property="ruleState"    column="rule_state"    />
+        <result property="forceType"    column="force_type"    />
+        <result property="forceTypeName"    column="force_type_name"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+    </resultMap>
+
+    <sql id="selectTmCmRulesVo">
+        select id, rule_code, rule_qc_fieids, rule_location_fieids, rule_location_fieids_sort, rule_source_code, rule_source_name, rule_type_code, rule_type_name, rule_type, rule_name, rule_desc, rule_script, rule_state, force_type, force_type_name, del_flag, alt_date, alt_per_code, alt_per_name, cre_date, cre_per_code, cre_per_name from tm_cm_rules
+    </sql>
+
+    <select id="selectTmCmRulesList" parameterType="TmCmRules" resultMap="TmCmRulesResult">
+        <include refid="selectTmCmRulesVo"/>
+        <where>
+            and DEL_FLAG= '0'
+            <if test="ruleCode != null  and ruleCode != ''"> and rule_code = #{ruleCode}</if>
+            <if test="ruleQcFieids != null  and ruleQcFieids != ''"> and rule_qc_fieids = #{ruleQcFieids}</if>
+            <if test="ruleLocationFieids != null  and ruleLocationFieids != ''"> and rule_location_fieids = #{ruleLocationFieids}</if>
+            <if test="ruleLocationFieidsSort != null "> and rule_location_fieids_sort = #{ruleLocationFieidsSort}</if>
+            <if test="ruleSourceCode != null  and ruleSourceCode != ''"> and rule_source_code = #{ruleSourceCode}</if>
+            <if test="ruleSourceName != null  and ruleSourceName != ''"> and rule_source_name like concat(concat('%', #{ruleSourceName}), '%')</if>
+            <if test="ruleTypeCode != null  and ruleTypeCode != ''"> and rule_type_code = #{ruleTypeCode}</if>
+            <if test="ruleTypeName != null  and ruleTypeName != ''"> and rule_type_name like concat(concat('%', #{ruleTypeName}), '%')</if>
+            <if test="ruleType != null  and ruleType != ''"> and rule_type = #{ruleType}</if>
+            <if test="ruleName != null  and ruleName != ''"> and rule_name like concat(concat('%', #{ruleName}), '%')</if>
+            <if test="ruleDesc != null  and ruleDesc != ''"> and rule_desc like concat(concat('%', #{ruleDesc}), '%')</if>
+            <if test="ruleScript != null  and ruleScript != ''"> and rule_script = #{ruleScript}</if>
+            <if test="ruleState != null  and ruleState != ''"> and rule_state = #{ruleState}</if>
+            <if test="forceType != null  and forceType != ''"> and force_type = #{forceType}</if>
+            <if test="forceTypeName != null  and forceTypeName != ''"> and force_type_name like concat(concat('%', #{forceTypeName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+        </where>
+        order by rule_code
+    </select>
+
+</mapper>

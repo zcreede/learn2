@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.AppClinMapper">
+    
+    <resultMap type="AppClin" id="AppClinResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="appCd"    column="app_cd"    />
+        <result property="appNo"    column="app_no"    />
+        <result property="maNo"    column="ma_no"    />
+        <result property="clinItemCd"    column="clin_item_cd"    />
+        <result property="clinItemName"    column="clin_item_name"    />
+        <result property="amount"    column="amount"    />
+        <result property="money"    column="money"    />
+        <result property="itemState"    column="item_state"    />
+        <result property="clinRepDate"    column="clin_rep_date"    />
+    </resultMap>
+
+    <sql id="selectAppClinVo">
+        select id, org_cd, app_cd, app_no, ma_no, clin_item_cd, clin_item_name, amount, money, item_state, clin_rep_date from app_clin
+    </sql>
+
+    <select id="selectAppClinList" parameterType="AppClin" resultMap="AppClinResult">
+        <include refid="selectAppClinVo"/>
+        <where>  
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="appCd != null  and appCd != ''"> and app_cd = #{appCd}</if>
+            <if test="appNo != null  and appNo != ''"> and app_no = #{appNo}</if>
+            <if test="maNo != null  and maNo != ''"> and ma_no = #{maNo}</if>
+            <if test="clinItemCd != null  and clinItemCd != ''"> and clin_item_cd = #{clinItemCd}</if>
+            <if test="clinItemName != null  and clinItemName != ''"> and clin_item_name like concat(concat('%', #{clinItemName}), '%')</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="itemState != null  and itemState != ''"> and item_state = #{itemState}</if>
+            <if test="clinRepDate != null "> and clin_rep_date = #{clinRepDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppClinById" parameterType="Long" resultMap="AppClinResult">
+        <include refid="selectAppClinVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppClin" parameterType="AppClin">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_app_clin.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into app_clin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="appCd != null and appCd != ''">app_cd,</if>
+            <if test="appNo != null">app_no,</if>
+            <if test="maNo != null">ma_no,</if>
+            <if test="clinItemCd != null">clin_item_cd,</if>
+            <if test="clinItemName != null">clin_item_name,</if>
+            <if test="amount != null">amount,</if>
+            <if test="money != null">money,</if>
+            <if test="itemState != null">item_state,</if>
+            <if test="clinRepDate != null">clin_rep_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="appCd != null and appCd != ''">#{appCd},</if>
+            <if test="appNo != null">#{appNo},</if>
+            <if test="maNo != null">#{maNo},</if>
+            <if test="clinItemCd != null">#{clinItemCd},</if>
+            <if test="clinItemName != null">#{clinItemName},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="money != null">#{money},</if>
+            <if test="itemState != null">#{itemState},</if>
+            <if test="clinRepDate != null">#{clinRepDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppClin" parameterType="AppClin">
+        update app_clin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">org_cd = #{orgCd},</if>
+            <if test="appCd != null and appCd != ''">app_cd = #{appCd},</if>
+            <if test="appNo != null">app_no = #{appNo},</if>
+            <if test="maNo != null">ma_no = #{maNo},</if>
+            <if test="clinItemCd != null">clin_item_cd = #{clinItemCd},</if>
+            <if test="clinItemName != null">clin_item_name = #{clinItemName},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="itemState != null">item_state = #{itemState},</if>
+            <if test="clinRepDate != null">clin_rep_date = #{clinRepDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppClinById" parameterType="Long">
+        delete from app_clin where id = #{id}
+    </delete>
+
+    <delete id="deleteAppClinByIds" parameterType="String">
+        delete from app_clin where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertMap" parameterType="map">
+        insert into app_clin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="org_cd != null and org_cd != ''">org_cd,</if>
+            <if test="app_cd != null and app_cd != ''">app_cd,</if>
+            <if test="app_no != null and app_no != ''">app_no,</if>
+            <if test="ma_no != null and ma_no != ''">ma_no,</if>
+            <if test="clin_item_cd != null and clin_item_cd != ''">clin_item_cd,</if>
+            <if test="clin_item_name != null and clin_item_name != ''">clin_item_name,</if>
+            <if test="amount != null">amount,</if>
+            <if test="money != null">money,</if>
+            <if test="item_state != null and item_state != ''">item_state,</if>
+            <if test="clin_rep_date != null">clin_rep_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="org_cd != null and org_cd != ''">#{org_cd},</if>
+            <if test="app_cd != null and app_cd != ''">#{app_cd},</if>
+            <if test="app_no != null and app_no != ''">#{app_no},</if>
+            <if test="ma_no != null and ma_no != ''">#{ma_no},</if>
+            <if test="clin_item_cd != null and clin_item_cd != ''">#{clin_item_cd},</if>
+            <if test="clin_item_name != null and clin_item_name != ''">#{clin_item_name},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="money != null">#{money},</if>
+            <if test="item_state != null and item_state != ''">#{item_state},</if>
+            <if test="clin_rep_date != null">#{clin_rep_date},</if>
+        </trim>
+    </insert>
+
+    <update id="updateStateDateByApp" parameterType="AppClin">
+        update app_clin set item_state = #{itemState}, clin_rep_date = #{clinRepDate} where app_cd = #{appCd} and clin_item_cd = #{clinItemCd}
+    </update>
+</mapper>

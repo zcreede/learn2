@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.emr.mapper.EmrSharingMapper">
+    
+    <resultMap type="EmrSharing" id="EmrSharingResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="elemId"    column="elem_id"    />
+        <result property="elemCon"    column="elem_con"    />
+        <result property="elemName"    column="elem_name"    />
+        <result property="elemCd"    column="elem_cd"    />
+        <result property="elemTypeCd"    column="elem_type_cd"    />
+        <result property="elemConText"    column="elem_con_text"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+<resultMap id="EmrSharingVoResult" type="EmrSharingVo" extends="EmrSharingResult">
+
+</resultMap>
+    <sql id="selectEmrSharingVo">
+        select id, org_cd, patient_id, elem_id, elem_con, elem_name, elem_cd, elem_type_cd, elem_con_text, cre_per_name, cre_per_code, cre_date, alt_per_name, alt_per_code, alt_date from emr_sharing
+    </sql>
+
+    <select id="selectEmrSharingList" parameterType="EmrSharing" resultMap="EmrSharingResult">
+        <include refid="selectEmrSharingVo"/>
+        <where>  
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="elemId != null  and elemId != ''"> and elem_id = #{elemId}</if>
+            <if test="elemCon != null  and elemCon != ''"> and elem_con = #{elemCon}</if>
+            <if test="elemName != null  and elemName != ''"> and elem_name like concat(concat('%', #{elemName}), '%')</if>
+            <if test="elemCd != null  and elemCd != ''"> and elem_cd = #{elemCd}</if>
+            <if test="elemTypeCd != null  and elemTypeCd != ''"> and elem_type_cd = #{elemTypeCd}</if>
+            <if test="elemConText != null  and elemConText != ''"> and elem_con_text = #{elemConText}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectEmrSharingById" parameterType="Long" resultMap="EmrSharingResult">
+        <include refid="selectEmrSharingVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectEmrSharingListByPatientId" parameterType="String" resultMap="EmrSharingVoResult">
+        <include refid="selectEmrSharingVo"/>
+        where patient_id = #{patientId}
+    </select>
+
+    <insert id="insertEmrSharing" parameterType="EmrSharing">
+        insert into emr_sharing
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null">org_cd,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="elemId != null">elem_id,</if>
+            <if test="elemCon != null">elem_con,</if>
+            <if test="elemName != null">elem_name,</if>
+            <if test="elemCd != null">elem_cd,</if>
+            <if test="elemTypeCd != null">elem_type_cd,</if>
+            <if test="elemConText != null">elem_con_text,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="altPerName != null">alt_per_name,</if>
+            <if test="altPerCode != null">alt_per_code,</if>
+            <if test="altDate != null">alt_date,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null">#{orgCd},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="elemId != null">#{elemId},</if>
+            <if test="elemCon != null">#{elemCon},</if>
+            <if test="elemName != null">#{elemName},</if>
+            <if test="elemCd != null">#{elemCd},</if>
+            <if test="elemTypeCd != null">#{elemTypeCd},</if>
+            <if test="elemConText != null">#{elemConText},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altDate != null">#{altDate},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateEmrSharing" parameterType="EmrSharing">
+        update emr_sharing
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null">org_cd = #{orgCd},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="elemId != null">elem_id = #{elemId},</if>
+            <if test="elemCon != null">elem_con = #{elemCon},</if>
+            <if test="elemName != null">elem_name = #{elemName},</if>
+            <if test="elemCd != null">elem_cd = #{elemCd},</if>
+            <if test="elemTypeCd != null">elem_type_cd = #{elemTypeCd},</if>
+            <if test="elemConText != null">elem_con_text = #{elemConText},</if>
+            <if test="crePerName != null">cre_per_name = #{crePerName},</if>
+            <if test="crePerCode != null">cre_per_code = #{crePerCode},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrSharingById" parameterType="Long">
+        delete from emr_sharing where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrSharingByIds" parameterType="String">
+        delete from emr_sharing where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEmrSharingByPatientIdElemIds" parameterType="String">
+        delete from emr_sharing where patient_id = #{patientId} and elem_id in
+        <foreach item="elemId" collection="elemIds" open="(" separator="," close=")">
+            #{elemId}
+        </foreach>
+    </delete>
+
+    <insert id="insertList" parameterType="EmrSharing">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_sharing
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.orgCd != null and item.orgCd != ''">org_cd,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.elemId != null">elem_id,</if>
+                <if test="item.elemCon != null and item.elemCon != ''">elem_con,</if>
+                <if test="item.elemName != null and item.elemName != ''">elem_name,</if>
+                <if test="item.elemCd != null and item.elemCd != ''">elem_cd,</if>
+                <if test="item.elemTypeCd != null and item.elemTypeCd != ''">elem_type_cd,</if>
+                <if test="item.elemConText != null and item.elemConText != ''">elem_con_text,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                cre_date,
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.orgCd != null and item.orgCd != ''">#{item.orgCd},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.elemId != null">#{item.elemId},</if>
+                <if test="item.elemCon != null and item.elemCon != ''">#{item.elemCon},</if>
+                <if test="item.elemName != null and item.elemName != ''">#{item.elemName},</if>
+                <if test="item.elemCd != null and item.elemCd != ''">#{item.elemCd},</if>
+                <if test="item.elemTypeCd != null and item.elemTypeCd != ''">#{item.elemTypeCd},</if>
+                <if test="item.elemConText != null and item.elemConText != ''">#{item.elemConText},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                sysdate,
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+</mapper>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrQcCommRecordMapper">
+    
+    <resultMap type="EmrQcCommRecord" id="EmrQcCommRecordResult">
+        <result property="id"    column="id"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="mrFileId"    column="mr_file_id"    />
+        <result property="qcSection"    column="qc_section"    />
+        <result property="mrType"    column="mr_type"    />
+        <result property="mrTypeName"    column="mr_type_name"    />
+        <result property="emrEleId"    column="emr_ele_id"    />
+        <result property="emrEleName"    column="emr_ele_name"    />
+        <result property="eleContext"    column="ele_context"    />
+        <result property="flawDesc"    column="flaw_desc"    />
+        <result property="fedbDesc"    column="fedb_desc"    />
+        <result property="fedbDate"    column="fedb_date"    />
+        <result property="fedbPerId"    column="fedb_per_id"    />
+        <result property="fedbPerName"    column="fedb_per_name"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="roleCode" column="role_code"/>
+    </resultMap>
+
+    <sql id="selectEmrQcCommRecordVo">
+        select id, main_id, patient_id, mr_file_id, qc_section, mr_type, mr_type_name, emr_ele_id, emr_ele_name, ele_context, flaw_desc, fedb_desc, fedb_date, fedb_per_id, fedb_per_name, alt_per_name, alt_per_code, alt_date, cre_per_name, cre_per_code, cre_date, role_code from emr_qc_comm_record
+    </sql>
+
+    <select id="selectEmrQcCommRecordList" parameterType="EmrQcCommRecord" resultMap="EmrQcCommRecordResult">
+        <include refid="selectEmrQcCommRecordVo"/>
+        <where>  
+            <if test="mainId != null "> and main_id = #{mainId}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="mrFileId != null  and mrFileId != ''"> and mr_file_id = #{mrFileId}</if>
+            <if test="qcSection != null  and qcSection != ''"> and qc_section = #{qcSection}</if>
+            <if test="mrType != null  and mrType != ''"> and mr_type = #{mrType}</if>
+            <if test="mrTypeName != null  and mrTypeName != ''"> and mr_type_name like concat(concat('%', #{mrTypeName}), '%')</if>
+            <if test="emrEleId != null  and emrEleId != ''"> and emr_ele_id = #{emrEleId}</if>
+            <if test="emrEleName != null  and emrEleName != ''"> and emr_ele_name like concat(concat('%', #{emrEleName}), '%')</if>
+            <if test="eleContext != null  and eleContext != ''"> and ele_context = #{eleContext}</if>
+            <if test="flawDesc != null  and flawDesc != ''"> and flaw_desc = #{flawDesc}</if>
+            <if test="fedbDesc != null  and fedbDesc != ''"> and fedb_desc = #{fedbDesc}</if>
+            <if test="fedbDate != null "> and fedb_date = #{fedbDate}</if>
+            <if test="fedbPerId != null  and fedbPerId != ''"> and fedb_per_id = #{fedbPerId}</if>
+            <if test="fedbPerName != null  and fedbPerName != ''"> and fedb_per_name like concat(concat('%', #{fedbPerName}), '%')</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+             <if test="roleCode != null and roleCode != ''">and role_code = #{roleCode},</if>
+        </where>
+    </select>
+    
+    <select id="selectEmrQcCommRecordById" parameterType="Long" resultMap="EmrQcCommRecordResult">
+        <include refid="selectEmrQcCommRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectEmrQcCommRecordByMainIdList" parameterType="Long" resultMap="EmrQcCommRecordResult">
+        <include refid="selectEmrQcCommRecordVo"/>
+        where main_id in
+        <foreach collection="mainIdList" item="mainId" open="(" separator="," close=")">
+            #{mainId}
+        </foreach>
+        order by fedb_date asc
+    </select>
+        
+    <insert id="insertEmrQcCommRecord" parameterType="EmrQcCommRecord">
+        insert into emr_qc_comm_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="mainId != null">main_id,</if>
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="mrFileId != null">mr_file_id,</if>
+            <if test="qcSection != null and qcSection != ''">qc_section,</if>
+            <if test="mrType != null">mr_type,</if>
+            <if test="mrTypeName != null">mr_type_name,</if>
+            <if test="emrEleId != null">emr_ele_id,</if>
+            <if test="emrEleName != null">emr_ele_name,</if>
+            <if test="eleContext != null">ele_context,</if>
+            <if test="flawDesc != null and flawDesc != ''">flaw_desc,</if>
+            <if test="fedbDesc != null">fedb_desc,</if>
+            fedb_date,
+            <if test="fedbPerId != null">fedb_per_id,</if>
+            <if test="fedbPerName != null">fedb_per_name,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            cre_date,
+            <if test="roleCode != null and roleCode != ''">role_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="mainId != null">#{mainId},</if>
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="mrFileId != null">#{mrFileId},</if>
+            <if test="qcSection != null and qcSection != ''">#{qcSection},</if>
+            <if test="mrType != null">#{mrType},</if>
+            <if test="mrTypeName != null">#{mrTypeName},</if>
+            <if test="emrEleId != null">#{emrEleId},</if>
+            <if test="emrEleName != null">#{emrEleName},</if>
+            <if test="eleContext != null">#{eleContext},</if>
+            <if test="flawDesc != null and flawDesc != ''">#{flawDesc},</if>
+            <if test="fedbDesc != null">#{fedbDesc},</if>
+            sysdate,
+            <if test="fedbPerId != null">#{fedbPerId},</if>
+            <if test="fedbPerName != null">#{fedbPerName},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            sysdate,
+            <if test="roleCode != null and roleCode != ''">#{roleCode},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertList" parameterType="EmrQcCommRecord">
+        insert all
+        <foreach collection="list" item="item">
+            into emr_qc_comm_record
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.mainId != null">main_id,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.mrFileId != null">mr_file_id,</if>
+                <if test="item.qcSection != null and item.qcSection != ''">qc_section,</if>
+                <if test="item.mrType != null">mr_type,</if>
+                <if test="item.mrTypeName != null">mr_type_name,</if>
+                <if test="item.emrEleId != null">emr_ele_id,</if>
+                <if test="item.emrEleName != null">emr_ele_name,</if>
+                <if test="item.eleContext != null">ele_context,</if>
+                <if test="item.flawDesc != null and item.flawDesc != ''">flaw_desc,</if>
+                <if test="item.fedbDesc != null">fedb_desc,</if>
+                fedb_date,
+                <if test="item.fedbPerId != null">fedb_per_id,</if>
+                <if test="item.fedbPerName != null">fedb_per_name,</if>
+                <if test="item.crePerName != null">cre_per_name,</if>
+                <if test="item.crePerCode != null">cre_per_code,</if>
+                cre_date,
+                <if test="item.roleCode != null and item.roleCode != ''">role_code,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.mainId != null">#{item.mainId},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.mrFileId != null">#{item.mrFileId},</if>
+                <if test="item.qcSection != null and item.qcSection != ''">#{item.qcSection},</if>
+                <if test="item.mrType != null">#{item.mrType},</if>
+                <if test="item.mrTypeName != null">#{item.mrTypeName},</if>
+                <if test="item.emrEleId != null">#{item.emrEleId},</if>
+                <if test="item.emrEleName != null">#{item.emrEleName},</if>
+                <if test="item.eleContext != null">#{item.eleContext},</if>
+                <if test="item.flawDesc != null and item.flawDesc != ''">#{item.flawDesc},</if>
+                <if test="item.fedbDesc != null">#{item.fedbDesc},</if>
+                sysdate,
+                <if test="item.fedbPerId != null">#{item.fedbPerId},</if>
+                <if test="item.fedbPerName != null">#{item.fedbPerName},</if>
+                <if test="item.crePerName != null">#{item.crePerName},</if>
+                <if test="item.crePerCode != null">#{item.crePerCode},</if>
+                sysdate,
+                <if test="item.roleCode != null and item.roleCode != ''">#{item.roleCode},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateEmrQcCommRecord" parameterType="EmrQcCommRecord">
+        update emr_qc_comm_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainId != null">main_id = #{mainId},</if>
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="mrFileId != null">mr_file_id = #{mrFileId},</if>
+            <if test="qcSection != null and qcSection != ''">qc_section = #{qcSection},</if>
+            <if test="mrType != null">mr_type = #{mrType},</if>
+            <if test="mrTypeName != null">mr_type_name = #{mrTypeName},</if>
+            <if test="emrEleId != null">emr_ele_id = #{emrEleId},</if>
+            <if test="emrEleName != null">emr_ele_name = #{emrEleName},</if>
+            <if test="eleContext != null">ele_context = #{eleContext},</if>
+            <if test="flawDesc != null and flawDesc != ''">flaw_desc = #{flawDesc},</if>
+            <if test="fedbDesc != null">fedb_desc = #{fedbDesc},</if>
+            <if test="fedbDate != null">fedb_date = #{fedbDate},</if>
+            <if test="fedbPerId != null">fedb_per_id = #{fedbPerId},</if>
+            <if test="fedbPerName != null">fedb_per_name = #{fedbPerName},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            alt_date = sysdate,
+            <if test="roleCode != null and roleCode != ''">role_code = #{roleCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmrQcCommRecordById" parameterType="Long">
+        delete from emr_qc_comm_record where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrQcCommRecordByIds" parameterType="String">
+        delete from emr_qc_comm_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

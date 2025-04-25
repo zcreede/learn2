@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.SysStaUnitMapper">
+    
+    <resultMap type="SysStaUnit" id="SysStaUnitResult">
+        <result property="id"    column="id"    />
+        <result property="unitSign"    column="unit_sign"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="inputstrphtc"    column="inputstrphtc"    />
+        <result property="inputstrelse"    column="inputstrelse"    />
+        <result property="define"    column="define"    />
+        <result property="dataType"    column="data_type"    />
+        <result property="showForm"    column="show_form"    />
+        <result property="allVal"    column="all_val"    />
+        <result property="valTypeId"    column="val_type_id"    />
+        <result property="clasId"    column="clas_id"    />
+        <result property="clasName"    column="clas_name"    />
+        <result property="verNum"    column="ver_num"    />
+        <result property="regAuth"    column="reg_auth"    />
+        <result property="relEnvi"    column="rel_envi"    />
+        <result property="clasMode"    column="clas_mode"    />
+        <result property="resOrg"    column="res_org"    />
+        <result property="regState"    column="reg_state"    />
+        <result property="subOrg"    column="sub_org"    />
+        <result property="issState"    column="iss_state"    />
+        <result property="issTime"    column="iss_time"    />
+        <result property="issCd"    column="iss_cd"    />
+        <result property="issName"    column="iss_name"    />
+        <result property="unitSource"    column="unit_source"    />
+        <result property="validFlag"    column="valid_flag"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+<resultMap id="SysStaUnitVoResult" type="SysStaUnitVo" extends="SysStaUnitResult">
+    <result property="elemId"    column="elemId"    />
+    <result property="elemCd"    column="elem_cd"    />
+    <result property="elemName"    column="elem_name"    />
+    <result property="elemInputstrphtc"    column="elemInputstrphtc"    />
+    <result property="isParagraph"    column="is_paragraph"    />
+    <result property="contType"    column="cont_type"    />
+    <result property="elemQua"    column="elem_qua"    />
+    <result property="typeFlag"    column="type_flag"    />
+    <result property="sourFlag"    column="sour_flag"    />
+    <result property="validFlag"    column="valid_flag"    />
+</resultMap>
+    <sql id="selectSysStaUnitVo">
+        select id, unit_sign, unit_name, inputstrphtc, inputstrelse, define, data_type, show_form, all_val, val_type_id, clas_id, clas_name, ver_num, reg_auth, rel_envi, clas_mode, res_org, reg_state, sub_org, iss_state, iss_time, iss_cd, iss_name, unit_source, valid_flag, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from sys_sta_unit
+    </sql>
+
+    <select id="selectSysStaUnitList" parameterType="SysStaUnitVo" resultMap="SysStaUnitVoResult">
+        select ssu.id, ssu.unit_sign, ssu.unit_name, ssu.inputstrphtc, ssu.inputstrelse, ssu.define,ssu.data_type,
+        ssu.show_form, ssu.all_val, ssu.val_type_id
+        from sys_sta_unit ssu
+        <where>
+            <if test="unitName != null  and unitName != ''"> and (
+                unit_name like concat(concat('%', #{unitName}), '%')
+                or id like concat(concat('%', #{unitName}), '%')
+                or unit_sign like concat(concat('%', #{unitName}), '%')
+                )</if>
+        </where>
+    </select>
+    
+    <select id="selectSysStaUnitById" parameterType="Long" resultMap="SysStaUnitResult">
+        <include refid="selectSysStaUnitVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysStaUnit" parameterType="SysStaUnit">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT seq_sys_sta_unit.NEXTVAL as id FROM DUAL
+        </selectKey>
+        insert into sys_sta_unit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="unitSign != null and unitSign != ''">unit_sign,</if>
+            <if test="unitName != null and unitName != ''">unit_name,</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">inputstrphtc,</if>
+            <if test="inputstrelse != null and inputstrelse != ''">inputstrelse,</if>
+            <if test="define != null and define != ''">define,</if>
+            <if test="dataType != null and dataType != ''">data_type,</if>
+            <if test="showForm != null and showForm != ''">show_form,</if>
+            <if test="allVal != null">all_val,</if>
+            <if test="valTypeId != null">val_type_id,</if>
+            <if test="clasId != null and clasId != ''">clas_id,</if>
+            <if test="clasName != null and clasName != ''">clas_name,</if>
+            <if test="verNum != null and verNum != ''">ver_num,</if>
+            <if test="regAuth != null and regAuth != ''">reg_auth,</if>
+            <if test="relEnvi != null and relEnvi != ''">rel_envi,</if>
+            <if test="clasMode != null and clasMode != ''">clas_mode,</if>
+            <if test="resOrg != null and resOrg != ''">res_org,</if>
+            <if test="regState != null and regState != ''">reg_state,</if>
+            <if test="subOrg != null and subOrg != ''">sub_org,</if>
+            <if test="issState != null and issState != ''">iss_state,</if>
+            <if test="issTime != null">iss_time,</if>
+            <if test="issCd != null">iss_cd,</if>
+            <if test="issName != null">iss_name,</if>
+            <if test="unitSource != null and unitSource != ''">unit_source,</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code,</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="unitSign != null and unitSign != ''">#{unitSign},</if>
+            <if test="unitName != null and unitName != ''">#{unitName},</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">#{inputstrphtc},</if>
+            <if test="inputstrelse != null and inputstrelse != ''">#{inputstrelse},</if>
+            <if test="define != null and define != ''">#{define},</if>
+            <if test="dataType != null and dataType != ''">#{dataType},</if>
+            <if test="showForm != null and showForm != ''">#{showForm},</if>
+            <if test="allVal != null">#{allVal},</if>
+            <if test="valTypeId != null">#{valTypeId},</if>
+            <if test="clasId != null and clasId != ''">#{clasId},</if>
+            <if test="clasName != null and clasName != ''">#{clasName},</if>
+            <if test="verNum != null and verNum != ''">#{verNum},</if>
+            <if test="regAuth != null and regAuth != ''">#{regAuth},</if>
+            <if test="relEnvi != null and relEnvi != ''">#{relEnvi},</if>
+            <if test="clasMode != null and clasMode != ''">#{clasMode},</if>
+            <if test="resOrg != null and resOrg != ''">#{resOrg},</if>
+            <if test="regState != null and regState != ''">#{regState},</if>
+            <if test="subOrg != null and subOrg != ''">#{subOrg},</if>
+            <if test="issState != null and issState != ''">#{issState},</if>
+            <if test="issTime != null">#{issTime},</if>
+            <if test="issCd != null">#{issCd},</if>
+            <if test="issName != null">#{issName},</if>
+            <if test="unitSource != null and unitSource != ''">#{unitSource},</if>
+            <if test="validFlag != null and validFlag != ''">#{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">#{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysStaUnit" parameterType="SysStaUnit">
+        update sys_sta_unit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitSign != null and unitSign != ''">unit_sign = #{unitSign},</if>
+            <if test="unitName != null and unitName != ''">unit_name = #{unitName},</if>
+            <if test="inputstrphtc != null and inputstrphtc != ''">inputstrphtc = #{inputstrphtc},</if>
+            <if test="inputstrelse != null and inputstrelse != ''">inputstrelse = #{inputstrelse},</if>
+            <if test="define != null and define != ''">define = #{define},</if>
+            <if test="dataType != null and dataType != ''">data_type = #{dataType},</if>
+            <if test="showForm != null and showForm != ''">show_form = #{showForm},</if>
+            <if test="allVal != null">all_val = #{allVal},</if>
+            <if test="valTypeId != null">val_type_id = #{valTypeId},</if>
+            <if test="clasId != null and clasId != ''">clas_id = #{clasId},</if>
+            <if test="clasName != null and clasName != ''">clas_name = #{clasName},</if>
+            <if test="verNum != null and verNum != ''">ver_num = #{verNum},</if>
+            <if test="regAuth != null and regAuth != ''">reg_auth = #{regAuth},</if>
+            <if test="relEnvi != null and relEnvi != ''">rel_envi = #{relEnvi},</if>
+            <if test="clasMode != null and clasMode != ''">clas_mode = #{clasMode},</if>
+            <if test="resOrg != null and resOrg != ''">res_org = #{resOrg},</if>
+            <if test="regState != null and regState != ''">reg_state = #{regState},</if>
+            <if test="subOrg != null and subOrg != ''">sub_org = #{subOrg},</if>
+            <if test="issState != null and issState != ''">iss_state = #{issState},</if>
+            <if test="issTime != null">iss_time = #{issTime},</if>
+            <if test="issCd != null">iss_cd = #{issCd},</if>
+            <if test="issName != null">iss_name = #{issName},</if>
+            <if test="unitSource != null and unitSource != ''">unit_source = #{unitSource},</if>
+            <if test="validFlag != null and validFlag != ''">valid_flag = #{validFlag},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysStaUnitById" parameterType="Long">
+        delete from sys_sta_unit where id = #{id}
+    </delete>
+
+    <delete id="deleteSysStaUnitByIds" parameterType="String">
+        delete from sys_sta_unit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

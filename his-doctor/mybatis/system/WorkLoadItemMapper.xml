@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.system.mapper.WorkLoadItemMapper">
+
+    <resultMap type="WorkLoadItem" id="WorkLoadItemResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="itemTypeCode"    column="item_type_code"    />
+        <result property="itemTypeName"    column="item_type_name"    />
+        <result property="dataSourceId"    column="data_source_id"    />
+        <result property="databaseDesc"    column="database_desc"    />
+        <result property="sourceFromType"    column="source_from_type"    />
+        <result property="sourceFromName"    column="source_from_name"    />
+        <result property="sortNo"    column="sort_no"    />
+        <result property="status"    column="status"    />
+        <result property="sqlScript"    column="sql_script"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+    </resultMap>
+
+    <sql id="selectWorkLoadItemVo">
+        select id, org_cd, item_code, item_name, item_type_code, item_type_name, data_source_id, database_desc, source_from_type, source_from_name, sort_no, status, sql_script, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date from tm_bs_work_load_item
+    </sql>
+
+    <select id="selectWorkLoadItemList" parameterType="WorkLoadItem" resultMap="WorkLoadItemResult">
+        <include refid="selectWorkLoadItemVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_cd = #{orgCd}</if>
+            <if test="itemCode != null  and itemCode != ''"> and item_code = #{itemCode}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat(concat('%', #{itemName}), '%')</if>
+            <if test="itemTypeCode != null  and itemTypeCode != ''"> and item_type_code = #{itemTypeCode}</if>
+            <if test="itemTypeName != null  and itemTypeName != ''"> and item_type_name like concat(concat('%', #{itemTypeName}), '%')</if>
+            <if test="dataSourceId != null  and dataSourceId != ''"> and data_source_id = #{dataSourceId}</if>
+            <if test="databaseDesc != null  and databaseDesc != ''"> and database_desc = #{databaseDesc}</if>
+            <if test="sourceFromType != null  and sourceFromType != ''"> and source_from_type = #{sourceFromType}</if>
+            <if test="sourceFromName != null  and sourceFromName != ''"> and source_from_name like concat(concat('%', #{sourceFromName}), '%')</if>
+            <if test="sortNo != null "> and sort_no = #{sortNo}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="sqlScript != null  and sqlScript != ''"> and sql_script = #{sqlScript}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+        </where>
+        order by sort_no
+    </select>
+
+    <select id="selectWorkLoadItemById" parameterType="Long" resultMap="WorkLoadItemResult">
+        <include refid="selectWorkLoadItemVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectMaxCode" resultType="java.lang.String">
+        select max(item_code) from tm_bs_work_load_item where item_code like concat(#{code},'%')
+    </select>
+
+    <resultMap type="DsPreserveOutResp" id="TmDsPreserveOutResult">
+        <result property="dataSourceId"    column="id"    />
+        <result property="databaseDesc"    column="sync_name"    />
+    </resultMap>
+    <select id="selectDsPreserveOutList" resultMap="TmDsPreserveOutResult">
+        select id, sync_name from SYS_SYNC_DATASOURCE
+        where SYNC_CODE = #{dataType}
+    </select>
+    <select id="selectMaxSortNo" resultType="java.lang.Integer">
+        select max(sort_no) from tm_bs_work_load_item
+    </select>
+
+
+    <insert id="insertWorkLoadItem" parameterType="WorkLoadItem">
+        insert into tm_bs_work_load_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">org_cd,</if>
+            <if test="itemCode != null and itemCode != ''">item_code,</if>
+            <if test="itemName != null and itemName != ''">item_name,</if>
+            <if test="itemTypeCode != null and itemTypeCode != ''">item_type_code,</if>
+            <if test="itemTypeName != null and itemTypeName != ''">item_type_name,</if>
+            <if test="dataSourceId != null">data_source_id,</if>
+            <if test="databaseDesc != null">database_desc,</if>
+            <if test="sourceFromType != null and sourceFromType != ''">source_from_type,</if>
+            <if test="sourceFromName != null and sourceFromName != ''">source_from_name,</if>
+            <if test="sortNo != null">sort_no,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="sqlScript != null">sql_script,</if>
+            <if test="crePerCode != null">cre_per_code,</if>
+            <if test="crePerName != null">cre_per_name,</if>
+            cre_date,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="itemCode != null and itemCode != ''">#{itemCode},</if>
+            <if test="itemName != null and itemName != ''">#{itemName},</if>
+            <if test="itemTypeCode != null and itemTypeCode != ''">#{itemTypeCode},</if>
+            <if test="itemTypeName != null and itemTypeName != ''">#{itemTypeName},</if>
+            <if test="dataSourceId != null">#{dataSourceId},</if>
+            <if test="databaseDesc != null">#{databaseDesc},</if>
+            <if test="sourceFromType != null and sourceFromType != ''">#{sourceFromType},</if>
+            <if test="sourceFromName != null and sourceFromName != ''">#{sourceFromName},</if>
+            <if test="sortNo != null">#{sortNo},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="sqlScript != null">#{sqlScript},</if>
+            <if test="crePerCode != null">#{crePerCode},</if>
+            <if test="crePerName != null">#{crePerName},</if>
+            sysdate,
+         </trim>
+    </insert>
+
+    <update id="updateWorkLoadItem" parameterType="WorkLoadItem">
+        update tm_bs_work_load_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemCode != null and itemCode != ''">item_code = #{itemCode},</if>
+            <if test="itemName != null and itemName != ''">item_name = #{itemName},</if>
+            <if test="itemTypeCode != null and itemTypeCode != ''">item_type_code = #{itemTypeCode},</if>
+            <if test="itemTypeName != null and itemTypeName != ''">item_type_name = #{itemTypeName},</if>
+            <if test="dataSourceId != null">data_source_id = #{dataSourceId},</if>
+            <if test="databaseDesc != null">database_desc = #{databaseDesc},</if>
+            <if test="sourceFromType != null and sourceFromType != ''">source_from_type = #{sourceFromType},</if>
+            <if test="sourceFromName != null and sourceFromName != ''">source_from_name = #{sourceFromName},</if>
+            <if test="sortNo != null">sort_no = #{sortNo},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="sqlScript != null">sql_script = #{sqlScript},</if>
+            <if test="altPerCode != null">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null">alt_per_name = #{altPerName},</if>
+            alt_date = sysdate,
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkLoadItemById" parameterType="Long">
+        delete from tm_bs_work_load_item where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkLoadItemByIds" parameterType="String">
+        delete from tm_bs_work_load_item where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.pat.mapper.AlleInfoMapper">
+
+    <resultMap type="AlleInfo" id="AlleInfoResult">
+        <result property="id"    column="id"    />
+        <result property="orgCd"    column="org_cd"    />
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="alleType"    column="alle_type"    />
+        <result property="alleName"    column="alle_name"    />
+        <result property="symDesc"    column="sym_desc"    />
+        <result property="cgiSi"    column="cgi_si"    />
+        <result property="occurDate"    column="occur_date"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="alleCode"    column="alle_code"    />
+    </resultMap>
+    <resultMap id="TdNaAllergyRecordResult" type="TdNaAllergyRecord">
+        <result property="id"    column="id"    />
+        <result property="hospitalCode"    column="hospital_code"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="admissionNo"    column="admission_no"    />
+        <result property="hospitalizedCount"    column="hospitalized_count"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="patientSex"    column="patient_sex"    />
+        <result property="patientAge"    column="patient_age"    />
+        <result property="allergyCode"    column="allergy_code"    />
+        <result property="allergyName"    column="allergy_name"    />
+        <result property="allergyType"    column="allergy_type"    />
+        <result property="operatorDate"    column="operator_date"    />
+        <result property="operatorNo"    column="operator_no"    />
+        <result property="operatorName"    column="operator_name"    />
+    </resultMap>
+
+    <sql id="selectAlleInfoVo">
+select * from (
+                  select id, HOSPITAL_CODE as org_cd, CASE_NO as patient_main_id, ADMISSION_NO as patient_id, ALLERGY_TYPE as alle_type, ALLERGY_NAME as alle_name, '' as sym_desc, '' as cgi_si,
+                         OPERATOR_DATE as occur_date, OPERATOR_NO as cre_per_code, OPERATOR_NAME as cre_per_name, OPERATOR_DATE as cre_date,
+                         OPERATOR_NO as alt_per_code, OPERATOR_NAME as alt_per_name, OPERATOR_DATE as alt_date,ALLERGY_CODE as alle_code from TD_NA_ALLERGY_RECORD
+                 union all
+                  select rownum id, HOSPITAL_CODE as org_cd, CASE_NO as patient_main_id, ADMISSION_NO as patient_id, ALLERGY_TYPE as alle_type, ALLERGY_NAME as alle_name, '' as sym_desc, '' as cgi_si,
+                         OPERATOR_DATE as occur_date, OPERATOR_NO as cre_per_code, OPERATOR_NAME as cre_per_name, OPERATOR_DATE as cre_date,
+                         OPERATOR_NO as alt_per_code, OPERATOR_NAME as alt_per_name, OPERATOR_DATE as alt_date,ALLERGY_CODE as alle_code from TD_NA_ALLERGY_RECORD_H
+              )
+
+    </sql>
+
+    <select id="selectAlleInfoList" parameterType="AlleInfo" resultMap="AlleInfoResult">
+        <include refid="selectAlleInfoVo"/>
+        <where>
+            <if test="orgCd != null  and orgCd != ''"> and org_Cd = #{orgCd}</if>
+            <if test="patientMainId != null  and patientMainId != ''"> and patient_Main_Id = #{patientMainId}</if>
+            <if test="patientId != null  and patientId != ''"> and patient_Id = #{patientId}</if>
+            <if test="alleType != null  and alleType != ''"> and alle_Type = #{alleType}</if>
+            <if test="alleName != null  and alleName != ''"> and alle_Name like concat(concat('%', #{alleName}), '%')</if>
+            <if test="occurDate != null "> and occur_Date = #{occurDate}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and cre_Per_Code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and cre_Per_Name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and alt_date = #{altDate}</if>
+            <if test="alleCode != null "> and alle_code = #{alleCode}</if>
+        </where>
+        order by occur_Date
+    </select>
+
+    <select id="selectAlleInfoByPatientMainId" parameterType="String" resultMap="AlleInfoResult">
+        <include refid="selectAlleInfoVo"/>
+        where patient_Main_Id=#{recordNo}
+    </select>
+
+    <insert id="insertAlleInfo" parameterType="AlleInfo">
+        insert into TD_NA_ALLERGY_RECORD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orgCd != null and orgCd != ''">HOSPITAL_CODE,</if>
+            <if test="patientMainId != null and patientMainId != ''">CASE_NO,</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no,</if>
+            <if test="hospitalizedCount != null">hospitalized_count,</if>
+            <if test="alleType != null">ALLERGY_TYPE,</if>
+            <if test="alleName != null and alleName != ''">ALLERGY_NAME,</if>
+            <if test="crePerCode != null and crePerCode != ''">OPERATOR_NO,</if>
+            <if test="crePerName != null and crePerName != ''">OPERATOR_NAME,</if>
+            <if test="creDate != null">OPERATOR_DATE,</if>
+            <if test="altPerCode != null">OPERATOR_NO,</if>
+            <if test="altPerName != null">OPERATOR_NAME,</if>
+            <if test="altDate != null">OPERATOR_DATE,</if>
+            <if test="alleCode != null">ALLERGY_CODE,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orgCd != null and orgCd != ''">#{orgCd},</if>
+            <if test="patientMainId != null and patientMainId != ''">#{patientMainId},</if>
+            <if test="admissionNo != null and admissionNo != ''">#{admissionNo},</if>
+            <if test="hospitalizedCount != null">#{hospitalizedCount},</if>
+            <if test="alleType != null">#{alleType},</if>
+            <if test="alleName != null and alleName != ''">#{alleName},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null">#{altPerCode},</if>
+            <if test="altPerName != null">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="alleCode != null">#{alleCode},</if>
+         </trim>
+    </insert>
+    <insert id="insertAlleInfoList" parameterType="AlleInfo">
+        insert all
+        <foreach item="item" index="index" collection="list">
+         into TD_NA_ALLERGY_RECORD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">id,</if>
+            <if test="item.orgCd != null and item.orgCd != ''">HOSPITAL_CODE,</if>
+            <if test="item.patientMainId != null and item.patientMainId != ''">CASE_NO,</if>
+            <if test="item.admissionNo != null and item.admissionNo != ''">admission_no,</if>
+            <if test="item.hospitalizedCount != null">hospitalized_count,</if>
+            <if test="item.alleType != null">ALLERGY_TYPE,</if>
+            <if test="item.alleName != null and item.alleName != ''">ALLERGY_NAME,</if>
+            <if test="item.crePerCode != null and item.crePerCode != ''">OPERATOR_NO,</if>
+            <if test="item.crePerName != null and item.crePerName != ''">OPERATOR_NAME,</if>
+            <if test="item.creDate != null">OPERATOR_DATE,</if>
+            <if test="item.altPerCode != null">OPERATOR_NO,</if>
+            <if test="item.altPerName != null">OPERATOR_NAME,</if>
+            <if test="item.altDate != null">OPERATOR_DATE,</if>
+            <if test="item.alleCode != null">ALLERGY_CODE,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="item.id != null">#{item.id},</if>
+            <if test="item.orgCd != null and item.orgCd != ''">#{item.orgCd},</if>
+            <if test="item.patientMainId != null and item.patientMainId != ''">#{item.patientMainId},</if>
+            <if test="item.admissionNo != null and item.admissionNo != ''">#{item.admissionNo},</if>
+            <if test="item.hospitalizedCount != null">#{item.hospitalizedCount},</if>
+            <if test="item.alleType != null">#{item.alleType},</if>
+            <if test="item.alleName != null and item.alleName != ''">#{item.alleName},</if>
+            <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+            <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+            <if test="item.creDate != null">#{item.creDate},</if>
+            <if test="item.altPerCode != null">#{item.altPerCode},</if>
+            <if test="item.altPerName != null">#{item.altPerName},</if>
+            <if test="item.altDate != null">#{item.altDate},</if>
+            <if test="item.alleCode != null">#{item.alleCode},</if>
+         </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <update id="updateAlleInfo" parameterType="AlleInfo">
+        update TD_NA_ALLERGY_RECORD
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgCd != null and orgCd != ''">HOSPITAL_CODE = #{orgCd},</if>
+            <if test="patientMainId != null and patientMainId != ''">CASE_NO = #{patientMainId},</if>
+            <if test="admissionNo != null and admissionNo != ''">admission_no=#{admissionNo},</if>
+            <if test="hospitalizedCount != null">hospitalized_count=#{hospitalizedCount},</if>
+            <if test="alleType != null">ALLERGY_TYPE = #{alleType},</if>
+            <if test="alleName != null and alleName != ''">ALLERGY_NAME = #{alleName},</if>
+            <if test="crePerCode != null and crePerCode != ''">OPERATOR_NO = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">OPERATOR_NAME = #{crePerName},</if>
+            <if test="creDate != null">OPERATOR_DATE = #{creDate},</if>
+            <if test="altPerCode != null">OPERATOR_NO = #{altPerCode},</if>
+            <if test="altPerName != null">OPERATOR_NAME = #{altPerName},</if>
+            <if test="altDate != null">OPERATOR_DATE = #{altDate},</if>
+            <if test="alleCode != null">ALLERGY_CODE = #{alleCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAlleInfoById" parameterType="String">
+        delete from TD_NA_ALLERGY_RECORD where id = #{id}
+    </delete>
+
+    <delete id="deleteAlleInfoByPatientId" parameterType="String">
+        delete from TD_NA_ALLERGY_RECORD where ADMISSION_NO = #{patientId}
+    </delete>
+
+    <delete id="deleteAlleInfoByIds" parameterType="String">
+        delete from TD_NA_ALLERGY_RECORD where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertMap" parameterType="map">
+        insert into TD_NA_ALLERGY_RECORD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="org_cd!=null and org_cd!=''">hospital_code,</if>
+            <if test="patient_main_id!=null and patient_main_id!=''">case_no,</if>
+            <if test="admission_no!=null and admission_no!=''">admission_no,</if>
+            <if test="hospitalized_count!=null">hospitalized_count,</if>
+            <if test="alle_type!=null and alle_type!=''">ALLERGY_TYPE,</if>
+            <if test="alle_name!=null and alle_name!=''">ALLERGY_NAME,</if>
+            <if test="cre_per_code != null and cre_per_code != ''">OPERATOR_NO,</if>
+            <if test="cre_per_name != null and cre_per_name != ''">OPERATOR_NAME,</if>
+            OPERATOR_DATE,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="org_cd!=null and org_cd!=''">#{org_cd},</if>
+            <if test="patient_main_id!=null and patient_main_id!=''">#{patient_main_id},</if>
+            <if test="admission_no!=null and admission_no!=''">#{admission_no},</if>
+            <if test="hospitalized_count!=null">#{hospitalized_count},</if>
+            <if test="alle_type!=null and alle_type!=''">#{alle_type},</if>
+            <if test="alle_name!=null and alle_name!=''">#{alle_name},</if>
+            <if test="cre_per_code != null and cre_per_code != ''">#{cre_per_code},</if>
+            <if test="cre_per_name != null and cre_per_name != ''">#{cre_per_name},</if>
+            sysdate,
+        </trim>
+    </insert>
+
+    <select id="selectAlleInfosByInpNos" parameterType="String" resultMap="TdNaAllergyRecordResult">
+        select HOSPITAL_CODE, CASE_NO, ADMISSION_NO, HOSPITALIZED_COUNT, PATIENT_NAME, PATIENT_SEX, PATIENT_AGE, ALLERGY_CODE, ALLERGY_NAME, ALLERGY_TYPE, OPERATOR_DATE, OPERATOR_NO, OPERATOR_NAME from TD_NA_ALLERGY_RECORD
+        where ADMISSION_NO in
+        <foreach collection="list" item="admissionNo" open="(" separator="," close=")">
+            #{admissionNo}
+        </foreach>
+    </select>
+
+    <select id="selectAlleInfosByInpNoOrMainId" parameterType="AlleInfoVo" resultMap="AlleInfoResult">
+        <include refid="selectAlleInfoVo"/>
+        <where>
+            <if test="list != null and list.size > 0">
+                or
+                <foreach collection="list" item="allerInfo" open="" separator="or" close="">
+                    (patient_main_id = #{allerInfo.patientMainId} or patient_main_id = #{allerInfo.caseNo} or patient_id=#{allerInfo.patientId})
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByInpNoAndDrugCode" parameterType="String" resultMap="AlleInfoResult">
+        select HOSPITAL_CODE, CASE_NO, ADMISSION_NO, HOSPITALIZED_COUNT, PATIENT_NAME, PATIENT_SEX, PATIENT_AGE, ALLERGY_CODE, ALLERGY_NAME, ALLERGY_TYPE, OPERATOR_DATE, OPERATOR_NO, OPERATOR_NAME from TD_NA_ALLERGY_RECORD
+        where ADMISSION_NO = #{admissionNo} and ALLERGY_CODE = #{allergyCode}
+    </select>
+    <delete id="deleteAlleInfo" >
+        delete from alle_info
+    </delete>
+    <select id="selectHisAlleInfoList" parameterType="SqlVo" resultType="java.util.Map">
+        ${sqlStr}
+        <if test="inpNoList!=null and inpNoList.size()>0">
+            where patient_id in
+            <foreach item="item" collection="inpNoList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <delete id="deleteAlleInfoByInpNoList" >
+        delete from TD_NA_ALLERGY_RECORD where ADMISSION_NO in
+        <foreach item="id" collection="inpNoList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

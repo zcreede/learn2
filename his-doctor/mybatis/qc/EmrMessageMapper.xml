@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emr.project.qc.mapper.EmrMessageMapper">
+
+    <resultMap type="EmrMessage" id="EmrMessageResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="inpNo"    column="inp_no"    />
+        <result property="roomNo"    column="room_no"    />
+        <result property="bedNo"    column="bed_no"    />
+        <result property="deptCd"    column="dept_cd"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="msgType"    column="msg_type"    />
+        <result property="msgContent"    column="msg_content"    />
+        <result property="msgState"    column="msg_state"    />
+        <result property="busType"    column="bus_type"    />
+        <result property="busId"    column="bus_id"    />
+        <result property="crePerCode"    column="cre_per_code"    />
+        <result property="crePerName"    column="cre_per_name"    />
+        <result property="creDate"    column="cre_date"    />
+        <result property="altPerCode"    column="alt_per_code"    />
+        <result property="altPerName"    column="alt_per_name"    />
+        <result property="altDate"    column="alt_date"    />
+        <result property="doctCd"    column="doct_cd"    />
+        <result property="doctName"    column="doct_name"    />
+        <result property="eventId"    column="event_id"    />
+    </resultMap>
+
+    <resultMap id="EmrMessageVoResult" type="EmrMessageVo" extends="EmrMessageResult">
+        <result property="patientMainId"    column="patient_main_id"    />
+        <result property="mrFileId"    column="mrFileId"    />
+        <result property="mrState"    column="mr_state"    />
+        <result property="visitId"    column="VISIT_ID"    />
+        <result property="outTime"    column="OUT_TIME"    />
+        <result property="resDocCd"    column="RES_DOC_CD"    />
+        <result property="resDocName"    column="RES_DOC_NAME"    />
+        <result property="recordNo"    column="RECORD_NO"    />
+        <result property="ageY"    column="AGE_Y"    />
+        <result property="ageM"    column="AGE_M"    />
+        <result property="ageD"    column="AGE_D"    />
+        <result property="ageH"    column="AGE_H"    />
+        <result property="ageMi"    column="AGE_MI"    />
+    </resultMap>
+    <sql id="selectEmrMessageVo">
+        select id, event_id, patient_id, patient_name, inp_no, room_no, bed_no, dept_cd, dept_name, msg_type, msg_content, msg_state, bus_type, bus_id, cre_per_code, cre_per_name, cre_date, alt_per_code, alt_per_name, alt_date,doct_cd,doct_name from emr_message
+    </sql>
+
+    <select id="selectEmrMessageList" parameterType="EmrMessageVo" resultMap="EmrMessageVoResult">
+        select m.* from (
+        select em.id, em.patient_id, tam.NAME as patient_name, em.inp_no, em.room_no, em.bed_no, tam.DEPARTMENT_NO as dept_cd, tbd.dept_name, em.msg_type, em.msg_content, em.msg_state, em.bus_type, em.bus_id, em.cre_per_code,
+        em.cre_per_name, em.cre_date, em.alt_per_code, em.alt_per_name, em.alt_date,em.doct_cd,em.doct_name,pp.patient_main_id,emr.main_id as mrFileId,qf.mr_state,
+        tam.HOSPITALIZED_COUNT as visit_id,tam.LEAVE_HOSPITAL_DATE as out_time,tam.RESIDENT_CODE as res_doc_cd,tam.RESIDENT_NAME as res_doc_name,tam.ADMISSION_NO as record_no,
+        tab.PERSON_AGE as age_y,tab.AGE_MONTH as age_m,tab.AGE_DAY as age_d,tab.AGE_HOUR as age_h,tab.AGE_BRANCH as age_mi
+        from emr_message em
+            left join PAT_PERSONALINFO pp on pp.patient_id=em.patient_id
+            LEFT JOIN EMR_SUBFILE_INDEX emr ON em.bus_id=to_char(emr.id) and emr.del_flag='0'
+            left join EMR_QC_FLOW qf on qf.PATIENT_ID = em.PATIENT_ID
+            left join t_ar_medicalinformation_all tam on tam.ADMISSION_NO = em.patient_id
+            left join t_ar_baseinfomation_all tab on tab.ADMISSION_NO = em.patient_id
+            left join tm_bs_dept tbd on tbd.dept_code = tam.DEPARTMENT_NO
+        <where>
+            ((qf.MR_STATE not in ('14','16') or qf.MR_STATE is null) or (em.msg_type ='1' and em.doct_cd = tam.RESIDENT_CODE and qf.MR_STATE in('14','16')))
+            and em.patient_id in(select a.ADMISSION_NO from t_ar_medicalinformation_all a)
+            <if test="patientId != null  and patientId != ''"> and em.patient_id = #{patientId}</if>
+            <if test="eventId != null  and eventId != ''"> and em.event_id = #{eventId}</if>
+            <if test="patientName != null  and patientName != ''"> and em.patient_name like concat(concat('%', #{patientName}), '%')</if>
+            <if test="inpNo != null  and inpNo != ''"> and em.inp_no = #{inpNo}</if>
+            <if test="roomNo != null  and roomNo != ''"> and em.room_no = #{roomNo}</if>
+            <if test="bedNo != null  and bedNo != ''"> and em.bed_no = #{bedNo}</if>
+            <if test="deptCd != null  and deptCd != ''"> and em.dept_cd = #{deptCd}</if>
+            <if test="deptName != null  and deptName != ''"> and em.dept_name like concat(concat('%', #{deptName}), '%')</if>
+            <if test="msgType != null "> and em.msg_type = #{msgType}</if>
+            <if test="msgContent != null  and msgContent != ''"> and em.msg_content = #{msgContent}</if>
+            <if test="msgState != null "> and em.msg_state = #{msgState}</if>
+            <if test="busType != null "> and em.bus_type = #{busType}</if>
+            <if test="busId != null  and busId != ''"> and em.bus_id = #{busId}</if>
+            <if test="crePerCode != null  and crePerCode != ''"> and em.cre_per_code = #{crePerCode}</if>
+            <if test="crePerName != null  and crePerName != ''"> and em.cre_per_name like concat(concat('%', #{crePerName}), '%')</if>
+            <if test="creDate != null "> and em.cre_date = #{creDate}</if>
+            <if test="altPerCode != null  and altPerCode != ''"> and em.alt_per_code = #{altPerCode}</if>
+            <if test="altPerName != null  and altPerName != ''"> and em.alt_per_name like concat(concat('%', #{altPerName}), '%')</if>
+            <if test="altDate != null "> and em.alt_date = #{altDate}</if>
+            <if test="doctCd != null and doctCd !=''"> and em.doct_cd = #{doctCd}</if>
+            <if test="doctName != null and doctName!='' "> and em.doct_name = #{doctName}</if>
+            <if test="beginTime != null and endTime!=null "> and em.alt_date between #{beginTime} and #{endTime} </if>
+        </where>
+        union all
+        select a.* from (
+            select eql.id,
+            eql.patient_id,
+            tam.NAME as patient_name,
+            tam.CASE_NO as inp_no,
+            '' as room_no,
+            tam.bed_no,
+            tam.DEPARTMENT_NO as dept_cd,
+            tbd.dept_name as dept_name,
+            1 as msg_type,
+            to_char(tnb.bedid || '床'||' '||tam.NAME||' '||tam.ADMISSION_NO||' '||tbd.dept_name||  '有'||eql.mr_type_name||'缺失病历缺陷,请及时处理!') as msg_content,
+            0 as msg_state,
+            1 as bus_type,
+            null as bus_id,
+            eql.cre_per_code,
+            eql.cre_per_name,
+            eql.cre_date,
+            eql.alt_per_code,
+            eql.alt_per_name,
+            eql.alt_date,
+            eql.doct_cd,
+            eql.doct_name,
+            pp.patient_main_id,
+            to_number(eql.mr_file_id) as mrFileId,
+            qf.mr_state,
+            tam.HOSPITALIZED_COUNT as visit_id,tam.LEAVE_HOSPITAL_DATE as out_time,tam.RESIDENT_CODE as res_doc_cd,tam.RESIDENT_NAME as res_doc_name,tam.ADMISSION_NO as record_no,
+            tab.PERSON_AGE as age_y,tab.AGE_MONTH as age_m,tab.AGE_DAY as age_d,tab.AGE_HOUR as age_h,tab.AGE_BRANCH as age_mi
+            from emr_qc_list eql
+            left join PAT_PERSONALINFO pp
+            on pp.patient_id = eql.patient_id
+            left join t_ar_medicalinformation_all tam on tam.ADMISSION_NO=eql.patient_id
+            left join tm_bs_dept tbd on tbd.dept_code=tam.DEPARTMENT_NO
+            left join tm_na_beds tnb on tnb.bed_no=tam.BED_NO
+            left join EMR_QC_FLOW qf on qf.PATIENT_ID = eql.PATIENT_ID
+            left join t_ar_baseinfomation_all tab on tab.ADMISSION_NO = eql.patient_id
+            where
+                eql.qc_state in('0','3')
+                and eql.missing_file_flag='1'
+                and ((qf.MR_STATE not in ('14','16') or qf.MR_STATE is null) or (eql.doct_cd = tam.RESIDENT_CODE and qf.MR_STATE in('14','16')))
+                and eql.patient_id in(select a.ADMISSION_NO from t_ar_medicalinformation_all a)
+            ) a
+        <where>
+            <if test="patientId != null  and patientId != ''"> and a.patient_id = #{patientId}</if>
+            <if test="deptCd != null  and deptCd != ''"> and a.dept_cd = #{deptCd}</if>
+            <if test="msgType != null "> and a.msg_type = #{msgType}</if>
+            <if test="msgState != null "> and a.msg_state = #{msgState}</if>
+            <if test="busType != null "> and a.bus_type = #{busType}</if>
+            <if test="doctCd != null and doctCd !=''"> and a.doct_cd = #{doctCd}</if>
+            <if test="doctName != null and doctName!='' "> and a.doct_name = #{doctName}</if>
+        </where>
+        ) m order by m.cre_date desc
+    </select>
+
+    <select id="selectEmrMessageById" parameterType="Long" resultMap="EmrMessageResult">
+        <include refid="selectEmrMessageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEmrMessage" parameterType="EmrMessage">
+        insert into emr_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="patientId != null">patient_id,</if>
+            <if test="patientName != null">patient_name,</if>
+            <if test="inpNo != null">inp_no,</if>
+            <if test="roomNo != null">room_no,</if>
+            <if test="bedNo != null">bed_no,</if>
+            <if test="deptCd != null">dept_cd,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="msgType != null">msg_type,</if>
+            <if test="msgContent != null and msgContent != ''">msg_content,</if>
+            <if test="msgState != null">msg_state,</if>
+            <if test="busType != null">bus_type,</if>
+            <if test="busId != null">bus_id,</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code,</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name,</if>
+            <if test="creDate != null">cre_date,</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code,</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name,</if>
+            <if test="altDate != null">alt_date,</if>
+            <if test="doctCd != null and doctCd!=''">doct_cd,</if>
+            <if test="doctName != null and doctName!=''">doct_name,</if>
+            <if test="eventId != null and eventId!=''">event_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="patientId != null">#{patientId},</if>
+            <if test="patientName != null">#{patientName},</if>
+            <if test="inpNo != null">#{inpNo},</if>
+            <if test="roomNo != null">#{roomNo},</if>
+            <if test="bedNo != null">#{bedNo},</if>
+            <if test="deptCd != null">#{deptCd},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="msgType != null">#{msgType},</if>
+            <if test="msgContent != null and msgContent != ''">#{msgContent},</if>
+            <if test="msgState != null">#{msgState},</if>
+            <if test="busType != null">#{busType},</if>
+            <if test="busId != null">#{busId},</if>
+            <if test="crePerCode != null and crePerCode != ''">#{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">#{crePerName},</if>
+            <if test="creDate != null">#{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">#{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">#{altPerName},</if>
+            <if test="altDate != null">#{altDate},</if>
+            <if test="doctCd != null and doctCd!=''">#{doctCd},</if>
+            <if test="doctName != null and doctName!=''">#{doctName},</if>
+            <if test="eventId != null and eventId!=''">#{eventId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmrMessage" parameterType="EmrMessage">
+        update emr_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="inpNo != null">inp_no = #{inpNo},</if>
+            <if test="roomNo != null">room_no = #{roomNo},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="msgType != null">msg_type = #{msgType},</if>
+            <if test="msgContent != null and msgContent != ''">msg_content = #{msgContent},</if>
+            <if test="msgState != null">msg_state = #{msgState},</if>
+            <if test="busType != null">bus_type = #{busType},</if>
+            <if test="busId != null">bus_id = #{busId},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="doctCd != null and doctcD != ''">DOCT_CD = #{doctCd},</if>
+            <if test="doctName != null and doctName != ''">doct_name = #{doctName},</if>
+            <if test="eventId != null and eventId != ''">event_id = #{eventId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="updateEmrMessageByBusId" parameterType="EmrMessage">
+        update emr_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="inpNo != null">inp_no = #{inpNo},</if>
+            <if test="roomNo != null">room_no = #{roomNo},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="msgType != null">msg_type = #{msgType},</if>
+            <if test="msgContent != null and msgContent != ''">msg_content = #{msgContent},</if>
+            <if test="msgState != null">msg_state = #{msgState},</if>
+            <if test="busType != null">bus_type = #{busType},</if>
+            <if test="busId != null">bus_id = #{busId},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="doctCd != null and doctcD != ''">DOCT_CD = #{doctCd},</if>
+            <if test="doctName != null and doctName != ''">doct_name = #{doctName},</if>
+            <if test="eventId != null and eventId != ''">event_id = #{eventId},</if>
+        </trim>
+        where bus_Id = #{busId}
+    </update>
+
+    <delete id="deleteEmrMessageById" parameterType="Long">
+        delete from emr_message where id = #{id}
+    </delete>
+
+    <delete id="deleteEmrMessageByIds" parameterType="String">
+        delete from emr_message where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertEmrMessageList" parameterType="EmrMessage">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into emr_message
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">id,</if>
+                <if test="item.patientId != null and item.patientId != ''">patient_id,</if>
+                <if test="item.patientName != null and item.patientName != ''">patient_name,</if>
+                <if test="item.inpNo != null and item.inpNo != ''">INP_NO,</if>
+                <if test="item.roomNo != null and item.roomNo != ''">ROOM_NO,</if>
+                <if test="item.bedNo != null and item.bedNo != ''">BED_NO,</if>
+                <if test="item.deptCd != null and item.deptCd != ''">DEPT_CD,</if>
+                <if test="item.deptName != null and item.deptName != ''">DEPT_NAME,</if>
+                <if test="item.msgType != null">MSG_TYPE,</if>
+                <if test="item.msgContent != null and item.msgContent != ''">MSG_CONTENT,</if>
+                <if test="item.msgState != null ">MSG_STATE,</if>
+                <if test="item.busType != null ">BUS_TYPE,</if>
+                <if test="item.busId != null and item.busId != ''">BUS_ID,</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">CRE_PER_CODE,</if>
+                <if test="item.crePerName != null and item.crePerName != ''">CRE_PER_NAME,</if>
+                <if test="item.creDate != null">CRE_DATE,</if>
+                <if test="item.doctCd != null and item.doctCd != ''">doct_cd,</if>
+                <if test="item.doctName != null and item.doctName != ''">doct_name,</if>
+                <if test="item.eventId != null and item.eventId != ''">event_id,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">#{item.id},</if>
+                <if test="item.patientId != null and item.patientId != ''">#{item.patientId},</if>
+                <if test="item.patientName != null and item.patientName != ''">#{item.patientName},</if>
+                <if test="item.inpNo != null and item.inpNo != ''">#{item.inpNo},</if>
+                <if test="item.roomNo != null and item.roomNo != ''">#{item.roomNo},</if>
+                <if test="item.bedNo != null and item.bedNo != ''">#{item.bedNo},</if>
+                <if test="item.deptCd != null and item.deptCd != ''">#{item.deptCd},</if>
+                <if test="item.deptName != null and item.deptName != ''">#{item.deptName},</if>
+                <if test="item.msgType != null">#{item.msgType},</if>
+                <if test="item.msgContent != null and item.msgContent != ''">#{item.msgContent},</if>
+                <if test="item.msgState != null ">#{item.msgState},</if>
+                <if test="item.busType != null ">#{item.busType},</if>
+                <if test="item.busId != null and item.busId != ''">#{item.busId},</if>
+                <if test="item.crePerCode != null and item.crePerCode != ''">#{item.crePerCode},</if>
+                <if test="item.crePerName != null and item.crePerName != ''">#{item.crePerName},</if>
+                <if test="item.creDate != null">#{item.creDate},</if>
+                <if test="item.doctCd != null and item.doctCd != ''">#{item.doctCd},</if>
+                <if test="item.doctName != null and item.doctName != ''">#{item.doctName},</if>
+                <if test="item.eventId != null and item.eventId != ''">#{item.eventId},</if>
+            </trim>
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+    <update id="updateEmrMessageList" >
+        update emr_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="inpNo != null">inp_no = #{inpNo},</if>
+            <if test="roomNo != null">room_no = #{roomNo},</if>
+            <if test="bedNo != null">bed_no = #{bedNo},</if>
+            <if test="deptCd != null">dept_cd = #{deptCd},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="msgType != null">msg_type = #{msgType},</if>
+            <if test="msgContent != null and msgContent != ''">msg_content = #{msgContent},</if>
+            <if test="msgState != null">msg_state = #{msgState},</if>
+            <if test="busType != null">bus_type = #{busType},</if>
+            <if test="busId != null">bus_id = #{busId},</if>
+            <if test="crePerCode != null and crePerCode != ''">cre_per_code = #{crePerCode},</if>
+            <if test="crePerName != null and crePerName != ''">cre_per_name = #{crePerName},</if>
+            <if test="creDate != null">cre_date = #{creDate},</if>
+            <if test="altPerCode != null and altPerCode != ''">alt_per_code = #{altPerCode},</if>
+            <if test="altPerName != null and altPerName != ''">alt_per_name = #{altPerName},</if>
+            <if test="altDate != null">alt_date = #{altDate},</if>
+            <if test="doctCd != null and doctcD != ''">DOCT_CD = #{doctCd},</if>
+            <if test="doctName != null and doctName != ''">doct_name = #{doctName},</if>
+            <if test="eventId != null and eventId != ''">event_id = #{eventId},</if>
+        </trim>
+        where id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </update>
+    <select id="selectByBusId" parameterType="EmrMessage" resultMap="EmrMessageResult">
+        select * from emr_message
+        <where>
+            <if test="busId != null">and bus_id = #{busId}</if>
+            <if test="msgState != null">and msg_state = #{msgState}</if>
+            <if test="patientId != null">and patient_id = #{patientId}</if>
+        </where>
+    </select>
+</mapper>
